@@ -93,8 +93,8 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
@@ -202,8 +202,8 @@ void FileDialog::showFolder(QString folder)
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
         oxygine::spTextField textField = new oxygine::TextField();
-        oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = QColor(255, 255, 255, 255);
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::defaultColor;
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
@@ -213,7 +213,8 @@ void FileDialog::showFolder(QString folder)
         pBox->setSize(m_MainPanel->getWidth() - 50, 40);
         textField->setHeight(40);
         textField->setWidth(pBox->getWidth() - 18);
-        textField->setX(8);
+        textField->setX(13);
+        textField->setY(5);
         pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         this->m_MainPanel->addItem(pBox);
         // add some event handling :)

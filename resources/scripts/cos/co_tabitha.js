@@ -165,8 +165,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No Effects") +
-               qsTr("\nCO Zone Effect: Units have 60% increased firepower and defense.");
+        return qsTr("\nGlobal Effect: \nNo Effects") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 60% increased firepower and defense.");
     };
     this.getPowerDescription = function()
     {

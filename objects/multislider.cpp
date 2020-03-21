@@ -9,8 +9,8 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     qint32 textWidth = 0;
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

@@ -15,8 +15,8 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
     m_Textfield = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

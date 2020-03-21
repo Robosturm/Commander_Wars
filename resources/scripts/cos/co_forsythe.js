@@ -171,8 +171,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect: Units have 20% offensive and defensive bonus.");
+        return qsTr("\nGlobal Effect: \nNo Effects.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 20% offensive and defensive bonus.");
     };
     this.getPowerDescription = function()
     {

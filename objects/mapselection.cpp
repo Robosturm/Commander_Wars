@@ -84,13 +84,14 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
         pBackground->addChild(pClipActor);
         oxygine::spTextField pTextfield = new oxygine::TextField();
-        oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = QColor(255, 255, 255, 255);
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::defaultColor;
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         pTextfield->setStyle(style);
         pTextfield->setHtmlText("");
+        pTextfield->setY(5);
         pClipActor->addChild(pTextfield);
         pClipActor->setX(10);
         pClipActor->setSize(width - 20, itemHeigth);

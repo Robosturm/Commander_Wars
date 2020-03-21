@@ -12,8 +12,8 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     m_Textfield = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -29,6 +29,7 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     m_pClipActor->addChild(m_Textfield);
     m_Textfield->setWidth(m_Box->getWidth() - 20 - 45);
     m_Textfield->setHeight(m_Box->getHeight());
+    m_Textfield->setY(5);
 
     qint32 scrollHeigth = 6 * 40;
     if (items.size() < 6)
@@ -84,13 +85,14 @@ void DropDownmenu::setCurrentItemText(QString value)
 void DropDownmenu::addDropDownText(QString text, qint32 id)
 {
     oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
     textField->setHtmlText(text);
+    textField->setY(5);
     auto size = addDropDownItem(textField.get(), id);
     textField->setSize(size);
 }

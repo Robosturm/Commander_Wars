@@ -56,8 +56,8 @@ CampaignEditor::CampaignEditor()
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -278,8 +278,8 @@ void CampaignEditor::updateCampaignData()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
-        oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = QColor(255, 255, 255, 255);
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::defaultColor;
         style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
@@ -638,8 +638,8 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     spPanel pPanel = new Panel(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -710,8 +710,8 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     spPanel pPanel = new Panel(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

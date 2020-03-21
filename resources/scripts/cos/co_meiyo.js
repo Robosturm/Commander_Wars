@@ -277,8 +277,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.") +
-                qsTr("\nCO Zone Effect: Unit Ranks are 100% more effective.");
+        return qsTr("\nGlobal Effect: \nUnit Ranks are 50% more effective. Units without a Rank loose 5% firepower.") +
+                qsTr("\n\nCO Zone Effect: \nUnit Ranks are 100% more effective.");
     };
     this.getPowerDescription = function()
     {

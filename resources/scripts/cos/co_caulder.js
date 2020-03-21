@@ -221,8 +221,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Units loose firepower by 20% and defense by 10%.") +
-               qsTr("\nCO Zone Effect: Units gain 60% firepower and 60% defense. They also heal 5HP each turn..");
+        return qsTr("\nGlobal Effect: \nUnits loose firepower by 20% and defense by 10%.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain 60% firepower and 60% defense. They also heal 5HP each turn..");
     };
     this.getPowerDescription = function()
     {

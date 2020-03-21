@@ -19,7 +19,7 @@ public slots:
     void editCOStyle();
     void reloadMenue();
 private:
-    oxygine::spSprite m_pCurrentCO;
+
     QString m_currentCOID;
 };
 

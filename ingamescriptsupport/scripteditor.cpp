@@ -33,8 +33,8 @@ ScriptEditor::ScriptEditor()
 
     m_Data = new ScriptData();
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -95,7 +95,7 @@ ScriptEditor::ScriptEditor()
              tr(ScriptEvent::EventAnimation.toStdString().c_str()),
              tr(ScriptEvent::EventVictoryInfo.toStdString().c_str()),
              tr(ScriptEvent::EventModifyVariable.toStdString().c_str())};
-    m_Events = new DropDownmenu(200, items);
+    m_Events = new DropDownmenu(280, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);
@@ -118,7 +118,7 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->addChild(pText);
     m_ImmediateStart = new Checkbox();
     m_ImmediateStart->setTooltipText(tr("If checked the game starts without beeing able to change rules, players or co's."));
-    m_ImmediateStart->setPosition(200, 30);
+    m_ImmediateStart->setPosition(280, 30);
     m_ImmediateStart->setChecked(false);
     pSpriteBox->addChild(m_ImmediateStart);
     connect(m_ImmediateStart.get(), &Checkbox::checkChanged, this, &ScriptEditor::changeImmediateStart, Qt::QueuedConnection);
@@ -273,8 +273,8 @@ void ScriptEditor::updateConditios()
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
     qint32 x = 450;
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -370,8 +370,8 @@ void ScriptEditor::updateEvents()
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
 {
     qint32 x = 250;
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

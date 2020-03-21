@@ -4,6 +4,8 @@
 
 FontManager* FontManager::m_pInstance = nullptr;
 
+const QColor FontManager::defaultColor = QColor(230, 200, 60);
+
 FontManager* FontManager::getInstance()
 {
     if (m_pInstance == nullptr)
@@ -12,7 +14,6 @@ FontManager* FontManager::getInstance()
     }
     return m_pInstance;
 }
-
 
 FontManager::FontManager()
 {

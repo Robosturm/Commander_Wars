@@ -229,8 +229,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect: Indirect and Sea Units have 30% offensive and 20% defensive bonus.");
+        return qsTr("\nGlobal Effect: \nNo Effects.") +
+               qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have 30% offensive and 20% defensive bonus.");
     };
     this.getPowerDescription = function()
     {

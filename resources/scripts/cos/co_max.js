@@ -235,8 +235,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Direct Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.") +
-               qsTr("\nCO Zone Effect: Direct Units gain 35% additional firepower.");
+        return qsTr("\nGlobal Effect: \nDirect Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Units gain 35% additional firepower.");
     };
     this.getPowerDescription = function()
     {

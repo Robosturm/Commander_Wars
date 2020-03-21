@@ -67,7 +67,7 @@ Console::Console()
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
     m_text = new oxygine::TextField();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).withColor(QColor(255,127,39)).alignLeft();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).withColor(QColor(255,127,39)).alignLeft();
     m_text->setStyle(style);
 
     m_text->attachTo(this);
@@ -214,7 +214,7 @@ void Console::update(const oxygine::UpdateState& us)
         Mainapp* pApp = Mainapp::getInstance();
         QMutexLocker locker(&datalocker);
         qint32 screenheight = pApp->getSettings()->getHeight();
-        qint32 h = FontManager::getTimesFont10()->getSize();
+        qint32 h = FontManager::getMainFont16()->getSize();
         // pre calc message start
         qint32 num = screenheight / h - 1;
         outputSize = num + 30;

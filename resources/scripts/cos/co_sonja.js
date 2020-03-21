@@ -181,8 +181,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%") +
-               qsTr("\nCO Zone Effect: Units gain 10% firepower and defense.");
+        return qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain 10% firepower and defense.");
     };
     this.getPowerDescription = function()
     {

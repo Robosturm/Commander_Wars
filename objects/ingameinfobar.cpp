@@ -200,8 +200,8 @@ void IngameInfoBar::updatePlayerInfo()
     }
 
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -291,11 +291,17 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             ObjectManager* pObjectManager = ObjectManager::getInstance();
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = nullptr;
-            oxygine::TextStyle style = FontManager::getMainFont();
-            style.color = QColor(255, 255, 255, 255);
+            oxygine::TextStyle style = FontManager::getMainFont24();
+            style.color = FontManager::defaultColor;
             style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
             style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             style.multiline = false;
+
+            oxygine::TextStyle smallStyle = FontManager::getMainFont16();
+            smallStyle.color = FontManager::defaultColor;
+            smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+            smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+            smallStyle.multiline = false;
 
 
             // draw building hp
@@ -598,13 +604,11 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
             qint32 y2 = 120;
 
-            float unitInfoScale = 0.7f;
             qint32 yAdvance = 2;
 
             pTextfield = new oxygine::TextField();
             pTextfield->setPosition(10, y2);
-            pTextfield->setStyle(style);
-            pTextfield->setScale(unitInfoScale);
+            pTextfield->setStyle(smallStyle);
             QString name = "";
             if (pBuilding != nullptr)
             {
@@ -619,7 +623,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 
 
-            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+            y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
             // show building information
             if (pBuilding != nullptr)
@@ -628,41 +632,37 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1)));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
                 else
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText(tr("Owner: Neutral"));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
                 if (pUnit == nullptr)
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20)));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
                 else
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20 - pUnit->getCapturePoints())));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
             }
             // show unit information
@@ -670,70 +670,63 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             {
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
-                pTextfield->setStyle(style);
-                pTextfield->setScale(unitInfoScale);
+                pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText(pUnit->getName());
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
-                pTextfield->setStyle(style);
-                pTextfield->setScale(unitInfoScale);
+                pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1)));
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 if (!pUnit->getWeapon1ID().isEmpty())
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 1: ") +
                                              WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon1ID())));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
 
                 if (!pUnit->getWeapon2ID().isEmpty())
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);
-                    pTextfield->setStyle(style);
-                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 2: ") +
                                              WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon2ID())));
                     m_pCursorInfoBox->addChild(pTextfield);
-                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
 
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
-                pTextfield->setStyle(style);
-                pTextfield->setScale(unitInfoScale);
+                pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Move: ") +
                                          MovementTableManager::getInstance()->getMovementName(pUnit->getMovementType())));
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
-                pTextfield->setStyle(style);
-                pTextfield->setScale(unitInfoScale);
+                pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Movementpoints: ") +
                                          QString::number(pUnit->getMovementpoints(QPoint(x, y)))));
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
-                pTextfield->setStyle(style);
-                pTextfield->setScale(unitInfoScale);
+                pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Vision: ") +
                                          QString::number(pUnit->getVision(QPoint(pUnit->getX(), pUnit->getY())))));
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 if (pUnit->getLoadingPlace() > 0)
                 {
@@ -741,31 +734,28 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     {
                         pTextfield = new oxygine::TextField();
                         pTextfield->setPosition(10, y2);
-                        pTextfield->setStyle(style);
-                        pTextfield->setScale(unitInfoScale);
+                        pTextfield->setStyle(smallStyle);
                         pTextfield->setHtmlText(tr("Loaded Units"));
                         m_pCursorInfoBox->addChild(pTextfield);
-                        y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                        y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                         for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                         {
                             pTextfield = new oxygine::TextField();
                             pTextfield->setPosition(10, y2);
-                            pTextfield->setStyle(style);
-                            pTextfield->setScale(unitInfoScale);
+                            pTextfield->setStyle(smallStyle);
                             pTextfield->setHtmlText((pUnit->getLoadedUnit(i)->getName()));
                             m_pCursorInfoBox->addChild(pTextfield);
-                            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                            y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                         }
                     }
                     else
                     {
                         pTextfield = new oxygine::TextField();
                         pTextfield->setPosition(10, y2);
-                        pTextfield->setStyle(style);
-                        pTextfield->setScale(unitInfoScale);
+                        pTextfield->setStyle(smallStyle);
                         pTextfield->setHtmlText(tr("Loaded Units: ?"));
                         m_pCursorInfoBox->addChild(pTextfield);
-                        y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                        y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                     }
                 }
             }

@@ -46,8 +46,8 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_TextBackground->setResAnim(pAnim);
     addChild(m_TextBackground);
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;

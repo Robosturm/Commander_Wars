@@ -38,6 +38,7 @@ public:
         Objects = 31998,
         FocusedObjects,
         Dialogs,
+        DropDownList,
         Tooltip,
         Console
     };

@@ -20,17 +20,22 @@ COInfoActor::COInfoActor(qint32 width)
 {
     Mainapp* pApp = Mainapp::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::defaultColor;
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
     oxygine::spTextField pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Information"));
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), 10);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     addChild(pLabel);
     m_pCurrentCO = new oxygine::Sprite();
     m_pCurrentCO->setScale((pApp->getSettings()->getHeight() - 200) / 352.0f);
@@ -39,8 +44,7 @@ COInfoActor::COInfoActor(qint32 width)
     addChild(m_pCurrentCO);
 
     m_COName = new oxygine::TextField();
-    m_COName->setStyle(style);
-    m_COName->setScale(2.0f);
+    m_COName->setStyle(headerStyle);
     addChild(m_COName);
 
     style.multiline = true;
@@ -60,6 +64,7 @@ COInfoActor::COInfoActor(qint32 width)
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_HitSprite->getScaleX());
     pTextField->setHtmlText(tr("Hit"));
+    pTextField->setY(3);
     m_HitSprite->setWidth(pTextField->getTextRect().getWidth() / m_HitSprite->getScaleX() + 21);
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
@@ -78,6 +83,7 @@ COInfoActor::COInfoActor(qint32 width)
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_MissSprite->getScaleX());
     pTextField->setHtmlText(tr("Miss"));
+    pTextField->setY(3);
     m_MissSprite->setWidth(pTextField->getTextRect().getWidth() / m_MissSprite->getScaleX()  + 21);
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
@@ -93,9 +99,11 @@ COInfoActor::COInfoActor(qint32 width)
     m_InfoSprite->setPosition(10, 400);
     pTextField = new oxygine::TextField();
     pTextField->setPosition(3, 2);
+    style.color = Qt::white;
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_InfoSprite->getScaleX());
     pTextField->setHtmlText(tr("Info"));
+    style.color = FontManager::defaultColor;
     m_InfoSprite->setWidth(pTextField->getTextRect().getWidth() / m_InfoSprite->getScaleX() + 12);
     m_InfoSprite->addChild(pTextField);
     m_InfoSprite->setX((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2);
@@ -211,7 +219,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     }
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
     m_HitText->setHtmlText(coHits);
-    m_HitText->setY(m_HitSprite->getY());
+    m_HitText->setY(m_HitSprite->getY() + 5);
 
     if (pCO.get() != nullptr)
     {
@@ -223,7 +231,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     }
     m_MissSprite->setY(m_HitSprite->getY() + 50);
     m_MissText->setHtmlText(coMiss);
-    m_MissText->setY(m_MissSprite->getY());
+    m_MissText->setY(m_MissSprite->getY() + 5);
 
     if (pCO.get() != nullptr)
     {
@@ -235,7 +243,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         value = pInterpreter->doFunction(coid, "getLongCODescription");
         if (value.isString())
         {
-            coDesc += " " + value.toString();
+            coDesc += "\n" + value.toString();
         }
     }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
@@ -286,8 +294,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowername->setHtmlText(coSuperpower);
     m_SuperPowerDesc->setHtmlText(coSuperpowerDesc);
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

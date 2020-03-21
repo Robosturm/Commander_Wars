@@ -102,8 +102,8 @@ void PlayerInfo::updateData()
                 pSprite->setScale(2.0f);
                 this->addChild(pSprite);
             }
+            oxygine::TextStyle style = FontManager::getMainFont24();
 
-            oxygine::TextStyle style = FontManager::getAWStandard();
             oxygine::spTextField Text = new oxygine::TextField();
 
             Text->setStyle(style);
@@ -114,7 +114,7 @@ void PlayerInfo::updateData()
                 number = "?";
             }
             Text->setHtmlText(number);
-            Text->setY(yPos + 20);
+            Text->setY(yPos + 30);
             Text->setX(0);
             Text->setScale(1.0f);
             this->addChild(Text);
@@ -209,7 +209,8 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
             }
             case GameEnums::PowerMode_Power:
             {
-                oxygine::TextStyle style = FontManager::getMainFont();
+                oxygine::TextStyle style = FontManager::getMainFont24();
+                style.color = FontManager::defaultColor;
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Power"));
@@ -233,7 +234,8 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
             }
             case GameEnums::PowerMode_Superpower:
             {
-                oxygine::TextStyle style = FontManager::getMainFont();
+                oxygine::TextStyle style = FontManager::getMainFont24();
+                style.color = FontManager::defaultColor;
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Superpower"));
@@ -257,7 +259,8 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
             }
             case GameEnums::PowerMode_Tagpower:
             {
-                oxygine::TextStyle style = FontManager::getMainFont();
+                oxygine::TextStyle style = FontManager::getMainFont24();
+                style.color = FontManager::defaultColor;
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Tagpower"));

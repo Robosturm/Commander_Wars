@@ -58,17 +58,9 @@ COStyleMenu::COStyleMenu()
     });
     connect(this, &COStyleMenu::sigEditCOStyle, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
 
-    spCOSelection pCOSelection = new COSelection();
+    spCOSelection pCOSelection = new COSelection(QSize(Settings::getWidth(), Settings::getHeight() - 100));
     pCOSelection->colorChanged(QColor(248, 88, 0));
-    pCOSelection->setScale((Settings::getWidth() - 70) / (pCOSelection->getWidth() + 208));
     addChild(pCOSelection);
-
-
-
-    m_pCurrentCO = new oxygine::Sprite();
-    m_pCurrentCO->setPosition(40 + pCOSelection->getScaledWidth(), 30);
-    m_pCurrentCO->setScale(pCOSelection->getScale());
-    addChild(m_pCurrentCO);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
 }
 
@@ -100,13 +92,6 @@ void COStyleMenu::selectedCOIDChanged(QString coid)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
-    if (!coid.isEmpty())
-    {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
-    }
-    m_pCurrentCO->setResAnim(pAnim);
     m_currentCOID = coid;
     pApp->continueThread();
 }

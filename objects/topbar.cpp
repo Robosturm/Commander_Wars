@@ -61,14 +61,15 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
     pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
     textField->setHtmlText(text);
     textField->attachTo(pBox);
+    textField->setY(5);
     pBox->setSize(200, 40);
     textField->setSize(pBox->getSize());
     pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group)->size());
@@ -109,8 +110,8 @@ void Topbar::addGroup(QString text)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;

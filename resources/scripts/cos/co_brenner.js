@@ -190,8 +190,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit: Repair Tanks\nGlobal Effect: No bonus.") +
-               qsTr("\nCO Zone Effect: Units gain additional 30% defense.");
+        return qsTr("\nSpecial Unit: Repair Tanks\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional 30% defense.");
     };
     this.getPowerDescription = function()
     {

@@ -17,8 +17,8 @@ MapSelectionView::MapSelectionView()
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -98,11 +98,11 @@ MapSelectionView::MapSelectionView()
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    oxygine::TextStyle styleTimes10 = FontManager::getTimesFont10();
-    styleTimes10.color = QColor(255, 255, 255, 255);
-    styleTimes10.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    styleTimes10.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    styleTimes10.multiline = false;
+    oxygine::TextStyle styleMain16 = FontManager::getMainFont16();
+    styleMain16.color = FontManager::defaultColor;
+    styleMain16.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    styleMain16.multiline = false;
 
     oxygine::spSlidingActor slider = new oxygine::SlidingActor();
     slider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
@@ -121,8 +121,8 @@ MapSelectionView::MapSelectionView()
         content->addChild(building);
         oxygine::spTextField pText = new oxygine::TextField();
         pText->setHtmlText("0");
-        pText->setPosition(2 + i * (GameMap::Imagesize + 12), 10 + GameMap::Imagesize * 1.2f);
-        pText->setStyle(styleTimes10);
+        pText->setPosition(2 + i * (GameMap::Imagesize + 12), 12 + GameMap::Imagesize * 1.2f);
+        pText->setStyle(styleMain16);
         content->addChild(pText);
         m_BuildingCountTexts.push_back(pText);
     }

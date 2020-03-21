@@ -21,8 +21,8 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setResAnim(pAnim);
     m_Textfield = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -40,6 +40,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     m_Textfield->setHeight(m_Textbox->getHeight());
     pClipActor->setSize(m_Textfield->getSize());
     pClipActor->setX(10);
+    pClipActor->setY(5);
     this->addChild(m_Textbox);
 
     m_pSpinBox = new oxygine::Box9Sprite();

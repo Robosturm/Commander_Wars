@@ -244,8 +244,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Income is reduced for buildings he captures.") +
-               qsTr("\nCO Zone Effect: Units have 20% increased firepower.");
+        return qsTr("\nGlobal Effect: \nIncome is reduced for buildings he captures.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 20% increased firepower.");
     };
     this.getPowerDescription = function()
     {

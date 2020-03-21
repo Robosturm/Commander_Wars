@@ -134,23 +134,20 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         }
     }
     // text incoming
-    oxygine::ResFont* font = FontManager::getMainFont();
-    oxygine::TextStyle style = font;
-    style.color = QColor(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    float heigth = 20.0f;
-    float scale = 3;
+    oxygine::TextStyle headline = FontManager::getMainFont72();
+    headline.color = FontManager::defaultColor;
+    headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headline.multiline = false;
     qint32 xPos = 10;
     for (qint32 i = 0; i < text.size(); i++)
     {
         oxygine::spTextField textField = new oxygine::TextField();
         textField->setHtmlText(QString(text[i]));
         textField->setPosition(xPos, 0);
-        textField->setScale(scale);
-        textField->setStyle(style);
-        qint32 size = textField->getTextRect().getWidth() * scale;
+        textField->setStyle(headline);
+        qint32 size = textField->getTextRect().getWidth();
+        float heigth = textField->getTextRect().getHeight();
         if (size <= 0)
         {
             size = (xPos - 10) / (i + 1);
@@ -164,7 +161,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         oxygine::spTweenQueue queue = new oxygine::TweenQueue();
         oxygine::spTween tween2 = oxygine::createTween(TweenWait(), oxygine::timeMS(m_frameTime * 2 * i + 1));
         oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1));
-        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2 * scale), oxygine::timeMS(m_frameTime * 4));
+        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2), oxygine::timeMS(m_frameTime * 4));
         queue->add(tween2);
         queue->add(tween3);
         queue->add(tween4);

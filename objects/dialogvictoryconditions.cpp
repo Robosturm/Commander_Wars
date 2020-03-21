@@ -42,11 +42,17 @@ DialogVictoryConditions::DialogVictoryConditions()
         emit sigFinished();
     });
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
+
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::defaultColor;
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
     spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
                                      QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
@@ -58,12 +64,11 @@ DialogVictoryConditions::DialogVictoryConditions()
 
     qint32 y = 10;
     oxygine::spTextField pTextfield = new oxygine::TextField();
-    pTextfield->setStyle(style);
+    pTextfield->setStyle(headerStyle);
     pTextfield->setHtmlText(tr("Victory Info"));
-    pTextfield->setScale(2.0f);
     pTextfield->setPosition(pApp->getSettings()->getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
     pPanel->addItem(pTextfield);
-    y += 50;
+    y += 60;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
     pTextfield = new oxygine::TextField();

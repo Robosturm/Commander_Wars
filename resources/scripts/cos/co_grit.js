@@ -233,8 +233,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Indirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.") +
-               qsTr("\nCO Zone Effect: Indirect units  have 30% offensive bonus.");
+        return qsTr("\nGlobal Effect: \nIndirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.") +
+               qsTr("\n\nCO Zone Effect: \nIndirect units  have 30% offensive bonus.");
     };
     this.getPowerDescription = function()
     {

@@ -316,8 +316,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Attacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
-               qsTr("\nCO Zone Effect: Units gain 10% firepower and defense.");
+        return qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain 10% firepower and defense.");
     };
     this.getPowerDescription = function()
     {

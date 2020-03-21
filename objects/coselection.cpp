@@ -7,7 +7,7 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/gamemanager.h"
 
-COSelection::COSelection(QStringList coids)
+COSelection::COSelection(QSize maxSize, QStringList coids)
     : QObject(),
       m_Coids(coids)
 {
@@ -62,10 +62,21 @@ COSelection::COSelection(QStringList coids)
         }
     }
 
+    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 50), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 50));
+    addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
         loadArmy(m_Armies[i], bannerX, y, i);
     }
+    m_CoFieldPanel = new Panel(true, QSize(51 * 3 * scale + 80, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()), QSize(51 * 3 * scale + 80, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()));
+    m_CoFieldPanel->setY(m_ArmyBannerPanel->getScaledHeight());
+    addChild(m_CoFieldPanel);
+
+    qint32 width = (maxSize.width() - m_CoFieldPanel->getScaledWidth()) / 2;
+    m_CoDescription = new Panel(true, QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()), QSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight()));
+    m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
+    addChild(m_CoDescription);
+
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
     {
         QString coid = pCOSpriteManager->getCOID(i);
@@ -85,78 +96,65 @@ COSelection::COSelection(QStringList coids)
         }
     }
 
-    // add border box
-    pAnim = pObjectManager->getResAnim("co_selection");
-    pSprite = new oxygine::Sprite();
-    pSprite->setResAnim(pAnim);
-    pSprite->setPosition(0, y);
-    addChild(pSprite);
-    this->setSize(pAnim->getWidth(), pAnim->getHeight() + y);
-
-    pAnim = pObjectManager->getResAnim("co_selection+mask");
-    m_BackgroundMask = new oxygine::Sprite();
-    m_BackgroundMask->setResAnim(pAnim);
-    m_BackgroundMask->setPosition(0, y);
-
-    addChild(m_BackgroundMask);
     pAnim = pObjectManager->getResAnim("co_cursor");
     m_Cursor = new oxygine::Sprite();
     m_Cursor->setResAnim(pAnim);
-    m_Cursor->setPosition(5, 7 + m_BackgroundMask->getY());
+    m_Cursor->setPosition(5, 7 + y);
     m_Cursor->setPriority(1);
+    m_Cursor->setScale(scale);
+    m_CoFieldPanel->addItem(m_Cursor);
 
-    addChild(m_Cursor);
+    m_pCurrentCO = new oxygine::Sprite();
+    m_pCurrentCO->setPosition(m_CoDescription->getX() + m_CoDescription->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
+    float scale = width / 208.0f;
+    float scale2 = (maxSize.height() - m_ArmyBannerPanel->getScaledHeight()) / 352.0f;
+    if (scale2 < scale)
+    {
+        scale = scale2;
+    }
+    m_pCurrentCO->setScale(scale);
+    addChild(m_pCurrentCO);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::defaultColor;
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
+    m_COName = new oxygine::TextField();
+    m_COName->setStyle(headerStyle);
+    m_COName->setSize(width, 55);
+    m_COName->setPosition(0, 10);
+    m_CoDescription->addItem(m_COName);
+
+    width -= 70;
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-
-    m_COName = new oxygine::TextField();
-    m_COName->setStyle(style);
-    m_COName->setSize(175 / 0.8f, 20);
-    m_COName->setScale(0.8f);
-    m_COName->setPosition(163, 15 + m_BackgroundMask->getY());
-    addChild(m_COName);
-
     m_COPower = new oxygine::TextField();
     m_COPower->setStyle(style);
-    m_COPower->setPosition(165, 154 + m_BackgroundMask->getY());
-    m_COPower->setScale(0.6f);
-    addChild(m_COPower);
-
+    m_COPower->setPosition(0, 70);
+    m_CoDescription->addItem(m_COPower);
     m_COSuperpower = new oxygine::TextField();
     m_COSuperpower->setStyle(style);
-    m_COSuperpower->setPosition(165, 170 + m_BackgroundMask->getY());
-    m_COSuperpower->setScale(0.6f);
-    addChild(m_COSuperpower);
+    m_COSuperpower->setPosition(0, 100);
+    m_CoDescription->addItem(m_COSuperpower);
 
     style.multiline = true;
 
     m_COBio = new oxygine::TextField();
     m_COBio->setStyle(style);
-    m_COBio->setScale(0.47f);
-    m_COBio->setSize(175 / m_COBio->getScaleY(), 20);
-
-    m_COBioRect = new oxygine::SlidingActor();
-    m_COBioRect->setPosition(m_COName->getX() + 2, m_COName->getY() + m_COName->getHeight() + 5);
-    m_COBioRect->setSize(179, 110 - m_COName->getHeight());
-    m_COBioRect->setContent(m_COBio);
-    addChild(m_COBioRect);
+    m_COBio->setSize(width, 20);
+    m_COBio->setY(150);
+    m_CoDescription->addItem(m_COBio);
 
     m_CODesc = new oxygine::TextField();
     m_CODesc->setStyle(style);
-    m_CODesc->setScale(0.47f);
-    m_CODesc->setSize(175 / m_CODesc->getScaleY(), 48);
-
-    m_CODescRect = new oxygine::SlidingActor();
-    m_CODescRect->setPosition(m_COName->getX() + 2, 212 + m_BackgroundMask->getY());
-    m_CODescRect->setSize(179, 48);
-    m_CODescRect->setContent(m_COBio);
-    addChild(m_CODescRect);
-
+    m_CODesc->setSize(width, 48);
+    m_CoDescription->addItem(m_CODesc);
     armyBannerClicked(m_Armies[0], 0);
 }
 
@@ -168,12 +166,13 @@ void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
     {
         oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
         pRect->setPosition(bannerX, 0);
-        pRect->setSize(pAnim->getWidth(), pAnim->getHeight());
+        pRect->setSize(pAnim->getWidth() * scale, pAnim->getHeight() * scale);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pAnim);
+        pSprite->setScale(scale);
         if (i != 0)
         {
-            pSprite->setPosition(0, -12);
+            pSprite->setPosition(0, -12 * scale);
         }
         pRect->addChild(pSprite);
         m_ArmyBanners.append(pSprite);
@@ -183,9 +182,9 @@ void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
         {
             armyBannerClicked(army, index);
         });
-        addChild(pRect);
-        bannerX += static_cast<qint32>(pAnim->getWidth());
-        y = static_cast<qint32>(pAnim->getHeight()) + 5;
+        m_ArmyBannerPanel->addItem(pRect);
+        bannerX += static_cast<qint32>(pAnim->getWidth() * scale);
+        y = static_cast<qint32>(pAnim->getHeight() * scale) + 5;
     }
 }
 
@@ -195,7 +194,7 @@ void COSelection::armyBannerClicked(QString army, qint32 index)
     {
         for (qint32 i2 = 0; i2 < m_ArmyBanners.size(); i2++)
         {
-            m_ArmyBanners[i2]->setY(-12);
+            m_ArmyBanners[i2]->setY(-12 * scale);
         }
         m_ArmyBanners[index]->setY(0);
         emit armySelectedChange(army);
@@ -291,6 +290,7 @@ void COSelection::armyChanged(QString army)
         y++;
     }
     colorChanged(m_CurrentColor);
+    m_CoFieldPanel->setContentHeigth(y * 51 + 30);
     pApp->continueThread();
 }
 
@@ -318,26 +318,27 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
         coid = "";
 
     }
-
+    pSprite->setScale(scale);
     pAnim = pObjectManager->getResAnim("co_background");
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnim);
+    pSprite->setScale(scale);
     actor->addChild(pSprite);
 
-    actor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
+    actor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
     actor->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        m_Cursor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
+        m_Cursor->setPosition(5 + x * 51 * scale, 7 + y * 51 * scale);
         m_CurrentCO = coid;
-        emit sigHoveredCOChanged(m_CurrentCO);
     });
     connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
     actor->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
+        emit sigHoveredCOChanged(m_CurrentCO);
         emit coSelected(m_CurrentCO);
     });
     m_COFields.append(actor);
-    addChild(actor);
+    m_CoFieldPanel->addItem(actor);
     m_CoIDs.append(coid);
 }
 
@@ -347,7 +348,6 @@ void COSelection::colorChanged(QColor color)
     pApp->suspendThread();
     QColor colorAlpha(color);
     colorAlpha.setAlpha(120);
-    m_BackgroundMask->setColor(color);
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         oxygine::Sprite* pSprite = dynamic_cast<oxygine::Sprite*>(m_COFields[i]->getLastChild().get());
@@ -397,20 +397,27 @@ void COSelection::hoveredCOChanged(QString coid)
             coSuperpower = value.toString();
         }
         m_COName->setHtmlText(coName);
-        m_COName->setX(165 + m_COName->getScaledWidth() / 2 - m_COName->getTextRect().getWidth() / 2);
+        m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);
-        m_COBioRect->setContent(m_COBio);
-        m_COBioRect->snap();
 
         m_CODesc->setHtmlText(coDesc);
         m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
-        m_CODescRect->setContent(m_CODesc);
-        m_CODescRect->snap();
+        m_CODesc->setY(m_COBio->getY() + m_COBio->getHeight() + 10);
 
         m_COPower->setHtmlText(coPower);
         m_COSuperpower->setHtmlText(coSuperpower);
+
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        oxygine::ResAnim* pAnim = nullptr;
+        if (!coid.isEmpty())
+        {
+            pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
+        }
+        m_pCurrentCO->setResAnim(pAnim);
+
+        addChild(m_pCurrentCO);
     }
     pApp->continueThread();
 }

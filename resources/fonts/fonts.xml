@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/fonts" />
-	<set scale_factor = "2.0f" />	
-	<font file="times_10.xml" />
-	<set scale_factor = "1.0f" />	
-	<font file="main.xml" />
-	<font file="AWStandard.xml" />
+	<font file="main16.xml" />
+	<font file="main24.xml" />
+	<font file="main48.xml" />
+	<font file="main72.xml" />
 </resources>

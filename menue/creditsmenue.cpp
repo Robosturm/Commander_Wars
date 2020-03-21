@@ -83,23 +83,28 @@ CreditsMenue::CreditsMenue()
     addChild(creditsActor);
     creditsActor->setY(pApp->getSettings()->getHeight());
     qint32 y = 0;
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+    oxygine::TextStyle headstyle = FontManager::getMainFont48();
+    headstyle.color = FontManager::defaultColor;
+    headstyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headstyle.multiline = false;
 
     qint32 x = pApp->getSettings()->getWidth() / 2;
     oxygine::spTextField pTextfield;
     for (qint32 i = 0; i < m_Headlines.size(); i++)
     {
         pTextfield = new oxygine::TextField();
-        pTextfield->setStyle(style);
+        pTextfield->setStyle(headstyle);
         pTextfield->setHtmlText(m_Headlines[i]);
-        pTextfield->setScale(2.0f);
-        pTextfield->setPosition(x - pTextfield->getTextRect().getWidth(), y);
+        pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2, y);
         creditsActor->addChild(pTextfield);
-        y += pTextfield->getTextRect(2.0f).getHeight() + 10;
+        y += pTextfield->getTextRect().getHeight() + 10;
         for (qint32 i2 = 0; i2 < m_Authors[i].size(); i2++)
         {
             pTextfield = new oxygine::TextField();

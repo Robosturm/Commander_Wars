@@ -201,8 +201,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No bonus.") +
-               qsTr("\nCO Zone Effect: Units gain additional 30% firepower when attacking units with equal or less health.");
+        return qsTr("\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional 30% firepower when attacking units with equal or less health.");
     };
     this.getPowerDescription = function()
     {

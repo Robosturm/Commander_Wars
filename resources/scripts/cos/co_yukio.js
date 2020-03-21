@@ -249,8 +249,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: None.") +
-               qsTr("\nCO Zone Effect: Damage is reduced by 10%. Troops deal 15% true damage if the base damage is at least 10%.");
+        return qsTr("\nGlobal Effect: \nNone.") +
+               qsTr("\n\nCO Zone Effect: \nDamage is reduced by 10%. Troops deal 15% true damage if the base damage is at least 10%.");
     };
     this.getPowerDescription = function()
     {

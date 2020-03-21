@@ -37,7 +37,6 @@ private:
     oxygine::spButton m_ShowCOInfoButton;
     oxygine::spButton m_ExitButton;
     spCOSelection m_COSelection;
-    oxygine::spSprite m_pCurrentCO;
     QString m_currentCOID;
     qint32 m_player;
 };

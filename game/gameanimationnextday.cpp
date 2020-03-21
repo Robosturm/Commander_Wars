@@ -80,22 +80,19 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         }
     }
 
-    oxygine::ResFont* font = FontManager::getMainFont();
-    oxygine::TextStyle style = font;
-    style.color = QColor(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    float scale = 3;
+    oxygine::TextStyle headline = FontManager::getMainFont72();
+    headline.color = FontManager::defaultColor;
+    headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headline.multiline = false;
     oxygine::spTextField textField = new oxygine::TextField();
     textField->setHtmlText((QString("Day ") + QString::number(GameMap::getInstance()->getCurrentDay())));
-    textField->setPosition(10, pApp->getSettings()->getHeight() / 2 - textField->getTextRect(scale).getHeight() / 2);
+    textField->setPosition(10, pApp->getSettings()->getHeight() / 2 - textField->getTextRect().getHeight() / 2);
     if (pCO != nullptr)
     {
         textField->setX(40 + m_CO->getScaledWidth());
     }
-    textField->setScale(scale);
-    textField->setStyle(style);
+    textField->setStyle(headline);
     addChild(textField);
 
     if (!m_permanent)

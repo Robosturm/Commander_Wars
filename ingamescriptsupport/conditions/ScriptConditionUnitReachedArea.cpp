@@ -172,8 +172,8 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
 {
     spGenericBox pBox = new GenericBox();
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

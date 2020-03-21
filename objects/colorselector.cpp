@@ -14,12 +14,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     this->moveToThread(pApp->getWorkerthread());
 
     // font style
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    qint32 space = 220;
+    qint32 space = 170;
     qint32 y = pixelSize * 256 + 20;
     qint32 barWidth = 30;
     if (pixelSize > 30)
@@ -40,8 +40,9 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Red: "));
     pLabel->setPosition(space * 0, y);
     addChild(pLabel);
-    m_SpinBoxRed = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
-    m_SpinBoxRed->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
+
+    m_SpinBoxRed = new SpinBox(space - 20, 0, 255);
+    m_SpinBoxRed->setPosition(space * 0, y + 40);
     addChild(m_SpinBoxRed);
     connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, [=](float value)
     {
@@ -53,8 +54,8 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Green: "));
     pLabel->setPosition(space * 1, y);
     addChild(pLabel);
-    m_SpinBoxGreen = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
-    m_SpinBoxGreen->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
+    m_SpinBoxGreen = new SpinBox(space - 20, 0, 255);
+    m_SpinBoxGreen->setPosition(space * 1, y + 40);
     addChild(m_SpinBoxGreen);
     connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, [=](float value)
     {
@@ -66,8 +67,8 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Blue: "));
     pLabel->setPosition(space * 2, y);
     addChild(pLabel);
-    m_SpinBoxBlue= new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
-    m_SpinBoxBlue->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
+    m_SpinBoxBlue= new SpinBox(space - 20, 0, 255);
+    m_SpinBoxBlue->setPosition(space * 2, y + 40);
     addChild(m_SpinBoxBlue);
     connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, [=](float value)
     {

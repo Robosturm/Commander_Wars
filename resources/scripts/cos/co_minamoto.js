@@ -260,8 +260,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect: Units near Mountains gain an additional 40% firepower.");
+        return qsTr("\nGlobal Effect: \nNo Effects.") +
+               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain an additional 40% firepower.");
     };
     this.getPowerDescription = function()
     {

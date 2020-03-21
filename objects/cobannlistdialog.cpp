@@ -96,22 +96,28 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     pSpriteBox->addChild(pSave);
     connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+
     // no the fun begins create checkboxes and stuff and a panel down here
     spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150),
                                      QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::defaultColor;
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
     oxygine::spTextField pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Bann List"));
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
+    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     pPanel->addItem(pLabel);
 
     // load default army and co sets

@@ -21,8 +21,8 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
     QColor color(255, 127, 39);
     QColor color2(0, 255, 0);
     qint32 fieldWidth = (width - 5 * (header.size() + 1))  / header.size();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

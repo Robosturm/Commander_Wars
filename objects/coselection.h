@@ -11,14 +11,18 @@
 
 #include "oxygine-framework.h"
 
+#include "objects/panel.h"
+
 class COSelection;
 typedef oxygine::intrusive_ptr<COSelection> spCOSelection;
 
 class COSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+
+    static constexpr float scale = 1.5f;
 public:
-    explicit COSelection(QStringList coids = {});
+    explicit COSelection(QSize maxSize, QStringList coids = {});
     virtual ~COSelection();
 
 signals:
@@ -36,22 +40,23 @@ protected:
 private:
     QStringList m_Armies;
     QVector<oxygine::spSprite> m_ArmyBanners;
-    oxygine::spSprite m_BackgroundMask;
+    spPanel m_ArmyBannerPanel;
 
     QVector<oxygine::spActor> m_COFields;
     oxygine::spSprite m_Cursor;
     QStringList m_CoIDs;
     QString m_CurrentCO;
     QColor m_CurrentColor;
+    spPanel m_CoFieldPanel;
 
 
     oxygine::spTextField m_COName;
     oxygine::spTextField m_COBio;
-    oxygine::spSlidingActor m_COBioRect;
     oxygine::spTextField m_CODesc;
-    oxygine::spSlidingActor m_CODescRect;
     oxygine::spTextField m_COPower;
     oxygine::spTextField m_COSuperpower;
+    oxygine::spSprite m_pCurrentCO;
+    spPanel m_CoDescription;
 
     QStringList m_Coids;
 };

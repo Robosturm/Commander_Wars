@@ -348,8 +348,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Unit costs are decreased when he has more income than funds and firepower is decreased.") +
-               qsTr("\nCO Zone Effect: Global firepower effects are doubled.");
+        return qsTr("\nGlobal Effect: \nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
+               qsTr("\n\nCO Zone Effect: \nGlobal firepower effects are doubled.");
     };
 
     this.getPowerDescription = function()

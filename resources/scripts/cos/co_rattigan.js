@@ -252,8 +252,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Units have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.") +
-               qsTr("\nCO Zone Effect: Units have 30% increased firepower against large regiments of units.");
+        return qsTr("\nGlobal Effect: \nUnits have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 30% increased firepower against large regiments of units.");
     };
     this.getPowerDescription = function()
     {

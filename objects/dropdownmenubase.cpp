@@ -72,11 +72,10 @@ void DropDownmenuBase::showDropDown()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    setPriority(static_cast<short>(Mainapp::ZOrder::FocusedObjects));
+    setPriority(static_cast<short>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
     m_OriginalPosition = getPosition();
-
     auto transform = computeGlobalTransform();
     setPosition(transform.x, transform.y);
     addRef();

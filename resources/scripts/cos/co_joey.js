@@ -260,8 +260,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Units are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.") +
-               qsTr("\nCO Zone Effect: Units are 30% stronger when engaging stronger units");
+        return qsTr("\nGlobal Effect: \nUnits are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.") +
+               qsTr("\n\nCO Zone Effect: \nUnits are 30% stronger when engaging stronger units");
     };
     this.getPowerDescription = function()
     {

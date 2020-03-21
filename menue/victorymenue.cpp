@@ -29,11 +29,17 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Victory Menue", Console::eDEBUG);
     GameMap* pMap = GameMap::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+    oxygine::TextStyle headerStyle = FontManager::getMainFont72();
+    headerStyle.color = FontManager::defaultColor;
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -84,8 +90,6 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         m_YGraphItems[i]->setStyle(style);
         m_pGraphBackground->addChild(m_YGraphItems[i]);
     }
-
-
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
@@ -246,9 +250,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
 
     m_Textfield = new oxygine::TextField();
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    m_Textfield->setStyle(style);
-    m_Textfield->setY(5);
-    m_Textfield->setScale(3.0f);
+    m_Textfield->setStyle(headerStyle);
     addChild(m_Textfield);
 
     m_PlayerSelectPanel = new Panel(true, QSize(200, m_pGraphBackground->getHeight()), QSize(200, 100));

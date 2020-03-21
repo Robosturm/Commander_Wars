@@ -155,8 +155,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: Units are 10% cheaper") +
-               qsTr("\nCO Zone Effect: Units have 10% more firepower and defense.");
+        return qsTr("\nGlobal Effect: \nUnits are 10% cheaper") +
+               qsTr("\n\nCO Zone Effect: \nUnits have 10% more firepower and defense.");
     };
     this.getPowerDescription = function()
     {

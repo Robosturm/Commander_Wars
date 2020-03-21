@@ -35,8 +35,8 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
 
     //Create Actor with Text and add it to button as child
     oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_MIDDLE;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;

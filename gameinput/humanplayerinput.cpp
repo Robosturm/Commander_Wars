@@ -262,7 +262,7 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
-    if (!GameMap::getInstance()->onMap(x, y))
+    if (!GameMap::getInstance()->onMap(x, y) || !GameMenue::getInstance()->getFocused())
     {
         return;
     }
@@ -741,7 +741,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     m_ZInformationLabel->addChild(pSprite2);
                     // add text to the label
                     oxygine::spTextField textField = new oxygine::TextField();
-                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).
+                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).
                                                withColor(QColor(0, 0, 0)).
                                                alignLeft().
                                                alignTop();

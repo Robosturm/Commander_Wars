@@ -31,7 +31,8 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     qint32 width = 250;
     // Label
     oxygine::spTextField text = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     text->setStyle(style);
     text->setHtmlText(tr("Map name:"));
     text->setPosition(30, y);

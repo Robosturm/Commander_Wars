@@ -191,7 +191,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 
 void GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color)
 {
-    oxygine::TextStyle style = FontManager::getTimesFont10();
+    oxygine::TextStyle style = FontManager::getMainFont16();
     style.color = color;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;

@@ -29,8 +29,8 @@ Chat::Chat(spNetworkInterface pInterface, QSize size)
 
     m_Panel = new Panel(true, QSize(size.width(), size.height() - 50), QSize(size.width(), size.height() - 50));
     addChild(m_Panel);
-    oxygine::TextStyle style = FontManager::getTimesFont10();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont16();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;

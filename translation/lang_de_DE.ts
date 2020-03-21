@@ -481,12 +481,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="116"/>
+        <location filename="../objects/buildlistdialog.cpp" line="121"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="246"/>
+        <location filename="../objects/buildlistdialog.cpp" line="250"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -547,12 +547,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="112"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="119"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="294"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="300"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -560,32 +560,32 @@
 <context>
     <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="31"/>
+        <location filename="../objects/coinfoactor.cpp" line="37"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="62"/>
+        <location filename="../objects/coinfoactor.cpp" line="66"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="80"/>
+        <location filename="../objects/coinfoactor.cpp" line="85"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="98"/>
+        <location filename="../objects/coinfoactor.cpp" line="105"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="139"/>
+        <location filename="../objects/coinfoactor.cpp" line="147"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="242"/>
+        <location filename="../objects/coinfoactor.cpp" line="250"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -611,17 +611,17 @@
 <context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="52"/>
+        <location filename="../objects/coselectiondialog.cpp" line="42"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="62"/>
+        <location filename="../objects/coselectiondialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="72"/>
+        <location filename="../objects/coselectiondialog.cpp" line="62"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -848,12 +848,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselector.cpp" line="53"/>
+        <location filename="../objects/colorselector.cpp" line="54"/>
         <source>Green: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselector.cpp" line="66"/>
+        <location filename="../objects/colorselector.cpp" line="67"/>
         <source>Blue: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1315,163 +1315,163 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="37"/>
+        <location filename="../objects/dialograndommap.cpp" line="38"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="41"/>
+        <location filename="../objects/dialograndommap.cpp" line="42"/>
         <source>Selects the name of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="50"/>
+        <location filename="../objects/dialograndommap.cpp" line="51"/>
         <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="54"/>
+        <location filename="../objects/dialograndommap.cpp" line="55"/>
         <source>Selects the author of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="63"/>
+        <location filename="../objects/dialograndommap.cpp" line="64"/>
         <source>Map Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="67"/>
+        <location filename="../objects/dialograndommap.cpp" line="68"/>
         <source>Selects the description for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="76"/>
+        <location filename="../objects/dialograndommap.cpp" line="77"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="80"/>
+        <location filename="../objects/dialograndommap.cpp" line="81"/>
         <source>Selects the width for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="89"/>
+        <location filename="../objects/dialograndommap.cpp" line="90"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="93"/>
+        <location filename="../objects/dialograndommap.cpp" line="94"/>
         <source>Selects the heigth for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="102"/>
+        <location filename="../objects/dialograndommap.cpp" line="103"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="106"/>
+        <location filename="../objects/dialograndommap.cpp" line="107"/>
         <source>Selects the amount of players for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="115"/>
+        <location filename="../objects/dialograndommap.cpp" line="116"/>
         <source>Map Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="119"/>
+        <location filename="../objects/dialograndommap.cpp" line="120"/>
         <source>The seed to generate the new map. Same map settings with the same seed generate the same map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="128"/>
+        <location filename="../objects/dialograndommap.cpp" line="129"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="132"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>If selected roads are created between the HQ&apos;s of the players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="141"/>
+        <location filename="../objects/dialograndommap.cpp" line="142"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialograndommap.cpp" line="147"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialograndommap.cpp" line="147"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialograndommap.cpp" line="147"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialograndommap.cpp" line="147"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
-        <location filename="../objects/dialograndommap.cpp" line="174"/>
+        <location filename="../objects/dialograndommap.cpp" line="147"/>
+        <location filename="../objects/dialograndommap.cpp" line="175"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="149"/>
+        <location filename="../objects/dialograndommap.cpp" line="150"/>
         <source>The percent distribution between the different terrains and buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="157"/>
+        <location filename="../objects/dialograndommap.cpp" line="158"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="164"/>
+        <location filename="../objects/dialograndommap.cpp" line="165"/>
         <source>Base Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="169"/>
+        <location filename="../objects/dialograndommap.cpp" line="170"/>
         <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="174"/>
+        <location filename="../objects/dialograndommap.cpp" line="175"/>
         <source>Factory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="174"/>
+        <location filename="../objects/dialograndommap.cpp" line="175"/>
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="174"/>
+        <location filename="../objects/dialograndommap.cpp" line="175"/>
         <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="177"/>
+        <location filename="../objects/dialograndommap.cpp" line="178"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="185"/>
+        <location filename="../objects/dialograndommap.cpp" line="186"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="203"/>
+        <location filename="../objects/dialograndommap.cpp" line="204"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1497,12 +1497,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="62"/>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="68"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="102"/>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="107"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1911,7 +1911,7 @@ This is immediatly applied.</source>
 <context>
     <name>GameAnimationNextDay</name>
     <message>
-        <location filename="../game/gameanimationnextday.cpp" line="128"/>
+        <location filename="../game/gameanimationnextday.cpp" line="125"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2063,91 +2063,91 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="321"/>
-        <location filename="../objects/ingameinfobar.cpp" line="365"/>
-        <location filename="../objects/ingameinfobar.cpp" line="369"/>
+        <location filename="../objects/ingameinfobar.cpp" line="327"/>
+        <location filename="../objects/ingameinfobar.cpp" line="371"/>
+        <location filename="../objects/ingameinfobar.cpp" line="375"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="409"/>
+        <location filename="../objects/ingameinfobar.cpp" line="415"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="425"/>
+        <location filename="../objects/ingameinfobar.cpp" line="431"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="441"/>
+        <location filename="../objects/ingameinfobar.cpp" line="447"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="457"/>
+        <location filename="../objects/ingameinfobar.cpp" line="463"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="474"/>
+        <location filename="../objects/ingameinfobar.cpp" line="480"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="491"/>
+        <location filename="../objects/ingameinfobar.cpp" line="497"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="633"/>
-        <location filename="../objects/ingameinfobar.cpp" line="683"/>
+        <location filename="../objects/ingameinfobar.cpp" line="636"/>
+        <location filename="../objects/ingameinfobar.cpp" line="681"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="643"/>
+        <location filename="../objects/ingameinfobar.cpp" line="645"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="653"/>
+        <location filename="../objects/ingameinfobar.cpp" line="654"/>
         <location filename="../objects/ingameinfobar.cpp" line="663"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="693"/>
+        <location filename="../objects/ingameinfobar.cpp" line="690"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="705"/>
+        <location filename="../objects/ingameinfobar.cpp" line="701"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="715"/>
+        <location filename="../objects/ingameinfobar.cpp" line="710"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="724"/>
+        <location filename="../objects/ingameinfobar.cpp" line="718"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="733"/>
+        <location filename="../objects/ingameinfobar.cpp" line="726"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="746"/>
+        <location filename="../objects/ingameinfobar.cpp" line="738"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="766"/>
+        <location filename="../objects/ingameinfobar.cpp" line="756"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2297,107 +2297,107 @@ This is immediatly applied.</source>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="36"/>
+        <location filename="../objects/mapeditdialog.cpp" line="37"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="40"/>
+        <location filename="../objects/mapeditdialog.cpp" line="41"/>
         <source>The name of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="49"/>
+        <location filename="../objects/mapeditdialog.cpp" line="50"/>
         <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="53"/>
+        <location filename="../objects/mapeditdialog.cpp" line="54"/>
         <source>The author of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="62"/>
+        <location filename="../objects/mapeditdialog.cpp" line="63"/>
         <source>Map Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="66"/>
+        <location filename="../objects/mapeditdialog.cpp" line="67"/>
         <source>The description for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="75"/>
+        <location filename="../objects/mapeditdialog.cpp" line="76"/>
         <source>Map Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="78"/>
+        <location filename="../objects/mapeditdialog.cpp" line="79"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="82"/>
+        <location filename="../objects/mapeditdialog.cpp" line="83"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="100"/>
+        <location filename="../objects/mapeditdialog.cpp" line="101"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="104"/>
+        <location filename="../objects/mapeditdialog.cpp" line="105"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="113"/>
+        <location filename="../objects/mapeditdialog.cpp" line="114"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="117"/>
+        <location filename="../objects/mapeditdialog.cpp" line="118"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="126"/>
+        <location filename="../objects/mapeditdialog.cpp" line="127"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="130"/>
+        <location filename="../objects/mapeditdialog.cpp" line="131"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="139"/>
+        <location filename="../objects/mapeditdialog.cpp" line="140"/>
         <source>Map Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="143"/>
+        <location filename="../objects/mapeditdialog.cpp" line="144"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="152"/>
+        <location filename="../objects/mapeditdialog.cpp" line="153"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="156"/>
+        <location filename="../objects/mapeditdialog.cpp" line="157"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="162"/>
+        <location filename="../objects/mapeditdialog.cpp" line="163"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="176"/>
+        <location filename="../objects/mapeditdialog.cpp" line="177"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3087,17 +3087,17 @@ This is immediatly applied.</source>
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/playerinfo.cpp" line="215"/>
+        <location filename="../game/playerinfo.cpp" line="216"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="239"/>
+        <location filename="../game/playerinfo.cpp" line="241"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="263"/>
+        <location filename="../game/playerinfo.cpp" line="266"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3329,157 +3329,157 @@ This is immediatly applied.</source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="75"/>
+        <location filename="../objects/ruleselection.cpp" line="78"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="92"/>
+        <location filename="../objects/ruleselection.cpp" line="95"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="100"/>
+        <location filename="../objects/ruleselection.cpp" line="103"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="104"/>
+        <location filename="../objects/ruleselection.cpp" line="107"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="113"/>
+        <location filename="../objects/ruleselection.cpp" line="116"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="118"/>
+        <location filename="../objects/ruleselection.cpp" line="121"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="128"/>
+        <location filename="../objects/ruleselection.cpp" line="131"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="132"/>
+        <location filename="../objects/ruleselection.cpp" line="135"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="144"/>
+        <location filename="../objects/ruleselection.cpp" line="146"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="150"/>
+        <location filename="../objects/ruleselection.cpp" line="152"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="154"/>
+        <location filename="../objects/ruleselection.cpp" line="156"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="163"/>
+        <location filename="../objects/ruleselection.cpp" line="165"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="166"/>
+        <location filename="../objects/ruleselection.cpp" line="168"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="177"/>
+        <location filename="../objects/ruleselection.cpp" line="179"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="181"/>
+        <location filename="../objects/ruleselection.cpp" line="183"/>
         <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="189"/>
+        <location filename="../objects/ruleselection.cpp" line="191"/>
         <source>CO Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="193"/>
+        <location filename="../objects/ruleselection.cpp" line="195"/>
         <source>If unchecked CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="203"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="205"/>
+        <location filename="../objects/ruleselection.cpp" line="207"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="213"/>
+        <location filename="../objects/ruleselection.cpp" line="215"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="216"/>
+        <location filename="../objects/ruleselection.cpp" line="218"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="216"/>
+        <location filename="../objects/ruleselection.cpp" line="218"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="216"/>
+        <location filename="../objects/ruleselection.cpp" line="218"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="220"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="230"/>
+        <location filename="../objects/ruleselection.cpp" line="232"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="234"/>
+        <location filename="../objects/ruleselection.cpp" line="236"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="243"/>
+        <location filename="../objects/ruleselection.cpp" line="245"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="247"/>
+        <location filename="../objects/ruleselection.cpp" line="249"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="257"/>
+        <location filename="../objects/ruleselection.cpp" line="259"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="261"/>
+        <location filename="../objects/ruleselection.cpp" line="263"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="274"/>
+        <location filename="../objects/ruleselection.cpp" line="275"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5464,72 +5464,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="90"/>
+        <location filename="../menue/victorymenue.cpp" line="94"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="184"/>
-        <location filename="../menue/victorymenue.cpp" line="473"/>
+        <location filename="../menue/victorymenue.cpp" line="188"/>
+        <location filename="../menue/victorymenue.cpp" line="475"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="193"/>
-        <location filename="../menue/victorymenue.cpp" line="478"/>
+        <location filename="../menue/victorymenue.cpp" line="197"/>
+        <location filename="../menue/victorymenue.cpp" line="480"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="202"/>
-        <location filename="../menue/victorymenue.cpp" line="483"/>
+        <location filename="../menue/victorymenue.cpp" line="206"/>
+        <location filename="../menue/victorymenue.cpp" line="485"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="211"/>
-        <location filename="../menue/victorymenue.cpp" line="488"/>
+        <location filename="../menue/victorymenue.cpp" line="215"/>
+        <location filename="../menue/victorymenue.cpp" line="490"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="220"/>
-        <location filename="../menue/victorymenue.cpp" line="493"/>
+        <location filename="../menue/victorymenue.cpp" line="224"/>
+        <location filename="../menue/victorymenue.cpp" line="495"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="231"/>
+        <location filename="../menue/victorymenue.cpp" line="235"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="264"/>
+        <location filename="../menue/victorymenue.cpp" line="266"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="293"/>
+        <location filename="../menue/victorymenue.cpp" line="295"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="299"/>
+        <location filename="../menue/victorymenue.cpp" line="301"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="305"/>
+        <location filename="../menue/victorymenue.cpp" line="307"/>
         <source>Technique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="311"/>
+        <location filename="../menue/victorymenue.cpp" line="313"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="541"/>
+        <location filename="../menue/victorymenue.cpp" line="543"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6543,13 +6543,16 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="320"/>
         <source>
-Global Effect: Units have 10% increased firepower but loose additional firepower for lost HP.</source>
+Global Effect: 
+Units have 10% increased firepower but loose additional firepower for lost HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="321"/>
         <source>
-CO Zone Effect: Units gain additional 20% firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a 15% defense boost and a 10% for every additional enemy for one turn.</source>
+
+CO Zone Effect: 
+Units gain additional 20% firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a 15% defense boost and a 10% for every additional enemy for one turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6658,13 +6661,16 @@ CO Zone Effect: Units gain additional 20% firepower and finish off units when th
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="191"/>
         <source>
-Global Effect: No bonus.</source>
+Global Effect: 
+No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="192"/>
         <source>
-CO Zone Effect: Units gain additional 20% firepower.</source>
+
+CO Zone Effect: 
+Units gain additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6803,13 +6809,16 @@ CO Zone Effect: Units gain additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_aira.js" line="234"/>
         <source>
-Global Effect: No bonus.</source>
+Global Effect: 
+No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_aira.js" line="235"/>
         <source>
-CO Zone Effect: Units gain additional 20% firepower.</source>
+
+CO Zone Effect: 
+Units gain additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6918,13 +6927,16 @@ CO Zone Effect: Units gain additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="176"/>
         <source>
-Global Effect: His Buildings that get captured revolt and increase the resistance 1 by one each day.</source>
+Global Effect: 
+His Buildings that get captured revolt and increase the resistance 1 by one each day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="177"/>
         <source>
-CO Zone Effect: Units gain additional 10% firepower.</source>
+
+CO Zone Effect: 
+Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7033,13 +7045,16 @@ CO Zone Effect: Units gain additional 10% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>
-Global Effect: Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
+Global Effect: 
+Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="335"/>
         <source>
-CO Zone Effect: Units gain additional 10% firepower.</source>
+
+CO Zone Effect: 
+Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7148,13 +7163,16 @@ CO Zone Effect: Units gain additional 10% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="223"/>
         <source>
-Global Effect: Reaf costs are always 1.</source>
+Global Effect: 
+Reaf costs are always 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="224"/>
         <source>
-CO Zone Effect: Hovercrafts gain a 40% firepower boost.</source>
+
+CO Zone Effect: 
+Hovercrafts gain a 40% firepower boost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7264,13 +7282,16 @@ CO Zone Effect: Hovercrafts gain a 40% firepower boost.</source>
         <location filename="../resources/scripts/cos/co_andy.js" line="209"/>
         <source>
 Special Unit: Repair Tanks
-Global Effect: No bonus.</source>
+Global Effect: 
+No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="210"/>
         <source>
-CO Zone Effect: Units gain additional 20% firepower.</source>
+
+CO Zone Effect: 
+Units gain additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7390,13 +7411,16 @@ CO Zone Effect: Units gain additional 20% firepower.</source>
         <location filename="../resources/scripts/cos/co_brenner.js" line="193"/>
         <source>
 Special Unit: Repair Tanks
-Global Effect: No bonus.</source>
+Global Effect: 
+No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_brenner.js" line="194"/>
         <source>
-CO Zone Effect: Units gain additional 30% defense.</source>
+
+CO Zone Effect: 
+Units gain additional 30% defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7490,13 +7514,16 @@ CO Zone Effect: Units gain additional 30% defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="204"/>
         <source>
-Global Effect: No bonus.</source>
+Global Effect: 
+No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="205"/>
         <source>
-CO Zone Effect: Units gain additional 30% firepower when attacking units with equal or less health.</source>
+
+CO Zone Effect: 
+Units gain additional 30% firepower when attacking units with equal or less health.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7605,13 +7632,16 @@ CO Zone Effect: Units gain additional 30% firepower when attacking units with eq
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="224"/>
         <source>
-Global Effect: Units loose firepower by 20% and defense by 10%.</source>
+Global Effect: 
+Units loose firepower by 20% and defense by 10%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="225"/>
         <source>
-CO Zone Effect: Units gain 60% firepower and 60% defense. They also heal 5HP each turn..</source>
+
+CO Zone Effect: 
+Units gain 60% firepower and 60% defense. They also heal 5HP each turn..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7706,13 +7736,16 @@ CO Zone Effect: Units gain 60% firepower and 60% defense. They also heal 5HP eac
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="162"/>
         <source>
-Global Effect: Units are 20% cheaper and have 15% less firepower.</source>
+Global Effect: 
+Units are 20% cheaper and have 15% less firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="163"/>
         <source>
-CO Zone Effect: Units have only 5% weaker firepower.</source>
+
+CO Zone Effect: 
+Units have only 5% weaker firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7821,13 +7854,16 @@ CO Zone Effect: Units have only 5% weaker firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="245"/>
         <source>
-Global Effect: Units deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.</source>
+Global Effect: 
+Units deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="246"/>
         <source>
-CO Zone Effect: Units gain 2% firepower for own units in vision range.</source>
+
+CO Zone Effect: 
+Units gain 2% firepower for own units in vision range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7936,13 +7972,16 @@ CO Zone Effect: Units gain 2% firepower for own units in vision range.</source>
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="248"/>
         <source>
-Global Effect: Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
+Global Effect: 
+Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="249"/>
         <source>
-CO Zone Effect: Naval units have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Naval units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8046,13 +8085,16 @@ CO Zone Effect: Naval units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_eagle.js" line="227"/>
         <source>
-Global Effect: Air units are 10% stronger and Sea units 10% weaker</source>
+Global Effect: 
+Air units are 10% stronger and Sea units 10% weaker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_eagle.js" line="228"/>
         <source>
-CO Zone Effect: Air units have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Air units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8668,13 +8710,16 @@ CO Zone Effect: Air units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="237"/>
         <source>
-Global Effect: No effects</source>
+Global Effect: 
+No effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="238"/>
         <source>
-CO Zone Effect: Units have 10% increased firepower and 10% Luck.</source>
+
+CO Zone Effect: 
+Units have 10% increased firepower and 10% Luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8778,13 +8823,16 @@ CO Zone Effect: Units have 10% increased firepower and 10% Luck.</source>
     <message>
         <location filename="../resources/scripts/cos/co_flak.js" line="200"/>
         <source>
-Global Effect: Units have 10% Luck and 5% Misfortune</source>
+Global Effect: 
+Units have 10% Luck and 5% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_flak.js" line="201"/>
         <source>
-CO Zone Effect: Units have 25% Luck and 10% Misfortune</source>
+
+CO Zone Effect: 
+Units have 25% Luck and 10% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8893,13 +8941,16 @@ CO Zone Effect: Units have 25% Luck and 10% Misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="174"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="175"/>
         <source>
-CO Zone Effect: Units have 20% offensive and defensive bonus.</source>
+
+CO Zone Effect: 
+Units have 20% offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8989,13 +9040,16 @@ CO Zone Effect: Units have 20% offensive and defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_gage.js" line="232"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_gage.js" line="233"/>
         <source>
-CO Zone Effect: Indirect and Sea Units have 30% offensive and 20% defensive bonus.</source>
+
+CO Zone Effect: 
+Indirect and Sea Units have 30% offensive and 20% defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9090,13 +9144,16 @@ CO Zone Effect: Indirect and Sea Units have 30% offensive and 20% defensive bonu
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="215"/>
         <source>
-Global Effect: Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
+Global Effect: 
+Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="216"/>
         <source>
-CO Zone Effect: Units have 15% offensive bonus.</source>
+
+CO Zone Effect: 
+Units have 15% offensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9205,13 +9262,16 @@ CO Zone Effect: Units have 15% offensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="242"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="243"/>
         <source>
-CO Zone Effect:  Sea Units have 20% offensive and 50% defensive bonus.</source>
+
+CO Zone Effect: 
+ Sea Units have 20% offensive and 50% defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9310,13 +9370,16 @@ CO Zone Effect:  Sea Units have 20% offensive and 50% defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_grimm.js" line="175"/>
         <source>
-Global Effect: Units have 20% reduced defense and 25% increased firepower.</source>
+Global Effect: 
+Units have 20% reduced defense and 25% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_grimm.js" line="176"/>
         <source>
-CO Zone Effect: Units have 50% offensive bonus and 10% defensive malus.</source>
+
+CO Zone Effect: 
+Units have 50% offensive bonus and 10% defensive malus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9420,13 +9483,16 @@ CO Zone Effect: Units have 50% offensive bonus and 10% defensive malus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="236"/>
         <source>
-Global Effect: Indirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.</source>
+Global Effect: 
+Indirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="237"/>
         <source>
-CO Zone Effect: Indirect units  have 30% offensive bonus.</source>
+
+CO Zone Effect: 
+Indirect units  have 30% offensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9535,13 +9601,16 @@ CO Zone Effect: Indirect units  have 30% offensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hachi.js" line="158"/>
         <source>
-Global Effect: Units are 10% cheaper</source>
+Global Effect: 
+Units are 10% cheaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hachi.js" line="159"/>
         <source>
-CO Zone Effect: Units have 10% more firepower and defense.</source>
+
+CO Zone Effect: 
+Units have 10% more firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9650,13 +9719,16 @@ CO Zone Effect: Units have 10% more firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="200"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="201"/>
         <source>
-CO Zone Effect: Units have 30% more firepower.</source>
+
+CO Zone Effect: 
+Units have 30% more firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9765,13 +9837,16 @@ CO Zone Effect: Units have 30% more firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="221"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="222"/>
         <source>
-CO Zone Effect: Direct Units gain an additional firerange when they don&apos;t move. However firepower is reduced by 10% in doing so. Normal attacks are 10% stronger.</source>
+
+CO Zone Effect: 
+Direct Units gain an additional firerange when they don&apos;t move. However firepower is reduced by 10% in doing so. Normal attacks are 10% stronger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9880,13 +9955,16 @@ CO Zone Effect: Direct Units gain an additional firerange when they don&apos;t m
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="211"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="212"/>
         <source>
-CO Zone Effect: Units have 20% firepower and defense bonus.</source>
+
+CO Zone Effect: 
+Units have 20% firepower and defense bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9980,13 +10058,16 @@ CO Zone Effect: Units have 20% firepower and defense bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="227"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="228"/>
         <source>
-CO Zone Effect: Units have 20% increased defense and firepower.</source>
+
+CO Zone Effect: 
+Units have 20% increased defense and firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10095,13 +10176,16 @@ CO Zone Effect: Units have 20% increased defense and firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="198"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="199"/>
         <source>
-CO Zone Effect: Units have 20% increased defense against indirect units. Units gain additional 5% firepower and defense per Comtower.</source>
+
+CO Zone Effect: 
+Units have 20% increased defense against indirect units. Units gain additional 5% firepower and defense per Comtower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10210,13 +10294,16 @@ CO Zone Effect: Units have 20% increased defense against indirect units. Units g
     <message>
         <location filename="../resources/scripts/cos/co_jess.js" line="245"/>
         <source>
-Global Effect: Air and Sea Units are 10% weaker and Ground Units have 10% increased firepower.</source>
+Global Effect: 
+Air and Sea Units are 10% weaker and Ground Units have 10% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jess.js" line="246"/>
         <source>
-CO Zone Effect: Ground Units have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Ground Units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10325,13 +10412,16 @@ CO Zone Effect: Ground Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_joey.js" line="263"/>
         <source>
-Global Effect: Units are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.</source>
+Global Effect: 
+Units are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_joey.js" line="264"/>
         <source>
-CO Zone Effect: Units are 30% stronger when engaging stronger units</source>
+
+CO Zone Effect: 
+Units are 30% stronger when engaging stronger units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10445,13 +10535,16 @@ CO Zone Effect: Units are 30% stronger when engaging stronger units</source>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="199"/>
         <source>
-Global Effect: Units have 14% Luck and 7% Misfortune</source>
+Global Effect: 
+Units have 14% Luck and 7% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="200"/>
         <source>
-CO Zone Effect: Units have 30% Luck and 15% Misfortune</source>
+
+CO Zone Effect: 
+Units have 30% Luck and 15% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10560,13 +10653,16 @@ CO Zone Effect: Units have 30% Luck and 15% Misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="185"/>
         <source>
-CO Zone Effect: Units loose 20% firepower but they firepower is unaffected by loss of HP.</source>
+
+CO Zone Effect: 
+Units loose 20% firepower but they firepower is unaffected by loss of HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10675,13 +10771,16 @@ CO Zone Effect: Units loose 20% firepower but they firepower is unaffected by lo
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="193"/>
         <source>
-Global Effect: Units have 20% stronger firepower and defense and are 20% more expensive.</source>
+Global Effect: 
+Units have 20% stronger firepower and defense and are 20% more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="194"/>
         <source>
-CO Zone Effect: Units have 40% stronger firepower and defense.</source>
+
+CO Zone Effect: 
+Units have 40% stronger firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10790,13 +10889,16 @@ CO Zone Effect: Units have 40% stronger firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_kindle.js" line="257"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
         <source>
-CO Zone Effect: Units on buildings have 50% increased firepower.</source>
+
+CO Zone Effect: 
+Units on buildings have 50% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10905,13 +11007,16 @@ CO Zone Effect: Units on buildings have 50% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="207"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="208"/>
         <source>
-CO Zone Effect: Units gain 30% increased firepower on street.</source>
+
+CO Zone Effect: 
+Units gain 30% increased firepower on street.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11021,13 +11126,16 @@ CO Zone Effect: Units gain 30% increased firepower on street.</source>
         <location filename="../resources/scripts/cos/co_lash.js" line="224"/>
         <source>
 Special Unit: Neo Spider Tank
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_lash.js" line="225"/>
         <source>
-CO Zone Effect: Units gain 10% increased firepower per defense star.</source>
+
+CO Zone Effect: 
+Units gain 10% increased firepower per defense star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11136,13 +11244,16 @@ CO Zone Effect: Units gain 10% increased firepower per defense star.</source>
     <message>
         <location filename="../resources/scripts/cos/co_lin.js" line="233"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_lin.js" line="234"/>
         <source>
-CO Zone Effect: Ground Units gain 30% firepower and defense.</source>
+
+CO Zone Effect: 
+Ground Units gain 30% firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11236,13 +11347,16 @@ CO Zone Effect: Ground Units gain 30% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_mary.js" line="319"/>
         <source>
-Global Effect: Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
+Global Effect: 
+Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_mary.js" line="320"/>
         <source>
-CO Zone Effect: Units gain 10% firepower and defense.</source>
+
+CO Zone Effect: 
+Units gain 10% firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11351,13 +11465,16 @@ CO Zone Effect: Units gain 10% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_max.js" line="238"/>
         <source>
-Global Effect: Direct Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.</source>
+Global Effect: 
+Direct Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_max.js" line="239"/>
         <source>
-CO Zone Effect: Direct Units gain 35% additional firepower.</source>
+
+CO Zone Effect: 
+Direct Units gain 35% additional firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11466,13 +11583,16 @@ CO Zone Effect: Direct Units gain 35% additional firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="280"/>
         <source>
-Global Effect: Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.</source>
+Global Effect: 
+Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="281"/>
         <source>
-CO Zone Effect: Unit Ranks are 100% more effective.</source>
+
+CO Zone Effect: 
+Unit Ranks are 100% more effective.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11571,13 +11691,16 @@ CO Zone Effect: Unit Ranks are 100% more effective.</source>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="253"/>
         <source>
-Global Effect: Units gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
+Global Effect: 
+Units gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="254"/>
         <source>
-CO Zone Effect: Units gain an additional 30% firepower on natural terrain.</source>
+
+CO Zone Effect: 
+Units gain an additional 30% firepower on natural terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11686,13 +11809,16 @@ CO Zone Effect: Units gain an additional 30% firepower on natural terrain.</sour
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="213"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="214"/>
         <source>
-CO Zone Effect: Units gain an additional 20% firepower.</source>
+
+CO Zone Effect: 
+Units gain an additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11806,13 +11932,16 @@ CO Zone Effect: Units gain an additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_minamoto.js" line="263"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_minamoto.js" line="264"/>
         <source>
-CO Zone Effect: Units near Mountains gain an additional 40% firepower.</source>
+
+CO Zone Effect: 
+Units near Mountains gain an additional 40% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11921,13 +12050,16 @@ CO Zone Effect: Units near Mountains gain an additional 40% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_nana.js" line="269"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_nana.js" line="270"/>
         <source>
-CO Zone Effect: Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
+
+CO Zone Effect: 
+Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12042,13 +12174,16 @@ CO Zone Effect: Indirect attacks deal one HP of damage to all nearby units, no m
         <location filename="../resources/scripts/cos/co_napoleon.js" line="247"/>
         <source>
 Special Unit: Iron Shield Generator
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="248"/>
         <source>
-CO Zone Effect: Defense is increased by 25% and by 45% against indirect units.</source>
+
+CO Zone Effect: 
+Defense is increased by 25% and by 45% against indirect units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12157,13 +12292,16 @@ CO Zone Effect: Defense is increased by 25% and by 45% against indirect units.</
     <message>
         <location filename="../resources/scripts/cos/co_nell.js" line="179"/>
         <source>
-Global Effect: No Effects</source>
+Global Effect: 
+No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_nell.js" line="180"/>
         <source>
-CO Zone Effect: Units have 15% Luck.</source>
+
+CO Zone Effect: 
+Units have 15% Luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12272,13 +12410,16 @@ CO Zone Effect: Units have 15% Luck.</source>
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="211"/>
         <source>
-Global Effect: Winter poses no problem for Olaf or his troops.</source>
+Global Effect: 
+Winter poses no problem for Olaf or his troops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="212"/>
         <source>
-CO Zone Effect: Firepower is increased by 30% during Snow.</source>
+
+CO Zone Effect: 
+Firepower is increased by 30% during Snow.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12387,13 +12528,16 @@ CO Zone Effect: Firepower is increased by 30% during Snow.</source>
     <message>
         <location filename="../resources/scripts/cos/co_ozzy.js" line="189"/>
         <source>
-Global Effect: No Effect.</source>
+Global Effect: 
+No Effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_ozzy.js" line="190"/>
         <source>
-CO Zone Effect: Defense is increased by 40%.</source>
+
+CO Zone Effect: 
+Defense is increased by 40%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12502,13 +12646,16 @@ CO Zone Effect: Defense is increased by 40%.</source>
     <message>
         <location filename="../resources/scripts/cos/co_penny.js" line="226"/>
         <source>
-Global Effect: Her troops are immune to all weather effects.</source>
+Global Effect: 
+Her troops are immune to all weather effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_penny.js" line="227"/>
         <source>
-CO Zone Effect: 10% increased firepower and defense.</source>
+
+CO Zone Effect: 
+10% increased firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12598,13 +12745,16 @@ CO Zone Effect: 10% increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="214"/>
         <source>
-Global Effect: Direct Units have 7% increased firepower and loose additional 5% firepower per terrain star.</source>
+Global Effect: 
+Direct Units have 7% increased firepower and loose additional 5% firepower per terrain star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="215"/>
         <source>
-CO Zone Effect: Direct Units have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Direct Units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12713,13 +12863,16 @@ CO Zone Effect: Direct Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="227"/>
         <source>
-Global Effect: Units have increased repairs by one on properties.</source>
+Global Effect: 
+Units have increased repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="228"/>
         <source>
-CO Zone Effect: Units have 20% increased firepower.</source>
+
+CO Zone Effect: 
+Units have 20% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12877,13 +13030,16 @@ CO Zone Effect: Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="255"/>
         <source>
-Global Effect: Units have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.</source>
+Global Effect: 
+Units have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="256"/>
         <source>
-CO Zone Effect: Units have 30% increased firepower against large regiments of units.</source>
+
+CO Zone Effect: 
+Units have 30% increased firepower against large regiments of units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12992,13 +13148,16 @@ CO Zone Effect: Units have 30% increased firepower against large regiments of un
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="219"/>
         <source>
-Global Effect: Units gain 1% firepower and 1% misfortune per star.</source>
+Global Effect: 
+Units gain 1% firepower and 1% misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="220"/>
         <source>
-CO Zone Effect: Units gain 4% firepower and 1% misfortune per star.</source>
+
+CO Zone Effect: 
+Units gain 4% firepower and 1% misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13107,13 +13266,16 @@ CO Zone Effect: Units gain 4% firepower and 1% misfortune per star.</source>
     <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="249"/>
         <source>
-Global Effect: Units gain 1 additional movementpoint and have 20% reduced firepower.</source>
+Global Effect: 
+Units gain 1 additional movementpoint and have 20% reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="250"/>
         <source>
-CO Zone Effect: Units gain 20% defense and have 10% reduced firepower.</source>
+
+CO Zone Effect: 
+Units gain 20% defense and have 10% reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13222,13 +13384,16 @@ CO Zone Effect: Units gain 20% defense and have 10% reduced firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="187"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="188"/>
         <source>
-CO Zone Effect: Units have 20% lifesteal.</source>
+
+CO Zone Effect: 
+Units have 20% lifesteal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13337,13 +13502,16 @@ CO Zone Effect: Units have 20% lifesteal.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="246"/>
         <source>
-Global Effect: Transporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.</source>
+Global Effect: 
+Transporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="247"/>
         <source>
-CO Zone Effect: Infantry Units have 40% increased firepower.</source>
+
+CO Zone Effect: 
+Infantry Units have 40% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13452,13 +13620,16 @@ CO Zone Effect: Infantry Units have 40% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="351"/>
         <source>
-Global Effect: Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
+Global Effect: 
+Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="352"/>
         <source>
-CO Zone Effect: Global firepower effects are doubled.</source>
+
+CO Zone Effect: 
+Global firepower effects are doubled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13567,13 +13738,16 @@ CO Zone Effect: Global firepower effects are doubled.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sasha.js" line="189"/>
         <source>
-Global Effect: She gets an additional 10% funds from allied properties.</source>
+Global Effect: 
+She gets an additional 10% funds from allied properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sasha.js" line="190"/>
         <source>
-CO Zone Effect: Units gain 10% additional firepower and defense.</source>
+
+CO Zone Effect: 
+Units gain 10% additional firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13682,13 +13856,16 @@ CO Zone Effect: Units gain 10% additional firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="216"/>
         <source>
-Global Effect: Copters have 25% increased firepower and Naval Units are 10% weaker.</source>
+Global Effect: 
+Copters have 25% increased firepower and Naval Units are 10% weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="217"/>
         <source>
-CO Zone Effect: Copters have 50% increased firepower and infantries have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Copters have 50% increased firepower and infantries have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13797,13 +13974,16 @@ CO Zone Effect: Copters have 50% increased firepower and infantries have 30% inc
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="288"/>
         <source>
-Global Effect: No Effect.</source>
+Global Effect: 
+No Effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="289"/>
         <source>
-CO Zone Effect: Direct Units gain additional 10% firepower for each indirect unit that can attack the defending unit.</source>
+
+CO Zone Effect: 
+Direct Units gain additional 10% firepower for each indirect unit that can attack the defending unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13907,13 +14087,16 @@ CO Zone Effect: Direct Units gain additional 10% firepower for each indirect uni
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="184"/>
         <source>
-Global Effect: Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%</source>
+Global Effect: 
+Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="185"/>
         <source>
-CO Zone Effect: Units gain 10% firepower and defense.</source>
+
+CO Zone Effect: 
+Units gain 10% firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14022,13 +14205,16 @@ CO Zone Effect: Units gain 10% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="250"/>
         <source>
-Global Effect: No Effects</source>
+Global Effect: 
+No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="251"/>
         <source>
-CO Zone Effect: Enemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.</source>
+
+CO Zone Effect: 
+Enemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14137,13 +14323,16 @@ CO Zone Effect: Enemy counterattacks deal 20% less damage. Units gain 10% firepo
     <message>
         <location filename="../resources/scripts/cos/co_sturm.js" line="198"/>
         <source>
-Global Effect: His troops are not affected by terrain only snow can stop him.</source>
+Global Effect: 
+His troops are not affected by terrain only snow can stop him.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sturm.js" line="199"/>
         <source>
-CO Zone Effect: Units have 30% increased firepower and defense.</source>
+
+CO Zone Effect: 
+Units have 30% increased firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14252,13 +14441,16 @@ CO Zone Effect: Units have 30% increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="168"/>
         <source>
-Global Effect: No Effects</source>
+Global Effect: 
+No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="169"/>
         <source>
-CO Zone Effect: Units have 60% increased firepower and defense.</source>
+
+CO Zone Effect: 
+Units have 60% increased firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14357,13 +14549,16 @@ CO Zone Effect: Units have 60% increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="227"/>
         <source>
-Global Effect: No Effects</source>
+Global Effect: 
+No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="228"/>
         <source>
-CO Zone Effect: Air Units have 50% increased firepower and 30% increased defense.</source>
+
+CO Zone Effect: 
+Air Units have 50% increased firepower and 30% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14458,13 +14653,16 @@ CO Zone Effect: Air Units have 50% increased firepower and 30% increased defense
     <message>
         <location filename="../resources/scripts/cos/co_varlot.js" line="247"/>
         <source>
-Global Effect: Income is reduced for buildings he captures.</source>
+Global Effect: 
+Income is reduced for buildings he captures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_varlot.js" line="248"/>
         <source>
-CO Zone Effect: Units have 20% increased firepower.</source>
+
+CO Zone Effect: 
+Units have 20% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14573,13 +14771,16 @@ CO Zone Effect: Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="184"/>
         <source>
-CO Zone Effect: Units have 30% increased firepower and 20% increased defense.</source>
+
+CO Zone Effect: 
+Units have 30% increased firepower and 20% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14689,13 +14890,16 @@ CO Zone Effect: Units have 30% increased firepower and 20% increased defense.</s
         <location filename="../resources/scripts/cos/co_waylon.js" line="221"/>
         <source>
 Special Unit: Kirov
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_waylon.js" line="222"/>
         <source>
-CO Zone Effect: Air Units have 30% increased firepower and 40% increased defense.</source>
+
+CO Zone Effect: 
+Air Units have 30% increased firepower and 40% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14786,13 +14990,16 @@ CO Zone Effect: Air Units have 30% increased firepower and 40% increased defense
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="211"/>
         <source>
-Global Effect: No Effects.</source>
+Global Effect: 
+No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="212"/>
         <source>
-CO Zone Effect: Direct Ground Units have 30% increased firepower.</source>
+
+CO Zone Effect: 
+Direct Ground Units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14887,13 +15094,16 @@ CO Zone Effect: Direct Ground Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="250"/>
         <source>
-Global Effect: Units with 5 HP or less deal maximum luck damage.</source>
+Global Effect: 
+Units with 5 HP or less deal maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="251"/>
         <source>
-CO Zone Effect: Units have 20% increased firepower.</source>
+
+CO Zone Effect: 
+Units have 20% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15002,13 +15212,16 @@ CO Zone Effect: Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
         <source>
-Global Effect: None.</source>
+Global Effect: 
+None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
         <source>
-CO Zone Effect: Damage is reduced by 10%. Troops deal 15% true damage if the base damage is at least 10%.</source>
+
+CO Zone Effect: 
+Damage is reduced by 10%. Troops deal 15% true damage if the base damage is at least 10%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15117,13 +15330,16 @@ CO Zone Effect: Damage is reduced by 10%. Troops deal 15% true damage if the bas
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="217"/>
         <source>
-Global Effect: Units are unaffected by sandstorms and have 10% increased firepower during sandstorm.</source>
+Global Effect: 
+Units are unaffected by sandstorms and have 10% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="218"/>
         <source>
-CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
+
+CO Zone Effect: 
+Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -145,8 +145,8 @@ void OptionMenue::showGameplayAndKeys()
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
     Settings* pSettings = pApp->getSettings();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -571,8 +571,8 @@ void OptionMenue::showSettings()
 
     AudioThread* pAudio = pApp->getAudioThread();
     Settings* pSettings = pApp->getSettings();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -926,8 +926,8 @@ void OptionMenue::showMods()
 
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = QColor(255, 255, 255, 255);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::defaultColor;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
