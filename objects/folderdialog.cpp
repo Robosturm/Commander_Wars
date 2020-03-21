@@ -66,7 +66,7 @@ FolderDialog::FolderDialog(QString startFolder)
     pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
@@ -156,7 +156,7 @@ void FolderDialog::showFolder(QString folder)
         pBox->setResAnim(pAnim);
         oxygine::spTextField textField = new oxygine::TextField();
         oxygine::TextStyle style = FontManager::getMainFont24();
-        style.color = FontManager::defaultColor;
+        style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;

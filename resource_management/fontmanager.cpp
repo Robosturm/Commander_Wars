@@ -3,8 +3,7 @@
 #include "coreengine/mainapp.h"
 
 FontManager* FontManager::m_pInstance = nullptr;
-
-const QColor FontManager::defaultColor = QColor(230, 200, 60);
+QColor FontManager::defaultColor{QColor(230, 200, 60)};
 
 FontManager* FontManager::getInstance()
 {
@@ -26,4 +25,14 @@ FontManager::FontManager()
             oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/fonts/fonts.xml");
         }
     }
+}
+
+void FontManager::setFontColor(QColor color)
+{
+    defaultColor = color;
+}
+
+QColor FontManager::getFontColor()
+{
+    return defaultColor;
 }

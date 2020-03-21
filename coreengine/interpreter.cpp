@@ -2,6 +2,7 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
+#include "resource_management/fontmanager.h"
 
 #include <QDir>
 #include <QQmlEngine>
@@ -37,9 +38,12 @@ void Interpreter::init()
     globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());
     globalObject().setProperty("audio", audio);
-
     QJSValue console = newQObject(Console::getInstance());
     globalObject().setProperty("GameConsole", console);
+    FontManager::getInstance()->moveToThread(QThread::currentThread());
+    QJSValue fontManager = newQObject(FontManager::getInstance());
+    globalObject().setProperty("FontManager", fontManager);
+
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
 

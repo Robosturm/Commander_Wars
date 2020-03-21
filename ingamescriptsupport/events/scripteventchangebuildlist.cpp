@@ -78,7 +78,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     spGenericBox pBox = new GenericBox();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

@@ -135,7 +135,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     }
     // text incoming
     oxygine::TextStyle headline = FontManager::getMainFont72();
-    headline.color = FontManager::defaultColor;
+    headline.color = FontManager::getFontColor();
     headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;

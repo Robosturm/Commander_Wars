@@ -3,14 +3,16 @@
 
 #include "oxygine-framework.h"
 
+#include <QObject>
 #include <QColor>
 
-class FontManager : public oxygine::Resources
+class FontManager : public QObject, public oxygine::Resources
 {
+    Q_OBJECT
 public:
     static FontManager* getInstance();
 
-    static const QColor defaultColor;
+
 
     inline static oxygine::ResFont* getMainFont16()
     {
@@ -31,10 +33,14 @@ public:
     {
         return getInstance()->getResFont("main72");
     }
+public slots:
+    static void setFontColor(QColor color);
+    static QColor getFontColor();
 private:
     explicit FontManager();
     virtual ~FontManager() = default;
     static FontManager* m_pInstance;
+    static QColor defaultColor;
 };
 
 #endif // FONTMANAGER_H

@@ -69,14 +69,13 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
 void Wikipage::loadText(QString text)
 {
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
-    pLabel->setScale(1.0f);
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
@@ -122,16 +121,15 @@ void Wikipage::loadImage(QString file, float scale)
 
 void Wikipage::loadHeadline(QString text)
 {
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    oxygine::TextStyle style = FontManager::getMainFont48();
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth(), y);
+    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
     m_pPanel->addItem(pLabel);
     y += 80;
 }

@@ -62,7 +62,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
         }
     }
 
-    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 50), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 50));
+    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 55), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 55));
     addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
@@ -117,7 +117,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     oxygine::TextStyle headerStyle = FontManager::getMainFont48();
-    headerStyle.color = FontManager::defaultColor;
+    headerStyle.color = FontManager::getFontColor();
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
@@ -130,7 +130,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
 
     width -= 70;
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

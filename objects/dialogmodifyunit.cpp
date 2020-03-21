@@ -65,15 +65,21 @@ void DialogModifyUnit::updateData()
     m_pPanel->clearContent();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::getFontColor();
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
     oxygine::spTextField pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Unit: ") + m_pUnit->getName()));
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
+    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 sliderOffset = 400;
@@ -264,7 +270,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

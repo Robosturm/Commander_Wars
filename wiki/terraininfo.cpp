@@ -24,10 +24,17 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     setWidth(width);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
+
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::getFontColor();
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = true;
+
     QString name = pTerrain->getTerrainName();
     QString description = pTerrain->getDescription();
     Building* pBuilding = pTerrain->getBuilding();
@@ -39,10 +46,9 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     // no the fun begins create checkboxes and stuff and a panel down here
     qint32 y = 0;
     oxygine::spTextField pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Terrain Information ") + name));
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), 0);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
     y += 60;
 
@@ -50,7 +56,6 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(description);
-    pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     y += 20 + pLabel->getTextRect().getHeight();
@@ -61,14 +66,12 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Defense:"));
-    pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
-    pLabel->setScale(1.0f);
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
     y += 40;
@@ -80,14 +83,12 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Income:"));
-        pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
-        pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
         y += 40;
@@ -96,7 +97,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         if (productionList.size() > 0)
         {
             pLabel = new oxygine::TextField();
-            pLabel->setStyle(style);
+            pLabel->setStyle(headerStyle);
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
                 pLabel->setHtmlText(tr("Builds and Supplies"));
@@ -105,8 +106,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             {
                 pLabel->setHtmlText(tr("Supplies"));
             }
-            pLabel->setScale(2.0f);
-            pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
+            pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
             addChild(pLabel);
             y += 80;
             qint32 x = 0;
@@ -138,10 +138,9 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     }
 
     pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Movement Costs"));
-    pLabel->setScale(2.0f);
-    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
     y += 60;
 
@@ -156,7 +155,6 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         pLabel->setHtmlText((name + ":"));
-        pLabel->setScale(1.0f);
         pLabel->setPosition(x, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
@@ -170,7 +168,6 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         {
             pLabel->setHtmlText("-");
         }
-        pLabel->setScale(1.0f);
         pLabel->setPosition(x + 120, y);
         addChild(pLabel);
         x += 170;

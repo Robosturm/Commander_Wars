@@ -737,25 +737,26 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     }
                     QColor color = m_pMarkedFieldData->getZLabelColor();
                     pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
+                    pSprite->setScale(2.0f);
+                    pSprite2->setScale(2.0f);
                     m_ZInformationLabel->addChild(pSprite);
                     m_ZInformationLabel->addChild(pSprite2);
                     // add text to the label
                     oxygine::spTextField textField = new oxygine::TextField();
                     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).
-                                               withColor(QColor(0, 0, 0)).
+                                               withColor(FontManager::getFontColor()).
                                                alignLeft().
                                                alignTop();
                     textField->setStyle(style);
-                    textField->setScale(0.6f);
-                    textField->setY(-2);
+                    textField->setX(3);
+                    textField->setY(1);
                     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
                     textField->attachTo(m_ZInformationLabel);
 
                     oxygine::spTextField textField2 = new oxygine::TextField();
                     textField2->setStyle(style);
-                    textField2->setScale(0.7f);
-                    textField2->setY(8);
-                    textField2->setX(3);
+                    textField2->setY(22);
+                    textField2->setX(5);
                     QString labelText = "";
                     QPoint field(x, y);
                     for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
@@ -768,10 +769,8 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     }
                     textField2->setHtmlText(labelText);
                     textField2->attachTo(m_ZInformationLabel);
-
-                    m_ZInformationLabel->setScale(1.5f);
-                    m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize / 2.0f,
-                                                     y * GameMap::Imagesize - GameMap::Imagesize * 1.75f);
+                    m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize + 4,
+                                                     y * GameMap::Imagesize - GameMap::Imagesize * 2.0f);
                     m_ZInformationLabel->setPriority(static_cast<qint16>(Mainapp::ZOrder::Animation));
                     pMap->addChild(m_ZInformationLabel);
                 }

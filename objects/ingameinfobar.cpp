@@ -201,7 +201,7 @@ void IngameInfoBar::updatePlayerInfo()
 
 
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -292,13 +292,13 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = nullptr;
             oxygine::TextStyle style = FontManager::getMainFont24();
-            style.color = FontManager::defaultColor;
+            style.color = FontManager::getFontColor();
             style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
             style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             style.multiline = false;
 
             oxygine::TextStyle smallStyle = FontManager::getMainFont16();
-            smallStyle.color = FontManager::defaultColor;
+            smallStyle.color = FontManager::getFontColor();
             smallStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
             smallStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
             smallStyle.multiline = false;

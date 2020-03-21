@@ -1171,108 +1171,108 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="74"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="81"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="83"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="89"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="86"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="92"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="87"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="93"/>
         <source>Selects the HP of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="100"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="106"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="103"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="109"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="104"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="110"/>
         <source>Selects the Fuel of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="126"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="132"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="129"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="155"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="135"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="161"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="130"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="136"/>
         <source>Selects the Ammo 1 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="152"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="158"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="156"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="162"/>
         <source>Selects the Ammo 2 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="183"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="184"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="190"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="187"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="193"/>
         <source>Selects the Owner of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="200"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="206"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="203"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="209"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="203"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="209"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="203"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="209"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="203"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="209"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="205"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="211"/>
         <source>Selects how the AI uses this unit
  Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1282,32 +1282,32 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="217"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="223"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="229"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="235"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="226"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="232"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="233"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="273"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="279"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="287"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="293"/>
         <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5358,27 +5358,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>TerrainInfo</name>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="43"/>
+        <location filename="../wiki/terraininfo.cpp" line="50"/>
         <source>Terrain Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="63"/>
+        <location filename="../wiki/terraininfo.cpp" line="68"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="82"/>
+        <location filename="../wiki/terraininfo.cpp" line="85"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="102"/>
+        <location filename="../wiki/terraininfo.cpp" line="103"/>
         <source>Builds and Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="106"/>
+        <location filename="../wiki/terraininfo.cpp" line="107"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5391,72 +5391,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitInfo</name>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="43"/>
+        <location filename="../wiki/unitinfo.cpp" line="50"/>
         <source>Unit Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="79"/>
+        <location filename="../wiki/unitinfo.cpp" line="84"/>
         <source>Unit Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="100"/>
+        <location filename="../wiki/unitinfo.cpp" line="103"/>
         <source>Firerange:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="118"/>
+        <location filename="../wiki/unitinfo.cpp" line="119"/>
         <source>Movementpoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="135"/>
+        <location filename="../wiki/unitinfo.cpp" line="134"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="152"/>
+        <location filename="../wiki/unitinfo.cpp" line="149"/>
         <source>Fuel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="178"/>
+        <location filename="../wiki/unitinfo.cpp" line="173"/>
         <source>Ammo 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="197"/>
+        <location filename="../wiki/unitinfo.cpp" line="190"/>
         <source>Ammo 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="217"/>
+        <location filename="../wiki/unitinfo.cpp" line="208"/>
         <source>Loading Place:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="231"/>
+        <location filename="../wiki/unitinfo.cpp" line="220"/>
         <source>Loadable Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="243"/>
+        <location filename="../wiki/unitinfo.cpp" line="231"/>
         <source>Transporters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="262"/>
+        <location filename="../wiki/unitinfo.cpp" line="249"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="350"/>
+        <location filename="../wiki/unitinfo.cpp" line="334"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="362"/>
+        <location filename="../wiki/unitinfo.cpp" line="345"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

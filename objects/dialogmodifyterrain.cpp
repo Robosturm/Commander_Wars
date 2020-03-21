@@ -81,7 +81,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     y += GameMap::Imagesize * 3;
 
     oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::defaultColor;
+    style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

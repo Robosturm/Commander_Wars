@@ -99,7 +99,7 @@ var Constructor = function()
     {
         var damage = -1;
         // only direct units can deal counter damage
-        if (Math.abs(actionTargetField.x - defender.getX()) + Math.abs(actionTargetField.y - defender.getY()) === 1)
+        if (Math.abs(attackerPosition.x - defender.getX()) + Math.abs(attackerPosition.y - defender.getY()) === 1)
         {
             if (defender.getMinRange() === 1 && defenderWeapon !== "")
             {
