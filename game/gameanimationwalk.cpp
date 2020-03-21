@@ -118,31 +118,34 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                 queueMoving->add(tween1);
 
                 int row = 0;
-                switch (direction)
+                if (pAnim->getRows() > 1)
                 {
-                    case GameEnums::Directions_North:
+                    switch (direction)
                     {
-                        row = 1;
-                        break;
-                    }
-                    case GameEnums::Directions_South:
-                    {
-                        row = 0;
-                        break;
-                    }
-                    case GameEnums::Directions_East:
-                    {
-                        row = 2;
-                        break;
-                    }
-                    case GameEnums::Directions_West:
-                    {
-                        row = 3;
-                        break;
-                    }
-                    default:
-                    {
-                        break;
+                        case GameEnums::Directions_North:
+                        {
+                            row = 1;
+                            break;
+                        }
+                        case GameEnums::Directions_South:
+                        {
+                            row = 0;
+                            break;
+                        }
+                        case GameEnums::Directions_East:
+                        {
+                            row = 2;
+                            break;
+                        }
+                        case GameEnums::Directions_West:
+                        {
+                            row = 3;
+                            break;
+                        }
+                        default:
+                        {
+                            break;
+                        }
                     }
                 }
                 oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
@@ -189,5 +192,6 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
     else
     {
         Console::print("Unable to load unit walk sprite: " + spriteID, Console::eERROR);
+        emit sigFinished();
     }
 }

@@ -172,6 +172,7 @@ protected slots:
     void updateTimer();
 protected:
     void loadGameMenue();
+    void keyInputAll(Qt::Key cur);
 private:
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;

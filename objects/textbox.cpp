@@ -51,7 +51,12 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         m_focused = !m_focused;
         if (m_focused)
         {
+            Tooltip::setEnabled(false);
             curmsgpos = m_Text.size();
+        }
+        else
+        {
+            Tooltip::setEnabled(true);
         }
     });
     this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
@@ -67,7 +72,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         {
             m_focused = false;
         }
-
+        Tooltip::setEnabled(true);
     });
     toggle.start();
 
@@ -90,7 +95,9 @@ void Textbox::update(const oxygine::UpdateState& us)
         if (toggle.elapsed() < BLINKFREQG)
         {
             drawText.insert(curmsgpos,"|");
-        }else{
+        }
+        else
+        {
             drawText.insert(curmsgpos," ");
         }
         if (toggle.elapsed() > BLINKFREQG * 2)
@@ -210,6 +217,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                 case Qt::Key_Return:
                 {
                     m_focused = false;
+                    Tooltip::setEnabled(true);
                     emit sigTextChanged(m_Text);
                     emit sigEnterPressed(m_Text);
                     break;

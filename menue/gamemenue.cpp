@@ -1072,33 +1072,42 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 pApp->continueThread();
             }
         }
-        else if (cur == Settings::getKey_information())
+        else
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            GameMap* pMap = GameMap::getInstance();
-            Player* pPlayer = pMap->getCurrentViewPlayer();
-            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
-                pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) != GameEnums::VisionType_Shrouded)
-            {
-                Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-                spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
-                this->addChild(fieldinfo);
-                connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
-                {
-                    setFocused(true);
-                });
-                setFocused(false);
-            }
-            pApp->continueThread();
+            keyInputAll(cur);
         }
     }
     else if (m_Focused)
     {
-        if (cur == Qt::Key_Escape)
+        keyInputAll(cur);
+    }
+}
+
+void GameMenue::keyInputAll(Qt::Key cur)
+{
+    if (cur == Qt::Key_Escape)
+    {
+        emit sigShowExitGame();
+    }
+    else if (cur == Settings::getKey_information())
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        GameMap* pMap = GameMap::getInstance();
+        Player* pPlayer = pMap->getCurrentViewPlayer();
+        if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
+            pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) != GameEnums::VisionType_Shrouded)
         {
-            emit sigShowExitGame();
+            Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
+            this->addChild(fieldinfo);
+            connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+            {
+                setFocused(true);
+            });
+            setFocused(false);
         }
+        pApp->continueThread();
     }
 }
 

@@ -602,6 +602,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     editorRedo();
+                    return;
                 }
                 break;
             }
@@ -610,6 +611,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     editorUndo();
+                    return;
                 }
                 break;
             }
@@ -621,6 +623,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     copyRect = QRect(-1, -1, 0, 0);
                     createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
                     createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                    return;
                 }
                 break;
             }
@@ -632,6 +635,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                         copyRect.width() != 0 && copyRect.height() != 0)
                     {
                         pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false);
+                        return;
                     }
                 }
                 break;

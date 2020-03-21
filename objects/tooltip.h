@@ -15,6 +15,9 @@ class Tooltip : public QObject, public oxygine::Sprite
 public:
     explicit Tooltip();
     virtual ~Tooltip();
+    bool getEnabled() const;
+    void setEnabled(bool enabled);
+
 signals:
     void sigHideTooltip();
     void sigStartTooltip();
@@ -34,6 +37,7 @@ protected:
 private:
     QString m_tooltipText;
     QTimer m_TooltipTimer;
+    bool m_enabled{true};
 
 };
 

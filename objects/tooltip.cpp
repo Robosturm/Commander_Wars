@@ -73,7 +73,7 @@ void Tooltip::showTooltip()
     pApp->suspendThread();
     hideTooltip();
 
-    if (oxygine::getStage()->isDescendant(this))
+    if (oxygine::getStage()->isDescendant(this) && m_enabled)
     {
         if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
         {
@@ -132,6 +132,16 @@ void Tooltip::disableTooltip()
 {
     stopTooltiptimer();
     hideTooltip();
+}
+
+bool Tooltip::getEnabled() const
+{
+    return m_enabled;
+}
+
+void Tooltip::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
 }
 
 void Tooltip::hideTooltip()
