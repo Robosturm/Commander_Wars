@@ -32,6 +32,11 @@ var CO =
         return 0;
     },
 
+    getMinFirerangeModifier : function(co, unit, posX, posY)
+    {
+        return 0;
+    },
+
     getCaptureBonus : function(co, unit, posX, posY)
     {
         return 0;

@@ -1036,13 +1036,14 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
     qint32 target = -1;
     qint32 currentDamage = std::numeric_limits<qint32>::min();
     qint32 deffense = 0;
-    qint32 minfireRange = pUnit->getMinRange();
+
     float minFundsDamage = -pUnit->getUnitValue() * minAttackFunds;
 
     for (qint32 i = 0; i < ret.size(); i++)
     {
+        QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
         Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
-
+        qint32 minfireRange = pUnit->getMinRange(moveTarget);
         qint32 fundsDamage = 0;
         float newHp = 0.0f;
         if (pEnemy != nullptr)
@@ -1057,7 +1058,7 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
             {
                 fundsDamage *= 2.0f;
             }
-            if (pEnemy->getMinRange() > 1)
+            if (pEnemy->getMinRange(pEnemy->getPosition()) > 1)
             {
                 fundsDamage *= 3.0f;
             }
@@ -1067,7 +1068,6 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
         {
             fundsDamage = static_cast<qint32>(ret[i].z());
         }
-        QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
         fundsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
         qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
         if (fundsDamage >= minFundsDamage)
@@ -1158,9 +1158,8 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
         spUnit pNextEnemy = m_EnemyUnits[i];
         if (pNextEnemy->getHp() > 0 && pNextEnemy->getTerrain() != nullptr)
         {
-
-            qint32 minFireRange = pNextEnemy->getMinRange();
             QPoint enemyPos = QPoint(pNextEnemy->getX(), pNextEnemy->getY());
+            qint32 minFireRange = pNextEnemy->getMinRange(enemyPos);
             qint32 maxFireRange = pNextEnemy->getMaxRange(enemyPos);
             qint32 moveRange = 0;
             qint32 distance = Mainapp::getDistance(newPosition, enemyPos);
@@ -1961,7 +1960,7 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             damage *= value;
         }
         // reduce effectiveness of units who can't attack a lot of units
-        if (dummy.getMinRange() > 1)
+        if (dummy.getMinRange(position) > 1)
         {
             if (value < 0.2f)
             {

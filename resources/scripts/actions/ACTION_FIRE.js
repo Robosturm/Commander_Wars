@@ -15,7 +15,7 @@ var Constructor = function()
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
                 ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
         {
-            var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(actionTargetField));
+            var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
             // check all fields we can attack
             for (var i = 0; i < fields.size(); i++)
             {
@@ -101,7 +101,7 @@ var Constructor = function()
         // only direct units can deal counter damage
         if (Math.abs(attackerPosition.x - defender.getX()) + Math.abs(attackerPosition.y - defender.getY()) === 1)
         {
-            if (defender.getMinRange() === 1 && defenderWeapon !== "")
+            if (defender.getMinRange(defender.getX(), defender.getY()) === 1 && defenderWeapon !== "")
             {
                 var health = defender.getHp() - takenDamage / 10.0;
                 if (defender.getFirstStrike(defender.getPosition(), attacker))
@@ -278,7 +278,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
-        var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(actionTargetField));
+        var fields = globals.getCircle(unit.getMinRange(actionTargetField), unit.getMaxRange(actionTargetField));
         data.setColor("#FFFF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))

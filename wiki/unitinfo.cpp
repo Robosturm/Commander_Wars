@@ -106,7 +106,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pUnit->getMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())));
+        pLabel->setHtmlText((QString::number(pUnit->getBaseMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
         y += 40;

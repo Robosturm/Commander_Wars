@@ -186,7 +186,7 @@ var Constructor = function()
                 var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
                 if (unit.getBaseMaxRange() > 1)
                 {
-                    if (unit.getMinRange() <= distance && distance <= unit.getMaxRange(unit.getPosition()))
+                    if (unit.getMinRange(Qt.point(x, y)) <= distance && distance <= unit.getMaxRange(unit.getPosition()))
                     {
                         inRangeCount += 1;
                     }

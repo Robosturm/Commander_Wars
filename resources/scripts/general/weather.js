@@ -41,6 +41,12 @@ var WEATHER =
         return 0;
     },
 
+    getMinFirerangeModifier : function(weather)
+    {
+        // only called when the weather is active
+        return 0;
+    },
+
     getVisionrangeModifier : function(weather)
     {
         // only called when the weather is active

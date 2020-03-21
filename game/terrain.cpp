@@ -600,6 +600,26 @@ qint32 Terrain::getFirerangeModifier(Unit* pUnit)
     }
 }
 
+qint32 Terrain::getMinFirerangeModifier(Unit* pUnit)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMinFirerangeModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue erg = pInterpreter->doFunction(terrainID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Terrain::getDefense(Unit* pUnit)
 {
     qint32 defense = getBaseDefense();

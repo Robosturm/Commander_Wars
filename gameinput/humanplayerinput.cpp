@@ -161,7 +161,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         if (pUnit->hasAmmo1() || pUnit->hasAmmo2())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-            qint32 minRange = pUnit->getMinRange();
+            qint32 minRange = pUnit->getMinRange(QPoint(x, y));
 
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();

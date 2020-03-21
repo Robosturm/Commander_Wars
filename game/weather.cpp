@@ -172,6 +172,24 @@ qint32 Weather::getFirerangeModifier()
     }
 }
 
+qint32 Weather::getMinFirerangeModifier()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMinFirerangeModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Weather::activate()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

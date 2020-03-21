@@ -509,12 +509,15 @@ qint32 Unit::getBonusMaxRange(QPoint position)
 
 qint32 Unit::getMaxRangeAtPosition(QPoint position)
 {
-
     qint32 points = maxRange + getBonusMaxRange(position);
-
-    if (points < minRange)
+    qint32 min = minRange + getBonusMinRange(position);
+    if (min < 1)
     {
-        points = minRange;
+        min = 1;
+    }
+    if (points < min)
+    {
+        points = min;
     }
     return points;
 }
@@ -529,10 +532,49 @@ qint32 Unit::getBaseMaxRange()
     return maxRange;
 }
 
-qint32 Unit::getMinRange() const
+qint32 Unit::getBaseMinRange() const
 {
     return minRange;
 }
+
+qint32 Unit::getMinRange(QPoint position)
+{
+    qint32 points = minRange + getBonusMinRange(position);
+    qint32 max = maxRange + getBonusMaxRange(position);
+    if (points > max)
+    {
+        points = max;
+    }
+    if (points < 1)
+    {
+        points = 1;
+    }
+    return points;
+}
+
+qint32 Unit::getBonusMinRange(QPoint position)
+{
+    qint32 rangeModifier = 0;
+    CO* pCO = m_pOwner->getCO(0);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getMinFirerangeModifier(this, position);
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getMinFirerangeModifier(this, position);
+    }
+    GameMap* pMap = GameMap::getInstance();
+    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
+    // add terrain modifiers
+    if (pMap->onMap(position.x(), position.y()))
+    {
+        rangeModifier += pMap->getTerrain(position.x(), position.y())->getMinFirerangeModifier(this);
+    }
+    return rangeModifier;
+}
+
 
 void Unit::setMinRange(const qint32 &value)
 {

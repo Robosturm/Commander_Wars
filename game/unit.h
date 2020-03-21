@@ -293,7 +293,9 @@ public slots:
 
     qint32 getCosts() const;
 
-    qint32 getMinRange() const;
+    qint32 getMinRange(QPoint position);
+    qint32 getBonusMinRange(QPoint position);
+    qint32 getBaseMinRange() const;
     void setMinRange(const qint32 &value);
 
     qint32 getMaxRange(QPoint position);

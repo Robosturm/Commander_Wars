@@ -90,6 +90,13 @@ public slots:
      */
     qint32 getFirerangeModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getMinFirerangeModifier
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getMinFirerangeModifier(Unit* pUnit, QPoint position);
+    /**
      * @brief getHpHidden
      * @param pUnit
      * @param position

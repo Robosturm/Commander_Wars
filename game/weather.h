@@ -50,6 +50,7 @@ public slots:
     qint32 getDefensiveModifier();
     qint32 getMovementCostModifier(Unit* pUnit, Terrain* pTerrain);
     qint32 getFirerangeModifier();
+    qint32 getMinFirerangeModifier();
     qint32 getVisionrangeModifier();
     void activate();
     void deactivate();

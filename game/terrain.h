@@ -273,7 +273,13 @@ public slots:
      * @param pUnit
      * @return
      */
-    qint32 getFirerangeModifier(Unit* pUnit);
+    qint32 getFirerangeModifier(Unit* pUnit);    
+    /**
+     * @brief getFirerangeModifier
+     * @param pUnit
+     * @return
+     */
+    qint32 getMinFirerangeModifier(Unit* pUnit);
     /**
      * @brief removeBuilding
      */

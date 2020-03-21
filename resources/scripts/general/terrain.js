@@ -28,6 +28,11 @@ var TERRAIN =
         return 0;
     },
 
+    getMinFirerangeModifier : function(terrain, unit)
+    {
+        return 0;
+    },
+
     // called for loading a sub image terrain
     // this has only a visual effect
     loadBaseTerrain : function(terrain, currentTerrainID)
