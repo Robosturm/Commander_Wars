@@ -13,19 +13,18 @@ class GameAnimationDialog : public GameAnimation
 {
     Q_OBJECT
 public:
-    static const qint32 dialogHeigth = 48;
+    static const qint32 dialogHeigth = 96;
     GameAnimationDialog(quint32 frameTime);
 
     virtual void restart() override;
     void finishDialog();
     void updateShownText();
-    void nextDialogStep();
 signals:
     void sigStartFinishTimer();
     void sigRightClick();
     void sigLeftClick();
 public slots:
-    void rightClick();
+    void nextDialogStep();
     void keyInput(oxygine::KeyEvent event);
     virtual bool onFinished() override;
     /**
@@ -85,8 +84,6 @@ private:
     QString m_BackgroundFile;
     oxygine::spSprite m_BackgroundSprite;
     oxygine::spResAnim m_BackgroundAnim;
-
-    float textScale{1.7f};
 
     bool paused{false};
 };

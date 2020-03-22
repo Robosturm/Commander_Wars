@@ -7,17 +7,38 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("flare",  false,
-                          BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-45, 5));
-        sprite.loadSprite("flare+mask",  true,
-                          BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-45, 5));
+        var player = unit.getOwner();
+        var armyName = "+" + player.getArmy().toLowerCase();
+        if (armyName === "+bg")
+        {
+            armyName = "+bh"
+        }
+        if ((armyName !== "+bh"))
+        {
+            armyName = "";
+        }
+        sprite.loadSprite("flare" + armyName,  false,
+                          BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
+        sprite.loadSprite("flare" + armyName + "+mask",  true,
+                          BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_FLARE.loadStandingAnimation(sprite, unit, defender, weapon);
         // mg
-        var offset = Qt.point(10, 27);
+        var offset = Qt.point(31, 29);
+        var player = unit.getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if (armyName === "bh")
+        {
+            offset = Qt.point(17, 27);
+        }
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
     };

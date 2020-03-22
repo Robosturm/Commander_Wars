@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getDescription = function()
     {
-        return qsTr("This is the Commander Wars Tutorial which will teach you basics of how to play Commander Wars.");
+        return qsTr("This is the Commander Wars tutorial, which will teach you the basics of how to play Commander Wars.");
     };
 
     this.getAuthor = function()

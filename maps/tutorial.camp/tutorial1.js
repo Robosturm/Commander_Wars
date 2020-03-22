@@ -77,7 +77,7 @@ var Constructor = function()
                                 "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog4.queueAnimation(dialog5);
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Update Installed!!! Hello, I'm Epoch, your frienldy robot. What is my job? Who am I? Where am I? Why am I?"),
+                    qsTr("Update Installed!!! Hello, I'm Epoch, your friendly robot. What is my job? Who am I? Where am I? Why am I?"),
                     "co_epoch", GameEnums.COMood_Happy, PLAYER.getDefaultColor(6));
         dialog5.queueAnimation(dialog6);
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(

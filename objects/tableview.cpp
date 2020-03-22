@@ -39,7 +39,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
     {
         oxygine::spClipRectActor pClipRect = new oxygine::ClipRectActor();
         pClipRect->setSize(fieldWidth, 40);
-        pClipRect->setPosition(i * (fieldWidth + 5) + 5, 8);
+        pClipRect->setPosition(i * (fieldWidth + 5) + 5, 13);
         oxygine::spTextField pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
@@ -99,7 +99,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
             }
             oxygine::spClipRectActor pClipRect = new oxygine::ClipRectActor();
             pClipRect->setSize(fieldWidth, 40);
-            pClipRect->setPosition(i2 * (fieldWidth + 5) + 5, 8 + (i + 1) * 40);
+            pClipRect->setPosition(i2 * (fieldWidth + 5) + 5, 13 + (i + 1) * 40);
             oxygine::spTextField pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(data[i][i2]);

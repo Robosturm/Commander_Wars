@@ -29,44 +29,39 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_BackgroundSprite = new oxygine::Sprite();
     addChild(m_BackgroundSprite);
 
-    float scale = 2.0f;
-
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
     m_TextMask = new oxygine::Sprite();
-    m_TextMask->setScaleY(scale);
     m_TextMask->setScaleX(pSetting->getWidth() / pAnim->getWidth());
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
     m_TextBackground = new oxygine::Sprite();
-    m_TextBackground->setScaleY(scale);
     m_TextBackground->setScaleX(pSetting->getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
     addChild(m_TextBackground);
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = FontManager::getMainFont48();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
     oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
-    pRect->setPosition(48 * scale + 5, 4 * scale);
-    pRect->setSize(pSetting->getWidth() - pRect->getX() - 5, 42 * scale);
+    pRect->setPosition(48 * 2 + 5, 6);
+    pRect->setSize(pSetting->getWidth() - pRect->getX() - 5, 96);
 
     m_TextField = new oxygine::TextField();
-    m_TextField->setPosition(0, -9);
-    m_TextField->setScale(textScale);
-    m_TextField->setSize(pRect->getWidth() / textScale - 2, pRect->getHeight());
+    m_TextField->setPosition(0, -6);
+    m_TextField->setSize(pRect->getWidth() - 5, pRect->getHeight());
     m_TextField->setStyle(style);
     pRect->addChild(m_TextField);
     addChild(pRect);
 
     m_COSprite = new oxygine::Sprite();
-    m_COSprite->setScale(scale);
-    m_COSprite->setY(3 * scale);
+    m_COSprite->setScale(2);
+    m_COSprite->setY(6);
     addChild(m_COSprite);
 
     setPositionTop(false);
@@ -85,15 +80,11 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
                 emit sigLeftClick();
             }
         }
+        pTouchEvent->stopPropagation();
     });
-    connect(this, &GameAnimationDialog::sigRightClick, this, &GameAnimationDialog::rightClick, Qt::QueuedConnection);
-    connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
+    connect(this, &GameAnimationDialog::sigRightClick, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
+    connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::nextDialogStep, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
-}
-
-void GameAnimationDialog::rightClick()
-{
-    nextDialogStep();
 }
 
 void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
@@ -211,7 +202,7 @@ void GameAnimationDialog::updateShownText()
     m_TextField->setHeight(textHeight);
     if (textHeight > dialogHeigth)
     {
-        m_TextField->setY((-textHeight + dialogHeigth) * textScale - 9);
+        m_TextField->setY((-textHeight + dialogHeigth) - 6);
     }
 }
 

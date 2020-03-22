@@ -101,7 +101,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         if (ret.isNumber())
         {
             qint32 value = 100 + ret.toInt();
-            text += "   Synergy: " + QString::number(value) + " %";
+            text += " Synergy: " + QString::number(value) + " %";
         }
         if (pCO1 != nullptr)
         {
