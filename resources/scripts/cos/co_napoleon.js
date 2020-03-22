@@ -244,7 +244,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit: Iron Shield Generator\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nDefense is increased by 25% and by 45% against indirect units.");
     };
     this.getPowerDescription = function()

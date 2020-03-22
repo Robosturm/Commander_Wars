@@ -221,7 +221,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit: Neo Spider Tank\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain 10% increased firepower per defense star.");
     };
     this.getPowerDescription = function()

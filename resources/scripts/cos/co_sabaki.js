@@ -165,6 +165,19 @@ var Constructor = function()
         }
         return 0;
     };
+
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_CRYSTAL_TANK"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function()
     {
@@ -184,7 +197,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have 20% lifesteal.");
     };
     this.getPowerDescription = function()

@@ -7306,7 +7306,9 @@ Hovercrafts gain a 40% firepower boost.</source>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="209"/>
         <source>
-Special Unit: Repair Tanks
+Special Unit:
+Repair Tanks
+
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
@@ -7435,7 +7437,9 @@ Units gain additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_brenner.js" line="193"/>
         <source>
-Special Unit: Repair Tanks
+Special Unit:
+Repair Tanks
+
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
@@ -11150,7 +11154,9 @@ Units gain 30% increased firepower on street.</source>
     <message>
         <location filename="../resources/scripts/cos/co_lash.js" line="224"/>
         <source>
-Special Unit: Neo Spider Tank
+Special Unit:
+Neo Spider Tank
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
@@ -12198,7 +12204,9 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
     <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="247"/>
         <source>
-Special Unit: Iron Shield Generator
+Special Unit:
+Iron Shield Generator
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
@@ -13387,34 +13395,37 @@ Units gain 20% defense and have 10% reduced firepower.</source>
 <context>
     <name>co_sabaki</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="184"/>
         <source>A former Yellow Comet CO that started a rebellion when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="188"/>
         <source>Spare parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="192"/>
         <source>Poverty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="196"/>
         <source>Highly skilled at salvaging parts, Sabaki&apos;s units can drain HP from enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="200"/>
         <source>
+Special Unit:
+Crystal Tanks
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="188"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="201"/>
         <source>
 
 CO Zone Effect: 
@@ -13422,82 +13433,82 @@ Units have 20% lifesteal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="205"/>
         <source>Units can drain even more HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="209"/>
         <source>Speed Salvage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="213"/>
         <source>Units heal HP equal to the amount of damage they inflict.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="217"/>
         <source>Rejuvination Raid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="221"/>
         <source>Grab those parts! There&apos;s a tank that needs fixing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="222"/>
         <source>Get those machines up and running! We need to push forward!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="223"/>
         <source>Every machine has a weakness, you just have to know where to look.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="224"/>
         <source>You may think I&apos;m nuts, but you&apos;re about to get screwed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="225"/>
         <source>Time to throw a wrench in their plans.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="226"/>
         <source>Let&apos;s see how you react when the hammer falls...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="230"/>
         <source>My army acts like a well-oiled machine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="231"/>
         <source>Nothing&apos;s more satisfying than killing an enemy with their own gun.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="232"/>
         <source>Your army just fell apart out there.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="236"/>
         <source>The revolution isn&apos;t over.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="237"/>
         <source>Even by healing my troops. I couldn&apos;t win.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="241"/>
         <source>Sabaki</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14774,34 +14785,37 @@ Units have 20% increased firepower.</source>
 <context>
     <name>co_von_bolt</name>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="179"/>
         <source>Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Masterminded of the Omega war. Immortal Evil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
         <source>Long life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="187"/>
         <source>Young &apos;uns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="191"/>
         <source>All units have superior firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="195"/>
         <source>
+Special Unit:
+Crystal Tanks
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="184"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="196"/>
         <source>
 
 CO Zone Effect: 
@@ -14809,82 +14823,82 @@ Units have 30% increased firepower and 20% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="188"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="200"/>
         <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="204"/>
         <source>Shockwave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="208"/>
         <source>Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="212"/>
         <source>Deus Ex Machina</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="216"/>
         <source>No matter how powerful...hhh...you are, you&apos;re...hhh...still a worm on a hook...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="217"/>
         <source>Well...hhh...let me have a taste...hhh...of your soul.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="218"/>
         <source>Hheh heh heh... Stop panicking... it&apos;s...hhh...almost over...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
         <source>Hheh heh heh. The darkness rises...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
         <source>The sweet scent of destruction...hhh...it makes me...hhh...feel young!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="221"/>
         <source>Hold still...hhh...I&apos;m going to...hhhhh...suck the marrow from your bones.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="225"/>
         <source>Predator...prey...hhh... I hunt them all...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="226"/>
         <source>Hehh hhh hhh... Pathetic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="227"/>
         <source>Even death...hhh...fears me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="231"/>
         <source>What? Why are you Jouth so strong?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="232"/>
         <source>Nooo...I want to live forever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_von_bolt.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_von_bolt.js" line="236"/>
         <source>Von Bolt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14914,7 +14928,9 @@ Units have 30% increased firepower and 20% increased defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_waylon.js" line="221"/>
         <source>
-Special Unit: Kirov
+Special Unit:
+Kirov
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>

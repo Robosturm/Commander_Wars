@@ -80,7 +80,7 @@ public slots:
      * @brief addText
      * @param text
      */
-    void addText(QString text, float offsetX, float offsetY, float scale, QColor color = Qt::GlobalColor::black);
+    void addText(QString text, float offsetX, float offsetY, float scale, QColor color = QColor(230, 200, 60));
     /**
      * @brief onFinished called when the animation is finished
      */
