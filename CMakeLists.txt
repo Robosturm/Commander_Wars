@@ -491,7 +491,7 @@ set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
      ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
 )
 
-# install libs
+# install  folders
 install(DIRECTORY system DESTINATION ".")
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
@@ -499,8 +499,9 @@ install(DIRECTORY customTerrainImages DESTINATION ".")
 install(DIRECTORY mods DESTINATION ".")
 install(DIRECTORY templates DESTINATION ".")
 install(DIRECTORY savegames DESTINATION ".")
+install(DIRECTORY data DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
-# install exe
+# install libs and exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice")
@@ -512,6 +513,3 @@ install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION "styles")
 
 # install translations
 install(FILES ${QM_FILES} DESTINATION "resources/translation/")
-
-# execute_process (
-#    COMMAND ${QT_BIN_DIR}/windeployqt.exe "D:/Programmierung/Commander_Wars/builds/install/Release/Commander_Wars.exe")

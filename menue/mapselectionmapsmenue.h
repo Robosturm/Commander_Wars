@@ -52,6 +52,8 @@ signals:
     void buttonNext();
     void buttonStartGame();
     void randomMap();
+    void sigShowLoadRules();
+    void sigShowSaveRules();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -76,6 +78,10 @@ public slots:
                          bool roadSupport, qint32 seed,
                          float forestchance, float mountainChance, float seachance, float buildingchance,
                          float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
+    void showLoadRules();
+    void showSaveRules();
+    void loadRules(QString filename);
+    void saveRules(QString filename);
 protected:
 
     // buttons
@@ -83,6 +89,9 @@ protected:
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
     oxygine::spButton m_pButtonBack;
+    oxygine::spButton m_pButtonSaveRules;
+    oxygine::spButton m_pButtonLoadRules;
+
     spMapSelectionView m_pMapSelectionView;
     // rule selection
     spPanel m_pRuleSelection;

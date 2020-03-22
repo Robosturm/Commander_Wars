@@ -20,6 +20,7 @@
 #include "game/co.h"
 
 #include "objects/dialograndommap.h"
+#include "objects/filedialog.h"
 
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
@@ -93,6 +94,27 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         emit randomMap();
     });
     connect(this, &MapSelectionMapsMenue::randomMap, this, &MapSelectionMapsMenue::showRandomMap, Qt::QueuedConnection);
+
+    m_pButtonLoadRules = ObjectManager::createButton(tr("Load Rules"));
+    m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 10, pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonLoadRules->attachTo(this);
+    m_pButtonLoadRules->setVisible(false);
+    m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowLoadRules();
+    });
+    connect(this, &MapSelectionMapsMenue::sigShowLoadRules, this, &MapSelectionMapsMenue::showLoadRules, Qt::QueuedConnection);
+
+    m_pButtonSaveRules = ObjectManager::createButton(tr("Save Rules"));
+    m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 10, pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonSaveRules->attachTo(this);
+    m_pButtonSaveRules->setVisible(false);
+    m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowSaveRules();
+    });
+    connect(this, &MapSelectionMapsMenue::sigShowSaveRules, this, &MapSelectionMapsMenue::showSaveRules, Qt::QueuedConnection);
+
 
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
@@ -293,6 +315,8 @@ void MapSelectionMapsMenue::hideRuleSelection()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pRuleSelection->setVisible(false);
+    m_pButtonSaveRules->setVisible(false);
+    m_pButtonLoadRules->setVisible(false);
     m_pRuleSelection->clearContent();
     pApp->continueThread();
 }
@@ -302,6 +326,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pRuleSelection->setVisible(true);
+    m_pButtonSaveRules->setVisible(true);
+    m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
     spRuleSelection pRuleSelection = new RuleSelection(pApp->getSettings()->getWidth() - 80);
     m_pRuleSelection->addItem(pRuleSelection);
@@ -369,5 +395,64 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
     m_pMapSelectionView->setCurrentMap(pGameMap);
     emit buttonNext();
+    pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::showLoadRules()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.grl");
+    QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
+}
+
+void MapSelectionMapsMenue::showSaveRules()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.grl");
+    QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
+}
+
+void MapSelectionMapsMenue::loadRules(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    if (filename.endsWith(".grl"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            QFile file(filename);
+            file.open(QIODevice::ReadOnly);
+            QDataStream stream(&file);
+            GameMap::getInstance()->getGameRules()->deserializeObject(stream);
+            file.close();
+            hideRuleSelection();
+            showRuleSelection();
+        }
+    }
+    pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::saveRules(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    if (filename.endsWith(".grl"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        GameMap* pMap = GameMap::getInstance();
+        pMap->getGameRules()->serializeObject(stream);
+        file.close();
+    }
     pApp->continueThread();
 }

@@ -2405,22 +2405,32 @@ This is immediatly applied.</source>
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="70"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="71"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="79"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="80"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="88"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="89"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="98"/>
+        <source>Load Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="108"/>
+        <source>Save Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="120"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3334,157 +3344,157 @@ This is immediatly applied.</source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="78"/>
+        <location filename="../objects/ruleselection.cpp" line="81"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="95"/>
+        <location filename="../objects/ruleselection.cpp" line="98"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="103"/>
+        <location filename="../objects/ruleselection.cpp" line="106"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="107"/>
+        <location filename="../objects/ruleselection.cpp" line="110"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="116"/>
+        <location filename="../objects/ruleselection.cpp" line="119"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="121"/>
+        <location filename="../objects/ruleselection.cpp" line="124"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="131"/>
+        <location filename="../objects/ruleselection.cpp" line="134"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="135"/>
+        <location filename="../objects/ruleselection.cpp" line="138"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="146"/>
+        <location filename="../objects/ruleselection.cpp" line="149"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="152"/>
+        <location filename="../objects/ruleselection.cpp" line="155"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="156"/>
+        <location filename="../objects/ruleselection.cpp" line="159"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="165"/>
+        <location filename="../objects/ruleselection.cpp" line="168"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="168"/>
+        <location filename="../objects/ruleselection.cpp" line="171"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="179"/>
+        <location filename="../objects/ruleselection.cpp" line="182"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="183"/>
+        <location filename="../objects/ruleselection.cpp" line="186"/>
         <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="191"/>
+        <location filename="../objects/ruleselection.cpp" line="194"/>
         <source>CO Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="195"/>
+        <location filename="../objects/ruleselection.cpp" line="198"/>
         <source>If unchecked CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="203"/>
+        <location filename="../objects/ruleselection.cpp" line="206"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="207"/>
+        <location filename="../objects/ruleselection.cpp" line="210"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="215"/>
+        <location filename="../objects/ruleselection.cpp" line="218"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="221"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="221"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="221"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="220"/>
+        <location filename="../objects/ruleselection.cpp" line="223"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="232"/>
+        <location filename="../objects/ruleselection.cpp" line="235"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="236"/>
+        <location filename="../objects/ruleselection.cpp" line="239"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="245"/>
+        <location filename="../objects/ruleselection.cpp" line="248"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="249"/>
+        <location filename="../objects/ruleselection.cpp" line="252"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="259"/>
+        <location filename="../objects/ruleselection.cpp" line="262"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="263"/>
+        <location filename="../objects/ruleselection.cpp" line="266"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="275"/>
+        <location filename="../objects/ruleselection.cpp" line="278"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3492,8 +3502,18 @@ This is immediatly applied.</source>
 <context>
     <name>RuleSelectionDialog</name>
     <message>
-        <location filename="../objects/ruleselectiondialog.cpp" line="27"/>
+        <location filename="../objects/ruleselectiondialog.cpp" line="29"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselectiondialog.cpp" line="38"/>
+        <source>Load Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselectiondialog.cpp" line="47"/>
+        <source>Save Rules</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -30,22 +30,25 @@ RuleSelection::~RuleSelection()
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
         spVictoryRule pRule = pMap->getGameRules()->getVictoryRule(ruleID);
-        QStringList inputTypes = pRule->getRuleType();
-        if (inputTypes[0] == VictoryRule::checkbox)
+        if (pRule.get() != nullptr)
         {
-            qint32 ruleValue = pRule->getRuleValue(0);
-            if (ruleValue == 0)
+            QStringList inputTypes = pRule->getRuleType();
+            if (inputTypes[0] == VictoryRule::checkbox)
             {
-                pMap->getGameRules()->removeVictoryRule(ruleID);
+                qint32 ruleValue = pRule->getRuleValue(0);
+                if (ruleValue == 0)
+                {
+                    pMap->getGameRules()->removeVictoryRule(ruleID);
+                }
             }
-        }
-        else if (inputTypes[0] == VictoryRule::spinbox)
-        {
-            qint32 ruleValue = pRule->getRuleValue(0);
-            qint32 infiniteValue = pRule->getInfiniteValue(0);
-            if (ruleValue <= infiniteValue)
+            else if (inputTypes[0] == VictoryRule::spinbox)
             {
-                pMap->getGameRules()->removeVictoryRule(ruleID);
+                qint32 ruleValue = pRule->getRuleValue(0);
+                qint32 infiniteValue = pRule->getInfiniteValue(0);
+                if (ruleValue <= infiniteValue)
+                {
+                    pMap->getGameRules()->removeVictoryRule(ruleID);
+                }
             }
         }
     }
