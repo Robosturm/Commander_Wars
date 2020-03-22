@@ -11,14 +11,12 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    this->setSize(size.width(), size.height());
-
-    m_HScrollbar = new H_Scrollbar(size.height() - 33, contentSize.height());
+    m_HScrollbar = new H_Scrollbar(size.height() - sliderSize, contentSize.height());
     this->addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
     connect(m_HScrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledY, Qt::QueuedConnection);
 
-    m_VScrollbar = new V_Scrollbar(size.width() - 33, contentSize.width());
+    m_VScrollbar = new V_Scrollbar(size.width() - sliderSize, contentSize.width());
     this->addChild(m_VScrollbar);
     m_VScrollbar->setY(size.height() - m_VScrollbar->getHeight());
     connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
@@ -48,6 +46,10 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     m_ContentRect->setSize(contentSize.width(), contentSize.height());
     m_ClipRect->addChild(m_ContentRect);
 
+    setSize(size.width(), size.height());
+    setContentWidth(contentSize.width());
+    setContentHeigth(contentSize.height());
+
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -64,7 +66,10 @@ void Panel::scrolledY(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
+    if (m_HScrollbar->getVisible())
+    {
+        m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
+    }
 
     hideItems();
 
@@ -115,35 +120,80 @@ void Panel::scrolledX(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
+    if (m_VScrollbar->getVisible())
+    {
+        m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
+    }
     hideItems();
     pApp->continueThread();
 }
 
 void Panel::setContentHeigth(qint32 heigth)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (heigth <= this->getHeight())
     {
         heigth = this->getHeight();
+        if (m_HScrollbar->getVisible())
+        {
+            m_HScrollbar->setVisible(false);
+            if (m_Panelbox.get() != nullptr)
+            {
+                m_Panelbox->setWidth(m_Panelbox->getWidth() + m_HScrollbar->getWidth());
+            }
+            m_ClipRect->setWidth(m_ClipRect->getWidth() + m_HScrollbar->getWidth());
+        }
     }
-    m_ContentRect->setHeight(heigth);
+    else if (!m_HScrollbar->getVisible())
+    {
+        if (m_Panelbox.get() != nullptr)
+        {
+            m_Panelbox->setWidth(m_Panelbox->getWidth() - m_HScrollbar->getWidth());
+        }
+        m_ClipRect->setWidth(m_ClipRect->getWidth() - m_HScrollbar->getWidth());
+        m_HScrollbar->setVisible(true);
+    }
 
+    m_ContentRect->setHeight(heigth);
     m_HScrollbar->setContentHeigth(heigth);
+    pApp->continueThread();
 }
 
 void Panel::setContentWidth(qint32 width)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (width <= this->getWidth())
     {
         width = this->getWidth();
+        if (m_VScrollbar->getVisible())
+        {
+            m_VScrollbar->setVisible(false);
+            if (m_Panelbox.get() != nullptr)
+            {
+                m_Panelbox->setHeight(m_Panelbox->getHeight() + m_VScrollbar->getHeight());
+            }
+            m_ClipRect->setHeight(m_ClipRect->getHeight() + m_VScrollbar->getHeight());
+        }
+    }
+    else if (!m_VScrollbar->getVisible())
+    {
+        if (m_Panelbox.get() != nullptr)
+        {
+            m_Panelbox->setHeight(m_Panelbox->getHeight() - m_VScrollbar->getHeight());
+        }
+        m_ClipRect->setHeight(m_ClipRect->getHeight() - m_VScrollbar->getHeight());
+        m_VScrollbar->setVisible(true);
     }
     m_ContentRect->setWidth(width);
 
     m_VScrollbar->setContentWidth(width);
+    pApp->continueThread();
 }
 
 qint32 Panel::getContentHeigth()

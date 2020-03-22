@@ -13,6 +13,7 @@ typedef oxygine::intrusive_ptr<Panel> spPanel;
 class Panel : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    static constexpr qint32 sliderSize = 33;
 public:
     explicit Panel(bool useBox, QSize size, QSize contentSize);
 

@@ -62,7 +62,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
         }
     }
 
-    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 55), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 55));
+    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 22), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 22));
     addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
@@ -406,6 +406,8 @@ void COSelection::hoveredCOChanged(QString coid)
         m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
         m_CODesc->setY(m_COBio->getY() + m_COBio->getHeight() + 10);
 
+        m_CoDescription->setContentHeigth(m_CODesc->getY() + m_CODesc->getHeight() + 20);
+
         m_COPower->setHtmlText(coPower);
         m_COSuperpower->setHtmlText(coSuperpower);
 
@@ -416,6 +418,8 @@ void COSelection::hoveredCOChanged(QString coid)
             pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
         }
         m_pCurrentCO->setResAnim(pAnim);
+
+
 
         addChild(m_pCurrentCO);
     }
