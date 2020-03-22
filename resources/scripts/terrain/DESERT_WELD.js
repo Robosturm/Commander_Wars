@@ -115,6 +115,14 @@ var Constructor = function()
         return ["desert_weld+E+W",
                 "desert_weld+N+S"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desertpipe";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_WELD = new Constructor();

@@ -2405,17 +2405,22 @@ This is immediatly applied.</source>
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="67"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="70"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="76"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="79"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="85"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="88"/>
+        <source>Random Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="98"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2447,7 +2452,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="718"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="732"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2477,13 +2482,13 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="479"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="497"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="492"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="510"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="714"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="728"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

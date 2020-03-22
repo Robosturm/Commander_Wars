@@ -41,7 +41,7 @@ var Constructor = function()
         }
         else if ((surroundings === "+N+S"))
         {
-			
+
             terrain.loadBaseSprite("weak_wall+N+S");
         }
         else if ((surroundings === "+E+W"))
@@ -95,6 +95,14 @@ var Constructor = function()
         // array of sprites that can be selected as fix sprites for this terrain
         return ["weak_wall+E+W",
                 "weak_wall+N+S"];
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_walltop";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "";
     };
 };
 Constructor.prototype = TERRAIN;

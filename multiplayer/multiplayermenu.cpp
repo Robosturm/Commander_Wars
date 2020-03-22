@@ -40,7 +40,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     Console::print("Entering Multiplayer Menue", Console::eDEBUG);
 
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(pApp->getSettings()->getWidth() / 2 - m_pButtonLoadSavegame->getWidth() / 2, pApp->getSettings()->getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
+    m_pButtonLoadSavegame->setPosition(pApp->getSettings()->getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, pApp->getSettings()->getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
     m_pButtonLoadSavegame->attachTo(this);
     m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -305,7 +305,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         {
                             stream >> scriptHash;
                         }
-                        if (existsMap(fileName, hash, scriptFile, scriptHash))
+                        if (!fileName.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) && existsMap(fileName, hash, scriptFile, scriptHash))
                         {
                             QByteArray sendData;
                             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -416,9 +416,16 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 sendStream << NetworkCommands::MAPDATA;
                 sendStream << file;
                 QFile mapFile(m_pMapSelectionView->getCurrentFile().filePath());
-                mapFile.open(QIODevice::ReadOnly);
-                sendStream << mapFile.readAll();
-                mapFile.close();
+                if (file.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
+                {
+                    GameMap::getInstance()->serializeObject(sendStream);
+                }
+                else
+                {
+                    mapFile.open(QIODevice::ReadOnly);
+                    sendStream << mapFile.readAll();
+                    mapFile.close();
+                }
                 sendStream << scriptFile;
                 if (!scriptFile.isEmpty())
                 {
@@ -436,69 +443,76 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 QString mapFile;
                 stream >> mapFile;
-                QByteArray mapData;
-                stream >> mapData;
-                QFile map(mapFile);
-                if (!map.exists())
+                if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
                 {
-                    QFileInfo mapInfo(mapFile);
-                    QDir dir;
-                    QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
-                    dir.mkdir(fileDir);
-                    map.open(QIODevice::WriteOnly);
-                    QDataStream mapFilestream(&map);
-                    for (qint32 i = 0; i < mapData.size(); i++)
-                    {
-                        mapFilestream << static_cast<quint8>(mapData[i]);
-                    }
-                    map.close();
-                    QString scriptFile;
-                    stream >> scriptFile;
-                    QByteArray scriptData;
-                    if (!scriptFile.isEmpty())
-                    {
-                        stream >> scriptData;
-                        QFile script(scriptFile);
-                        if (!script.exists())
-                        {
-                            QFileInfo scriptInfo(scriptFile);
-                            fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
-                            dir.mkdir(fileDir);
-                            script.open(QIODevice::WriteOnly);
-                            QDataStream scriptFilestream(&map);
-                            for (qint32 i = 0; i < scriptData.size(); i++)
-                            {
-                                scriptFilestream << static_cast<quint8>(scriptData[i]);
-                            }
-                            script.close();
-                        }
-                        else
-                        {
-                            Mainapp* pApp = Mainapp::getInstance();
-                            pApp->suspendThread();
-                            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
-                            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-                            addChild(pDialogMessageBox);
-                            pApp->continueThread();
-                            return;
-                        }
-                    }
-                    m_pMapSelectionView->setCurrentMap(new GameMap(mapFile, true));
-                    loadMultiplayerMap();
-                    QByteArray sendData;
-                    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                    sendStream << NetworkCommands::REQUESTRULE;
-                    m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    new GameMap(stream);
                 }
                 else
                 {
-                    Mainapp* pApp = Mainapp::getInstance();
-                    pApp->suspendThread();
-                    spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
-                    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-                    addChild(pDialogMessageBox);
-                    pApp->continueThread();
-                    return;
+                    QByteArray mapData;
+                    stream >> mapData;
+                    QFile map(mapFile);
+                    if (!map.exists())
+                    {
+                        QFileInfo mapInfo(mapFile);
+                        QDir dir;
+                        QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
+                        dir.mkdir(fileDir);
+                        map.open(QIODevice::WriteOnly);
+                        QDataStream mapFilestream(&map);
+                        for (qint32 i = 0; i < mapData.size(); i++)
+                        {
+                            mapFilestream << static_cast<quint8>(mapData[i]);
+                        }
+                        map.close();
+                        QString scriptFile;
+                        stream >> scriptFile;
+                        QByteArray scriptData;
+                        if (!scriptFile.isEmpty())
+                        {
+                            stream >> scriptData;
+                            QFile script(scriptFile);
+                            if (!script.exists())
+                            {
+                                QFileInfo scriptInfo(scriptFile);
+                                fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
+                                dir.mkdir(fileDir);
+                                script.open(QIODevice::WriteOnly);
+                                QDataStream scriptFilestream(&map);
+                                for (qint32 i = 0; i < scriptData.size(); i++)
+                                {
+                                    scriptFilestream << static_cast<quint8>(scriptData[i]);
+                                }
+                                script.close();
+                            }
+                            else
+                            {
+                                Mainapp* pApp = Mainapp::getInstance();
+                                pApp->suspendThread();
+                                spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
+                                connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+                                addChild(pDialogMessageBox);
+                                pApp->continueThread();
+                                return;
+                            }
+                        }
+                        m_pMapSelectionView->setCurrentMap(new GameMap(mapFile, true));
+                        loadMultiplayerMap();
+                        QByteArray sendData;
+                        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                        sendStream << NetworkCommands::REQUESTRULE;
+                        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    }
+                    else
+                    {
+                        Mainapp* pApp = Mainapp::getInstance();
+                        pApp->suspendThread();
+                        spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
+                        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+                        addChild(pDialogMessageBox);
+                        pApp->continueThread();
+                        return;
+                    }
                 }
             }
         }
@@ -508,6 +522,9 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             if (!m_NetworkInterface->getIsServer())
             {
                 initClientGame(socketID, stream);
+                addRef();
+                oxygine::Actor::detach();
+                deleteLater();
             }
         }
     }
@@ -541,9 +558,6 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
-    addRef();
-    oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 

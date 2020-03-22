@@ -14,6 +14,10 @@ namespace NetworkCommands
      */
     static const QString REQUESTRULE = "REQUESTRULE";
     /**
+     * @brief RANDOMMAPIDENTIFIER
+     */
+    static const QString RANDOMMAPIDENTIFIER = "????";
+    /**
      * @brief SENDINITUPDATE initial update from the host containing the game rules and all player data
      */
     static const QString SENDINITUPDATE = "SENDINITUPDATE";

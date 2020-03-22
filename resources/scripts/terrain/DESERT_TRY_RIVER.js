@@ -75,6 +75,14 @@ var Constructor = function()
                 "desert_try_river+S+W",
                 "desert_try_river+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desert";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_TRY_RIVER = new Constructor();

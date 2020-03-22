@@ -67,6 +67,14 @@ var Constructor = function()
                 "snow_mountain+E+W",
                 "snow_mountain+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_snowmountain";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_snowmountain";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_MOUNTAIN = new Constructor();

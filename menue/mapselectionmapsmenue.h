@@ -51,6 +51,7 @@ signals:
     void buttonBack();
     void buttonNext();
     void buttonStartGame();
+    void randomMap();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -63,9 +64,22 @@ public slots:
      * @brief startGame starts a game for a single player mode
      */
     virtual void startGame();
+    /**
+     * @brief showRandomMap
+     */
+    void showRandomMap();
+    /**
+     * @brief selectRandomMap
+     */
+    void selectRandomMap(QString mapName, QString author, QString description,
+                         qint32 width,qint32 heigth, qint32 playerCount,
+                         bool roadSupport, qint32 seed,
+                         float forestchance, float mountainChance, float seachance, float buildingchance,
+                         float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
 protected:
 
     // buttons
+    oxygine::spButton m_pRandomMap;
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
     oxygine::spButton m_pButtonBack;

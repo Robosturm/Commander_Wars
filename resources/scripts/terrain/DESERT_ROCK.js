@@ -20,7 +20,7 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("DESERT");
+        terrain.loadBaseTerrain("DESERT");
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -60,8 +60,8 @@ var Constructor = function()
     this.getDescription = function()
     {
         return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-               "<r>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</r>";
+                "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
+                "<r>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</r>";
     };
 
     this.getTerrainSprites = function()
@@ -71,6 +71,14 @@ var Constructor = function()
                 "desert_rock+E",
                 "desert_rock+E+W",
                 "desert_rock+W"];
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desertmountain";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desertmountain";
     };
 };
 Constructor.prototype = TERRAIN;

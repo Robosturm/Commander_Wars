@@ -112,6 +112,14 @@ var Constructor = function()
         return ["snow_weld+E+W",
                 "snow_weld+N+S"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_snowpipe";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_snow";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_WELD = new Constructor();

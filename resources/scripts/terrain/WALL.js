@@ -73,6 +73,18 @@ var Constructor = function()
                 "wall+S+W",
                 "wall+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_walltop";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "";
+    };
+    this.getDefense = function()
+    {
+        return 4;
+    };
 };
 Constructor.prototype = TERRAIN;
 var WALL = new Constructor();

@@ -59,6 +59,14 @@ var Constructor = function()
                 "ruin+1",
                 "ruin+2"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_town+0";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_ruin";
+    };
 };
 Constructor.prototype = TERRAIN;
 var RUIN = new Constructor();

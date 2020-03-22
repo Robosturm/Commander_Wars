@@ -99,6 +99,14 @@ var Constructor = function()
         return ["snow_destroyedweld+E+W",
                 "snow_destroyedweld+N+S"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_snow+0";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_snow";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_DESTROYEDWELD = new Constructor();

@@ -71,6 +71,14 @@ var Constructor = function()
                 "desert_path+S+W",
                 "desert_path+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desertroad";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PATH = new Constructor();

@@ -1584,7 +1584,7 @@ void Unit::setAmmo2(const qint32 &value)
 
 void Unit::reduceAmmo2(qint32 value)
 {
-    if (ammo2 > 0)
+    if (ammo2 >= 0)
     {
         setAmmo2(ammo2 - value);
     }
@@ -1659,7 +1659,7 @@ bool Unit::hasAmmo1() const
 
 void Unit::reduceAmmo1(qint32 value)
 {
-    if (ammo1 > 0)
+    if (ammo1 >= 0)
     {
         setAmmo1(ammo1 - value);
     }

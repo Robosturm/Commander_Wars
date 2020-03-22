@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "help";
+        return "fire";
     };
     this.perform = function(action)
     {

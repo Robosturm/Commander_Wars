@@ -5,6 +5,8 @@
 		<!-- battle sprite -->
 		<image file="battlesprites/base_air.png" />
 		<image file="battlesprites/base_forest.png" />
+		<image file="battlesprites/base_desertforest.png" />
+		<image file="battlesprites/base_snowforest.png" />
 		
 		<image file="battlesprites/foreground/fore_airport.png" />
 		<image file="battlesprites/foreground/fore_beach.png" />
@@ -28,6 +30,16 @@
 		<image file="battlesprites/foreground/fore_street.png" />
 		<image file="battlesprites/foreground/fore_town.png" />
 		<image file="battlesprites/foreground/fore_town+0.png" />
+		<image file="battlesprites/foreground/fore_desert.png" />
+		<image file="battlesprites/foreground/fore_desertforest.png" />
+		<image file="battlesprites/foreground/fore_desertmountain.png" />
+		<image file="battlesprites/foreground/fore_desertpipe.png" />
+		<image file="battlesprites/foreground/fore_desertroad.png" />
+		<image file="battlesprites/foreground/fore_snowforest.png" />
+		<image file="battlesprites/foreground/fore_snowmountain.png" />
+		<image file="battlesprites/foreground/fore_snowpipe.png" />
+		<image file="battlesprites/foreground/fore_snow+0.png" />
+		<image file="battlesprites/foreground/fore_walltop.png" />
 		
 		<image file="battlesprites/background/back_airport.png" />
 		<image file="battlesprites/background/back_beach.png" />
@@ -50,6 +62,15 @@
 		<image file="battlesprites/background/back_street.png" />
 		<image file="battlesprites/background/back_town.png" />
 		<image file="battlesprites/background/back_town+0.png" />
+		<image file="battlesprites/background/back_desert.png" />
+		<image file="battlesprites/background/back_desertforest.png" />
+		<image file="battlesprites/background/back_desertmountain.png" />
+		<image file="battlesprites/background/back_snowforest.png" />
+		<image file="battlesprites/background/back_snowmountain.png" />
+		<image file="battlesprites/background/back_snow_mountain+0.png" />
+		<image file="battlesprites/background/back_ruin.png" />
+		<image file="battlesprites/background/back_snow.png" />
+		
 		
 		<!-- battle animation -->
 		<image file="battlesprites/battle_back.png" />
@@ -115,7 +136,8 @@
 		<image file="surrender.png" />
 		<image file="intel.png" />		
 		<image file="hq+captured.png" />
-		<image file="hq+lost.png" />		
+		<image file="hq+lost.png" />
+		<image file="flareshot.png" />
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

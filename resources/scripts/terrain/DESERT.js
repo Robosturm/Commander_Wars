@@ -93,6 +93,14 @@ var Constructor = function()
                 "desert+6",
                 "desert+7"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desert";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT = new Constructor();

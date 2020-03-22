@@ -26,7 +26,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "fire";
+        return "flareshot";
     };
     this.isFinalStep = function(action)
     {

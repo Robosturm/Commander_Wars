@@ -96,6 +96,14 @@ var Constructor = function()
                 "snow_pipeline+S+W",
                 "snow_pipeline+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_snowpipe";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_snow";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_PIPELINE = new Constructor();

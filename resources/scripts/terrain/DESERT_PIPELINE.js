@@ -100,6 +100,14 @@ var Constructor = function()
                 "desert_pipeline+S+W",
                 "desert_pipeline+W"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desertpipe";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desert";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PIPELINE = new Constructor();

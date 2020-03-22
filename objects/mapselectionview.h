@@ -42,6 +42,10 @@ public:
     {
         return m_currentMapFile;
     }
+    inline void setCurrentFile(QString info)
+    {
+        m_currentMapFile = QFileInfo(info);
+    }
     inline spCampaign getCurrentCampaign()
     {
         return m_CurrentCampaign;

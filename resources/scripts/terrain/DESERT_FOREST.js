@@ -20,7 +20,7 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("DESERT");
+        terrain.loadBaseTerrain("DESERT");
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -56,7 +56,7 @@ var Constructor = function()
     this.getDescription = function()
     {
         return "<r>" + qsTr("In Fog of War conditions, the woods provide ground unit hiding places.") + "</r>" +
-               "<div c='#00ff00'>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</div>";
+                "<div c='#00ff00'>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</div>";
     };
 
     this.getTerrainSprites = function()
@@ -66,6 +66,18 @@ var Constructor = function()
                 "desert_forest+E",
                 "desert_forest+E+W",
                 "desert_forest+W"];
+    };
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_desertforest";
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_desertforest";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_desertforest";
     };
 };
 Constructor.prototype = TERRAIN;

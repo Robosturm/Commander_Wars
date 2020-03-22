@@ -44,6 +44,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
     loaded = true;
@@ -89,7 +90,6 @@ void GameMap::loadMapData()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
-    mapAuthor = Settings::getUsername();
 }
 
 qint32 GameMap::getUniqueIdCounter()
@@ -1554,4 +1554,5 @@ void GameMap::initPlayers()
         pPlayer->defineArmy();
         pPlayer->loadVisionFields();
     }
+    m_CurrentPlayer = players[players.size() - 1];
 }

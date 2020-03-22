@@ -49,6 +49,14 @@ var Constructor = function()
     {
         return qsTr("Snowy terrain reduces rough to cross.");
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_snow+0";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_snow";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW = new Constructor();

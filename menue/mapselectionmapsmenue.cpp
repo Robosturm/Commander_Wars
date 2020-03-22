@@ -19,10 +19,13 @@
 
 #include "game/co.h"
 
+#include "objects/dialograndommap.h"
+
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
 #include "multiplayer/multiplayermenu.h"
+#include "multiplayer/networkcommands.h"
 
 #include "objects/ruleselection.h"
 
@@ -81,6 +84,16 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         emit buttonNext();
     });
     connect(this, &MapSelectionMapsMenue::buttonNext, this, &MapSelectionMapsMenue::slotButtonNext, Qt::QueuedConnection);
+
+    m_pRandomMap = ObjectManager::createButton(tr("Random Map"));
+    m_pRandomMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getWidth() + 20, pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pRandomMap->attachTo(this);
+    m_pRandomMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit randomMap();
+    });
+    connect(this, &MapSelectionMapsMenue::randomMap, this, &MapSelectionMapsMenue::showRandomMap, Qt::QueuedConnection);
+
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
     m_pButtonStart->setPosition(pApp->getSettings()->getWidth() - 10 - m_pButtonStart->getWidth(), pApp->getSettings()->getHeight() - 10 - m_pButtonStart->getHeight());
@@ -185,7 +198,9 @@ void MapSelectionMapsMenue::slotButtonNext()
         case MapSelectionStep::selectMap:
         {
             QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
-            if (m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map"))
+            QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
+            if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||
+                (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER))
             {
                 m_pMapSelectionView->setCurrentCampaign(nullptr);
                 if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
@@ -259,6 +274,7 @@ void MapSelectionMapsMenue::hideMapSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_pRandomMap->setVisible(false);
     m_pMapSelectionView->setVisible(false);
     pApp->continueThread();
 }
@@ -267,6 +283,7 @@ void MapSelectionMapsMenue::showMapSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_pRandomMap->setVisible(true);
     m_pMapSelectionView->setVisible(true);
     pApp->continueThread();
 }
@@ -323,5 +340,34 @@ void MapSelectionMapsMenue::startGame()
     addRef();
     oxygine::Actor::detach();
     deleteLater();
+    pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::showRandomMap()
+{
+    spDialogRandomMap pDialogRandomMap = new DialogRandomMap();
+    addChild(pDialogRandomMap);
+    connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &MapSelectionMapsMenue::selectRandomMap, Qt::QueuedConnection);
+}
+
+void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QString description,
+                                            qint32 width,qint32 heigth, qint32 playerCount,
+                                            bool roadSupport, qint32 seed,
+                                            float forestchance, float mountainChance, float seachance, float buildingchance,
+                                            float factoryChance, float airPortChance, float harbourChance, float startBaseSize)
+          {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pGameMap = new GameMap(width, heigth, playerCount);
+    pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
+                        forestchance / 100.0f, mountainChance / 100.0f,
+                        seachance / 100.0f, buildingchance / 100.0f,
+                        factoryChance / 100.0f, airPortChance / 100.0f, harbourChance / 100.0f, startBaseSize / 100.0f);
+    pGameMap->setMapName(mapName);
+    pGameMap->setMapAuthor(author);
+    pGameMap->setMapDescription(description);
+    m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
+    m_pMapSelectionView->setCurrentMap(pGameMap);
+    emit buttonNext();
     pApp->continueThread();
 }
