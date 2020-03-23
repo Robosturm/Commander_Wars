@@ -883,10 +883,11 @@ void GameRules::deserializeObject(QDataStream& pStream)
         pWeather->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;
-        for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
+        if (pGameRuleManager->existsWeather(pWeather->getWeatherId()))
         {
-            if (pGameRuleManager->existsWeather(pWeather->getWeatherId()))
+            for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
             {
+
                 if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
                 {
                     m_Weathers[i2] = pWeather;
