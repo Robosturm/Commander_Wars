@@ -4894,7 +4894,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="51"/>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="55"/>
         <source>A mysterious tile that costs 0MP to move over.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5375,7 +5375,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="59"/>
+        <location filename="../game/terrain.cpp" line="46"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

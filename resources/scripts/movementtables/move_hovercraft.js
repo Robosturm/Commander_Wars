@@ -70,7 +70,7 @@ var Constructor = function()
             if (currentGroup === 0 || targetGroup === 0)
             {
                 // fields we can move from land to sea
-                var crossable = ["HARBOUR", "BEACH", "TEMPORARY_HARBOUR", "RIVER"];
+                var crossable = ["HARBOUR", "BEACH", "TEMPORARY_HARBOUR", "RIVER", "TELEPORTTILE"];
                 for (var i = 0; i < crossable.length; i++)
                 {
                     if (crossable[i] === id ||

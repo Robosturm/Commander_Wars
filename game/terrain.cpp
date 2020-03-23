@@ -26,20 +26,7 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
     {
         pTerrain->createBaseTerrain(currentTerrainID);
     }
-    return pTerrain;
-}
-
-Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
-    : terrainID(terrainID),
-      x(x),
-      y(y),
-      m_Building{nullptr}
-{
-    Mainapp* pApp = Mainapp::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    Interpreter::setCppOwnerShip(this);
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
     QJSValue obj = pInterpreter->getGlobal(terrainID);
     // check if the js-script was loaded already
     // otherwise do load it
@@ -52,13 +39,26 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
         }
         if (terrainExists)
         {
-            init();
+            pTerrain->init();
         }
         else
         {
             Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
         }
     }
+    return pTerrain;
+}
+
+Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
+    : terrainID(terrainID),
+      x(x),
+      y(y),
+      m_Building{nullptr}
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
 }
 
 qint32 Terrain::getVisionHigh() const
@@ -129,6 +129,10 @@ void Terrain::setFixedSprite(bool FixedSprite)
 
 void Terrain::init()
 {
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        m_pBaseTerrain->init();
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "init";
     QJSValueList args;
