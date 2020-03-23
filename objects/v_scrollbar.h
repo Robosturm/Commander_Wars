@@ -34,6 +34,7 @@ public:
     float getScrollspeed() const;
     void setScrollspeed(float Scrollspeed);
 
+    virtual void setWidth(float w) override;
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -48,6 +49,8 @@ signals:
 public slots:
     void changeScrollValue(float value);
 private:
+    void scroll(oxygine::Event* pEvent);
+private:
     float m_Scrollvalue{0.0f};
     qint32 m_Width;
     qint32 m_ContentWidth;
@@ -56,6 +59,9 @@ private:
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
     QElapsedTimer m_ScrollTimer;
+
+    oxygine::spBox9Sprite m_pBox;
+    oxygine::spButton m_pArrowRigth;
 };
 
 #endif // V_SCROLLBAR_H

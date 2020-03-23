@@ -162,8 +162,8 @@ namespace oxygine
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
         void setSize(const Vector2&);
         void setSize(float w, float h);
-        void setWidth(float w);
-        void setHeight(float h);
+        virtual void setWidth(float w);
+        virtual void setHeight(float h);
         /**Extends actor's clickable area from each side. Affects only to Actor::isOn. Max value is 127, Min Value is -128*/
         void setExtendedClickArea(char add) {_extendedIsOn = add;}
 

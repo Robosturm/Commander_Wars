@@ -24,7 +24,9 @@ public:
      */
     void setContentHeigth(qint32 heigth);
 
-    virtual void update(const oxygine::UpdateState& us) override;
+    virtual void update(const oxygine::UpdateState&) override;
+
+    virtual void setHeight(float h) override;
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -38,7 +40,8 @@ signals:
     void sigChangeScrollValue(float value);
 public slots:
     void changeScrollValue(float value);
-
+private:
+    void scroll(oxygine::Event* pEvent);
 private:
     float m_Scrollvalue{0.0f};
     qint32 m_Heigth;
@@ -47,6 +50,9 @@ private:
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
     QElapsedTimer m_ScrollTimer;
+
+    oxygine::spBox9Sprite m_pBox;
+    oxygine::spButton m_pArrowDown;
 };
 
 #endif // H_SCROLLBAR_H

@@ -853,6 +853,7 @@ void GameRules::serializeObject(QDataStream& pStream)
 
 void GameRules::deserializeObject(QDataStream& pStream)
 {
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     m_VictoryRules.clear();
     qint32 version = 0;
     pStream >> version;
@@ -863,6 +864,18 @@ void GameRules::deserializeObject(QDataStream& pStream)
         m_VictoryRules.append(new VictoryRule());
         m_VictoryRules[i]->deserializeObject(pStream);
     }
+    qint32 ruleItem = 0;
+    while (ruleItem < m_VictoryRules.size())
+    {
+        if (pGameRuleManager->existsVictoryRule(m_VictoryRules[ruleItem]->getRuleID()))
+        {
+            ruleItem++;
+        }
+        else
+        {
+            m_VictoryRules.removeAt(ruleItem);
+        }
+    }
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
@@ -872,16 +885,19 @@ void GameRules::deserializeObject(QDataStream& pStream)
         pStream >> chance;
         for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
         {
-            if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
+            if (pGameRuleManager->existsWeather(pWeather->getWeatherId()))
             {
-                m_Weathers[i2] = pWeather;
-                m_WeatherChances[i2] = chance;
-                break;
-            }
-            else if (i2 == m_Weathers.size() - 1)
-            {
-                m_Weathers.append(pWeather);
-                m_WeatherChances.append(chance);
+                if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
+                {
+                    m_Weathers[i2] = pWeather;
+                    m_WeatherChances[i2] = chance;
+                    break;
+                }
+                else if (i2 == m_Weathers.size() - 1)
+                {
+                    m_Weathers.append(pWeather);
+                    m_WeatherChances.append(chance);
+                }
             }
         }
     }

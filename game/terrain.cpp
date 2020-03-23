@@ -1050,7 +1050,14 @@ void Terrain::deserializeObject(QDataStream& pStream)
         m_pBaseTerrain->deserializeObject(pStream);
         m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
         m_pBaseTerrain->setPosition(0, 0);
-        this->addChild(m_pBaseTerrain);
+        if (m_pBaseTerrain->isValid())
+        {
+            this->addChild(m_pBaseTerrain);
+        }
+        else
+        {
+            m_pBaseTerrain = nullptr;
+        }
     }
     bool hasBuilding = false;
     pStream >> hasBuilding;

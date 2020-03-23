@@ -104,16 +104,26 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     m_Cursor->setScale(scale);
     m_CoFieldPanel->addItem(m_Cursor);
 
+    oxygine::spBox9Sprite pPanelbox = new oxygine::Box9Sprite();
+    pAnim = pObjectManager->getResAnim("panel");
+    pPanelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pPanelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pPanelbox->setResAnim(pAnim);
+    pPanelbox->setX(m_CoDescription->getX() + m_CoDescription->getScaledWidth());
+    pPanelbox->setY(m_ArmyBannerPanel->getScaledHeight());
+    pPanelbox->setSize(width, maxSize.height() - m_ArmyBannerPanel->getScaledHeight());
+
     m_pCurrentCO = new oxygine::Sprite();
-    m_pCurrentCO->setPosition(m_CoDescription->getX() + m_CoDescription->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
-    float scale = width / 208.0f;
-    float scale2 = (maxSize.height() - m_ArmyBannerPanel->getScaledHeight()) / 352.0f;
+    m_pCurrentCO->setPosition(10, 10);
+    float scale = (width - 20) / 208.0f;
+    float scale2 = (maxSize.height() - m_ArmyBannerPanel->getScaledHeight() - 20) / 352.0f;
     if (scale2 < scale)
     {
         scale = scale2;
     }
     m_pCurrentCO->setScale(scale);
-    addChild(m_pCurrentCO);
+    pPanelbox->addChild(m_pCurrentCO);
+    addChild(pPanelbox);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     oxygine::TextStyle headerStyle = FontManager::getMainFont48();
@@ -418,10 +428,6 @@ void COSelection::hoveredCOChanged(QString coid)
             pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
         }
         m_pCurrentCO->setResAnim(pAnim);
-
-
-
-        addChild(m_pCurrentCO);
     }
     pApp->continueThread();
 }

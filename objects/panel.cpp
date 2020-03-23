@@ -66,7 +66,7 @@ void Panel::scrolledY(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_HScrollbar->getVisible())
+    if (m_HScrollbar->getVisible() && getVisible())
     {
         m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
     }
@@ -120,7 +120,7 @@ void Panel::scrolledX(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_VScrollbar->getVisible())
+    if (m_VScrollbar->getVisible() && getVisible())
     {
         m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
     }
@@ -139,12 +139,13 @@ void Panel::setContentHeigth(qint32 heigth)
         heigth = this->getHeight();
         if (m_HScrollbar->getVisible())
         {
-            m_HScrollbar->setVisible(false);
             if (m_Panelbox.get() != nullptr)
             {
                 m_Panelbox->setWidth(m_Panelbox->getWidth() + m_HScrollbar->getWidth());
             }
             m_ClipRect->setWidth(m_ClipRect->getWidth() + m_HScrollbar->getWidth());
+            m_HScrollbar->setVisible(false);
+            m_VScrollbar->setWidth(m_VScrollbar->getWidth() + m_HScrollbar->getWidth());
         }
     }
     else if (!m_HScrollbar->getVisible())
@@ -155,6 +156,7 @@ void Panel::setContentHeigth(qint32 heigth)
         }
         m_ClipRect->setWidth(m_ClipRect->getWidth() - m_HScrollbar->getWidth());
         m_HScrollbar->setVisible(true);
+        m_VScrollbar->setWidth(m_VScrollbar->getWidth() - m_HScrollbar->getWidth());
     }
 
     m_ContentRect->setHeight(heigth);
@@ -173,12 +175,13 @@ void Panel::setContentWidth(qint32 width)
         width = this->getWidth();
         if (m_VScrollbar->getVisible())
         {
-            m_VScrollbar->setVisible(false);
             if (m_Panelbox.get() != nullptr)
             {
                 m_Panelbox->setHeight(m_Panelbox->getHeight() + m_VScrollbar->getHeight());
             }
             m_ClipRect->setHeight(m_ClipRect->getHeight() + m_VScrollbar->getHeight());
+            m_VScrollbar->setVisible(false);
+            m_HScrollbar->setHeight(m_HScrollbar->getHeight() + m_VScrollbar->getHeight());
         }
     }
     else if (!m_VScrollbar->getVisible())
@@ -189,6 +192,7 @@ void Panel::setContentWidth(qint32 width)
         }
         m_ClipRect->setHeight(m_ClipRect->getHeight() - m_VScrollbar->getHeight());
         m_VScrollbar->setVisible(true);
+        m_HScrollbar->setHeight(m_HScrollbar->getHeight() - m_VScrollbar->getHeight());
     }
     m_ContentRect->setWidth(width);
 
@@ -218,5 +222,10 @@ void Panel::removeItem(oxygine::spActor pActor)
 
 void Panel::clearContent()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_ContentRect->removeChildren();
+    m_ContentRect->setX(0.0f);
+    m_ContentRect->setY(0.0f);
+    pApp->continueThread();
 }

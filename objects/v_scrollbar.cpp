@@ -16,34 +16,34 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     this->setSize(width, 33);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
-    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setResAnim(pAnim);
-    pBox->setSize(width, 33);
-    this->addChild(pBox);
+    m_pBox = new oxygine::Box9Sprite();
+    m_pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pBox->setResAnim(pAnim);
+    m_pBox->setSize(width, 33);
+    this->addChild(m_pBox);
 
-    oxygine::spButton pArrowRigth = new oxygine::Button();
-    pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
-    pArrowRigth->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    pArrowRigth->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowRigth = new oxygine::Button();
+    m_pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
+    m_pArrowRigth->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pArrowRigth->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+        m_pArrowRigth->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
-    pArrowRigth->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pArrowRigth->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+        m_pArrowRigth->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_scroll = 1;
     });
-    pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
         m_scroll = 0;
     });
-    pBox->addChild(pArrowRigth);
-    pArrowRigth->setPosition(width - pArrowRigth->getWidth() - 8, 9);
+    m_pBox->addChild(m_pArrowRigth);
+    m_pArrowRigth->setPosition(width - m_pArrowRigth->getWidth() - 8, 9);
 
     oxygine::spButton pArrowLeft = new oxygine::Button();
     // pButton->setPosition(200, 200);
@@ -66,7 +66,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         m_scroll = 0;
     });
-    pBox->addChild(pArrowLeft);
+    m_pBox->addChild(pArrowLeft);
     pArrowLeft->setPosition(9, 8);
 
     m_slider = new oxygine::Box9Sprite();
@@ -89,7 +89,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_slider->setSize(sliderWidth, 18);
     m_slider->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     m_slider->setPosition(20, 9);
-    pBox->addChild(m_slider);
+    m_pBox->addChild(m_slider);
     m_slider->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar_active");
@@ -114,38 +114,43 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
         m_slider->setResAnim(pAnimState);
         m_sliding = false;
     });
-    pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
+    m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
     {
-        if (m_sliding)
-        {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
-            {
-                qint32 x = pTouchEvent->localPosition.x - m_slider->getWidth() / 2;
-                if (x < 20)
-                {
-                    x = 20;
-                }
-                else if (x > this->getWidth() - m_slider->getWidth() - 20)
-                {
-                    x = this->getWidth() - m_slider->getWidth() - 20;
-                }
-                m_slider->setX(x);
-                // calc new scroll value :)
-                if (static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20) > 0)
-                {
-                    m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20);
-                }
-                else
-                {
-                    m_Scrollvalue = 0;
-                }
-                emit sigScrollValueChanged(m_Scrollvalue);
-            }
-        }
+        scroll(pEvent);
     });
 
     connect(this, &V_Scrollbar::sigChangeScrollValue, this, &V_Scrollbar::changeScrollValue, Qt::QueuedConnection);
+}
+
+void V_Scrollbar::scroll(oxygine::Event* pEvent)
+{
+    if (m_sliding)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            qint32 x = pTouchEvent->localPosition.x - m_slider->getWidth() / 2;
+            if (x < 20)
+            {
+                x = 20;
+            }
+            else if (x > this->getWidth() - m_slider->getWidth() - 20)
+            {
+                x = this->getWidth() - m_slider->getWidth() - 20;
+            }
+            m_slider->setX(x);
+            // calc new scroll value :)
+            if (static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20) > 0)
+            {
+                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20);
+            }
+            else
+            {
+                m_Scrollvalue = 0;
+            }
+            emit sigScrollValueChanged(m_Scrollvalue);
+        }
+    }
 }
 
 void V_Scrollbar::setContentWidth(qint32 width)
@@ -225,5 +230,17 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
         // all fine do nothing
     }
     m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
+    pApp->continueThread();
+}
+
+void V_Scrollbar::setWidth(float w)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    oxygine::Actor::setWidth(w);
+    m_Width = w;
+    m_pBox->setWidth(w);
+    m_pArrowRigth->setPosition(m_Width - m_pArrowRigth->getWidth() - 8, 9);
+    setContentWidth(m_ContentWidth);
     pApp->continueThread();
 }

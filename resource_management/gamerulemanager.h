@@ -13,11 +13,6 @@ signals:
 
 public slots:
     void loadAll();
-
-
-
-
-
     /**
      * @brief loadVictoryRule
      * @param victoryID the victory that should be loaded.
@@ -73,7 +68,27 @@ public slots:
     {
         return m_loadedWeather.size();
     }
-
+    /**
+     * @brief existsWeather
+     * @param weatherID
+     * @return
+     */
+    inline bool existsWeather(QString weatherID)
+    {
+        return m_loadedWeather.contains(weatherID);
+    }
+    /**
+     * @brief existsVictoryRule
+     * @param ruleID
+     * @return
+     */
+    inline bool existsVictoryRule(QString ruleID)
+    {
+        return m_loadedVictoryRules.contains(ruleID);
+    }
+    /**
+     * @brief reset
+     */
     void reset();
 private:
     QStringList m_loadedWeather;
