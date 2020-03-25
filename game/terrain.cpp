@@ -929,9 +929,18 @@ bool Terrain::getVisionHide(Player* pPlayer)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
     QJSValue ret = pInterpreter->doFunction(terrainID, function1);
+    GameMap* pMap = GameMap::getInstance();
     if (ret.isBool())
     {
         bool value = ret.toBool();
+        if (!value &&
+            m_Building.get() != nullptr &&
+            pPlayer != nullptr &&
+            pPlayer->isEnemy(m_Building->getOwner()) &&
+            pMap->getGameRules()->getBuildingVisionHide())
+        {
+            value = m_Building->getVisionHide();
+        }
         if (value && pPlayer != nullptr)
         {
             CO* pCO = pPlayer->getCO(0);

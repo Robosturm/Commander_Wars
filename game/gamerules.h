@@ -49,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 8;
+        return 9;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -70,6 +70,16 @@ public:
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getVisionBuildingVisionHide
+     * @return
+     */
+    bool getBuildingVisionHide() const;
+    /**
+     * @brief setVisionBuildingVisionHide
+     * @param VisionBuildingVisionHide
+     */
+    void setBuildingVisionHide(bool VisionBuildingVisionHide);
     /**
      * @brief getVisionBlock
      * @return
@@ -344,7 +354,7 @@ private:
     bool m_WeatherPrediction{true};
     bool m_coUnits{true};
     bool m_VisionBlock{false};
-
+    bool m_BuildingVisionHide{false};
 };
 
 #endif // GAMERULES_H

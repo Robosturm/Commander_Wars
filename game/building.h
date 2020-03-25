@@ -82,6 +82,7 @@ public:
 signals:
 
 public slots:
+    bool getVisionHide();
     /**
      * @brief getVisionHigh
      * @return

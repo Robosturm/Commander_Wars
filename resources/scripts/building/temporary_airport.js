@@ -62,6 +62,11 @@ var Constructor = function()
                "<div c='#00ff00'>" + qsTr("air ") + "</div>" +
                "<r>" + qsTr("units is possible.") + "</r>";
     };
+
+    this.getVisionHide = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

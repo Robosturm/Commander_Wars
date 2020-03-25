@@ -36,6 +36,11 @@ var Constructor = function()
                "<div c='#00ff00'>" + qsTr("resupply") + "</div>" +
                "<r>" + qsTr(".") + "</r>";
     };
+
+    this.getVisionHide = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

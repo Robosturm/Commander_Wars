@@ -2063,91 +2063,91 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="327"/>
-        <location filename="../objects/ingameinfobar.cpp" line="371"/>
-        <location filename="../objects/ingameinfobar.cpp" line="375"/>
+        <location filename="../objects/ingameinfobar.cpp" line="328"/>
+        <location filename="../objects/ingameinfobar.cpp" line="372"/>
+        <location filename="../objects/ingameinfobar.cpp" line="376"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="415"/>
+        <location filename="../objects/ingameinfobar.cpp" line="416"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="431"/>
+        <location filename="../objects/ingameinfobar.cpp" line="432"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="447"/>
+        <location filename="../objects/ingameinfobar.cpp" line="448"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="463"/>
+        <location filename="../objects/ingameinfobar.cpp" line="464"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="480"/>
+        <location filename="../objects/ingameinfobar.cpp" line="481"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="497"/>
+        <location filename="../objects/ingameinfobar.cpp" line="498"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="636"/>
-        <location filename="../objects/ingameinfobar.cpp" line="681"/>
+        <location filename="../objects/ingameinfobar.cpp" line="638"/>
+        <location filename="../objects/ingameinfobar.cpp" line="683"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="645"/>
+        <location filename="../objects/ingameinfobar.cpp" line="647"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="654"/>
-        <location filename="../objects/ingameinfobar.cpp" line="663"/>
+        <location filename="../objects/ingameinfobar.cpp" line="656"/>
+        <location filename="../objects/ingameinfobar.cpp" line="665"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="690"/>
+        <location filename="../objects/ingameinfobar.cpp" line="692"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="701"/>
+        <location filename="../objects/ingameinfobar.cpp" line="703"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="710"/>
+        <location filename="../objects/ingameinfobar.cpp" line="712"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="718"/>
+        <location filename="../objects/ingameinfobar.cpp" line="720"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="726"/>
+        <location filename="../objects/ingameinfobar.cpp" line="728"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="738"/>
+        <location filename="../objects/ingameinfobar.cpp" line="740"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="756"/>
+        <location filename="../objects/ingameinfobar.cpp" line="758"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3475,26 +3475,36 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="248"/>
-        <source>Unit Limit: </source>
+        <source>Building Vision Denial: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="252"/>
+        <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="261"/>
+        <source>Unit Limit: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="265"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="262"/>
+        <location filename="../objects/ruleselection.cpp" line="275"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="266"/>
+        <location filename="../objects/ruleselection.cpp" line="279"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="278"/>
+        <location filename="../objects/ruleselection.cpp" line="291"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

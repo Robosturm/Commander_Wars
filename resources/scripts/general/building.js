@@ -218,4 +218,9 @@ var BUILDING =
     {
         return 0;
     },
+
+    getVisionHide : function(building)
+    {
+        return false;
+    }
 };

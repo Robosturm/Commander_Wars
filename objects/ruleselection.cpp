@@ -245,6 +245,19 @@ void RuleSelection::showRuleSelection()
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
+    textField->setHtmlText(tr("Building Vision Denial: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getBuildingVisionHide());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setBuildingVisionHide, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
     textField->setHtmlText(tr("Unit Limit: "));
     textField->setPosition(30, y);
     addChild(textField);

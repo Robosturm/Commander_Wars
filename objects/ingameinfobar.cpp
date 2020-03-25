@@ -278,7 +278,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
         Player* pPlayer = pMap->getCurrentViewPlayer();
-        if (pPlayer->getFieldVisibleType(x, y) != GameEnums::VisionType_Shrouded)
+        GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
+        if (visionHide != GameEnums::VisionType_Shrouded)
         {
             Terrain* pTerrain = pMap->getTerrain(x, y);
             Building* pBuilding = pTerrain->getBuilding();
@@ -628,7 +629,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             // show building information
             if (pBuilding != nullptr)
             {
-                if (pBuilding->getOwner() != nullptr)
+                if (pBuilding->getOwner() != nullptr &&
+                    visionHide == GameEnums::VisionType_Clear)
                 {
                     pTextfield = new oxygine::TextField();
                     pTextfield->setPosition(10, y2);

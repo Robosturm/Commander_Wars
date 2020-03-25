@@ -83,6 +83,21 @@ QString Building::getDescription()
     }
 }
 
+bool Building::getVisionHide()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getVisionHide";
+    QJSValueList args;
+    QJSValue objArg = pInterpreter->newQObject(this);
+    args << objArg;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return false;
+}
+
 void Building::setUnitOwner(Unit* pUnit)
 {
     setOwner(pUnit->getOwner());

@@ -41,6 +41,11 @@ var Constructor = function()
     {
         return 5;
     };
+
+    this.getVisionHide = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

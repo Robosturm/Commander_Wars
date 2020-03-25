@@ -40,6 +40,11 @@ var Constructor = function()
     {
         return qsTr("Oil rig. Once captured produces a lot of funds, but can't repair units.");
     };
+
+    this.getVisionHide = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

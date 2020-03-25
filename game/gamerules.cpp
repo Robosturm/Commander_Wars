@@ -763,6 +763,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getBuildingVisionHide() const
+{
+    return m_BuildingVisionHide;
+}
+
+void GameRules::setBuildingVisionHide(bool buildingVisionHide)
+{
+    m_BuildingVisionHide = buildingVisionHide;
+}
+
 bool GameRules::getVisionBlock() const
 {
     return m_VisionBlock;
@@ -849,6 +859,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_DayWeather;
     pStream << m_coUnits;
     pStream << m_VisionBlock;
+    pStream << m_BuildingVisionHide;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1024,5 +1035,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 7)
     {
         pStream >> m_VisionBlock;
+    }
+    if (version > 8)
+    {
+        pStream >> m_BuildingVisionHide;
     }
 }

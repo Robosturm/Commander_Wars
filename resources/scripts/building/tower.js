@@ -41,6 +41,11 @@ var Constructor = function()
                "<div c='#00ff00'>" + qsTr("attack and defence powers") + "</div>" +
                "<r>" + "." + "</r>";
     };
+
+    this.getVisionHide = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = BUILDING;

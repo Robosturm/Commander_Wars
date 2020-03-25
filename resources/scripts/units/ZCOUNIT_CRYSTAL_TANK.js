@@ -67,12 +67,15 @@ var Constructor = function()
 
     this.postBattleActions = function(unit, damage, otherUnit, gotAttacked)
     {
-        // damage can be negativ if we can't do a counter attack the damge is -1
-        // avoid loosing hp cause of our passive or power
-        var healPercent = 0.25;
-        if (damage > 0)
+        if (!gotAttacked)
         {
-            unit.setHp(unit.getHp() + damage * healPercent);
+            // damage can be negativ if we can't do a counter attack the damge is -1
+            // avoid loosing hp cause of our passive or power
+            var healPercent = 0.35;
+            if (damage > 0)
+            {
+                unit.setHp(unit.getHp() + damage * healPercent);
+            }
         }
     };
 }
