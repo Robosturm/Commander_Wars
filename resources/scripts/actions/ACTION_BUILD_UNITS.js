@@ -66,12 +66,12 @@ var Constructor = function()
     {
         var building = action.getTargetBuilding();
         var units = building.getConstructionList();
+        var funds = map.getCurrentPlayer().getFunds();
         for (i = 0; i < units.length; i++)
         {
             var name = Global[units[i]].getName();
             var costs = map.getCurrentPlayer().getCosts(units[i]);
             var enabled = false;
-            var funds = map.getCurrentPlayer().getFunds();
             if (costs <= funds)
             {
                 enabled = true;

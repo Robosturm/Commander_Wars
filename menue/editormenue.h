@@ -220,16 +220,18 @@ public slots:
      * @param playerCount
      * @param roadSupport
      * @param seed
-     * @param forestchance
-     * @param mountainChance
-     * @param seachance
-     * @param buildingchance
+     * @param terrains
+     * @param buildings
+     * @param ownedBaseSize
+     * @param startBaseSize
      */
     void createRandomMap(QString mapName, QString author, QString description,
-                         qint32 width,qint32 heigth, qint32 playerCount,
+                         qint32 width, qint32 heigth, qint32 playerCount,
                          bool roadSupport, qint32 seed,
-                         float forestchance, float mountainChance, float seachance, float buildingchance,
-                         float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
+                         QVector<std::tuple<QString, float>> terrains,
+                         QVector<std::tuple<QString, float>> buildings,
+                         QVector<float> ownedBaseSize,
+                         float startBaseSize);
     /**
      * @brief createMarkedArea
      * @param pActor

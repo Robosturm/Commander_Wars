@@ -40,7 +40,9 @@ public:
     static Console* getInstance();
     static void dotask(QString message);
     static void draw();
+    static void messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg);
     void init();
+
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
     static void print(QString message, qint8 LogLevel);

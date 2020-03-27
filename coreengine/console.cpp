@@ -19,6 +19,7 @@
 #include "oxygine/KeyEvent.h"
 #include "qclipboard.h"
 #include "qguiapplication.h"
+#include "qlogging.h"
 
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
@@ -1433,4 +1434,43 @@ void Console::KeyInput(oxygine::KeyEvent event)
         }
     }
     pApp->continueThread();
+}
+
+void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    static QFile file("console.log");
+    static QTextStream stream(&file);
+    if (!file.isOpen())
+    {
+        file.open(QIODevice::WriteOnly);
+    }
+    QByteArray localMsg = msg.toLocal8Bit();
+    switch (type)
+    {
+        case QtDebugMsg:
+            stream << "Debug: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+            stream.flush();
+            fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtInfoMsg:
+            stream << "Info: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+            stream.flush();
+            fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtWarningMsg:
+            stream << "Warning: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+            stream.flush();
+            fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtCriticalMsg:
+            stream << "Critical: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+            stream.flush();
+            fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            break;
+        case QtFatalMsg:
+            stream << "Fatal: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+            stream.flush();
+            fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+            abort();
+    }
 }

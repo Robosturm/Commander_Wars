@@ -490,19 +490,19 @@ void EditorMenue::clickedTopbar(QString itemID)
 }
 
 void EditorMenue::createRandomMap(QString mapName, QString author, QString description,
-                                  qint32 width,qint32 heigth, qint32 playerCount,
+                                  qint32 width, qint32 heigth, qint32 playerCount,
                                   bool roadSupport, qint32 seed,
-                                  float forestchance, float mountainChance, float seachance, float buildingchance,
-                                  float factoryChance, float airPortChance, float harbourChance, float startBaseSize)
+                                  QVector<std::tuple<QString, float>> terrains,
+                                  QVector<std::tuple<QString, float>> buildings,
+                                  QVector<float> ownedBaseSize,
+                                  float startBaseSize)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     cleanTemp(-1);
     GameMap* pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
-                        forestchance / 100.0f, mountainChance / 100.0f,
-                        seachance / 100.0f, buildingchance / 100.0f,
-                        factoryChance / 100.0f, airPortChance / 100.0f, harbourChance / 100.0f, startBaseSize / 100.0f);
+                        terrains, buildings, ownedBaseSize, startBaseSize / 100.0f);
     pGameMap->setMapName(mapName);
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);

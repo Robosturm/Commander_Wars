@@ -60,6 +60,7 @@
 
 int main(int argc, char* argv[])
 {
+    qInstallMessageHandler(Console::messageOutput);
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     /*************************************************************************************************/
     // setup network session support
@@ -106,6 +107,8 @@ int main(int argc, char* argv[])
     qRegisterMetaType<WikiDatabase::pageData>("WikiDatabase::pageData");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
+    qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
+    qRegisterMetaType<QVector<float>>("QVector<float>");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");

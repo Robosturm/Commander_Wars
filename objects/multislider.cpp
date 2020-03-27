@@ -60,19 +60,22 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     {
         sliderDirection = 1;
     }
-    while (totalSliderValue != 100)
+    if (m_Slider.size() > 0)
     {
-        qint32 currentValue = m_Slider[currentSliderChange]->getCurrentValue();
-        if ((currentValue > 0 && sliderDirection < 0) ||
-            (currentValue < 100 && sliderDirection > 0))
+        while (totalSliderValue != 100)
         {
-            m_Slider[currentSliderChange]->setCurrentValue(m_Slider[currentSliderChange]->getCurrentValue() + sliderDirection);
-            totalSliderValue += sliderDirection;
-        }
-        currentSliderChange += 1;
-        if (currentSliderChange >= m_Slider.size())
-        {
-            currentSliderChange = 0;
+            qint32 currentValue = m_Slider[currentSliderChange]->getCurrentValue();
+            if ((currentValue > 0 && sliderDirection < 0) ||
+                (currentValue < 100 && sliderDirection > 0))
+            {
+                m_Slider[currentSliderChange]->setCurrentValue(m_Slider[currentSliderChange]->getCurrentValue() + sliderDirection);
+                totalSliderValue += sliderDirection;
+            }
+            currentSliderChange += 1;
+            if (currentSliderChange >= m_Slider.size())
+            {
+                currentSliderChange = 0;
+            }
         }
     }
 }

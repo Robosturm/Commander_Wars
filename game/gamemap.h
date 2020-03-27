@@ -109,10 +109,12 @@ public:
      * @param buildingchance
      * @return seed used to create the map
      */
-    qint32 randomMap(qint32 width,qint32 heigth, qint32 playerCount,
+    qint32 randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                      bool roadSupport, qint32 seed,
-                     float forestchance, float mountainChance, float seachance, float buildingchance,
-                     float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
+                     QVector<std::tuple<QString, float>> terrains,
+                     QVector<std::tuple<QString, float>> buildings,
+                     QVector<float> ownedBaseSize,
+                     float startBaseSize);
     /**
      * @brief placeGroup
      * @param startX
@@ -122,7 +124,7 @@ public:
      * @param terrainRadius
      * @param randInt
      */
-    qint32 placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
+    qint32 randomMapPlaceGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
     /**
      * @brief addTerrainPoint
      * @param points
@@ -131,17 +133,7 @@ public:
      * @param terrainID
      * @param terrainRadius
      */
-    void addTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
-    /**
-     * @brief placeReaf
-     * @param randInt
-     */
-    void placeReaf(QRandomGenerator& randInt);
-    /**
-     * @brief placeBeach
-     * @param randInt
-     */
-    void placeBeach(QRandomGenerator& randInt);
+    void randomMapAddTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
     /**
      * @brief createBuildings
      * @param buildings
@@ -149,18 +141,50 @@ public:
      * @param randInt
      * @param noHarbour
      */
-    QVector<QPoint> createBuildings(qint32 buildings, QRandomGenerator& randInt, float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
+    QVector<QPoint> randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize, float startBaseSize);
     /**
      * @brief createRoad
      */
-    void createRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions);
+    void randomMapCreateRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions);
     /**
      * @brief isBuildingPlace
      * @param x
      * @param y
      * @return
      */
-    bool isBuildingPlace(qint32 x, qint32 y);
+    bool randomMapIsBuildingPlace(QString buildingId, qint32 x, qint32 y);
+    /**
+     * @brief placeBuildings
+     * @param buildingId
+     * @param baseTerrainID
+     * @param buildings
+     * @param playerPositions
+     * @param ownedBaseSize
+     * @param chance
+     * @param startBaseSize
+     * @param randInt
+     */
+    void randomMapPlaceBuildings(QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions, QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt);
+    /**
+     * @brief placeTerain
+     * @param terrainID
+     * @param width
+     * @param heigth
+     * @param placeChance
+     * @param placeSize
+     * @param topTerrainIDs
+     * @param placeChances
+     * @param randInt
+     */
+    void randomMapPlaceTerain(QString terrainID, qint32 width, qint32 heigth, float placeChance, QPoint placeSize, QStringList topTerrainIDs, QList<QVariant> placeChances, QRandomGenerator& randInt);
+    /**
+     * @brief placeOnTop
+     * @param terrainID
+     * @param topId
+     * @param chance
+     * @param randInt
+     */
+    void randomMapPlaceOnTop(QString terrainID, QString topId, float chance, QRandomGenerator& randInt);
     /**
      * @brief getInstance
      * @return
