@@ -1095,11 +1095,17 @@ void GameMenue::keyInputAll(Qt::Key cur)
         pApp->suspendThread();
         GameMap* pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getCurrentViewPlayer();
+        GameEnums::VisionType visionType = pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
-            pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) != GameEnums::VisionType_Shrouded)
+            visionType != GameEnums::VisionType_Shrouded)
         {
             Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-            spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
+            Unit* pUnit = pTerrain->getUnit();
+            if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+            {
+                pUnit = nullptr;
+            }
+            spFieldInfo fieldinfo = new FieldInfo(pTerrain, pUnit);
             this->addChild(fieldinfo);
             connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
             {
