@@ -63,21 +63,21 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(1, 4);
     },
-    getFORESTCreateType : function()
+    getPLAINSCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Group;
     },
     getRIVERTopTerrainIDs : function()
     {
-        return [0.05];
+        return ["BRIDGE"];
     },
     getRIVERTopTerrainChances : function()
     {
-        return ["BRIDGE"];
+        return [0.05];
     },
     getRIVERDistribution : function()
     {
-        return Qt.point(1, 1);
+        return Qt.point(1, 3);
     },
     getRIVERCreateType : function()
     {

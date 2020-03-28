@@ -57,17 +57,34 @@ var RANDOMMAPGENERATOR =
     {
         return GameEnums.RandomMapTerrainType_Group;
     },
-    getRIVERTopTerrainIDs : function()
+	
+	getPLAINSTopTerrainIDs : function()
     {
-        return [0.05];
+        return [];
     },
-    getRIVERTopTerrainChances : function()
+    getPLAINSTopTerrainChances : function()
+    {
+        return [];
+    },
+    getPLAINSDistribution : function()
+    {
+        return Qt.point(1, 1);
+    },
+    getPLAINSCreateType : function()
+    {
+        return GameEnums.RandomMapTerrainType_Group;
+    },	
+    getRIVERTopTerrainIDs : function()
     {
         return ["BRIDGE"];
     },
+    getRIVERTopTerrainChances : function()
+    {
+        return [0.05];
+    },
     getRIVERDistribution : function()
     {
-        return Qt.point(1, 1);
+        return Qt.point(1, 3);
     },
     getRIVERCreateType : function()
     {
