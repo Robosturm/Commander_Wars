@@ -1471,6 +1471,5 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             stream << "Fatal: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
             stream.flush();
             fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-            abort();
     }
 }

@@ -7,12 +7,12 @@ var RANDOMMAPGENERATOR =
     // always need to be here
     getTerrainBaseChances : function()
     {
-        return [50, 17, 16, 0, 0, 17];
+        return [30, 20, 20, 10, 0, 20];
     },
     getTerrainBases : function()
     {
         // the entries PLAINS and Buildings are mandatory
-        return ["PLAINS", "FOREST", "MOUNTAIN", "RIVER", "SEA", "Buildings"];
+        return ["PLAINS", "DESERT", "SNOW", "RIVER", "SEA", "Buildings"];
     },
     getBuildingBaseChances : function()
     {
@@ -27,6 +27,8 @@ var RANDOMMAPGENERATOR =
         // describes how roads from hq to hq are created on different tiles without a building on it
         var baseID = terrain.getBaseTerrainID();
         var terrainId = terrain.getTerrainID()
+		// first item is the base terrain or empty for use the current
+		// second item is the road placed on top of the tile
         if (baseID === "SEA")
         {
             return ["SEA", "BRIDGE"];
@@ -35,23 +37,31 @@ var RANDOMMAPGENERATOR =
 		{
 			return ["", "BRIDGE"];
 		}
+		else if (baseID === "SNOW")
+        {
+            return ["SNOW", "STREET"];
+        }
+		else if (baseID === "DESERT")
+        {
+            return ["DESERT", "DESERT_PATH"];
+        }
         return ["PLAINS", "STREET"];
     },
     // for each terrain we need get + TerrainID + TopTerrainIDs and get + TerrainID + TopTerrainChances
     // each function returns the terrains that can be placed on top of the base terrain mainly for sea tiles + the chance it's gonna be placed
     // get + TerrainID + Distribution describes the chance of all terrains beeing connected to one mass
     // get + TerrainID + CreateType how the terrain is placed in random blob or more in a line like a river or road
-    getFORESTTopTerrainIDs : function()
+    getPLAINSTopTerrainIDs : function()
     {
-        return [];
+        return ["FOREST", "MOUNTAIN"];
     },
-    getFORESTTopTerrainChances : function()
+    getPLAINSTopTerrainChances : function()
     {
-        return [];
+        return [0.1, 0.1];
     },
-    getFORESTDistribution : function()
+    getPLAINSDistribution : function()
     {
-        return Qt.point(5, 10);
+        return Qt.point(1, 4);
     },
     getFORESTCreateType : function()
     {
@@ -73,19 +83,35 @@ var RANDOMMAPGENERATOR =
     {
         return GameEnums.RandomMapTerrainType_Line;
     },
-    getMOUNTAINTopTerrainIDs : function()
+    getSNOWTopTerrainIDs : function()
     {
-        return [];
+        return ["SNOW_FOREST", "SNOW_MOUNTAIN"];
     },
-    getMOUNTAINTopTerrainChances : function()
+    getSNOWTopTerrainChances : function()
     {
-        return [];
+        return [0.1, 0.1];
     },
-    getMOUNTAINDistribution : function()
+    getSNOWDistribution : function()
     {
-        return Qt.point(2, 6);
+        return Qt.point(1, 4);
     },
-    getMOUNTAINCreateType : function()
+    getSNOWCreateType : function()
+    {
+        return GameEnums.RandomMapTerrainType_Group;
+    },
+	getDESERTTopTerrainIDs : function()
+    {
+        return ["DESERT_FOREST", "DESERT_ROCK"];
+    },
+    getDESERTTopTerrainChances : function()
+    {
+        return [0.1, 0.1];
+    },
+    getDESERTDistribution : function()
+    {
+        return Qt.point(1, 4);
+    },
+    getDESERTCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Group;
     },
@@ -204,14 +230,15 @@ var RANDOMMAPGENERATOR =
     },
     getBuildingBaseTerrain : function(x, y)
     {
-        var id = map.getTerrain(x, y).getTerrainID();
+        var id = map.getTerrain(x, y).getBaseTerrainID();
         if (id === "PLAINS" ||
-                id === "FOREST" ||
-                id === "MOUNTAIN")
+            id === "SNOW" ||
+            id === "DESERT")
         {
             return true;
         }
         return false;
+
     },
 	customStep : function()
 	{

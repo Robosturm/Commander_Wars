@@ -126,6 +126,16 @@ public:
      */
     qint32 randomMapPlaceGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
     /**
+     * @brief randomMapPlaceLine
+     * @param startX
+     * @param startY
+     * @param count
+     * @param terrainID
+     * @param randInt
+     * @return
+     */
+    qint32 randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, QString terrainID, QRandomGenerator& randInt);
+    /**
      * @brief addTerrainPoint
      * @param points
      * @param x
@@ -133,7 +143,7 @@ public:
      * @param terrainID
      * @param terrainRadius
      */
-    void randomMapAddTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
+    bool randomMapAddTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
     /**
      * @brief createBuildings
      * @param buildings
@@ -166,7 +176,7 @@ public:
      */
     void randomMapPlaceBuildings(QString buildingId, QString baseTerrainID, qint32 buildings, QVector<QPoint> playerPositions, QVector<float> ownedBaseSize, float chance, float startBaseSize, QRandomGenerator& randInt);
     /**
-     * @brief placeTerain
+     * @brief randomMapPlaceTerain
      * @param terrainID
      * @param width
      * @param heigth
@@ -174,9 +184,10 @@ public:
      * @param placeSize
      * @param topTerrainIDs
      * @param placeChances
+     * @param type
      * @param randInt
      */
-    void randomMapPlaceTerain(QString terrainID, qint32 width, qint32 heigth, float placeChance, QPoint placeSize, QStringList topTerrainIDs, QList<QVariant> placeChances, QRandomGenerator& randInt);
+    void randomMapPlaceTerain(QString terrainID, qint32 width, qint32 heigth, float placeChance, QPoint placeSize, QStringList topTerrainIDs, QList<QVariant> placeChances, GameEnums::RandomMapTerrainType type, QRandomGenerator& randInt);
     /**
      * @brief placeOnTop
      * @param terrainID

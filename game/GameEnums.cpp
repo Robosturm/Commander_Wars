@@ -106,6 +106,9 @@ void GameEnums::registerEnums()
     value.setProperty("AiTypes_NormalOffensive", AiTypes_NormalOffensive);
     value.setProperty("AiTypes_NormalDefensive", AiTypes_NormalDefensive);
 
+    value.setProperty("RandomMapTerrainType_Group", RandomMapTerrainType_Group);
+    value.setProperty("RandomMapTerrainType_Line", RandomMapTerrainType_Line);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 
@@ -124,6 +127,14 @@ QString GameEnums::getUnitTypeText(UnitType type)
         case UnitType_Ground:
         {
             return tr("Ground");
+        }
+        case UnitType_Infantry:
+        {
+            return tr("Infantry");
+        }
+        case UnitType_Hovercraft:
+        {
+            return tr("Hovercraft");
         }
     }
     return tr("Ground");

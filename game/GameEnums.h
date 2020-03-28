@@ -186,6 +186,13 @@ public:
     };
     Q_ENUM(AiTypes)
 
+    enum RandomMapTerrainType
+    {
+        RandomMapTerrainType_Group,
+        RandomMapTerrainType_Line,
+    };
+    Q_ENUM(RandomMapTerrainType)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

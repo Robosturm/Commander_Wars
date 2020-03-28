@@ -1330,132 +1330,132 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="61"/>
+        <location filename="../objects/dialograndommap.cpp" line="62"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="65"/>
+        <location filename="../objects/dialograndommap.cpp" line="66"/>
         <source>Selects the name of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="74"/>
+        <location filename="../objects/dialograndommap.cpp" line="75"/>
         <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="78"/>
+        <location filename="../objects/dialograndommap.cpp" line="79"/>
         <source>Selects the author of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="87"/>
+        <location filename="../objects/dialograndommap.cpp" line="88"/>
         <source>Map Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="91"/>
+        <location filename="../objects/dialograndommap.cpp" line="92"/>
         <source>Selects the description for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="100"/>
+        <location filename="../objects/dialograndommap.cpp" line="101"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="104"/>
+        <location filename="../objects/dialograndommap.cpp" line="105"/>
         <source>Selects the width for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="113"/>
+        <location filename="../objects/dialograndommap.cpp" line="114"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="117"/>
+        <location filename="../objects/dialograndommap.cpp" line="118"/>
         <source>Selects the heigth for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="126"/>
+        <location filename="../objects/dialograndommap.cpp" line="127"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="130"/>
+        <location filename="../objects/dialograndommap.cpp" line="131"/>
         <source>Selects the amount of players for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="140"/>
+        <location filename="../objects/dialograndommap.cpp" line="141"/>
         <source>Map Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="144"/>
+        <location filename="../objects/dialograndommap.cpp" line="145"/>
         <source>The seed to generate the new map. Same map settings with the same seed generate the same map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="153"/>
+        <location filename="../objects/dialograndommap.cpp" line="154"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="157"/>
+        <location filename="../objects/dialograndommap.cpp" line="158"/>
         <source>If selected roads are created between the HQ&apos;s of the players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="166"/>
+        <location filename="../objects/dialograndommap.cpp" line="167"/>
         <source>Base Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="171"/>
+        <location filename="../objects/dialograndommap.cpp" line="172"/>
         <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="179"/>
+        <location filename="../objects/dialograndommap.cpp" line="180"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="185"/>
+        <location filename="../objects/dialograndommap.cpp" line="186"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="191"/>
+        <location filename="../objects/dialograndommap.cpp" line="192"/>
         <source>Owner Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="198"/>
+        <location filename="../objects/dialograndommap.cpp" line="199"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="229"/>
+        <location filename="../objects/dialograndommap.cpp" line="230"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="327"/>
+        <location filename="../objects/dialograndommap.cpp" line="328"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="332"/>
+        <location filename="../objects/dialograndommap.cpp" line="333"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="336"/>
+        <location filename="../objects/dialograndommap.cpp" line="337"/>
         <source>The percent distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1463,12 +1463,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="291"/>
+        <location filename="../objects/dialograndommap.cpp" line="292"/>
         <source>The percent distribution between the different terrains when a terrain is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="308"/>
+        <location filename="../objects/dialograndommap.cpp" line="309"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1916,19 +1916,29 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="118"/>
+        <location filename="../game/GameEnums.cpp" line="121"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="122"/>
+        <location filename="../game/GameEnums.cpp" line="125"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="126"/>
         <location filename="../game/GameEnums.cpp" line="129"/>
+        <location filename="../game/GameEnums.cpp" line="140"/>
         <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/GameEnums.cpp" line="133"/>
+        <source>Infantry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/GameEnums.cpp" line="137"/>
+        <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

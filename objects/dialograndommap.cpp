@@ -52,6 +52,7 @@ DialogRandomMap::DialogRandomMap()
         emit sigShowGeneratorSelection();
     });
     connect(m_GeneratorFile.get(), &Textbox::sigTextChanged, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
+    connect(this, &DialogRandomMap::sigShowGeneratorSelection, this, &DialogRandomMap::showGeneratorSelection, Qt::QueuedConnection);
     m_pPanel->addItem(m_Generator);
     y += 40;
 
@@ -245,13 +246,13 @@ void DialogRandomMap::showGeneratorSelection()
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
-
 }
 
 void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    filename = filename.replace(QCoreApplication::applicationDirPath() + "/", "");
     m_GeneratorFile->setCurrentText(filename);
     QFile file(filename);
     if (file.exists())
