@@ -72,7 +72,7 @@ public:
      * @param heigth
      * @param playerCount
      */
-    void newMap(qint32 width, qint32 heigth, qint32 playerCount);
+    void newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain = "PLAINS");
     /**
      * @brief changeMap
      * @param width
@@ -125,6 +125,14 @@ public:
      * @param randInt
      */
     qint32 randomMapPlaceGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
+    /**
+     * @brief randomMapTerrainPlaceable
+     * @param x
+     * @param y
+     * @param terrainID
+     * @return
+     */
+    bool randomMapTerrainPlaceable(qint32 x, qint32 y, QString terrainID);
     /**
      * @brief randomMapPlaceLine
      * @param startX

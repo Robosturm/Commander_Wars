@@ -11,7 +11,7 @@ var RANDOMMAPGENERATOR =
     },
     getTerrainBases : function()
     {
-        // the entries PLAINS and Buildings are mandatory
+        // the entry Buildings is mandatory
         return ["PLAINS", "FOREST", "MOUNTAIN", "RIVER", "SEA", "Buildings"];
     },
     getBuildingBaseChances : function()
@@ -37,7 +37,13 @@ var RANDOMMAPGENERATOR =
 		}
         return ["PLAINS", "STREET"];
     },
-    // for each terrain we need get + TerrainID + TopTerrainIDs and get + TerrainID + TopTerrainChances
+	getBaseTerrainID : function()
+	{
+		// map is filled with this terrain at the start
+		return "PLAINS";
+	},
+    // for each terrain we need
+	// get + TerrainID + TopTerrainIDs and get + TerrainID + TopTerrainChances
     // each function returns the terrains that can be placed on top of the base terrain mainly for sea tiles + the chance it's gonna be placed
     // get + TerrainID + Distribution describes the chance of all terrains beeing connected to one mass
     // get + TerrainID + CreateType how the terrain is placed in random blob or more in a line like a river or road
@@ -53,11 +59,14 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(5, 10);
     },
+	getFORESTPlaceable : function(x, y)
+    {
+        return true;
+    },
     getFORESTCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Group;
-    },
-	
+    },	
 	getPLAINSTopTerrainIDs : function()
     {
         return [];
@@ -69,6 +78,10 @@ var RANDOMMAPGENERATOR =
     getPLAINSDistribution : function()
     {
         return Qt.point(1, 1);
+    },
+	getPLAINSPlaceable : function(x, y)
+    {
+        return true;
     },
     getPLAINSCreateType : function()
     {
@@ -86,6 +99,10 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(1, 3);
     },
+	getRIVERPlaceable : function(x, y)
+    {
+        return true;
+    },
     getRIVERCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Line;
@@ -102,6 +119,10 @@ var RANDOMMAPGENERATOR =
     {
         return Qt.point(2, 6);
     },
+	getMOUNTAINPlaceable : function(x, y)
+    {
+        return true;
+    },
     getMOUNTAINCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Group;
@@ -117,6 +138,10 @@ var RANDOMMAPGENERATOR =
     getSEADistribution : function()
     {
         return Qt.point(1, 4);
+    },
+	getSEAPlaceable : function(x, y)
+    {
+        return true;
     },
     getSEACreateType : function()
     {

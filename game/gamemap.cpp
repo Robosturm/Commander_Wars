@@ -756,9 +756,9 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
         }
+        updateTerrain(x, y);
         if (updateSprites)
         {
-            updateTerrain(x, y);
             this->updateSprites(x, y);
         }
         pApp->continueThread();

@@ -156,7 +156,7 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(text);
     m_CreateRoad = new Checkbox();
     m_CreateRoad->setTooltipText(tr("If selected roads are created between the HQ's of the players."));
-    m_CreateRoad->setChecked(true);
+    m_CreateRoad->setChecked(false);
     m_CreateRoad->setPosition(text->getX() + width, text->getY());
     m_pPanel->addItem(m_CreateRoad);
 

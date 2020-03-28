@@ -9,7 +9,7 @@
 #include "game/player.h"
 #include "game/co.h"
 
-void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount)
+void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain)
 {
     clearMap();
     for (qint32 y = 0; y < heigth; y++)
@@ -17,7 +17,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount)
         fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
-            spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
+            spTerrain pTerrain = Terrain::createTerrain(baseTerrain, x, y, "");
             this->addChild(pTerrain);
             fields[y]->append(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
