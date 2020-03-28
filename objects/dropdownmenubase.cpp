@@ -83,7 +83,14 @@ void DropDownmenuBase::showDropDown()
     releaseRef();
     if (getY() > Settings::getHeight() / 2)
     {
-        m_Panel->setY(-m_Panel->getHeight());
+        if (m_Panel->getH_Scrollbar()->getVisible())
+        {
+            m_Panel->setY(-m_Panel->getHeight());
+        }
+        else
+        {
+            m_Panel->setY(-m_Panel->getHeight() + m_Panel->getV_Scrollbar()->getHeight() + 7);
+        }
     }
     else
     {
