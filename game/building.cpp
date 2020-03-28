@@ -463,11 +463,7 @@ QStringList  Building::getConstructionList()
     QStringList coUnits;
     if (m_pOwner != nullptr)
     {
-        GameMap* pMap = GameMap::getInstance();
-        if (pMap->getGameRules()->getCoUnits())
-        {
-            coUnits = m_pOwner->getCOUnits(this);
-        }
+        coUnits = m_pOwner->getCOUnits(this);
     }
     if (coUnits.size() > 0)
     {
@@ -483,6 +479,7 @@ QStringList  Building::getConstructionList()
             }
         }
     }
+    GameMap* pMap = GameMap::getInstance();
     QStringList returnList;
     if (m_pOwner != nullptr)
     {
@@ -490,11 +487,12 @@ QStringList  Building::getConstructionList()
         for (qint32 i = 0; i < buildList.size(); i++)
         {
             QString unitID = buildList[i];
-            if (playerBuildList.contains(unitID))
+            QJSValue erg = pInterpreter->doFunction(unitID, "getCOSpecificUnit", args1);
+            if (playerBuildList.contains(unitID) &&
+                (!erg.toBool() || pMap->getGameRules()->getCoUnits()))
             {
                 returnList.append(unitID);
             }
-
         }
         return returnList;
     }

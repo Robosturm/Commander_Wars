@@ -191,11 +191,11 @@ void RuleSelection::showRuleSelection()
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setHtmlText(tr("CO Units: "));
+    textField->setHtmlText(tr("CO Specific Units: "));
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
-    pCheckbox->setTooltipText(tr("If unchecked CO-Units can't be produced."));
+    pCheckbox->setTooltipText(tr("If unchecked specific CO-Units can't be produced."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getCoUnits());

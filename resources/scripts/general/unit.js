@@ -211,5 +211,11 @@ var UNIT =
             return GameEnums.UnitType_Hovercraft;
         }
         return unitType;
+    },
+
+    getCOSpecificUnit : function(building)
+    {
+        return false;
     }
+
 };

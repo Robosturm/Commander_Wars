@@ -88,6 +88,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Air;
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

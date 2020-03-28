@@ -63,6 +63,10 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

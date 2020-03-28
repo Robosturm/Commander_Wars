@@ -78,6 +78,10 @@ var Constructor = function()
             }
         }
     };
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

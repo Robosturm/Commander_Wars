@@ -3427,12 +3427,12 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="194"/>
-        <source>CO Units: </source>
+        <source>CO Specific Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="198"/>
-        <source>If unchecked CO-Units can&apos;t be produced.</source>
+        <source>If unchecked specific CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
