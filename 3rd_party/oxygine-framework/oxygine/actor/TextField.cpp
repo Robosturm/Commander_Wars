@@ -190,8 +190,18 @@ namespace oxygine
         }
     }
 
+    QString TextField::getText() const
+    {
+         QString ret = _text;
+         ret = ret.replace("&gt;", ">");
+         ret = ret.replace("&lt;", "<");
+         return ret;
+    }
+
     void TextField::setHtmlText(QString str)
     {
+        str = str.replace(">", "&gt;");
+        str = str.replace("<", "&lt;");
         _flags |= flag_html;
         if (_text != str)
         {

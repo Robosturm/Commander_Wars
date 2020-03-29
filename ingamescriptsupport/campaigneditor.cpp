@@ -166,6 +166,7 @@ CampaignEditor::CampaignEditor()
     connect(this, &CampaignEditor::sigShowEditEnableMaps, this, &CampaignEditor::showEditEnableMaps, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigShowEditDisableMaps, this, &CampaignEditor::showEditDisableMaps, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigShowExitBox, this, &CampaignEditor::showExitBox, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowEditScriptVariables, this, &CampaignEditor::showEditScriptVariables, Qt::QueuedConnection);
 }
 
 void CampaignEditor::showExitBox()
@@ -305,8 +306,16 @@ void CampaignEditor::updateCampaignData()
             emit sigShowEditDisableMaps(i);
         });
 
+        oxygine::spButton pVariableButton = pObjectManager->createButton(tr("Variables"), 150);
+        pVariableButton->setPosition(520, 10 + i * 40);
+        m_Panel->addItem(pVariableButton);
+        pVariableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigShowEditScriptVariables(i);
+        });
+
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove Map"), 150);
-        pRemoveButton->setPosition(520, 10 + i * 40);
+        pRemoveButton->setPosition(680, 10 + i * 40);
         m_Panel->addItem(pRemoveButton);
         pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
@@ -317,13 +326,13 @@ void CampaignEditor::updateCampaignData()
         pText = new  oxygine::TextField();
         pText->setStyle(style);
         pText->setHtmlText(tr("Last Map"));
-        pText->setPosition(670, 10 + i * 40);
+        pText->setPosition(835, 10 + i * 40);
         m_Panel->addItem(pText);
 
         spCheckbox pBox = new Checkbox();
         pBox->setChecked(mapDatas[i].lastMap);
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign"));
-        pBox->setPosition(780, 10 + i * 40);
+        pBox->setPosition(940, 10 + i * 40);
         m_Panel->addItem(pBox);
         connect(pBox.get(), &Checkbox::checkChanged, [=](bool value)
         {
@@ -331,7 +340,7 @@ void CampaignEditor::updateCampaignData()
         });
     }
     m_Panel->setContentHeigth(mapDatas.size() * 40 + 40);
-    m_Panel->setContentWidth(850);
+    m_Panel->setContentWidth(1010);
     pApp->continueThread();
 }
 
@@ -422,6 +431,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
         QString line = stream.readLine().simplified();
         if (line.endsWith(campaignMaps))
         {
+
             break;
         }
         if (line.endsWith(campaignMapsFolder))
@@ -483,6 +493,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
             QStringList items = line.replace("if (map", "")
                                     .replace("DisableCount < ", ",")
                                     .replace(" && map", ",")
+                                    .replace(" && ", ",")
                                     .replace("EnableCount >= ", ",")
                                     .replace(") {ret.push(\"", ",")
                                     .replace("\");} // " + campaignMapAdd, "")
@@ -492,7 +503,37 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                 qint32 index = items[0].toInt();
                 mapDatas[index].disableCount = items[1].toInt();
                 mapDatas[index].previousCount = items[3].toInt();
-                mapDatas[index].map = items[4];
+                for (qint32 i = 4; i < items.size() - 1; i++)
+                {
+                    if (items[i].startsWith("!("))
+                    {
+                        QStringList subList = items[i].replace("!(variables.createVariable(\"", "")
+                                              .replace("\").readDataInt32() ", "@")
+                                              .replace(" ", "@").replace(")", "").split("@");
+                        if (subList.size() >= 3)
+                        {
+                            mapDatas[index].scriptVariableDisableActive = true;
+                            mapDatas[index].scriptVariableDisableName = subList[0];
+                            mapDatas[index].scriptVariableDisableCompare = subList[1];
+                            mapDatas[index].scriptVariableDisableValue = subList[2].toInt();
+                        }
+
+                    }
+                    else
+                    {
+                        QStringList subList = items[i].replace("variables.createVariable(\"", "")
+                                              .replace("\").readDataInt32() ", "@")
+                                              .replace(" ", "@").replace(")", "").split("@");
+                        if (subList.size() >= 3)
+                        {
+                            mapDatas[index].scriptVariableEnableActive = true;
+                            mapDatas[index].scriptVariableEnableName = subList[0];
+                            mapDatas[index].scriptVariableEnableCompare = subList[1];
+                            mapDatas[index].scriptVariableEnableValue = subList[2].toInt();
+                        }
+                    }
+                }
+                mapDatas[index].map = items[items.size() - 1];
             }
         }
     }   
@@ -505,7 +546,7 @@ void CampaignEditor::updateMapNames()
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
         QString name = getMapName(m_CampaignFolder->getCurrentText() + mapDatas[i].map);
-        if (name != mapDatas[i].mapName)
+        if (name != mapDatas[i].mapName && !name.isEmpty())
         {
             orgName.append(mapDatas[i].mapName);
             newName.append(name);
@@ -592,7 +633,19 @@ void CampaignEditor::saveCampaign(QString filename)
             }
             stream << "        // " << campaignMapDisabled << "\n";
             stream << "        if (map" << QString::number(i) << "DisableCount < " << mapDatas[i].disableCount <<
-                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
+                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount;
+            if (mapDatas[i].scriptVariableEnableActive)
+            {
+                stream << " && variables.createVariable(\"" << mapDatas[i].scriptVariableEnableName << "\").readDataInt32() "
+                       << mapDatas[i].scriptVariableEnableCompare << " " << mapDatas[i].scriptVariableEnableValue;
+            }
+            if (mapDatas[i].scriptVariableDisableActive)
+            {
+                stream << " && !(variables.createVariable(\"" << mapDatas[i].scriptVariableDisableName << "\").readDataInt32() "
+                       << mapDatas[i].scriptVariableDisableCompare << " " << mapDatas[i].scriptVariableDisableValue << ")";
+            }
+
+            stream << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
         }
 
         stream << "        return ret;\n";
@@ -634,7 +687,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     spGenericBox pBox = new GenericBox();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
     spPanel pPanel = new Panel(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
@@ -706,7 +759,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     spGenericBox pBox = new GenericBox();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
     spPanel pPanel = new Panel(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
@@ -766,6 +819,185 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         pPanel->addItem(pCheckbox);
         counter++;
     }
+    CampaignEditor::addChild(pBox);
+    pApp->continueThread();
+}
+
+void CampaignEditor::showEditScriptVariables(qint32 index)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGenericBox pBox = new GenericBox();
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
+    spPanel pPanel = new Panel(true, size, size);
+    pPanel->setPosition(20, 20);
+    pBox->addChild(pPanel);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    oxygine::TextStyle headerStyle = FontManager::getMainFont48();
+    headerStyle.color = FontManager::getFontColor();
+    headerStyle.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    headerStyle.multiline = false;
+
+    qint32 y = 10;
+    oxygine::spTextField pText = new  oxygine::TextField();
+    pText->setStyle(headerStyle);
+    pText->setHtmlText(tr("Enable Variable"));
+    pText->setPosition(10, y);
+    pPanel->addItem(pText);
+    y += 60;
+
+    qint32 width = 300;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Variable: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    spTextbox textBox = new Textbox(300);
+    textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
+    textBox->setPosition(width, y);
+    textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
+    connect(textBox.get(), &Textbox::sigTextChanged,
+            [=](QString value)
+    {
+        mapDatas[index].scriptVariableEnableName = value;
+    });
+    pPanel->addItem(textBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Compare: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    QVector<QString> items = {"===", "!==", ">=", "<="};
+    spDropDownmenu dropDown = new DropDownmenu(150, items);
+    dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
+    dropDown->setPosition(width, y);
+    dropDown->setCurrentItemText(mapDatas[index].scriptVariableEnableCompare);
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
+            [=](qint32)
+    {
+        mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
+    });
+    pPanel->addItem(dropDown);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Value: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    spSpinBox spinBox = new SpinBox(150, -999999, 999999);
+    spinBox->setTooltipText(tr("The value that the variable gets checked against."));
+    spinBox->setPosition(width, y);
+    spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        mapDatas[index].scriptVariableEnableValue = value;
+    });
+    pPanel->addItem(spinBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Use Variable: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    spCheckbox checkBox = new Checkbox();
+    checkBox->setTooltipText(tr("If checked the enable variable needs to fullfil the condition to allow this map to be playable."));
+    checkBox->setPosition(width, y);
+    checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
+    connect(checkBox.get(), &Checkbox::checkChanged,
+            [=](bool value)
+    {
+        mapDatas[index].scriptVariableEnableActive = value;
+    });
+    pPanel->addItem(checkBox);
+    y += 40;
+
+    pText = new  oxygine::TextField();
+    pText->setStyle(headerStyle);
+    pText->setHtmlText(tr("Disable Variable"));
+    pText->setPosition(10, y);
+    pPanel->addItem(pText);
+    y += 60;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Variable: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    textBox = new Textbox(300);
+    textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
+    textBox->setPosition(width, y);
+    textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
+    connect(textBox.get(), &Textbox::sigTextChanged,
+            [=](QString value)
+    {
+        mapDatas[index].scriptVariableDisableName = value;
+    });
+    pPanel->addItem(textBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Compare: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    dropDown = new DropDownmenu(150, items);
+    dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
+    dropDown->setPosition(width, y);
+    dropDown->setCurrentItemText(mapDatas[index].scriptVariableDisableCompare);
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
+            [=](qint32)
+    {
+        mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
+    });
+    pPanel->addItem(dropDown);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Value: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    spinBox = new SpinBox(150, -999999, 999999);
+    spinBox->setTooltipText(tr("The value that the variable gets checked against."));
+    spinBox->setPosition(width, y);
+    spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        mapDatas[index].scriptVariableDisableValue = value;
+    });
+    pPanel->addItem(spinBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Use Variable: "));
+    pText->setPosition(30, y);
+    pPanel->addItem(pText);
+    checkBox = new Checkbox();
+    checkBox->setTooltipText(tr("If checked and if the disable variable fullfil the condition this map can't be played."));
+    checkBox->setPosition(width, y);
+    checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);
+    connect(checkBox.get(), &Checkbox::checkChanged,
+            [=](bool value)
+    {
+        mapDatas[index].scriptVariableDisableActive = value;
+    });
+    pPanel->addItem(checkBox);
+    y += 40;
+    pPanel->setContentHeigth(y);
     CampaignEditor::addChild(pBox);
     pApp->continueThread();
 }

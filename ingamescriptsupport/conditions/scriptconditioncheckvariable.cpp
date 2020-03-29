@@ -112,7 +112,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spTextbox textBox = new Textbox(300);
-    textBox->setTooltipText(tr("Name of the Variable that should be changed. Try not to use names starting with \"variable\". This name is used by the system."));
+    textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_Variable);
     connect(textBox.get(), &Textbox::sigTextChanged,
@@ -124,7 +124,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Modifier: "));
+    pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     QVector<QString> items = {"===", "!==", ">=", "<="};
@@ -145,7 +145,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, -999999, 999999);
-    spinBox->setTooltipText(tr("The value modifying the variable."));
+    spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

@@ -42,14 +42,14 @@ public:
         QStringList disableMaps;
         qint32 disableCount{1};
         bool lastMap{false};
-        bool scriptVariableEnable;
-        QString scriptVariableEnableName;
-        QString scriptVariableEnableCompare;
-        qint32 scriptVariableEnableValue;
-        bool scriptVariableDisable;
-        QString scriptVariableDisableName;
-        QString scriptVariableDisableCompare;
-        qint32 scriptVariableDisableValue;
+        QString scriptVariableEnableName = "myName";
+        QString scriptVariableEnableCompare = "===";
+        qint32 scriptVariableEnableValue{0};
+        bool scriptVariableEnableActive{false};
+        QString scriptVariableDisableName = "myName";
+        QString scriptVariableDisableCompare = "===";
+        qint32 scriptVariableDisableValue{0};
+        bool scriptVariableDisableActive{false};
     };
     explicit CampaignEditor();
     virtual ~CampaignEditor() = default;
@@ -92,6 +92,11 @@ signals:
      * @brief sigShowExitBox
      */
     void sigShowExitBox();
+    /**
+     * @brief sigShowEditScriptVariables
+     * @param index
+     */
+    void sigShowEditScriptVariables(qint32 index);
 public slots:
     /**
      * @brief showSaveCampaign
@@ -168,6 +173,11 @@ public slots:
      * @brief exitEditor
      */
     void exitEditor();
+    /**
+     * @brief showEditScriptVariables
+     * @param index
+     */
+    void showEditScriptVariables(qint32 index);
 private:
     spPanel m_Panel;
     /**

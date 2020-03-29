@@ -707,63 +707,130 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="175"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="176"/>
         <source>Do you want to exit the campaign editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="292"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="293"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="300"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="301"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="308"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="309"/>
+        <source>Variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="317"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="319"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="328"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="325"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="334"/>
         <source>All maps marked as last map need to be won in order to finish the campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="649"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="702"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="653"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="706"/>
         <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="675"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="728"/>
         <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="721"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="774"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="725"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="778"/>
         <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="745"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="798"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="850"/>
+        <source>Enable Variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="859"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="935"/>
+        <source>Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="863"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="939"/>
+        <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="876"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="952"/>
+        <source>Compare: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="881"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="956"/>
+        <source>The way how the variable gets compared with the constant. variable compare value </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="894"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="969"/>
+        <source>Value: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="898"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="973"/>
+        <source>The value that the variable gets checked against.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="911"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="986"/>
+        <source>Use Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
+        <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="928"/>
+        <source>Disable Variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="990"/>
+        <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3759,12 +3826,12 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="115"/>
-        <source>Name of the Variable that should be changed. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
+        <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="127"/>
-        <source>Modifier: </source>
+        <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3779,7 +3846,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="148"/>
-        <source>The value modifying the variable.</source>
+        <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5666,6 +5733,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/wikipage.cpp" line="36"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ZCOUNIT_CRYSTAL_TANK</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="52"/>
+        <source>Crystal Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="61"/>
+        <source>Special heavy armored tank. The tank is healed by some fraction of the damage dealt.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1765,183 +1765,193 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
     {
         myMovepoints = 1;
     }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 maxCounter = pMap->getMapWidth() * pMap->getMapHeight() / (myMovepoints * 2);
     float myFirerange = dummy.getBaseMaxRange();
     float enemyFirerange = dummy.getBaseMaxRange();
     QPoint position = dummy.getPosition();
-    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
+    qint32 counter = 1;
+    while (attacksCount  < 5 &&
+           pEnemyUnits->size() > 5 &&
+           counter <= maxCounter)
     {
-        Unit* pEnemyUnit = pEnemyUnits->at(i3);
-        QPoint enemyPosition = pEnemyUnit->getPosition();
-        float distance = Mainapp::getDistance(position, enemyPosition);
-        if (distance / myMovepoints <= maxDayDistance)
+        for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
         {
-            float dmg = 0.0f;
-            if (!dummy.getWeapon1ID().isEmpty())
+            Unit* pEnemyUnit = pEnemyUnits->at(i3);
+            QPoint enemyPosition = pEnemyUnit->getPosition();
+            float distance = Mainapp::getDistance(position, enemyPosition);
+            if (distance / myMovepoints <= maxDayDistance * counter &&
+                distance / myMovepoints >= maxDayDistance * (counter - 1))
             {
-                dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
-            }
-            if (!dummy.getWeapon2ID().isEmpty())
-            {
-                float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
-                if (dmg2 > dmg)
+                float dmg = 0.0f;
+                if (!dummy.getWeapon1ID().isEmpty())
                 {
-                    dmg = dmg2;
+                    dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
                 }
-            }
-            if (dmg > pEnemyUnit->getHp() * 10.0f)
-            {
-                dmg = pEnemyUnit->getHp() * 10.0f;
-            }
-            if (dmg > 0.0f)
-            {
-                float counterDmg = 0;
-                if (!pEnemyUnit->getWeapon1ID().isEmpty())
+                if (!dummy.getWeapon2ID().isEmpty())
                 {
-                    counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
-                }
-                if (!pEnemyUnit->getWeapon2ID().isEmpty())
-                {
-                    float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
-                    if (dmg2 > counterDmg)
+                    float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
+                    if (dmg2 > dmg)
                     {
-                        counterDmg = dmg2;
+                        dmg = dmg2;
                     }
                 }
-                if (counterDmg > 100.0f)
+                if (dmg > pEnemyUnit->getHp() * 10.0f)
                 {
-                    counterDmg = 100.0f;
+                    dmg = pEnemyUnit->getHp() * 10.0f;
                 }
-                else if (counterDmg < 7.5f)
+                if (dmg > 0.0f)
                 {
-                    counterDmg = 0.0f;
-                }
-                float resDamage = 0;
+                    float counterDmg = 0;
+                    if (!pEnemyUnit->getWeapon1ID().isEmpty())
+                    {
+                        counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
+                    }
+                    if (!pEnemyUnit->getWeapon2ID().isEmpty())
+                    {
+                        float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
+                        if (dmg2 > counterDmg)
+                        {
+                            counterDmg = dmg2;
+                        }
+                    }
+                    if (counterDmg > 100.0f)
+                    {
+                        counterDmg = 100.0f;
+                    }
+                    else if (counterDmg < 7.5f)
+                    {
+                        counterDmg = 0.0f;
+                    }
+                    float resDamage = 0;
 
-                float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
-                float smoothing = 3;
-                if (myMovepoints + myFirerange >= enemyMovepoints)
-                {
-                    float mult = (myMovepoints + myFirerange + smoothing) / (enemyMovepoints + enemyFirerange + smoothing);
-                    if (mult > 1.5f)
+                    float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
+                    float smoothing = 3;
+                    if (myMovepoints + myFirerange >= enemyMovepoints)
                     {
-                        mult = 1.5f;
-                    }
-                    resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
-                                counterDmg / 100.0f * pEnemyUnit->getUnitValue();
-                }
-                else
-                {
-                    float mult = (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
-                    if (mult > 1.5f)
-                    {
-                        mult = 1.5f;
-                    }
-                    resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * bonusFactor -
-                                counterDmg / 100.0f * pEnemyUnit->getUnitValue() * mult;
-                }
-                if (resDamage > pEnemyUnit->getUnitValue())
-                {
-                    resDamage = pEnemyUnit->getUnitValue();
-                }
-                float factor = 1.0f;
-                if (dmg > highDamage)
-                {
-                    factor += (attackCount[i3].w() + smoothing) / (attackCount[i3].x() + smoothing);
-                }
-                else if (dmg > midDamage)
-                {
-                    factor += (attackCount[i3].z() + smoothing) / (attackCount[i3].z() + smoothing);
-                }
-                if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
-                {
-                    factor += (2.0f - (distance / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
-                    if (pEnemyUnit->hasWeapons())
-                    {
-                        float notAttackableValue = 0.0f;
-                        if (dmg > highDamage)
+                        float mult = (myMovepoints + myFirerange + smoothing) / (enemyMovepoints + enemyFirerange + smoothing);
+                        if (mult > 1.5f)
                         {
-                            notAttackableValue = 2.0f;
+                            mult = 1.5f;
                         }
-                        else if (dmg > midDamage)
+                        resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
+                                    counterDmg / 100.0f * pEnemyUnit->getUnitValue();
+                    }
+                    else
+                    {
+                        float mult = (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
+                        if (mult > 1.5f)
                         {
-                            notAttackableValue = 1.5f;
+                            mult = 1.5f;
                         }
-                        else if (dmg > notAttackableDamage)
+                        resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * bonusFactor -
+                                    counterDmg / 100.0f * pEnemyUnit->getUnitValue() * mult;
+                    }
+                    if (resDamage > pEnemyUnit->getUnitValue())
+                    {
+                        resDamage = pEnemyUnit->getUnitValue();
+                    }
+                    float factor = 1.0f;
+                    if (dmg > highDamage)
+                    {
+                        factor += (attackCount[i3].w() + smoothing) / (attackCount[i3].x() + smoothing);
+                    }
+                    else if (dmg > midDamage)
+                    {
+                        factor += (attackCount[i3].z() + smoothing) / (attackCount[i3].z() + smoothing);
+                    }
+                    if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
+                    {
+                        factor += (2.0f - (distance / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
+                        if (pEnemyUnit->hasWeapons())
                         {
-                            notAttackableValue = 1.0f;
+                            float notAttackableValue = 0.0f;
+                            if (dmg > highDamage)
+                            {
+                                notAttackableValue = 2.0f;
+                            }
+                            else if (dmg > midDamage)
+                            {
+                                notAttackableValue = 1.5f;
+                            }
+                            else if (dmg > notAttackableDamage)
+                            {
+                                notAttackableValue = 1.0f;
+                            }
+                            else
+                            {
+                                factor /= 2.0f;
+                            }
+                            if (attackCount[i3].y() == 0.0f &&
+                                attackCount[i3].x() == 0.0f &&
+                                attackCount[i3].z() == 0.0f &&
+                                attackCount[i3].w() == 0.0f)
+                            {
+                                notAttackableCount += notAttackableValue;
+                            }
+                            else if (attackCount[i3].y() == 0.0f &&
+                                     attackCount[i3].z() == 0.0f &&
+                                     attackCount[i3].w() == 0.0f)
+                            {
+                                notAttackableCount  += notAttackableValue / 2.0f;
+                            }
                         }
                         else
                         {
-                            factor /= 2.0f;
-                        }
-                        if (attackCount[i3].y() == 0.0f &&
-                            attackCount[i3].x() == 0.0f &&
-                            attackCount[i3].z() == 0.0f &&
-                            attackCount[i3].w() == 0.0f)
-                        {
-                            notAttackableCount += notAttackableValue;
-                        }
-                        else if (attackCount[i3].y() == 0.0f &&
-                                 attackCount[i3].z() == 0.0f &&
-                                 attackCount[i3].w() == 0.0f)
-                        {
-                            notAttackableCount  += notAttackableValue / 2.0f;
+                            factor /= 8.0f;
                         }
                     }
                     else
                     {
-                        factor /= 8.0f;
-                    }
-                }
-                else
-                {
-                    factor += (1.0f - (distance / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
-                    if (pEnemyUnit->hasWeapons())
-                    {
-                        float notAttackableValue = 0.0f;
-                        if (dmg > highDamage)
+                        factor += (1.0f - (distance / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
+                        if (pEnemyUnit->hasWeapons())
                         {
-                            notAttackableValue = 2.0f;
-                        }
-                        else if (dmg > midDamage)
-                        {
-                            notAttackableValue = 1.5f;
-                        }
-                        else if (dmg > notAttackableDamage)
-                        {
-                            notAttackableValue = 1.0f;
+                            float notAttackableValue = 0.0f;
+                            if (dmg > highDamage)
+                            {
+                                notAttackableValue = 2.0f;
+                            }
+                            else if (dmg > midDamage)
+                            {
+                                notAttackableValue = 1.5f;
+                            }
+                            else if (dmg > notAttackableDamage)
+                            {
+                                notAttackableValue = 1.0f;
+                            }
+                            else
+                            {
+                                factor /= 2.0f;
+                            }
+                            if (attackCount[i3].y() == 0.0f &&
+                                attackCount[i3].x() == 0.0f &&
+                                attackCount[i3].z() == 0.0f &&
+                                attackCount[i3].w() == 0.0f)
+                            {
+                                notAttackableCount += notAttackableValue / 2.0f;
+                            }
+                            else if (attackCount[i3].x() == 0.0f &&
+                                     attackCount[i3].z() == 0.0f &&
+                                     attackCount[i3].w() == 0.0f)
+                            {
+                                notAttackableCount  += notAttackableValue / 4.0f;
+                            }
                         }
                         else
                         {
-                            factor /= 2.0f;
-                        }
-                        if (attackCount[i3].y() == 0.0f &&
-                            attackCount[i3].x() == 0.0f &&
-                            attackCount[i3].z() == 0.0f &&
-                            attackCount[i3].w() == 0.0f)
-                        {
-                            notAttackableCount += notAttackableValue / 2.0f;
-                        }
-                        else if (attackCount[i3].x() == 0.0f &&
-                                 attackCount[i3].z() == 0.0f &&
-                                 attackCount[i3].w() == 0.0f)
-                        {
-                            notAttackableCount  += notAttackableValue / 4.0f;
+                            factor /= 8.0f;
                         }
                     }
-                    else
+                    if (factor < 0)
                     {
-                        factor /= 8.0f;
+                        factor = 0;
                     }
+                    damageCount += resDamage * factor;
+                    attacksCount++;
                 }
-                if (factor < 0)
-                {
-                    factor = 0;
-                }
-                damageCount += resDamage * factor;
-                attacksCount++;
             }
         }
+        counter++;
     }
     if (attacksCount <= 0)
     {

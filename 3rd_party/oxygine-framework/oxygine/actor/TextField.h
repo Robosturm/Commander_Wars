@@ -24,7 +24,7 @@ namespace oxygine
         /**Returns text bounds*/
         const Rect&                 getTextRect(float localScale = 1.0f) const;
         /**Returns current text*/
-        QString              getText() const { return _text; }
+        QString              getText() const;
         const ResFont*              getFont() const;
 
         int                         getFontSize() const;

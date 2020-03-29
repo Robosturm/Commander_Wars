@@ -101,7 +101,7 @@ var Constructor = function()
         // only direct units can deal counter damage
         if (Math.abs(attackerPosition.x - defender.getX()) + Math.abs(attackerPosition.y - defender.getY()) === 1)
         {
-            if (defender.getMinRange(defender.getX(), defender.getY()) === 1 && defenderWeapon !== "")
+            if (defender.getMinRange(Qt.point(defender.getX(), defender.getY())) === 1 && defenderWeapon !== "")
             {
                 var health = defender.getHp() - takenDamage / 10.0;
                 if (defender.getFirstStrike(defender.getPosition(), attacker))

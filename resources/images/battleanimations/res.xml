@@ -169,6 +169,8 @@
 		<!-- flare -->
 		<image file="flare/flare.png" />
 		<image file="flare/flare+mask.png" />
+		<image file="flare/flare+bh.png" />
+		<image file="flare/flare+bh+mask.png" />
 		
 		<!-- heavy_hovercraft -->
 		<image file="heavy_hovercraft/heavy_hovercraft.png" />
