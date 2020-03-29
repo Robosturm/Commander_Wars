@@ -494,11 +494,11 @@ void GameMap::randomMapCreateRoad(QRandomGenerator& randInt, QVector<QPoint>& pl
 
 QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize, float startBaseSize)
 {
-    qint32 maximumBuildingTry = 1000;
-    qint32 maxTries = maximumBuildingTry;
     QVector<QPoint> playerPositions;
     qint32 mapWidth = getMapWidth();
     qint32 mapHeigth = getMapHeight();
+    qint32 maximumBuildingTry = 3 * mapWidth * mapHeigth;
+    qint32 maxTries = maximumBuildingTry;
     qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getHQBaseTerrainID");
