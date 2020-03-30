@@ -9,7 +9,14 @@ var Constructor = function()
 
     this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
     {
-        return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
+        if (co.canUseSuperpower())
+        {
+            return true;
+        }
+        else
+        {
+            return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
+        }
     };
 
     this.init = function(co)

@@ -364,7 +364,7 @@ var CO =
         return GameEnums.PowerMode_Off;
     },
 
-    getAiUsePowerAtUnitCount : function(co, powerSurplus, turnMode, unitCount)
+    getAiUsePowerAtUnitCount : function(co, powerSurplus, turnMode, unitCount, count)
     {
         if (turnMode === GameEnums.AiTurnMode_StartOfDay &&
             unitCount >= 5)

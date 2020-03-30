@@ -46,7 +46,8 @@ var Constructor = function()
                  unitID === "BLACK_BOAT" ||
                  unitID === "CANNONBOAT")
         {
-            if ((transportTerrain.getID() === "BRIDGE"))
+            if ((transportTerrain !== null &&
+                 transportTerrain.getID() === "BRIDGE"))
             {
                 return false;
             }

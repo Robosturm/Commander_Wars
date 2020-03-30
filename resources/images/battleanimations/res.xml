@@ -370,6 +370,8 @@
 		<!-- t_heli -->
 		<image file="t_heli/t_heli+bm.png" />
 		<image file="t_heli/t_heli+bm+mask.png" />
+		<image file="t_heli/t_heli+bh.png" />
+		<image file="t_heli/t_heli+bh+mask.png" />
 		<image file="t_heli/t_heli+ge.png" />
 		<image file="t_heli/t_heli+ge+mask.png" />
 		<image file="t_heli/t_heli+os.png" />
@@ -383,6 +385,7 @@
 		<image file="sniper/sniper+os.png" />
 		<image file="sniper/sniper+os+mask.png" />
 		<image file="sniper/sniper+ma.png" />
+		<image file="sniper/sniper+ma+mask.png" />
 		<image file="sniper/sniper+ma+mask.png" />
 		
 		<!-- stealthbomber -->

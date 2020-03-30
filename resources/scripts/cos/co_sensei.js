@@ -168,7 +168,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
         {
             return -10;
         }

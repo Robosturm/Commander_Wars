@@ -359,7 +359,7 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                                 }
                                 else if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
                                 {
-                                     testPrio = pBuilding->getConstructionList().size();
+                                    testPrio = pBuilding->getConstructionList().size();
                                 }
                                 if (testPrio > prio)
                                 {
@@ -612,85 +612,88 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
             QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
             pAction->setMovepath(path, turnPfs.getCosts(path));
             pAction->setActionID(ACTION_UNLOAD);
-            bool unloaded = false;
-            QVector<qint32> unloadedUnits;
-            do
+            if (pAction->canBePerformed())
             {
-                unloaded = false;
-                QVector<QList<QVariant>> unloadFields;
-                for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+                bool unloaded = false;
+                QVector<qint32> unloadedUnits;
+                do
                 {
-                    QString function1 = "getUnloadFields";
-                    QJSValueList args1;
-                    QJSValue obj1 = pInterpreter->newQObject(pAction);
-                    args1 << obj1;
-                    args1 << i;
-                    QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
-                    unloadFields.append(ret.toVariant().toList());
-                }
-                MenuData* pDataMenu = pAction->getMenuStepData();
-                QStringList actions = pDataMenu->getActionIDs();
-                if (actions.size() > 1)
-                {
-                    for (qint32 i = 0; i < unloadFields.size(); i++)
+                    unloaded = false;
+                    MenuData* pDataMenu = pAction->getMenuStepData();
+                    QStringList actions = pDataMenu->getActionIDs();
+                    QVector<qint32> unitIDx = pDataMenu->getCostList();
+                    QVector<QList<QVariant>> unloadFields;
+                    for (qint32 i = 0; i < unitIDx.size() - 1; i++)
                     {
-                        if (!needsRefuel(pUnit->getLoadedUnit(i)))
+                        QString function1 = "getUnloadFields";
+                        QJSValueList args1;
+                        QJSValue obj1 = pInterpreter->newQObject(pAction);
+                        args1 << obj1;
+                        args1 << unitIDx[i];
+                        QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
+                        unloadFields.append(ret.toVariant().toList());
+                    }
+                    if (actions.size() > 1)
+                    {
+                        for (qint32 i = 0; i < unloadFields.size(); i++)
                         {
-                            if (!unloadedUnits.contains(i))
+                            if (!needsRefuel(pUnit->getLoadedUnit(i)))
                             {
-                                if (unloadFields[i].size() == 1)
+                                if (!unloadedUnits.contains(unitIDx[i]))
                                 {
-                                    qint32 costs = pDataMenu->getCostList()[i];
-                                    addMenuItemData(pAction, actions[i], costs);
-                                    MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                                    addSelectedFieldData(pAction, pFields->getPoints()->at(0));
-                                    delete pFields;
-                                    unloaded = true;
-                                    unloadedUnits.append(i);
-                                    break;
-                                }
-                                else if (unloadFields[i].size() > 0 &&
-                                         pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
-                                {
-                                    for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                    if (unloadFields[i].size() == 1)
                                     {
-                                        QPoint unloadField = unloadFields[i][i2].toPoint();
-                                        Building* pBuilding = pMap->getTerrain(unloadField.x(),
-                                                                               unloadField.y())->getBuilding();
-                                        if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
-                                        {
-                                            qint32 costs = pDataMenu->getCostList()[i];
-                                            addMenuItemData(pAction, actions[i], costs);
-                                            addSelectedFieldData(pAction, unloadField);
-                                            unloaded = true;
-                                            unloadedUnits.append(i);
-                                            break;
-                                        }
+                                        addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                        MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                                        addSelectedFieldData(pAction, pFields->getPoints()->at(0));
+                                        delete pFields;
+                                        unloaded = true;
+                                        unloadedUnits.append(unitIDx[i]);
+                                        break;
                                     }
-                                    break;
+                                    else if (unloadFields[i].size() > 0 &&
+                                             pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
+                                    {
+                                        for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                        {
+                                            QPoint unloadField = unloadFields[i][i2].toPoint();
+                                            Building* pBuilding = pMap->getTerrain(unloadField.x(),
+                                                                                   unloadField.y())->getBuilding();
+                                            if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
+                                            {
+                                                addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                                addSelectedFieldData(pAction, unloadField);
+                                                unloaded = true;
+                                                unloadedUnits.append(unitIDx[i]);
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
                                 }
                             }
                         }
+                        if (unloaded == false &&
+                            !needsRefuel(pUnit->getLoadedUnit(0)))
+                        {
+                            qint32 costs = pDataMenu->getCostList()[0];
+                            addMenuItemData(pAction, actions[0], costs);
+                            unloaded = true;
+                            MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                            qint32 field = Mainapp::randInt(0, pFields->getPoints()->size() - 1);
+                            addSelectedFieldData(pAction, pFields->getPoints()->at(field));
+                            delete pFields;
+                        }
                     }
-                    if (unloaded == false)
-                    {
-                        qint32 costs = pDataMenu->getCostList()[0];
-                        addMenuItemData(pAction, actions[0], costs);
-                        unloaded = true;
-                        MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                        qint32 field = Mainapp::randInt(0, pFields->getPoints()->size() - 1);
-                        addSelectedFieldData(pAction, pFields->getPoints()->at(field));
-                        delete pFields;
-                    }
+                    delete pDataMenu;
                 }
-                delete pDataMenu;
+                while (unloaded);
+                addMenuItemData(pAction, ACTION_WAIT, 0);
+                updatePoints.append(pUnit->getPosition());
+                updatePoints.append(pAction->getActionTarget());
+                emit performAction(pAction);
+                return true;
             }
-            while (unloaded);
-            addMenuItemData(pAction, ACTION_WAIT, 0);
-            updatePoints.append(pUnit->getPosition());
-            updatePoints.append(pAction->getActionTarget());
-            emit performAction(pAction);
-            return true;
         }
         else
         {
@@ -1015,7 +1018,7 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, UnitPath
         qint32 x = movePath[i].x();
         qint32 y = movePath[i].y();
         if ((pMap->getTerrain(x, y)->getUnit() == nullptr ||
-            pMap->getTerrain(x, y)->getUnit() == pUnit) &&
+             pMap->getTerrain(x, y)->getUnit() == pUnit) &&
             turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
         {
             float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
@@ -1095,7 +1098,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
     qint32 capturePoints = pUnit->getCapturePoints();
     Building* pBuilding = pUnit->getTerrain()->getBuilding();
     if (capturePoints > 0)
-    {        
+    {
         qint32 restCapture = 20 - capturePoints;
         qint32 currentHp = pUnit->getHpRounded();
         qint32 newHp = Mainapp::roundUp(newLife);
@@ -1780,8 +1783,8 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             Unit* pEnemyUnit = pEnemyUnits->at(i3);
             QPoint enemyPosition = pEnemyUnit->getPosition();
             float distance = Mainapp::getDistance(position, enemyPosition);
-            if (distance / myMovepoints <= maxDayDistance * counter &&
-                distance / myMovepoints >= maxDayDistance * (counter - 1))
+            if (distance / myMovepoints <= counter &&
+                distance / myMovepoints >= (counter - 1))
             {
                 float dmg = 0.0f;
                 if (!dummy.getWeapon1ID().isEmpty())
@@ -2006,20 +2009,29 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     {
         movement = 1;
     }
+    GameMap* pMap = GameMap::getInstance();
     qint32 loadingPlace = dummy.getLoadingPlace();
     qint32 smallTransporterCount = 0;
-    for (qint32 i = 0; i < pUnits->size(); i++)
+    qint32 maxCounter = pMap->getMapWidth() * pMap->getMapHeight() / (movement * 2);
+    qint32 counter = 1;
+    while (relevantUnits.size()  < loadingPlace * 2 &&
+           pUnits->size() > loadingPlace * 2 &&
+           counter <= maxCounter)
     {
-        qint32 distance = Mainapp::getDistance(position, pUnits->at(i)->getPosition());
-        if (distance / movement <= maxDayDistance)
+        for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            relevantUnits.append(pUnits->at(i));
-        }
-        if (loadingPlace == 1)
-        {
-            if (pUnits->at(i)->getLoadingPlace() == 1)
+            qint32 distance = Mainapp::getDistance(position, pUnits->at(i)->getPosition());
+            if (distance / movement <= counter * maxDayDistance &&
+                distance / movement >= (counter - 1) * maxDayDistance)
             {
-                smallTransporterCount++;
+                relevantUnits.append(pUnits->at(i));
+            }
+            if (loadingPlace == 1)
+            {
+                if (pUnits->at(i)->getLoadingPlace() == 1)
+                {
+                    smallTransporterCount++;
+                }
             }
         }
     }

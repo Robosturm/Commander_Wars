@@ -857,7 +857,8 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                                 // and not added yet
                                 if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
                                     (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                    (pMap->getTerrain(x, y)->getUnit() == nullptr))
+                                    ((pMap->getTerrain(x, y)->getUnit() == nullptr) ||
+                                     (pMap->getTerrain(x, y)->getUnit() == pUnit)))
                                 {
                                     found = true;
                                     distance = dist;
@@ -1218,7 +1219,8 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qin
                 // the unloading area is also free
                 if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
                     m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
-                    pMap->getTerrain(x, y)->getUnit() == nullptr)
+                    (pMap->getTerrain(x, y)->getUnit() == nullptr ||
+                    pMap->getTerrain(x, y)->getUnit() == pUnit))
                 {
                     // and on top of that we have same free fields to unload the unit
                     for (qint32 i3 = 0; i3 < pUnloadArea->size(); i3++)
