@@ -24,7 +24,7 @@ namespace oxygine
 
     namespace text
     {
-        typedef std::vector<Symbol> text_data;
+        typedef QVector<Symbol> text_data;
 
 
         class DrawContext

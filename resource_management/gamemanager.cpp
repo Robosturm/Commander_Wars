@@ -12,12 +12,11 @@ GameManager::GameManager()
 {
     oxygine::Resources::loadXML("resources/images/game/res.xml");
     // load game images
-    Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/game/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/game/res.xml");
         }
     }
 }
@@ -34,13 +33,12 @@ GameManager* GameManager::getInstance()
 void GameManager::loadAll()
 {
     loaded = true;
-    Mainapp* pMainapp = Mainapp::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/actions");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/actions");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/actions");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -63,13 +61,12 @@ void GameManager::loadAll()
 
 bool GameManager::loadAction(QString actionID)
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/actions");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/actions");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/actions");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

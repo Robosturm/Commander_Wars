@@ -56,10 +56,10 @@ namespace oxygine
         mutable float _guideX[2];
         mutable float _guideY[2];
 
-        mutable std::vector<float> _guidesX;
-        mutable std::vector<float> _guidesY;
-        mutable std::vector<float> _pointsX;
-        mutable std::vector<float> _pointsY;
+        mutable QVector<float> _guidesX;
+        mutable QVector<float> _guidesY;
+        mutable QVector<float> _pointsX;
+        mutable QVector<float> _pointsY;
 
         void prepare() const;
 

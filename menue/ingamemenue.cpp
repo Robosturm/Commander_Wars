@@ -61,8 +61,8 @@ void InGameMenue::loadBackground()
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 }
 
 void InGameMenue::loadHandling()
@@ -123,8 +123,8 @@ void InGameMenue::loadHandling()
 
                 if (this->m_moveMap)
                 {
-                    qint32 resX = static_cast<qint32>((this->m_MoveMapMousePoint.x() - curX) * pApp->getSettings()->getMouseSensitivity());
-                    qint32 resY = static_cast<qint32>((this->m_MoveMapMousePoint.y() - curY) * pApp->getSettings()->getMouseSensitivity());
+                    qint32 resX = static_cast<qint32>((this->m_MoveMapMousePoint.x() - curX) * Settings::getMouseSensitivity());
+                    qint32 resY = static_cast<qint32>((this->m_MoveMapMousePoint.y() - curY) * Settings::getMouseSensitivity());
                     this->m_MoveMapMousePoint.setX(curX);
                     this->m_MoveMapMousePoint.setY(curY);
                     emit this->sigMoveMap(resX , resY);

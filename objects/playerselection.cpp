@@ -28,7 +28,7 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     m_pPlayerSelection = new Panel(true,
                                    QSize(width,
                                          heigth),
-                                   QSize(pApp->getSettings()->getWidth() - 70, 100));
+                                   QSize(Settings::getWidth() - 70, 100));
     connect(this, &PlayerSelection::sigShowSelectCO, this, &PlayerSelection::showSelectCO, Qt::QueuedConnection);
     connect(this, &PlayerSelection::buttonShowPlayerBuildList, this, &PlayerSelection::slotShowPlayerBuildList, Qt::QueuedConnection);
     connect(this, &PlayerSelection::sigAiChanged, this, &PlayerSelection::selectAI, Qt::QueuedConnection);

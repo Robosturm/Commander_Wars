@@ -111,10 +111,10 @@ namespace oxygine
         void print();
         bool isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const;
 
-        typedef std::vector<spNativeTexture> rts;
+        typedef QVector<spNativeTexture> rts;
         rts _rts;
 
-        typedef std::vector<spNativeTexture> free;
+        typedef QVector<spNativeTexture> free;
         free _free;
     };
 

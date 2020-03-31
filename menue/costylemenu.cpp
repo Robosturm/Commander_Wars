@@ -33,8 +33,8 @@ COStyleMenu::COStyleMenu()
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
@@ -42,7 +42,7 @@ COStyleMenu::COStyleMenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
-    pButtonExit->setPosition(20, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(20, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -51,7 +51,7 @@ COStyleMenu::COStyleMenu()
 
     oxygine::spButton pButtonEdit = ObjectManager::createButton(tr("Edit CO"));
     pButtonEdit->attachTo(this);
-    pButtonEdit->setPosition(pApp->getSettings()->getWidth() - pButtonExit->getWidth() - 20, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonEdit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 20, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonEdit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigEditCOStyle();

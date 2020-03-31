@@ -104,9 +104,9 @@ void WeaponManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/weapons");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/weapons");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/weapons");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -159,9 +159,9 @@ bool WeaponManager::loadWeapon(QString weaponID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/weapons");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/weapons");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/weapons");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

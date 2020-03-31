@@ -9,7 +9,7 @@ namespace oxygine
     DECLARE_SMART(Texture, spTexture);
 
     class AnimationFrame;
-    typedef std::vector<AnimationFrame> frames;
+    typedef QVector<AnimationFrame> frames;
 
     class AtlasBuilder
     {

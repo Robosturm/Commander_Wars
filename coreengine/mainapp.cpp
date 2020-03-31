@@ -9,17 +9,6 @@
 #include "game/co.h"
 #include "network/tcpserver.h"
 
-#include "resource_management/backgroundmanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/fontmanager.h"
-#include "resource_management/gameanimationmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/gamerulemanager.h"
-#include "resource_management/objectmanager.h"
-#include "resource_management/terrainmanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/battleanimationmanager.h"
 #include "wiki/wikidatabase.h"
 
 #include "coreengine/userdata.h"
@@ -35,6 +24,19 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
+
+
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/cospritemanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/gameanimationmanager.h"
+#include "resource_management/gamemanager.h"
+#include "resource_management/gamerulemanager.h"
+#include "resource_management/objectmanager.h"
+#include "resource_management/terrainmanager.h"
+#include "resource_management/unitspritemanager.h"
+#include "resource_management/battleanimationmanager.h"
 
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
@@ -54,17 +56,7 @@ Mainapp::Mainapp()
     randGenerator.seed(seedValue);
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
-
-    emit m_Audiothread->sigInitAudio();
-    m_AudioWorker.setObjectName("AudioThread");
-    m_Networkthread.setObjectName("NetworkThread");
-    m_Workerthread.setObjectName("WorkerThread");
-    m_AudioWorker.start(QThread::Priority::LowPriority);
-    m_Networkthread.start(QThread::Priority::NormalPriority);
-    m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
-    m_Settings.setup();
-
-    // createTrainingData();
+    Settings::setup();
 }
 
 Mainapp::~Mainapp()
@@ -294,6 +286,15 @@ void Mainapp::loadRessources()
     WikiDatabase::getInstance();
     Userdata::getInstance();
 
+    // start after ressource loading
+    m_AudioWorker.setObjectName("AudioThread");
+    m_Networkthread.setObjectName("NetworkThread");
+    m_Workerthread.setObjectName("WorkerThread");
+    m_AudioWorker.start(QThread::Priority::LowPriority);
+    m_Networkthread.start(QThread::Priority::NormalPriority);
+    m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
+
+    emit m_Audiothread->sigInitAudio();
     emit m_Worker->sigStart();
     while (!m_Worker->getStarted())
     {
@@ -305,7 +306,7 @@ void Mainapp::loadRessources()
         m_pGameServer = new TCPServer();
         emit m_pGameServer->sig_connect("", Settings::getServerPort());
     }
-    m_Timer.start(1);
+    m_Timer.start(1, this);
 }
 
 
@@ -319,8 +320,8 @@ void Mainapp::changeScreenMode(qint32 mode)
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint);
             show();
-            getSettings()->setFullscreen(false);
-            getSettings()->setBorderless(true);
+            Settings::setFullscreen(false);
+            Settings::setBorderless(true);
             break;
         }
         case 2:
@@ -329,10 +330,10 @@ void Mainapp::changeScreenMode(qint32 mode)
             QScreen *screen = QGuiApplication::primaryScreen();
             QSize  screenSize = screen->availableSize ();
             // set window info
-            getSettings()->setFullscreen(true);
-            getSettings()->setBorderless(true);
-            getSettings()->setWidth(screenSize.width());
-            getSettings()->setHeight(screenSize.height());
+            Settings::setFullscreen(true);
+            Settings::setBorderless(true);
+            Settings::setWidth(screenSize.width());
+            Settings::setHeight(screenSize.height());
             break;
         }
         default:
@@ -340,8 +341,8 @@ void Mainapp::changeScreenMode(qint32 mode)
             setWindowState(Qt::WindowState::WindowNoState);
             setFlag(Qt::FramelessWindowHint, false);
             showNormal();
-            getSettings()->setFullscreen(false);
-            getSettings()->setBorderless(false);
+            Settings::setFullscreen(false);
+            Settings::setBorderless(false);
         }
     }
     // change screen size after changing the border flags
@@ -353,24 +354,23 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
     setMaximumSize(QSize(width, heigth));
-    getSettings()->setWidth(width);
-    getSettings()->setHeight(heigth);
+    Settings::setWidth(width);
+    Settings::setHeight(heigth);
     if (oxygine::Stage::instance.get() != nullptr)
     {
         oxygine::Stage::instance->setSize(width, heigth);
     }
-    getSettings()->saveSettings();
+    Settings::saveSettings();
     emit sigWindowLayoutChanged();
 }
 
 qint32 Mainapp::getScreenMode()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->getSettings()->getFullscreen())
+    if (Settings::getFullscreen())
     {
         return 2;
     }
-    else if (pApp->getSettings()->getBorderless())
+    else if (Settings::getBorderless())
     {
         return 1;
     }
@@ -390,7 +390,7 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     else
     {
         Qt::Key cur = static_cast<Qt::Key>(event->key());
-        if (cur == getSettings()->getKeyConsole())
+        if (cur == Settings::getKeyConsole())
         {
             Console::getInstance()->toggleView();
         }

@@ -29,7 +29,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -39,7 +39,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -48,8 +48,8 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     });
 
 
-    m_pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    m_pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
@@ -89,7 +89,7 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("HP: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
+    spSlider pSlider = new Slider(Settings::getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
     pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediatly applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
@@ -106,7 +106,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Fuel: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
+        spSlider pSlider = new Slider(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
         pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
@@ -132,7 +132,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Ammo 1: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
+        spSlider pSlider = new Slider(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
         pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
@@ -158,7 +158,7 @@ void DialogModifyUnit::updateData()
         pLabel->setHtmlText(tr("Ammo 2: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
-        spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
+        spSlider pSlider = new Slider(Settings::getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
         pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());

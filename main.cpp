@@ -62,14 +62,7 @@ int main(int argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
-    /*************************************************************************************************/
-    // setup network session support
-    QNetworkConfigurationManager manager;
-    // If the saved network configuration is not currently discovered use the system default
-    QNetworkConfiguration config = manager.defaultConfiguration();
-    QNetworkSession networkSession(config);
-    networkSession.open();
-
+    Settings::loadSettings();
     srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
@@ -77,6 +70,10 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QObject::tr("Commander Wars"));
     app.setApplicationVersion(Mainapp::getGameVersion());
+
+    // start crash report handler
+    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
+
     Mainapp window;
     window.setTitle(QObject::tr("Commander Wars"));
 
@@ -142,8 +139,13 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Wikipage>("Wikipage");
     qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
 
-    // start crash report handler
-    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
+    /*************************************************************************************************/
+    // setup network session support
+    QNetworkConfigurationManager manager;
+    // If the saved network configuration is not currently discovered use the system default
+    QNetworkConfiguration config = manager.defaultConfiguration();
+    QNetworkSession networkSession(config);
+    networkSession.open();
 
     /*************************************************************************************************/
     // show window according to window mode
@@ -161,7 +163,7 @@ int main(int argc, char* argv[])
         window.stopGameServer();
     }
     networkSession.close();
-    window.getSettings()->saveSettings();
+    Settings::saveSettings();
 
     if (GameMap::getInstance() != nullptr)
     {

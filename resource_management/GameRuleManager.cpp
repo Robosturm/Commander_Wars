@@ -35,9 +35,9 @@ void GameRuleManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/gamerules");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/gamerules");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/gamerules");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -76,9 +76,9 @@ bool GameRuleManager::loadVictoryRule(QString victoryID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/gamerules/victory");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/gamerules/victory");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/gamerules/victory");
     }    
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
@@ -104,9 +104,9 @@ bool GameRuleManager::loadWeather(QString weatherID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/gamerules/weather");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/gamerules/weather");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/gamerules/weather");
     }    
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

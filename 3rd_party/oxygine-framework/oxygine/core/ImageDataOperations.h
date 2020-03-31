@@ -225,7 +225,9 @@ namespace oxygine
         void applyOperationT(const Op& op, Dest& destPixelFormat, const ImageData& dest)
         {
             if (!check(dest, dest))
+            {
                 return;
+            }
 
             unsigned char* destBuffer = (unsigned char*)dest.data;
 
@@ -288,8 +290,8 @@ namespace oxygine
                 {
                     PixelR8G8B8A8 d;
                     applyOperationT(op, d, dest);
-                }
                     break;
+                }
                 default:
                     Q_ASSERT(!"unknown format");
             }

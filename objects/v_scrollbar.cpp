@@ -193,7 +193,20 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
 
 void V_Scrollbar::changeScrollValue(float value)
 {
-    setScrollvalue(value);
+    m_Scrollvalue += value;
+    if (m_Scrollvalue < 0)
+    {
+        m_Scrollvalue = 0;
+    }
+    else if (m_Scrollvalue > 1.0f)
+    {
+        m_Scrollvalue = 1.0f;
+    }
+    else
+    {
+        // all fine do nothing
+    }
+    setScrollvalue(m_Scrollvalue);
     emit sigScrollValueChanged(m_Scrollvalue);
 }
 

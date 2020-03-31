@@ -30,7 +30,7 @@ namespace oxygine
         /**returns handle (ptr) to HW texture ID*/
         virtual nativeTextureHandle getHandle() const = 0;
 
-        static std::vector<spNativeTexture> getCreatedTextures();
+        static QVector<spNativeTexture> getCreatedTextures();
         /**debug counter of created textures*/
         static volatile int created;
     };

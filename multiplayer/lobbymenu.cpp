@@ -40,8 +40,8 @@ LobbyMenu::LobbyMenu()
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/multiplayer");
@@ -49,7 +49,7 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
-    pButtonExit->setPosition(10, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->setPosition(10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -58,7 +58,7 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Host Game"));
     pButtonHost->attachTo(this);
-    pButtonHost->setPosition(pApp->getSettings()->getWidth() - pButtonHost->getWidth() - 10, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigHost();
@@ -67,7 +67,7 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
     pButtonJoin->attachTo(this);
-    pButtonJoin->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigJoinGame();
@@ -76,15 +76,15 @@ LobbyMenu::LobbyMenu()
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
     pButtonJoinAdress->attachTo(this);
-    pButtonJoinAdress->setPosition(pApp->getSettings()->getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonJoinAdress->setPosition(Settings::getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigJoinAdress();
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    m_pGamesPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 380),
-                          QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 380));
+    m_pGamesPanel = new Panel(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 380),
+                          QSize(Settings::getWidth() - 20, Settings::getHeight() - 380));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
@@ -94,7 +94,7 @@ LobbyMenu::LobbyMenu()
         pInterface = pApp->getGameServer();
     }
 
-    spChat pChat = new Chat(pInterface, QSize(pApp->getSettings()->getWidth() - 20, 300));
+    spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300));
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
     addChild(pChat);
 }

@@ -11,12 +11,11 @@ BattleAnimationManager* BattleAnimationManager::m_pInstance = nullptr;
 BattleAnimationManager::BattleAnimationManager()
 {
     oxygine::Resources::loadXML("resources/images/battleanimations/res.xml");
-    Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/battleanimations/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/battleanimations/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/battleanimations/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/battleanimations/res.xml");
         }
     }
 }
@@ -33,13 +32,12 @@ BattleAnimationManager* BattleAnimationManager::getInstance()
 void BattleAnimationManager::loadAll()
 {
     reset();
-    Mainapp* pMainapp = Mainapp::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/battleanimations");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/battleanimations");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/battleanimations");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -66,9 +64,9 @@ bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/battleanimations");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/battleanimations");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/battleanimations");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

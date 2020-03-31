@@ -45,7 +45,7 @@ namespace oxygine
         int _height;
 
 
-        std::vector<unsigned char> _data;
+        QVector<unsigned char> _data;
         int _lockFlags;
         Rect _lockRect;
     };

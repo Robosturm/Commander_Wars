@@ -795,10 +795,11 @@ bool Unit::canAttackStealthedUnit(Unit* pDefender)
     QJSValue obj2 = pInterpreter->newQObject(pDefender);
     args1 << obj2;
     QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
-    if (erg.isBool() && erg.toBool())
+    if (erg.isBool())
     {
-        return true;
+        return erg.toBool();
     }
+    return false;
 }
 
 Terrain* Unit::getTerrain()

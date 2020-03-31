@@ -20,12 +20,12 @@ EditorSelection::EditorSelection()
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setWidth(pApp->getSettings()->getWidth() / 4.0f);
-    this->setPosition(pApp->getSettings()->getWidth() - pApp->getSettings()->getWidth() / 4.0f, 0);
-    m_BoxSelectionType = createV9Box(0, startHSelectionType, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxPlacementSize = createV9Box(0, startHPlacementSize, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxPlacementSelection = createV9Box(0, startHTerrain, pApp->getSettings()->getWidth() / 4.0f, pApp->getSettings()->getHeight() - startHTerrain);
+    this->setWidth(Settings::getWidth() / 4.0f);
+    this->setPosition(Settings::getWidth() - Settings::getWidth() / 4.0f, 0);
+    m_BoxSelectionType = createV9Box(0, startHSelectionType, Settings::getWidth() / 4.0f, selectionHeight);
+    m_BoxPlacementSize = createV9Box(0, startHPlacementSize, Settings::getWidth() / 4.0f, selectionHeight);
+    m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, Settings::getWidth() / 4.0f, selectionHeight);
+    m_BoxPlacementSelection = createV9Box(0, startHTerrain, Settings::getWidth() / 4.0f, Settings::getHeight() - startHTerrain);
     m_PlacementSelectionSlider = new oxygine::SlidingActor();
     m_PlacementSelectionSlider->setPosition(10, 50);
     m_PlacementSelectionSlider->setSize(m_BoxPlacementSelection->getWidth() - 20,

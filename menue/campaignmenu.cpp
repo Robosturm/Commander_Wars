@@ -33,8 +33,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapselection");
@@ -43,7 +43,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
     pButtonExit->setPosition(10,
-                             pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+                             Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -51,7 +51,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     connect(this, &CampaignMenu::sigExitMenue, this, &CampaignMenu::exitMenue, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - m_pButtonNext->getWidth(), pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonNext->setPosition(Settings::getWidth() - 10 - m_pButtonNext->getWidth(), Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     m_pButtonNext->attachTo(this);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

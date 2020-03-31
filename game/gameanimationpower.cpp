@@ -44,7 +44,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     // first sprite for rotating
     oxygine::spBox9Sprite firstSpriteMask = new oxygine::Box9Sprite();
     firstSpriteMask->setResAnim(pAnimMask);
-    firstSpriteMask->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
 
@@ -55,7 +55,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     // second sprite for rotating
     oxygine::spBox9Sprite secondSpriteMask = new oxygine::Box9Sprite();
     secondSpriteMask->setResAnim(pAnimMask);
-    secondSpriteMask->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
@@ -63,7 +63,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 
     // rotating sprite
     spRotatingSprite rotSprite = new RotatingSprite();
-    rotSprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
     rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
     rotSprite->setDirection(3);
     addChild(rotSprite);
@@ -72,10 +72,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
     oxygine::spSprite m_CO = new oxygine::Sprite();
     m_CO->setResAnim(pAnim);
-    m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
+    m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
     m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-    m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
+    m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
     m_CO->addTween(tween1);
     addChild(m_CO);
 
@@ -109,10 +109,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
             pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
             m_CO = new oxygine::Sprite();
             m_CO->setResAnim(pAnim);
-            m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
+            m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() * 2 - 40, pApp->getSettings()->getHeight());
-            tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
+            m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() * 2 - 40, Settings::getHeight());
+            tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
             m_CO->addTween(tween1);
             addChild(m_CO);
         }
@@ -156,12 +156,12 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         textField->setVisible(false);
         if (Mainapp::isEven(i))
         {
-            textField->setY(pApp->getSettings()->getHeight());
+            textField->setY(Settings::getHeight());
         }
         oxygine::spTweenQueue queue = new oxygine::TweenQueue();
         oxygine::spTween tween2 = oxygine::createTween(TweenWait(), oxygine::timeMS(m_frameTime * 2 * i + 1));
         oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1));
-        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2), oxygine::timeMS(m_frameTime * 4));
+        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 - heigth / 2), oxygine::timeMS(m_frameTime * 4));
         queue->add(tween2);
         queue->add(tween3);
         queue->add(tween4);

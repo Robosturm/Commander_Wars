@@ -31,7 +31,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -41,7 +41,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // next button
     m_NextButton = pObjectManager->createButton(tr("Next"), 150);
-    m_NextButton->setPosition(pApp->getSettings()->getWidth() - m_NextButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_NextButton->getHeight());
+    m_NextButton->setPosition(Settings::getWidth() - m_NextButton->getWidth() - 30, Settings::getHeight() - 30 - m_NextButton->getHeight());
     pSpriteBox->addChild(m_NextButton);
     m_NextButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -50,7 +50,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // quit button
     m_QuitButton = pObjectManager->createButton(tr("Quit"), 150);
-    m_QuitButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_QuitButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_QuitButton->getHeight());
+    m_QuitButton->setPosition(Settings::getWidth() / 2 - m_QuitButton->getWidth() / 2, Settings::getHeight() - 30 - m_QuitButton->getHeight());
     pSpriteBox->addChild(m_QuitButton);
     m_QuitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -60,7 +60,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // back button
     m_BackButton = pObjectManager->createButton(tr("Back"), 150);
-    m_BackButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_BackButton->getHeight());
+    m_BackButton->setPosition(30, Settings::getHeight() - 30 - m_BackButton->getHeight());
     pSpriteBox->addChild(m_BackButton);
     m_BackButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -71,8 +71,8 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     connect(this, &COInfoDialog::back, this, &COInfoDialog::slotBack, Qt::QueuedConnection);
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    m_pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                         QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    m_pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
     m_COInfo = new COInfoActor(m_pPanel->getWidth());

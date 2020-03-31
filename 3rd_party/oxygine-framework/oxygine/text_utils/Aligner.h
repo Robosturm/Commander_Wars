@@ -58,7 +58,7 @@ namespace oxygine
             int getLineSkip()const;
 
 
-            typedef std::vector<Symbol*> line;
+            typedef QVector<Symbol*> line;
 
             void _alignLine(line& ln);
             int _alignX(int rx);

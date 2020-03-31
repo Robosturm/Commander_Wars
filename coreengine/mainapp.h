@@ -107,10 +107,6 @@ public:
 
 
 public slots:
-    inline Settings* getSettings()
-    {
-        return &m_Settings;
-    }
     static void seed(quint32 seed);
     static qint32 randInt(qint32 low, qint32 high);
     /**
@@ -186,7 +182,6 @@ public slots:
     qint32 getScreenMode();
 private:
     QTranslator m_Translator;
-    QTimer m_Timer;
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
@@ -198,7 +193,6 @@ private:
     spTCPServer m_pGameServer{nullptr};
     AudioThread* m_Audiothread;
     WorkerThread* m_Worker;
-    Settings m_Settings;
     void createTrainingData();
 };
 

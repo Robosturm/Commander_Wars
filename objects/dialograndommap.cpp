@@ -17,7 +17,7 @@ DialogRandomMap::DialogRandomMap()
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -25,8 +25,8 @@ DialogRandomMap::DialogRandomMap()
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
-    m_pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                         QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    m_pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -40,7 +40,7 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Generator:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_GeneratorFile = new Textbox(pApp->getSettings()->getWidth() - 300 - width);
+    m_GeneratorFile = new Textbox(Settings::getWidth() - 300 - width);
     m_GeneratorFile->setTooltipText(tr("Selects the generator script used to generate the random map."));
     m_GeneratorFile->setPosition(text->getX() + width, text->getY());
     m_GeneratorFile->setCurrentText("data/randomMaps/commanderwarsgenerator.js");
@@ -62,7 +62,7 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Map name:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapName = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapName = new Textbox(Settings::getWidth() - 150 - width);
     m_MapName->setTooltipText(tr("Selects the name of the new map."));
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText("");
@@ -75,7 +75,7 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Map Author:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapAuthor = new Textbox(Settings::getWidth() - 150 - width);
     m_MapAuthor->setTooltipText(tr("Selects the author of the new map."));
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(Settings::getUsername());
@@ -88,7 +88,7 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Map Description:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapDescription = new Textbox(Settings::getWidth() - 150 - width);
     m_MapDescription->setTooltipText(tr("Selects the description for the new map."));
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText("");
@@ -167,7 +167,7 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Base Size:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_BaseSize = new Slider(pApp->getSettings()->getWidth() - 200 - width, 0, 100);
+    m_BaseSize = new Slider(Settings::getWidth() - 200 - width, 0, 100);
     m_BaseSize->setCurrentValue(33);
     m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + width, y);
@@ -197,7 +197,7 @@ DialogRandomMap::DialogRandomMap()
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -228,7 +228,7 @@ DialogRandomMap::DialogRandomMap()
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -288,7 +288,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 terrainChances.append(terrainChancesVariant[i].toInt());
             }
         }
-        m_TerrainChances = new Multislider(terrainStrings, pApp->getSettings()->getWidth() - 150, terrainChances);
+        m_TerrainChances = new Multislider(terrainStrings, Settings::getWidth() - 150, terrainChances);
         m_TerrainChances->setTooltipText(tr("The percent distribution between the different terrains when a terrain is placed."));
         m_TerrainChances->setPosition(30, m_TerrainChanceLabel->getY() + 40);
         m_pPanel->addItem(m_TerrainChances);
@@ -305,7 +305,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 buildingChances.append(buildingChancesVariant[i].toInt());
             }
         }
-        m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 150, buildingChances);
+        m_BuildingChances = new Multislider(buildingStrings, Settings::getWidth() - 150, buildingChances);
         m_BuildingChances->setTooltipText(tr("The percent distribution between the different buildings when a building is placed."));
         m_BuildingChances->setPosition(30, m_BuildingChanceLabel->getY() + 40);
         m_pPanel->addItem(m_BuildingChances);
@@ -333,7 +333,7 @@ void DialogRandomMap::playerChanged(qreal)
         playerStrings.append(tr("Player ") + QString::number(i + 1));
         playerChances.append(0);
     }
-    m_OwnerDistribution = new Multislider(playerStrings, pApp->getSettings()->getWidth() - 150, playerChances);
+    m_OwnerDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
     m_OwnerDistribution->setTooltipText(tr("The percent distribution between the players. Note buildings close to an Player HQ may be ignored."));
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 40);
     m_pPanel->addItem(m_OwnerDistribution);

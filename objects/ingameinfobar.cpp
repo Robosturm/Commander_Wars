@@ -31,12 +31,12 @@ IngameInfoBar::IngameInfoBar()
     pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pMiniMapBox->setResAnim(pAnim);
 
-    pMiniMapBox->setSize(width, pApp->getSettings()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
+    pMiniMapBox->setSize(width, Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth);
     pMiniMapBox->setPosition(0, 0);
-    if (pApp->getSettings()->getHeight() - cursorInfoHeigth - gameInfoHeigth < 100)
+    if (Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth < 100)
     {
         pMiniMapBox->setHeight(100);
-        setScale(pApp->getSettings()->getHeight() / static_cast<float>(100 + cursorInfoHeigth + gameInfoHeigth));
+        setScale(Settings::getHeight() / static_cast<float>(100 + cursorInfoHeigth + gameInfoHeigth));
     }
     setSize(width, Settings::getHeight());
 
@@ -72,7 +72,7 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
 
-    setX(pApp->getSettings()->getWidth() - getScaledWidth());
+    setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);
 }
 

@@ -23,7 +23,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -40,7 +40,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     connect(m_COSelection.get(), &COSelection::coSelected, this, &COSelectionDialog::selectedCOIDChanged);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -50,7 +50,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -60,7 +60,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
 
     // show co info button
     m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 150);
-    m_ShowCOInfoButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_ShowCOInfoButton->getHeight());
+    m_ShowCOInfoButton->setPosition(Settings::getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, Settings::getHeight() - 30 - m_ShowCOInfoButton->getHeight());
     pSpriteBox->addChild(m_ShowCOInfoButton);
     m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

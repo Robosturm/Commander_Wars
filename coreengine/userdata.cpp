@@ -25,12 +25,15 @@ Userdata::Userdata()
 
 void Userdata::storeUser()
 {
-    QFile user(Settings::getUsername() + ".dat");
-    user.remove();
-    user.open(QIODevice::WriteOnly);
-    QDataStream pStream(&user);
-    serializeObject(pStream);
-    user.close();
+    if (!Settings::getUsername().isEmpty())
+    {
+        QFile user(Settings::getUsername() + ".dat");
+        user.remove();
+        user.open(QIODevice::WriteOnly);
+        QDataStream pStream(&user);
+        serializeObject(pStream);
+        user.close();
+    }
 }
 
 void Userdata::changeUser()

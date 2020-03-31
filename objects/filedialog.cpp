@@ -15,7 +15,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -24,17 +24,17 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
     // current folder
-    m_CurrentFolder = new Textbox(pApp->getSettings()->getWidth() - 60);
+    m_CurrentFolder = new Textbox(Settings::getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 210), QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 300));
+    m_MainPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 210), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
-    m_CurrentFile = new Textbox(pApp->getSettings()->getWidth() - 60 - 160);
+    m_CurrentFile = new Textbox(Settings::getWidth() - 60 - 160);
     m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getHeight() + 10);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);

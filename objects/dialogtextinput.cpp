@@ -15,7 +15,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -31,18 +31,18 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setHtmlText(text);
     pText->setStyle(style);
-    pText->setPosition(pApp->getSettings()->getWidth() / 2 - pText->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2 - 40);
+    pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);
 
     m_pTextbox = new Textbox(300);
-    m_pTextbox->setPosition(pApp->getSettings()->getWidth() / 2 - m_pTextbox->getWidth() / 2, pApp->getSettings()->getHeight() / 2);
+    m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2);
     m_pTextbox->setCurrentText(startInput);
     pSpriteBox->addChild(m_pTextbox);
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 + 10,
-                            pApp->getSettings()->getHeight() / 2 + 50);
+    m_OkButton->setPosition(Settings::getWidth() / 2 + 10,
+                            Settings::getHeight() / 2 + 50);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -56,8 +56,8 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     if (showCancel)
     {
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        m_CancelButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() - 10,
-                                    pApp->getSettings()->getHeight() / 2 + 50);
+        m_CancelButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() - 10,
+                                    Settings::getHeight() / 2 + 50);
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {

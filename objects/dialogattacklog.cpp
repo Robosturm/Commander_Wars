@@ -26,7 +26,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -43,7 +43,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(pApp->getSettings()->getWidth() / 2 - pOkButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -51,8 +51,8 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         emit sigFinished();
     });
 
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
 
     pSpriteBox->addChild(pPanel);

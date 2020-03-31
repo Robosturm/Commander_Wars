@@ -25,7 +25,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(m_pSpriteBox);
@@ -35,7 +35,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Apply"), 150);
-    pOkButton->setPosition(pApp->getSettings()->getWidth() - pOkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -47,7 +47,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     // cancel button
     oxygine::spButton pExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    pExitButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - pExitButton->getHeight());
+    pExitButton->setPosition(30, Settings::getHeight() - 30 - pExitButton->getHeight());
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

@@ -12,11 +12,11 @@ COSpriteManager::COSpriteManager()
 {
     oxygine::Resources::loadXML("resources/images/co/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/co/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/co/res.xml");
         }
     }
 }
@@ -105,9 +105,9 @@ void COSpriteManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/cos");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/cos");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/cos");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -146,9 +146,9 @@ bool COSpriteManager::loadCO(QString coID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/cos");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/cos");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/cos");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

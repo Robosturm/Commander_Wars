@@ -7,10 +7,10 @@ namespace oxygine
 {
     volatile int NativeTexture::created = 0;
 
-    std::vector<spNativeTexture> NativeTexture::getCreatedTextures()
+    QVector<spNativeTexture> NativeTexture::getCreatedTextures()
     {
 
-        std::vector<spNativeTexture> t;
+        QVector<spNativeTexture> t;
 
         const ObjectBase::__createdObjects& obj = ObjectBase::__getCreatedObjects();
         for (ObjectBase::__createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)

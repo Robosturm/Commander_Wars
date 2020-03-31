@@ -45,9 +45,9 @@ namespace oxygine
 
         void loadBase(QDomElement node);
 
-        std::vector<unsigned char> _hitTestBuffer;
+        QVector<unsigned char> _hitTestBuffer;
 
-        typedef std::vector<atlas> atlasses;
+        typedef QVector<atlas> atlasses;
         atlasses _atlasses;
     };
 

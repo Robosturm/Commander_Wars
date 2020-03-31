@@ -38,9 +38,9 @@ COInfoActor::COInfoActor(qint32 width)
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     addChild(pLabel);
     m_pCurrentCO = new oxygine::Sprite();
-    m_pCurrentCO->setScale((pApp->getSettings()->getHeight() - 200) / 352.0f);
+    m_pCurrentCO->setScale((Settings::getHeight() - 200) / 352.0f);
     m_pCurrentCO->setSize(208, 352);
-    m_pCurrentCO->setPosition(pApp->getSettings()->getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
+    m_pCurrentCO->setPosition(Settings::getWidth() - 120 - m_pCurrentCO->getScaledWidth(), 90);
     addChild(m_pCurrentCO);
 
     m_COName = new oxygine::TextField();
@@ -106,7 +106,7 @@ COInfoActor::COInfoActor(qint32 width)
     style.color = FontManager::getFontColor();
     m_InfoSprite->setWidth(pTextField->getTextRect().getWidth() / m_InfoSprite->getScaleX() + 12);
     m_InfoSprite->addChild(pTextField);
-    m_InfoSprite->setX((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2);
+    m_InfoSprite->setX((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2);
     addChild(m_InfoSprite);
     m_InfoText = new oxygine::TextField();
     m_InfoText->setStyle(style);
@@ -193,7 +193,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     m_COName->setHtmlText(coName);
-    m_COName->setPosition((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
+    m_COName->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
     if (pCO.get() != nullptr)
     {
         value = pInterpreter->doFunction(coid, "getBio");

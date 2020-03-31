@@ -41,11 +41,11 @@ WikiDatabase::WikiDatabase()
 
     oxygine::Resources::loadXML("resources/images/wiki/res.xml");
 
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/wiki/res.xml"))
         {
-            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"));
+            oxygine::Resources::loadXML(QString(Settings::getMods().at(i) + "/images/wiki/res.xml"));
         }
     }
 }
@@ -81,9 +81,9 @@ void WikiDatabase::load()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/wiki");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/wiki");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/wiki");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {

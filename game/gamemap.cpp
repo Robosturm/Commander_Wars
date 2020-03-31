@@ -669,8 +669,8 @@ void GameMap::centerMap(qint32 x, qint32 y)
     if (onMap(x, y))
     {
         // draw point
-        this->setPosition(pApp->getSettings()->getWidth() / 2.0f - x * this->getZoom() * Imagesize - Imagesize / 2.0f,
-                          pApp->getSettings()->getHeight() / 2.0f - y * this->getZoom() * Imagesize - Imagesize / 2.0f);
+        this->setPosition(Settings::getWidth() / 2.0f - x * this->getZoom() * Imagesize - Imagesize / 2.0f,
+                          Settings::getHeight() / 2.0f - y * this->getZoom() * Imagesize - Imagesize / 2.0f);
     }
 }
 
@@ -683,17 +683,17 @@ void GameMap::moveMap(qint32 x, qint32 y)
     float resY = this->getPosition().y + y;
     float minVisible = 16.0f / m_zoom;
     Mainapp* pApp = Mainapp::getInstance();
-    if (resX > pApp->getSettings()->getWidth()  - minVisible * m_zoom * Imagesize)
+    if (resX > Settings::getWidth()  - minVisible * m_zoom * Imagesize)
     {
-        resX = pApp->getSettings()->getWidth() - minVisible * m_zoom * Imagesize;
+        resX = Settings::getWidth() - minVisible * m_zoom * Imagesize;
     }
     if (resX < -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize)
     {
         resX = -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize;
     }
-    if (resY > pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize)
+    if (resY > Settings::getHeight() - minVisible * m_zoom * Imagesize)
     {
-        resY = pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize;
+        resY = Settings::getHeight() - minVisible * m_zoom * Imagesize;
     }
     if (resY < -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize)
     {

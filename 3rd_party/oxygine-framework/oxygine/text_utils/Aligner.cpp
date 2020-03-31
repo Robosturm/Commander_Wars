@@ -197,7 +197,7 @@ namespace oxygine
                 int delta = (int)_line.size() - lastWordPos;
                 line leftPart;
                 leftPart.resize(delta + 1);
-                leftPart.assign(_line.begin() + lastWordPos, _line.end());
+                leftPart = line(_line.begin() + lastWordPos, _line.end());
                 _line.resize(lastWordPos);
                 nextLine();
 

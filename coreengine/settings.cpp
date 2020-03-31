@@ -69,13 +69,22 @@ QStringList Settings::m_activeMods;
 // this Object
 Settings* Settings::m_pInstance = nullptr;
 
+Settings* Settings::getInstance()
+{
+    if (m_pInstance == nullptr)
+    {
+        m_pInstance = new Settings();
+    }
+    return m_pInstance;
+}
+
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
-    loadSettings();
 }
 
-void Settings::loadSettings(){
+void Settings::loadSettings()
+{
     bool ok = false;
     QSettings settings(m_settingFile, QSettings::IniFormat);
 

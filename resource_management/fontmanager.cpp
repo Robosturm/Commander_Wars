@@ -20,11 +20,11 @@ FontManager::FontManager()
     Interpreter::setCppOwnerShip(this);
     oxygine::Resources::loadXML("resources/fonts/fonts.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/fonts/fonts.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/fonts/fonts.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/fonts/fonts.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/fonts/fonts.xml");
         }
     }
 }

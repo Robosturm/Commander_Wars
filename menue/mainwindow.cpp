@@ -43,8 +43,8 @@ Mainwindow::Mainwindow()
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
@@ -180,7 +180,7 @@ Mainwindow::Mainwindow()
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(Mainapp::getGameVersion());
-    pTextfield->setPosition(pApp->getSettings()->getWidth() - 10 - pTextfield->getTextRect().getWidth(), pApp->getSettings()->getHeight() - 10 - pTextfield->getTextRect().getHeight());
+    pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
 }
 
@@ -194,7 +194,7 @@ void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
     static const qint32 buttonCount = 10;
     float buttonHeigth = pButton->getHeight() + 5;
     Mainapp* pApp = Mainapp::getInstance();
-    pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
+    pButton->setPosition(Settings::getWidth() / 2.0f - pButton->getWidth() / 2.0f, Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
 
 Mainwindow::~Mainwindow()

@@ -14,8 +14,7 @@ class Settings : public QObject
 {
     Q_OBJECT
 public:
-    Settings();
-    virtual ~Settings() = default;
+    static Settings* getInstance();
 
     static void loadSettings();
     static void saveSettings();
@@ -85,34 +84,34 @@ public slots:
         return m_fullscreen;
     }
 
-    inline Qt::Key getKeyConsole()
+    static inline Qt::Key getKeyConsole()
     {
         return m_key_console;
     }
 
-    inline void setTotalVolume(qint32 value)
+    static inline void setTotalVolume(qint32 value)
     {
         m_TotalVolume = value;
     }
-    inline qint32 getTotalVolume()
+    static inline qint32 getTotalVolume()
     {
         return m_TotalVolume;
     }
 
-    inline void setMusicVolume(qint32 value)
+    static inline void setMusicVolume(qint32 value)
     {
         m_MusicVolume = value;
     }
-    inline qint32 getMusicVolume()
+    static inline qint32 getMusicVolume()
     {
         return m_MusicVolume;
     }
 
-    inline void setSoundVolume(qint32 value)
+    static inline void setSoundVolume(qint32 value)
     {
         m_SoundVolume = value;
     }
-    inline qint32 getSoundVolume()
+    static inline qint32 getSoundVolume()
     {
         return m_SoundVolume;
     }
@@ -225,6 +224,9 @@ public slots:
     static Qt::Key getKey_MapZoomIn();
     static void setKey_MapZoomIn(const Qt::Key &key_MapZoomIn);
 private:
+    Settings();
+    virtual ~Settings() = default;
+
     // setting variables
     static qint32 m_x;
     static qint32 m_y;

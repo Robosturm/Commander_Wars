@@ -54,11 +54,11 @@ EditorMenue::EditorMenue()
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
-    autoScrollBorder = QRect(50, 50, pApp->getSettings()->getWidth() / 4, 50);
+    autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
 
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
-    m_Topbar = new Topbar(0, pApp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
+    m_Topbar = new Topbar(0, Settings::getWidth() -  m_EditorSelection->getWidth());
     this->addChild(m_Topbar);
 
     pApp->getAudioThread()->clearPlayList();
@@ -135,7 +135,7 @@ EditorMenue::EditorMenue()
     xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(140, 50);
-    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
+    pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
 

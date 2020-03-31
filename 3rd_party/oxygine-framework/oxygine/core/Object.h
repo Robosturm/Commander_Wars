@@ -38,7 +38,7 @@ namespace oxygine
         static void showAssertInDtor(int id);
 
         //debug functions
-        typedef std::vector<ObjectBase*> __createdObjects;
+        typedef QVector<ObjectBase*> __createdObjects;
         static __createdObjects&    __getCreatedObjects();
 
     protected:

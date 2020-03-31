@@ -156,7 +156,7 @@ namespace oxygine
 
         for (size_t i = 0; i != size; ++i)
         {
-            listener& ls = _listeners->at(i);
+            const listener& ls = _listeners->at(i);
             if (ls.type != event->type)
                 continue;
             copy[num] = ls;

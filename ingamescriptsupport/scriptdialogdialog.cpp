@@ -22,7 +22,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     m_pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(m_pSpriteBox);
@@ -30,14 +30,14 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     m_pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
-    QSize size(pApp->getSettings()->getWidth() - 80, pApp->getSettings()->getHeight() - 120);
+    QSize size(Settings::getWidth() - 80, Settings::getHeight() - 120);
     m_Panel = new Panel(true, size, size);
     m_Panel->setPosition(30, 30);
     m_pSpriteBox->addChild(m_Panel);
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(pApp->getSettings()->getWidth() - pOkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -47,7 +47,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 
     // add Dialog button
     oxygine::spButton pDialogButton = pObjectManager->createButton(tr("add Dialog"), 150);
-    pDialogButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - pDialogButton->getHeight());
+    pDialogButton->setPosition(30, Settings::getHeight() - 30 - pDialogButton->getHeight());
     m_pSpriteBox->addChild(pDialogButton);
     pDialogButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -55,7 +55,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     });
     // remove Dialog button
     oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("remove Last"), 150);
-    pRemoveButton->setPosition(pApp->getSettings()->getWidth() / 2 - pRemoveButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - pRemoveButton->getHeight());
+    pRemoveButton->setPosition(Settings::getWidth() / 2 - pRemoveButton->getWidth() / 2, Settings::getHeight() - 30 - pRemoveButton->getHeight());
     m_pSpriteBox->addChild(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -79,7 +79,7 @@ void ScriptDialogDialog::updateDialog()
     pApp->suspendThread();
     m_Panel->clearContent();
     qint32 count = m_Event->getDialogSize();
-    qint32 panelWidth = pApp->getSettings()->getWidth();
+    qint32 panelWidth = Settings::getWidth();
     if (panelWidth < 1000)
     {
         panelWidth = 1000;

@@ -247,7 +247,7 @@ void GameMenue::loadGameMenue()
     {
         pButtonBox->setSize(286, 50);
     }
-    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, pApp->getSettings()->getHeight() - pButtonBox->getHeight() + 6);
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save Game"), 130);
@@ -281,7 +281,7 @@ void GameMenue::loadGameMenue()
     xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(140, 50);
-    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
+    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);

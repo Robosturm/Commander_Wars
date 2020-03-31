@@ -15,7 +15,7 @@ GenericBox::GenericBox()
     m_pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
-    m_pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(m_pSpriteBox);
@@ -25,7 +25,7 @@ GenericBox::GenericBox()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(pApp->getSettings()->getWidth() / 2 - pOkButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

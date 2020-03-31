@@ -6,6 +6,7 @@
 #include "../utils/AtlasBuilder.h"
 #include <stdint.h>
 #include <qvariant.h>
+#include <qfile.h>
 
 namespace oxygine
 {
@@ -39,7 +40,7 @@ namespace oxygine
     const int ALIGN = sizeof(int32_t);
     const int BITS = ALIGN * 8;
 
-    void makeAlpha(const ImageData& srcImage, Rect& bounds, std::vector<unsigned char>& alpha, HitTestData& adata, bool hittest)
+    void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest)
     {
         int w = srcImage.w;
         int h = srcImage.h;
@@ -56,7 +57,7 @@ namespace oxygine
 
         int size = adata.h * destPitch;
 
-        alpha.resize(pos + size);
+        alpha.resize(pos + size + 10);
 
 
         const unsigned char* srcData = srcImage.data;
@@ -248,19 +249,22 @@ namespace oxygine
         atlas_data ad;
 
         ImageData::TextureFormat tf = ImageData::TF_R8G8B8A8;
-        std::vector<ResAnim*> anims;
+        QVector<ResAnim*> anims;
         while (true)
         {
             XmlWalker walker = context.walker.next();
             if (walker.empty())
+            {
                 break;
+            }
 
             QDomElement child_node = walker.getNode();
 
             QString name = child_node.nodeName();
             if (name != "image")
+            {
                 continue;
-
+            }
 
             QString id = child_node.attribute("id");
             QString file = child_node.attribute("file");
@@ -268,6 +272,28 @@ namespace oxygine
             if (file.isEmpty())
             {
                 createEmpty(walker, context);
+                continue;
+            }
+
+            QFile fileInfo(walker.getPath("file"));
+            if (!fileInfo.exists())
+            {
+                qCritical("Invalid item found. %s", fileInfo.fileName().toStdString().c_str());
+                continue;
+            }
+
+            bool found = false;
+            for (const auto& item : anims)
+            {
+                if (item->getResPath() == walker.getPath("file"))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+            {
+                qCritical("Duplicate entry found. %s", fileInfo.fileName().toStdString().c_str());
                 continue;
             }
 
@@ -293,8 +319,6 @@ namespace oxygine
             int rows = 0;
             int frame_width = 0;
             int frame_height = 0;
-            float frame_scale = 1.0f;
-            bool loaded = false;
 
             QImage img(walker.getPath("file"));
             if (img.width() == 0 || img.height() == 0)
@@ -355,7 +379,9 @@ namespace oxygine
                         ImageData src;
                         Rect bounds(0, 0, srcImage_.w, srcImage_.h);
                         if (trim)
+                        {
                             makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
+                        }
                         src = srcImage_.getRect(bounds);
 
                         Rect dest(0, 0, 0, 0);
@@ -450,7 +476,7 @@ namespace oxygine
 
         applyAtlas(ad, _linearFilter, _clamp2edge);
 
-        for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
+        for (QVector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
         {
             ResAnim* rs = *i;
             int num = rs->getTotalFrames();

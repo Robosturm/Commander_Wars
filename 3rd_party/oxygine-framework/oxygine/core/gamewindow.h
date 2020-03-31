@@ -44,10 +44,13 @@ namespace oxygine
         {
             m_quit = true;
         }
+
     protected:
+        virtual void initializeGL() override;
+        virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;
         virtual void paintGL() override;
-        virtual void initializeGL() override;
+
         virtual void resizeGL(int w, int h) override;
         // input events
         virtual void mousePressEvent(QMouseEvent *event) override;
@@ -60,16 +63,16 @@ namespace oxygine
         bool beginRendering();
         void swapDisplayBuffers();
 
-
-        QBasicTimer timer;
         bool _useTouchAPI = false;
         bool _renderEnabled = true;
         spEventDispatcher _dispatcher;
 
         bool m_quit{false};
         QMutex m_Mutex{QMutex::RecursionMode::Recursive};
+        QBasicTimer m_Timer;
 
         static GameWindow* _window;
+
     };
 }
 

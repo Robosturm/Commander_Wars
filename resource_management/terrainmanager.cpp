@@ -14,11 +14,11 @@ TerrainManager::TerrainManager() : QObject()
     Mainapp* pMainapp = Mainapp::getInstance();
     this->moveToThread(pMainapp->getWorkerthread());
     oxygine::Resources::loadXML("resources/images/terrain/res.xml");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/terrain/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/terrain/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/terrain/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/terrain/res.xml");
         }
     }
 }
@@ -40,9 +40,9 @@ void TerrainManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/terrain");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/terrain");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/terrain");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -96,9 +96,9 @@ bool TerrainManager::loadTerrain(QString TerrainID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/terrain");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/terrain");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/terrain");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

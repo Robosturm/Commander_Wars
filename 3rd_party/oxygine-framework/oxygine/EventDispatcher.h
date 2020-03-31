@@ -87,7 +87,7 @@ namespace oxygine
 
         int _lastID;
 
-        typedef std::vector<listener> listeners;
+        typedef QVector<listener> listeners;
         listeners* _listeners;
 
         bool m_enabled{true};

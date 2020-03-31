@@ -37,7 +37,7 @@ namespace oxygine
     class Resources: public Resource
     {
     public:
-        typedef std::vector<spResource> resources;
+        typedef QVector<spResource> resources;
         typedef QMap<QString, spResource> resourcesMap;
 
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
@@ -135,10 +135,10 @@ namespace oxygine
         resourcesMap _resourcesMap;
 
 
-        typedef std::vector< registeredResource > registeredResources;
+        typedef QVector< registeredResource > registeredResources;
         static registeredResources _registeredResources;
 
         QString _name;
-        std::vector<QDomDocument*> _docs;
+        QVector<QDomDocument*> _docs;
     };
 }

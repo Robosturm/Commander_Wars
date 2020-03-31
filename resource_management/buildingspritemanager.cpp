@@ -13,11 +13,11 @@ BuildingSpriteManager::BuildingSpriteManager()
     // load terrain
     oxygine::Resources::loadXML("resources/images/building/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/building/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/building/res.xml");
         }
     }
 }
@@ -50,9 +50,9 @@ void BuildingSpriteManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/building");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/building");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/building");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -80,9 +80,9 @@ bool BuildingSpriteManager::loadBuilding(QString buildingID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/building");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/building");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/building");
     }    
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

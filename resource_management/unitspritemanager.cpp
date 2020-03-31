@@ -10,11 +10,11 @@ UnitSpriteManager::UnitSpriteManager()
 {
     oxygine::Resources::loadXML("resources/images/units/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/units/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/units/res.xml");
         }
     }
 }
@@ -35,9 +35,9 @@ void UnitSpriteManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/units");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/units");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/units");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -65,9 +65,9 @@ bool UnitSpriteManager::loadUnit(QString unitID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/units");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/units");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/units");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

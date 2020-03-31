@@ -150,6 +150,15 @@ namespace oxygine
         //sleep(1000/50);
     }
 
+    void GameWindow::registerResourceTypes()
+    {
+        Resources::registerResourceType(ResAtlas::create, "atlas");
+        Resources::registerResourceType(ResBuffer::create, "buffer");
+        Resources::registerResourceType(ResFontBM::create, "font");
+        Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
+        Resources::registerResourceType(ResFontBM::createSD, "sdfont");
+    }
+
     void GameWindow::initializeGL()
     {
         initializeOpenGLFunctions();
@@ -164,11 +173,7 @@ namespace oxygine
 
         STDRenderer::initialize();
 
-        Resources::registerResourceType(ResAtlas::create, "atlas");
-        Resources::registerResourceType(ResBuffer::create, "buffer");
-        Resources::registerResourceType(ResFontBM::create, "font");
-        Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
-        Resources::registerResourceType(ResFontBM::createSD, "sdfont");
+        registerResourceTypes();
 
         STDRenderer::instance = new STDRenderer;
         STDRenderDelegate::instance = new STDRenderDelegate;
@@ -183,7 +188,6 @@ namespace oxygine
         oxygine::getStage()->setSize(size.width(), size.height());
 
         loadRessources();
-        timer.start(12, this);
     }
 
     void GameWindow::resizeGL(int w, int h)

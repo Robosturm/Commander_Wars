@@ -57,7 +57,7 @@ void AudioThread::initAudio()
     m_Player->setNotifyInterval(200);
     m_Player2->setNotifyInterval(200);
 
-    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
+    SlotSetVolume(static_cast<qint32>(static_cast<float>(Settings::getMusicVolume())));
     connect(m_Player, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
     connect(m_Player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
     connect(m_Player2, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
@@ -216,7 +216,7 @@ void AudioThread::SlotSetVolume(qint32 value)
     if (m_Player != nullptr)
     {
         qreal sound = (static_cast<qreal>(value) / 100.0 *
-                       static_cast<qreal>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0);
+                       static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
         qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
         m_Player->setVolume(qRound(volume * 100));
         m_Player2->setVolume(qRound(volume * 100));
@@ -252,9 +252,9 @@ void AudioThread::SlotLoadFolder(QString folder)
 {
     QStringList loadedSounds;
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        loadMusicFolder(pMainapp->getSettings()->getMods().at(i) + "/" + folder, loadedSounds);
+        loadMusicFolder(Settings::getMods().at(i) + "/" + folder, loadedSounds);
     }
     loadMusicFolder(folder, loadedSounds);
 }
@@ -292,8 +292,8 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
 
 void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay)
 {
-    qreal sound = (static_cast<qreal>(Mainapp::getInstance()->getSettings()->getSoundVolume()) / 100.0 *
-                   static_cast<qreal>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0);
+    qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
+                   static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
     QUrl url = QUrl::fromLocalFile(folder + file);
     if (url.isValid())
     {

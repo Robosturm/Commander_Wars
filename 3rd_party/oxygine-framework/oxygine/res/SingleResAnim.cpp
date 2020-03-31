@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    void makeAlpha(const ImageData& srcImage, Rect& bounds, std::vector<unsigned char>& alpha, HitTestData& adata, bool hittest);
+    void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest);
 
 
     void SingleResAnim::init(QString file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)

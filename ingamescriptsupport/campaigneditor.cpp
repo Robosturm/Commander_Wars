@@ -47,7 +47,7 @@ CampaignEditor::CampaignEditor()
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -66,14 +66,14 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Campaign Folder:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_CampaignFolder = new Textbox(Settings::getWidth() - 500);
     m_CampaignFolder->setTooltipText(tr("Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp"));
     m_CampaignFolder->setPosition(300, y);
     m_CampaignFolder->setCurrentText("maps/");
     pSpriteBox->addChild(m_CampaignFolder);
     // Campaign Button
     oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Select Folder"), 150);
-    pCampaignButton->setPosition(pApp->getSettings()->getWidth() - pCampaignButton->getWidth() - 30, 30);
+    pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
     pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -86,7 +86,7 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Campaign Name:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Name = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Name = new Textbox(Settings::getWidth() - 500);
     m_Name->setTooltipText(tr("Name of the campaign shown in the map selection screen."));
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
@@ -98,7 +98,7 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Campaign Author:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Author = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Author = new Textbox(Settings::getWidth() - 500);
     m_Author->setTooltipText(tr("Name of the author shown in the map selection screen."));
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
@@ -110,21 +110,21 @@ CampaignEditor::CampaignEditor()
     pText->setHtmlText(tr("Campaign Description:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Description = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Description = new Textbox(Settings::getWidth() - 500);
     m_Description->setTooltipText(tr("Description of the campaign shown in the map selection screen."));
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
 
     y += 40;
-    QSize size(pApp->getSettings()->getWidth() - 80, pApp->getSettings()->getHeight() - 280);
+    QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
     m_Panel = new Panel(true, size, size);
     m_Panel->setPosition(40, y);
     pSpriteBox->addChild(m_Panel);
 
     // add campaign
     oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("add Campaign Map"), 200);
-    pAddCampaignButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - pAddCampaignButton->getHeight());
+    pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -133,7 +133,7 @@ CampaignEditor::CampaignEditor()
 
     // load campaign
     oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("load Campaign"), 150);
-    pLoadCampaignButton->setPosition(pApp->getSettings()->getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), pApp->getSettings()->getHeight() - 30 - pLoadCampaignButton->getHeight());
+    pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), Settings::getHeight() - 30 - pLoadCampaignButton->getHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -142,7 +142,7 @@ CampaignEditor::CampaignEditor()
 
     // save campaign
     oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("save Campaign"), 150);
-    pSaveCampaignButton->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - 30 - pSaveCampaignButton->getHeight());
+    pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 30 - pSaveCampaignButton->getHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
     pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -151,7 +151,7 @@ CampaignEditor::CampaignEditor()
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
-    pOkButton->setPosition(pApp->getSettings()->getWidth() - pOkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - pOkButton->getHeight());
+    pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -510,9 +510,9 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                         QStringList subList = items[i].replace("!(variables.createVariable(\"", "")
                                               .replace("\").readDataInt32() ", "@")
                                               .replace(" ", "@").replace(")", "").split("@");
-                        subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
                         if (subList.size() >= 3)
                         {
+                            subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
                             mapDatas[index].scriptVariableDisableActive = true;
                             mapDatas[index].scriptVariableDisableName = subList[0];
                             mapDatas[index].scriptVariableDisableCompare = subList[1];
@@ -527,6 +527,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                                               .replace(" ", "@").replace(")", "").split("@");
                         if (subList.size() >= 3)
                         {
+                            subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
                             mapDatas[index].scriptVariableEnableActive = true;
                             mapDatas[index].scriptVariableEnableName = subList[0];
                             mapDatas[index].scriptVariableEnableCompare = subList[1];

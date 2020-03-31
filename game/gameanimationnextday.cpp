@@ -32,8 +32,8 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
 
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnim);
-    pSprite->setScaleX(pApp->getSettings()->getWidth() / pAnim->getWidth());
-    pSprite->setScaleY(pApp->getSettings()->getHeight() / pAnim->getHeight());
+    pSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    pSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
     QColor color = pPlayer->getColor();
     if (permanent)
     {
@@ -58,9 +58,9 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         if (pAnim != nullptr)
         {
             m_CO->setResAnim(pAnim);
-            m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
+            m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);
         }
     }
@@ -73,9 +73,9 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         {
             m_CO = new oxygine::Sprite();
             m_CO->setResAnim(pAnim);
-            m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
+            m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            m_CO->setPosition(20, Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2);
             addChild(m_CO);
         }
     }
@@ -87,7 +87,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     headline.multiline = false;
     oxygine::spTextField textField = new oxygine::TextField();
     textField->setHtmlText((QString("Day ") + QString::number(GameMap::getInstance()->getCurrentDay())));
-    textField->setPosition(10, pApp->getSettings()->getHeight() / 2 - textField->getTextRect().getHeight() / 2);
+    textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().getHeight() / 2);
     if (pCO != nullptr)
     {
         textField->setX(40 + m_CO->getScaledWidth());

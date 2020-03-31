@@ -27,7 +27,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -37,7 +37,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -47,7 +47,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
     // cancel button
     m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_ExitButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_ExitButton->getHeight());
+    m_ExitButton->setPosition(30, Settings::getHeight() - 30 - m_ExitButton->getHeight());
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -56,7 +56,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     });
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
-    m_ToggleAll->setPosition(pApp->getSettings()->getWidth() / 2 + 60 , pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -86,12 +86,12 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
     m_PredefinedLists = new DropDownmenu(230, items);
 
-    m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
     oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-    pSave->setPosition(pApp->getSettings()->getWidth() / 2 - pSave->getWidth() / 2, pApp->getSettings()->getHeight() - 75 - m_ToggleAll->getHeight());
+    pSave->setPosition(Settings::getWidth() / 2 - pSave->getWidth() / 2, Settings::getHeight() - 75 - m_ToggleAll->getHeight());
     pSave->addClickListener([=](oxygine::Event*)
     {
         emit sigShowSaveBannlist();
@@ -106,8 +106,8 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150));
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 

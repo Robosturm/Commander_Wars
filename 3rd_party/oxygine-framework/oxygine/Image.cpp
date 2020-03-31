@@ -39,25 +39,25 @@ namespace oxygine
         memset(&_buffer.front(), val, _buffer.size());
     }
 
-    bool Image::init(const QImage& buffer, bool premultiplied)
+    bool Image::init(QImage buffer, bool premultiplied)
     {
         cleanup();
 
         if (buffer.width() > 0 && buffer.height() > 0)
         {
-            m_image = buffer.convertToFormat(QImage::Format::Format_RGBA8888);
+            buffer = buffer.convertToFormat(QImage::Format::Format_RGBA8888);
             // resize image data and imahe
-            init(m_image.width(), m_image.height(), ImageData::TF_R8G8B8A8);
+            init(buffer.width(), buffer.height(), ImageData::TF_R8G8B8A8);
             ImageData dest = lock();
-            int pitch = ImageData::getBytesPerPixel(ImageData::TF_R8G8B8A8) * m_image.width();
-            ImageData src(m_image.width(), 1, pitch, ImageData::TF_R8G8B8A8,  nullptr);
+            int pitch = ImageData::getBytesPerPixel(ImageData::TF_R8G8B8A8) * buffer.width();
+            ImageData src(buffer.width(), 1, pitch, ImageData::TF_R8G8B8A8,  nullptr);
             dest.h = 1;
             if (premultiplied)
             {
                 operations::op_premultipliedAlpha op;
-                for (qint32 i = 0; i < m_image.height(); i++)
+                for (qint32 i = 0; i < buffer.height(); i++)
                 {
-                    src.data = m_image.scanLine(i);
+                    src.data = buffer.scanLine(i);
                     operations::applyOperation(op, src, dest);
                     dest.data += dest.pitch;
                 }
@@ -65,9 +65,9 @@ namespace oxygine
             else
             {
                 operations::op_blit op;
-                for (qint32 i = 0; i < m_image.height(); i++)
+                for (qint32 i = 0; i < buffer.height(); i++)
                 {
-                    src.data = m_image.scanLine(i);
+                    src.data = buffer.scanLine(i);
                     operations::applyOperation(op, src, dest);
                     dest.data += dest.pitch;
                 }
@@ -75,9 +75,7 @@ namespace oxygine
         }
         else
         {
-
             qWarning("Image. can't unpack data unknown file format");
-
             init(16, 16, ImageData::TF_R8G8B8A8);
             fillZero();
         }

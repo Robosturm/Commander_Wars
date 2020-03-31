@@ -24,37 +24,37 @@ MapSelectionView::MapSelectionView()
     style.multiline = false;
 
     qint32 width = 0;
-    if (pApp->getSettings()->getWidth() / 2 > 400)
+    if (Settings::getWidth() / 2 > 400)
     {
         width = 400;
     }
-    else if (pApp->getSettings()->getWidth() / 2 < 300)
+    else if (Settings::getWidth() / 2 < 300)
     {
         width = 300;
     }
     else
     {
-        width = pApp->getSettings()->getWidth() / 2;
+        width = Settings::getWidth() / 2;
     }
 
-    m_pMapSelection = new MapSelection(pApp->getSettings()->getHeight() - 70, width, "");
+    m_pMapSelection = new MapSelection(Settings::getHeight() - 70, width, "");
     m_pMapSelection->setPosition(10, 10);
     this->addChild(m_pMapSelection);
     m_pMinimap = new Minimap();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
 
-    QSize size(pApp->getSettings()->getWidth() - width - 80,
-               pApp->getSettings()->getHeight() / 2 - 135);
+    QSize size(Settings::getWidth() - width - 80,
+               Settings::getHeight() / 2 - 135);
     m_MinimapPanel = new Panel(true, size, size);
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
 
     // map info text
-    m_MapInfo = new Panel(true, QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60),
-                          QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60));
-    m_MapInfo->setPosition(width + 50, pApp->getSettings()->getHeight() / 2 - 100);
+    m_MapInfo = new Panel(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
+                          QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
+    m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     this->addChild(m_MapInfo);
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
@@ -93,7 +93,7 @@ MapSelectionView::MapSelectionView()
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = new oxygine::Box9Sprite();
     m_pBuildingBackground->setResAnim(pAnim);
-    m_pBuildingBackground->setSize(pApp->getSettings()->getWidth() - width - 100, 60);
+    m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, 60);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
                                        m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);

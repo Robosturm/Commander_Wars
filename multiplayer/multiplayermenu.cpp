@@ -40,7 +40,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     Console::print("Entering Multiplayer Menue", Console::eDEBUG);
 
     m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(pApp->getSettings()->getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, pApp->getSettings()->getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
+    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
     m_pButtonLoadSavegame->attachTo(this);
     m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -77,8 +77,8 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         {
             emit sigShowIPs();
         });
-        m_pHostAdresse->setPosition(pApp->getSettings()->getWidth() / 2 - m_pHostAdresse->getWidth() / 2,
-                                         pApp->getSettings()->getHeight() - m_pHostAdresse->getHeight() - 10);
+        m_pHostAdresse->setPosition(Settings::getWidth() / 2 - m_pHostAdresse->getWidth() / 2,
+                                         Settings::getHeight() - m_pHostAdresse->getHeight() - 10);
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
@@ -672,7 +672,7 @@ void Multiplayermenu::createChat()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_Chat = new Chat(m_NetworkInterface, QSize(pApp->getSettings()->getWidth() - 20,
+    m_Chat = new Chat(m_NetworkInterface, QSize(Settings::getWidth() - 20,
                                                 300));
     m_Chat->setPosition(10, Settings::getHeight() - 360);
     addChild(m_Chat);

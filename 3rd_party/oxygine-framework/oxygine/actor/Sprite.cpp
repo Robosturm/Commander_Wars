@@ -72,18 +72,21 @@ namespace oxygine
         const int BITS = (sizeof(int32_t) * 8);
 
         const unsigned char* buff = ad.data;
-        Vector2 pos = localPosition * _frame.getResAnim()->getAppliedScale();
-        pos = pos.div(_localScale);
-        Point lp = pos.cast<Point>() / HIT_TEST_DOWNSCALE;
-        Rect r(0, 0, ad.w, ad.h);
-        if (r.pointIn(lp))
+        if (buff != nullptr)
         {
-            const int32_t* ints = reinterpret_cast<const int32_t*>(buff + lp.y * ad.pitch);
+            Vector2 pos = localPosition * _frame.getResAnim()->getAppliedScale();
+            pos = pos.div(_localScale);
+            Point lp = pos.cast<Point>() / HIT_TEST_DOWNSCALE;
+            Rect r(0, 0, ad.w, ad.h);
+            if (r.pointIn(lp))
+            {
+                const int32_t* ints = reinterpret_cast<const int32_t*>(buff + lp.y * ad.pitch);
 
-            int n = lp.x / BITS;
-            int b = lp.x % BITS;
+                int n = lp.x / BITS;
+                int b = lp.x % BITS;
 
-            return (ints[n] >> b) & 1;
+                return (ints[n] >> b) & 1;
+            }
         }
         return false;
     }

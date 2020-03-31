@@ -29,8 +29,8 @@ CreditsMenue::CreditsMenue()
     sprite->setPosition(0, 0);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
-    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/credits_options");
@@ -39,7 +39,7 @@ CreditsMenue::CreditsMenue()
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
     pButtonExit->setPosition(10,
-                             pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+                             Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigExitMenue();
@@ -81,7 +81,7 @@ CreditsMenue::CreditsMenue()
     }
     creditsActor = new oxygine::Actor();
     addChild(creditsActor);
-    creditsActor->setY(pApp->getSettings()->getHeight());
+    creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -95,7 +95,7 @@ CreditsMenue::CreditsMenue()
     headstyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headstyle.multiline = false;
 
-    qint32 x = pApp->getSettings()->getWidth() / 2;
+    qint32 x = Settings::getWidth() / 2;
     oxygine::spTextField pTextfield;
     for (qint32 i = 0; i < m_Headlines.size(); i++)
     {
@@ -127,7 +127,7 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
         speedTimer.start();
     }
     Mainapp* pApp = Mainapp::getInstance();
-    if (creditsActor->getY() - pApp->getSettings()->getHeight() / 2.0f + m_creditsHeigth < 0)
+    if (creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
     {
         emit sigExitMenue();
     }

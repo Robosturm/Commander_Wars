@@ -11,11 +11,11 @@ GameAnimationManager::GameAnimationManager()
 {
     oxygine::Resources::loadXML("resources/images/animations/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/animations/res.xml"))
+        if (QFile::exists(Settings::getMods().at(i) + "/images/animations/res.xml"))
         {
-            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/animations/res.xml");
+            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/animations/res.xml");
         }
     }
 }

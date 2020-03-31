@@ -24,7 +24,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -34,7 +34,7 @@ DialogVictoryConditions::DialogVictoryConditions()
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() / 2 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -54,8 +54,8 @@ DialogVictoryConditions::DialogVictoryConditions()
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
@@ -66,7 +66,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(headerStyle);
     pTextfield->setHtmlText(tr("Victory Info"));
-    pTextfield->setPosition(pApp->getSettings()->getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
+    pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
     pPanel->addItem(pTextfield);
     y += 60;
     QString info = pMap->getGameScript()->getVictoryInfo();
@@ -74,7 +74,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
-    pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
+    pTextfield->setWidth(Settings::getWidth() - 60);
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     y += 10 + pTextfield->getTextRect().getHeight();
@@ -85,7 +85,7 @@ DialogVictoryConditions::DialogVictoryConditions()
 
         pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
-        pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
+        pTextfield->setWidth(Settings::getWidth() - 60);
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
@@ -117,7 +117,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pTextfield);
                 x += stepWidth;
-                if (x + stepWidth > pApp->getSettings()->getWidth() - 70 && i2 < pMap->getPlayerCount() - 1)
+                if (x + stepWidth > Settings::getWidth() - 70 && i2 < pMap->getPlayerCount() - 1)
                 {
                     x = 10;
                     y += 60;

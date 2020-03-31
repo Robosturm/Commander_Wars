@@ -14,7 +14,7 @@ FolderDialog::FolderDialog(QString startFolder)
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -23,20 +23,20 @@ FolderDialog::FolderDialog(QString startFolder)
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
     // current folder
-    m_CurrentFolder = new Textbox(pApp->getSettings()->getWidth() - 60);
+    m_CurrentFolder = new Textbox(Settings::getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150), QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 300));
+    m_MainPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() - 30 - m_OkButton->getWidth(),
-                            pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(Settings::getWidth() - 30 - m_OkButton->getWidth(),
+                            Settings::getHeight() - 30 - m_OkButton->getHeight());
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -50,7 +50,7 @@ FolderDialog::FolderDialog(QString startFolder)
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(30,
-                                pApp->getSettings()->getHeight() - 30 - m_CancelButton->getHeight());
+                                Settings::getHeight() - 30 - m_CancelButton->getHeight());
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

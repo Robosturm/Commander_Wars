@@ -16,7 +16,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
@@ -33,12 +33,12 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     m_Text = new oxygine::TextField();
     m_Text->setHtmlText((text + ".  "));
     m_Text->setStyle(style);
-    m_Text->setPosition(pApp->getSettings()->getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2 - 40);
+    m_Text->setPosition(Settings::getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
 
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-    m_CancelButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_CancelButton->getWidth() / 2,
-                                pApp->getSettings()->getHeight() / 2 + 10);
+    m_CancelButton->setPosition(Settings::getWidth() / 2 - m_CancelButton->getWidth() / 2,
+                                Settings::getHeight() / 2 + 10);
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

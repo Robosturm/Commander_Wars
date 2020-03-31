@@ -7,7 +7,7 @@
 
 namespace oxygine
 {
-    typedef std::vector<AnimationFrame> animationFrames;
+    typedef QVector<AnimationFrame> animationFrames;
 
     DECLARE_SMART(ResAnim, spResAnim);
     class ResAnim: public Resource

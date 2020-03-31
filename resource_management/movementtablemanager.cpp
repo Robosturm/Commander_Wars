@@ -45,9 +45,9 @@ void MovementTableManager::loadAll()
     QStringList searchPaths;
     searchPaths.append("resources/scripts/movementtables");
     // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/movementtables");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/movementtables");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
@@ -105,9 +105,9 @@ bool MovementTableManager::loadTable(QString movementtableID)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/movementtables");
-    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
-        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/movementtables");
+        searchPaths.append(Settings::getMods().at(i) + "/scripts/movementtables");
     }
     bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)

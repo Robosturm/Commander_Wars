@@ -63,7 +63,7 @@ Console::Console()
     oxygine::Actor::setPriority(static_cast<qint16>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = new oxygine::ColorRectSprite();
     m_pBackgroundsprite->setPosition(0, 0);
-    m_pBackgroundsprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
     m_pBackgroundsprite->attachTo(this);
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
@@ -212,9 +212,9 @@ void Console::update(const oxygine::UpdateState& us)
     // no need to calculate more than we need if we're invisible
     if(show)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+
         QMutexLocker locker(&datalocker);
-        qint32 screenheight = pApp->getSettings()->getHeight();
+        qint32 screenheight = Settings::getHeight();
         qint32 h = FontManager::getMainFont16()->getSize();
         // pre calc message start
         qint32 num = screenheight / h - 1;
@@ -261,7 +261,7 @@ void Console::toggleView()
     if (show)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        m_pBackgroundsprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+        m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
     }
     toggled = true;
 }
@@ -1295,7 +1295,7 @@ void Console::KeyInput(oxygine::KeyEvent event)
     Qt::Key cur = event.getKey();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (cur == pApp->getSettings()->getKeyConsole())
+    if (cur == Settings::getKeyConsole())
     {
         Console::toggleView();
     }
@@ -1450,7 +1450,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtDebugMsg:
             if (Console::LogLevel <= Console::eLogLevels::eDEBUG)
             {
-                stream << "Debug: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Debug: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1458,7 +1458,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtInfoMsg:
             if (Console::LogLevel <= Console::eLogLevels::eINFO)
             {
-                stream << "Info: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Info: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1466,7 +1466,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtWarningMsg:
             if (Console::LogLevel <= Console::eLogLevels::eWARNING)
             {
-                stream << "Warning: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Warning: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1474,7 +1474,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtCriticalMsg:
             if (Console::LogLevel <= Console::eLogLevels::eERROR)
             {
-                stream << "Critical: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Critical: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1482,7 +1482,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtFatalMsg:
             if (Console::LogLevel <= Console::eLogLevels::eFATAL)
             {
-                stream << "Fatal: " << localMsg.constData() << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Fatal: " << localMsg << " " << context.file << " " << context.line << " " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }

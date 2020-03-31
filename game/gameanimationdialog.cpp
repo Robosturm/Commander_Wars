@@ -24,21 +24,19 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
     connect(&finishTimer, &QTimer::timeout, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
 
-    Settings* pSetting = Mainapp::getInstance()->getSettings();
-
     m_BackgroundSprite = new oxygine::Sprite();
     addChild(m_BackgroundSprite);
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
     m_TextMask = new oxygine::Sprite();
-    m_TextMask->setScaleX(pSetting->getWidth() / pAnim->getWidth());
+    m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
     m_TextBackground = new oxygine::Sprite();
-    m_TextBackground->setScaleX(pSetting->getWidth() / pAnim->getWidth());
+    m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
     addChild(m_TextBackground);
 
@@ -50,7 +48,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
     oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
     pRect->setPosition(48 * 2 + 5, 6);
-    pRect->setSize(pSetting->getWidth() - pRect->getX() - 5, 96);
+    pRect->setSize(Settings::getWidth() - pRect->getX() - 5, 96);
 
     m_TextField = new oxygine::TextField();
     m_TextField->setPosition(0, -6);
@@ -229,7 +227,7 @@ void GameAnimationDialog::setPositionTop(bool value)
     }
     else
     {
-        setY(Mainapp::getInstance()->getSettings()->getHeight() - m_TextBackground->getScaledHeight());
+        setY(Settings::getHeight() - m_TextBackground->getScaledHeight());
         m_BackgroundSprite->setY(-getY());
     }
 }

@@ -40,7 +40,7 @@ namespace oxygine
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
         void _finalize();
 
-        typedef std::vector<page> pages;
+        typedef QVector<page> pages;
         pages _pages;
         Font* _font;
         bool _sdf;
