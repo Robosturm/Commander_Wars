@@ -115,6 +115,15 @@ void GameRules::init()
     {
         m_VictoryRules[i]->init();
     }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 playerCount = pMap->getPlayerCount();
+    m_WeatherDays.append(QVector<qint32>(playerCount, -1));
+    m_WeatherDays.append(QVector<qint32>(playerCount, -1));
+    for (qint32 i = 0; i < playerCount; i++)
+    {
+            m_WeatherDays[0][i] = getStartWeather();
+            m_WeatherDays[1][i] = getStartWeather();
+    }
 }
 
 void GameRules::checkVictory()

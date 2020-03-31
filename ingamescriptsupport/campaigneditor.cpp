@@ -510,6 +510,7 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                         QStringList subList = items[i].replace("!(variables.createVariable(\"", "")
                                               .replace("\").readDataInt32() ", "@")
                                               .replace(" ", "@").replace(")", "").split("@");
+                        subList[1] = subList[1].replace(">", "&gt;").replace("<", "&lt;");
                         if (subList.size() >= 3)
                         {
                             mapDatas[index].scriptVariableDisableActive = true;
@@ -636,13 +637,17 @@ void CampaignEditor::saveCampaign(QString filename)
                       " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount;
             if (mapDatas[i].scriptVariableEnableActive)
             {
+                QString compare = mapDatas[i].scriptVariableEnableCompare;
+                compare = compare.replace("&gt;", ">").replace("&lt;", "<");
                 stream << " && variables.createVariable(\"" << mapDatas[i].scriptVariableEnableName << "\").readDataInt32() "
-                       << mapDatas[i].scriptVariableEnableCompare << " " << mapDatas[i].scriptVariableEnableValue;
+                       << compare << " " << mapDatas[i].scriptVariableEnableValue;
             }
             if (mapDatas[i].scriptVariableDisableActive)
             {
+                QString compare = mapDatas[i].scriptVariableDisableCompare;
+                compare = compare.replace("&gt;", ">").replace("&lt;", "<");
                 stream << " && !(variables.createVariable(\"" << mapDatas[i].scriptVariableDisableName << "\").readDataInt32() "
-                       << mapDatas[i].scriptVariableDisableCompare << " " << mapDatas[i].scriptVariableDisableValue << ")";
+                       << compare << " " << mapDatas[i].scriptVariableDisableValue << ")";
             }
 
             stream << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
@@ -876,7 +881,8 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    QVector<QString> items = {"===", "!==", ">=", "<="};
+
+    QVector<QString> items = {"===", "!==", "&gt;=", "&lt;="};
     spDropDownmenu dropDown = new DropDownmenu(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);

@@ -37,7 +37,7 @@ void ScriptConditionCheckVariable::readCondition(QTextStream& rStream)
     if (items.size() >= 3)
     {
         m_Variable = items[0];
-        m_Compare = items[1];
+        m_Compare = items[1].replace(">", "&gt;").replace("<", "&lt;");
         m_value = items[2].toInt();
     }
     while (!rStream.atEnd())
@@ -71,7 +71,9 @@ void ScriptConditionCheckVariable::writeCondition(QTextStream& rStream)
     {
         variableName = ScriptData::campaignVariables;
     }
-    rStream << "        if (" + variableName + ".createVariable(\"" + m_Variable + "\").readDataInt32() " + m_Compare + " " + QString::number(m_value) + ") { // "
+    QString compare = m_Compare;
+    compare = compare.replace("&gt;", ">").replace("&lt;", "<");
+    rStream << "        if (" + variableName + ".createVariable(\"" + m_Variable + "\").readDataInt32() " + compare + " " + QString::number(m_value) + ") { // "
             << QString::number(getVersion()) << " " << ConditionCheckVariable + "\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
@@ -127,7 +129,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    QVector<QString> items = {"===", "!==", ">=", "<="};
+    QVector<QString> items = {"===", "!==", "&gt;=", "&lt;="};
     spDropDownmenu dropDown = new DropDownmenu(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, 70);

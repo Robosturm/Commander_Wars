@@ -55,6 +55,8 @@ public:
      * @brief autoScroll
      */
     virtual void autoScroll() override;
+    Chat* getChat() const;
+
 signals:
     void sigActionPerformed();
     void sigGameStarted();

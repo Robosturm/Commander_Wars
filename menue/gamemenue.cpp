@@ -1117,6 +1117,11 @@ void GameMenue::keyInputAll(Qt::Key cur)
     }
 }
 
+Chat* GameMenue::getChat() const
+{
+    return m_pChat.get();
+}
+
 void GameMenue::autoScroll()
 {
     Mainapp* pApp = Mainapp::getInstance();

@@ -391,8 +391,7 @@
 		<!-- stealthbomber -->
 		<image file="stealthbomber/stealthbomber.png" />
 		<image file="stealthbomber/stealthbomber+mask.png" />
-		
-		
+				
 		<!-- transportplane -->
 		<image file="transportplane/transportplane.png" />
 		<image file="transportplane/transportplane+mask.png" />

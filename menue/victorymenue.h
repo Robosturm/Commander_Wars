@@ -61,6 +61,11 @@ protected:
      * @brief drawGraphStep
      */
     void drawGraphStep(qint32 progress);
+    /**
+     * @brief getStepTime
+     * @return
+     */
+    qint32 getStepTime();
 private:
     GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**

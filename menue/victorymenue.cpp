@@ -169,16 +169,8 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     }
 
     m_ProgressTimer.setSingleShot(false);
-    qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(pMap->getCurrentDay() / 10.0)));
-    if (pMap->getCurrentDay() < 5)
-    {
-        stepTime = 400;
-    }
-    else if (stepTime < 50)
-    {
-            stepTime = 50;
-    }
-    m_ProgressTimer.start(stepTime);
+
+    m_ProgressTimer.start(getStepTime());
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
 
     spPanel panel = new Panel(true, QSize(pApp->getSettings()->getWidth() - pButtonExit->getWidth() - 30, 105), QSize(pApp->getSettings()->getWidth() - pButtonExit->getX() - 20, 40));
@@ -344,7 +336,6 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     qint32 sentenceWidth = startX - 10;
                     pAnim = pGameManager->getResAnim("dialogfield+mask");
                     oxygine::spSprite  pTextMask = new oxygine::Sprite();
-                    pTextMask->setScaleY(scale);
                     pTextMask->setWidth(sentenceWidth);
                     pTextMask->setScaleX(pTextMask->getWidth() / pAnim->getWidth());
                     pTextMask->setResAnim(pAnim);
@@ -357,7 +348,6 @@ VictoryMenue::VictoryMenue(bool multiplayer)
 
                     oxygine::spSprite pWinLooseSprite = new oxygine::Sprite();
                     pAnim = pGameManager->getResAnim("dialogfield");
-                    pWinLooseSprite->setScaleY(scale);
                     pWinLooseSprite->setWidth(sentenceWidth);
                     pWinLooseSprite->setScaleX(pWinLooseSprite->getWidth() / pAnim->getWidth());
                     pWinLooseSprite->setResAnim(pAnim);
@@ -366,7 +356,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
 
                     oxygine::spSprite pCOSprite = new oxygine::Sprite();
                     pCOSprite->setScale(scale);
-                    pCOSprite->setPosition(5, 3 * scale + y);
+                    pCOSprite->setPosition(5, 11 + y);
                     QString resAnim = pCO->getCoID().toLower() + "+face";
                     pAnim = pCOSpriteManager->getResAnim(resAnim);
                     QString sentence = "";
@@ -455,6 +445,8 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {
+        m_ProgressTimer.stop();
+        m_ProgressTimer.start(getStepTime());
         m_PlayerSelectPanel->setVisible(true);
         m_pGraphBackground->setVisible(true);
         if (m_VictoryPanel.get() != nullptr)
@@ -535,6 +527,8 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     }
     else
     {
+        m_ProgressTimer.stop();
+        m_ProgressTimer.start(50);
         if (m_VictoryPanel.get() != nullptr)
         {
             m_PlayerSelectPanel->setVisible(false);
@@ -872,4 +866,19 @@ void VictoryMenue::drawGraphStep(qint32 progress)
         }
     }
 
+}
+
+qint32 VictoryMenue::getStepTime()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(pMap->getCurrentDay() / 10.0)));
+    if (pMap->getCurrentDay() < 5)
+    {
+        stepTime = 400;
+    }
+    else if (stepTime < 50)
+    {
+        stepTime = 50;
+    }
+    return stepTime;
 }

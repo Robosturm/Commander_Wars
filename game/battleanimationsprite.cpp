@@ -220,6 +220,8 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
                 qint32 loops, float scale, short priority, qint32 showDelay,
                 bool _invertFlipX)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
@@ -291,6 +293,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
         }
         m_Actor->addChild(pSprite);
     }
+    pApp->continueThread();
 }
 
 void BattleAnimationSprite::detachChild(oxygine::spActor pActor)

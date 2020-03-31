@@ -14,7 +14,7 @@ namespace oxygine
         Image();
         ~Image();
 
-        bool init(QImage& bf, bool premultiplied);
+        bool init(const QImage& bf, bool premultiplied);
         void init(const ImageData& src);
         void init(int w, int h, ImageData::TextureFormat Format);
 
@@ -45,6 +45,7 @@ namespace oxygine
         void        swap(Image& r);
 
     private:
+        QImage m_image;
         ImageData _image;
         size_t _offset;//buffer offset
         std::vector<unsigned char> _buffer;

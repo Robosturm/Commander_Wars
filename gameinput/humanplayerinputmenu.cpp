@@ -289,7 +289,8 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 
 void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 {
-    if (m_Focused && GameMenue::getInstance()->getFocused())
+    Chat* pChat = GameMenue::getInstance()->getChat();
+    if (m_Focused && (pChat == nullptr || pChat->getVisible() == false))
     {
         // for debugging
         Qt::Key cur = event.getKey();
