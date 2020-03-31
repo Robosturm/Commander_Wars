@@ -222,7 +222,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     });
     panel->addItem(pButtonPlayerStrength);
 
-    if (pMap->getWinnerTeam() >= 0 || true)
+    if (pMap->getWinnerTeam() >= 0)
     {
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
         pButtonVictoryRanking->attachTo(this);
@@ -270,7 +270,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
 
     // victory score
     qint32 winnerTeam = pMap->getWinnerTeam();
-    if (winnerTeam >= 0 || true)
+    if (winnerTeam >= 0)
     {
         oxygine::TextStyle style48 = FontManager::getMainFont48();
         style48.color = FontManager::getFontColor();

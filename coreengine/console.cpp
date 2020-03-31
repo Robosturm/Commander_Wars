@@ -1450,7 +1450,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtDebugMsg:
             if (Console::LogLevel <= Console::eLogLevels::eDEBUG)
             {
-                stream << "Debug: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1458,7 +1458,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtInfoMsg:
             if (Console::LogLevel <= Console::eLogLevels::eINFO)
             {
-                stream << "Info: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1466,7 +1466,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtWarningMsg:
             if (Console::LogLevel <= Console::eLogLevels::eWARNING)
             {
-                stream << "Warning: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1474,7 +1474,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtCriticalMsg:
             if (Console::LogLevel <= Console::eLogLevels::eERROR)
             {
-                stream << "Critical: " << msg << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
@@ -1482,7 +1482,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
         case QtFatalMsg:
             if (Console::LogLevel <= Console::eLogLevels::eFATAL)
             {
-                stream << "Fatal: " << localMsg << " " << context.file << " " << context.line << " " << context.function << "\n";
+                stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
                 fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
             }
