@@ -107,7 +107,7 @@ bool TerrainManager::loadTerrain(QString TerrainID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedTerrains.append(TerrainID);

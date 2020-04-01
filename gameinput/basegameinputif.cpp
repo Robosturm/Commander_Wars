@@ -99,7 +99,7 @@ BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
         }
         case GameEnums::AiTypes_NormalDefensive:
         {
-            ret = new NormalAi(0.1f, 0, 0.3f, 10000);
+            ret = new NormalAi(0.0f, -0.1f, 0.3f, 10000);
             break;
         }
         case GameEnums::AiTypes_ProxyAi:

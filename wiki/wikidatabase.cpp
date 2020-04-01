@@ -52,7 +52,6 @@ WikiDatabase::WikiDatabase()
 
 void WikiDatabase::load()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
     // load database
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
@@ -96,7 +95,7 @@ void WikiDatabase::load()
             dirIter->next();
             QString file = dirIter->fileInfo().absoluteFilePath();
             Interpreter* pInterpreter = Interpreter::getInstance();
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, false);
             QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getName");
             QString name = "";
             if (erg.isString())
@@ -228,7 +227,7 @@ spWikipage WikiDatabase::getPage(pageData data)
         // default loader
         ret = new Wikipage();
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->openScript(id);
+        pInterpreter->openScript(id, false);
         QJSValueList args;
         QJSValue obj1 = pInterpreter->newQObject(ret.get());
         args << obj1;

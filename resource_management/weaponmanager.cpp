@@ -147,7 +147,7 @@ void WeaponManager::loadAll()
             QTextStream stream2(&tmp);
             stream2 << jsData;
             tmp.close();
-            pInterpreter->openScript("temp/table.js");
+            pInterpreter->openScript("temp/table.js", true);
             QFile::remove("temp/table.js");
         }
     }
@@ -170,7 +170,7 @@ bool WeaponManager::loadWeapon(QString weaponID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedWeapons.append(weaponID);

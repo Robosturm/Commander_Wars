@@ -37,6 +37,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_scroll = 1;
+        m_currentScrollspeed = m_Scrollspeed;
+        speedCounter = 0;
     });
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -61,6 +63,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_scroll = -1;
+        m_currentScrollspeed = m_Scrollspeed;
+        speedCounter = 0;
     });
     pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -153,6 +157,16 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
     }
 }
 
+float V_Scrollbar::getScrollspeed() const
+{
+    return m_Scrollspeed;
+}
+
+void V_Scrollbar::setScrollspeed(float Scrollspeed)
+{
+    m_Scrollspeed = Scrollspeed;
+}
+
 void V_Scrollbar::setContentWidth(qint32 width)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -170,7 +184,7 @@ void V_Scrollbar::setContentWidth(qint32 width)
     }
     m_Scrollvalue = 0;
     m_slider->setSize(sliderWidth, 18);
-    changeScrollValue(m_Scrollvalue);
+    setScrollvalue(m_Scrollvalue);
     pApp->continueThread();
 }
 
@@ -183,7 +197,12 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentWidth > m_Width)
             {
-                emit sigChangeScrollValue(m_Scrollvalue + m_scroll * m_Scrollspeed * 10.0f / static_cast<float>(m_ContentWidth));
+                speedCounter++;
+                if (speedCounter % 8 == 0)
+                {
+                    m_currentScrollspeed *= 2;
+                }
+                emit sigChangeScrollValue(m_scroll * m_currentScrollspeed * 10.0f / static_cast<float>(m_ContentWidth));
                 m_ScrollTimer.start();
             }
         }
@@ -193,6 +212,7 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
 
 void V_Scrollbar::changeScrollValue(float value)
 {
+
     m_Scrollvalue += value;
     if (m_Scrollvalue < 0)
     {
@@ -208,16 +228,6 @@ void V_Scrollbar::changeScrollValue(float value)
     }
     setScrollvalue(m_Scrollvalue);
     emit sigScrollValueChanged(m_Scrollvalue);
-}
-
-float V_Scrollbar::getScrollspeed() const
-{
-    return m_Scrollspeed;
-}
-
-void V_Scrollbar::setScrollspeed(float Scrollspeed)
-{
-    m_Scrollspeed = Scrollspeed;
 }
 
 float V_Scrollbar::getScrollvalue() const

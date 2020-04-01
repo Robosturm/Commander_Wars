@@ -87,7 +87,7 @@ bool GameRuleManager::loadVictoryRule(QString victoryID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedVictoryRules.append(victoryID);
@@ -115,7 +115,7 @@ bool GameRuleManager::loadWeather(QString weatherID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedWeather.append(weatherID);

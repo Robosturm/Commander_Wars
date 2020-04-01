@@ -31,7 +31,7 @@ public:
 signals:
 
 public slots:
-    void openScript(QString script);
+    void openScript(QString script, bool setup);
     void loadScript(QString content, QString script);
     QJSValue doFunction(QString func, QJSValueList& args);
     QJSValue doFunction(QString obj, QString func, const QJSValueList& args = QJSValueList());
@@ -63,7 +63,7 @@ public slots:
 private:
     explicit Interpreter();
     void init();
-
+    QString m_runtimeData;
     static Interpreter* m_pInstance;
 };
 

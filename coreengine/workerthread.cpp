@@ -61,7 +61,7 @@ void WorkerThread::start()
         {
             dirIter.next();
             QString file = dirIter.fileInfo().absoluteFilePath();
-            m_pInterpreter->openScript(file);
+            m_pInterpreter->openScript(file, true);
         }
     }
 

@@ -75,7 +75,7 @@ bool GameManager::loadAction(QString actionID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedActions.append(actionID);

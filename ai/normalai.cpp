@@ -1071,7 +1071,12 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
         {
             fundsDamage = static_cast<qint32>(ret[i].z());
         }
-        fundsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
+        float counterDamage = calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
+        if (counterDamage < 0)
+        {
+            counterDamage = 0;
+        }
+        fundsDamage -= counterDamage;
         qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
         if (fundsDamage >= minFundsDamage)
         {
@@ -1154,6 +1159,12 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                                        QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings,
                                        bool ignoreOutOfVisionRange)
 {
+    qint32 baseCost = pUnit->getUnitValue();
+    QVector<qint32> baseCosts;
+    for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
+    {
+        baseCosts.append(pUnits->at(i3)->getUnitValue());
+    }
     GameMap* pMap = GameMap::getInstance();
     float counterDamage = 0;
     for (qint32 i = 0; i < m_EnemyUnits.size(); i++)
@@ -1191,8 +1202,18 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                         if (distance >= minFireRange && distance <= maxFireRange &&
                             pNextEnemy->isAttackable(pUnits->at(i3), true))
                         {
-                            // reduce damage the more units it can attack
-                            damageData.setX(damageData.x() - 3.0);
+                            if (baseCosts[i3] > 0 && baseCost > 0)
+                            {
+                                if (baseCost > baseCosts[i3])
+                                {
+                                    // reduce damage the more units it can attack
+                                    damageData.setX(damageData.x() -  damageData.x() * baseCosts[i3] / baseCost / 2);
+                                }
+                                else
+                                {
+                                    damageData.setX(damageData.x() -  damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                }
+                            }
                         }
                     }
                 }
@@ -1215,11 +1236,22 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                         {
                             distance = Mainapp::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), targets[i2]);
                             if (distance >= minFireRange && distance <= maxFireRange &&
-                                pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr &&
-                                pNextEnemy->isAttackable(pUnits->at(i3), true))
+                                (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
+                                 pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
+                                 pNextEnemy->isAttackable(pUnits->at(i3), true))
                             {
-                                // reduce damage the more units it can attack
-                                damageData.setX(damageData.x() - 3.0 / 10.0f);
+                                if (baseCosts[i3] > 0 && baseCost > 0)
+                                {
+                                    if (baseCost > baseCosts[i3])
+                                    {
+                                        // reduce damage the more units it can attack
+                                        damageData.setX(damageData.x() -  damageData.x() * baseCosts[i3] / baseCost / 2);
+                                    }
+                                    else
+                                    {
+                                        damageData.setX(damageData.x() -  damageData.x() *  baseCost / baseCosts[i3] / 2);
+                                    }
+                                }
                             }
                         }
                     }
@@ -1237,6 +1269,16 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
         }
     }
     counterDamage += calculateCounteBuildingDamage(pUnit, newPosition, pBuildings, pEnemyBuildings);
+    static qint32 min = std::numeric_limits<qint32>::max();
+    static qint32 max = std::numeric_limits<qint32>::min();
+    if (counterDamage < min)
+    {
+        min = counterDamage;
+    }
+    if (counterDamage > max)
+    {
+        max = counterDamage;
+    }
     return counterDamage;
 }
 

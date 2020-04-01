@@ -28,13 +28,12 @@ public:
 
     virtual void update(const oxygine::UpdateState& us) override;
 
-    float getScrollvalue() const;
-    void setScrollvalue(float Scrollvalue);
-
+    virtual void setWidth(float w) override;
     float getScrollspeed() const;
     void setScrollspeed(float Scrollspeed);
 
-    virtual void setWidth(float w) override;
+    float getScrollvalue() const;
+    void setScrollvalue(float Scrollvalue);
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -52,9 +51,11 @@ private:
     void scroll(oxygine::Event* pEvent);
 private:
     float m_Scrollvalue{0.0f};
+    qint32 speedCounter{0};
     qint32 m_Width;
     qint32 m_ContentWidth;
     qint32 m_scroll{0};
+    float m_currentScrollspeed{0.0f};
     float m_Scrollspeed{1.0f};
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;

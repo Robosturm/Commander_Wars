@@ -190,11 +190,11 @@ void GameMenue::disconnected(quint64)
 
 bool GameMenue::isNetworkGame()
 {
-     if (m_pNetworkInterface.get() != nullptr)
-     {
-         return true;
-     }
-     return false;
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        return true;
+    }
+    return false;
 }
 
 void GameMenue::loadGameMenue()
@@ -210,7 +210,7 @@ void GameMenue::loadGameMenue()
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-         pMap->getPlayer(i)->getBaseGameInput()->init();
+        pMap->getPlayer(i)->getBaseGameInput()->init();
     }
     pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 
@@ -301,7 +301,7 @@ void GameMenue::loadGameMenue()
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
         m_ChatButton->setPosition(8, 4);
         m_ChatButton->addClickListener([=](oxygine::Event*)
-        {            
+        {
             m_pChat->setVisible(!m_pChat->getVisible());
             setFocused(!m_pChat->getVisible());
             m_ChatButton->removeTweens();
@@ -369,7 +369,7 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
 {
     if (pGameAction != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
-        pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
+         pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
         GameMap* pMap = GameMap::getInstance();
         // check for units that have a multi turn avaible
@@ -386,47 +386,47 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
                     if ((pUnit->getOwner() == pPlayer) &&
                         (pUnit->getHasMoved() == false))
                     {
-                       QVector<QPoint> currentMultiTurnPath = pUnit->getMultiTurnPath();
-                       if (currentMultiTurnPath.size() > 0)
-                       {
-                           // replace current action with auto moving none moved units
-                           m_pStoredAction = pGameAction;
-                           GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
-                           if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
-                           {
-                               multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
-                           }
-                           multiTurnMovement->setTarget(pUnit->getPosition());
-                           UnitPathFindingSystem pfs(pUnit, pPlayer);
-                           pfs.setMovepoints(pUnit->getFuel());
-                           pfs.explore();
-                           qint32 movepoints = pUnit->getMovementpoints(multiTurnMovement->getTarget());
-                           // shorten path
-                           QVector<QPoint> newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath, movepoints);
-                           multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
-                           QVector<QPoint> multiTurnPath;
-                           // still some path ahead?
-                           if (newPath.size() == 0)
-                           {
-                               multiTurnPath = currentMultiTurnPath;
-                           }
-                           else if (currentMultiTurnPath.size() > newPath.size())
-                           {
-                               for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
-                               {
-                                   multiTurnPath.append(currentMultiTurnPath[i]);
-                               }
-                           }
-                           multiTurnMovement->setMultiTurnPath(multiTurnPath);
-                           return multiTurnMovement;
-                       }
-                       else if (pUnit->getCapturePoints() > 0 && pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
-                       {
-                           m_pStoredAction = pGameAction;
-                           GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_CAPTURE);
-                           multiTurnMovement->setTarget(pUnit->getPosition());
-                           return multiTurnMovement;
-                       }
+                        QVector<QPoint> currentMultiTurnPath = pUnit->getMultiTurnPath();
+                        if (currentMultiTurnPath.size() > 0)
+                        {
+                            // replace current action with auto moving none moved units
+                            m_pStoredAction = pGameAction;
+                            GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
+                            if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
+                            {
+                                multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
+                            }
+                            multiTurnMovement->setTarget(pUnit->getPosition());
+                            UnitPathFindingSystem pfs(pUnit, pPlayer);
+                            pfs.setMovepoints(pUnit->getFuel());
+                            pfs.explore();
+                            qint32 movepoints = pUnit->getMovementpoints(multiTurnMovement->getTarget());
+                            // shorten path
+                            QVector<QPoint> newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath, movepoints);
+                            multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
+                            QVector<QPoint> multiTurnPath;
+                            // still some path ahead?
+                            if (newPath.size() == 0)
+                            {
+                                multiTurnPath = currentMultiTurnPath;
+                            }
+                            else if (currentMultiTurnPath.size() > newPath.size())
+                            {
+                                for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
+                                {
+                                    multiTurnPath.append(currentMultiTurnPath[i]);
+                                }
+                            }
+                            multiTurnMovement->setMultiTurnPath(multiTurnPath);
+                            return multiTurnMovement;
+                        }
+                        else if (pUnit->getCapturePoints() > 0 && pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
+                        {
+                            m_pStoredAction = pGameAction;
+                            GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_CAPTURE);
+                            multiTurnMovement->setTarget(pUnit->getPosition());
+                            return multiTurnMovement;
+                        }
                     }
                 }
             }
@@ -463,13 +463,14 @@ void GameMenue::performAction(GameAction* pGameAction)
                 if ((pUnit != nullptr) &&
                     (pUnit->isStealthed(pMap->getCurrentPlayer())))
                 {
-                    qint32 counter = 0;
-                    while (counter < trapPath.size() - 1)
+                    while (trapPath.size() > 1)
                     {
-                        QPoint currentPoint = trapPath[counter];
-                        QPoint previousPoint = trapPath[counter + 1];
+                        QPoint currentPoint = trapPath[0];
+                        QPoint previousPoint = trapPath[1];
                         Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
-                        if (pUnit != nullptr)
+                        qint32 moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
+                                                                      previousPoint.x(), previousPoint.y());
+                        if (pUnit != nullptr || moveCost == 0)
                         {
                             trapPathCost -= pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
                                                                         previousPoint.x(), previousPoint.y());
@@ -479,10 +480,10 @@ void GameMenue::performAction(GameAction* pGameAction)
                         {
                             break;
                         }
-                        counter++;
                     }
                     GameAction* pTrapAction = new GameAction("ACTION_TRAP");
                     pTrapAction->setMovepath(trapPath, trapPathCost);
+                    pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
                     pTrapAction->writeDataInt32(point.x());
                     pTrapAction->writeDataInt32(point.y());
                     pTrapAction->setTarget(pGameAction->getTarget());
@@ -642,7 +643,7 @@ void GameMenue::skipAnimations()
                             Player* pPlayer2 = pMap->getCurrentViewPlayer();
                             // only show animation if at least one player is an ally
                             if (pPlayer2->isAlly(pAtkUnit->getOwner()) ||
-                               (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
+                                (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
                             {
                                 battleActive = true;
                                 i++;
@@ -1014,7 +1015,7 @@ void GameMenue::startGame()
         pApp->getAudioThread()->clearPlayList();
         pMap->getCurrentPlayer()->loadCOMusic();
         pMap->updateUnitIcons();
-        pMap->getGameRules()->createFogVision();        
+        pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();
         updatePlayerinfo();
         emit sigActionPerformed();

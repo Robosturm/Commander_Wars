@@ -157,7 +157,7 @@ bool COSpriteManager::loadCO(QString coID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedCOs.append(coID);

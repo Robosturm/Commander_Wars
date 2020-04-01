@@ -46,7 +46,7 @@ void Interpreter::init()
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
-void Interpreter::openScript(QString script)
+void Interpreter::openScript(QString script, bool setup)
 {
         QFile scriptFile(script);
         if (!scriptFile.open(QIODevice::ReadOnly))
@@ -58,7 +58,17 @@ void Interpreter::openScript(QString script)
         {
             QTextStream stream(&scriptFile);
             QString contents = stream.readAll();
+            if (setup)
+            {
+                stream.seek(0);
+                while (!stream.atEnd())
+                {
+                    QString line = stream.readLine().simplified();
+                    m_runtimeData += line + "\n";
+                }
+            }
             scriptFile.close();
+
             QJSValue value = evaluate(contents, script);
             if (value.isError())
             {

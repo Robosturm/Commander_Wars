@@ -91,7 +91,7 @@ bool BuildingSpriteManager::loadBuilding(QString buildingID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedBuildings.append(buildingID);

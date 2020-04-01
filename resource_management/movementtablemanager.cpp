@@ -88,7 +88,7 @@ void MovementTableManager::loadAll()
             QTextStream stream2(&tmp);
             stream2 << jsData;
             tmp.close();
-            pInterpreter->openScript("temp/table.js");
+            pInterpreter->openScript("temp/table.js", true);
             QFile::remove("temp/table.js");
         }
     }
@@ -116,7 +116,7 @@ bool MovementTableManager::loadTable(QString movementtableID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedTables.append(movementtableID);

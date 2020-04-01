@@ -60,7 +60,6 @@ void BattleAnimationManager::loadAll()
 
 bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/battleanimations");
@@ -75,7 +74,7 @@ bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedBattleAnimations.append(battleAnimationsID);

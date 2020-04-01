@@ -266,7 +266,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
             m_BuildingChances->detach();
         }
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->openScript(filename);
+        pInterpreter->openScript(filename, false);
         m_TerrainIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getTerrainBases").toVariant().toStringList();
         QList<QVariant> terrainChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getTerrainBaseChances").toVariant().toList();
         m_BuildingIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getBuildingBases").toVariant().toStringList();

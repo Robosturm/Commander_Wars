@@ -39,6 +39,8 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_scroll = 1;
+        m_Scrollspeed = 1.0f;
+        speedCounter = 0;
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -63,6 +65,8 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_scroll = -1;
+        m_Scrollspeed = 1.0f;
+        speedCounter = 0;
     });
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -184,7 +188,12 @@ void H_Scrollbar::update(const oxygine::UpdateState&)
         {
             if (m_ContentHeigth > m_Heigth)
             {
-                emit sigChangeScrollValue(m_scroll * 10.0f / static_cast<float>(m_ContentHeigth));
+                speedCounter++;
+                if (speedCounter % 8 == 0)
+                {
+                    m_Scrollspeed *= 2;
+                }
+                emit sigChangeScrollValue(m_scroll * m_Scrollspeed * 10.0f / static_cast<float>(m_ContentHeigth));
                 m_ScrollTimer.start();
             }
         }

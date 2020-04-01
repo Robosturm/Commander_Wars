@@ -1016,7 +1016,7 @@ void GameMap::startGame()
     {
         if (QFile::exists(mod + "/scripts/mapstart.js"))
         {
-            pInterpreter->openScript(mod + "/scripts/mapstart.js");
+            pInterpreter->openScript(mod + "/scripts/mapstart.js", true);
             pInterpreter->doFunction("MapStart", "gameStart");
         }
     }

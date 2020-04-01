@@ -76,7 +76,7 @@ bool UnitSpriteManager::loadUnit(QString unitID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pInterpreter->openScript(file);
+            pInterpreter->openScript(file, true);
             if (!bRet)
             {
                 m_loadedUnits.append(unitID);

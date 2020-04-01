@@ -2058,44 +2058,49 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     // update vision based on the movepath of the unit
     GameMap* pMap = GameMap::getInstance();
     bool visionBlock = pMap->getGameRules()->getVisionBlock();
-    for (qint32 i = 0; i < movePath.size(); i++)
+    for (qint32 i = 0; i < movePath.size() - 1; i++)
     {
-        QmlVectorPoint* pCircle;
-        qint32 visionRange = getVision(movePath[i]);
-        Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
-        if (visionBlock)
+        qint32 moveCost = getMovementCosts(movePath[i].x(), movePath[i].y(),
+                                           movePath[i + 1].x(), movePath[i + 1].y());
+        if (moveCost > 0)
         {
-            pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
-        }
-        else
-        {
-            pCircle = Mainapp::getCircle(0, visionRange);
-        }
-        for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
-        {
-            QPoint circleField = pCircle->at(i2);
-            QPoint field = circleField + QPoint(movePath[i].x(), movePath[i].y());
-            if (pMap->onMap(field.x(), field.y()))
+            QmlVectorPoint* pCircle;
+            qint32 visionRange = getVision(movePath[i]);
+            Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
+            if (visionBlock)
             {
-                if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
+                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
+            }
+            else
+            {
+                pCircle = Mainapp::getCircle(0, visionRange);
+            }
+            for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
+            {
+                QPoint circleField = pCircle->at(i2);
+                QPoint field = circleField + QPoint(movePath[i].x(), movePath[i].y());
+                if (pMap->onMap(field.x(), field.y()))
                 {
-                    m_pOwner->addVisionField(field.x(), field.y(), 1, true);
-                }
-                else
-                {
-                    Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
-                    Unit* pUnit = pTerrain->getUnit();
-                    bool visionHide = pTerrain->getVisionHide(m_pOwner);
-                    if ((!visionHide) ||
-                        ((pUnit != nullptr) && visionHide &&
-                         !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                    if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
                     {
-                        m_pOwner->addVisionField(field.x(), field.y(), 1, false);
+                        m_pOwner->addVisionField(field.x(), field.y(), 1, true);
+                    }
+                    else
+                    {
+                        Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
+                        Unit* pUnit = pTerrain->getUnit();
+                        bool visionHide = pTerrain->getVisionHide(m_pOwner);
+                        if ((!visionHide) ||
+                            ((pUnit != nullptr) && visionHide &&
+                             !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
+                        {
+                            m_pOwner->addVisionField(field.x(), field.y(), 1, false);
+                        }
                     }
                 }
             }
+            delete pCircle;
         }
-        delete pCircle;
     }
     if (movePath.size() > 1)
     {
