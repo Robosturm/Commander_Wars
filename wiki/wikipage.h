@@ -25,6 +25,11 @@ public:
     }
 signals:
     void sigFinished();
+    /**
+     * @brief sigShowLink
+     * @param pageID
+     */
+    void sigShowLink(QString pageID);
 public slots:
     void keyInput(oxygine::KeyEvent event);
     /**
@@ -36,12 +41,17 @@ public slots:
      * @brief loadImage
      * @param file
      */
-    void loadImage(QString file, float scale = 1.0f);
+    void loadImage(QString file, float scale = 1.0f, QString pageID = "");
     /**
      * @brief loadHeadline
      * @param text
      */
     void loadHeadline(QString text);
+    /**
+     * @brief showLink
+     * @param pageID
+     */
+    void showLink(QString pageID);
 protected:
     spPanel m_pPanel;
     oxygine::spButton m_OkButton;

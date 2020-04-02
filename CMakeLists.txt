@@ -270,6 +270,7 @@ set(${PROJECT_NAME}_SRCS
         game/gamerecording/playerrecord.cpp
         game/gamerecording/SpecialEvent.cpp
         game/gamerecording/gamerecorder.cpp
+        game/gamerecording/replayrecorder.cpp
         # cool ingame script support
         game/gamescript.cpp
         game/campaign.cpp

@@ -14,6 +14,8 @@
 
 #include "ai/coreai.h"
 
+#include "wiki/wikidatabase.h"
+
 TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     : QObject()
 {
@@ -125,6 +127,10 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             {
                 spUnit pDummy = new Unit(productionList[i], m_pPlayer.get(), false);
                 pDummy->setPosition(x, y);
+                pDummy->addClickListener([=](oxygine::Event*)
+                {
+                   emit sigShowLink(productionList[i]);
+                });
                 addChild(pDummy);
                 x += GameMap::Imagesize * 2;
                 if (x + GameMap::Imagesize * 2 > width && i < productionList.size() - 1)
@@ -179,4 +185,14 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     }
     y += 40;
     setHeight(y);
+    connect(this, &TerrainInfo::sigShowLink, this, &TerrainInfo::showLink, Qt::QueuedConnection);
+}
+
+void TerrainInfo::showLink(QString pageID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    pApp->continueThread();
 }

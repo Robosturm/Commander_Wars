@@ -81,6 +81,14 @@ public:
      */
     void changeMap(qint32 width, qint32 heigth, qint32 playerCount);
     /**
+     * @brief resizeMap
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    void resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
+    /**
      * @brief flipX
      */
     void flipX();

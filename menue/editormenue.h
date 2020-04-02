@@ -61,6 +61,7 @@ public:
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
+    void sigResizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
 public slots:
     /**
      * @brief scriptFinished
@@ -232,6 +233,18 @@ public slots:
                          QVector<std::tuple<QString, float>> buildings,
                          QVector<float> ownedBaseSize,
                          float startBaseSize);
+    /**
+     * @brief showResizeMap
+     */
+    void showResizeMap();
+    /**
+     * @brief resizeMap
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    void resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom);
     /**
      * @brief createMarkedArea
      * @param pActor

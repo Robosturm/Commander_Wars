@@ -51,7 +51,6 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
 void InGameMenue::loadBackground()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();

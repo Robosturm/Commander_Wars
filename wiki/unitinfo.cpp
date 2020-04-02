@@ -19,6 +19,8 @@
 #include "game/gamemap.h"
 #include "game/battleanimationsprite.h"
 
+#include "wiki/wikidatabase.h"
+
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()
 {
@@ -260,6 +262,10 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->loadSprites();
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
+        pTerrain->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(terrainId);
+        });
         addChild(pTerrain);
 
         pLabel = new oxygine::TextField();
@@ -304,6 +310,10 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->setBuilding(pBuilding);
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
+        pTerrain->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(pBuildingSpriteManager->getBuildingID(i));
+        });
         addChild(pTerrain);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width);
@@ -350,6 +360,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         y += 40;
     }
     setHeight(y);
+    connect(this, &UnitInfo::sigShowLink, this, &UnitInfo::showLink, Qt::QueuedConnection);
 }
 
 void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint32 width)
@@ -366,6 +377,10 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
         spUnit pDummy = new Unit(sortedUnits[i], pUnit->getOwner(), false);
+        pDummy->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(sortedUnits[i]);
+        });
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
         addChild(pDummy);
@@ -398,6 +413,10 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
     {
         spUnit pDummy = new Unit(unitID, pUnit->getOwner(), false);
         pDummy->setPosition(x, y);
+        pDummy->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(unitID);
+        });
         addChild(pDummy);
         x += GameMap::Imagesize * 1.5f;
         if (x + GameMap::Imagesize * 1.5f > width)
@@ -419,6 +438,10 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
         if (pDummy->canTransportUnit(pUnit, true))
         {
             pDummy->setPosition(x, y);
+            pDummy->addClickListener([=](oxygine::Event*)
+            {
+               emit sigShowLink(unitID);
+            });
             addChild(pDummy);
             x += GameMap::Imagesize * 1.5f;
             if (x + GameMap::Imagesize * 1.5f > width)
@@ -428,4 +451,13 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
             }
         }
     }
+}
+
+void UnitInfo::showLink(QString pageID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
+    pApp->continueThread();
 }

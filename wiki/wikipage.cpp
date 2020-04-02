@@ -49,6 +49,7 @@ Wikipage::Wikipage()
     pSpriteBox->addChild(m_pPanel);
 
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
+    connect(this, &Wikipage::sigShowLink, this, &Wikipage::showLink, Qt::QueuedConnection);
 }
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
@@ -82,7 +83,7 @@ void Wikipage::loadText(QString text)
     y += pLabel->getTextRect().getHeight() + 10;
 }
 
-void Wikipage::loadImage(QString file, float scale)
+void Wikipage::loadImage(QString file, float scale, QString pageID)
 {
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
@@ -99,6 +100,10 @@ void Wikipage::loadImage(QString file, float scale)
         pSprite->setResAnim(pAnim);
         pSprite->setScale(scale);
         pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+        pSprite->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(pageID);
+        });
         m_pPanel->addItem(pSprite);
         y += pSprite->getScaledHeight() + 10;
     }
@@ -113,6 +118,10 @@ void Wikipage::loadImage(QString file, float scale)
             pSprite->setOwner(nullptr);
             pSprite->setScale(scale);
             pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+            pSprite->addClickListener([=](oxygine::Event*)
+            {
+               emit sigShowLink(pageID);
+            });
             m_pPanel->addItem(pSprite);
             y += pSprite->getScaledHeight() + 10;
         }
@@ -132,4 +141,18 @@ void Wikipage::loadHeadline(QString text)
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
     m_pPanel->addItem(pLabel);
     y += 80;
+}
+
+void Wikipage::showLink(QString pageID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    auto entry = pWikiDatabase->getEntry(pageID);
+    if (!std::get<0>(entry).isEmpty() &&
+        !std::get<1>(entry).isEmpty())
+    {
+       oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
+    }
+    pApp->continueThread();
 }

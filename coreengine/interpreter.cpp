@@ -10,7 +10,7 @@
 #include <QThread>
 
 Interpreter* Interpreter::m_pInstance = nullptr;
-
+QString Interpreter::m_runtimeData;
 //Interpreter::Interpreter(QString script)
 //    : QQmlEngine()
 //{
@@ -46,9 +46,14 @@ void Interpreter::init()
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
+QString Interpreter::getRuntimeData()
+{
+    return m_runtimeData;
+}
+
 void Interpreter::openScript(QString script, bool setup)
 {
-        QFile scriptFile(script);
+    QFile scriptFile(script);
         if (!scriptFile.open(QIODevice::ReadOnly))
         {
             QString error = "Error: attemp to read File " + script + " which couldn't be opened.";

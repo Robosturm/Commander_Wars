@@ -31,6 +31,18 @@ public:
      * @param y
      */
     void createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint32 y);
+signals:
+    /**
+     * @brief sigShowLink
+     * @param pageID
+     */
+    void sigShowLink(QString pageID);
+public slots:
+    /**
+     * @brief showLink
+     * @param pageID
+     */
+    void showLink(QString pageID);
 protected:
     oxygine::spSprite m_pCurrentCO;
 

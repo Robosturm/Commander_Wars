@@ -50,6 +50,7 @@ quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
 QString Settings::m_ServerAdress      = "";
 bool Settings::m_Server               = false;
+bool Settings::m_record               = true;
 
 // ingame options
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
@@ -81,6 +82,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getRecord()
+{
+    return m_record;
+}
+
+void Settings::setRecord(bool record)
+{
+    m_record = record;
 }
 
 void Settings::loadSettings()
@@ -124,8 +135,9 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_height = 864;
     }
-    m_borderless  = settings.value("borderless",false).toBool();
-    m_fullscreen  = settings.value("fullscreen",false).toBool();
+    m_borderless  = settings.value("borderless", false).toBool();
+    m_fullscreen  = settings.value("fullscreen", false).toBool();
+    m_record  = settings.value("recordgames", false).toBool();
     settings.endGroup();
 
     // Keys
@@ -397,6 +409,7 @@ void Settings::saveSettings(){
     settings.setValue("height",                     m_height);
     settings.setValue("borderless",                 m_borderless);
     settings.setValue("fullscreen",                 m_fullscreen);
+    settings.setValue("recordgames",                m_record);
     settings.endGroup();
 
     settings.beginGroup("Keys");

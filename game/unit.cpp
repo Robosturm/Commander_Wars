@@ -2058,10 +2058,14 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     // update vision based on the movepath of the unit
     GameMap* pMap = GameMap::getInstance();
     bool visionBlock = pMap->getGameRules()->getVisionBlock();
-    for (qint32 i = 0; i < movePath.size() - 1; i++)
+    for (qint32 i = 0; i < movePath.size(); i++)
     {
-        qint32 moveCost = getMovementCosts(movePath[i].x(), movePath[i].y(),
-                                           movePath[i + 1].x(), movePath[i + 1].y());
+        qint32 moveCost = 1;
+        if (i < movePath.size() - 1)
+        {
+            moveCost = getMovementCosts(movePath[i].x(), movePath[i].y(),
+                                        movePath[i + 1].x(), movePath[i + 1].y());
+        }
         if (moveCost > 0)
         {
             QmlVectorPoint* pCircle;

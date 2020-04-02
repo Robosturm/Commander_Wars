@@ -20,8 +20,17 @@ public:
     explicit TerrainInfo(Terrain* pTerrain, qint32 width);
 
 signals:
-
+    /**
+     * @brief sigShowLink
+     * @param pageID
+     */
+    void sigShowLink(QString pageID);
 public slots:
+    /**
+     * @brief showLink
+     * @param pageID
+     */
+    void showLink(QString pageID);
 
 private:
     spPlayer m_pPlayer;

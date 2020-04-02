@@ -35,6 +35,18 @@ public:
      * @param width
      */
     void createTransportTable(Unit* pUnit, qint32& y, qint32 width);
+signals:
+    /**
+     * @brief sigShowLink
+     * @param pageID
+     */
+    void sigShowLink(QString pageID);
+public slots:
+    /**
+     * @brief showLink
+     * @param pageID
+     */
+    void showLink(QString pageID);
 };
 
 #endif // UNITINFO_H

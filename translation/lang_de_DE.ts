@@ -560,32 +560,32 @@
 <context>
     <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="37"/>
+        <location filename="../objects/coinfoactor.cpp" line="38"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="66"/>
+        <location filename="../objects/coinfoactor.cpp" line="67"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="85"/>
+        <location filename="../objects/coinfoactor.cpp" line="86"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="105"/>
+        <location filename="../objects/coinfoactor.cpp" line="106"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="147"/>
+        <location filename="../objects/coinfoactor.cpp" line="148"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="250"/>
+        <location filename="../objects/coinfoactor.cpp" line="251"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1582,308 +1582,338 @@ This is immediatly applied.</source>
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="68"/>
+        <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Saves a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Loads a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="71"/>
+        <location filename="../menue/editormenue.cpp" line="73"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="71"/>
+        <location filename="../menue/editormenue.cpp" line="73"/>
         <source>Edit and create a script for any map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Edit and create a campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="75"/>
         <source>Undo Strg+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="75"/>
         <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Redo Strg+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Redo the last undo command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Exits the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
+        <location filename="../menue/editormenue.cpp" line="79"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Create a new map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Edit the information for a map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
+        <location filename="../menue/editormenue.cpp" line="82"/>
+        <source>Resize Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="82"/>
+        <source>Resizes the map using left, top, right and bottom size changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Flips the map at the x-axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Flips the map at the y-axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="85"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="85"/>
         <source>Flips and rotates the map at the x-axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="86"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="86"/>
         <source>Flips and rotates the map at the y-axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="84"/>
+        <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="84"/>
+        <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Creates a new random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="86"/>
+        <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Editor Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="87"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="87"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Selects the editor mode placing the current tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="88"/>
+        <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="88"/>
+        <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Selects the editor mode deleting units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="89"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="89"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Edit Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Selects the editor mode editing the style of a terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Edit the CO&apos;s and player start setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Selects the editor rules for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="97"/>
         <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
-        <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy.</source>
+        <location filename="../menue/editormenue.cpp" line="97"/>
+        <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="98"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="104"/>
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="104"/>
         <source>Deletes the current map and imports an AW DoR/DC Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="105"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="287"/>
+        <location filename="../menue/editormenue.cpp" line="290"/>
         <source>Do you want to exit the map editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="517"/>
+        <source>Left: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="521"/>
+        <source>Change of the map size on the left map border.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="529"/>
+        <source>Top: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="533"/>
+        <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2037,57 +2067,57 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="820"/>
+        <location filename="../menue/gamemenue.cpp" line="822"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="836"/>
+        <location filename="../menue/gamemenue.cpp" line="838"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="845"/>
+        <location filename="../menue/gamemenue.cpp" line="847"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1147"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1162"/>
+        <location filename="../menue/gamemenue.cpp" line="1165"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4828,80 +4858,80 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="95"/>
-        <location filename="../coreengine/settings.cpp" line="105"/>
-        <location filename="../coreengine/settings.cpp" line="111"/>
-        <location filename="../coreengine/settings.cpp" line="117"/>
-        <location filename="../coreengine/settings.cpp" line="123"/>
-        <location filename="../coreengine/settings.cpp" line="135"/>
-        <location filename="../coreengine/settings.cpp" line="141"/>
-        <location filename="../coreengine/settings.cpp" line="148"/>
-        <location filename="../coreengine/settings.cpp" line="155"/>
-        <location filename="../coreengine/settings.cpp" line="162"/>
-        <location filename="../coreengine/settings.cpp" line="169"/>
-        <location filename="../coreengine/settings.cpp" line="176"/>
-        <location filename="../coreengine/settings.cpp" line="183"/>
-        <location filename="../coreengine/settings.cpp" line="190"/>
-        <location filename="../coreengine/settings.cpp" line="197"/>
-        <location filename="../coreengine/settings.cpp" line="204"/>
-        <location filename="../coreengine/settings.cpp" line="211"/>
-        <location filename="../coreengine/settings.cpp" line="218"/>
-        <location filename="../coreengine/settings.cpp" line="225"/>
-        <location filename="../coreengine/settings.cpp" line="232"/>
-        <location filename="../coreengine/settings.cpp" line="239"/>
-        <location filename="../coreengine/settings.cpp" line="246"/>
-        <location filename="../coreengine/settings.cpp" line="253"/>
-        <location filename="../coreengine/settings.cpp" line="260"/>
-        <location filename="../coreengine/settings.cpp" line="267"/>
-        <location filename="../coreengine/settings.cpp" line="274"/>
+        <location filename="../coreengine/settings.cpp" line="106"/>
+        <location filename="../coreengine/settings.cpp" line="116"/>
+        <location filename="../coreengine/settings.cpp" line="122"/>
+        <location filename="../coreengine/settings.cpp" line="128"/>
+        <location filename="../coreengine/settings.cpp" line="134"/>
+        <location filename="../coreengine/settings.cpp" line="147"/>
+        <location filename="../coreengine/settings.cpp" line="153"/>
+        <location filename="../coreengine/settings.cpp" line="160"/>
+        <location filename="../coreengine/settings.cpp" line="167"/>
+        <location filename="../coreengine/settings.cpp" line="174"/>
+        <location filename="../coreengine/settings.cpp" line="181"/>
+        <location filename="../coreengine/settings.cpp" line="188"/>
+        <location filename="../coreengine/settings.cpp" line="195"/>
+        <location filename="../coreengine/settings.cpp" line="202"/>
+        <location filename="../coreengine/settings.cpp" line="209"/>
+        <location filename="../coreengine/settings.cpp" line="216"/>
+        <location filename="../coreengine/settings.cpp" line="223"/>
+        <location filename="../coreengine/settings.cpp" line="230"/>
+        <location filename="../coreengine/settings.cpp" line="237"/>
+        <location filename="../coreengine/settings.cpp" line="244"/>
+        <location filename="../coreengine/settings.cpp" line="251"/>
+        <location filename="../coreengine/settings.cpp" line="258"/>
+        <location filename="../coreengine/settings.cpp" line="265"/>
+        <location filename="../coreengine/settings.cpp" line="272"/>
+        <location filename="../coreengine/settings.cpp" line="279"/>
         <location filename="../coreengine/settings.cpp" line="286"/>
-        <location filename="../coreengine/settings.cpp" line="293"/>
-        <location filename="../coreengine/settings.cpp" line="300"/>
-        <location filename="../coreengine/settings.cpp" line="311"/>
-        <location filename="../coreengine/settings.cpp" line="318"/>
-        <location filename="../coreengine/settings.cpp" line="325"/>
-        <location filename="../coreengine/settings.cpp" line="332"/>
-        <location filename="../coreengine/settings.cpp" line="339"/>
-        <location filename="../coreengine/settings.cpp" line="346"/>
+        <location filename="../coreengine/settings.cpp" line="298"/>
+        <location filename="../coreengine/settings.cpp" line="305"/>
+        <location filename="../coreengine/settings.cpp" line="312"/>
+        <location filename="../coreengine/settings.cpp" line="323"/>
+        <location filename="../coreengine/settings.cpp" line="330"/>
+        <location filename="../coreengine/settings.cpp" line="337"/>
+        <location filename="../coreengine/settings.cpp" line="344"/>
+        <location filename="../coreengine/settings.cpp" line="351"/>
+        <location filename="../coreengine/settings.cpp" line="358"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="95"/>
-        <location filename="../coreengine/settings.cpp" line="105"/>
-        <location filename="../coreengine/settings.cpp" line="111"/>
-        <location filename="../coreengine/settings.cpp" line="117"/>
-        <location filename="../coreengine/settings.cpp" line="123"/>
-        <location filename="../coreengine/settings.cpp" line="135"/>
-        <location filename="../coreengine/settings.cpp" line="141"/>
-        <location filename="../coreengine/settings.cpp" line="148"/>
-        <location filename="../coreengine/settings.cpp" line="155"/>
-        <location filename="../coreengine/settings.cpp" line="162"/>
-        <location filename="../coreengine/settings.cpp" line="169"/>
-        <location filename="../coreengine/settings.cpp" line="176"/>
-        <location filename="../coreengine/settings.cpp" line="183"/>
-        <location filename="../coreengine/settings.cpp" line="190"/>
-        <location filename="../coreengine/settings.cpp" line="197"/>
-        <location filename="../coreengine/settings.cpp" line="204"/>
-        <location filename="../coreengine/settings.cpp" line="211"/>
-        <location filename="../coreengine/settings.cpp" line="218"/>
-        <location filename="../coreengine/settings.cpp" line="225"/>
-        <location filename="../coreengine/settings.cpp" line="232"/>
-        <location filename="../coreengine/settings.cpp" line="239"/>
-        <location filename="../coreengine/settings.cpp" line="246"/>
-        <location filename="../coreengine/settings.cpp" line="253"/>
-        <location filename="../coreengine/settings.cpp" line="260"/>
-        <location filename="../coreengine/settings.cpp" line="267"/>
-        <location filename="../coreengine/settings.cpp" line="274"/>
+        <location filename="../coreengine/settings.cpp" line="106"/>
+        <location filename="../coreengine/settings.cpp" line="116"/>
+        <location filename="../coreengine/settings.cpp" line="122"/>
+        <location filename="../coreengine/settings.cpp" line="128"/>
+        <location filename="../coreengine/settings.cpp" line="134"/>
+        <location filename="../coreengine/settings.cpp" line="147"/>
+        <location filename="../coreengine/settings.cpp" line="153"/>
+        <location filename="../coreengine/settings.cpp" line="160"/>
+        <location filename="../coreengine/settings.cpp" line="167"/>
+        <location filename="../coreengine/settings.cpp" line="174"/>
+        <location filename="../coreengine/settings.cpp" line="181"/>
+        <location filename="../coreengine/settings.cpp" line="188"/>
+        <location filename="../coreengine/settings.cpp" line="195"/>
+        <location filename="../coreengine/settings.cpp" line="202"/>
+        <location filename="../coreengine/settings.cpp" line="209"/>
+        <location filename="../coreengine/settings.cpp" line="216"/>
+        <location filename="../coreengine/settings.cpp" line="223"/>
+        <location filename="../coreengine/settings.cpp" line="230"/>
+        <location filename="../coreengine/settings.cpp" line="237"/>
+        <location filename="../coreengine/settings.cpp" line="244"/>
+        <location filename="../coreengine/settings.cpp" line="251"/>
+        <location filename="../coreengine/settings.cpp" line="258"/>
+        <location filename="../coreengine/settings.cpp" line="265"/>
+        <location filename="../coreengine/settings.cpp" line="272"/>
+        <location filename="../coreengine/settings.cpp" line="279"/>
         <location filename="../coreengine/settings.cpp" line="286"/>
-        <location filename="../coreengine/settings.cpp" line="293"/>
-        <location filename="../coreengine/settings.cpp" line="300"/>
-        <location filename="../coreengine/settings.cpp" line="311"/>
-        <location filename="../coreengine/settings.cpp" line="318"/>
-        <location filename="../coreengine/settings.cpp" line="325"/>
-        <location filename="../coreengine/settings.cpp" line="332"/>
-        <location filename="../coreengine/settings.cpp" line="339"/>
-        <location filename="../coreengine/settings.cpp" line="346"/>
+        <location filename="../coreengine/settings.cpp" line="298"/>
+        <location filename="../coreengine/settings.cpp" line="305"/>
+        <location filename="../coreengine/settings.cpp" line="312"/>
+        <location filename="../coreengine/settings.cpp" line="323"/>
+        <location filename="../coreengine/settings.cpp" line="330"/>
+        <location filename="../coreengine/settings.cpp" line="337"/>
+        <location filename="../coreengine/settings.cpp" line="344"/>
+        <location filename="../coreengine/settings.cpp" line="351"/>
+        <location filename="../coreengine/settings.cpp" line="358"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5467,32 +5497,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>TerrainInfo</name>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="50"/>
+        <location filename="../wiki/terraininfo.cpp" line="52"/>
         <source>Terrain Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="68"/>
+        <location filename="../wiki/terraininfo.cpp" line="70"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="85"/>
+        <location filename="../wiki/terraininfo.cpp" line="87"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="103"/>
+        <location filename="../wiki/terraininfo.cpp" line="105"/>
         <source>Builds and Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="107"/>
+        <location filename="../wiki/terraininfo.cpp" line="109"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="142"/>
+        <location filename="../wiki/terraininfo.cpp" line="148"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5500,72 +5530,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitInfo</name>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="50"/>
+        <location filename="../wiki/unitinfo.cpp" line="52"/>
         <source>Unit Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="84"/>
+        <location filename="../wiki/unitinfo.cpp" line="86"/>
         <source>Unit Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="103"/>
+        <location filename="../wiki/unitinfo.cpp" line="105"/>
         <source>Firerange:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="119"/>
+        <location filename="../wiki/unitinfo.cpp" line="121"/>
         <source>Movementpoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="134"/>
+        <location filename="../wiki/unitinfo.cpp" line="136"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="149"/>
+        <location filename="../wiki/unitinfo.cpp" line="151"/>
         <source>Fuel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="173"/>
+        <location filename="../wiki/unitinfo.cpp" line="175"/>
         <source>Ammo 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="190"/>
+        <location filename="../wiki/unitinfo.cpp" line="192"/>
         <source>Ammo 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="208"/>
+        <location filename="../wiki/unitinfo.cpp" line="210"/>
         <source>Loading Place:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="220"/>
+        <location filename="../wiki/unitinfo.cpp" line="222"/>
         <source>Loadable Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="231"/>
+        <location filename="../wiki/unitinfo.cpp" line="233"/>
         <source>Transporters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="249"/>
+        <location filename="../wiki/unitinfo.cpp" line="251"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="334"/>
+        <location filename="../wiki/unitinfo.cpp" line="344"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="345"/>
+        <location filename="../wiki/unitinfo.cpp" line="355"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

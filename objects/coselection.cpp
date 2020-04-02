@@ -260,7 +260,9 @@ void COSelection::armyChanged(QString army)
         }
     }
     qint32 y = startY;
-    while (y < 5)
+    bool coFound = true;
+    bool emptyCOsAdded = false;
+    while (coFound && !emptyCOsAdded)
     {
         qint32 x = startX;
         if (y != startY)
@@ -269,7 +271,7 @@ void COSelection::armyChanged(QString army)
         }
         while (x < 3)
         {
-            bool coFound = false;
+            coFound = false;
             for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
             {
                 QString coid = pCOSpriteManager->getCOID(i);
@@ -290,9 +292,10 @@ void COSelection::armyChanged(QString army)
                     }
                 }
             }
-            if (!coFound)
+            if (!coFound && (!emptyCOsAdded || x < 3))
             {
                 coFound = true;
+                emptyCOsAdded = true;
                 addCO("", "", x, y, army);
             }
             x++;
@@ -300,7 +303,7 @@ void COSelection::armyChanged(QString army)
         y++;
     }
     colorChanged(m_CurrentColor);
-    m_CoFieldPanel->setContentHeigth(y * 51 + 30);
+    m_CoFieldPanel->setContentHeigth(y * 51 * scale + 30);
     pApp->continueThread();
 }
 
@@ -428,6 +431,16 @@ void COSelection::hoveredCOChanged(QString coid)
             pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
         }
         m_pCurrentCO->setResAnim(pAnim);
+    }
+    else
+    {
+        m_COName->setHtmlText("");
+        m_COBio->setHtmlText("");
+        m_CODesc->setHtmlText("");
+        m_CoDescription->setContentHeigth(0);
+        m_COPower->setHtmlText("");
+        m_COSuperpower->setHtmlText("");
+        m_pCurrentCO->setResAnim(nullptr);
     }
     pApp->continueThread();
 }

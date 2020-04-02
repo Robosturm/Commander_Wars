@@ -28,6 +28,11 @@ public:
     virtual ~Interpreter();
 
     static void setCppOwnerShip(QObject* object);
+    /**
+     * @brief getRuntimeData
+     * @return
+     */
+    static QString getRuntimeData();
 signals:
 
 public slots:
@@ -63,7 +68,7 @@ public slots:
 private:
     explicit Interpreter();
     void init();
-    QString m_runtimeData;
+    static QString m_runtimeData;
     static Interpreter* m_pInstance;
 };
 

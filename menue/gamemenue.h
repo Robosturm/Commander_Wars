@@ -13,6 +13,8 @@
 
 #include "objects/chat.h"
 
+#include "game/gamerecording/replayrecorder.h"
+
 /**
  * @brief The GameMenue class handles the game :)
  */
@@ -176,6 +178,7 @@ protected:
     void loadGameMenue();
     void keyInputAll(Qt::Key cur);
 private:
+    ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
     oxygine::spTextField xyTextInfo;

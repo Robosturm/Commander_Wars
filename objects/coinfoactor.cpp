@@ -16,9 +16,10 @@
 
 #include "game/gamemap.h"
 
+#include "wiki/wikidatabase.h"
+
 COInfoActor::COInfoActor(qint32 width)
 {
-    Mainapp* pApp = Mainapp::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -380,6 +381,10 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         QString unitID = sortedUnits[i];
         m_UnitDataActors.append(new oxygine::Actor());
         m_UnitDataActors[i]->setPosition(x, y);
+        m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(unitID);
+        });
         addChild(m_UnitDataActors[i]);
         spUnit pUnit = new Unit(unitID, pPlayer.get(), false);
         // gather basic co information
@@ -463,6 +468,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     setHeight(y + 100);
+    connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
     pApp->continueThread();
 }
 
@@ -518,3 +524,16 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     pActor->addChild(pEndBox);
 }
 
+void COInfoActor::showLink(QString pageID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    auto entry = pWikiDatabase->getEntry(pageID);
+    if (!std::get<0>(entry).isEmpty() &&
+        !std::get<1>(entry).isEmpty())
+    {
+       oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
+    }
+    pApp->continueThread();
+}

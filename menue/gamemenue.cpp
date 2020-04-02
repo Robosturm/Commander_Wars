@@ -513,6 +513,8 @@ void GameMenue::performAction(GameAction* pGameAction)
             pGameAction->serializeObject(stream);
             emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
         }
+        // record action if required
+        m_ReplayRecorder.recordAction(pGameAction);
         // perform action
         Mainapp::seed(pGameAction->getSeed());
         Mainapp::setUseSeed(true);
@@ -1006,9 +1008,10 @@ void GameMenue::startGame()
         pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
         GameRules* pRules = pMap->getGameRules();
         pRules->init();
-        pMap->nextTurn();
-        pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount());
         updatePlayerinfo();
+        m_ReplayRecorder.startRecording();
+        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        performAction(pAction);
     }
     else
     {

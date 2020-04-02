@@ -45,6 +45,8 @@
 
 #include "objects/selectkey.h"
 
+#include "ingamescriptsupport/genericbox.h"
+
 EditorMenue* EditorMenue::m_pInstance = nullptr;
 
 EditorMenue::EditorMenue()
@@ -77,6 +79,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("New Map"), "NEWMAP", 1, tr("Create a new map"));
     m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1, tr("Edit the information for a map"));
+    m_Topbar->addItem(tr("Resize Map"), "RESIZEMAP", 1, tr("Resizes the map using left, top, right and bottom size changes."));
     m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1, tr("Flips the map at the x-axis"));
     m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1, tr("Flips the map at the y-axis"));
     m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1, tr("Flips and rotates the map at the x-axis"));
@@ -91,7 +94,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
     m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
-    m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy."));
+    m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));
     m_Topbar->addItem(tr("Paste Ctrl+V"), "PASTE", 2, tr("Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec."));
 
     m_Topbar->addGroup(tr("Import/Export"));
@@ -148,7 +151,7 @@ EditorMenue::EditorMenue()
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
     connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
-
+    connect(this, &EditorMenue::sigResizeMap, this, &EditorMenue::resizeMap, Qt::QueuedConnection);
 
     // clean up temp folder
     QDir dir("temp/");
@@ -163,7 +166,7 @@ EditorMenue::EditorMenue()
 EditorMenue::~EditorMenue()
 {
     cleanTemp(-1);
-    m_pInstance = nullptr;    
+    m_pInstance = nullptr;
 }
 
 void EditorMenue::cleanTemp(qint32 step)
@@ -486,6 +489,66 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         // do nothing
     }
+    else if (itemID == "RESIZEMAP")
+    {
+        showResizeMap();
+    }
+    pApp->continueThread();
+}
+
+void EditorMenue::showResizeMap()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    GameMap* pMap = GameMap::getInstance();
+    spGenericBox pBox = new GenericBox();
+
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 width = 300;
+
+    oxygine::spTextField pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Left: "));
+    pText->setPosition(30, 30);
+    pBox->addItem(pText);
+    spSpinBox leftBox = new SpinBox(150, -pMap->getMapWidth() + 1, 9999);
+    leftBox->setTooltipText(tr("Change of the map size on the left map border."));
+    leftBox->setPosition(width, 30);
+    leftBox->setInfinityValue(-pMap->getMapWidth());
+    leftBox->setCurrentValue(0);
+    pBox->addItem(leftBox);
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Top: "));
+    pText->setPosition(30, 70);
+    pBox->addItem(pText);
+    spSpinBox topBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
+    topBox->setTooltipText(tr("Change of the map size on the top map border."));
+    topBox->setPosition(width, 70);
+    topBox->setInfinityValue(-pMap->getMapHeight());
+    topBox->setCurrentValue(0);
+    pBox->addItem(topBox);
+
+    addChild(pBox);
+    connect(pBox.get(), &GenericBox::sigFinished, [=]
+    {
+
+    });
+    pApp->continueThread();
+}
+
+void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap::getInstance()->resizeMap(left, top, right, bottom);
     pApp->continueThread();
 }
 
@@ -586,67 +649,64 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
     Qt::Key cur = event.getKey();
     if (m_Focused)
     {
-        switch (cur)
+        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
-            case Qt::Key_Escape:
+            switch (cur)
             {
-//                Console::print("Leaving Editor Menue", Console::eDEBUG);
-//                oxygine::getStage()->addChild(new Mainwindow());
-//                addRef();
-//                oxygine::Actor::detach();
-//                deleteLater();
-                break;
-            }
-            case Qt::Key_Y:
-            {
-                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                case Qt::Key_Escape:
                 {
-                    editorRedo();
-                    return;
+                    //                Console::print("Leaving Editor Menue", Console::eDEBUG);
+                    //                oxygine::getStage()->addChild(new Mainwindow());
+                    //                addRef();
+                    //                oxygine::Actor::detach();
+                    //                deleteLater();
+                    break;
                 }
-                break;
-            }
-            case Qt::Key_Z:
-            {
-                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                case Qt::Key_Y:
                 {
-                    editorUndo();
-                    return;
+                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                    {
+                        editorRedo();
+                    }
+                    break;
                 }
-                break;
-            }
-            case Qt::Key_C:
-            {
-                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                case Qt::Key_Z:
                 {
-                    m_EditorMode = EditorModes::CopySelection;
-                    copyRect = QRect(-1, -1, 0, 0);
-                    createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                    createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                    return;
+                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                    {
+                        editorUndo();
+                    }
+                    break;
                 }
-                break;
-            }
-            case Qt::Key_V:
-            {
-                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                case Qt::Key_C:
                 {
+                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+                    {
+                        m_EditorMode = EditorModes::CopySelection;
+                        copyRect = QRect(-1, -1, 0, 0);
+                        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                        createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                    }
+                    break;
+                }
+                case Qt::Key_V:
+                {
+
                     if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
                         copyRect.width() != 0 && copyRect.height() != 0)
                     {
                         pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false);
-                        return;
                     }
                 }
-                break;
-            }
-            default:
-            {
-                // do nothing
-                break;
+                    break;
+                default:
+                {
+                    // do nothing
+                    break;
+                }
             }
         }
-        if (cur == Settings::getKey_information())
+        else if (cur == Settings::getKey_information())
         {
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
