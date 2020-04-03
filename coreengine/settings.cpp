@@ -67,6 +67,7 @@ bool Settings::m_StaticMarkedFields = false;
 
 // add mod path
 QStringList Settings::m_activeMods;
+QStringList Settings::m_activeModVersions;
 // this Object
 Settings* Settings::m_pInstance = nullptr;
 
@@ -82,6 +83,11 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+QStringList Settings::getActiveModVersions()
+{
+    return m_activeModVersions;
 }
 
 bool Settings::getRecord()
@@ -391,6 +397,30 @@ void Settings::loadSettings()
         m_activeMods = modList.split(",");
     }
     m_activeMods.sort();
+    for (const auto& mod : m_activeMods)
+    {
+        bool found = false;
+        QFile file(mod + "/mod.txt");
+        if (file.exists())
+        {
+            file.open(QFile::ReadOnly);
+            QTextStream stream(&file);
+            while (!stream.atEnd())
+            {
+                QString line = stream.readLine();
+                if (line.startsWith("version="))
+                {
+                    m_activeMods.append(line.split("=")[1]);
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found)
+        {
+            m_activeMods.append("1.0.0");
+        }
+    }
     settings.endGroup();
 }
 

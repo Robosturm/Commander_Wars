@@ -54,26 +54,26 @@ void WikiDatabase::load()
 {
     // load database
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_Entries.append(pageData(pCOSpriteManager->getCOName(i), pCOSpriteManager->getCOID(i), "CO"));
+        m_Entries.append(pageData(pCOSpriteManager->getName(i), pCOSpriteManager->getID(i), "CO"));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(pageData(pTerrainManager->getTerrainName(terrainId), terrainId, "Terrain"));
+        m_Entries.append(pageData(pTerrainManager->getName(terrainId), terrainId, "Terrain"));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
+    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        m_Entries.append(pageData(pBuildingSpriteManager->getBuildingName(i), pBuildingSpriteManager->getBuildingID(i), "Building"));
+        m_Entries.append(pageData(pBuildingSpriteManager->getName(i), pBuildingSpriteManager->getID(i), "Building"));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(pageData(pUnitSpriteManager->getUnitName(unitId), unitId, "Unit"));
+        m_Entries.append(pageData(pUnitSpriteManager->getName(unitId), unitId, "Unit"));
     }
 
     // load general wiki page
@@ -193,7 +193,7 @@ spWikipage WikiDatabase::getPage(pageData data)
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     // select page loader and create wiki page
-    if (pCOSpriteManager->existsCO(id))
+    if (pCOSpriteManager->exists(id))
     {
         spPlayer pPlayer = new Player();
         pPlayer->init();
@@ -204,18 +204,18 @@ spWikipage WikiDatabase::getPage(pageData data)
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getHeight());
     }
-    else if (pTerrainManager->existsTerrain(id))
+    else if (pTerrainManager->exists(id))
     {
         spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "");
         ret = new FieldInfo(pTerrain.get(), nullptr);
     }
-    else if (pBuildingSpriteManager->existsBuilding(id))
+    else if (pBuildingSpriteManager->exists(id))
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
         pTerrain->setBuilding(new Building(id));
         ret = new FieldInfo(pTerrain.get(), nullptr);
     }
-    else if (pUnitSpriteManager->existsUnit(id))
+    else if (pUnitSpriteManager->exists(id))
     {
         spPlayer pPlayer = new Player();
         pPlayer->init();

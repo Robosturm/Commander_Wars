@@ -284,7 +284,7 @@ GameMap::~GameMap()
 
 QStringList GameMap::getAllUnitIDs()
 {
-    return UnitSpriteManager::getInstance()->getLoadedUnits();
+    return UnitSpriteManager::getInstance()->getLoadedRessources();
 }
 
 GameAction* GameMap::createAction()
@@ -665,7 +665,6 @@ bool GameMap::onMap(qint32 x, qint32 y)
 
 void GameMap::centerMap(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
     if (onMap(x, y))
     {
         // draw point
@@ -682,7 +681,6 @@ void GameMap::moveMap(qint32 x, qint32 y)
     float resX = this->getPosition().x + x;
     float resY = this->getPosition().y + y;
     float minVisible = 16.0f / m_zoom;
-    Mainapp* pApp = Mainapp::getInstance();
     if (resX > Settings::getWidth()  - minVisible * m_zoom * Imagesize)
     {
         resX = Settings::getWidth() - minVisible * m_zoom * Imagesize;

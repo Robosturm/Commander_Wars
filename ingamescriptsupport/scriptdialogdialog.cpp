@@ -115,9 +115,9 @@ void ScriptDialogDialog::updateDialog()
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
         ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
-        for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+        for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
-            ids.append(pCOSpriteManager->getCOID(i));
+            ids.append(pCOSpriteManager->getID(i));
         }
         ids.append("co_beast");
         ids.append("co_davis");

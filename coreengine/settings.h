@@ -33,6 +33,8 @@ public:
 
     static void setUsername(const QString &Username);
 
+    static QStringList getActiveModVersions();
+
 public slots:
     static bool getRecord();
     static void setRecord(bool record);
@@ -289,6 +291,7 @@ private:
     static Settings* m_pInstance;
     static const QString m_settingFile;
     static QStringList m_activeMods;
+    static QStringList m_activeModVersions;
 
 
 };

@@ -13,7 +13,6 @@
 MapSelectionView::MapSelectionView()
     : QObject()
 {
-    Mainapp* pApp = Mainapp::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
@@ -107,10 +106,10 @@ MapSelectionView::MapSelectionView()
     oxygine::spSlidingActor slider = new oxygine::SlidingActor();
     slider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
     oxygine::spActor content = new oxygine::Actor();
-    content->setSize(pBuildingSpriteManager->getBuildingCount()* (GameMap::Imagesize + 12), 100);
-    for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
+    content->setSize(pBuildingSpriteManager->getCount()* (GameMap::Imagesize + 12), 100);
+    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
+        spBuilding building = new Building(pBuildingSpriteManager->getID(i));
         building->updateBuildingSprites(false);
         qint32 width = building->getBuildingWidth();
         qint32 heigth = building->getBuildingHeigth();
@@ -208,9 +207,9 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_currentMapFile = info;
 
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-        for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
+        for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
         {
-            qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getBuildingID(i));
+            qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getID(i));
             m_BuildingCountTexts[i]->setHtmlText(QString::number(count));
         }
     }

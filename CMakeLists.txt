@@ -43,7 +43,7 @@ endif()
 add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=11
+    -DMINOR=12
     -DREVISION=0
 )
 

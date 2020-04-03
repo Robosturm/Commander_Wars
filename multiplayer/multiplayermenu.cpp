@@ -192,10 +192,12 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             stream << NetworkCommands::MAPINFO;
             stream << Mainapp::getGameVersion();
             QStringList mods = Settings::getMods();
+            QStringList versions = Settings::getActiveModVersions();
             stream << static_cast<qint32>(mods.size());
             for (qint32 i = 0; i < mods.size(); i++)
             {
                 stream << mods[i];
+                stream << versions[i];
             }
             stream << saveGame;
             if (saveGame)
@@ -248,13 +250,18 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 qint32 size = 0;
                 stream >> size;
                 QStringList mods;
+                QStringList versions;
                 for (qint32 i = 0; i < size; i++)
                 {
                     QString mod;
                     stream >> mod;
                     mods.append(mod);
+                    QString version;
+                    stream >> version;
+                    versions.append(version);
                 }
                 QStringList myMods = Settings::getMods();
+                QStringList myVersions = Settings::getActiveModVersions();
                 bool sameMods = true;
                 if (myMods.size() != mods.size())
                 {
@@ -269,6 +276,20 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         {
                             sameMods = false;
                             break;
+                        }
+                        else
+                        {
+                            for (qint32 i2 = 0; i2 < mods.size(); i2++)
+                            {
+                                if (mods[i2] == myMods[i])
+                                {
+                                    if (versions[i2] != myVersions[i])
+                                    {
+                                        sameMods = false;
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                     for (qint32 i = 0; i < mods.size(); i++)

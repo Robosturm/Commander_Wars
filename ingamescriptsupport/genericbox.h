@@ -12,7 +12,7 @@ class GenericBox : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit GenericBox();
+    explicit GenericBox(bool cancel = false);
     virtual ~GenericBox() = default;
     /**
      * @brief addItem
@@ -24,6 +24,10 @@ signals:
      * @brief sigFinished
      */
     void sigFinished();
+    /**
+     * @brief sigCancel
+     */
+    void sigCancel();
 private:
     oxygine::spBox9Sprite m_pSpriteBox;
 };

@@ -2,27 +2,13 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
-
-ObjectManager* ObjectManager::m_pInstance = nullptr;
-
-ObjectManager* ObjectManager::getInstance()
-{
-    if (m_pInstance == nullptr)
-    {
-        m_pInstance = new ObjectManager();
-    }
-    return m_pInstance;
-}
+#include "coreengine/mainapp.h"
 
 ObjectManager::ObjectManager()
+    : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
-    this->moveToThread(pMainapp->getWorkerthread());
-    oxygine::Resources::loadXML("resources/objects/res.xml");
-    oxygine::Resources::loadXML("resources/cursor/res.xml");
-
+    loadRessources("/cursor/res.xml");
 }
 
 oxygine::spButton ObjectManager::createButton(QString text, qint32 width)

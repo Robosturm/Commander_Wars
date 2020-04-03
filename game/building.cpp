@@ -46,7 +46,7 @@ void Building::init()
 
 bool Building::isValid()
 {
-    return BuildingSpriteManager::getInstance()->existsBuilding(m_BuildingID);
+    return BuildingSpriteManager::getInstance()->exists(m_BuildingID);
 }
 
 QPoint Building::getOffset(Terrain* pTerrain)

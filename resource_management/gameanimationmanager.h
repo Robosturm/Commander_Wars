@@ -1,17 +1,16 @@
 #ifndef GAMEANIMATIONMANAGER_H
 #define GAMEANIMATIONMANAGER_H
 
-#include "oxygine-framework.h"
+#include "resource_management/RessourceManagement.h"
 
-class GameAnimationManager : public oxygine::Resources
+class GameAnimationManager : public QObject, public RessourceManagement<GameAnimationManager>
 {
-
-public:
-    static GameAnimationManager* getInstance();
+    Q_OBJECT
+protected:
+    friend RessourceManagement<GameAnimationManager>;
+    GameAnimationManager();
 private:
-    explicit GameAnimationManager();
     virtual ~GameAnimationManager() = default;
-    static GameAnimationManager* m_pInstance;
 };
 
 #endif // GAMEANIMATIONMANAGER_H

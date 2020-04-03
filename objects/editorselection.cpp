@@ -114,7 +114,7 @@ EditorSelection::EditorSelection()
     // create terrains
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     // reserve vector size for fun and speed :D
-    m_Terrains.reserve(pTerrainManager->getTerrainCount());
+    m_Terrains.reserve(pTerrainManager->getCount());
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrainIDs)
     {
@@ -132,9 +132,9 @@ EditorSelection::EditorSelection()
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
+    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
+        spBuilding building = new Building(pBuildingSpriteManager->getID(i));
         qint32 width = building->getBuildingWidth();
         qint32 heigth = building->getBuildingHeigth();
         building->setScaleX(1.0f / static_cast<float>(width));
@@ -511,7 +511,7 @@ void EditorSelection::updateTerrainView()
     pApp->suspendThread();
     initSelection();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    for (qint32 i = m_StartIndex; i < pTerrainManager->getTerrainCount(); i++)
+    for (qint32 i = m_StartIndex; i < pTerrainManager->getCount(); i++)
     {
         m_Terrains[i]->setVisible(true);
     }

@@ -1,16 +1,16 @@
 #ifndef BACKGROUNDMANAGER_H
 #define BACKGROUNDMANAGER_H
 
-#include "oxygine-framework.h"
+#include "resource_management/RessourceManagement.h"
 
-class BackgroundManager : public oxygine::Resources
+class BackgroundManager : public QObject, public RessourceManagement<BackgroundManager>
 {
-public:
-    static BackgroundManager* getInstance();
+    Q_OBJECT
+protected:
+    friend RessourceManagement<BackgroundManager>;
+    BackgroundManager();
 private:
-    explicit BackgroundManager();
     virtual ~BackgroundManager() = default;
-    static BackgroundManager* m_pInstance;
 };
 
 #endif // BACKGROUNDMANAGER_H

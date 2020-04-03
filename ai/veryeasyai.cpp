@@ -156,9 +156,9 @@ bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
                 if (pCO != nullptr &&
                     pCO->getCOUnit() == nullptr)
                 {
-                    data[0] = pCOSpriteManager->getCOIndex(pCO->getCoID());
+                    data[0] = pCOSpriteManager->getIndex(pCO->getCoID());
 
-                    data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
+                    data[1] = pUnitSpriteManager->getIndex(pUnit->getUnitID());
                     float ret = m_COUnitTree.getDecision(data);
                     if (ret == 1.0f)
                     {
@@ -696,7 +696,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
                         }
                         if (selectedUnit >= 0)
                         {
-                            QString unitID = pUnitSpriteManager->getUnitID(selectedUnit);
+                            QString unitID = pUnitSpriteManager->getID(selectedUnit);
                             qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
                             if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
                             {

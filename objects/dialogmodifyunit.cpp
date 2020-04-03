@@ -283,7 +283,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     QStringList units = m_pUnit->getTransportUnits();
     for (qint32 i = 0; i < units.size(); i++)
     {
-        if (pUnitSpriteManager->existsUnit(units[i]))
+        if (pUnitSpriteManager->exists(units[i]))
         {
             items.append(units[i]);
         }

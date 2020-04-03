@@ -110,7 +110,7 @@ void Wikipage::loadImage(QString file, float scale, QString pageID)
     else
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        if (pUnitSpriteManager->existsUnit(file))
+        if (pUnitSpriteManager->exists(file))
         {
             spPlayer pPlayer = new Player();
             pPlayer->init();

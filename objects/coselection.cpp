@@ -77,9 +77,9 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     m_CoDescription->setPosition(m_CoFieldPanel->getScaledWidth(), m_ArmyBannerPanel->getScaledHeight());
     addChild(m_CoDescription);
 
-    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        QString coid = pCOSpriteManager->getCOID(i);
+        QString coid = pCOSpriteManager->getID(i);
         if (m_Coids.isEmpty() || m_Coids.contains(coid))
         {
             QString function1 = "getCOArmy";
@@ -272,9 +272,9 @@ void COSelection::armyChanged(QString army)
         while (x < 3)
         {
             coFound = false;
-            for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+            for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
             {
-                QString coid = pCOSpriteManager->getCOID(i);
+                QString coid = pCOSpriteManager->getID(i);
                 if ((m_Coids.isEmpty() || m_Coids.contains(coid)) &&
                     !m_CoIDs.contains(coid))
                 {

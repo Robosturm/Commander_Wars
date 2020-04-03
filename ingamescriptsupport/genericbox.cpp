@@ -6,7 +6,7 @@
 
 #include "coreengine/mainapp.h"
 
-GenericBox::GenericBox()
+GenericBox::GenericBox(bool cancel)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -23,6 +23,7 @@ GenericBox::GenericBox()
     m_pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
+
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
@@ -32,6 +33,18 @@ GenericBox::GenericBox()
         emit sigFinished();
         detach();
     });
+    if (cancel)
+    {
+        pOkButton->setX(Settings::getWidth() / 2 + 10);
+        oxygine::spButton pCancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+        pCancelButton->setPosition(Settings::getWidth() / 2 - pCancelButton->getWidth() - 10, Settings::getHeight() - 30 - pOkButton->getHeight());
+        m_pSpriteBox->addChild(pCancelButton);
+        pCancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigCancel();
+            detach();
+        });
+    }
 }
 
 void GenericBox::addItem(oxygine::spActor pActor)

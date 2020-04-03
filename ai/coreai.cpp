@@ -162,7 +162,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
         CO* pCO = m_pPlayer->getCO(i);
         if (pCO != nullptr)
         {
-            data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
+            data[0] = COSpriteManager::getInstance()->getIndex(pCO->getCoID());
             if (pCO->canUseSuperpower())
             {
                 data[1] = 2;
@@ -711,7 +711,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                     {
                         if (items[i] == "CO")
                         {
-                            for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
+                            for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
@@ -719,7 +719,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         }
                         else if (items[i] == "BUILDING")
                         {
-                            for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getBuildingCount(); i2++)
+                            for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getCount(); i2++)
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
@@ -727,7 +727,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         }
                         else if (items[i] == "UNIT")
                         {
-                            for (qint32 i2 = 0; i2 < pUnitSpriteManager->getUnitCount(); i2++)
+                            for (qint32 i2 = 0; i2 < pUnitSpriteManager->getCount(); i2++)
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
@@ -751,7 +751,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         // convert all data to numbers
                         if (types[i] == "CO")
                         {
-                            qint32 index = pCOSpriteManager->getCOIndex(items[i]);
+                            qint32 index = pCOSpriteManager->getIndex(items[i]);
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {
@@ -760,7 +760,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         }
                         else if (types[i] == "BUILDING")
                         {
-                            qint32 index = pBuildingSpriteManager->getBuildingIndex(items[i]);
+                            qint32 index = pBuildingSpriteManager->getIndex(items[i]);
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {
@@ -769,7 +769,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         }
                         else if (types[i] == "UNIT")
                         {
-                            qint32 index = pUnitSpriteManager->getUnitIndex(items[i]);
+                            qint32 index = pUnitSpriteManager->getIndex(items[i]);
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {

@@ -96,8 +96,8 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 
     // fire range
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    if ((pUnit->getWeapon1ID() != "" && pWeaponManager->existsWeapon(pUnit->getWeapon1ID())) ||
-        (pUnit->getWeapon2ID() != "" && pWeaponManager->existsWeapon(pUnit->getWeapon2ID())))
+    if ((pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID())) ||
+        (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID())))
     {
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
@@ -245,7 +245,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString id = pUnit->getMovementType();
-    name = pMovementTableManager->getMovementName(id);
+    name = pMovementTableManager->getName(id);
     pLabel = new oxygine::TextField();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Movement ") + name));
@@ -288,11 +288,11 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
             y += 40;
         }
     }
-    for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
+    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
         pTerrain->loadSprites();
-        Building* pBuilding = new Building(pBuildingSpriteManager->getBuildingID(i));
+        Building* pBuilding = new Building(pBuildingSpriteManager->getID(i));
         // pBuilding->setOwner(pUnit->getOwner());
         pBuilding->updateBuildingSprites(false);
         qint32 buildingWidth = pBuilding->getBuildingWidth();
@@ -312,7 +312,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(pBuildingSpriteManager->getBuildingID(i));
+           emit sigShowLink(pBuildingSpriteManager->getID(i));
         });
         addChild(pTerrain);
         pLabel = new oxygine::TextField();
@@ -329,7 +329,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setPosition(x + 30, y - 5);
         addChild(pLabel);
         x += 80;
-        if (x + 90 > width && i < pBuildingSpriteManager->getBuildingCount() - 1)
+        if (x + 90 > width && i < pBuildingSpriteManager->getCount() - 1)
         {
             x = 0;
             y += 40;
@@ -337,22 +337,22 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     y += 40;
 
-    if (pUnit->getWeapon1ID() != "" && pWeaponManager->existsWeapon(pUnit->getWeapon1ID()))
+    if (pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID()))
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(headerStyle);
-        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getWeaponName(pUnit->getWeapon1ID())));
+        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(pUnit->getWeapon1ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
         y += 80;
         createWeaponTable(pUnit, pUnit->getWeapon1ID(), y, width);
         y += 40;
     }
-    if (pUnit->getWeapon2ID() != "" && pWeaponManager->existsWeapon(pUnit->getWeapon2ID()))
+    if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(headerStyle);
-        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getWeaponName(pUnit->getWeapon2ID())));
+        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(pUnit->getWeapon2ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
         addChild(pLabel);
         y += 80;
@@ -398,7 +398,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         pLabel->setPosition(x + 30, y - 5);
         addChild(pLabel);
         x += 100;
-        if (x + 110 > width && i < pUnitSpriteManager->getUnitCount() - 1)
+        if (x + 110 > width && i < pUnitSpriteManager->getCount() - 1)
         {
             x = 0;
             y += 40;

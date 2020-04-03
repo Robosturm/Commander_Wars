@@ -74,27 +74,27 @@ void COSelectionDialog::showCOInfo()
     QString coid = m_currentCOID;
     if (coid.isEmpty())
     {
-        coid = COSpriteManager::getInstance()->getCOID(0);
+        coid = COSpriteManager::getInstance()->getID(0);
     }
     Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
     spCO co = new CO(coid, pPlayer);
     addChild(new COInfoDialog(co, pPlayer, [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        qint32 index = pCOSpriteManager->getCOIndex(pCurrentCO->getCoID());
+        qint32 index = pCOSpriteManager->getIndex(pCurrentCO->getCoID());
         index += direction;
         QString coid;
         if (index < 0)
         {
-            coid = pCOSpriteManager->getCOID(pCOSpriteManager->getCOCount() - 1);
+            coid = pCOSpriteManager->getID(pCOSpriteManager->getCount() - 1);
         }
-        else if (index >= pCOSpriteManager->getCOCount())
+        else if (index >= pCOSpriteManager->getCount())
         {
-            coid = pCOSpriteManager->getCOID(0);
+            coid = pCOSpriteManager->getID(0);
         }
         else
         {
-            coid = pCOSpriteManager->getCOID(index);
+            coid = pCOSpriteManager->getID(index);
         }
         pCurrentCO = new CO(coid, pPlayer);
     }, false));

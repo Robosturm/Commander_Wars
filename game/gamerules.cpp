@@ -43,9 +43,9 @@ GameRules::GameRules()
         }
     }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        m_COBannlist.append(pCOSpriteManager->getCOID(i));
+        m_COBannlist.append(pCOSpriteManager->getID(i));
     }
     m_StartWeather = 0;
     m_RoundTimer.setSingleShot(true);
@@ -1019,7 +1019,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
         {
             QString coid;
             pStream >> coid;
-            if (pCOSpriteManager->existsCO(coid))
+            if (pCOSpriteManager->exists(coid))
             {
                 m_COBannlist.append(coid);
             }
@@ -1027,9 +1027,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     }
     if (version <= 3 || !m_COBannlistEdited)
     {
-        for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+        for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
-            m_COBannlist.append(pCOSpriteManager->getCOID(i));
+            m_COBannlist.append(pCOSpriteManager->getID(i));
         }
     }
     if (version > 5)

@@ -42,7 +42,7 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString baseTerrain = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getBaseTerrainID").toString();
-    if (!TerrainManager::getInstance()->existsTerrain(baseTerrain))
+    if (!TerrainManager::getInstance()->exists(baseTerrain))
     {
         baseTerrain = "PLAINS";
     }

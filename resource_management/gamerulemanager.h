@@ -1,24 +1,20 @@
 #ifndef GAMERULEMANAGER_H
 #define GAMERULEMANAGER_H
 
-#include <QObject>
+#include "resource_management/RessourceManagement.h"
 
-class GameRuleManager : public QObject
+class GameRuleManager : public QObject, public RessourceManagement<GameRuleManager>
 {
     Q_OBJECT
 public:
-    static GameRuleManager* getInstance();
-
-signals:
-
-public slots:
-    void loadAll();
     /**
-     * @brief loadVictoryRule
-     * @param victoryID the victory that should be loaded.
-     * @return true if all is fine
+     * @brief loadAll
      */
-    bool loadVictoryRule(QString victoryID);
+    virtual void loadAll() override;
+    /**
+     * @brief reset
+     */
+    virtual void reset() override;
     /**
      * @brief getVictoryRuleID
      * @param position the position in the loaded victory list
@@ -40,13 +36,6 @@ public slots:
     {
         return m_loadedVictoryRules.size();
     }
-
-    /**
-     * @brief loadWeather
-     * @param weatherID the weather that should be loaded.
-     * @return true if all is fine
-     */
-    bool loadWeather(QString weatherID);
     /**
      * @brief getWeatherID
      * @param position the position in the loaded wearther list
@@ -86,18 +75,14 @@ public slots:
     {
         return m_loadedVictoryRules.contains(ruleID);
     }
-    /**
-     * @brief reset
-     */
-    void reset();
+protected:
+    friend RessourceManagement<GameRuleManager>;
+    GameRuleManager();
+
 private:
+    virtual ~GameRuleManager() = default;
     QStringList m_loadedWeather;
     QStringList m_loadedVictoryRules;
-    explicit GameRuleManager();
-    virtual ~GameRuleManager() = default;
-    static GameRuleManager* m_pInstance;
 };
-
-
 
 #endif // TERRAINMANAGER_H

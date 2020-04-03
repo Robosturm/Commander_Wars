@@ -371,7 +371,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             pApp->suspendThread();
             QString id = m_ActionIDs[currentAction];
             UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-            if (pUnitSpriteManager->existsUnit(id))
+            if (pUnitSpriteManager->exists(id))
             {
                 spUnit pDummy = new Unit(id, GameMap::getInstance()->getCurrentPlayer(), false);
                 spFieldInfo fieldinfo = new FieldInfo(nullptr, pDummy.get());

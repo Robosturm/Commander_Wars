@@ -29,9 +29,9 @@ Player::Player()
     m_pBaseGameInput = nullptr;
     // for older versions we allow all loaded units to be buildable
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
     {
-        m_BuildList.append(pUnitSpriteManager->getUnitID(i));
+        m_BuildList.append(pUnitSpriteManager->getID(i));
     }
 }
 
@@ -1027,9 +1027,9 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 averageCosts = 0;
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
     {
-        QString unitId = pUnitSpriteManager->getUnitID(i);
+        QString unitId = pUnitSpriteManager->getID(i);
         QString function1 = "getBaseCost";
         QJSValue erg = pInterpreter->doFunction(unitId, function1);
         if (erg.isNumber())
@@ -1037,7 +1037,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
              averageCosts += erg.toInt();
         }
     }
-    averageCosts = averageCosts / pUnitSpriteManager->getUnitCount();
+    averageCosts = averageCosts / pUnitSpriteManager->getCount();
 
     GameMap* pMap = GameMap::getInstance();
     qint32 damageDone = 0;
@@ -1316,9 +1316,9 @@ void Player::deserializeObject(QDataStream& pStream)
     {
         // for older versions we allow all loaded units to be buildable
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+        for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
         {
-            m_BuildList.append(pUnitSpriteManager->getUnitID(i));
+            m_BuildList.append(pUnitSpriteManager->getID(i));
         }
     }
     if (version > 11)

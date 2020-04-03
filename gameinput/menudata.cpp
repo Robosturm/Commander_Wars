@@ -37,7 +37,7 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
     else
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        if (pUnitSpriteManager->existsUnit(icon))
+        if (pUnitSpriteManager->exists(icon))
         {
             iconList.append(new Unit(icon, pMap->getCurrentPlayer(), false));
         }

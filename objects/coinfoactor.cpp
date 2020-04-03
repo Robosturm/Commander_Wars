@@ -317,9 +317,9 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         m_SynergyStarActors.clear();
         GameManager* pGameManager = GameManager::getInstance();
         pAnim = pGameManager->getResAnim("tagaffinitystar");
-        for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+        for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
         {
-            QString coid = pCOSpriteManager->getCOID(i);
+            QString coid = pCOSpriteManager->getID(i);
             spCO testCO = new CO(coid, nullptr);
 
             QJSValueList args;

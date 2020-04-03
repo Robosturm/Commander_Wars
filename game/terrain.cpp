@@ -35,7 +35,7 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
     {
         if (!obj.isObject())
         {
-            terrainExists = TerrainManager::getInstance()->loadTerrain(terrainID);
+            terrainExists = false;
         }
         if (terrainExists)
         {
@@ -91,7 +91,7 @@ Terrain::~Terrain()
 
 bool Terrain::isValid()
 {
-    return TerrainManager::getInstance()->existsTerrain(terrainID);
+    return TerrainManager::getInstance()->exists(terrainID);
 }
 
 void Terrain::setSpriteVisibility(bool value)
@@ -702,7 +702,8 @@ void Terrain::removeBuilding()
                 for (qint32 y1 = 0; y1 < heigth; y1++)
                 {
                     // delete down stream on all other fields
-                    if (!((x1 == 0) && (y1 == 0)))
+                    if (!((x1 == 0) && (y1 == 0)) &&
+                        pMap->onMap(x - x1, y - y1))
                     {
                         pMap->getTerrain(x - x1, y - y1)->removeDownstream();
                     }

@@ -690,7 +690,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 1: ") +
-                                             WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon1ID())));
+                                             WeaponManager::getInstance()->getName(pUnit->getWeapon1ID())));
                     m_pCursorInfoBox->addChild(pTextfield);
                     y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
@@ -701,7 +701,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 2: ") +
-                                             WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon2ID())));
+                                             WeaponManager::getInstance()->getName(pUnit->getWeapon2ID())));
                     m_pCursorInfoBox->addChild(pTextfield);
                     y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
@@ -710,7 +710,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Move: ") +
-                                         MovementTableManager::getInstance()->getMovementName(pUnit->getMovementType())));
+                                         MovementTableManager::getInstance()->getName(pUnit->getMovementType())));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 

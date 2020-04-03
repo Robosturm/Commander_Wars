@@ -40,7 +40,7 @@ void CO::init()
 
 bool CO::isValid()
 {
-    return COSpriteManager::getInstance()->existsCO(coID);
+    return COSpriteManager::getInstance()->exists(coID);
 }
 
 float CO::getUnitBuildValue(QString unitID)

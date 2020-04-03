@@ -6,21 +6,6 @@
 
 #include "spritingsupport/spritecreator.h"
 
-COSpriteManager* COSpriteManager::m_pInstance = nullptr;
-
-COSpriteManager::COSpriteManager()
-{
-    oxygine::Resources::loadXML("resources/images/co/res.xml");
-    Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
-    {
-        if (QFile::exists(Settings::getMods().at(i) + "/images/co/res.xml"))
-        {
-            oxygine::Resources::loadXML(Settings::getMods().at(i) + "/images/co/res.xml");
-        }
-    }
-}
-
 QVector<QString> COSpriteManager::getSpriteCOIDs()
 {
     QVector<QString> ret;
@@ -39,47 +24,11 @@ QVector<QString> COSpriteManager::getSpriteCOIDs()
     return ret;
 }
 
-COSpriteManager* COSpriteManager::getInstance()
-{
-    if (m_pInstance == nullptr)
-    {
-        m_pInstance = new COSpriteManager();
-    }
-    return m_pInstance;
-}
-
-QString COSpriteManager::getCOName(qint32 position)
-{
-    if ((position >= 0) && (position < m_loadedCOs.size()))
-    {
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getName");
-        if (value.isString())
-        {
-            return value.toString();
-        }
-    }
-    return "";
-}
-
-
-QString COSpriteManager::getCOName(QString coid)
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue value = pInterpreter->doFunction(coid, "getName");
-    if (value.isString())
-    {
-        return value.toString();
-    }
-    return "";
-}
-
-
 QStringList COSpriteManager::getCOStyles(QString id)
 {
-    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
+    for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
-        if (m_loadedCOs[i] == id)
+        if (m_loadedRessources[i] == id)
         {
             return getCOStyles(i);
         }
@@ -89,105 +38,13 @@ QStringList COSpriteManager::getCOStyles(QString id)
 
 QStringList COSpriteManager::getCOStyles(qint32 position)
 {
-    if ((position >= 0) && (position < m_loadedCOs.size()))
+    if ((position >= 0) && (position < m_loadedRessources.size()))
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getCOStyles");
+        QJSValue value = pInterpreter->doFunction(m_loadedRessources[position], "getCOStyles");
         return value.toVariant().toStringList();
     }
     return QStringList();
-}
-
-void COSpriteManager::loadAll()
-{
-    reset();
-    Mainapp* pMainapp = Mainapp::getInstance();
-    QStringList searchPaths;
-    searchPaths.append("resources/scripts/cos");
-    // make sure to overwrite existing js stuff
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
-    {
-        searchPaths.append(Settings::getMods().at(i) + "/scripts/cos");
-    }
-    for (qint32 i = 0; i < searchPaths.size(); i++)
-    {
-        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
-        QStringList filter;
-        filter << "*.js";
-        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
-        while (dirIter->hasNext())
-        {
-            dirIter->next();
-            QString file = dirIter->fileInfo().fileName().split(".").at(0);
-            if (!m_loadedCOs.contains(file.toUpper()))
-            {
-                loadCO(file.toUpper());
-            }
-        }
-    }
-    m_loadedCOs.sort();
-}
-
-qint32 COSpriteManager::getCOIndex(QString id)
-{
-    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
-    {
-        if (m_loadedCOs[i] == id)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-
-bool COSpriteManager::loadCO(QString coID)
-{
-    Mainapp* pMainapp = Mainapp::getInstance();
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QStringList searchPaths;
-    searchPaths.append("resources/scripts/cos");
-    for (qint32 i = 0; i < Settings::getMods().size(); i++)
-    {
-        searchPaths.append(Settings::getMods().at(i) + "/scripts/cos");
-    }
-    bool bRet = false;
-    for (qint32 i = 0; i < searchPaths.size(); i++)
-    {
-        QString file = searchPaths[i] + "/" + coID + ".js";
-        QFileInfo checkFile(file);
-        if (checkFile.exists() && checkFile.isFile())
-        {
-            pInterpreter->openScript(file, true);
-            if (!bRet)
-            {
-                m_loadedCOs.append(coID);
-            }
-            bRet = true;
-        }
-    }
-    return bRet;
-}
-
-void COSpriteManager::reset()
-{
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
-    {
-        pInterpreter->deleteObject(m_loadedCOs[i]);
-    }
-    m_loadedCOs.clear();
-}
-
-bool COSpriteManager::existsCO(QString coID)
-{
-    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
-    {
-        if (m_loadedCOs[i] == coID)
-        {
-            return true;
-        }
-    }
-    return false;
 }
 
 void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable, bool useColorBox)

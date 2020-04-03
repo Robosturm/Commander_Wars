@@ -152,10 +152,10 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
 
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     qint32 x = 0;
-    for (qint32 i = 0; i < pMovementTableManager->getMovementTableCount(); i++)
+    for (qint32 i = 0; i < pMovementTableManager->getCount(); i++)
     {
-        QString name = pMovementTableManager->getMovementName(pMovementTableManager->getMovementID(i));
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(pMovementTableManager->getMovementID(i), pTerrain, pTerrain, nullptr);
+        QString name = pMovementTableManager->getName(pMovementTableManager->getID(i));
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(pMovementTableManager->getID(i), pTerrain, pTerrain, nullptr);
 
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width);
@@ -177,7 +177,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel->setPosition(x + 120, y);
         addChild(pLabel);
         x += 170;
-        if (x + 210 > width && i < pMovementTableManager->getMovementTableCount() - 1)
+        if (x + 210 > width && i < pMovementTableManager->getCount() - 1)
         {
             x = 0;
             y += 40;

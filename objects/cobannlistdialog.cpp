@@ -135,9 +135,9 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + m_Armies[i]);
         coids.append(ret.toVariant().toStringList());
         // add unadded co's of this army
-        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
+        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
         {
-            QString coID = pCOSpriteManager->getCOID(i2);
+            QString coID = pCOSpriteManager->getID(i2);
             QString function1 = "getCOArmy";
             QJSValue ret = pInterpreter->doFunction(coID, function1);
             if (ret.isString())
@@ -152,9 +152,9 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         }
     }
     // add unadded co's
-    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
     {
-        QString coID = pCOSpriteManager->getCOID(i);
+        QString coID = pCOSpriteManager->getID(i);
         if (!coids.contains(coID))
         {
             coids.append(coID);
@@ -178,7 +178,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
 
-        pLabel->setHtmlText(pCOSpriteManager->getCOName(coID));
+        pLabel->setHtmlText(pCOSpriteManager->getName(coID));
 
         pLabel->setPosition(x, y);
         pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);

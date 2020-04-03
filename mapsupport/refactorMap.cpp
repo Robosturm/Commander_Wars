@@ -238,6 +238,24 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             pTerrain->setY(y);
         }
     }
+    for (qint32 y = 0; y < currentHeigth; y++)
+    {
+        for (qint32 x = 0; x < currentWidth; x++)
+        {
+            spBuilding pBuilding = fields[y]->at(x)->getBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
+                    pBuilding->getY() - pBuilding->getBuildingHeigth() + 1 < 0)
+                {
+                    fields[y]->at(x)->setBuilding(nullptr);
+                }
+            }
+        }
+    }
+
+    updateSprites();
+    centerMap(currentWidth / 2, currentHeigth / 2);
 }
 
 void GameMap::flipX()

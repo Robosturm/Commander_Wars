@@ -73,7 +73,7 @@ Unit::~Unit()
 
 bool Unit::isValid()
 {
-    return UnitSpriteManager::getInstance()->existsUnit(m_UnitID);
+    return UnitSpriteManager::getInstance()->exists(m_UnitID);
 }
 
 QString Unit::getDescription()

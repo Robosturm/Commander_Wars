@@ -946,6 +946,7 @@ void OptionMenue::showMods()
         {
             QString name = folder;
             QString description;
+            QString version;
             QFile file(folder + "/mod.txt");
             if (file.exists())
             {
@@ -961,6 +962,10 @@ void OptionMenue::showMods()
                     if (line.startsWith("description="))
                     {
                         description = line.split("=")[1];
+                    }
+                    if (line.startsWith("version="))
+                    {
+                        version = line.split("=")[1];
                     }
                 }
             }
@@ -1012,7 +1017,7 @@ void OptionMenue::showMods()
                     m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
                 }
                 pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-                m_ModDescriptionText->setHtmlText(description);
+                m_ModDescriptionText->setHtmlText(description + "\n" + version);
                 m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
             });
             m_ModBoxes.append(pBox);

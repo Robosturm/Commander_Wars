@@ -502,7 +502,7 @@ void EditorMenue::showResizeMap()
     pApp->suspendThread();
 
     GameMap* pMap = GameMap::getInstance();
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = new GenericBox(true);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -511,35 +511,65 @@ void EditorMenue::showResizeMap()
     style.multiline = false;
 
     qint32 width = 300;
+    qint32 y = 30;
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Left: "));
-    pText->setPosition(30, 30);
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spSpinBox leftBox = new SpinBox(150, -pMap->getMapWidth() + 1, 9999);
     leftBox->setTooltipText(tr("Change of the map size on the left map border."));
-    leftBox->setPosition(width, 30);
+    leftBox->setPosition(width, y);
     leftBox->setInfinityValue(-pMap->getMapWidth());
     leftBox->setCurrentValue(0);
     pBox->addItem(leftBox);
+    y += 40;
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Top: "));
-    pText->setPosition(30, 70);
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spSpinBox topBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
     topBox->setTooltipText(tr("Change of the map size on the top map border."));
-    topBox->setPosition(width, 70);
+    topBox->setPosition(width, y);
     topBox->setInfinityValue(-pMap->getMapHeight());
     topBox->setCurrentValue(0);
     pBox->addItem(topBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Right: "));
+    pText->setPosition(30, y);
+    pBox->addItem(pText);
+    spSpinBox rightBox = new SpinBox(150, -pMap->getMapWidth() + 1, 999999);
+    rightBox->setTooltipText(tr("Change of the map size on the right map border."));
+    rightBox->setPosition(width, y);
+    rightBox->setInfinityValue(-pMap->getMapWidth());
+    rightBox->setCurrentValue(0);
+    pBox->addItem(rightBox);
+     y += 40;
+
+     pText = new oxygine::TextField();
+     pText->setStyle(style);
+     pText->setHtmlText(tr("Bottom: "));
+     pText->setPosition(30, y);
+     pBox->addItem(pText);
+     spSpinBox bottomBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
+     bottomBox->setTooltipText(tr("Change of the map size on the bottom map border."));
+     bottomBox->setPosition(width, y);
+     bottomBox->setInfinityValue(-pMap->getMapHeight());
+     bottomBox->setCurrentValue(0);
+     pBox->addItem(bottomBox);
+     y += 40;
 
     addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, [=]
     {
-
+        emit sigResizeMap(leftBox->getCurrentValue(), topBox->getCurrentValue(),
+                          rightBox->getCurrentValue(), bottomBox->getCurrentValue());
     });
     pApp->continueThread();
 }
