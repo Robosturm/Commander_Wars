@@ -116,23 +116,23 @@ QString GameEnums::getUnitTypeText(UnitType type)
 {
     switch (type)
     {
-        case UnitType_Air:
+        case GameEnums::UnitType_Air:
         {
             return tr("Air");
         }
-        case UnitType_Naval:
+        case GameEnums::UnitType_Naval:
         {
             return tr("Naval");
         }
-        case UnitType_Ground:
+        case GameEnums::UnitType_Ground:
         {
             return tr("Ground");
         }
-        case UnitType_Infantry:
+        case GameEnums::UnitType_Infantry:
         {
             return tr("Infantry");
         }
-        case UnitType_Hovercraft:
+        case GameEnums::UnitType_Hovercraft:
         {
             return tr("Hovercraft");
         }

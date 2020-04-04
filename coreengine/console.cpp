@@ -97,13 +97,13 @@ void Console::init()
     pInterpreter->pushObject(consoleName, m_pConsole);
     // Print some Info
 
-    Console::print(tr("Enter \"help()\" for console info."), Console::eINFO);
-    Console::print(tr("Starting Game..."), Console::eINFO);
-    Console::print(tr("Prepare to Fight..."), Console::eINFO);
-    Console::print(tr("Read this message while waiting..."), Console::eINFO);
-    Console::print("", Console::eINFO);
+    Console::print(tr("Enter \"help()\" for console info."), Console::eLogLevels::eINFO);
+    Console::print(tr("Starting Game..."), Console::eLogLevels::eINFO);
+    Console::print(tr("Prepare to Fight..."), Console::eLogLevels::eINFO);
+    Console::print(tr("Read this message while waiting..."), Console::eLogLevels::eINFO);
+    Console::print("", Console::eLogLevels::eINFO);
     Console::createfunnymessage();
-    Console::print("", Console::eINFO);
+    Console::print("", Console::eLogLevels::eINFO);
 }
 
 void Console::createSprites(QString input, QString colorTable, QString maskTable)

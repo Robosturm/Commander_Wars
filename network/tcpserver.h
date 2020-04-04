@@ -52,7 +52,7 @@ private:
     QMutex TaskMutex;
     QVector<spRxTask> pRXTasks;
     QVector<spTxTask> pTXTasks;
-    QVector<std::shared_ptr<QTcpSocket>> pTCPSockets;
+    QVector<QTcpSocket*> pTCPSockets;
     QVector<quint64> m_SocketIDs;
     quint64 m_idCounter = 0;
     QTcpServer* pTCPServer;

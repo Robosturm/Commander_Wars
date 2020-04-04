@@ -25,14 +25,14 @@ void TCPServer::connectTCP(QString, quint16 port)
     QObject::connect(pTCPServer, &QTcpServer::newConnection, this, &TCPServer::onConnect);
     QObject::connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient);
     QObject::connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData);
-    Console::print(tr("Server is running"), Console::eDEBUG);
+    Console::print(tr("Server is running"), Console::eLogLevels::eDEBUG);
 }
 
 TCPServer::~TCPServer()
 {
     disconnect();
     disconnectTCP();
-    Console::print(tr("Server is closed"), Console::eDEBUG);
+    Console::print(tr("Server is closed"), Console::eLogLevels::eDEBUG);
 }
 
 void TCPServer::disconnectTCP()
@@ -49,7 +49,7 @@ void TCPServer::disconnectTCP()
             // realize correct deletion
             pTCPSockets[0]->disconnect();
             pTCPSockets[0]->close();
-            Console::print(tr("Client disconnected."), Console::eDEBUG);
+            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
         }
         pRXTasks.removeAt(0);
         pTXTasks.removeAt(0);
@@ -58,7 +58,6 @@ void TCPServer::disconnectTCP()
     if (pTCPServer != nullptr)
     {
         pTCPServer->close();
-        delete pTCPServer;
         pTCPServer = nullptr;
     }
 }
@@ -74,12 +73,13 @@ void TCPServer::disconnectClient(quint64 socketID)
             {
                 // realize correct deletion
                 pTCPSockets[i]->disconnect(this);
+                pTCPSockets[i]->disconnectFromHost();
                 pTCPSockets[i]->close();
             }
             pRXTasks.removeAt(i);
             pTXTasks.removeAt(i);
             pTCPSockets.removeAt(i);
-            Console::print(tr("Client disconnected."), Console::eDEBUG);
+            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
             emit sigDisconnected(socketID);
             break;
         }
@@ -96,7 +96,6 @@ void TCPServer::disconnectSocket()
             pTCPSockets[i]->state() == QAbstractSocket::SocketState::UnconnectedState)
         {
             // realize correct deletion
-            std::shared_ptr<QTcpSocket> pSocket = pTCPSockets[i];
             pTCPSockets[i]->disconnect();
             pTCPSockets[i]->close();
             pRXTasks.removeAt(i);
@@ -104,7 +103,7 @@ void TCPServer::disconnectSocket()
             pTCPSockets.removeAt(i);
             quint64 id = m_SocketIDs[i];
             m_SocketIDs.removeAt(i);
-            Console::print(tr("Client disconnected."), Console::eDEBUG);
+            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
             emit sigDisconnected(id);
         }
         else
@@ -120,11 +119,10 @@ void TCPServer::onConnect()
     if (pTCPServer != nullptr)
     {
         QTcpSocket* nextSocket = pTCPServer->nextPendingConnection();
-        std::shared_ptr<QTcpSocket> pSocket = std::shared_ptr<QTcpSocket>(nextSocket);
-        pTCPSockets.append(pSocket);
-        pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(pSocket.get(), &QTcpSocket::disconnected, this, &TCPServer::disconnectSocket, Qt::QueuedConnection);
-        QObject::connect(pSocket.get(), QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPServer::displayError);
+        pTCPSockets.append(nextSocket);
+        nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
+        QObject::connect(nextSocket, &QTcpSocket::disconnected, this, &TCPServer::disconnectSocket, Qt::QueuedConnection);
+        QObject::connect(nextSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPServer::displayError);
         m_idCounter++;
         if (m_idCounter == 0)
         {
@@ -133,18 +131,18 @@ void TCPServer::onConnect()
         m_SocketIDs.append(m_idCounter);
 
         // Start RX-Task
-        RxTask* pRXTask = new RxTask(pSocket.get(), m_idCounter, this);
+        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
-        QObject::connect(pSocket.get(), &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData);
+        QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData);
 
         // start TX-Task
-        TxTask* pTXTask = new TxTask(pSocket.get(), m_idCounter, this);
+        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send);
 
-        Console::print(tr("New Client connection."), Console::eDEBUG);
+        Console::print(tr("New Client connection."), Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }
@@ -155,7 +153,7 @@ QTcpSocket* TCPServer::getSocket(quint64 socketID)
     {
         if (m_SocketIDs[i] == socketID)
         {
-            return pTCPSockets[i].get();
+            return pTCPSockets[i];
         }
     }
     return nullptr;

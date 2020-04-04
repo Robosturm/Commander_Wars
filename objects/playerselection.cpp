@@ -629,7 +629,7 @@ void PlayerSelection::showPlayerSelection()
 
         y += 15 + playerIncomeSpinBox->getHeight();
     }
-    m_pPlayerSelection->setContentHeigth(y);
+    m_pPlayerSelection->setContentHeigth(y + 50);
     pApp->continueThread();
 }
 

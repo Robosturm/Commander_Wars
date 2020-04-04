@@ -156,13 +156,6 @@ int main(int argc, char* argv[])
     QDir dir("temp/");
     dir.removeRecursively();
     /*************************************************************************************************/
-    // clean up section ahead
-    // store current settings when closing
-    if (window.getGameServer() != nullptr)
-    {
-        window.stopGameServer();
-    }
-    networkSession.close();
     Settings::saveSettings();
 
     if (GameMap::getInstance() != nullptr)
@@ -170,6 +163,16 @@ int main(int argc, char* argv[])
         GameMap::getInstance()->deleteMap();
     }
     Userdata::getInstance()->storeUser();
+
+    // clean up section ahead
+    // store current settings when closing
+    if (window.getGameServer() != nullptr)
+    {
+        window.stopGameServer();
+        QThread::msleep(200);
+    }
+    networkSession.close();
+
     //end
     if (returncode == 1)
     {

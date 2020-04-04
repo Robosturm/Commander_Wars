@@ -25,14 +25,14 @@ public slots:
      */
     virtual QTcpSocket* getSocket(quint64) override
     {
-        return pSocket.get();
+        return pSocket;
     }
 
 
 private:
     spRxTask pRXTask;
     spTxTask pTXTask;
-    std::shared_ptr<QTcpSocket> pSocket;
+    QTcpSocket* pSocket;
 };
 
 #endif // TCPCLIENT_H

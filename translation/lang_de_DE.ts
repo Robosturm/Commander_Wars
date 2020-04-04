@@ -5031,12 +5031,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../network/tcpserver.cpp" line="52"/>
         <location filename="../network/tcpserver.cpp" line="82"/>
-        <location filename="../network/tcpserver.cpp" line="107"/>
+        <location filename="../network/tcpserver.cpp" line="106"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="147"/>
+        <location filename="../network/tcpserver.cpp" line="145"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>

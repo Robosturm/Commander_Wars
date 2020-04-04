@@ -15,13 +15,13 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eERROR);
+        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(maskTable) && maskTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + maskTable, Console::eERROR);
+        Console::print(tr("The mask table is not an existing file. ") + maskTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage maskTableImg(maskTable);
@@ -99,13 +99,13 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, Q
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eERROR);
+        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(newTable) && newTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + newTable, Console::eERROR);
+        Console::print(tr("The mask table is not an existing file. ") + newTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage maskTableImg(newTable);
