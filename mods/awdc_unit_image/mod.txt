@@ -1,2 +1,3 @@
 name=Advance Wars Darc Conflict Unit Image Mod
 description=This mod changes the Unit Sprites to the 2/3 View of Advance Wars Darc Conflict. Created by Robosturm
+version=1.0.0

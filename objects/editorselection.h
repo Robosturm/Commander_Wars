@@ -23,6 +23,7 @@ public:
      */
     enum class EditorMode
     {
+        All = -1,
         Terrain = 0,
         Building,
         Unit,

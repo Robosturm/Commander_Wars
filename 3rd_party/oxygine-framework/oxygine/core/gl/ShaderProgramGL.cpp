@@ -40,7 +40,6 @@ namespace oxygine
     bool ShaderProgramGL::getShaderBuildLog(GLuint shader, std::string& str)
     {
         GLint length = 0;
-        GLint success = GL_TRUE;
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
         if (length)
@@ -49,7 +48,9 @@ namespace oxygine
             window->glGetShaderInfoLog(shader, (int)str.size(), NULL, &str[0]);
         }
         else
+        {
             str.clear();
+        }
 
         GLint status = GL_TRUE;
         window->glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
@@ -129,13 +130,14 @@ namespace oxygine
         }
         else
         {
-            handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
-
             qDebug("shader source code:");
             for (int i = 0; i < num; ++i)
+            {
                 qDebug(sources[i]);
+            }
             qDebug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
+            handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
+            return 0;
         }
 
         return shader;

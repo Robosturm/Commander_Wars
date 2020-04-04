@@ -96,6 +96,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
     m_Topbar->addItem(tr("Copy Ctrl+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode"));
     m_Topbar->addItem(tr("Paste Ctrl+V"), "PASTE", 2, tr("Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec."));
+    m_Topbar->addItem(tr("Paste Ctrl+Shift+V"), "PASTEALL", 2, tr("Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec."));
 
     m_Topbar->addGroup(tr("Import/Export"));
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3, tr("Deletes the current map and imports an old Commander Wars Map from a file."));
@@ -489,6 +490,10 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         // do nothing
     }
+    else if (itemID == "PASTEALL")
+    {
+        // do nothing
+    }
     else if (itemID == "RESIZEMAP")
     {
         showResizeMap();
@@ -550,20 +555,20 @@ void EditorMenue::showResizeMap()
     rightBox->setInfinityValue(-pMap->getMapWidth());
     rightBox->setCurrentValue(0);
     pBox->addItem(rightBox);
-     y += 40;
+    y += 40;
 
-     pText = new oxygine::TextField();
-     pText->setStyle(style);
-     pText->setHtmlText(tr("Bottom: "));
-     pText->setPosition(30, y);
-     pBox->addItem(pText);
-     spSpinBox bottomBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
-     bottomBox->setTooltipText(tr("Change of the map size on the bottom map border."));
-     bottomBox->setPosition(width, y);
-     bottomBox->setInfinityValue(-pMap->getMapHeight());
-     bottomBox->setCurrentValue(0);
-     pBox->addItem(bottomBox);
-     y += 40;
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Bottom: "));
+    pText->setPosition(30, y);
+    pBox->addItem(pText);
+    spSpinBox bottomBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
+    bottomBox->setTooltipText(tr("Change of the map size on the bottom map border."));
+    bottomBox->setPosition(width, y);
+    bottomBox->setInfinityValue(-pMap->getMapHeight());
+    bottomBox->setCurrentValue(0);
+    pBox->addItem(bottomBox);
+    y += 40;
 
     addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, [=]
@@ -694,41 +699,38 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 }
                 case Qt::Key_Y:
                 {
-                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-                    {
-                        editorRedo();
-                    }
+                    editorRedo();
                     break;
                 }
                 case Qt::Key_Z:
                 {
-                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-                    {
-                        editorUndo();
-                    }
+                    editorUndo();
                     break;
                 }
                 case Qt::Key_C:
                 {
-                    if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
-                    {
-                        m_EditorMode = EditorModes::CopySelection;
-                        copyRect = QRect(-1, -1, 0, 0);
-                        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                        createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                    }
+                    m_EditorMode = EditorModes::CopySelection;
+                    copyRect = QRect(-1, -1, 0, 0);
+                    createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                    createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
                     break;
                 }
                 case Qt::Key_V:
                 {
-
                     if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
                         copyRect.width() != 0 && copyRect.height() != 0)
                     {
-                        pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false);
+                        if ((event.getModifiers() & Qt::KeyboardModifier::ShiftModifier) > 0)
+                        {
+                            pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, EditorSelection::EditorMode::All);
+                        }
+                        else
+                        {
+                            pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, m_EditorSelection->getCurrentMode());
+                        }
                     }
-                }
                     break;
+                }
                 default:
                 {
                     // do nothing
@@ -866,6 +868,10 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                     }
                     break;
                 }
+                case EditorSelection::EditorMode::All:
+                {
+                    break;
+                }
             }
             break;
         }
@@ -913,6 +919,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         {
             switch (m_EditorSelection->getCurrentMode())
             {
+                case EditorSelection::EditorMode::All:
                 case EditorSelection::EditorMode::Unit:
                 case EditorSelection::EditorMode::Terrain:
                 case EditorSelection::EditorMode::Building:
@@ -953,7 +960,7 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
         {
             if (copyRect.x() < 0)
             {
-                pasteSelection(x, y, true);
+                pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
                 GameMap::getInstance()->addChild(copyRectActor);
                 if (copyRect.width() == 0)
                 {
@@ -986,7 +993,7 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
         {
             if (copyRect.x() >= 0)
             {
-                pasteSelection(x, y, true);
+                pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
                 GameMap::getInstance()->addChild(copyRectActor);
                 if (copyRect.width() == 0)
                 {
@@ -1070,6 +1077,10 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 {
                     createTempFile();
                     placeUnit(x, y);
+                    break;
+                }
+                case EditorSelection::EditorMode::All:
+                {
                     break;
                 }
             }
@@ -1677,7 +1688,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
     }
 }
 
-void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
+void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
 {
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
@@ -1724,13 +1735,15 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
                 qint32 xDir = copyRect.width() / qAbs(copyRect.width());
                 qint32 yDir = copyRect.height() / qAbs(copyRect.height());
 
-                switch (m_EditorSelection->getCurrentMode())
+
+                for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
                 {
-                    case EditorSelection::EditorMode::Terrain:
+                    for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
                     {
-                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
+                        switch (selection)
                         {
-                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            case EditorSelection::EditorMode::All:
+                            case EditorSelection::EditorMode::Terrain:
                             {
                                 Terrain* pCopyTerrain = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos);
                                 pMap->replaceTerrain(pCopyTerrain->getBaseTerrainID(1), x + xPos, y + yPos, false, false);
@@ -1739,16 +1752,12 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
                                 QString id = pCopyTerrain->getTerrainSpriteName();
                                 pTerrain->setFixedSprite(!id.isEmpty());
                                 pTerrain->setTerrainSpriteName(id);
+                                if (selection != EditorSelection::EditorMode::All)
+                                {
+                                    break;
+                                }
                             }
-                        }
-                        pMap->updateSprites();
-                        break;
-                    }
-                    case EditorSelection::EditorMode::Building:
-                    {
-                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
-                        {
-                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            case EditorSelection::EditorMode::Building:
                             {
                                 Building* pBuilding = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getBuilding();
                                 if (pBuilding != nullptr &&
@@ -1764,16 +1773,12 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
                                     pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
                                 }
+                                if (selection != EditorSelection::EditorMode::All)
+                                {
+                                    break;
+                                }
                             }
-                        }
-                        pMap->updateSprites();
-                        break;
-                    }
-                    case EditorSelection::EditorMode::Unit:
-                    {
-                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
-                        {
-                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            case EditorSelection::EditorMode::Unit:
                             {
                                 Unit* pUnit = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getUnit();
                                 if (pUnit != nullptr)
@@ -1794,12 +1799,15 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
                                         pCopyUnit->setModdingFlags(pCopyUnit->getModdingFlags());
                                     }
                                 }
+                                if (selection != EditorSelection::EditorMode::All)
+                                {
+                                    break;
+                                }
                             }
                         }
-                        pMap->updateSprites();
-                        break;
                     }
                 }
+                pMap->updateSprites();
             }
         }
     }

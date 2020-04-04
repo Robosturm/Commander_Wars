@@ -893,6 +893,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
             {
 
                 pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
+                m_TransportUnits[i]->updateIcons(pMap->getCurrentViewPlayer());
                 m_TransportUnits[i]->showCORange();
 
                 m_TransportUnits.removeAt(i);
@@ -911,6 +912,7 @@ void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
         if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
         {
             pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[index]);
+            m_TransportUnits[index]->updateIcons(pMap->getCurrentViewPlayer());
             m_TransportUnits[index]->showCORange();
         }
         m_TransportUnits.removeAt(index);

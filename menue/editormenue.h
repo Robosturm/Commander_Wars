@@ -260,7 +260,7 @@ public slots:
     /**
      * @brief pasteSelection
      */
-    void pasteSelection(qint32 x, qint32 y, bool click);
+    void pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection);
     /**
      * @brief exitEditor
      */
