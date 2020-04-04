@@ -186,7 +186,7 @@ QStringList RessourceManagement<TClass>::getSearchPaths()
         // make sure to overwrite existing js stuff
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
-            searchPaths.append(Settings::getMods().at(i) + scriptPath);
+            searchPaths.append(Settings::getMods().at(i) + "/" + scriptPath);
         }
     }
     return searchPaths;

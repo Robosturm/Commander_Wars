@@ -410,7 +410,7 @@ void Settings::loadSettings()
                 QString line = stream.readLine();
                 if (line.startsWith("version="))
                 {
-                    m_activeMods.append(line.split("=")[1]);
+                    m_activeModVersions.append(line.split("=")[1]);
                     found = true;
                     break;
                 }
@@ -418,7 +418,7 @@ void Settings::loadSettings()
         }
         if (!found)
         {
-            m_activeMods.append("1.0.0");
+            m_activeModVersions.append("1.0.0");
         }
     }
     settings.endGroup();
