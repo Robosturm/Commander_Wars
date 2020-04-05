@@ -172,6 +172,11 @@ signals:
      */
     void sigWindowLayoutChanged();
     /**
+     * @brief sigChangePosition
+     * @param pos
+     */
+    void sigChangePosition(QPoint pos, bool invert);
+    /**
      * @brief sigShowCrashReport
      * @param log
      */
@@ -179,6 +184,7 @@ signals:
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
+    void changePosition(QPoint pos, bool invert);
     qint32 getScreenMode();
 private:
     QTranslator m_Translator;

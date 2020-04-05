@@ -193,7 +193,6 @@ void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
     static const qint32 buttonCount = 10;
     float buttonHeigth = pButton->getHeight() + 5;
-    Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(Settings::getWidth() / 2.0f - pButton->getWidth() / 2.0f, Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
 

@@ -56,6 +56,7 @@ Mainapp::Mainapp()
     randGenerator.seed(seedValue);
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
+    connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     Settings::setup();
 }
 
@@ -362,6 +363,16 @@ void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
     }
     Settings::saveSettings();
     emit sigWindowLayoutChanged();
+    emit sigChangePosition(QPoint(-1, -1), true);
+}
+
+void Mainapp::changePosition(QPoint pos, bool invert)
+{
+    setPosition(position() + pos);
+    if (invert)
+    {
+        emit sigChangePosition(-pos, false);
+    }
 }
 
 qint32 Mainapp::getScreenMode()

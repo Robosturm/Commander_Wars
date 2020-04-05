@@ -2358,18 +2358,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="476"/>
+        <location filename="../coreengine/mainapp.cpp" line="487"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="482"/>
+        <location filename="../coreengine/mainapp.cpp" line="493"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="484"/>
+        <location filename="../coreengine/mainapp.cpp" line="495"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
