@@ -272,7 +272,7 @@ namespace oxygine
         animFrameChanged(_frame);
     }
 
-    void Sprite::animFrameChanged(const AnimationFrame& f)
+    void Sprite::animFrameChanged(const AnimationFrame&)
     {
 
     }

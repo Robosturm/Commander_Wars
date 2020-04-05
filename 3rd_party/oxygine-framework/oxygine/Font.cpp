@@ -3,7 +3,12 @@
 
 namespace oxygine
 {
-    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f), _sdf(false), _ignoreOptions(true)
+    Font::Font()
+        : _ignoreOptions(true),
+          _scale(1.0f),
+          _sdf(false),
+          _size(0),
+          _baselineDistance(0)
     {
     }
 
@@ -11,7 +16,7 @@ namespace oxygine
     {
     }
 
-    void Font::init(QString name, int realSize, int baselineDistance, int lineHeight, bool sdf)
+    void Font::init(QString name, int realSize, int baselineDistance, int, bool sdf)
     {
         setName(name);
         _sdf = sdf;

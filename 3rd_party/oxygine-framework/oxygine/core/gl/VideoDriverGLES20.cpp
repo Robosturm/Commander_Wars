@@ -60,11 +60,8 @@ namespace oxygine
 
     void VideoDriverGLES20::setShaderProgram(ShaderProgram* prog_)
     {
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        ShaderProgramGL* prog = safeCast<ShaderProgramGL*>(prog_);
-        unsigned int id = prog->getID();
-        window->glUseProgram(id);
-        _programID = id;
+        prog_->bind();
+        _programID = prog_->getID();
         _p = prog_;
     }
 
@@ -143,15 +140,11 @@ namespace oxygine
 
     void VideoDriverGLES20::setDefaultSettings()
     {
-        //glEnable(GL_TEXTURE_2D);
-
         glDisable(GL_SCISSOR_TEST);
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_BLEND);
         glDepthMask(GL_FALSE);
         glCullFace(GL_FRONT_AND_BACK);
-
-        //setProgram(_us.getShaderProgram(0)->program);
     }
 
     void VideoDriverGLES20::setUniformInt(const char* id, int v)
@@ -159,7 +152,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int location = window->glGetUniformLocation(_programID, id);
         if (location == -1)
+        {
             return;
+        }
         window->glUniform1i(location, v);
     }
 
@@ -168,7 +163,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int p = window->glGetUniformLocation(_programID, id);
         if (p == -1)
+        {
             return;
+        }
         window->glUniform4fv(p, num, v->m);
     }
 
@@ -177,7 +174,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int p = window->glGetUniformLocation(_programID, id);
         if (p == -1)
+        {
             return;
+        }
         window->glUniform2fv(p, num, &v->x);
     }
 
@@ -186,7 +185,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int p = window->glGetUniformLocation(_programID, id);
         if (p == -1)
+        {
             return;
+        }
         window->glUniform3fv(p, num, &v->x);
     }
 
@@ -195,7 +196,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int p = window->glGetUniformLocation(_programID, id);
         if (p == -1)
+        {
             return;
+        }
         window->glUniformMatrix4fv(p, num, GL_FALSE, mat->ml);
     }
 
@@ -204,7 +207,9 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         int p = window->glGetUniformLocation(_programID, id);
         if (p == -1)
+        {
             return;
+        }
         window->glUniform1f(p, val);
     }
 }

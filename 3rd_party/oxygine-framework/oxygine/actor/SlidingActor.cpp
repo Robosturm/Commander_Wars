@@ -128,18 +128,18 @@ namespace oxygine
     const timeMS fdt = timeMS(1000 / 60);
     //const float fdt = 20;
 
-    void SlidingActor::doUpdate(const UpdateState& us)
+    void SlidingActor::doUpdate(const UpdateState&)
     {
         if (!_content)
+        {
             return;
-
-        //static float ml = 0;
-        //ml = max(_speed.length(), ml);
-        //qDebug("sp: %.2f", ml);
+        }
 
         timeMS ct = Clock::getTimeMS();
         if (_lastIterTime + NUM * fdt < ct)
+        {
             _lastIterTime = ct;
+        }
 
         if (_drag.isDragging())
         {

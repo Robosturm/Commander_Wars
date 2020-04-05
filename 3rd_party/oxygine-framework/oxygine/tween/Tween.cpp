@@ -6,13 +6,20 @@
 
 namespace oxygine
 {
-    Tween::Tween() : _duration(0),
-        _loops(1),
-		_loopsDone(0),
-        _percent(0),
-        _status(status_not_started),
-        _disabledStatusDone(false),
-        _elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0), _globalEase(ease_linear)
+    Tween::Tween()
+        : _status(status_not_started),
+          _elapsed(0),
+          _duration(0),
+          _delay(0),
+          _loops(1),
+          _loopsDone(0),
+          _ease(ease_linear),
+          _globalEase(ease_linear),
+          _twoSides(false),
+          _disabledStatusDone(false),
+          _percent(0),
+          _detach(false),
+          _client(0)
     {
 
     }
@@ -25,7 +32,7 @@ namespace oxygine
     {
         _elapsed = timeMS(0);
         _status = status_not_started;
-		_loopsDone = 0;
+        _loopsDone = 0;
     }
 
     void Tween::init(timeMS duration, int loops, bool twoSides, timeMS delay, EASE ease)
@@ -43,34 +50,34 @@ namespace oxygine
         }
     }
 
-	void Tween::init2(const TweenOptions& opt)
-	{
-		_duration = opt._duration;
-		_ease = opt._ease;
-		_loops = opt._loops;
-		_twoSides = opt._twoSides;
-		_delay = opt._delay;
-		_detach = opt._detach;
-		_globalEase = opt._globalEase;
-		_cbDone = opt._callback;
+    void Tween::init2(const TweenOptions& opt)
+    {
+        _duration = opt._duration;
+        _ease = opt._ease;
+        _loops = opt._loops;
+        _twoSides = opt._twoSides;
+        _delay = opt._delay;
+        _detach = opt._detach;
+        _globalEase = opt._globalEase;
+        _cbDone = opt._callback;
 
         if (_duration == timeMS(0))
         {
             _duration = timeMS(1);
         }
         else if (_duration < timeMS(0))
-		{
-			Q_ASSERT(!"Tweener duration should be more than ZERO");
+        {
+            Q_ASSERT(!"Tweener duration should be more than ZERO");
             _duration = timeMS(1);
-		}
-	}
+        }
+    }
 
-	void Tween::setDoneCallback(const EventCallback& cb)
+    void Tween::setDoneCallback(const EventCallback& cb)
     {
         _cbDone = cb;
     }
 
-	void Tween::addDoneCallback(const EventCallback& cb)
+    void Tween::addDoneCallback(const EventCallback& cb)
     {
         addEventListener(TweenEvent::DONE, cb);
     }
@@ -90,28 +97,28 @@ namespace oxygine
         return v;
     }
 
-	void Tween::remove()
-	{
-		getClient()->removeTween(this);
-	}
+    void Tween::remove()
+    {
+        getClient()->removeTween(this);
+    }
 
     void Tween::complete(timeMS deltaTime)
     {
         if (_loops == -1)
             return;
 
-//if already done
+        //if already done
         if (_status >= status_done)
             return;
 
         //Q_ASSERT(_client);
 
-		if (!_client)
-			return;
+        if (!_client)
+            return;
 
-//Q_ASSERT(!"not implemented");
+        //Q_ASSERT(!"not implemented");
 
-//not started yet because has delay
+        //not started yet because has delay
         if (_status == status_delayed)
         {
             _start(*_client);
@@ -120,7 +127,7 @@ namespace oxygine
 
 
         Q_ASSERT(_status == status_started);
-//while (_status != status_remove)
+        //while (_status != status_remove)
         {
             UpdateState us;
             us.dt = deltaTime;
@@ -130,7 +137,7 @@ namespace oxygine
 
         Q_ASSERT(_status == status_done);
 
-//_client->removeTween(this);
+        //_client->removeTween(this);
     }
 
     void Tween::start(Actor& actor)
@@ -157,28 +164,28 @@ namespace oxygine
                     _start(*_client);
                 }
             }
-            break;
+                break;
             case status_started:
             {
                 if (_duration > timeMS(0))
                 {
                     timeMS localElapsed = _elapsed - _delay;
-					
-					if (_globalEase != ease_linear)
-					{
+
+                    if (_globalEase != ease_linear)
+                    {
                         float p = localElapsed.count() / float(_duration.count() * _loops);
                         timeMS nv = timeMS(static_cast<qint64>(calcEase(_globalEase, std::min(p, 1.0f)) * _duration.count() * _loops));
-						localElapsed = nv;
-					}
+                        localElapsed = nv;
+                    }
 
-					int loopsDone = localElapsed / _duration;					
+                    int loopsDone = localElapsed / _duration;
                     _percent = _calcEase(((float)(localElapsed.count() - loopsDone * _duration.count())) / _duration.count());
 
-					while(_loopsDone < loopsDone)
-					{
-						_loopDone(actor, us);
-						_loopsDone++;
-					}
+                    while(_loopsDone < loopsDone)
+                    {
+                        _loopDone(actor, us);
+                        _loopsDone++;
+                    }
 
                     if (_loops > 0 && int(loopsDone) >= _loops)
                     {
@@ -193,12 +200,12 @@ namespace oxygine
                 }
                 _update(*_client, us);
             }
-            break;
+                break;
             case status_done:
             {
                 done(*_client, us);
             }
-            break;
+                break;
             default:
                 break;
         }
@@ -343,16 +350,16 @@ namespace oxygine
                 return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
             case ease_outInBounce:
                 return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
-			default:
-				t = _customEaseHandler(ease, t);
-				//Q_ASSERT(!"unsupported ease");
-				break;
-		}
-		return t;
-	}
+            default:
+                t = _customEaseHandler(ease, t);
+                //Q_ASSERT(!"unsupported ease");
+                break;
+        }
+        return t;
+    }
 
-	void  Tween::setCustomEaseHandler(easeHandler h)
-	{
-		_customEaseHandler = h;
-	}
+    void  Tween::setCustomEaseHandler(easeHandler h)
+    {
+        _customEaseHandler = h;
+    }
 }

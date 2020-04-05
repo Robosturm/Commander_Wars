@@ -285,7 +285,7 @@ namespace oxygine
         _prepared = true;
     }
 
-    void Box9Sprite::sizeChanged(const Vector2& size)
+    void Box9Sprite::sizeChanged(const Vector2&)
     {
         _prepared = false;
     }

@@ -56,7 +56,13 @@ namespace oxygine
         return id;
     }
 
-    NativeTextureGLES::NativeTextureGLES(): _id(0), _fbo(0), _width(0), _height(0), _format(ImageData::TF_UNDEFINED), _lockFlags(0)
+    NativeTextureGLES::NativeTextureGLES()
+        : _id(0),
+          _fbo(0),
+          _format(ImageData::TF_UNDEFINED),
+          _width(0),
+          _height(0),
+          _lockFlags(0)
     {
 
     }

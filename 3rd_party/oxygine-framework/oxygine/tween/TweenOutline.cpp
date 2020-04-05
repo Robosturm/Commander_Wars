@@ -61,16 +61,11 @@ namespace oxygine
             int h = _pp._screen.size.y;
 
             if (w < 0 || h < 0)
+            {
                 return;
-
-
-
+            }
             IVideoDriver* driver = IVideoDriver::instance;
-            const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
-
             _downsample = 1;
-
-
             spNativeTexture rt = _pp._rt;
             spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 

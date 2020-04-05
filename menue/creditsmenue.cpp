@@ -126,7 +126,6 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
         creditsActor->setY(creditsActor->getY() - 2);
         speedTimer.start();
     }
-    Mainapp* pApp = Mainapp::getInstance();
     if (creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
     {
         emit sigExitMenue();

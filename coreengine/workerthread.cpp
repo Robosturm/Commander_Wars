@@ -42,7 +42,6 @@ void WorkerThread::start()
     oxygine::getStage()->addChild(pConsole);
     m_pInterpreter = Interpreter::createInstance();
     pConsole->init();
-    GameEnums::registerEnums();
     // load General-Base Scripts
     QStringList searchPaths;
     searchPaths.append("/resources/scripts/general");

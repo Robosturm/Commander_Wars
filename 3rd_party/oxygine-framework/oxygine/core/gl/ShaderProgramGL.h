@@ -1,28 +1,25 @@
 #pragma once
-#include <qopengl.h>
+#include <QOpenGLShader>
 #include "../ShaderProgram.h"
 
 namespace oxygine
 {
     class VertexDeclarationGL;
-    class ShaderProgramGL: public ShaderProgram
+    class ShaderProgramGL : public ShaderProgram
     {
     public:
-        ShaderProgramGL(GLuint program);
-        ShaderProgramGL(GLuint vs, GLuint fs, const VertexDeclarationGL* decl);
+        ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclarationGL* decl);
         ~ShaderProgramGL();
-
-        unsigned int    getID() const;
+        unsigned int    getID() const override;
         int             getUniformLocation(const char* id) const;
-
-        static unsigned int createShader(unsigned int type, const char* data,
-                                         const char* prepend = "", const char* append = "", error_policy ep = ep_show_error);
-        static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL* decl, bool deleteAttachedShaders = false);
-        static bool getShaderBuildLog(GLuint shader, std::string& str);
-        static bool getProgramBuildLog(GLuint program, std::string& str);
-
+        virtual void bind() override;
+    protected:
+        void compileShader(QOpenGLShader& shader, QString data);
     private:
-        GLuint _program;
+        GLuint _p;
+        QOpenGLShaderProgram _program;
+        QOpenGLShader _vsShader;
+        QOpenGLShader _fsShader;
     };
 
 

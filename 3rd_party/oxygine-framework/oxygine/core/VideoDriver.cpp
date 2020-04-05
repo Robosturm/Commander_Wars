@@ -39,12 +39,12 @@ namespace oxygine
         return nullptr;
     }
 
-    void VideoDriverNull::begin(const Rect& viewport, const QColor* clearColor)
+    void VideoDriverNull::begin(const Rect&, const QColor*)
     {
 
     }
 
-    void VideoDriverNull::getViewport(Rect& r) const
+    void VideoDriverNull::getViewport(Rect&) const
     {
 
     }
@@ -81,7 +81,7 @@ namespace oxygine
     {
 
     }
-    void VideoDriverNull::setTexture(int sampler, spNativeTexture)
+    void VideoDriverNull::setTexture(int, spNativeTexture)
     {
 
     }

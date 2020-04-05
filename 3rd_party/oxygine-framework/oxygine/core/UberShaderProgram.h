@@ -18,7 +18,7 @@ namespace oxygine
         UberShaderProgramBase();
         ~UberShaderProgramBase();
 
-        void init(const std::vector<unsigned char>& baseShader, const char* prepend = "", const char* append = "");
+        void init(const QString& baseShader, QString prepend = "", QString append = "");
 
         void release();
 
@@ -35,7 +35,7 @@ namespace oxygine
         void* _getRestorableObject() {return this;}
         void _restore(Restorable*, void*);
 
-        std::vector<unsigned char> _data;
+        QString _data;
         ShaderUniformsCallback _cb;
 
         virtual void releaseShaders() {}

@@ -8,7 +8,8 @@ namespace oxygine
     Clock::Clock():
         _counter(0), _destTime(0), _srcTime(0),
         _multiplier(1.0f), _fixedStep(0),
-        _lastUpdateTime(-1), _lastDT(0)
+        _lastDT(0),
+        _lastUpdateTime(-1)
     {
     }
 

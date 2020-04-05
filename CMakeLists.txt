@@ -83,7 +83,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/core/oxygine.cpp
     ${OXYGINE_ROOT}/oxygine/core/Renderer.cpp
     ${OXYGINE_ROOT}/oxygine/core/Restorable.cpp
-    ${OXYGINE_ROOT}/oxygine/core/Texture.cpp
     ${OXYGINE_ROOT}/oxygine/core/UberShaderProgram.cpp
     ${OXYGINE_ROOT}/oxygine/core/VideoDriver.cpp
 	${OXYGINE_ROOT}/oxygine/core/gamewindow.cpp
@@ -93,8 +92,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/core/gl/VertexDeclarationGL.cpp
     ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGL.cpp
     ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGLES20.cpp
-    # math
-    ${OXYGINE_ROOT}/oxygine/math/AffineTransform.cpp
     # actor
     ${OXYGINE_ROOT}/oxygine/actor/Actor.cpp
     ${OXYGINE_ROOT}/oxygine/actor/Box9Sprite.cpp

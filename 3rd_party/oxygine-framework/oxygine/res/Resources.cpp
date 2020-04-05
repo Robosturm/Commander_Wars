@@ -81,7 +81,7 @@ namespace oxygine
         return getT<ResFont>(id, ep);
     }
 
-    void Resources::load(ResLoadedCallback cb)
+    void Resources::load(ResLoadedCallback)
     {
         Resource::load(nullptr);
         //if (cb)
@@ -119,7 +119,7 @@ namespace oxygine
         _resourcesMap.clear();
         _resources.clear();
 
-        for (size_t i = 0; i < _docs.size(); ++i)
+        for (int i = 0; i < _docs.size(); ++i)
             delete _docs[i];
         _docs.clear();
     }

@@ -28,17 +28,17 @@ namespace oxygine
     }
 
 
-    void NativeTextureNull::init(nativeTextureHandle, int w, int h, ImageData::TextureFormat tf)
+    void NativeTextureNull::init(nativeTextureHandle, int, int, ImageData::TextureFormat)
     {
 
     }
 
-    void NativeTextureNull::init(int w, int h, ImageData::TextureFormat tf, bool renderTarget)
+    void NativeTextureNull::init(int, int, ImageData::TextureFormat, bool)
     {
 
     }
 
-    void NativeTextureNull::init(const ImageData& src, bool sysMemCopy)
+    void NativeTextureNull::init(const ImageData&, bool)
     {
 
     }
@@ -48,7 +48,7 @@ namespace oxygine
 
     }
 
-    ImageData NativeTextureNull::lock(lock_flags, const Rect* src)
+    ImageData NativeTextureNull::lock(lock_flags, const Rect*)
     {
         return ImageData();
     }
@@ -63,22 +63,22 @@ namespace oxygine
 
     }
 
-    void NativeTextureNull::setClamp2Edge(bool clamp2edge)
+    void NativeTextureNull::setClamp2Edge(bool)
     {
 
     }
 
-    void NativeTextureNull::setLinearFilter(bool enable)
+    void NativeTextureNull::setLinearFilter(bool)
     {
 
     }
 
-    void NativeTextureNull::updateRegion(int x, int y, const ImageData& data)
+    void NativeTextureNull::updateRegion(int, int, const ImageData&)
     {
 
     }
 
-    void NativeTextureNull::apply(const Rect* rect)
+    void NativeTextureNull::apply(const Rect*)
     {
 
     }

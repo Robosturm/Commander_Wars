@@ -60,7 +60,7 @@ namespace oxygine
     protected:
         const glyph* findGlyph(int code, const glyphOptions& opt) const;
 
-        virtual bool loadGlyph(int code, glyph&, const glyphOptions& opt) { return false; }
+        virtual bool loadGlyph(int, glyph&, const glyphOptions&) { return false; }
 
         typedef std::unordered_set<glyph, GlyphHasher> glyphs;
 

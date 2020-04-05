@@ -55,7 +55,11 @@ namespace oxygine
     }
 
 
-    ResFontBM::ResFontBM(): _font(nullptr), _format(ImageData::TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
+    ResFontBM::ResFontBM()
+        : _font(nullptr),
+          _sdf(false),
+          _format(ImageData::TF_R8G8B8A8),
+          _premultipliedAlpha(false)
     {
 
     }
@@ -65,7 +69,7 @@ namespace oxygine
         cleanup();
     }
 
-    const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
+    const oxygine::Font* ResFontBM::getClosestFont(float, int styleFontSize, float& resScale) const
     {
         if (!styleFontSize)
             styleFontSize = _size;
@@ -173,7 +177,7 @@ namespace oxygine
 
     }
 
-    void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
+    void ResFontBM::_createFont(CreateResourceContext* context, bool, bool bmc, int downsample)
     {
         _sdf = false;
 
@@ -340,7 +344,7 @@ namespace oxygine
         }
     }
 
-    const Font* ResFontBM::getFont(QString name, int size) const
+    const Font* ResFontBM::getFont(QString, int) const
     {
         return _font;
     }

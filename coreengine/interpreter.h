@@ -33,6 +33,11 @@ public:
      * @return
      */
     static QString getRuntimeData();
+    /**
+     * @brief reloadInterpreter
+     * @param runtime
+     */
+    static void reloadInterpreter(QString runtime);
 signals:
 
 public slots:

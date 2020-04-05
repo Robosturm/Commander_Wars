@@ -27,14 +27,13 @@ namespace oxygine
     }
 
     XmlWalker::XmlWalker(QString path, float scaleFactor, bool load, bool alpha, QDomElement xml)
-        : _root(xml),
+        : _path(path),
+          _root(xml),
           _notStarted(true),
-          _scaleFactor(scaleFactor),
+          _scaleFactor(scaleFactor),          
           _load(load),
-          _alphaHitTest(alpha),
-          _path(path)
+          _alphaHitTest(alpha)
     {
-        //_alphaTracking = true;
     }
 
 
@@ -125,7 +124,7 @@ namespace oxygine
         opt.ready();
     }
 
-    bool RestoreResourcesContext::isNeedProceed(spNativeTexture t)
+    bool RestoreResourcesContext::isNeedProceed(spNativeTexture)
     {
         return true;
     }

@@ -68,7 +68,7 @@ namespace oxygine
         actor.setAnimFrame(frame);
     }
 
-    void TweenAnim::update(Sprite& actor, float p, const UpdateState& us)
+    void TweenAnim::update(Sprite& actor, float p, const UpdateState&)
     {
         Q_ASSERT(_resAnim);
         int frame;

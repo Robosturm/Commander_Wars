@@ -31,17 +31,18 @@ namespace oxygine
         IVideoDriver* driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
-
+        // read shader data
         QString vs_h;
         QString vs_v;
         QString fs_blur;
+        QString vs_blit;
+        QString fs_blit;
         if (QFile::exists("system/pp_hblur_vs.glsl"))
         {
             QFile file("system/pp_hblur_vs.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_h = stream.readAll();
-
         }
         if (QFile::exists("system/pp_vblur_vs.glsl"))
         {
@@ -49,7 +50,6 @@ namespace oxygine
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
             vs_v = stream.readAll();
-
         }
         if (QFile::exists("system/pp_rast_fs.glsl"))
         {
@@ -58,28 +58,6 @@ namespace oxygine
             QTextStream stream(&file);
             fs_blur = stream.readAll();
         }
-
-        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_h.data());
-        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_v.data());
-        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)fs_blur.data());
-
-
-        shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
-        driver->setShaderProgram(shaderBlurV);
-        driver->setUniformInt("s_texture", 0);
-
-        shaderBlurH = new ShaderProgramGL(ShaderProgramGL::createProgram(h, ps, decl));
-        driver->setShaderProgram(shaderBlurH);
-        driver->setUniformInt("s_texture", 0);
-
-
-        GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glDeleteShader(h);
-        window->glDeleteShader(v);
-        window->glDeleteShader(ps);
-
-        QString vs_blit;
-        QString fs_blit;
         if (QFile::exists("system/pp_blit_vs.glsl"))
         {
             QFile file("system/pp_blit_vs.glsl");
@@ -94,11 +72,14 @@ namespace oxygine
             QTextStream stream(&file);
             fs_blit = stream.readAll();
         }
-
-        unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_blit.data(), "", "");
-        unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)fs_blit.data(), "", "");
-
-        shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
+        // create shaders
+        shaderBlurV = new ShaderProgramGL(vs_v, fs_blur, decl);
+        driver->setShaderProgram(shaderBlurV);
+        driver->setUniformInt("s_texture", 0);
+        shaderBlurH = new ShaderProgramGL(vs_h, fs_blur, decl);
+        driver->setShaderProgram(shaderBlurH);
+        driver->setUniformInt("s_texture", 0);
+        shaderBlit = new ShaderProgramGL(vs_blit, fs_blit, decl);
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
     }
@@ -140,21 +121,29 @@ namespace oxygine
         ImageData::TextureFormat _tf;
         NTP(int w, int h, ImageData::TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
 
-        bool operator()(const spNativeTexture& t1, const spNativeTexture& t2) const
+        bool operator()(const spNativeTexture& t1, const spNativeTexture&) const
         {
             if (t1->getFormat() < _tf)
+            {
                 return true;
+            }
             if (t1->getWidth() < _w)
+            {
                 return true;
+            }
             return t1->getHeight() < _h;
         }
 
         static bool cmp(const spNativeTexture& t2, const spNativeTexture& t1)
         {
             if (t1->getFormat() > t2->getFormat())
+            {
                 return true;
+            }
             if (t1->getWidth() > t2->getWidth())
+            {
                 return true;
+            }
             return t1->getHeight() > t2->getHeight();
         }
     };
@@ -267,7 +256,7 @@ namespace oxygine
 
     void RenderTargetsManager::reset()
     {
-        for (size_t i = 0; i < _rts.size(); ++i)
+        for (int i = 0; i < _rts.size(); ++i)
         {
             _rts[i]->release();
         }
@@ -373,7 +362,11 @@ namespace oxygine
         driver->setTexture(0, 0);
     }
 
-    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(ImageData::TF_R8G8B8A8), _extend(2, 2)
+    PostProcess::PostProcess(const PostProcessOptions& opt)
+        : _extend(2, 2),
+          _format(ImageData::TF_R8G8B8A8),
+          _options(opt)
+
     {
     }
 
@@ -486,7 +479,10 @@ namespace oxygine
 
 
 
-    TweenPostProcess::TweenPostProcess(const PostProcessOptions& opt) : _pp(opt), _prevMaterial(0), _actor(0)
+    TweenPostProcess::TweenPostProcess(const PostProcessOptions& opt)
+        : _actor(0),
+          _pp(opt),
+          _prevMaterial(0)
     {
     }
 
@@ -525,16 +521,18 @@ namespace oxygine
         _actor->setRenderDelegate(this);
     }
 
-    void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
+    void TweenPostProcess::update(Actor&, float p, const UpdateState&)
     {
         _progress = p;
         addPostProcessItem(this);
     }
 
-    void TweenPostProcess::done(Actor& actor)
+    void TweenPostProcess::done(Actor&)
     {
         if (_actor->getRenderDelegate())
+        {
             _actor->setRenderDelegate(_prevMaterial);
+        }
     }
 
 }

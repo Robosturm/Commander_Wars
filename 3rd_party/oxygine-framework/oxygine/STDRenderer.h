@@ -71,7 +71,7 @@ namespace oxygine
         static spNativeTexture invisible;
 
         static UberShaderProgram uberShader;
-        static std::vector<unsigned char> uberShaderBody;
+        static QString uberShaderBody;
         static std::vector<unsigned short> indices16;
         static size_t maxVertices;
 

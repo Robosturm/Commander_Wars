@@ -7,8 +7,17 @@ namespace oxygine
 {
     namespace text
     {
-        Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0),
-            bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font), mat(mt)
+        Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size)
+            : style(Style),
+              bounds(0, 0, 0, 0),
+              width((int)size.x),
+              height((int)size.y),
+              mat(mt),
+              _font(font),
+              _scale(gscale),
+              _x(0),
+              _y(0),
+              _lineWidth(0)
         {
             //qDebug("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
@@ -110,7 +119,7 @@ namespace oxygine
             {
                 //calculate real text width
                 int rx = 0;
-                for (size_t i = 0; i < ln.size(); ++i)
+                for (int i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
                     rx = std::max(s.x + s.gl.advance_x, rx);
@@ -118,7 +127,7 @@ namespace oxygine
 
                 int tx = _alignX(rx);
 
-                for (size_t i = 0; i < ln.size(); ++i)
+                for (int i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
                     s.x += tx;
@@ -203,7 +212,7 @@ namespace oxygine
 
                 //line = leftPart;
 
-                for (size_t i = 0; i < leftPart.size(); ++i)
+                for (int i = 0; i < leftPart.size(); ++i)
                 {
                     putSymbol(*leftPart[i]);
                 }

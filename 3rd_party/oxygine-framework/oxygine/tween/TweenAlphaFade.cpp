@@ -9,11 +9,12 @@ namespace oxygine
     public:
         TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt) : TweenPostProcess(opt), _fadeIn(fadeIn) {}
 
-        void render(Actor* actor, const RenderState& rs)
+        void render(Actor*, const RenderState&)
         {
             if (!_pp._rt)
+            {
                 return;
-
+            }
             spSTDMaterial mat = new STDMaterial;
             mat->_base = _pp._rt;
             mat->_blend = blend_premultiplied_alpha;

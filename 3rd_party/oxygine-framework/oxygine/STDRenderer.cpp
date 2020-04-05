@@ -26,7 +26,7 @@ namespace oxygine
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
-    std::vector<unsigned char> STDRenderer::uberShaderBody;
+    QString STDRenderer::uberShaderBody;
 
 
     RenderStateCache& rsCache()
@@ -35,7 +35,9 @@ namespace oxygine
         return r;
     }
 
-    RenderStateCache::RenderStateCache(): _blend(blend_disabled), _program(0)
+    RenderStateCache::RenderStateCache()
+        : _program(0),
+          _blend(blend_disabled)
     {
         reset();
     }
@@ -182,20 +184,13 @@ namespace oxygine
 
         maxVertices = indices16.size() / 3 * 2;
 
-        std::string shaderBody;
         if (QFile::exists("system/shader.glsl"))
         {
             QFile file("system/shader.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
-            shaderBody = stream.readAll().toStdString();
-            uberShaderBody = std::vector<uchar>(shaderBody.begin(), shaderBody.end());
+            uberShaderBody = stream.readAll();
         }
-        else
-        {
-            shaderBody = "\0";
-        }
-
         uberShader.init(uberShaderBody);
 
         restore();
@@ -459,7 +454,10 @@ namespace oxygine
 
 
 
-    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0)
+    STDRenderer::STDRenderer(IVideoDriver* driver)
+        : _vdecl(0),
+          _driver(driver),
+          _uberShader(0)
     {
         if (!driver)
             driver = IVideoDriver::instance;
@@ -552,7 +550,9 @@ namespace oxygine
     {
         size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
         if (!indices)
+        {
             return;
+        }
 
         _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
                       &_verticesData.front(), (unsigned int)_verticesData.size(),

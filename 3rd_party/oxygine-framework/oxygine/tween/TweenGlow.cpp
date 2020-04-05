@@ -19,10 +19,7 @@ namespace oxygine
 
         void render(Actor* actor, const RenderState& rs) override
         {
-            STDRenderDelegate* mat = STDRenderDelegate::instance;
             STDRenderer* renderer = STDRenderer::getCurrent();
-
-
             RenderState r = rs;
             actor->setRenderDelegate(_prevMaterial);
             actor->render(r);
@@ -32,12 +29,7 @@ namespace oxygine
             RectF src(0, 0,
                       _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
                       _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
-
-            RectF dest = _pp._screen.cast<RectF>();
-
             rsCache().setBlendMode(blend_premultiplied_alpha);
-
-
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
             //renderer->applySimpleMode(true);
@@ -57,25 +49,15 @@ namespace oxygine
 
 
             IVideoDriver* driver = IVideoDriver::instance;
-            const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
-
             _downsample = 1;
-
-
             spNativeTexture rt = _pp._rt;
             spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
             Rect rc(0, 0, w, h);
 
-
             driver->setShaderProgram(PostProcess::shaderBlurH);
             driver->setUniform("step", 1.0f / rt->getWidth());
             pass(rt, rc, rt2, rc);
-
-
-            int alpha = lerp(0, 255, _progress);
-            //qDebug("tween alpha %d", alpha);
-
             QColor c = _color;
             c.setAlpha(64);
             driver->setShaderProgram(PostProcess::shaderBlurV);

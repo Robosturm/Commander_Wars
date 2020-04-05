@@ -83,7 +83,6 @@ namespace oxygine
             Node* node = _firstChild;
             while (node)
             {
-                int num = 0;
                 Symbol* res = node->getSymbol(pos);
                 if (res)
                     return res;
@@ -151,7 +150,7 @@ namespace oxygine
 
         void TextNode::xupdateMaterial(const STDMaterial& mat)
         {
-            for (size_t i = 0; i < _data.size(); ++i)
+            for (int i = 0; i < _data.size(); ++i)
             {
                 size_t size = _data.size();
                 for (size_t i = 0; i < size; ++i)
@@ -234,7 +233,7 @@ namespace oxygine
 
             int offsetY = rd.bounds.pos.y;
 
-            for (size_t i = 0; i < _data.size(); ++i)
+            for (int i = 0; i < _data.size(); ++i)
             {
                 Symbol& s = _data[i];
                 s.y += offsetY;
@@ -248,7 +247,7 @@ namespace oxygine
 
         void DivNode::resize(Aligner& rd)
         {
-            if (options == -1)
+            if (options == 0xff)
             {
                 resizeChildren(rd);
                 return;

@@ -19,16 +19,16 @@ namespace oxygine
 {
     CREATE_COPYCLONE_NEW(Actor);
 
-    Actor::Actor():
-        _extendedIsOn(0),
-        _zOrder(0),
-        _scale(1, 1),
-        _rotation(0),
-        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
-        _parent(nullptr),
-        _alpha(255),
-        _stage(nullptr),
-        _rdelegate(STDRenderDelegate::instance)
+    Actor::Actor()
+        : _rdelegate(STDRenderDelegate::instance),
+          _stage(nullptr),
+          _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
+          _alpha(255),
+          _extendedIsOn(0),
+          _parent(nullptr),
+          _scale(1, 1),
+          _rotation(0),
+          _zOrder(0)
     {
         _transform.identity();
         _transformInvert.identity();
@@ -565,7 +565,7 @@ namespace oxygine
         setRotation(rad);
     }
 
-    void Actor::sizeChanged(const Vector2& size)
+    void Actor::sizeChanged(const Vector2&)
     {
 
     }
@@ -701,7 +701,7 @@ namespace oxygine
         const_cast<Actor*>(this)->transformUpdated();
     }
 
-    bool Actor::isOn(const Vector2& localPosition, float localScale)
+    bool Actor::isOn(const Vector2& localPosition, float)
     {
         RectF r = getDestRect();
         r.expand(Vector2(_extendedIsOn, _extendedIsOn), Vector2(_extendedIsOn, _extendedIsOn));
@@ -984,7 +984,7 @@ namespace oxygine
 
     }
 
-    void Actor::doUpdate(const UpdateState& us)
+    void Actor::doUpdate(const UpdateState&)
     {
 
     }
@@ -1057,7 +1057,7 @@ namespace oxygine
         return true;
     }
 
-    void Actor::completeRender(const RenderState& rs)
+    void Actor::completeRender(const RenderState&)
     {
 
     }
@@ -1107,12 +1107,13 @@ namespace oxygine
         return RectF(Vector2(0, 0), getSize());
     }
 
-    spTween Actor::_addTween(spTween tween, bool rel)
+    spTween Actor::_addTween(spTween tween, bool)
     {
         Q_ASSERT(tween);
         if (!tween)
+        {
             return nullptr;
-
+        }
         tween->start(*this);
         _tweens.append(tween);
 
@@ -1311,7 +1312,6 @@ namespace oxygine
         scale.y = qSqrt(t.b * t.b + t.d * t.d);
 
         angle = -atan2(t.c, t.a);
-        float an = angle / M_PI * 180;
         pos.x = t.x;
         pos.y = t.y;
     }

@@ -27,8 +27,15 @@ Interpreter::Interpreter()
     setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    init();
     m_pInstance = this;
+    init();
+}
+
+void Interpreter::reloadInterpreter(QString runtime)
+{
+    delete m_pInstance;
+    m_pInstance = new Interpreter();
+    m_pInstance->loadScript(runtime, "Interpreter Runtime");
 }
 
 void Interpreter::init()
@@ -42,7 +49,7 @@ void Interpreter::init()
     globalObject().setProperty("GameConsole", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());
     globalObject().setProperty("FontManager", fontManager);
-
+    GameEnums::registerEnums();
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
@@ -54,35 +61,35 @@ QString Interpreter::getRuntimeData()
 void Interpreter::openScript(QString script, bool setup)
 {
     QFile scriptFile(script);
-        if (!scriptFile.open(QIODevice::ReadOnly))
+    if (!scriptFile.open(QIODevice::ReadOnly))
+    {
+        QString error = "Error: attemp to read File " + script + " which couldn't be opened.";
+        Console::print(error, Console::eERROR);
+    }
+    else
+    {
+        QTextStream stream(&scriptFile);
+        QString contents = stream.readAll();
+        if (setup)
         {
-            QString error = "Error: attemp to read File " + script + " which couldn't be opened.";
+            stream.seek(0);
+            while (!stream.atEnd())
+            {
+                QString line = stream.readLine().simplified();
+                m_runtimeData += line + "\n";
+            }
+        }
+        scriptFile.close();
+
+        QJSValue value = evaluate(contents, script);
+        if (value.isError())
+        {
+            QString error = value.toString() + " in File:" + script + " in File: " +
+                            value.property("fileName").toString() + " at Line: " +
+                            value.property("lineNumber").toString();
             Console::print(error, Console::eERROR);
         }
-        else
-        {
-            QTextStream stream(&scriptFile);
-            QString contents = stream.readAll();
-            if (setup)
-            {
-                stream.seek(0);
-                while (!stream.atEnd())
-                {
-                    QString line = stream.readLine().simplified();
-                    m_runtimeData += line + "\n";
-                }
-            }
-            scriptFile.close();
-
-            QJSValue value = evaluate(contents, script);
-            if (value.isError())
-            {
-                QString error = value.toString() + " in File:" + script + " in File: " +
-                                value.property("fileName").toString() + " at Line: " +
-                                value.property("lineNumber").toString();
-                Console::print(error, Console::eERROR);
-            }
-        }
+    }
 }
 
 void Interpreter::loadScript(QString content, QString script)
@@ -100,7 +107,7 @@ void Interpreter::loadScript(QString content, QString script)
 Interpreter::~Interpreter()
 {
     // free memory
-   collectGarbage();
+    collectGarbage();
 }
 
 

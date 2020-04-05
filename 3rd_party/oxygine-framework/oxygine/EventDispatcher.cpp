@@ -98,9 +98,10 @@ namespace oxygine
     void EventDispatcher::removeEventListeners(void* CallbackThis)
     {
         if (!_listeners)
+        {
             return;
-
-        for (size_t i = 0; i < _listeners->size(); ++i)
+        }
+        for (int i = 0; i < _listeners->size(); ++i)
         {
             const listener& ls = _listeners->at(i);
             if (ls.cb.p_this == CallbackThis)
@@ -115,9 +116,10 @@ namespace oxygine
     void EventDispatcher::removeEventListenersByType(eventType et)
     {
         if (!_listeners)
+        {
             return;
-
-        for (size_t i = 0; i < _listeners->size(); ++i)
+        }
+        for (int i = 0; i < _listeners->size(); ++i)
         {
             const listener& ls = _listeners->at(i);
             if (ls.type == et)

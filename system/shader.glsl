@@ -28,7 +28,6 @@ void program_main_vs()
 
 #endif
 
-
 #ifdef PS
 uniform lowp vec4 clip_mask;
 uniform lowp vec4 add_color;
