@@ -54,7 +54,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         detach();
         emit sigCancel();
     });
-    qint32 heigth = Settings::getHeight() - 220;
+    qint32 heigth = Settings::getHeight() - 320;
     qint32 width = Settings::getWidth() / 2 - 80;
     qint32 pixelSize = width;
     if (pixelSize > heigth)

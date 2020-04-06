@@ -41,7 +41,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
         emit canceled();
         detach();
     });
-    qint32 pixelSize = (Settings::getHeight() - 120) / 256;
+    qint32 pixelSize = (Settings::getHeight() - 220) / 256;
     // add spin boxes for red green and blue
     m_pColorSelector = new ColorSelector(color, pixelSize);
     m_pColorSelector->setY(30);

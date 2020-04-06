@@ -17,6 +17,7 @@ signals:
     void sigEnterCreditsmenue();
     void sigQuit();
     void sigEnterLoadGame();
+    void sigEnterReplayGame();
     void sigLastSaveGame();
     void sigEnterWikimenue();
     void sigEnterCOStyleMenu();
@@ -26,8 +27,10 @@ public slots:
     void enterOptionmenue();
     void enterWikimenue();
     void enterLoadGame();
+    void enterReplayGame();
     void enterCreditsmenue();
     void loadGame(QString filename);
+    void replayGame(QString filename);
     void lastSaveGame();
     void enterMultiplayer();
     void changeUsername(QString name);

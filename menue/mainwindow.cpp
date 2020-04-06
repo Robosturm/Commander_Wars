@@ -99,6 +99,17 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigEnterLoadGame, this, &Mainwindow::enterLoadGame, Qt::QueuedConnection);
     btnI++;
 
+    // replay button
+    oxygine::spButton pButtonReplay = ObjectManager::createButton(tr("Replay Game"));
+    pButtonReplay->attachTo(this);
+    setButtonPosition(pButtonReplay, btnI);
+    pButtonReplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterReplayGame();
+    });
+    connect(this, &Mainwindow::sigEnterReplayGame, this, &Mainwindow::enterReplayGame, Qt::QueuedConnection);
+    btnI++;
+
     // editor button
     oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"));
     pButtonEditor->attachTo(this);
@@ -191,7 +202,7 @@ void Mainwindow::changeUsername(QString name)
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 10;
+    static const qint32 buttonCount = 11;
     float buttonHeigth = pButton->getHeight() + 5;
     pButton->setPosition(Settings::getWidth() / 2.0f - pButton->getWidth() / 2.0f, Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
@@ -259,13 +270,25 @@ void Mainwindow::enterLoadGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    // dummy impl for loading
     QVector<QString> wildcards;
     wildcards.append("*.sav");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void Mainwindow::enterReplayGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QVector<QString> wildcards;
+    wildcards.append("*.rec");
+    QString path = QCoreApplication::applicationDirPath() + "/data/records";
+    spFileDialog saveDialog = new FileDialog(path, wildcards);
+    this->addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
     pApp->continueThread();
 }
 
@@ -288,6 +311,26 @@ void Mainwindow::loadGame(QString filename)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             pMenu->startGame();
+            leaveMenue();
+        }
+    }
+    pApp->continueThread();
+}
+
+void Mainwindow::replayGame(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (filename.endsWith(".rec"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+//            GameMenue* pMenu = new GameMenue(filename, true);
+//            oxygine::getStage()->addChild(pMenu);
+
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioThread()->clearPlayList();
             leaveMenue();
         }
     }

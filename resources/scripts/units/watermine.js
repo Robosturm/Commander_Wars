@@ -15,7 +15,7 @@ var Constructor = function()
         unit.setBaseMovementPoints(0);
         unit.setMinRange(0);
         unit.setMaxRange(0);
-		unit.setVision(1);
+        unit.setVision(1);
 		
 		unit.setHidden(true);
     };

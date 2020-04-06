@@ -78,6 +78,17 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     connect(this, &ColorSelector::sigSelecetedColorChanged, this, &ColorSelector::selecetedColorChanged);
 
     m_ColorDialog = new oxygine::Actor();
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    {
+        pEvent->stopPropagation();
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            qint32 red = pTouchEvent->localPosition.x / (pixelSize);
+            qint32 green = pTouchEvent->localPosition.y / (pixelSize);
+            emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
+        }
+    });
     m_ColorDialog->setPosition(0, 0);
     addChild(m_ColorDialog);
     // create dialog fields
@@ -87,59 +98,57 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         pixelSize--;
         x = pixelSize * 256 + 30;
     }
-    for (qint32 red = 0; red <= 255; red++)
+
+    for (qint32 red = 0; red <= 255; red += pixelCount)
     {
         m_RedGreenField.append(QVector<oxygine::spColorRectSprite>());
-        for (qint32 green = 0; green <= 255; green++)
+        for (qint32 green = 0; green <= 255; green += pixelCount)
         {
             oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
-            m_RedGreenField[red].append(pSprite);
+            m_RedGreenField[m_RedGreenField.size() - 1].append(pSprite);
             pSprite->setPosition(red * pixelSize, green * pixelSize);
-            pSprite->setSize(pixelSize + 1, pixelSize + 1);
+            pSprite->setSize(pixelSize * pixelCount + 1, pixelSize * pixelCount + 1);
             pSprite->setColor(red, green, m_CurrentColor.blue(), 255);
-            pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
-            {
-                pEvent->stopPropagation();
-                emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
-            });
             m_ColorDialog->addChild(pSprite);
-            if (red == m_CurrentColor.red() && green == m_CurrentColor.green())
-            {
-                m_Cursor1 = new oxygine::Sprite();
-                oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_1");
-                m_Cursor1->setResAnim(pAnim);
-                m_Cursor1->setPriority(5);
-                m_Cursor1->setScale(2);
-                m_Cursor1->setPosition(red * pixelSize - pAnim->getWidth() * m_Cursor1->getScaleX() / 2, green * pixelSize - pAnim->getHeight()  * m_Cursor1->getScaleY() / 2);
-                m_ColorDialog->addChild(m_Cursor1);
-            }
         }
     }
+    m_Cursor1 = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_1");
+    m_Cursor1->setResAnim(pAnim);
+    m_Cursor1->setPriority(5);
+    m_Cursor1->setScale(2);
+    m_Cursor1->setPosition(m_CurrentColor.red() * pixelSize - pAnim->getWidth() * m_Cursor1->getScaleX() / 2, m_CurrentColor.green() * pixelSize - pAnim->getHeight()  * m_Cursor1->getScaleY() / 2);
+    m_ColorDialog->addChild(m_Cursor1);
 
-    for (qint32 blue = 0; blue <= 255; blue++)
+    oxygine::spActor bar = new oxygine::Actor();
+    m_ColorDialog->addChild(bar);
+    for (qint32 blue = 0; blue <= 255; blue += pixelCount)
     {
         oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
         m_BlueField.append(pSprite);
         pSprite->setPosition(x, blue * pixelSize);
-        pSprite->setSize(barWidth, pixelSize + 1);
+        pSprite->setSize(barWidth, pixelSize * pixelCount + 1);
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
-        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
-        {
-            pEvent->stopPropagation();
-            emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
-        });
-        m_ColorDialog->addChild(pSprite);
-        if (blue == m_CurrentColor.blue())
-        {
-            m_Cursor2 = new oxygine::Sprite();
-            oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_2");
-            m_Cursor2->setResAnim(pAnim);
-            m_Cursor2->setScale(3);
-            m_Cursor2->setPriority(5);
-            m_Cursor2->setPosition(x - pAnim->getWidth() * m_Cursor2->getScaleX() + 5, blue * pixelSize - pAnim->getHeight() / 2);
-            m_ColorDialog->addChild(m_Cursor2);
-        }
+        bar->addChild(pSprite);
     }
+    bar->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    {
+        pEvent->stopPropagation();
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
+            emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
+        }
+    });
+
+    m_Cursor2 = new oxygine::Sprite();
+    pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_2");
+    m_Cursor2->setResAnim(pAnim);
+    m_Cursor2->setScale(3);
+    m_Cursor2->setPriority(5);
+    m_Cursor2->setPosition(x - pAnim->getWidth() * m_Cursor2->getScaleX() + 5, m_CurrentColor.blue() * pixelSize - pAnim->getHeight() / 2);
+    m_ColorDialog->addChild(m_Cursor2);
 
     selecetedColorChanged(m_CurrentColor);
 }
@@ -153,27 +162,20 @@ void ColorSelector::selecetedColorChanged(QColor color)
     m_SpinBoxGreen->setCurrentValue(m_CurrentColor.green());
     m_SpinBoxBlue->setCurrentValue(m_CurrentColor.blue());
 
-    for (qint32 red = 0; red <= 255; red++)
+    for (qint32 red = 0; red <= 255; red += pixelCount)
     {
-        for (qint32 green = 0; green <= 255; green++)
+        for (qint32 green = 0; green <= 255; green += pixelCount)
         {
-            m_RedGreenField[red][green]->setColor(red, green, m_CurrentColor.blue(), 255);
-
-            if (red == m_CurrentColor.red() && green == m_CurrentColor.green())
-            {
-                m_Cursor1->setPosition(red * pixelSize - m_Cursor1->getResAnim()->getWidth() * m_Cursor1->getScaleX() / 2, green * pixelSize - m_Cursor1->getResAnim()->getHeight()  * m_Cursor1->getScaleY() / 2);
-            }
+            m_RedGreenField[red / pixelCount][green / pixelCount]->setColor(red, green, m_CurrentColor.blue(), 255);
         }
     }
+    m_Cursor1->setPosition(color.red() * pixelSize - m_Cursor1->getResAnim()->getWidth() * m_Cursor1->getScaleX() / 2, color.green() * pixelSize - m_Cursor1->getResAnim()->getHeight()  * m_Cursor1->getScaleY() / 2);
 
-    for (qint32 blue = 0; blue <= 255; blue++)
+    for (qint32 blue = 0; blue <= 255; blue += pixelCount)
     {
-        m_BlueField[blue]->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
-        if (blue == m_CurrentColor.blue())
-        {
-            m_Cursor2->setY(blue * pixelSize - m_Cursor2->getResAnim()->getHeight() / 2);
-        }
+        m_BlueField[blue / pixelCount]->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
     }
+    m_Cursor2->setY(color.blue() * pixelSize - m_Cursor2->getResAnim()->getHeight() / 2);
 
     pApp->continueThread();
 }

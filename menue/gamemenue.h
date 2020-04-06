@@ -177,7 +177,7 @@ protected slots:
 protected:
     void loadGameMenue();
     void keyInputAll(Qt::Key cur);
-private:
+protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;

@@ -99,10 +99,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 
 {    
     loadGameMenue();
-
 }
-
-
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {

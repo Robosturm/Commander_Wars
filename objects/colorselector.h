@@ -17,6 +17,7 @@ typedef oxygine::intrusive_ptr<ColorSelector> spColorSelector;
 class ColorSelector : public QObject, public oxygine::Actor
 {
     Q_OBJECT
+    static constexpr qint32 pixelCount = 4;
 public:
     explicit ColorSelector(QColor color, qint32 pixelSize);
 

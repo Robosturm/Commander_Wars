@@ -204,6 +204,7 @@ set(${PROJECT_NAME}_SRCS
         menue/campaignmenu.cpp
         menue/wikimenu.cpp
         menue/costylemenu.cpp
+        menue/replaymenu.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp

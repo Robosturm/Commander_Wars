@@ -2077,77 +2077,77 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="185"/>
+        <location filename="../menue/gamemenue.cpp" line="182"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="253"/>
+        <location filename="../menue/gamemenue.cpp" line="250"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="261"/>
+        <location filename="../menue/gamemenue.cpp" line="258"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="301"/>
+        <location filename="../menue/gamemenue.cpp" line="298"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="822"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="838"/>
+        <location filename="../menue/gamemenue.cpp" line="835"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="847"/>
+        <location filename="../menue/gamemenue.cpp" line="844"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1150"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1165"/>
+        <location filename="../menue/gamemenue.cpp" line="1162"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2399,36 +2399,41 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="103"/>
-        <source>Map Editor</source>
+        <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="114"/>
-        <source>Options</source>
+        <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="125"/>
-        <source>CO Style</source>
+        <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="136"/>
-        <source>Wiki</source>
+        <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="147"/>
-        <source>Credits</source>
+        <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="158"/>
+        <source>Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="169"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="170"/>
+        <location filename="../menue/mainwindow.cpp" line="181"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16684,17 +16689,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="105"/>
         <source>Carries X 2 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="105"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="106"/>
         <source>ground units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
