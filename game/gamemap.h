@@ -623,7 +623,7 @@ public slots:
      */
     void exportAWDCMap(QString file);
 
-
+    void setMapNameFromFilename(QString filename);
     QString getMapName() const;
     void setMapName(const QString &value);
 

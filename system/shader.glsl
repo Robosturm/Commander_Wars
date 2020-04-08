@@ -2,6 +2,7 @@
 varying lowp vec4 result_color;
 varying mediump vec2 result_uv;
 varying mediump vec2 result_uv2;
+precision mediump float;
 
 #ifdef VS
 uniform highp mat4 mat;

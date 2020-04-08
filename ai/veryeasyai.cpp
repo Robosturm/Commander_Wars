@@ -600,10 +600,6 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
                 emit performAction(pAction);
                 return true;
             }
-            else
-            {
-                Q_ASSERT(false);
-            }
         }
     }
     delete pAction;

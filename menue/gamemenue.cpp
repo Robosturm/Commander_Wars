@@ -469,8 +469,7 @@ void GameMenue::performAction(GameAction* pGameAction)
                                                                       previousPoint.x(), previousPoint.y());
                         if (pUnit != nullptr || moveCost == 0)
                         {
-                            trapPathCost -= pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
-                                                                        previousPoint.x(), previousPoint.y());
+                            trapPathCost -= moveCost;
                             trapPath.pop_front();
                         }
                         else

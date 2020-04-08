@@ -404,6 +404,19 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     {
         scorePoints.setZ(0);
     }
+    // cap score points
+    if (scorePoints.x() > 150)
+    {
+        scorePoints.setX(150);
+    }
+    if (scorePoints.y() > 150)
+    {
+        scorePoints.setY(150);
+    }
+    if (scorePoints.z() > 150)
+    {
+        scorePoints.setZ(0);
+    }
     score = scorePoints.x() + scorePoints.y() + scorePoints.z();
     return getRank(score);
 }

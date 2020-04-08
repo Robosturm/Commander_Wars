@@ -1827,5 +1827,17 @@ void EditorMenue::exitEditor()
 
 void EditorMenue::autosave()
 {
-    saveMap("maps/autosave.map");
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QString filename = "maps/autosave.map";
+    if (filename.endsWith(".map"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        GameMap* pMap = GameMap::getInstance();
+        pMap->serializeObject(stream);
+        file.close();
+    }
+    pApp->continueThread();
 }

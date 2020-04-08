@@ -72,6 +72,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserializeObject(pStream);
+    setMapNameFromFilename(map);
     loaded = true;
     if (!onlyLoad)
     {
@@ -79,6 +80,22 @@ GameMap::GameMap(QString map, bool onlyLoad)
         qint32 heigth = getMapHeight();
         qint32 width = getMapWidth();
         centerMap(width / 2, heigth / 2);
+    }
+}
+
+void GameMap::setMapNameFromFilename(QString filename)
+{
+    if (mapName.isEmpty())
+    {
+        QStringList items = filename.split("/");
+        if (items.size() > 0)
+        {
+            items = items[items.size() - 1].split(".");
+            if (items.size() > 0)
+            {
+                mapName = items[0];
+            }
+        }
     }
 }
 
