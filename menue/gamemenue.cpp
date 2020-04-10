@@ -235,19 +235,19 @@ void GameMenue::loadGameMenue()
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
-        pButtonBox->setSize(286 + 70, 50);
-        m_CurrentRoundTime->setPosition(138 + 4, 10);
+        pButtonBox->setSize(226 + 70, 50);
+        m_CurrentRoundTime->setPosition(108 + 4, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
     else
     {
-        pButtonBox->setSize(286, 50);
+        pButtonBox->setSize(226, 50);
     }
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
-    oxygine::spButton saveGame = pObjectManager->createButton(tr("Save Game"), 130);
+    oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 100);
     saveGame->setPosition(8, 4);
     saveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -255,8 +255,8 @@ void GameMenue::loadGameMenue()
     });
     pButtonBox->addChild(saveGame);
 
-    oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit Game"), 130);
-    exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
+    oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 100);
+    exitGame->setPosition(pButtonBox->getWidth() - 108, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowExitGame();
@@ -272,12 +272,12 @@ void GameMenue::loadGameMenue()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = new oxygine::TextField();
+    xyTextInfo = new Label(180);
     xyTextInfo->setStyle(style);
     xyTextInfo->setHtmlText("X: 0 Y: 0");
     xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(xyTextInfo);
-    pButtonBox->setSize(140, 50);
+    pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);

@@ -63,7 +63,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     y += 20 + pLabel->getTextRect().getHeight();
 
     qint32 yStart = y;
-    qint32 xOffset = 200;
+    qint32 xOffset = 230;
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
@@ -118,7 +118,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Movementpoints:"));
+    pLabel->setHtmlText(tr("Movepoints: "));
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();

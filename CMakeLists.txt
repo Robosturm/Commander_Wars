@@ -188,6 +188,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogattacklog.cpp
         objects/dropdownmenusprite.cpp
         objects/dropdownmenubase.cpp
+        objects/label.cpp
 
         #modding
         modding/csvtableimporter.cpp

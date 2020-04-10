@@ -11,6 +11,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionBuildingCaptured::ScriptConditionBuildingCaptured()
     : ScriptCondition (ConditionType::buildingCaptured)
 {
@@ -135,7 +137,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
@@ -151,7 +153,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
@@ -167,7 +169,7 @@ void ScriptConditionBuildingCaptured::showEditCondition(spScriptEditor pScriptEd
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);

@@ -129,7 +129,7 @@ void SelectKey::setKeycode(Qt::Key code)
     if (codeText != tr("Unknown"))
     {
         currentCode = code;
-        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild().get());
+        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild()->getFirstChild().get());
         pText->setHtmlText((tr("Key ") + codeText));
         active = false;
         emit sigKeyChanged(currentCode);

@@ -9,6 +9,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionStartOfTurn::ScriptConditionStartOfTurn()
     : ScriptCondition (ConditionType::startOfTurn)
 {
@@ -87,7 +89,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("At Day: "));
     pText->setPosition(30, 30);
@@ -99,7 +101,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionStartOfTurn::setDay, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 70);

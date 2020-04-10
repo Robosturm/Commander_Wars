@@ -411,6 +411,10 @@ void COSelection::hoveredCOChanged(QString coid)
         }
         m_COName->setHtmlText(coName);
         m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
+        if (m_COName->getX() < 5)
+        {
+            m_COName->setX(5);
+        }
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);

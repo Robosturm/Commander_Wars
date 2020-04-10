@@ -6,6 +6,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "objects/label.h"
+
 ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     : m_CurrentColor(color),
       pixelSize(pixelSize)
@@ -35,7 +37,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     {
         setWidth(space * 3);
     }
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    spLabel pLabel = new Label(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Red: "));
     pLabel->setPosition(space * 0, y);
@@ -49,7 +51,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         emit sigSelecetedColorChanged(QColor(value, m_CurrentColor.green(), m_CurrentColor.blue()));
     });
 
-    pLabel = new oxygine::TextField();
+    pLabel = new Label(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Green: "));
     pLabel->setPosition(space * 1, y);
@@ -62,7 +64,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), value, m_CurrentColor.blue()));
     });
 
-    pLabel = new oxygine::TextField();
+    pLabel = new Label(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Blue: "));
     pLabel->setPosition(space * 2, y);

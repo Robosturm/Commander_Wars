@@ -33,6 +33,7 @@
 #include "objects/dialogmodifyterrain.h"
 
 #include "objects/dialogmessagebox.h"
+#include "objects/label.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 
@@ -60,8 +61,8 @@ EditorMenue::EditorMenue()
 
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
+
     m_Topbar = new Topbar(0, Settings::getWidth() -  m_EditorSelection->getWidth());
-    this->addChild(m_Topbar);
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
@@ -86,7 +87,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1, tr("Flips and rotates the map at the y-axis"));
     m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1, tr("Creates a new random map."));
 
-    m_Topbar->addGroup(tr("Editor Commands"));
+    m_Topbar->addGroup(tr("Commands"));
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
     m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
@@ -105,6 +106,27 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
 
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setResAnim(pAnim);
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    xyTextInfo = new Label(180);
+    xyTextInfo->setStyle(style);
+    xyTextInfo->setHtmlText("X: 0 Y: 0");
+    xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(xyTextInfo);
+    pButtonBox->setSize(200, 50);
+    pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
+    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(pButtonBox);
+    addChild(m_Topbar);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
@@ -121,27 +143,6 @@ EditorMenue::EditorMenue()
             }
         }
     });
-
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
-    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pButtonBox->setResAnim(pAnim);
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    xyTextInfo = new oxygine::TextField();
-    xyTextInfo->setStyle(style);
-    xyTextInfo->setHtmlText("X: 0 Y: 0");
-    xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(xyTextInfo);
-    pButtonBox->setSize(140, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
-    addChild(pButtonBox);
 
     // connecting stuff
     connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);
@@ -518,7 +519,7 @@ void EditorMenue::showResizeMap()
     qint32 width = 300;
     qint32 y = 30;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Left: "));
     pText->setPosition(30, y);
@@ -531,7 +532,7 @@ void EditorMenue::showResizeMap()
     pBox->addItem(leftBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Top: "));
     pText->setPosition(30, y);
@@ -544,7 +545,7 @@ void EditorMenue::showResizeMap()
     pBox->addItem(topBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Right: "));
     pText->setPosition(30, y);
@@ -557,7 +558,7 @@ void EditorMenue::showResizeMap()
     pBox->addItem(rightBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Bottom: "));
     pText->setPosition(30, y);

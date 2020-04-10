@@ -48,11 +48,6 @@ public:
 
     static Mainapp* getInstance();
 
-    inline QTranslator* getTranslator()
-    {
-        return &m_Translator;
-    }
-
     inline AudioThread* getAudioThread()
     {
         return m_Audiothread;
@@ -187,7 +182,6 @@ public slots:
     void changePosition(QPoint pos, bool invert);
     qint32 getScreenMode();
 private:
-    QTranslator m_Translator;
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;
     static bool m_useSeed;

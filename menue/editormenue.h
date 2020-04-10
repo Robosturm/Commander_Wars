@@ -8,6 +8,7 @@
 #include "objects/editorselection.h"
 
 #include "objects/topbar.h"
+#include "objects/label.h"
 
 #include "oxygine/KeyEvent.h"
 
@@ -273,7 +274,7 @@ private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
-    oxygine::spTextField xyTextInfo;
+    spLabel xyTextInfo;
 
     static EditorMenue* m_pInstance;
 

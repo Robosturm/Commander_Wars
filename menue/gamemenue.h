@@ -8,6 +8,7 @@
 #include "game/gamemap.h"
 #include "game/playerinfo.h"
 #include "objects/ingameinfobar.h"
+#include "objects/label.h"
 
 #include "network/NetworkInterface.h"
 
@@ -181,7 +182,7 @@ protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
-    oxygine::spTextField xyTextInfo;
+    spLabel xyTextInfo;
     static GameMenue* m_pInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};

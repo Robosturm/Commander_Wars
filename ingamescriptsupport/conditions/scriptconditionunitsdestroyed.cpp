@@ -11,6 +11,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionUnitsDestroyed::ScriptConditionUnitsDestroyed()
     : ScriptCondition(ConditionType::unitsDestroyed)
 {
@@ -123,7 +125,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Count: "));
     pText->setPosition(30, 30);
@@ -139,7 +141,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     spinBox->setTooltipText(tr("Player who has to kill the units."));

@@ -18,6 +18,7 @@
 #include "objects/selectkey.h"
 #include "objects/spinbox.h"
 #include "objects/textbox.h"
+#include "objects/label.h"
 
 #include <QDir>
 #include <QFileInfoList>
@@ -80,6 +81,7 @@ OptionMenue::OptionMenue()
     });
     connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigChangeScreenSize, pApp, &Mainapp::changeScreenSize, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigReloadSettings, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
     oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"));
@@ -151,24 +153,24 @@ void OptionMenue::showGameplayAndKeys()
     style.multiline = false;
 
     qint32 y = 10;
-    qint32 sliderOffset = 400;
+    qint32 sliderOffset = 450;
 
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    spLabel pTextfield = new Label(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Gameplay Settings"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Show Ingame Animations: "));
+    pTextfield->setHtmlText(tr("Ingame Animations: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
                              tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
                              tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
-    spDropDownmenu pAnimationMode = new DropDownmenu(400, items);
+    spDropDownmenu pAnimationMode = new DropDownmenu(450, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getShowAnimations()));
     pAnimationMode->setPosition(sliderOffset - 130, y);
     pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
@@ -179,13 +181,13 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
-    spDropDownmenu pBattleAnimationMode = new DropDownmenu(400, items);
+    spDropDownmenu pBattleAnimationMode = new DropDownmenu(450, items);
     pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimations()));
     pBattleAnimationMode->setPosition(sliderOffset - 130, y);
@@ -196,7 +198,7 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
@@ -212,9 +214,9 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Battle Animation Speed: "));
+    pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pBattleAnimationSpeed = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
@@ -228,7 +230,7 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Multi Turn Plantime: "));
     pTextfield->setPosition(10, y);
@@ -244,7 +246,7 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto End Turn: "));
     pTextfield->setPosition(10, y);
@@ -260,7 +262,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Menu Heigth: "));
     pTextfield->setPosition(10, y);
@@ -276,9 +278,9 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Show Windows Cursor: "));
+    pTextfield->setHtmlText(tr("Show PC Cursor: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = new Checkbox();
@@ -292,9 +294,9 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Animated marked Tiles: "));
+    pTextfield->setHtmlText(tr("Animated Markers: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = new Checkbox();
@@ -308,14 +310,14 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Up: "));
     pTextfield->setPosition(10, y);
@@ -327,7 +329,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Left: "));
     pTextfield->setPosition(10, y);
@@ -339,7 +341,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Down: "));
     pTextfield->setPosition(10, y);
@@ -351,7 +353,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Right: "));
     pTextfield->setPosition(10, y);
@@ -363,7 +365,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Confirm: "));
     pTextfield->setPosition(10, y);
@@ -375,7 +377,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Cancel: "));
     pTextfield->setPosition(10, y);
@@ -387,7 +389,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Next: "));
     pTextfield->setPosition(10, y);
@@ -399,7 +401,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Previous: "));
     pTextfield->setPosition(10, y);
@@ -411,7 +413,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quicksave 1: "));
     m_pOptions->addItem(pTextfield);
@@ -423,7 +425,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quickload 1: "));
     m_pOptions->addItem(pTextfield);
@@ -435,7 +437,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quicksave 2: "));
     m_pOptions->addItem(pTextfield);
@@ -447,7 +449,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quickload 2: "));
     m_pOptions->addItem(pTextfield);
@@ -459,7 +461,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Information: "));
     m_pOptions->addItem(pTextfield);
@@ -471,7 +473,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Up: "));
     m_pOptions->addItem(pTextfield);
@@ -483,7 +485,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Left: "));
     m_pOptions->addItem(pTextfield);
@@ -495,7 +497,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Down: "));
     m_pOptions->addItem(pTextfield);
@@ -507,7 +509,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Right: "));
     m_pOptions->addItem(pTextfield);
@@ -519,7 +521,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Zoom In: "));
     m_pOptions->addItem(pTextfield);
@@ -531,7 +533,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Zoom Out: "));
     m_pOptions->addItem(pTextfield);
@@ -549,12 +551,15 @@ void OptionMenue::showGameplayAndKeys()
 
 void OptionMenue::reloadSettings()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Console::print("Leaving Option Menue", Console::eDEBUG);
     addRef();
     oxygine::Actor::detach();
 
     oxygine::getStage()->addChild(new OptionMenue());
     deleteLater();
+    pApp->continueThread();
 }
 
 void OptionMenue::showSettings()
@@ -675,8 +680,7 @@ void OptionMenue::showSettings()
                                      QSize(1024 , 640 ),
                                      QSize(1024 , 600 ),
                                      QSize(960 ,  720 ),
-                                     QSize(960 ,  640 ),
-                                     QSize(800 ,  600 )};
+                                     QSize(960 ,  640 )};
     QScreen *screen = QGuiApplication::primaryScreen();
     QSize  screenSize = screen->availableSize ();
     if (Settings::getFullscreen())
@@ -713,7 +717,7 @@ void OptionMenue::showSettings()
     }
     qint32 sliderOffset = 400;
 
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    spLabel pTextfield = new Label(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Settings"));
     pTextfield->setPosition(10, y);
@@ -721,7 +725,7 @@ void OptionMenue::showSettings()
     y += 40;
 
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Resolution: "));
     pTextfield->setPosition(10, y);
@@ -738,7 +742,7 @@ void OptionMenue::showSettings()
     });
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Mode: "));
     pTextfield->setPosition(10, y);
@@ -752,13 +756,13 @@ void OptionMenue::showSettings()
     connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, &Mainapp::changeScreenMode, Qt::QueuedConnection);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Audio Settings"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Global Volume: "));
     pTextfield->setPosition(10, y);
@@ -775,7 +779,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pSlider);
 
     y += 40;
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Music Volume: "));
     pTextfield->setPosition(10, y);
@@ -792,7 +796,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pSlider);
 
     y += 40;
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sound Volume: "));
     pTextfield->setPosition(10, y);
@@ -808,14 +812,53 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pSlider);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Language: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items.clear();
+    QLocale english("en");
+    items.append(english.nativeLanguageName());
+    languages.append("en");
+    qint32 current = 0;
+    QString path =  QCoreApplication::applicationDirPath() + "/resources/translation/";
+    QStringList filter;
+    filter << "*.qm";
+    QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
+        languages.append(lang);
+        QLocale langLoc(lang);
+        items.append(langLoc.nativeLanguageName());
+        if (lang == Settings::getLanguage())
+        {
+           current = items.size() - 1;
+        }
+    }
+    spDropDownmenu pLanguageMenu = new DropDownmenu(400, items);
+    pLanguageMenu->setTooltipText(tr("Selects the language for the game. Note: Not everything may be translated."));
+    pLanguageMenu->setPosition(sliderOffset - 130, y);
+    pLanguageMenu->setCurrentItem(current);
+    m_pOptions->addItem(pLanguageMenu);
+    connect(pLanguageMenu.get(), &DropDownmenu::sigItemChanged, pApp,
+            [=](qint32 item)
+    {
+        Settings::setLanguage(languages[item]);
+        emit sigReloadSettings();
+    });
+    y += 40;
+
+    pTextfield = new Label(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Network Settings"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Username: "));
     pTextfield->setPosition(10, y);
@@ -842,7 +885,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Server Adress: "));
     pTextfield->setPosition(10, y);
@@ -858,7 +901,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Lobby port: "));
     pTextfield->setPosition(10, y);
@@ -874,7 +917,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(portBox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Server: "));
     pTextfield->setPosition(10, y);
@@ -891,7 +934,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Game port: "));
     pTextfield->setPosition(10, y);

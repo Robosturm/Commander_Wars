@@ -40,6 +40,7 @@ signals:
     void sigChangeScrollValue(float value);
 public slots:
     void changeScrollValue(float value);
+    void setScrollvalue(float Scrollvalue);
 private:
     void scroll(oxygine::Event* pEvent);
 private:

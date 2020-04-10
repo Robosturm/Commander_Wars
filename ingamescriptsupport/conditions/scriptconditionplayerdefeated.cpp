@@ -11,6 +11,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionPlayerDefeated::ScriptConditionPlayerDefeated()
     : ScriptCondition(ConditionType::playerDefeated)
 {
@@ -111,7 +113,7 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);

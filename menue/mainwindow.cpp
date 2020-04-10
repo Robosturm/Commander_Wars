@@ -50,12 +50,13 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
+    qint32 buttonWidth = 200;
     qint32 btnI = 0;
     QString lastSaveGame = Settings::getLastSaveGame();
     if (QFile::exists(lastSaveGame) && lastSaveGame.endsWith(".sav"))
     {
         // create the ui for the main menue here :)
-        oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"));
+        oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"), buttonWidth);
         setButtonPosition(pButtonLastSaveGame, btnI);
         pButtonLastSaveGame->attachTo(this);
         pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -67,7 +68,7 @@ Mainwindow::Mainwindow()
     }
 
     // create the ui for the main menue here :)
-    oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"));
+    oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"), buttonWidth);
     setButtonPosition(pButtonSingleplayer, btnI);
     pButtonSingleplayer->attachTo(this);
     pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -78,7 +79,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // create the ui for the main menue here :)
-    oxygine::spButton pButtonMultiplayer = ObjectManager::createButton(tr("Multiplayer"));
+    oxygine::spButton pButtonMultiplayer = ObjectManager::createButton(tr("Multiplayer"), buttonWidth);
     setButtonPosition(pButtonMultiplayer, btnI);
     pButtonMultiplayer->attachTo(this);
     pButtonMultiplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -89,7 +90,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // load button
-    oxygine::spButton pButtonLoadGame = ObjectManager::createButton(tr("Load Game"));
+    oxygine::spButton pButtonLoadGame = ObjectManager::createButton(tr("Load Game"), buttonWidth);
     pButtonLoadGame->attachTo(this);
     setButtonPosition(pButtonLoadGame, btnI);
     pButtonLoadGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -100,7 +101,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // replay button
-    oxygine::spButton pButtonReplay = ObjectManager::createButton(tr("Replay Game"));
+    oxygine::spButton pButtonReplay = ObjectManager::createButton(tr("Replay Game"), buttonWidth);
     pButtonReplay->attachTo(this);
     setButtonPosition(pButtonReplay, btnI);
     pButtonReplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -111,7 +112,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // editor button
-    oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"));
+    oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"), buttonWidth);
     pButtonEditor->attachTo(this);
     setButtonPosition(pButtonEditor, btnI);
     pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -122,7 +123,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // option button
-    oxygine::spButton pButtonOptions = ObjectManager::createButton(tr("Options"));
+    oxygine::spButton pButtonOptions = ObjectManager::createButton(tr("Options"), buttonWidth);
     pButtonOptions->attachTo(this);
     setButtonPosition(pButtonOptions, btnI);
     pButtonOptions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -133,7 +134,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // co style button
-    oxygine::spButton pButtonCOStyle = ObjectManager::createButton(tr("CO Style"));
+    oxygine::spButton pButtonCOStyle = ObjectManager::createButton(tr("CO Style"), buttonWidth);
     pButtonCOStyle->attachTo(this);
     setButtonPosition(pButtonCOStyle, btnI);
     pButtonCOStyle->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -144,7 +145,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // wiki button
-    oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"));
+    oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"), buttonWidth);
     pButtonWiki->attachTo(this);
     setButtonPosition(pButtonWiki, btnI);
     pButtonWiki->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -155,7 +156,7 @@ Mainwindow::Mainwindow()
     btnI++;    
 
     // credits button
-    oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"));
+    oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"), buttonWidth);
     pButtonCredtis->attachTo(this);
     setButtonPosition(pButtonCredtis, btnI);
     pButtonCredtis->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -166,7 +167,7 @@ Mainwindow::Mainwindow()
     btnI++;
 
     // quit button
-    oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"));
+    oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"), buttonWidth);
     pQuit->attachTo(this);
     setButtonPosition(pQuit, btnI);
     pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

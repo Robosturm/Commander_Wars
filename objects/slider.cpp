@@ -5,7 +5,7 @@
 #include "resource_management/fontmanager.h"
 
 Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
-    : V_Scrollbar (width, width * 100 / 10),
+    : V_Scrollbar (width, (width) * 100 / 10),
       m_minValue(minValue),
       m_maxValue(maxValue),
       m_Unit(unit)

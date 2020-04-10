@@ -15,6 +15,8 @@
 #include "game/co.h"
 #include "game/battleanimationsprite.h"
 
+#include "objects/label.h"
+
 IngameInfoBar::IngameInfoBar()
     : QObject()
 {
@@ -33,7 +35,7 @@ IngameInfoBar::IngameInfoBar()
 
     pMiniMapBox->setSize(width, Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth);
     pMiniMapBox->setPosition(0, 0);
-    if (Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth < 100)
+    if (Settings::getHeight() - cursorInfoHeigth - gameInfoHeigth < 50)
     {
         pMiniMapBox->setHeight(100);
         setScale(Settings::getHeight() / static_cast<float>(100 + cursorInfoHeigth + gameInfoHeigth));
@@ -207,21 +209,22 @@ void IngameInfoBar::updatePlayerInfo()
     style.multiline = false;
 
     qint32 count = pPlayer->getBuildingCount();
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    qint32 width = 285;
+    spLabel pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
     pTextfield->setPosition(10, 100);
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getUnitCount();
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
     pTextfield->setPosition(10, 135);
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getFunds();
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(width);
     pTextfield->setStyle(style);
     Player* pViewPlayer = pMap->getCurrentViewPlayer();
     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
@@ -238,14 +241,14 @@ void IngameInfoBar::updatePlayerInfo()
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getPlayerID();
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)));
     pTextfield->setPosition(10, 205);
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getTeam();
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
     pTextfield->setPosition(10, 240);
@@ -292,11 +295,6 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             ObjectManager* pObjectManager = ObjectManager::getInstance();
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = nullptr;
-            oxygine::TextStyle style = FontManager::getMainFont24();
-            style.color = FontManager::getFontColor();
-            style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-            style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-            style.multiline = false;
 
             oxygine::TextStyle smallStyle = FontManager::getMainFont16();
             smallStyle.color = FontManager::getFontColor();
@@ -306,7 +304,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 
             // draw building hp
-            oxygine::spTextField pTextfield = new oxygine::TextField();
+            qint32 width = 145;
+            spLabel pTextfield = new Label(width);
             qint32 hp = 0;
             if ((pBuilding != nullptr) && (pBuilding->getHp() > 0))
             {
@@ -319,7 +318,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             if (hp > 0 && pUnit == nullptr)
             {
                 pAnim = pObjectManager->getResAnim("barforeground");
-                pTextfield->setStyle(style);
+                pTextfield->setStyle(smallStyle);
                 qint32 hpMax = 100;
                 if (hp > 100)
                 {
@@ -365,8 +364,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 float count = pUnit->getHp();
                 qint32 hpRounded = pUnit->getHpRounded();
                 float countMax = 10.0f;
-                pTextfield = new oxygine::TextField();
-                pTextfield->setStyle(style);
+                pTextfield = new Label(width);
+                pTextfield->setStyle(smallStyle);
                 if (HpHidden)
                 {
                     pTextfield->setHtmlText((tr("HP: ") + "?/10"));
@@ -409,8 +408,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 qint32 countInt = pUnit->getAmmo1();
                 qint32 countMaxInt = pUnit->getMaxAmmo1();
-                pTextfield = new oxygine::TextField();
-                pTextfield->setStyle(style);
+                pTextfield = new Label(width);
+                pTextfield->setStyle(smallStyle);
                 if (countMaxInt > 0)
                 {
                     pTextfield->setHtmlText((tr("Ammo1: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
@@ -441,8 +440,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 countInt = pUnit->getAmmo2();
                 countMaxInt = pUnit->getMaxAmmo2();
-                pTextfield = new oxygine::TextField();
-                pTextfield->setStyle(style);
+                pTextfield = new Label(width);
+                pTextfield->setStyle(smallStyle);
                 if (countMaxInt > 0)
                 {
                     pTextfield->setHtmlText((tr("Ammo2: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
@@ -474,8 +473,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 countInt = pUnit->getFuel();
                 countMaxInt = pUnit->getMaxFuel();
-                pTextfield = new oxygine::TextField();
-                pTextfield->setStyle(style);
+                pTextfield = new Label(width);
+                pTextfield->setStyle(smallStyle);
                 if (countMaxInt > 0)
                 {
                     pTextfield->setHtmlText((tr("Fuel: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
@@ -607,7 +606,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
             qint32 yAdvance = 2;
 
-            pTextfield = new oxygine::TextField();
+            pTextfield = new Label(width);
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(smallStyle);
             QString name = "";
@@ -632,7 +631,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 if (pBuilding->getOwner() != nullptr &&
                     visionHide == GameEnums::VisionType_Clear)
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1)));
@@ -641,7 +640,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 }
                 else
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText(tr("Owner: Neutral"));
@@ -650,7 +649,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 }
                 if (pUnit == nullptr)
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20)));
@@ -659,7 +658,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 }
                 else
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20 - pUnit->getCapturePoints())));
@@ -670,14 +669,14 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             // show unit information
             if (pUnit != nullptr)
             {
-                pTextfield = new oxygine::TextField();
+                pTextfield = new Label(width);
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText(pUnit->getName());
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
-                pTextfield = new oxygine::TextField();
+                pTextfield = new Label(width);
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1)));
@@ -686,7 +685,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 if (!pUnit->getWeapon1ID().isEmpty())
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 1: ") +
@@ -697,7 +696,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 if (!pUnit->getWeapon2ID().isEmpty())
                 {
-                    pTextfield = new oxygine::TextField();
+                    pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(smallStyle);
                     pTextfield->setHtmlText((tr("Weapon 2: ") +
@@ -706,7 +705,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                 }
 
-                pTextfield = new oxygine::TextField();
+                pTextfield = new Label(width);
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Move: ") +
@@ -714,15 +713,15 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
-                pTextfield = new oxygine::TextField();
+                pTextfield = new Label(width);
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
-                pTextfield->setHtmlText((tr("Movementpoints: ") +
+                pTextfield->setHtmlText((tr("Movepoints: ") +
                                          QString::number(pUnit->getMovementpoints(QPoint(x, y)))));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
-                pTextfield = new oxygine::TextField();
+                pTextfield = new Label(width);
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 pTextfield->setHtmlText((tr("Vision: ") +
@@ -734,7 +733,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 {
                     if (!pUnit->getTransportHidden(pPlayer))
                     {
-                        pTextfield = new oxygine::TextField();
+                        pTextfield = new Label(width);
                         pTextfield->setPosition(10, y2);
                         pTextfield->setStyle(smallStyle);
                         pTextfield->setHtmlText(tr("Loaded Units"));
@@ -742,7 +741,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                         for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                         {
-                            pTextfield = new oxygine::TextField();
+                            pTextfield = new Label(width);
                             pTextfield->setPosition(10, y2);
                             pTextfield->setStyle(smallStyle);
                             pTextfield->setHtmlText((pUnit->getLoadedUnit(i)->getName()));
@@ -752,7 +751,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     }
                     else
                     {
-                        pTextfield = new oxygine::TextField();
+                        pTextfield = new Label(width);
                         pTextfield->setPosition(10, y2);
                         pTextfield->setStyle(smallStyle);
                         pTextfield->setHtmlText(tr("Loaded Units: ?"));

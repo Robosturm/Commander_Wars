@@ -8,6 +8,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/spinbox.h"
+#include "objects/label.h"
 
 ScriptConditionEachDay::ScriptConditionEachDay()
     : ScriptCondition (ConditionType::eachDay)
@@ -98,7 +99,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     style.multiline = false;
 
     qint32 width = 300;
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Each Day: "));
     pText->setPosition(30, 30);
@@ -110,7 +111,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setIntervall, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Start Day: "));
     pText->setPosition(30, 70);
@@ -122,7 +123,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setDay, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);

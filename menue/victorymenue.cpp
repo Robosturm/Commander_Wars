@@ -381,7 +381,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     style.multiline = true;
                     winLooseText->setStyle(style48);
                     winLooseText->setSize(sentenceWidth - 110, pWinLooseSprite->getScaledHeight());
-                    winLooseText->setPosition(48 * scale + 10, 6 + y);
+                    winLooseText->setPosition(48 * scale + 10, 1 + y);
                     winLooseText->setHtmlText(sentence);
                     m_VictoryPanel->addItem(winLooseText);
                     y += 48 * scale + 10;

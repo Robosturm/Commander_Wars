@@ -3,6 +3,7 @@
 
 #include <Qt>
 #include <QObject>
+#include <QTranslator>
 
 #include "oxygine-framework.h"
 
@@ -18,7 +19,6 @@ public:
 
     static void loadSettings();
     static void saveSettings();
-    static void setup();
 
     static quint16 getServerPort();
     static void setServerPort(const quint16 &ServerPort);
@@ -35,7 +35,12 @@ public:
 
     static QStringList getActiveModVersions();
 
+
 public slots:
+
+    static QString getLanguage();
+    static void setLanguage(const QString &language);
+
     static bool getRecord();
     static void setRecord(bool record);
 
@@ -293,7 +298,7 @@ private:
     static QStringList m_activeMods;
     static QStringList m_activeModVersions;
 
-
+    static QTranslator m_Translator;
 };
 
 #endif // SETTINGS_H

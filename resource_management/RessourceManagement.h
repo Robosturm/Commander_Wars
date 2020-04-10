@@ -209,12 +209,12 @@ void RessourceManagement<TClass>::loadAll(QStringList& list)
         QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
         QStringList filter;
         filter << "*.js";
-        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
-        while (dirIter->hasNext())
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
         {
-            dirIter->next();
-            QString id = dirIter->fileInfo().fileName().split(".").at(0).toUpper();
-            pInterpreter->openScript(dirIter->fileInfo().filePath(), true);
+            dirIter.next();
+            QString id = dirIter.fileInfo().fileName().split(".").at(0).toUpper();
+            pInterpreter->openScript(dirIter.fileInfo().filePath(), true);
             if (!list.contains(id) &&
                 !id.startsWith("__"))
             {

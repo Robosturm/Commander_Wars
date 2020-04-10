@@ -6,6 +6,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "objects/spinbox.h"
+#include "objects/label.h"
 
 ScriptEventModifyUnit::ScriptEventModifyUnit()
     : ScriptEvent (ScriptEvent::EventType::modifyUnit)
@@ -57,7 +58,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     style.multiline = false;
 
     qint32 width = 300;
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
@@ -69,7 +70,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setX, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
@@ -82,7 +83,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
 
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify HP: "));
     pText->setPosition(30, 110);
@@ -95,7 +96,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setHpChange, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Ammo 1: "));
     pText->setPosition(30, 150);
@@ -108,7 +109,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setAmmo1Change, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Ammo 2: "));
     pText->setPosition(30, 190);
@@ -121,7 +122,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyUnit::setAmmo2Change, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modify Fuel: "));
     pText->setPosition(30, 230);

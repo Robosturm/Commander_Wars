@@ -95,7 +95,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     });
     connect(this, &MapSelectionMapsMenue::randomMap, this, &MapSelectionMapsMenue::showRandomMap, Qt::QueuedConnection);
 
-    m_pButtonLoadRules = ObjectManager::createButton(tr("Load Rules"));
+    m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
     m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     m_pButtonLoadRules->attachTo(this);
     m_pButtonLoadRules->setVisible(false);
@@ -105,7 +105,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     });
     connect(this, &MapSelectionMapsMenue::sigShowLoadRules, this, &MapSelectionMapsMenue::showLoadRules, Qt::QueuedConnection);
 
-    m_pButtonSaveRules = ObjectManager::createButton(tr("Save Rules"));
+    m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
     m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 10, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
     m_pButtonSaveRules->attachTo(this);
     m_pButtonSaveRules->setVisible(false);

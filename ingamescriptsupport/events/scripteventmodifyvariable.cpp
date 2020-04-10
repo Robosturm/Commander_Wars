@@ -11,6 +11,7 @@
 #include "objects/spinbox.h"
 #include "objects/dropdownmenu.h"
 #include "objects/checkbox.h"
+#include "objects/label.h"
 
 ScriptEventModifyVariable::ScriptEventModifyVariable()
     : ScriptEvent (EventType::modifyVariable)
@@ -87,7 +88,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, 30);
@@ -103,7 +104,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(textBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modifier: "));
     pText->setPosition(30, 70);
@@ -120,7 +121,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(dropDown);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
@@ -136,7 +137,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Campaign Variable: "));
     pText->setPosition(30, 150);

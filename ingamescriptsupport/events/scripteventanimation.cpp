@@ -16,6 +16,8 @@
 
 #include "qcoreapplication.h"
 
+#include "objects/label.h"
+
 ScriptEventAnimation::ScriptEventAnimation()
     : ScriptEvent(EventType::animation)
 {
@@ -78,7 +80,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 y = 30;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, y);
@@ -94,7 +96,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, y);
@@ -110,7 +112,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Offset X: "));
     pText->setPosition(30, y);
@@ -127,7 +129,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Offset Y: "));
     pText->setPosition(30, y);
@@ -144,7 +146,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Offset Y: "));
     pText->setPosition(30, y);
@@ -161,7 +163,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(colorBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Sleep after finish: "));
     pText->setPosition(30, y);
@@ -178,7 +180,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Scale X: "));
     pText->setPosition(30, y);
@@ -195,7 +197,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Scale Y: "));
     pText->setPosition(30, y);
@@ -212,7 +214,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Delay: "));
     pText->setPosition(30, y);
@@ -229,7 +231,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Sprite: "));
     pText->setPosition(30, y);
@@ -252,7 +254,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     });
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Frames: "));
     pText->setPosition(30, y);

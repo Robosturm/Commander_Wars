@@ -219,6 +219,27 @@ void H_Scrollbar::changeScrollValue(float value)
     emit sigScrollValueChanged(m_Scrollvalue);
 }
 
+void H_Scrollbar::setScrollvalue(float Scrollvalue)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Scrollvalue = Scrollvalue;
+    if (m_Scrollvalue < 0)
+    {
+        m_Scrollvalue = 0;
+    }
+    else if (m_Scrollvalue > 1.0f)
+    {
+        m_Scrollvalue = 1.0f;
+    }
+    else
+    {
+        // all fine do nothing
+    }
+    m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
+    pApp->continueThread();
+}
+
 void H_Scrollbar::setHeight(float h)
 {
     Mainapp* pApp = Mainapp::getInstance();

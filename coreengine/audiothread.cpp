@@ -251,7 +251,6 @@ void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
 void AudioThread::SlotLoadFolder(QString folder)
 {
     QStringList loadedSounds;
-    Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
         loadMusicFolder(Settings::getMods().at(i) + "/" + folder, loadedSounds);

@@ -190,9 +190,9 @@ void PlayerSelection::showPlayerSelection()
     }
     QVector<qint32> xPositions;
     qint32 labelminStepSize = (m_pPlayerSelection->getWidth() - 100) / items.size();
-    if (labelminStepSize < 190)
+    if (labelminStepSize < 210)
     {
-        labelminStepSize = 190;
+        labelminStepSize = 210;
     }
     qint32 curPos = 5;
 
@@ -289,7 +289,7 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 6;
-    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 120);
+    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 150);
     pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllBuildList);
     pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -601,7 +601,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"), 120);
+        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"), 150);
         pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
         m_pPlayerSelection->addItem(pButtonPlayerBuildList);
         pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

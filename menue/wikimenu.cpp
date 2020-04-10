@@ -11,6 +11,8 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
+#include "objects/label.h"
+
 Wikimenu::Wikimenu()
     : QObject()
 {
@@ -50,7 +52,8 @@ Wikimenu::Wikimenu()
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
 
     qint32 y = 10;
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    qint32 width = 150;
+    spLabel pTextfield = new Label(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Search: "));
     pTextfield->setPosition(10, y);
@@ -70,9 +73,9 @@ Wikimenu::Wikimenu()
     connect(this, &Wikimenu::sigSearch, this, &Wikimenu::search, Qt::QueuedConnection);
     y += 50;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = new Label(width - 10);
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Search Tags: "));
+    pTextfield->setText(tr("Tags: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_Tags = new DropDownmenu(300, WikiDatabase::getInstance()->getTags());

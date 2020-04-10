@@ -58,7 +58,7 @@ MapSelectionView::MapSelectionView()
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 10);
-    pTextfield->setHtmlText(tr("Map Name: "));
+    pTextfield->setHtmlText(tr("Name: "));
     m_MapInfo->addItem(pTextfield);
     m_MapName = new oxygine::TextField();
     m_MapName->setStyle(style);
@@ -68,7 +68,7 @@ MapSelectionView::MapSelectionView()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 50);
-    pTextfield->setHtmlText(tr("Map Author: "));
+    pTextfield->setHtmlText(tr("Author: "));
     m_MapInfo->addItem(pTextfield);
     m_MapAuthor = new oxygine::TextField();
     m_MapAuthor->setStyle(style);
@@ -78,7 +78,7 @@ MapSelectionView::MapSelectionView()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 90);
-    pTextfield->setHtmlText(tr("Map Description "));
+    pTextfield->setHtmlText(tr("Description "));
     m_MapInfo->addItem(pTextfield);
 
     style.multiline = true;

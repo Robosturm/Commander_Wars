@@ -57,7 +57,6 @@ Mainapp::Mainapp()
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
-    Settings::setup();
 }
 
 Mainapp::~Mainapp()

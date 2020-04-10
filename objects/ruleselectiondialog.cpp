@@ -35,7 +35,7 @@ RuleSelectionDialog::RuleSelectionDialog()
         detach();
     });
 
-    m_pButtonLoadRules = ObjectManager::createButton(tr("Load Rules"));
+    m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
     m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -44,7 +44,7 @@ RuleSelectionDialog::RuleSelectionDialog()
     pSpriteBox->addChild(m_pButtonLoadRules);
     connect(this, &RuleSelectionDialog::sigShowLoadRules, this, &RuleSelectionDialog::showLoadRules, Qt::QueuedConnection);
 
-    m_pButtonSaveRules = ObjectManager::createButton(tr("Save Rules"));
+    m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
     m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 20 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
     m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

@@ -10,6 +10,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea()
     : ScriptCondition (ConditionType::playerReachedArea)
 {
@@ -179,7 +181,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     qint32 width = 300;
 
     qint32 y = 30;
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, y);
@@ -196,7 +198,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, y);
@@ -213,7 +215,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, y);
@@ -230,7 +232,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, y);
@@ -247,14 +249,14 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    oxygine::spTextField pTextInfo = new oxygine::TextField();
+    spLabel pTextInfo = new Label(width - 10);
     pTextInfo->setStyle(style);
     pTextInfo->setHtmlText(getPlayerInfo());
     pTextInfo->setPosition(30, y);
     pBox->addItem(pTextInfo);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Add Player: "));
     pText->setPosition(30, y);

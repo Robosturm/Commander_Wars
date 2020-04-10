@@ -15,6 +15,8 @@
 
 #include "objects/checkbox.h"
 
+#include "objects/label.h"
+
 ScriptEventChangeBuildlist::ScriptEventChangeBuildlist()
     : ScriptEvent (EventType::changeBuildlist)
 {
@@ -85,7 +87,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
@@ -101,7 +103,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit ID: "));
     pText->setPosition(30, 70);
@@ -128,7 +130,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
         unitID = pMenu->getCurrentItemText();
     });
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Remove: "));
     pText->setPosition(30, 110);

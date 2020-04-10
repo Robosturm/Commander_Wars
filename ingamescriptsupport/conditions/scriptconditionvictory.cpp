@@ -9,6 +9,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionVictory::ScriptConditionVictory()
     : ScriptCondition (ConditionType::victory)
 {
@@ -74,7 +76,7 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Team: "));
     pText->setPosition(30, 30);

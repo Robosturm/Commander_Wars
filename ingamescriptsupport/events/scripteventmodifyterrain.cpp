@@ -5,6 +5,8 @@
 
 #include "objects/dropdownmenusprite.h"
 #include "objects/spinbox.h"
+#include "objects/label.h"
+
 #include "game/terrain.h"
 
 #include "resource_management/fontmanager.h"
@@ -52,7 +54,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     style.multiline = false;
 
     qint32 width = 300;
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
@@ -64,7 +66,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyTerrain::setX, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
@@ -76,7 +78,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventModifyTerrain::setY, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Terrain: "));
     pText->setPosition(30, 150);

@@ -24,6 +24,7 @@
 
 #include "qfile.h"
 
+#include "objects/label.h"
 
 const QString CampaignEditor::campaign = "campaign";
 const QString CampaignEditor::campaignName = "campaignName";
@@ -63,7 +64,7 @@ CampaignEditor::CampaignEditor()
     style.multiline = false;
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Folder:"));
+    pText->setHtmlText(tr("Folder:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_CampaignFolder = new Textbox(Settings::getWidth() - 500);
@@ -72,7 +73,7 @@ CampaignEditor::CampaignEditor()
     m_CampaignFolder->setCurrentText("maps/");
     pSpriteBox->addChild(m_CampaignFolder);
     // Campaign Button
-    oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Select Folder"), 150);
+    oxygine::spButton pCampaignButton = pObjectManager->createButton(tr("Folder"), 150);
     pCampaignButton->setPosition(Settings::getWidth() - pCampaignButton->getWidth() - 30, 30);
     pSpriteBox->addChild(pCampaignButton);
     pCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -83,7 +84,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Name:"));
+    pText->setHtmlText(tr("Name:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Name = new Textbox(Settings::getWidth() - 500);
@@ -95,7 +96,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Author:"));
+    pText->setHtmlText(tr("Author:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Author = new Textbox(Settings::getWidth() - 500);
@@ -107,7 +108,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Description:"));
+    pText->setHtmlText(tr("Description:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Description = new Textbox(Settings::getWidth() - 500);
@@ -123,7 +124,7 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->addChild(m_Panel);
 
     // add campaign
-    oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("add Campaign Map"), 200);
+    oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("Add Map"), 200);
     pAddCampaignButton->setPosition(30, Settings::getHeight() - 30 - pAddCampaignButton->getHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -132,7 +133,7 @@ CampaignEditor::CampaignEditor()
     });
 
     // load campaign
-    oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("load Campaign"), 150);
+    oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadCampaignButton->setPosition(Settings::getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), Settings::getHeight() - 30 - pLoadCampaignButton->getHeight());
     pSpriteBox->addChild(pLoadCampaignButton);
     pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -141,7 +142,7 @@ CampaignEditor::CampaignEditor()
     });
 
     // save campaign
-    oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("save Campaign"), 150);
+    oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveCampaignButton->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 30 - pSaveCampaignButton->getHeight());
     pSpriteBox->addChild(pSaveCampaignButton);
     pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -851,16 +852,17 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     headerStyle.multiline = false;
 
     qint32 y = 10;
-    oxygine::spTextField pText = new  oxygine::TextField();
+    qint32 width = 300;
+    spLabel pText = new Label(width - 10);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
     y += 60;
 
-    qint32 width = 300;
 
-    pText = new oxygine::TextField();
+
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, y);
@@ -877,7 +879,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(textBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, y);
@@ -896,7 +898,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(dropDown);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, y);
@@ -913,7 +915,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Use Variable: "));
     pText->setPosition(30, y);
@@ -930,14 +932,14 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(checkBox);
     y += 40;
 
-    pText = new  oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
     y += 60;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, y);
@@ -954,7 +956,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(textBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, y);
@@ -971,7 +973,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(dropDown);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, y);
@@ -988,7 +990,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(spinBox);
     y += 40;
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Use Variable: "));
     pText->setPosition(30, y);

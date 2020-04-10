@@ -84,16 +84,19 @@ void DropDownmenu::setCurrentItemText(QString value)
 
 void DropDownmenu::addDropDownText(QString text, qint32 id)
 {
+    oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    style.multiline = true;
+    style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
     textField->setY(5);
-    auto size = addDropDownItem(textField.get(), id);
+    clipRect->addChild(textField);
+    clipRect->setSize(m_Textfield->getWidth(), m_Textfield->getHeight());
+    auto size = addDropDownItem(clipRect.get(), id);
     textField->setSize(size);
 }
 

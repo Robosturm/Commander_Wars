@@ -21,6 +21,7 @@ signals:
     void sigShowSettings();
     void sigShowGameplayAndKeys();
     void sigChangeScreenSize(qint32 width, qint32 heigth);
+    void sigReloadSettings();
 public slots:
     void exitMenue();
     void showMods();
@@ -36,6 +37,8 @@ private:
     spPanel m_pModDescription;
     oxygine::spTextField m_ModDescriptionText;
     QVector<oxygine::spActor> m_ModBoxes;
+
+    QStringList languages;
 
     bool restartNeeded{false};
 };

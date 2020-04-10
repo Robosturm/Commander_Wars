@@ -61,12 +61,12 @@ ScriptEditor::ScriptEditor()
                               tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
                               tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str())};
-    m_Conditions = new DropDownmenu(200, items);
+    m_Conditions = new DropDownmenu(300, items);
     m_Conditions->setTooltipText(tr("Condition type you wan't to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event."));
     m_Conditions->setPosition(30, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
-    oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 150);
+    oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 200);
     pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, Settings::getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
     pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -95,12 +95,12 @@ ScriptEditor::ScriptEditor()
              tr(ScriptEvent::EventAnimation.toStdString().c_str()),
              tr(ScriptEvent::EventVictoryInfo.toStdString().c_str()),
              tr(ScriptEvent::EventModifyVariable.toStdString().c_str())};
-    m_Events = new DropDownmenu(280, items);
+    m_Events = new DropDownmenu(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, Settings::getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button
-    oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 150);
+    oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 200);
     pEventButton->setPosition(m_Events->getX() + m_Events->getWidth() + 10, Settings::getHeight() - 115);
     pSpriteBox->addChild(pEventButton);
     pEventButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -132,14 +132,14 @@ ScriptEditor::ScriptEditor()
          emit sigShowExitBox();
     });
 
-    oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save Script"), 150);
+    oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
     pSaveButton->setPosition(Settings::getWidth() / 2 - pSaveButton->getWidth() / 2, Settings::getHeight() - 30 - pSaveButton->getHeight());
     pSpriteBox->addChild(pSaveButton);
     pSaveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigSaveScript();
     });
-    oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load Script"), 150);
+    oxygine::spButton pLoadButton = pObjectManager->createButton(tr("Load"), 150);
     pLoadButton->setPosition(30, Settings::getHeight() - 30 - pLoadButton->getHeight());
     pSpriteBox->addChild(pLoadButton);
     pLoadButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

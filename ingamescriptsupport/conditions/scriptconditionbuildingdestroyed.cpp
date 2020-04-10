@@ -11,6 +11,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed()
     : ScriptCondition(ConditionType::buildingDestroyed)
 {
@@ -104,7 +106,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
@@ -120,7 +122,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);

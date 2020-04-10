@@ -109,7 +109,7 @@ public slots:
      * @param addPlayerColor apply the player color to this sprite or not
      * @param maxUnitCount maximum unit count. Needed to create the amount of models of this sprite based on the units hp
      * @param offset offset from the original model position
-     * @param movement movement of the animation as point
+     * @param movement movement of the animation as point. Amount of pixels the sprite should move.
      * @param moveTime time to reach the target
      * @param deleteAfter deletes the sprite after finished movement or animation
      * @param loop the amount of loops played for an animated sprite

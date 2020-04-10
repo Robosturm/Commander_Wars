@@ -742,16 +742,20 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     m_ZInformationLabel->addChild(pSprite);
                     m_ZInformationLabel->addChild(pSprite2);
                     // add text to the label
+                    oxygine::spClipRectActor clipRec = new oxygine::ClipRectActor();
+                    clipRec->setX(2);
+                    clipRec->setY(1);
+                    clipRec->setSize(28 * 2, 18);
                     oxygine::spTextField textField = new oxygine::TextField();
                     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).
                                                withColor(FontManager::getFontColor()).
                                                alignLeft().
                                                alignTop();
                     textField->setStyle(style);
-                    textField->setX(3);
-                    textField->setY(1);
+
                     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
-                    textField->attachTo(m_ZInformationLabel);
+                    textField->attachTo(clipRec);
+                    clipRec->attachTo(m_ZInformationLabel);
 
                     oxygine::spTextField textField2 = new oxygine::TextField();
                     textField2->setStyle(style);

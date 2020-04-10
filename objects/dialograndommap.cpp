@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/filedialog.h"
+#include "objects/label.h"
 
 DialogRandomMap::DialogRandomMap()
     : QObject()
@@ -35,7 +36,7 @@ DialogRandomMap::DialogRandomMap()
     float y = 30;
     qint32 width = 250;
 
-    oxygine::spTextField text = new oxygine::TextField();
+    spLabel text = new Label(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Generator:"));
     text->setPosition(30, y);
@@ -57,9 +58,9 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map name:"));
+    text->setHtmlText(tr("Name:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
     m_MapName = new Textbox(Settings::getWidth() - 150 - width);
@@ -70,9 +71,9 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Author:"));
+    text->setHtmlText(tr("Author:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
     m_MapAuthor = new Textbox(Settings::getWidth() - 150 - width);
@@ -83,9 +84,9 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Description:"));
+    text->setHtmlText(tr("Description:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
     m_MapDescription = new Textbox(Settings::getWidth() - 150 - width);
@@ -96,9 +97,9 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map width:"));
+    text->setHtmlText(tr("Width:"));
     text->setPosition(30, 5 + y );
     m_pPanel->addItem(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -109,9 +110,9 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map heigth:"));
+    text->setHtmlText(tr("Heigth:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -122,9 +123,9 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Player:"));
+    text->setHtmlText(tr("Player:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
@@ -136,9 +137,9 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Seed:"));
+    text->setHtmlText(tr("Seed:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
     m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
@@ -149,7 +150,7 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Create Road:"));
     text->setPosition(30, 5 + y + text->getHeight());
@@ -162,12 +163,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Base Size:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_BaseSize = new Slider(Settings::getWidth() - 200 - width, 0, 100);
+    m_BaseSize = new Slider(Settings::getWidth() - 220 - width, 0, 100);
     m_BaseSize->setCurrentValue(33);
     m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + width, y);

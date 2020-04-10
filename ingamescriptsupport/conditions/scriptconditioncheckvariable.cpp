@@ -10,6 +10,7 @@
 #include "objects/spinbox.h"
 #include "objects/textbox.h"
 #include "objects/dropdownmenu.h"
+#include "objects/label.h"
 
 ScriptConditionCheckVariable::ScriptConditionCheckVariable()
     : ScriptCondition (ConditionType::checkVariable)
@@ -108,7 +109,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, 30);
@@ -124,7 +125,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(textBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, 70);
@@ -141,7 +142,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(dropDown);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
@@ -157,7 +158,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Campaign Variable: "));
     pText->setPosition(30, 150);

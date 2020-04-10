@@ -62,7 +62,6 @@ int main(int argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
-    Settings::loadSettings();
     srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
@@ -70,6 +69,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QObject::tr("Commander Wars"));
     app.setApplicationVersion(Mainapp::getGameVersion());
+    Settings::loadSettings();
 
     // start crash report handler
     crashReporter::setSignalHandler(&Mainapp::showCrashReport);

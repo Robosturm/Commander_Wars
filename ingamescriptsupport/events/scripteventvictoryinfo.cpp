@@ -9,6 +9,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/textbox.h"
+#include "objects/label.h"
 
 ScriptEventVictoryInfo::ScriptEventVictoryInfo()
     : ScriptEvent (EventType::victoryInfo)
@@ -56,7 +57,7 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Victory Info: "));
     pText->setPosition(30, 30);

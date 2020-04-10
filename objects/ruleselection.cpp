@@ -13,6 +13,7 @@
 #include "objects/dropdownmenu.h"
 #include "objects/timespinbox.h"
 #include "objects/cobannlistdialog.h"
+#include "objects/label.h"
 
 
 RuleSelection::RuleSelection(qint32 width)
@@ -74,7 +75,8 @@ void RuleSelection::showRuleSelection()
 
     QColor headerColor(0, 255, 0, 255);
 
-    oxygine::spTextField textField = new oxygine::TextField();
+    qint32 textWidth = 300;
+    spLabel textField = new Label(500);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -83,7 +85,7 @@ void RuleSelection::showRuleSelection()
     addChild(textField);
     y += 60;
 
-    qint32 textWidth = 300;
+
 
     QVector<QString> weatherStrings;
     QVector<qint32> weatherChances;
@@ -101,7 +103,7 @@ void RuleSelection::showRuleSelection()
     connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &RuleSelection::weatherChancesChanged, Qt::QueuedConnection);
 
     y += m_pWeatherSlider->getHeight();
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Random Weather: "));
     textField->setPosition(30, y);
@@ -114,7 +116,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
     y += 40;
 
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Start Weather: "));
     textField->setPosition(30, pCheckbox->getY() + 40);
@@ -129,7 +131,7 @@ void RuleSelection::showRuleSelection()
     startWeatherChanged(0);
     y += 50;
 
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Weather Forecast: "));
     textField->setPosition(30, y);
@@ -142,7 +144,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setWeatherPrediction, Qt::QueuedConnection);
 
     y = textField->getY() + 50;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -150,9 +152,9 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     y += 60;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
-    textField->setHtmlText(tr("Unit Ranking System: "));
+    textField->setHtmlText(tr("Unit Ranking: "));
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
@@ -163,7 +165,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
 
     y += 40;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Bannlist: "));
     textField->setPosition(30, y);
@@ -177,7 +179,7 @@ void RuleSelection::showRuleSelection()
     addChild(coBannlist);
     connect(this, &RuleSelection::sigShowCOBannlist, this, &RuleSelection::showCOBannlist, Qt::QueuedConnection);
     y += 40;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("No CO Powers: "));
     textField->setPosition(30, y);
@@ -189,7 +191,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Specific Units: "));
     textField->setPosition(30, y);
@@ -201,7 +203,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getCoUnits());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCoUnits, Qt::QueuedConnection);
     y += 40;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("AI Attack Terrain: "));
     textField->setPosition(30, y);
@@ -213,7 +215,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getAiAttackTerrain());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAiAttackTerrain, Qt::QueuedConnection);
     y += 40;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
@@ -230,7 +232,7 @@ void RuleSelection::showRuleSelection()
     addChild(fogOfWar);
     y += 50;
 
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Vision Block: "));
     textField->setPosition(30, y);
@@ -243,7 +245,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
     y += 40;
 
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Building Vision Denial: "));
     textField->setPosition(30, y);
@@ -256,12 +258,12 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setBuildingVisionHide, Qt::QueuedConnection);
     y += 40;
 
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Unit Limit: "));
     textField->setPosition(30, y);
     addChild(textField);
-    spSpinBox pSpinbox = new SpinBox(150, 0, 9999);
+    spSpinBox pSpinbox = new SpinBox(200, 0, 9999);
     pSpinbox->setTooltipText(tr("The maximum amount of units a single player can own at any time."));
     pSpinbox->setInfinityValue(0.0);
     pSpinbox->setPosition(textWidth, textField->getY());
@@ -270,12 +272,12 @@ void RuleSelection::showRuleSelection()
     connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
 
     y += 50;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     textField->setStyle(style);
     textField->setHtmlText(tr("Round Time: "));
     textField->setPosition(30, y);
     addChild(textField);
-    spTimeSpinBox pTimeSpinbox = new TimeSpinBox(150);
+    spTimeSpinBox pTimeSpinbox = new TimeSpinBox(200);
     pTimeSpinbox->setTooltipText(tr("The maximum amount of time in hh:mm::ss for each turn for each player."));
     pTimeSpinbox->setPosition(textWidth, textField->getY());
     addChild(pTimeSpinbox);
@@ -284,7 +286,7 @@ void RuleSelection::showRuleSelection()
 
 
     y += 50;
-    textField = new oxygine::TextField();
+    textField = new Label(textWidth - 10);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -332,7 +334,7 @@ void RuleSelection::showRuleSelection()
             QString descriptiopn = pRule->getRuleDescription(i2);
             // add a cool check box and a cool text
             QString labelName = pRule->getRuleName(i2);
-            textField = new oxygine::TextField();
+            textField = new Label(textWidth - 10);
             textField->setStyle(style);
             textField->setHtmlText(labelName);
             textField->setPosition(xPos + 30, i * 50 + y);

@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/filedialog.h"
+#include "objects/label.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -30,11 +31,11 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     float y = 30;
     qint32 width = 250;
     // Label
-    oxygine::spTextField text = new oxygine::TextField();
+    spLabel text = new Label(width - 10);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     text->setStyle(style);
-    text->setHtmlText(tr("Map name:"));
+    text->setHtmlText(tr("Name:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapName = new Textbox(Settings::getWidth() - 60 - width);
@@ -45,9 +46,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Author:"));
+    text->setHtmlText(tr("Author:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapAuthor = new Textbox(Settings::getWidth() - 60 - width);
@@ -58,9 +59,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Description:"));
+    text->setHtmlText(tr("Description:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapDescription = new Textbox(Settings::getWidth() - 60 - width);
@@ -71,9 +72,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Script:"));
+    text->setHtmlText(tr("Script:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_ScriptButton = pObjectManager->createButton(tr("Select File"), 150);
@@ -96,9 +97,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map width:"));
+    text->setHtmlText(tr("Width:"));
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -109,9 +110,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map heigth:"));
+    text->setHtmlText(tr("Heigth:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -122,9 +123,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Player:"));
+    text->setHtmlText(tr("Player:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
@@ -135,9 +136,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
-    text->setHtmlText(tr("Map Turn Limit:"));
+    text->setHtmlText(tr("Turn Limit:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapTurnLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
@@ -148,7 +149,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new oxygine::TextField();
+    text = new Label(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Deploy Limit:"));
     text->setPosition(30, 5 + y + text->getHeight());

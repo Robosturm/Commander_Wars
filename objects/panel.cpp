@@ -161,6 +161,8 @@ void Panel::setContentHeigth(qint32 heigth)
 
     m_ContentRect->setHeight(heigth);
     m_HScrollbar->setContentHeigth(heigth);
+    m_ContentRect->setY(0);
+    m_HScrollbar->setScrollvalue(0);
     pApp->continueThread();
 }
 
@@ -195,8 +197,9 @@ void Panel::setContentWidth(qint32 width)
         m_HScrollbar->setHeight(m_HScrollbar->getHeight() - m_VScrollbar->getHeight());
     }
     m_ContentRect->setWidth(width);
-
     m_VScrollbar->setContentWidth(width);
+    m_ContentRect->setX(0);
+    m_VScrollbar->setScrollvalue(0);
     pApp->continueThread();
 }
 

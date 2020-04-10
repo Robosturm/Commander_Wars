@@ -18,7 +18,6 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button"));
     pButton->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
-
     //Create Actor with Text and add it to button as child
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -28,7 +27,6 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
-    textField->attachTo(pButton);
     if (width < 0)
     {
         width = textField->getTextRect().getWidth();
@@ -42,7 +40,11 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
         width -= 30;
     }
     pButton->setSize(width + 30, 40);
+    oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
+    clipRect->setSize(pButton->getSize());
     textField->setSize(pButton->getSize());
+    textField->attachTo(clipRect);
+    clipRect->attachTo(pButton);
 
     oxygine::Sprite* ptr = pButton.get();
     pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)

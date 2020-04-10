@@ -9,6 +9,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptEventDefeatPlayer::ScriptEventDefeatPlayer()
     : ScriptEvent (ScriptEvent::EventType::defeatPlayer)
 {
@@ -51,7 +53,7 @@ void ScriptEventDefeatPlayer::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);

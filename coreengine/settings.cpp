@@ -10,6 +10,8 @@
 
 #include <qguiapplication.h>
 
+#include "qlocale.h"
+
 const QString Settings::m_settingFile = "Commander_Wars.ini";
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
@@ -70,6 +72,7 @@ QStringList Settings::m_activeMods;
 QStringList Settings::m_activeModVersions;
 // this Object
 Settings* Settings::m_pInstance = nullptr;
+QTranslator Settings::m_Translator;
 
 Settings* Settings::getInstance()
 {
@@ -83,6 +86,28 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+QString Settings::getLanguage()
+{
+    return m_language;
+}
+
+void Settings::setLanguage(const QString &language)
+{
+    m_language = language;
+    // load language file and install it
+    if(m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+    {
+    }
+    else if (m_language != "en")
+    {
+        QString error = "Error: Unknown Language " + m_language + " selected.";
+        Console::print(error, Console::eERROR);
+        m_language = "en";
+        m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm");
+    }
+    QGuiApplication::installTranslator(&m_Translator);
 }
 
 QStringList Settings::getActiveModVersions()
@@ -106,7 +131,7 @@ void Settings::loadSettings()
     QSettings settings(m_settingFile, QSettings::IniFormat);
 
     settings.beginGroup("general");
-    m_language    = settings.value("language","en").toString();
+    setLanguage(settings.value("language","en").toString());
     m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[General] " + tr("Setting:") + " MouseSensitivity";
@@ -514,21 +539,6 @@ QString Settings::getModConfigString()
         }
     }
     return modString;
-}
-
-void Settings::setup()
-{
-    Mainapp* pMainapp = Mainapp::getInstance();
-    // load language file and install it
-    if(pMainapp->getTranslator()->load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
-    {
-        QGuiApplication::installTranslator(pMainapp->getTranslator());
-    }
-    else if (m_language != "en")
-    {
-        QString error = "Error: Unknown Language " + m_language + " selected.";
-        Console::print(error, Console::eERROR);
-    }
 }
 
 float Settings::getMouseSensitivity()

@@ -9,6 +9,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/label.h"
+
 ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea()
     : ScriptCondition (ConditionType::unitReachedArea)
 {
@@ -180,7 +182,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
 
     qint32 width = 300;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit X: "));
     pText->setPosition(30, 30);
@@ -196,7 +198,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit Y: "));
     pText->setPosition(30, 70);
@@ -212,7 +214,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, 110);
@@ -228,7 +230,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, 150);
@@ -244,7 +246,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, 190);
@@ -260,7 +262,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
+    pText = new Label(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, 230);
