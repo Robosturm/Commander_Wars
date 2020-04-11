@@ -393,6 +393,7 @@ set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
 # created translation files
 set(TS_FILES
     translation/lang_de_DE.ts
+    translation/lang_en.ts
 )
 
 # adds the translations and a target for it
