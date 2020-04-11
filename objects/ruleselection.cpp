@@ -122,7 +122,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, pCheckbox->getY() + 40);
     addChild(textField);
 
-    spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
+    spDropDownmenu startWeather = new DropDownmenu(300, weatherStrings);
     startWeather->setTooltipText(tr("The weather at the start of the game."));
     startWeather->setPosition(textWidth, textField->getY());
     startWeather->setCurrentItem(pMap->getGameRules()->getStartWeather());
@@ -221,7 +221,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     QVector<QString> fogModes = {tr("Off"), tr("Fog of War"), tr("Shroud of War")};
-    spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
+    spDropDownmenu fogOfWar = new DropDownmenu(300, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
     fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());

@@ -61,7 +61,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
     pBox->setResAnim(pAnim);
     oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
-    clipRect->setSize(230, 40);
+    clipRect->setSize(280, 40);
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -73,7 +73,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     textField->attachTo(clipRect);
     clipRect->attachTo(pBox);
     textField->setY(5);
-    pBox->setSize(250, 40);
+    pBox->setSize(300, 40);
     textField->setSize(pBox->getSize());
     pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group)->size());
     m_Items.at(group)->append(pBox);

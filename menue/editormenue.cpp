@@ -73,8 +73,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0, tr("Loads a map to a give file."));
     m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
     m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
-    m_Topbar->addItem(tr("Undo Strg+Z"), "UNDO", 0, tr("Undo the last map modification."));
-    m_Topbar->addItem(tr("Redo Strg+Y"), "REDO", 0, tr("Redo the last undo command."));
+    m_Topbar->addItem(tr("Undo Ctrl+Z"), "UNDO", 0, tr("Undo the last map modification."));
+    m_Topbar->addItem(tr("Redo Ctrl+Y"), "REDO", 0, tr("Redo the last undo command."));
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0, tr("Exits the editor"));
 
     m_Topbar->addGroup(tr("Map Info"));

@@ -780,7 +780,7 @@
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="867"/>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="944"/>
         <source>Variable: </source>
-        <translation type="unfinished">Variable: </translation>
+        <translation>Variable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="871"/>
@@ -792,7 +792,7 @@
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="884"/>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="961"/>
         <source>Compare: </source>
-        <translation type="unfinished">Komperator: </translation>
+        <translation>Komperator: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="890"/>
@@ -1227,7 +1227,7 @@
     <message>
         <location filename="../objects/dialogmodifyterrain.cpp" line="108"/>
         <source>Select Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild</translation>
     </message>
 </context>
 <context>
@@ -1628,22 +1628,22 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="76"/>
-        <source>Undo Strg+Z</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
-        <source>Redo Strg+Y</source>
+        <location filename="../menue/editormenue.cpp" line="76"/>
+        <source>Undo Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Redo the last undo command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="77"/>
+        <source>Redo Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2124,7 +2124,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/gamemenue.cpp" line="818"/>
         <source>Funds</source>
-        <translation type="unfinished">Fonds</translation>
+        <translation>Fonds</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="818"/>
@@ -2144,12 +2144,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1146"/>
         <source>Do you want to exit the current game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1161"/>
         <source>Do you want to surrender the current game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Willst du aufgeben?</translation>
     </message>
 </context>
 <context>
@@ -2157,7 +2157,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/gamescript.cpp" line="84"/>
         <source>This is a normal game with the following Victory Conditions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies ist ein normales Spiel mit den nachfolgenden Siegbedingungen.</translation>
     </message>
 </context>
 <context>
@@ -2231,49 +2231,49 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="480"/>
         <source>Fuel: </source>
-        <translation type="unfinished">Treib.: </translation>
+        <translation>Treib.: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="497"/>
         <source>Fuel: -/-</source>
-        <translation type="unfinished"></translation>
+        <translation>Treib.: -/-</translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="637"/>
         <location filename="../objects/ingameinfobar.cpp" line="682"/>
         <source>Owner: Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Besitzer: Spieler </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="646"/>
         <source>Owner: Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>Besitzer: Neutral</translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="655"/>
         <location filename="../objects/ingameinfobar.cpp" line="664"/>
         <source>Resistance: </source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="691"/>
         <source>Weapon 1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 1: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="702"/>
         <source>Weapon 2: </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 2: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="711"/>
         <source>Move: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bew.art: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="719"/>
         <source>Movepoints: </source>
-        <translation type="unfinished">Bewegung: </translation>
+        <translation>Bew.punkte: </translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="727"/>
@@ -2283,12 +2283,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="739"/>
         <source>Loaded Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladung</translation>
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="757"/>
         <source>Loaded Units: ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladung: ?</translation>
     </message>
 </context>
 <context>
@@ -2600,49 +2600,49 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="42"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="43"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="753"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="62"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="761"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="67"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="68"/>
         <source>Connecting</source>
         <translation>Verbinde</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="103"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="104"/>
         <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="104"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="105"/>
         <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="113"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="114"/>
         <source>Host Adress: </source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="350"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="358"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="513"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="531"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="521"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="539"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="749"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="757"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
@@ -3357,7 +3357,7 @@ Version: </source>
         <location filename="../objects/playerselection.cpp" line="317"/>
         <location filename="../objects/playerselection.cpp" line="331"/>
         <source>Human</source>
-        <translation>Mescnh</translation>
+        <translation>Mensch</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="313"/>
@@ -4487,7 +4487,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="248"/>
         <source>Select Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bild</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="259"/>
@@ -5603,7 +5603,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="121"/>
         <source>Movepoints: </source>
-        <translation>Bewegung: </translation>
+        <translation>Bewegungspunkte: </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="136"/>
@@ -5643,7 +5643,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="251"/>
         <source>Movement </source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegungsart </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="344"/>
@@ -13218,7 +13218,7 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufall</translation>
     </message>
 </context>
 <context>
@@ -16816,7 +16816,7 @@ Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="9"/>
         <source>No HQ&apos;s</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine HQ&apos;s</translation>
     </message>
 </context>
 <context>
@@ -16829,7 +16829,7 @@ Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="9"/>
         <source>No Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Einheiten</translation>
     </message>
 </context>
 <context>
@@ -16847,12 +16847,12 @@ Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="18"/>
         <source>Turn Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rundenlimit</translation>
     </message>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="22"/>
         <source>Winner Team</source>
-        <translation type="unfinished"></translation>
+        <translation>Siegerteam</translation>
     </message>
 </context>
 <context>

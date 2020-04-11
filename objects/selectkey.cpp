@@ -13,7 +13,7 @@ SelectKey::SelectKey(Qt::Key code)
     m_Button = ObjectManager::createButton("");
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild().get());
+        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild()->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
         active = true;
     });

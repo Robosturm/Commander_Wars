@@ -30,6 +30,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "multiplayer/networkcommands.h"
+#include "multiplayer/hashing.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
@@ -58,7 +59,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         hideMapSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
         // change the name of the start button
-        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
         // quit on host connection lost
         connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
@@ -199,6 +200,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
                 stream << mods[i];
                 stream << versions[i];
             }
+            Hashing::writeByteArray(stream, Hashing::getRuntimeHash());
             stream << saveGame;
             if (saveGame)
             {
@@ -300,6 +302,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                             break;
                         }
                     }
+                }
+                QByteArray hostRuntime;
+                Hashing::readByteArray(stream, hostRuntime);
+                if (hostRuntime != Hashing::getRuntimeHash())
+                {
+                    sameMods = false;
                 }
                 if (version == Mainapp::getGameVersion() && sameMods)
                 {
@@ -746,11 +754,11 @@ void Multiplayermenu::startGame()
         m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
         if (m_pPlayerSelection->getPlayerReady())
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
         }
         else
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
         }
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);

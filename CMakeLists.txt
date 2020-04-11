@@ -321,6 +321,7 @@ set(${PROJECT_NAME}_SRCS
         multiplayer/multiplayermenu.cpp
         multiplayer/gameserver.cpp
         multiplayer/gamedata.cpp
+        multiplayer/hashing.cpp
 
         #campaign support
         ingamescriptsupport/campaigneditor.cpp
