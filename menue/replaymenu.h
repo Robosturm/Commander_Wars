@@ -9,6 +9,16 @@ class ReplayMenu : public GameMenue
 public:
     ReplayMenu(QString filename);
     virtual ~ReplayMenu();
+signals:
+    void sigShowRecordInvalid();
+    void sigExitReplay();
+public slots:
+    void showRecordInvalid();
+    void exitReplay();
+    void nextReplayAction();
+    virtual void showExitGame() override;
+protected:
+    void loadUIButtons();
 };
 
 #endif // REPLAYMENU_H

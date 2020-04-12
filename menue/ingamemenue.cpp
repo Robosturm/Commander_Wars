@@ -21,8 +21,6 @@ InGameMenue::InGameMenue()
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     loadBackground();
-    oxygine::Actor::addChild(GameMap::getInstance());
-    loadHandling();
 }
 
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)

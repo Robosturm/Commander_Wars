@@ -8,6 +8,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+#include "coreengine/filesupport.h"
 
 #include "multiplayer/lobbymenu.h"
 #include "menue/gamemenue.h"
@@ -30,7 +31,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "multiplayer/networkcommands.h"
-#include "multiplayer/hashing.h"
+
 
 Multiplayermenu::Multiplayermenu(QString adress, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
@@ -200,7 +201,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
                 stream << mods[i];
                 stream << versions[i];
             }
-            Hashing::writeByteArray(stream, Hashing::getRuntimeHash());
+            Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash());
             stream << saveGame;
             if (saveGame)
             {
@@ -303,9 +304,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         }
                     }
                 }
-                QByteArray hostRuntime;
-                Hashing::readByteArray(stream, hostRuntime);
-                if (hostRuntime != Hashing::getRuntimeHash())
+                QByteArray hostRuntime = Filesupport::readByteArray(stream);
+                if (hostRuntime != Filesupport::getRuntimeHash())
                 {
                     sameMods = false;
                 }
@@ -586,7 +586,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
+    oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
     pApp->continueThread();
 }
 
@@ -841,7 +841,7 @@ void Multiplayermenu::countdown()
             pMap->updateSprites();
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
+            oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             addRef();
             oxygine::Actor::detach();

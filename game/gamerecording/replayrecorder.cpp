@@ -5,6 +5,7 @@
 #include "game/gamemap.h"
 #include "game/gameaction.h"
 #include "gameinput/basegameinputif.h"
+#include "coreengine/filesupport.h"
 
 #include <QByteArray>
 #include <QDateTime>
@@ -17,6 +18,8 @@ ReplayRecorder::ReplayRecorder()
 
 ReplayRecorder::~ReplayRecorder()
 {
+    m_recordFile.seek(_countPos);
+    m_stream << _count;
     m_recordFile.flush();
     m_recordFile.close();
     if (playing)
@@ -42,7 +45,11 @@ void ReplayRecorder::startRecording()
         {
             m_stream << static_cast<qint8>(data.at(i));
         }
+        QStringList mods = Settings::getMods();
+        Filesupport::writeVectorList(m_stream, mods);
         pMap->serializeObject(m_stream);
+        _countPos = m_recordFile.pos();
+        m_stream << _count;
         m_recordFile.flush();
         m_recording = true;
 
@@ -55,10 +62,11 @@ void ReplayRecorder::recordAction(GameAction* pAction)
     {
         pAction->serializeObject(m_stream);
         m_recordFile.flush();
+        _count++;
     }
 }
 
-void ReplayRecorder::loadRecord(QString filename)
+bool ReplayRecorder::loadRecord(QString filename)
 {
     m_recordFile.setFileName(filename);
     if (m_recordFile.exists())
@@ -74,21 +82,27 @@ void ReplayRecorder::loadRecord(QString filename)
             envData.append(value);
         }
         envData = qUncompress(envData);
-        QString interpreterEnvironment(envData);
-        Interpreter::reloadInterpreter(interpreterEnvironment);
-        // load map
-        GameMap* pMap = new GameMap(m_stream);
-        // swap out all ai's / or players with a proxy ai.
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        _mods = Filesupport::readVectorList<QString, QList>(m_stream);
+        if (_mods == Settings::getMods())
         {
-            pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+            QString interpreterEnvironment(envData);
+            Interpreter::reloadInterpreter(interpreterEnvironment);
+            // load map
+            _mapPos = m_recordFile.pos();
+            GameMap* pMap = new GameMap(m_stream);
+            m_stream >> _count;
+            // swap out all ai's / or players with a proxy ai.
+            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+            {
+                pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
+            }
+            playing = true;
         }
-        playing = true;
     }
+    return playing;
 }
 
-
-void ReplayRecorder::nextAction()
+GameAction* ReplayRecorder::nextAction()
 {
     if (playing)
     {
@@ -96,7 +110,20 @@ void ReplayRecorder::nextAction()
         {
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(m_stream);
-            // todo restream it
+            return pAction;
         }
+    }
+    return nullptr;
+}
+
+void ReplayRecorder::seekToStart()
+{
+    m_recordFile.seek(_mapPos);
+    GameMap* pMap = new GameMap(m_stream);
+    m_stream >> _count;
+    // swap out all ai's / or players with a proxy ai.
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
     }
 }

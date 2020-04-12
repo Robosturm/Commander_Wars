@@ -23,9 +23,12 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    explicit GameMenue(spNetworkInterface pNetworkInterface = nullptr, bool saveGame = false);
+    explicit GameMenue(bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
+    explicit GameMenue();
     virtual ~GameMenue();
+
+
 
     static GameMenue* getInstance()
     {
@@ -168,7 +171,7 @@ public slots:
     /**
      * @brief showExitGame
      */
-    void showExitGame();
+    virtual void showExitGame();
     /**
      * @brief showSurrenderGame
      */
@@ -176,6 +179,7 @@ public slots:
 protected slots:
     void updateTimer();
 protected:
+    void loadUIButtons();
     void loadGameMenue();
     void keyInputAll(Qt::Key cur);
 protected:

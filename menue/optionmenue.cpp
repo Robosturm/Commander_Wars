@@ -830,12 +830,15 @@ void OptionMenue::showSettings()
     {
         dirIter.next();
         QString lang = dirIter.fileName().replace(".qm", "").replace("lang_", "");
-        languages.append(lang);
-        QLocale langLoc(lang);
-        items.append(langLoc.nativeLanguageName());
-        if (lang == Settings::getLanguage())
+        if (lang != "en")
         {
-           current = items.size() - 1;
+            languages.append(lang);
+            QLocale langLoc(lang);
+            items.append(langLoc.nativeLanguageName());
+            if (lang == Settings::getLanguage())
+            {
+                current = items.size() - 1;
+            }
         }
     }
     spDropDownmenu pLanguageMenu = new DropDownmenu(400, items);

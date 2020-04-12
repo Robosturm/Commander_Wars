@@ -117,7 +117,7 @@ void CampaignMenu::slotButtonNext()
         pMap->updateSprites();
         // start game
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new GameMenue());
+        oxygine::getStage()->addChild(new GameMenue(false, nullptr));
         addRef();
         oxygine::Actor::detach();
         deleteLater();

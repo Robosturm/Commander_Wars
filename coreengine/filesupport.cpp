@@ -1,4 +1,4 @@
-#include "hashing.h"
+#include "filesupport.h"
 
 #include "coreengine/settings.h"
 
@@ -6,12 +6,12 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 
-Hashing::Hashing() : QObject()
+Filesupport::Filesupport() : QObject()
 {
 
 }
 
-QByteArray Hashing::getHash(QStringList filter, QStringList folders)
+QByteArray Filesupport::getHash(QStringList filter, QStringList folders)
 {
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
     for (auto folder : folders)
@@ -30,7 +30,7 @@ QByteArray Hashing::getHash(QStringList filter, QStringList folders)
     return myHash.result();
 }
 
-QByteArray Hashing::getRuntimeHash()
+QByteArray Filesupport::getRuntimeHash()
 {
     QStringList folders = Settings::getMods();
     folders.append("/resources");
@@ -38,17 +38,18 @@ QByteArray Hashing::getRuntimeHash()
     return getHash(filter, folders);
 }
 
-void Hashing::writeByteArray(QDataStream& stream, const QByteArray& array)
+void Filesupport::writeByteArray(QDataStream& stream, const QByteArray& array)
 {
-    stream << array.size();
+    stream << static_cast<qint32>(array.size());
     for (qint32 i = 0; i < array.size(); i++)
     {
         stream << static_cast<qint8>(array[i]);
     }
 }
 
-void Hashing::readByteArray(QDataStream& stream, QByteArray& array)
+QByteArray Filesupport::readByteArray(QDataStream& stream)
 {
+    QByteArray array;
     qint32 size = 0;
     stream >> size;
     for (qint32 i = 0; i < size; i++)
@@ -57,4 +58,5 @@ void Hashing::readByteArray(QDataStream& stream, QByteArray& array)
         stream >> value;
         array.append(value);
     }
+    return array;
 }

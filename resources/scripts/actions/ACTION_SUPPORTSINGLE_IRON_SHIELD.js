@@ -107,8 +107,9 @@ var Constructor = function()
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
         var defenseUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX, ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY);
-        animation.addSprite("defense", map.getImageSize() / 2, 0, 400, 1.5);
-        animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("DEFENSE"), map.getImageSize() / 2 + 25, 2, 1);
+        animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+        animation.addSprite("defense", map.getImageSize() / 2 + 8, 1, 400, 1.7);
         defenseUnit.addDefensiveBonus(200);
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit.setHasMoved(true);
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit = null;

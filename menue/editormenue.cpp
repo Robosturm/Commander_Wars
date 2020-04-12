@@ -53,6 +53,8 @@ EditorMenue* EditorMenue::m_pInstance = nullptr;
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20)
 {
+    oxygine::Actor::addChild(GameMap::getInstance());
+    loadHandling();
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;

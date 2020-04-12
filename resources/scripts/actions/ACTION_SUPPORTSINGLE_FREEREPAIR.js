@@ -107,8 +107,9 @@ var Constructor = function()
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
-        animation.addSprite("repair", map.getImageSize() / 2, 0, 400, 1.5);
-        animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+        var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+        animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+        animation.addSprite("repair", map.getImageSize() / 2 + 8, 1, 400, 1.7);
 
         repairUnit.refill();
         repairUnit.setHp(repairUnit.getHp() + 1);

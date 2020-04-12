@@ -77,10 +77,23 @@ public slots:
       */
     void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0);
     /**
+     * @brief addBox
+     * @param spriteID
+     * @param offsetX
+     * @param offsetY
+     * @param width
+     * @param heigth
+     * @param color
+     * @param sleepAfterFinish
+     * @param delay
+     */
+    void addBox(QString spriteID, float offsetX, float offsetY, qint32 width, qint32 heigth, qint32 sleepAfterFinish = 0, QColor color = Qt::white);
+    /**
      * @brief addText
      * @param text
+     * @return the width of the text
      */
-    void addText(QString text, float offsetX, float offsetY, float scale, QColor color = QColor(230, 200, 60));
+    qint32 addText(QString text, float offsetX, float offsetY, float scale, QColor color = QColor(230, 200, 60), qint32 priority = 1);
     /**
      * @brief onFinished called when the animation is finished
      */

@@ -362,7 +362,7 @@ void MapSelectionMapsMenue::startGame()
     pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new GameMenue());
+    oxygine::getStage()->addChild(new GameMenue(false, nullptr));
     addRef();
     oxygine::Actor::detach();
     deleteLater();

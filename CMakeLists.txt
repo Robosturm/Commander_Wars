@@ -237,6 +237,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/timer.cpp
         coreengine/userdata.cpp
         coreengine/crashreporter.cpp
+        coreengine/filesupport.cpp
         # tweens
         coreengine/tweentogglevisibility.cpp
         coreengine/tweenwait.cpp
@@ -320,8 +321,7 @@ set(${PROJECT_NAME}_SRCS
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
         multiplayer/gameserver.cpp
-        multiplayer/gamedata.cpp
-        multiplayer/hashing.cpp
+        multiplayer/gamedata.cpp        
 
         #campaign support
         ingamescriptsupport/campaigneditor.cpp

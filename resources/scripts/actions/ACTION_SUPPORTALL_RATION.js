@@ -90,6 +90,7 @@ var Constructor = function()
         var y = unit.getY();
         var animation = null;
         var refillUnit= null;
+        var width = 0;
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
@@ -97,8 +98,9 @@ var Constructor = function()
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
-                animation.addSprite("ration", map.getImageSize() / 2, 0, 400, 1.5);
-                animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
             }
         }
         x = unit.getX() - 1;
@@ -109,8 +111,9 @@ var Constructor = function()
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
-                animation.addSprite("ration", map.getImageSize() / 2, 0, 400, 1.5);
-                animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
             }
         }
         x = unit.getX();
@@ -122,8 +125,9 @@ var Constructor = function()
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
-                animation.addSprite("ration", map.getImageSize() / 2, 0, 400, 1.5);
-                animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
             }
         }
         y = unit.getY() - 1;
@@ -134,8 +138,9 @@ var Constructor = function()
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
-                animation.addSprite("ration", map.getImageSize() / 2, 0, 400, 1.5);
-                animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
+                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
             }
         }
 	};

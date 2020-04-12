@@ -1,9 +1,9 @@
 /* BlurFragmentShader.glsl */
 //precision mediump float;
  
-uniform mediump sampler2D s_texture;
+mediump uniform sampler2D s_texture;
  
-varying mediump vec2 v_texCoord;
+mediump varying vec2 v_texCoord;
  
 void main()
 {

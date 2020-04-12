@@ -16,6 +16,7 @@
 #include "menue/creditsmenue.h"
 #include "menue/wikimenu.h"
 #include "menue/costylemenu.h"
+#include "menue/replaymenu.h"
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/filedialog.h"
@@ -327,8 +328,9 @@ void Mainwindow::replayGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-//            GameMenue* pMenu = new GameMenue(filename, true);
-//            oxygine::getStage()->addChild(pMenu);
+            Console::print("Leaving Main Menue", Console::eDEBUG);
+            ReplayMenu* pMenu = new ReplayMenu(filename);
+            oxygine::getStage()->addChild(pMenu);
 
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();

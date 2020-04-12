@@ -44,10 +44,12 @@
 
 GameMenue* GameMenue::m_pInstance = nullptr;
 
-GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
+GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
       m_SaveGame(saveGame)
 {
+    oxygine::Actor::addChild(GameMap::getInstance());
+    loadHandling();
     m_pNetworkInterface = pNetworkInterface;
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -89,6 +91,7 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
         gameStarted = true;
     }
     loadGameMenue();
+    loadUIButtons();
     startGame();
 }
 
@@ -97,8 +100,16 @@ GameMenue::GameMenue(QString map, bool saveGame)
       gameStarted(true),
       m_SaveGame(saveGame)
 
-{    
+{
+    oxygine::Actor::addChild(GameMap::getInstance());
+    loadHandling();
     loadGameMenue();
+    loadUIButtons();
+}
+
+GameMenue::GameMenue()
+    : InGameMenue()
+{
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -219,6 +230,30 @@ void GameMenue::loadGameMenue()
     addChild(m_IngameInfoBar);
     addChild(m_pPlayerinfo);
 
+    connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
+    connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
+    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
+    connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
+    connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
+    connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
+}
+
+void GameMenue::loadUIButtons()
+{
+    GameMap* pMap = GameMap::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
@@ -256,7 +291,7 @@ void GameMenue::loadGameMenue()
     pButtonBox->addChild(saveGame);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(pButtonBox->getWidth() - 108, 4);
+    exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowExitGame();
@@ -306,27 +341,6 @@ void GameMenue::loadGameMenue()
         });
         pButtonBox->addChild(m_ChatButton);
     }
-
-    connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
-    connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
-    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
-    connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
-    connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
-    connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
-
 }
 
 void GameMenue::updateTimer()
@@ -716,10 +730,13 @@ void GameMenue::actionPerformed()
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
-    pApp->continueThread();
+    if (xyTextInfo.get() != nullptr)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
+        pApp->continueThread();
+    }
 }
 
 void GameMenue::updatePlayerinfo()

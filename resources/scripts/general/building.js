@@ -158,8 +158,9 @@ var BUILDING =
                 if (!unit.isStealthed(map.getCurrentViewPlayer()))
                 {
                     var animation = GameAnimationFactory.createAnimation(x, y);
-                    animation.addSprite("repair", map.getImageSize() / 2, 0, 1400, 1.5);
-                    animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+                    var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+                    animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                    animation.addSprite("repair", map.getImageSize() / 2 + 8, 1, 400, 1.7);
                 }
             }
         }

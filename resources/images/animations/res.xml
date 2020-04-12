@@ -77,6 +77,7 @@
 
 				
 		<!-- static -->
+		<image file="info.png" guideX1="5" guideX2="47" guideY1="5" guideY2="6"/>
 		<image file="ration.png" />
 		<image file="trap.png" />
 		<image file="repair.png" />
