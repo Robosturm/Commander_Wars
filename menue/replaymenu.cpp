@@ -1,3 +1,5 @@
+#include <QMutexLocker>
+
 #include "replaymenu.h"
 
 #include "game/gameanimationfactory.h"
@@ -15,6 +17,9 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
     connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::swapPlay, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
 
     bool valid = m_ReplayRecorder.loadRecord(filename);
     if (valid)
@@ -78,14 +83,30 @@ void ReplayMenu::exitReplay()
 
 void ReplayMenu::nextReplayAction()
 {
-    GameAction* pAction = m_ReplayRecorder.nextAction();
-    if (pAction != nullptr)
+    QMutexLocker locker(&_replayMutex);
+    if (requestPause)
     {
-        performAction(pAction);
+        _paused = true;
+        requestPause = false;
     }
-    else
+    if (!_paused)
     {
-        // todo replay ended
+        GameAction* pAction = m_ReplayRecorder.nextAction();
+
+        float progress = 0.0f;
+        if (m_ReplayRecorder.getRecordSize() > 0)
+        {
+            progress = static_cast<float>(m_ReplayRecorder.getProgess()) / static_cast<float>(m_ReplayRecorder.getRecordSize());
+        }
+        _progressBar->setScrollvalue(progress);
+        if (pAction != nullptr)
+        {
+            performAction(pAction);
+        }
+        else
+        {
+            // todo replay ended
+        }
     }
 }
 
@@ -117,19 +138,57 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
-    pButtonBox->setSize(156, 50);
-    pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
+    pButtonBox->setSize(Settings::getWidth() - m_IngameInfoBar->getWidth(), 50);
+    pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
-    exitGame->setPosition(8, 4);
+    exitGame->setPosition(pButtonBox->getWidth() - 8 - exitGame->getWidth(), 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowExitGame();
     });
     pButtonBox->addChild(exitGame);
 
+    qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
+    if (content < exitGame->getX())
+    {
+        content = exitGame->getX() + 80;
+    }
+
+    qint32 y = 9;
+    _playButton = ObjectManager::createIconButton("play");
+    _playButton->setVisible(false);
+    _pauseButton = ObjectManager::createIconButton("pause");
+    _playButton->setPosition(exitGame->getX() - 4 - _playButton->getWidth(), y);
+    _pauseButton->setPosition(exitGame->getX() - 4 - _pauseButton->getWidth(), y);
+    _playButton->addClickListener([=](oxygine::Event * )
+    {
+        emit sigSwapPlay();
+    });
+    _pauseButton->addClickListener([=](oxygine::Event * )
+    {
+        emit sigSwapPlay();
+    });
+    pButtonBox->addChild(_playButton);
+    pButtonBox->addChild(_pauseButton);
+    oxygine::spButton _fastForwardButton = ObjectManager::createIconButton("fastforward");
+    _fastForwardButton->setPosition(_playButton->getX() - 4 - _fastForwardButton->getWidth(), y);
+    pButtonBox->addChild(_fastForwardButton);
+    _fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
+    {
+        emit sigStartFastForward();
+    });
+    _fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event*)
+    {
+        emit sigStopFastForward();
+    });
+
+    _progressBar = new V_Scrollbar(exitGame->getX() - 80, content);
+    _progressBar->setPosition(8, y);
+    _progressBar->setEnabled(false);
+    pButtonBox->addChild(_progressBar);
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = new oxygine::Box9Sprite();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
@@ -148,4 +207,46 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
+}
+
+void ReplayMenu::swapPlay()
+{
+    QMutexLocker locker(&_replayMutex);
+    if (_playButton->getVisible())
+    {
+        _playButton->setVisible(false);
+        _pauseButton->setVisible(true);
+        requestPause = false;
+        if (_paused)
+        {
+            _paused = false;
+            emit sigActionPerformed();
+        }
+    }
+    else
+    {
+        _playButton->setVisible(true);
+        _pauseButton->setVisible(false);
+        requestPause = true;
+    }
+}
+
+void ReplayMenu::startFastForward()
+{
+    QMutexLocker locker(&_replayMutex);
+    _StoredShowAnimations = Settings::getShowAnimations();
+    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        GameAnimationFactory::finishAllAnimations();
+    }
+    pApp->continueThread();
+}
+
+void ReplayMenu::stopFastForward()
+{
+    QMutexLocker locker(&_replayMutex);
+    Settings::setShowAnimations(_StoredShowAnimations);
 }

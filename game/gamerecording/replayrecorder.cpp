@@ -18,9 +18,12 @@ ReplayRecorder::ReplayRecorder()
 
 ReplayRecorder::~ReplayRecorder()
 {
-    m_recordFile.seek(_countPos);
-    m_stream << _count;
-    m_recordFile.flush();
+    if (m_recording)
+    {
+        m_recordFile.seek(_countPos);
+        m_stream << _count;
+        m_recordFile.flush();
+    }
     m_recordFile.close();
     if (playing)
     {
@@ -91,6 +94,7 @@ bool ReplayRecorder::loadRecord(QString filename)
             _mapPos = m_recordFile.pos();
             GameMap* pMap = new GameMap(m_stream);
             m_stream >> _count;
+            _progress = 0;
             // swap out all ai's / or players with a proxy ai.
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
@@ -108,6 +112,7 @@ GameAction* ReplayRecorder::nextAction()
     {
         if (!m_stream.atEnd())
         {
+            _progress++;
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(m_stream);
             return pAction;
@@ -121,6 +126,7 @@ void ReplayRecorder::seekToStart()
     m_recordFile.seek(_mapPos);
     GameMap* pMap = new GameMap(m_stream);
     m_stream >> _count;
+    _progress = 0;
     // swap out all ai's / or players with a proxy ai.
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {

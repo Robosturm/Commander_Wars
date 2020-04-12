@@ -180,7 +180,9 @@ namespace oxygine
     int EventDispatcher::getListenersCount() const
     {
         if (!_listeners)
+        {
             return 0;
+        }
         return (int)_listeners->size();
     }
 

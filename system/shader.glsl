@@ -29,5 +29,6 @@ lowp uniform sampler2D alpha_texture;
 void program_main_ps()
 {	
 	gl_FragColor = texture2D(base_texture, result_uv) * result_color;
+	gl_FragColor = gl_FragColor + add_color * gl_FragColor.a;
 }
 #endif

@@ -43,6 +43,22 @@ public:
      * @brief seekToStart
      */
     void seekToStart();
+    /**
+     * @brief getProgess
+     * @return
+     */
+    qint32 getProgess()
+    {
+        return _progress;
+    }
+    /**
+     * @brief getRecordSize
+     * @return
+     */
+    qint32 getRecordSize()
+    {
+        return _count;
+    }
 signals:
 
 private:
@@ -50,6 +66,7 @@ private:
     QDataStream m_stream{&m_recordFile};
     QStringList _mods;
     qint32 _count = 0;
+    qint32 _progress = 0;
     qint64 _countPos = 0;
     qint64 _mapPos = 0;
     bool m_recording {false};

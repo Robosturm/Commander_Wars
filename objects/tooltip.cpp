@@ -134,16 +134,6 @@ void Tooltip::disableTooltip()
     hideTooltip();
 }
 
-bool Tooltip::getEnabled() const
-{
-    return m_enabled;
-}
-
-void Tooltip::setEnabled(bool enabled)
-{
-    m_enabled = enabled;
-}
-
 void Tooltip::hideTooltip()
 {
     Mainapp* pApp = Mainapp::getInstance();
