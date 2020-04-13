@@ -112,6 +112,7 @@ GameAction* ReplayRecorder::nextAction()
     {
         if (!m_stream.atEnd())
         {
+
             _progress++;
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(m_stream);

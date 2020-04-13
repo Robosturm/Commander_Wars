@@ -56,7 +56,8 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClickUp(qint32, qint32)
 {
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
+    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+        m_pPlayer == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
@@ -74,7 +75,8 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         return;
     }
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
+    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+        m_pPlayer == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
@@ -266,7 +268,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
     {
         return;
     }
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
+    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+        m_pPlayer == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
@@ -318,7 +321,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             {
                 selectUnit(x, y);
             }
-            else
+            else if (m_pPlayer != nullptr)
             {
                 Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
                 QStringList actions;
@@ -375,10 +378,14 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     }
                 }
             }
-
+            else
+            {
+                delete m_pGameAction;
+            }
         }
         // we want to select an action
-        else if (m_pGameAction->getActionID() == "")
+        else if (m_pGameAction->getActionID() == "" &&
+                 m_pPlayer != nullptr)
         {
             if ((m_pUnitPathFindingSystem != nullptr) &&
                 (m_pUnitPathFindingSystem->isReachable(x, y)) &&
@@ -694,7 +701,9 @@ void HumanPlayerInput::createMarkedMoveFields()
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (pMap->getCurrentPlayer() == m_pPlayer)
+    if ((pMap->getCurrentPlayer() == m_pPlayer ||
+        m_pPlayer == nullptr) &&
+        pMap->onMap(x, y))
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
@@ -1321,44 +1330,47 @@ void HumanPlayerInput::previousSelectOption()
 
 void HumanPlayerInput::autoEndTurn()
 {
-    CO* pCO0 = m_pPlayer->getCO(0);
-    CO* pCO1 = m_pPlayer->getCO(1);
-    if (Settings::getAutoEndTurn() &&
-        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
-        GameAnimationFactory::getAnimationCount() == 0 &&
-        (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
-        (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
+    if (m_pPlayer)
     {
-        GameMap* pMap = GameMap::getInstance();
-        qint32 heigth = pMap->getMapHeight();
-        qint32 width = pMap->getMapWidth();
-        for (qint32 y = 0; y < heigth; y++)
+        CO* pCO0 = m_pPlayer->getCO(0);
+        CO* pCO1 = m_pPlayer->getCO(1);
+        if (Settings::getAutoEndTurn() &&
+            GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
+            GameAnimationFactory::getAnimationCount() == 0 &&
+            (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
+            (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
         {
-            for (qint32 x = 0; x < width; x++)
+            GameMap* pMap = GameMap::getInstance();
+            qint32 heigth = pMap->getMapHeight();
+            qint32 width = pMap->getMapWidth();
+            for (qint32 y = 0; y < heigth; y++)
             {
-                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-                if (pUnit != nullptr && pUnit->getOwner() == m_pPlayer && !pUnit->getHasMoved())
+                for (qint32 x = 0; x < width; x++)
                 {
-                    return;
-                }
-                if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer)
-                {
-                    GameAction action;
-                    action.setTarget(QPoint(x, y));
-                    QStringList actions = pBuilding->getActionList();
-                    for (qint32 i = 0; i < actions.size(); i++)
+                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                    if (pUnit != nullptr && pUnit->getOwner() == m_pPlayer && !pUnit->getHasMoved())
                     {
-                        if (action.canBePerformed(actions[i]))
+                        return;
+                    }
+                    if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer)
+                    {
+                        GameAction action;
+                        action.setTarget(QPoint(x, y));
+                        QStringList actions = pBuilding->getActionList();
+                        for (qint32 i = 0; i < actions.size(); i++)
                         {
-                            return;
+                            if (action.canBePerformed(actions[i]))
+                            {
+                                return;
+                            }
                         }
                     }
                 }
             }
+            GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+            emit performAction(pAction);
         }
-        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
-        emit performAction(pAction);
     }
 }
 

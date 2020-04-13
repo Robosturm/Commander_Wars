@@ -30,6 +30,8 @@ ReplayMenu::ReplayMenu(QString filename)
         loadHandling();
         loadGameMenue();
         loadUIButtons();
+        _HumanInput = new HumanPlayerInput();
+        _HumanInput->init();
         emit sigActionPerformed();
     }
     else
@@ -92,7 +94,7 @@ void ReplayMenu::nextReplayAction()
     if (!_paused)
     {
         GameAction* pAction = m_ReplayRecorder.nextAction();
-
+        _HumanInput->cleanUpInput();
         float progress = 0.0f;
         if (m_ReplayRecorder.getRecordSize() > 0)
         {

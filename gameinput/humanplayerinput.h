@@ -20,6 +20,10 @@
 class GameAction;
 class UnitPathFindingSystem;
 
+class HumanPlayerInput;
+typedef oxygine::intrusive_ptr<HumanPlayerInput> spHumanPlayerInput;
+
+
 class HumanPlayerInput : public BaseGameInputIF
 {
     Q_OBJECT

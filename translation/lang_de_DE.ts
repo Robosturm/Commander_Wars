@@ -3504,17 +3504,17 @@ Version: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="56"/>
+        <location filename="../menue/replaymenu.cpp" line="58"/>
         <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods in Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="118"/>
+        <location filename="../menue/replaymenu.cpp" line="120"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="146"/>
+        <location filename="../menue/replaymenu.cpp" line="148"/>
         <source>Exit</source>
         <translation type="unfinished">Verkassen</translation>
     </message>

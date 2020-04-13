@@ -7,6 +7,7 @@
 		<image file="button_square.png" cols = "3" />
 		<image file="checkbox.png" cols = "4" />
 		<!-- button icons -->
+		<image file="settings.png" />
 		<image file="pause.png" />
 		<image file="play.png" />
 		<image file="fastforward.png" />

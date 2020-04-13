@@ -128,7 +128,7 @@ void RuleSelection::showRuleSelection()
     startWeather->setCurrentItem(pMap->getGameRules()->getStartWeather());
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
     addChild(startWeather);
-    startWeatherChanged(0);
+    startWeatherChanged(pMap->getGameRules()->getStartWeather());
     y += 50;
 
     textField = new Label(textWidth - 10);

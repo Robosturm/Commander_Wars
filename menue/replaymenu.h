@@ -5,6 +5,7 @@
 
 #include "menue/gamemenue.h"
 #include "objects/v_scrollbar.h"
+#include "gameinput/humanplayerinput.h"
 
 class ReplayMenu : public GameMenue
 {
@@ -37,6 +38,7 @@ private:
     oxygine::spButton _playButton;
     oxygine::spButton _pauseButton;
     GameEnums::AnimationMode _StoredShowAnimations = GameEnums::AnimationMode_All;
+    spHumanPlayerInput _HumanInput;
 };
 
 #endif // REPLAYMENU_H

@@ -513,11 +513,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
 qint32 Unit::getMaxRangeAtPosition(QPoint position)
 {
     qint32 points = maxRange + getBonusMaxRange(position);
-    qint32 min = minRange + getBonusMinRange(position);
-    if (min < 1)
-    {
-        min = 1;
-    }
+    qint32 min = getMinRange(position);
     if (points < min)
     {
         points = min;
@@ -543,10 +539,14 @@ qint32 Unit::getBaseMinRange() const
 qint32 Unit::getMinRange(QPoint position)
 {
     qint32 points = minRange + getBonusMinRange(position);
-    qint32 max = maxRange + getBonusMaxRange(position);
-    if (points > max)
+    qint32 maxBonus = getBonusMaxRange(position);
+    if (maxBonus > 0 && points > maxBonus + maxRange)
     {
-        points = max;
+        points = maxBonus + maxRange;
+    }
+    else if (points > maxRange)
+    {
+        points = maxRange;
     }
     if (points < 1)
     {
