@@ -20,8 +20,13 @@ ReplayRecorder::~ReplayRecorder()
 {
     if (m_recording)
     {
+        _dailyMapPos = m_recordFile.pos();
+        _dailyBuffer.seek(0);
+        Filesupport::writeByteArray(m_stream, _dailyBuffer.buffer());
         m_recordFile.seek(_countPos);
         m_stream << _count;
+        m_recordFile.seek(_posOfDailyMapPos);
+        m_stream << _dailyMapPos;
         m_recordFile.flush();
     }
     m_recordFile.close();
@@ -43,6 +48,7 @@ void ReplayRecorder::startRecording()
         QString fileName = "data/records/" + pMap->getMapName() + "-" + currentDate + ".rec";
         m_recordFile.setFileName(fileName);
         m_recordFile.open(QIODevice::WriteOnly);
+        _dailyBuffer.open(QIODevice::ReadWrite);
         m_stream << static_cast<qint32>(data.size());
         for (qint32 i = 0; i < data.size(); i++)
         {
@@ -53,9 +59,11 @@ void ReplayRecorder::startRecording()
         pMap->serializeObject(m_stream);
         _countPos = m_recordFile.pos();
         m_stream << _count;
+        _posOfDailyMapPos = m_recordFile.pos();
+        m_stream << _dailyMapPos;
         m_recordFile.flush();
         m_recording = true;
-
+        _currentDay = pMap->getCurrentDay();
     }
 }
 
@@ -63,9 +71,28 @@ void ReplayRecorder::recordAction(GameAction* pAction)
 {
     if (m_recording)
     {
+        GameMap* pMap = GameMap::getInstance();
+        qint32 curDay = pMap->getCurrentDay();
+        if (_currentDay != curDay && curDay > 1)
+        {
+            _currentDay = curDay;
+            qint64 curPos = _dailyBuffer.pos();
+            qint64 size = 0;
+            _dailyStream << size;
+            GameMap* pMap = GameMap::getInstance();
+            _dailyStream << pMap->getCurrentDay();
+            _dailyStream << _count;
+            _dailyStream << m_recordFile.pos();
+            pMap->serializeObject(_dailyStream);
+            qint64 seekPos = _dailyBuffer.pos();
+            _dailyBuffer.seek(curPos);
+            _dailyStream << (seekPos - curPos);
+            _dailyBuffer.seek(seekPos);
+        }
         pAction->serializeObject(m_stream);
         m_recordFile.flush();
         _count++;
+
     }
 }
 
@@ -94,6 +121,7 @@ bool ReplayRecorder::loadRecord(QString filename)
             _mapPos = m_recordFile.pos();
             GameMap* pMap = new GameMap(m_stream);
             m_stream >> _count;
+            m_stream >> _dailyMapPos;
             _progress = 0;
             // swap out all ai's / or players with a proxy ai.
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -110,9 +138,9 @@ GameAction* ReplayRecorder::nextAction()
 {
     if (playing)
     {
-        if (!m_stream.atEnd())
+        if (!m_stream.atEnd() &&
+            m_recordFile.pos() < _dailyMapPos)
         {
-
             _progress++;
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(m_stream);

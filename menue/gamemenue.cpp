@@ -166,6 +166,34 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     }
 }
 
+Player* GameMenue::getCurrentViewPlayer()
+{
+    GameMap* pMap = GameMap::getInstance();
+    spPlayer pCurrentPlayer = pMap->getCurrentPlayer();
+    if (pCurrentPlayer.get() != nullptr)
+    {
+        qint32 currentPlayerID = pCurrentPlayer->getPlayerID();
+        for (qint32 i = currentPlayerID; i >= 0; i--)
+        {
+            if (pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
+                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                return pMap->getPlayer(i);
+            }
+        }
+        for (qint32 i = pMap->getPlayerCount() - 1; i > currentPlayerID; i--)
+        {
+            if (pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
+                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            {
+                return pMap->getPlayer(i);
+            }
+        }
+        return pCurrentPlayer.get();
+    }
+    return nullptr;
+}
+
 void GameMenue::playerJoined(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
@@ -590,7 +618,7 @@ void GameMenue::skipAnimations()
             case GameEnums::AnimationMode_Ally:
             {
                 Player* pPlayer1 = pMap->getCurrentPlayer();
-                Player* pPlayer2 = pMap->getCurrentViewPlayer();
+                Player* pPlayer2 = getCurrentViewPlayer();
                 // skip animations if the current player is an enemy of the current view player
                 if (pPlayer2->isEnemy(pPlayer1))
                 {

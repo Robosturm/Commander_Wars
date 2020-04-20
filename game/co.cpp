@@ -1106,7 +1106,11 @@ QString CO::getDefeatSentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList sentences = pInterpreter->doFunction(coID, "getDefeatSentences").toVariant().toStringList();
-    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    QString sentence = "";
+    if (sentences.size() > 0)
+    {
+        sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    }
     return sentence;
 }
 
@@ -1114,7 +1118,11 @@ QString CO::getVictorySentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList sentences = pInterpreter->doFunction(coID, "getVictorySentences").toVariant().toStringList();
-    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    QString sentence = "";
+    if (sentences.size() > 0)
+    {
+        sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    }
     return sentence;
 }
 

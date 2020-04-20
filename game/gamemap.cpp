@@ -1244,6 +1244,16 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
     }
 }
 
+Player* GameMap::getCurrentViewPlayer()
+{
+    GameMenue* pMenue = GameMenue::getInstance();
+    if (pMenue != nullptr)
+    {
+        return pMenue->getCurrentViewPlayer();
+    }
+    return getCurrentPlayer();
+}
+
 void GameMap::startOfTurn(Player* pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -1489,32 +1499,6 @@ void GameMap::nextTurn()
     {
         GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
     }
-}
-
-Player* GameMap::getCurrentViewPlayer()
-{
-    if (loaded && m_CurrentPlayer.get() != nullptr)
-    {
-        qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
-        for (qint32 i = currentPlayerID; i >= 0; i--)
-        {
-            if (players[i]->getBaseGameInput() != nullptr &&
-                players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-            {
-                return players[i].get();
-            }
-        }
-        for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
-        {
-            if (players[i]->getBaseGameInput() != nullptr &&
-                players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-            {
-                return players[i].get();
-            }
-        }
-        return m_CurrentPlayer.get();
-    }
-    return nullptr;
 }
 
 void GameMap::initPlayers()

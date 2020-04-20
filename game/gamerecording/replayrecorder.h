@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QDataStream>
+#include <QBuffer>
 
 class GameAction;
 
@@ -69,8 +70,14 @@ private:
     qint32 _progress = 0;
     qint64 _countPos = 0;
     qint64 _mapPos = 0;
+    qint64 _dailyMapPos = 0;
+    qint64 _posOfDailyMapPos = 0;
+
     bool m_recording {false};
     bool playing{false};
+    QBuffer _dailyBuffer;
+    QDataStream _dailyStream{&_dailyBuffer};
+    qint32 _currentDay{0};
 };
 
 #endif // REPLAYRECORDER_H

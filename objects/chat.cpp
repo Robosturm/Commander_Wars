@@ -108,6 +108,7 @@ void Chat::addMessage(QString message, bool local)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    GameMenue* pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     bool show = true;
     if (message.startsWith("@") && pMap.get() != nullptr)
@@ -117,7 +118,7 @@ void Chat::addMessage(QString message, bool local)
         if (target.startsWith(chatTeamTarget))
         {
             qint32 team = target.replace(chatTeamTarget, "").toInt();
-            if (team - 1 != pMap->getCurrentViewPlayer()->getTeam())
+            if (team - 1 != pGamemenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -125,7 +126,7 @@ void Chat::addMessage(QString message, bool local)
         else if (target.startsWith(chatAllyTarget))
         {
             qint32 team = target.replace(chatAllyTarget, "").toInt();
-            if (team != pMap->getCurrentViewPlayer()->getTeam())
+            if (team != pGamemenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -133,7 +134,7 @@ void Chat::addMessage(QString message, bool local)
         else if (target.startsWith(chatNotTeamTarget))
         {
             qint32 team = target.replace(chatNotTeamTarget, "").toInt();
-            if (team == pMap->getCurrentViewPlayer()->getTeam())
+            if (team == pGamemenu->getCurrentViewPlayer()->getTeam())
             {
                 show = false;
             }
@@ -141,7 +142,7 @@ void Chat::addMessage(QString message, bool local)
         else if (target.startsWith(chatPlayerTarget))
         {
             qint32 player = target.replace(chatPlayerTarget, "").toInt();
-            if (player - 1 != pMap->getCurrentViewPlayer()->getPlayerID())
+            if (player - 1 != pGamemenu->getCurrentViewPlayer()->getPlayerID())
             {
                 show = false;
             }
@@ -176,8 +177,10 @@ void Chat::sendData(QString message)
     if (!message.isEmpty())
     {
         QString text;
+        GameMenue* pGamemenu = GameMenue::getInstance();
         spGameMap pMap = GameMap::getInstance();
-        if (message.startsWith("@") && pMap.get() != nullptr)
+        if (message.startsWith("@") && pMap.get() != nullptr &&
+            pGamemenu != nullptr)
         {
             QStringList list = message.split(" ");
             for (qint32 i = 0; i < list.size(); i++)
@@ -186,11 +189,11 @@ void Chat::sendData(QString message)
                 {
                     if (list[i] == chatEnemyTarget)
                     {
-                        list[i] = chatNotTeamTarget + QString::number(pMap->getCurrentViewPlayer()->getTeam());
+                        list[i] = chatNotTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
                     }
                     else if (list[i] == chatAllyTarget)
                     {
-                        list[i] = chatTeamTarget + QString::number(pMap->getCurrentViewPlayer()->getTeam());
+                        list[i] = chatTeamTarget + QString::number(pGamemenu->getCurrentViewPlayer()->getTeam());
                     }
                     text += list[i] + " " + Settings::getUsername() + ": ";
                 }

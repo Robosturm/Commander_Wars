@@ -549,6 +549,11 @@ public slots:
      */
     Player* getCurrentPlayer();
     /**
+     * @brief getCurrentViewPlayer
+     * @return
+     */
+    Player* getCurrentViewPlayer();
+    /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
      */
@@ -630,12 +635,7 @@ public slots:
     inline GameRules* getGameRules()
     {
         return m_Rules.get();
-    }
-    /**
-     * @brief getCurrentViewPlayer
-     * @return
-     */
-    Player* getCurrentViewPlayer();
+    }    
     /**
      * @brief updateUnitIcons
      */

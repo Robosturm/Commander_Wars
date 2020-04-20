@@ -62,7 +62,11 @@ public:
      */
     virtual void autoScroll() override;
     Chat* getChat() const;
-
+    /**
+     * @brief getCurrentViewPlayer
+     * @return
+     */
+    virtual Player* getCurrentViewPlayer();
 signals:
     void sigActionPerformed();
     void sigGameStarted();

@@ -384,8 +384,9 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             }
         }
         // we want to select an action
-        else if (m_pGameAction->getActionID() == "" &&
-                 m_pPlayer != nullptr)
+        else if (m_pPlayer != nullptr &&
+                 m_pGameAction != nullptr &&
+                 m_pGameAction->getActionID() == "")
         {
             if ((m_pUnitPathFindingSystem != nullptr) &&
                 (m_pUnitPathFindingSystem->isReachable(x, y)) &&

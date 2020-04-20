@@ -7,9 +7,11 @@
 #include "menue/mainwindow.h"
 
 #include "objects/dialogmessagebox.h"
+#include "objects/dropdownmenu.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+#include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)
     : GameMenue()
@@ -20,6 +22,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::swapPlay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
 
     bool valid = m_ReplayRecorder.loadRecord(filename);
     if (valid)
@@ -127,6 +130,11 @@ void ReplayMenu::showExitGame()
     pApp->continueThread();
 }
 
+Player* ReplayMenu::getCurrentViewPlayer()
+{
+    return &_Viewplayer;
+}
+
 void ReplayMenu::loadUIButtons()
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -186,8 +194,15 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
+    _configButton = ObjectManager::createIconButton("settings");
+    _configButton->setPosition(_fastForwardButton->getX() - 4 - _configButton->getWidth(), y);
+    _configButton->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowConfig();
+    });
+    pButtonBox->addChild(_configButton);
 
-    _progressBar = new V_Scrollbar(exitGame->getX() - 80, content);
+    _progressBar = new V_Scrollbar(_configButton->getX() - 10, content);
     _progressBar->setPosition(8, y);
     _progressBar->setEnabled(false);
     pButtonBox->addChild(_progressBar);
@@ -251,4 +266,102 @@ void ReplayMenu::stopFastForward()
 {
     QMutexLocker locker(&_replayMutex);
     Settings::setShowAnimations(_StoredShowAnimations);
+}
+
+void ReplayMenu::showConfig()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (_pauseButton->getVisible())
+    {
+        swapPlay();
+    }
+
+    spGenericBox pBox = new GenericBox();
+
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+                         QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
+    pPanel->setPosition(30, 30);
+    pBox->addChild(pPanel);
+    qint32 width = 300;
+    qint32 y = 10;
+    QVector<qint32> teams;
+    QVector<QString> teamNames;
+    GameMap* pMap = GameMap::getInstance();
+    teamNames.append(tr("Current Team"));
+    teamNames.append(tr("All Teams"));
+    teamNames.append(tr("Map"));
+    qint32 viewType = _Viewplayer.getViewType();
+    bool found = false;
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        qint32 team = pMap->getPlayer(i)->getTeam();
+        if (!teams.contains(team))
+        {
+            if (team == viewType && !found)
+            {
+                viewType = teamNames.size();
+                found = true;
+            }
+            teams.append(team);
+            teamNames.append(tr("Team ") + QString::number(team + 1));
+        }
+    }
+    spLabel pText = new Label(width - 10);
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Teamview:"));
+    pText->setPosition(10, y);
+    pPanel->addItem(pText);
+    spDropDownmenu dropDown = new DropDownmenu(300, teamNames);
+    dropDown->setPosition(width, y);
+    pPanel->addItem(dropDown);
+
+    if (viewType < 0)
+    {
+        dropDown->setCurrentItem(viewType - Viewplayer::ViewType::CurrentTeam);
+    }
+    else
+    {
+        dropDown->setCurrentItem(viewType);
+    }
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, &ReplayMenu::setViewTeam, Qt::QueuedConnection);
+
+    addChild(pBox);
+    pApp->continueThread();
+}
+
+void ReplayMenu::setViewTeam(qint32 item)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    if (item <= -Viewplayer::ViewType::CurrentTeam)
+    {
+        _Viewplayer.setViewType(item + Viewplayer::ViewType::CurrentTeam);
+    }
+    else
+    {
+        QVector<qint32> teams;
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            qint32 team = pMap->getPlayer(i)->getTeam();
+            if (!teams.contains(team))
+            {
+                if (teams.size() == item + Viewplayer::ViewType::CurrentTeam)
+                {
+                    _Viewplayer.setViewType(team);
+                    break;
+                }
+                teams.append(team);
+            }
+        }
+    }
+    pMap->getGameRules()->createFogVision();
+    pApp->continueThread();
 }

@@ -13,6 +13,7 @@
 #include "coreengine/tweentogglevisibility.h"
 
 #include "resource_management/gamemanager.h"
+#include "menue/gamemenue.h"
 
 Minimap::Minimap()
     : QObject()
@@ -47,7 +48,13 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
         setSize(ImageSize * width, ImageSize * heigth);
-        Player* pPlayer = pMap->getCurrentViewPlayer();
+        Player* pPlayer = pMap->getCurrentPlayer();
+        GameMenue* pGamemenu = GameMenue::getInstance();
+        if (pGamemenu != nullptr)
+        {
+            pPlayer = pGamemenu->getCurrentViewPlayer();
+        }
+
         GameManager* pGameManager = GameManager::getInstance();
         for (qint32 x = 0; x < width; x++)
         {

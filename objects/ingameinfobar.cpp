@@ -14,6 +14,7 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/battleanimationsprite.h"
+#include "menue/gamemenue.h"
 
 #include "objects/label.h"
 
@@ -87,6 +88,7 @@ void IngameInfoBar::updatePlayerInfo()
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     GameMap* pMap = GameMap::getInstance();
+    GameMenue* pGamemenu = GameMenue::getInstance();
     Player* pPlayer = pMap->getCurrentPlayer();
     oxygine::spSprite pSprite = new oxygine::Sprite();
     CO* pCO = pPlayer->getCO(0);
@@ -226,7 +228,7 @@ void IngameInfoBar::updatePlayerInfo()
     count = pPlayer->getFunds();
     pTextfield = new Label(width);
     pTextfield->setStyle(style);
-    Player* pViewPlayer = pMap->getCurrentViewPlayer();
+    Player* pViewPlayer = pGamemenu->getCurrentViewPlayer();
     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
         pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
     {
@@ -280,7 +282,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
-        Player* pPlayer = pMap->getCurrentViewPlayer();
+        GameMenue* pGamemenu = GameMenue::getInstance();
+        Player* pPlayer = pGamemenu->getCurrentViewPlayer();
         GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);
         if (visionHide != GameEnums::VisionType_Shrouded)
         {
@@ -360,7 +363,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             bool HpHidden = false;
             if (pUnit != nullptr)
             {
-                HpHidden = pUnit->getHpHidden(pMap->getCurrentViewPlayer());
+                HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
                 float count = pUnit->getHp();
                 qint32 hpRounded = pUnit->getHpRounded();
                 float countMax = 10.0f;

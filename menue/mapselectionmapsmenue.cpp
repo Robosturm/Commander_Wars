@@ -391,6 +391,10 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f);
     pGameMap->setMapName(mapName);
+    if (mapName.isEmpty())
+    {
+        pGameMap->setMapName("Random Map");
+    }
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);

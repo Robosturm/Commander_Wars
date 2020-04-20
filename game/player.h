@@ -353,21 +353,21 @@ public slots:
      * @param x
      * @param y
      */
-    bool getFieldVisible(qint32 x, qint32 y);
+    virtual bool getFieldVisible(qint32 x, qint32 y);
     /**
      * @brief getFieldVisibleType
      * @param x
      * @param y
      * @return
      */
-    GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y);
+    virtual GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y);
     /**
      * @brief getFieldDirectVisible
      * @param x
      * @param y
      * @return if true a stealthed unit will be made visible by this players view
      */
-    bool getFieldDirectVisible(qint32 x, qint32 y);
+    virtual bool getFieldDirectVisible(qint32 x, qint32 y);
     /**
      * @brief loadVisionFields
      */

@@ -284,6 +284,8 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationpower.cpp
         game/gameanimationnextday.cpp
         game/battleanimation.cpp
+        # replay/observer
+        game/viewplayer.cpp
 
         # game input
         gameinput/basegameinputif.cpp
