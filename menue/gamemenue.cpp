@@ -51,6 +51,8 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
+    loadGameMenue();
+    loadUIButtons();
     if (m_pNetworkInterface.get() != nullptr)
     {
         GameMap* pMap = GameMap::getInstance();
@@ -89,11 +91,9 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     }
     else
     {
-        startGame();
         gameStarted = true;
+        startGame();
     }
-    loadGameMenue();
-    loadUIButtons();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -501,97 +501,118 @@ void GameMenue::performAction(GameAction* pGameAction)
     pApp->suspendThread();
     if (pGameAction != nullptr)
     {
-        m_pStoredAction = nullptr;
         GameMap* pMap = GameMap::getInstance();
-        pMap->getGameRules()->pauseRoundTime();
-        if (!pGameAction->getIsLocal() &&
-            (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
+        bool multiplayer = !pGameAction->getIsLocal() &&
+                           m_pNetworkInterface.get() != nullptr &&
+                           gameStarted;
+
+        if (multiplayer &&
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
+            m_syncCounter + 1 != pGameAction->getSyncCounter())
         {
-            pGameAction = doMultiTurnMovement(pGameAction);
+            gameStarted = false;
+            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
+            addChild(pDialogMessageBox);
         }
-        QVector<QPoint> path = pGameAction->getMovePath();
-        Unit * pMoveUnit = pGameAction->getTargetUnit();
-        if (path.size() > 0 && pMoveUnit != nullptr)
+        else
         {
-            QVector<QPoint> trapPath;
-            qint32 trapPathCost = 0;
-            for (qint32 i = path.size() - 1; i >= 0; i--)
+            if (multiplayer &&
+                pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
-                // check the movepath for a trap
-                QPoint point = path[i];
-                Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
-                if ((pUnit != nullptr) &&
-                    (pUnit->isStealthed(pMap->getCurrentPlayer())))
+                m_syncCounter = pGameAction->getSyncCounter();
+            }
+            m_pStoredAction = nullptr;
+            pMap->getGameRules()->pauseRoundTime();
+            if (!pGameAction->getIsLocal() &&
+                (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
+            {
+                pGameAction = doMultiTurnMovement(pGameAction);
+            }
+            QVector<QPoint> path = pGameAction->getMovePath();
+            Unit * pMoveUnit = pGameAction->getTargetUnit();
+            if (path.size() > 0 && pMoveUnit != nullptr)
+            {
+                QVector<QPoint> trapPath;
+                qint32 trapPathCost = 0;
+                for (qint32 i = path.size() - 1; i >= 0; i--)
                 {
-                    while (trapPath.size() > 1)
+                    // check the movepath for a trap
+                    QPoint point = path[i];
+                    Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+                    if ((pUnit != nullptr) &&
+                        (pUnit->isStealthed(pMap->getCurrentPlayer())))
                     {
-                        QPoint currentPoint = trapPath[0];
-                        QPoint previousPoint = trapPath[1];
-                        Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
-                        qint32 moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
-                                                                      previousPoint.x(), previousPoint.y());
-                        if (pUnit != nullptr || moveCost == 0)
+                        while (trapPath.size() > 1)
                         {
-                            trapPathCost -= moveCost;
-                            trapPath.pop_front();
+                            QPoint currentPoint = trapPath[0];
+                            QPoint previousPoint = trapPath[1];
+                            Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
+                            qint32 moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
+                                                                          previousPoint.x(), previousPoint.y());
+                            if (pUnit != nullptr || moveCost == 0)
+                            {
+                                trapPathCost -= moveCost;
+                                trapPath.pop_front();
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
-                        else
-                        {
-                            break;
-                        }
+                        GameAction* pTrapAction = new GameAction("ACTION_TRAP");
+                        pTrapAction->setMovepath(trapPath, trapPathCost);
+                        pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
+                        pTrapAction->writeDataInt32(point.x());
+                        pTrapAction->writeDataInt32(point.y());
+                        pTrapAction->setTarget(pGameAction->getTarget());
+                        delete pGameAction;
+                        pGameAction = pTrapAction;
+                        break;
                     }
-                    GameAction* pTrapAction = new GameAction("ACTION_TRAP");
-                    pTrapAction->setMovepath(trapPath, trapPathCost);
-                    pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
-                    pTrapAction->writeDataInt32(point.x());
-                    pTrapAction->writeDataInt32(point.y());
-                    pTrapAction->setTarget(pGameAction->getTarget());
-                    delete pGameAction;
-                    pGameAction = pTrapAction;
-                    break;
-                }
-                else
-                {
-                    trapPath.push_front(point);
-                    if (point.x() != pMoveUnit->getX() ||
-                        point.y() != pMoveUnit->getY())
+                    else
                     {
-                        QPoint previousPoint = path[i + 1];
-                        trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
+                        trapPath.push_front(point);
+                        if (point.x() != pMoveUnit->getX() ||
+                            point.y() != pMoveUnit->getY())
+                        {
+                            QPoint previousPoint = path[i + 1];
+                            trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
+                        }
                     }
                 }
             }
-        }
-        // send action to other players if needed
-        if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
-            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi &&
-            gameStarted)
-        {
-            QByteArray data;
-            QDataStream stream(&data, QIODevice::WriteOnly);
-            stream << pMap->getCurrentPlayer()->getPlayerID();
-            pGameAction->serializeObject(stream);
-            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
-        }
-        // record action if required
-        m_ReplayRecorder.recordAction(pGameAction);
-        // perform action
-        Mainapp::seed(pGameAction->getSeed());
-        Mainapp::setUseSeed(true);
-        if (pMoveUnit != nullptr)
-        {
-            pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
-        }
-        m_CurrentActionUnit = pMoveUnit;
-        pGameAction->perform();
-        // clean up the action
-        delete pGameAction;
-        skipAnimations();
-        if (pMap->getCurrentPlayer()->getIsDefeated())
-        {
-            GameAction* pAction = new GameAction();
-            pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
-            performAction(pAction);
+            // send action to other players if needed
+            if (multiplayer &&
+                pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+            {
+                m_syncCounter++;
+                pGameAction->setSyncCounter(m_syncCounter);
+                QByteArray data;
+                QDataStream stream(&data, QIODevice::WriteOnly);
+                stream << pMap->getCurrentPlayer()->getPlayerID();
+                pGameAction->serializeObject(stream);
+                emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
+            }
+            // record action if required
+            m_ReplayRecorder.recordAction(pGameAction);
+            // perform action
+            Mainapp::seed(pGameAction->getSeed());
+            Mainapp::setUseSeed(true);
+            if (pMoveUnit != nullptr)
+            {
+                pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
+            }
+            m_CurrentActionUnit = pMoveUnit;
+            pGameAction->perform();
+            // clean up the action
+            delete pGameAction;
+            skipAnimations();
+            if (pMap->getCurrentPlayer()->getIsDefeated())
+            {
+                GameAction* pAction = new GameAction();
+                pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+                performAction(pAction);
+            }
         }
     }
     pApp->continueThread();
@@ -1187,6 +1208,11 @@ void GameMenue::keyInputAll(Qt::Key cur)
         }
         pApp->continueThread();
     }
+}
+
+qint64 GameMenue::getSyncCounter() const
+{
+    return m_syncCounter;
 }
 
 Chat* GameMenue::getChat() const

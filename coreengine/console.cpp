@@ -51,6 +51,7 @@ const QString Console::functions[] =
     QString("createSprites"),
     QString("updateMaskImages"),
     QString("help"),
+    QString("logActions"),
     QString("")
 };
 
@@ -260,7 +261,6 @@ void Console::toggleView()
     oxygine::Actor::setVisible(show);
     if (show)
     {
-        Mainapp* pApp = Mainapp::getInstance();
         m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
     }
     toggled = true;
@@ -288,6 +288,11 @@ void Console::help(qint32 start, qint32 end)
         }
         index++;
     }
+}
+
+void Console::logActions(bool log)
+{
+    Settings::setLogActions(log);
 }
 
 void Console::createfunnymessage(qint32 message){

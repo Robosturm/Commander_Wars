@@ -64,6 +64,16 @@ void GameAction::reset()
     actionData.setDevice(buffer);
 }
 
+qint64 GameAction::getSyncCounter() const
+{
+    return m_syncCounter;
+}
+
+void GameAction::setSyncCounter(const qint64 &syncCounter)
+{
+    m_syncCounter = syncCounter;
+}
+
 void GameAction::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
 {
     m_MultiTurnPath = MultiTurnPath;
@@ -76,11 +86,46 @@ void GameAction::setTargetUnit(Unit *pTargetUnit)
 
 void GameAction::perform()
 {
+    if (Settings::getLogActions())
+    {
+        printAction();
+    }
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     pInterpreter->doFunction(m_actionID, function1, args1);
+}
+
+void GameAction::printAction()
+{
+    Console::print("Performing Action " + m_actionID, Console::eINFO);
+    Console::print("Target X " + QString::number(m_target.x()) +
+                   "Target Y " + QString::number(m_target.y()), Console::eINFO);
+    Console::print("Costs " + QString::number(costs), Console::eINFO);
+    Console::print("Seed " + QString::number(seed), Console::eINFO);
+    Unit* pUnit = getTargetUnit();
+    Building* pBuilding = getTargetBuilding();
+    if (pUnit != nullptr)
+    {
+        Console::print("Unit " + pUnit->getUnitID(), Console::eINFO);
+    }
+    else if (pBuilding != nullptr)
+    {
+        Console::print("Building " + pBuilding->getBuildingID(), Console::eINFO);
+    }
+    if (m_Movepath.size() > 0)
+    {
+        Console::print("Moving to X " + QString::number(m_Movepath[0].x()) +
+                       "Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
+    }
+    QString data;
+    QByteArray bytes = buffer->data();
+    for (qint32 i = 0; i < bytes.size(); i++)
+    {
+        data += "0x" + QString::number(bytes[i])+ " ";
+    }
+    Console::print("Data " + data, Console::eINFO);
 }
 
 void GameAction::setActionID(QString actionID)
@@ -380,6 +425,7 @@ void GameAction::serializeObject(QDataStream& stream)
     {
         stream << m_MultiTurnPath[i];
     }
+    stream << m_syncCounter;
 }
 
 void GameAction::deserializeObject(QDataStream& stream)
@@ -420,4 +466,5 @@ void GameAction::deserializeObject(QDataStream& stream)
             m_MultiTurnPath.append(point);
         }
     }
+    stream >> m_syncCounter;
 }

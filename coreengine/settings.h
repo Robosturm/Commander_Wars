@@ -36,6 +36,9 @@ public:
     static QStringList getActiveModVersions();
 
 
+    static bool getLogActions();
+    static void setLogActions(bool LogActions);
+
 public slots:
 
     static QString getLanguage();
@@ -299,6 +302,9 @@ private:
     static QStringList m_activeModVersions;
 
     static QTranslator m_Translator;
+
+    // logging
+    static bool m_LogActions;
 };
 
 #endif // SETTINGS_H

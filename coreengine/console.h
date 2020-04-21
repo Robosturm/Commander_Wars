@@ -75,6 +75,15 @@ public slots:
      * @param end
      */
     void help(qint32 start = 0, qint32 end = -1);
+    /**
+     * @brief logActions
+     * @param log
+     */
+    void logActions(bool log);
+    /**
+     * @brief update
+     * @param us
+     */
     virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief KeyInput event called when a key is pressed

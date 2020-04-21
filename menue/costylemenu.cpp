@@ -51,7 +51,7 @@ COStyleMenu::COStyleMenu()
 
     oxygine::spButton pButtonEdit = ObjectManager::createButton(tr("Edit CO"));
     pButtonEdit->attachTo(this);
-    pButtonEdit->setPosition(Settings::getWidth() - pButtonExit->getWidth() - 20, Settings::getHeight() - pButtonExit->getHeight() - 10);
+    pButtonEdit->setPosition(Settings::getWidth() - pButtonEdit->getWidth() - 20, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonEdit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigEditCOStyle();

@@ -41,7 +41,7 @@ ReplayMenu::ReplayMenu(QString filename)
         loadUIButtons();
         _HumanInput = new HumanPlayerInput();
         _HumanInput->init();
-
+        gameStarted = true;
         emit sigActionPerformed();
     }
     else

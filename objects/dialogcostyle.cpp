@@ -105,7 +105,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(tr("Predefined Styles"));

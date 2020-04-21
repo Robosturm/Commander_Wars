@@ -165,7 +165,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
         }
         m_TextField->setHtmlText(m_Text.mid(0, writePosition));
         textHeight = m_TextField->getTextRect().getHeight();
-        if (textHeight > nextHeight)
+        if (textHeight > nextHeight && autoFinishMs < 0)
         {
             writePosition -= 1;
             updateShownText();

@@ -59,6 +59,16 @@ public:
     {
         return 2;
     }
+    /**
+     * @brief getSyncCounter
+     * @return
+     */
+    qint64 getSyncCounter() const;
+    /**
+     * @brief setSyncCounter
+     * @param syncCounter
+     */
+    void setSyncCounter(const qint64 &syncCounter);
 
 signals:
 
@@ -285,6 +295,8 @@ public slots:
      * @brief reset
      */
     void reset();
+protected:
+    void printAction();
 private:
     QString m_actionID;
     /**
@@ -318,6 +330,8 @@ private:
     QVector<QPoint> m_MultiTurnPath;
 
     bool isLocal{false};
+
+    qint64 m_syncCounter{0};
 };
 
 #endif // GAMEACTION_H

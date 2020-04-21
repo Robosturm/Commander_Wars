@@ -74,6 +74,9 @@ QStringList Settings::m_activeModVersions;
 Settings* Settings::m_pInstance = nullptr;
 QTranslator Settings::m_Translator;
 
+// logging
+bool Settings::m_LogActions = false;
+
 Settings* Settings::getInstance()
 {
     if (m_pInstance == nullptr)
@@ -86,6 +89,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getLogActions()
+{
+    return m_LogActions;
+}
+
+void Settings::setLogActions(bool LogActions)
+{
+    m_LogActions = LogActions;
 }
 
 QString Settings::getLanguage()
@@ -447,6 +460,11 @@ void Settings::loadSettings()
         }
     }
     settings.endGroup();
+
+    // logging
+    settings.beginGroup("Logging");
+    m_Server  = settings.value("LogActions", false).toBool();
+    settings.endGroup();
 }
 
 void Settings::saveSettings(){
@@ -524,6 +542,11 @@ void Settings::saveSettings(){
     // mods
     settings.beginGroup("Mods");    
     settings.setValue("Mods",                    getModConfigString());
+    settings.endGroup();
+
+    // logging
+    settings.beginGroup("Logging");
+    settings.setValue("LogActions",               m_LogActions);
     settings.endGroup();
 }
 

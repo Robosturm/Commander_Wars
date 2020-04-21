@@ -60,6 +60,11 @@ public:
      * @return
      */
     virtual Player* getCurrentViewPlayer();
+    /**
+     * @brief getSyncCounter
+     * @return
+     */
+    qint64 getSyncCounter() const;
 signals:
     void sigActionPerformed();
     void sigGameStarted();
@@ -207,6 +212,8 @@ protected:
     QTimer m_UpdateTimer;
     GameAction* m_pStoredAction{nullptr};
     spUnit m_CurrentActionUnit{nullptr};
+
+    qint64 m_syncCounter{0};
 };
 
 #endif // GAMEMENUE_H
