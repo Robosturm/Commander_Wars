@@ -27,9 +27,6 @@ public:
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue();
     virtual ~GameMenue();
-
-
-
     static GameMenue* getInstance()
     {
         return m_pInstance;
@@ -185,6 +182,7 @@ protected slots:
 protected:
     void loadUIButtons();
     void loadGameMenue();
+    void connectMap();
     void keyInputAll(Qt::Key cur);
 protected:
     ReplayRecorder m_ReplayRecorder;

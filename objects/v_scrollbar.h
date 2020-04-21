@@ -45,6 +45,15 @@ signals:
      * @param value
      */
     void sigChangeScrollValue(float value);
+    /**
+     * @brief sigStartEditValue
+     */
+    void sigStartEditValue();
+    /**
+     * @brief sigEndEditValue
+     * @param value
+     */
+    void sigEndEditValue(float value);
 public slots:
     void changeScrollValue(float value);
 private:

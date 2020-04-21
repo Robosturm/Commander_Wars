@@ -8,6 +8,7 @@
 
 #include "objects/dialogmessagebox.h"
 #include "objects/dropdownmenu.h"
+#include "objects/slider.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
@@ -27,6 +28,11 @@ ReplayMenu::ReplayMenu(QString filename)
     bool valid = m_ReplayRecorder.loadRecord(filename);
     if (valid)
     {
+        // store animation modes
+        _storedAnimMode = Settings::getShowAnimations();
+        _storedBatteAnimMode = Settings::getBattleAnimations();
+        _storedAnimationSpeed = Settings::getAnimationSpeedValue();
+        _storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         GameMap* pMap = GameMap::getInstance();
         oxygine::Actor::addChild(pMap);
         pMap->updateSprites();
@@ -35,6 +41,7 @@ ReplayMenu::ReplayMenu(QString filename)
         loadUIButtons();
         _HumanInput = new HumanPlayerInput();
         _HumanInput->init();
+
         emit sigActionPerformed();
     }
     else
@@ -45,6 +52,10 @@ ReplayMenu::ReplayMenu(QString filename)
 
 ReplayMenu::~ReplayMenu()
 {
+    Settings::setShowAnimations(_storedAnimMode);
+    Settings::setBattleAnimations(_storedBatteAnimMode);
+    Settings::setAnimationSpeed(_storedAnimationSpeed);
+    Settings::setBattleAnimationSpeed(_storedBattleAnimationSpeed);
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -58,7 +69,7 @@ void ReplayMenu::showRecordInvalid()
     {
         modList += mod + "\n";
     }
-    spDialogMessageBox pExit = new DialogMessageBox(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods in Replay:") + "\n" +
+    spDialogMessageBox pExit = new DialogMessageBox(tr("The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:") + "\n" +
                                                     modList, true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
@@ -89,12 +100,16 @@ void ReplayMenu::exitReplay()
 void ReplayMenu::nextReplayAction()
 {
     QMutexLocker locker(&_replayMutex);
-    if (requestPause)
+    if (_requestPause)
     {
         _paused = true;
-        requestPause = false;
+        _requestPause = false;
     }
-    if (!_paused)
+    if (_seekDay > 0)
+    {
+        seekToDay(_seekDay);
+    }
+    else if (!_paused)
     {
         GameAction* pAction = m_ReplayRecorder.nextAction();
         _HumanInput->cleanUpInput();
@@ -110,7 +125,9 @@ void ReplayMenu::nextReplayAction()
         }
         else
         {
-            // todo replay ended
+            swapPlay();
+            _paused = true;
+            _requestPause = false;
         }
     }
 }
@@ -137,6 +154,7 @@ Player* ReplayMenu::getCurrentViewPlayer()
 
 void ReplayMenu::loadUIButtons()
 {
+    loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -160,12 +178,6 @@ void ReplayMenu::loadUIButtons()
         emit sigShowExitGame();
     });
     pButtonBox->addChild(exitGame);
-
-    qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
-    if (content < exitGame->getX())
-    {
-        content = exitGame->getX() + 80;
-    }
 
     qint32 y = 9;
     _playButton = ObjectManager::createIconButton("play");
@@ -202,9 +214,19 @@ void ReplayMenu::loadUIButtons()
     });
     pButtonBox->addChild(_configButton);
 
+    qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
+    if (content < exitGame->getX())
+    {
+        content = exitGame->getX() + 80;
+    }
     _progressBar = new V_Scrollbar(_configButton->getX() - 10, content);
+    connect(_progressBar.get(), &V_Scrollbar::sigScrollValueChanged, this, &ReplayMenu::seekChanged, Qt::QueuedConnection);
+    connect(_progressBar.get(), &V_Scrollbar::sigStartEditValue, this, &ReplayMenu::startSeeking, Qt::QueuedConnection);
+    connect(_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
+    _progressBar->setContentWidth(content);
     _progressBar->setPosition(8, y);
-    _progressBar->setEnabled(false);
+    _progressBar->setScrollspeed((_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
+
     pButtonBox->addChild(_progressBar);
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = new oxygine::Box9Sprite();
@@ -226,6 +248,112 @@ void ReplayMenu::loadUIButtons()
     addChild(pButtonBox);
 }
 
+void ReplayMenu::loadSeekUi()
+{
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    oxygine::spBox9Sprite pDayBox = new oxygine::Box9Sprite();
+    pDayBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pDayBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pDayBox->setResAnim(pAnim);
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    _seekDayLabel = new Label(140);
+    _seekDayLabel->setStyle(style);
+    _seekDayLabel->setHtmlText(tr("Day: "));
+    _seekDayLabel->setPosition(8, 8);
+    pDayBox->addChild(_seekDayLabel);
+    pDayBox->setSize(160, 50);
+    pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getHeight() + 6 - pDayBox->getHeight());
+    pDayBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(pDayBox);
+    _seekActor = pDayBox;
+    _seekActor->setVisible(false);
+}
+
+void ReplayMenu::startSeeking()
+{
+    QMutexLocker locker(&_replayMutex);
+    if (!_paused && !_requestPause)
+    {
+        _seekPause = true;
+        swapPlay();
+    }
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    _StoredShowAnimations = Settings::getShowAnimations();
+    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
+    if (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        GameAnimationFactory::finishAllAnimations();
+    }
+    Settings::setShowAnimations(_StoredShowAnimations);
+    _seeking = true;
+    pApp->continueThread();
+}
+
+void ReplayMenu::seekChanged(float value)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    _seekActor->setVisible(true);
+    qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
+    qint32 day = m_ReplayRecorder.getDayFromPosition(count);
+    _seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
+    pApp->continueThread();
+}
+
+void ReplayMenu::seekRecord(float value)
+{
+    QMutexLocker locker(&_replayMutex);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
+    qint32 day = m_ReplayRecorder.getDayFromPosition(count);
+    if (_paused)
+    {
+        seekToDay(day);
+    }
+    else
+    {
+        _seekDay = day;
+    }
+    _seekActor->setVisible(false);
+    _seeking = false;
+    pApp->continueThread();
+}
+
+void ReplayMenu::seekToDay(qint32 day)
+{
+    QMutexLocker locker(&_replayMutex);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    _seekDay = -1;
+
+    GameMap* pMap = GameMap::getInstance();
+    auto pos = pMap->getPosition();
+    m_ReplayRecorder.seekToDay(day);
+    pMap = GameMap::getInstance();
+    addChild(pMap);
+    pMap->setPosition(pos);
+    pMap->updateSprites();
+    pMap->getGameRules()->createFogVision();
+    connectMap();
+    connectMapCursor();
+    pApp->continueThread();
+    if (_seekPause)
+    {
+        swapPlay();
+    }
+}
+
 void ReplayMenu::swapPlay()
 {
     QMutexLocker locker(&_replayMutex);
@@ -233,7 +361,7 @@ void ReplayMenu::swapPlay()
     {
         _playButton->setVisible(false);
         _pauseButton->setVisible(true);
-        requestPause = false;
+        _requestPause = false;
         if (_paused)
         {
             _paused = false;
@@ -244,17 +372,17 @@ void ReplayMenu::swapPlay()
     {
         _playButton->setVisible(true);
         _pauseButton->setVisible(false);
-        requestPause = true;
+        _requestPause = true;
     }
 }
 
 void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&_replayMutex);
-    _StoredShowAnimations = Settings::getShowAnimations();
-    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    _StoredShowAnimations = Settings::getShowAnimations();
+    Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
@@ -289,7 +417,7 @@ void ReplayMenu::showConfig()
                          QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
     pBox->addChild(pPanel);
-    qint32 width = 300;
+    qint32 width = 450;
     qint32 y = 10;
     QVector<qint32> teams;
     QVector<QString> teamNames;
@@ -331,6 +459,82 @@ void ReplayMenu::showConfig()
         dropDown->setCurrentItem(viewType);
     }
     connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, &ReplayMenu::setViewTeam, Qt::QueuedConnection);
+    y += 40;
+
+    spLabel pTextfield = new Label(800);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Gameplay Settings"));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    y += 40;
+
+    pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Ingame Animations: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
+                             tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
+                             tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
+    spDropDownmenu pAnimationMode = new DropDownmenu(450, items);
+    pAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getShowAnimations()));
+    pAnimationMode->setPosition(width - 130, y);
+    pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
+    pPanel->addItem(pAnimationMode);
+    connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setShowAnimations(static_cast<GameEnums::AnimationMode>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Battle Animations: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    items = {tr("Detailed"), tr("Overworld")};
+    spDropDownmenu pBattleAnimationMode = new DropDownmenu(450, items);
+    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
+    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimations()));
+    pBattleAnimationMode->setPosition(width - 130, y);
+    pPanel->addItem(pBattleAnimationMode);
+    connect(pBattleAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setBattleAnimations(static_cast<GameEnums::BattleAnimationMode>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Animation Speed: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spSlider pAnimationSpeed = new Slider(Settings::getWidth() - 20 - width, 1, 100, "");
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
+    pAnimationSpeed->setPosition(width - 130, y);
+    pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
+    pPanel->addItem(pAnimationSpeed);
+    connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spSlider pBattleAnimationSpeed = new Slider(Settings::getWidth() - 20 - width, 1, 100, "");
+    pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
+    pBattleAnimationSpeed->setPosition(width - 130, y);
+    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getBattleAnimationSpeedValue()));
+    pPanel->addItem(pBattleAnimationSpeed);
+    connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setBattleAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
 
     addChild(pBox);
     pApp->continueThread();

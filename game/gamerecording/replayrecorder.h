@@ -60,6 +60,18 @@ public:
     {
         return _count;
     }
+    /**
+     * @brief getDayFromPosition
+     * @param count
+     * @return
+     */
+    qint32 getDayFromPosition(qint32 count);
+    /**
+     * @brief seekToDay
+     * @param day
+     * @return
+     */
+    void seekToDay(qint32 day);
 signals:
 
 private:

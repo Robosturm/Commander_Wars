@@ -28,6 +28,7 @@ public:
     enum class ZOrder
     {
         Background = -32000,
+        Map,
         Terrain = -30000,
         CORange = 30000,
         FogFields,

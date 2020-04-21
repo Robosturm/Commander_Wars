@@ -7,6 +7,7 @@
 #include "objects/v_scrollbar.h"
 #include "gameinput/humanplayerinput.h"
 #include "game/viewplayer.h"
+#include "game/GameEnums.h"
 
 class ReplayMenu : public GameMenue
 {
@@ -37,13 +38,39 @@ public slots:
     void stopFastForward();
     void showConfig();
     void setViewTeam(qint32 item);
+    /**
+     * @brief startSeeking
+     */
+    void startSeeking();
+    /**
+     * @brief seekRecord
+     * @param value
+     */
+    void seekRecord(float value);
+    /**
+     * @brief seekChanged
+     * @param value
+     */
+    void seekChanged(float value);
 protected:
+    /**
+     * @brief loadUIButtons
+     */
     void loadUIButtons();
+    /**
+     * @brief loadSeekUi
+     */
+    void loadSeekUi();
+    /**
+     * @brief seekToDay
+     * @param day
+     */
+    void seekToDay(qint32 day);
 private:
     bool _paused{false};
-    bool requestPause{false};
+    bool _requestPause{false};
     spV_Scrollbar _progressBar;
-    QMutex _replayMutex;
+    QMutex _replayMutex{QMutex::RecursionMode::Recursive};
     oxygine::spButton _playButton;
     oxygine::spButton _pauseButton;
     oxygine::spButton _fastForwardButton;
@@ -51,6 +78,17 @@ private:
     GameEnums::AnimationMode _StoredShowAnimations = GameEnums::AnimationMode_All;
     spHumanPlayerInput _HumanInput;
     Viewplayer _Viewplayer;
+
+    GameEnums::AnimationMode _storedAnimMode;
+    GameEnums::BattleAnimationMode _storedBatteAnimMode;
+    quint32 _storedAnimationSpeed = 1;
+    quint32 _storedBattleAnimationSpeed = 1;
+
+    bool _seekPause{false};
+    bool _seeking{false};
+    qint32 _seekDay = -1;
+    oxygine::spActor _seekActor;
+    spLabel _seekDayLabel;
 };
 
 #endif // REPLAYMENU_H

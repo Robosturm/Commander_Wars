@@ -45,6 +45,7 @@ public slots:
 protected:
     void loadBackground();
     void loadHandling();
+    void connectMapCursor();
     bool m_moveMap{false};
     bool m_Focused{true};
     QPoint m_MoveMapMousePoint;

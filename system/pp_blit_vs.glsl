@@ -3,10 +3,10 @@ attribute  vec3 position;
 attribute  vec4 color;
 attribute  vec2 uv;
  
-mediump uniform float step;
+uniform mediump float step;
 
-mediump varying vec2 v_texCoord;
-mediump varying vec4 v_color;
+varying mediump vec2 v_texCoord;
+varying mediump vec4 v_color;
  
 void main()
 {

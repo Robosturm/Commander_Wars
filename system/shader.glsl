@@ -1,11 +1,11 @@
 //shared data between vs/ps
-lowp varying vec4 result_color;
-mediump varying vec2 result_uv;
-mediump varying vec2 result_uv2;
+varying lowp vec4 result_color;
+varying mediump vec2 result_uv;
+varying mediump vec2 result_uv2;
 
 #ifdef VS
-highp uniform mat4 mat;
-mediump uniform vec3 msk[4];
+uniform highp mat4 mat;
+uniform mediump vec3 msk[4];
 attribute vec3 position;
 attribute vec4 color;
 attribute vec2 uv;
@@ -20,11 +20,11 @@ void program_main_vs()
 #endif
 
 #ifdef PS
-lowp uniform vec4 clip_mask;
-lowp uniform vec4 add_color;
-lowp uniform sampler2D base_texture;
-lowp uniform sampler2D mask_texture;
-lowp uniform sampler2D alpha_texture;
+uniform lowp vec4 clip_mask;
+uniform lowp vec4 add_color;
+uniform lowp sampler2D base_texture;
+uniform lowp sampler2D mask_texture;
+uniform lowp sampler2D alpha_texture;
 
 void program_main_ps()
 {	

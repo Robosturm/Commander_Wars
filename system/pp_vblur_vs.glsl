@@ -5,22 +5,22 @@ attribute  vec2 uv;
  
 uniform mediump float step;
 
-mediump varying vec4 v_color;
-mediump varying vec2 v_texCoord;
-mediump varying vec2 v_blurTexCoords0;
-mediump varying vec2 v_blurTexCoords1;
-mediump varying vec2 v_blurTexCoords2;
-mediump varying vec2 v_blurTexCoords3;
-mediump varying vec2 v_blurTexCoords4;
-mediump varying vec2 v_blurTexCoords5;
-mediump varying vec2 v_blurTexCoords6;
-mediump varying vec2 v_blurTexCoords7;
-mediump varying vec2 v_blurTexCoords8;
-mediump varying vec2 v_blurTexCoords9;
-mediump varying vec2 v_blurTexCoords10;
-mediump varying vec2 v_blurTexCoords11;
-mediump varying vec2 v_blurTexCoords12;
-mediump varying vec2 v_blurTexCoords13;
+varying mediump vec4 v_color;
+varying mediump vec2 v_texCoord;
+varying mediump vec2 v_blurTexCoords0;
+varying mediump vec2 v_blurTexCoords1;
+varying mediump vec2 v_blurTexCoords2;
+varying mediump vec2 v_blurTexCoords3;
+varying mediump vec2 v_blurTexCoords4;
+varying mediump vec2 v_blurTexCoords5;
+varying mediump vec2 v_blurTexCoords6;
+varying mediump vec2 v_blurTexCoords7;
+varying mediump vec2 v_blurTexCoords8;
+varying mediump vec2 v_blurTexCoords9;
+varying mediump vec2 v_blurTexCoords10;
+varying mediump vec2 v_blurTexCoords11;
+varying mediump vec2 v_blurTexCoords12;
+varying mediump vec2 v_blurTexCoords13;
  
  
 void main()

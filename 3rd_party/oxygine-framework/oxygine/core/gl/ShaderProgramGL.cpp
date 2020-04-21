@@ -50,21 +50,15 @@ namespace oxygine
 
     void ShaderProgramGL::compileShader(QOpenGLShader& shader, QString data)
     {
-        QString defines = "#define lowp\n"
-                          "#define mediump\n"
-                          "#define highp\n";
-        QString code = defines + data;
-        bool success = shader.compileSourceCode(code);
+        bool success = shader.compileSourceCode(data);
         QString log = shader.log();
         if (success)
         {
-            qDebug("compiled shader:\n %s", log.toStdString().c_str());
+            qDebug("compiled shader. Log:\n %s", log.toStdString().c_str());
         }
         else
         {
-            qInfo("shader source code:\n %s", code.toStdString().c_str());
-            qInfo(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            qCritical("can't compile shader: %s", log.toStdString().c_str());
+            qCritical("can't compile shader. Log:\n%s", log.toStdString().c_str());
         }
     }
 

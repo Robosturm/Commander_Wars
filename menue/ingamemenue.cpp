@@ -78,6 +78,15 @@ void InGameMenue::loadHandling()
         }
     });
     connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
+    connectMapCursor();
+}
+
+void InGameMenue::connectMapCursor()
+{
+    Mainapp* pApp = Mainapp::getInstance();
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -135,7 +144,6 @@ void InGameMenue::loadHandling()
         }
     });
     connect(this, &InGameMenue::sigMoveMap, m_MapMover.get(), &MapMover::MoveMap, Qt::QueuedConnection);
-
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -195,10 +203,6 @@ void InGameMenue::loadHandling()
             pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
         }
     });
-
-    connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
     GameMap::getInstance()->addChild(m_Cursor);
 }
 

@@ -47,6 +47,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
             speedCounter = 0;
+            emit sigStartEditValue();
         }
     });
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
@@ -54,6 +55,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
         if (m_enabled)
         {
             m_scroll = 0;
+            emit sigEndEditValue(m_Scrollvalue);
         }
     });
     m_pBox->addChild(m_pArrowRigth);
@@ -85,6 +87,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
             speedCounter = 0;
+            emit sigStartEditValue();
         }
     });
     pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
@@ -92,6 +95,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
         if (m_enabled)
         {
             m_scroll = 0;
+            emit sigEndEditValue(m_Scrollvalue);
         }
     });
     m_pBox->addChild(pArrowLeft);
@@ -143,6 +147,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar_pressed");
             m_slider->setResAnim(pAnimState);
             m_sliding = true;
+            emit sigStartEditValue();
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
@@ -152,6 +157,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
             m_slider->setResAnim(pAnimState);
             m_sliding = false;
+            emit sigEndEditValue(m_Scrollvalue);
         }
     });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)

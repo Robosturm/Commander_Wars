@@ -107,6 +107,7 @@ void GameMap::loadMapData()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
+    setPriority(static_cast<short>(Mainapp::ZOrder::Map));
 }
 
 qint32 GameMap::getUniqueIdCounter()
