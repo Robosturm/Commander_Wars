@@ -36,11 +36,7 @@ public:
      * @param pNetworkInterface
      */
     void attachInterface(spNetworkInterface pNetworkInterface);
-    /**
-     * @brief startGame
-     * @param startPlayer
-     */
-    void startGame();
+
     /**
      * @brief getGameStarted
      * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
@@ -177,7 +173,15 @@ public slots:
      * @brief showSurrenderGame
      */
     void showSurrenderGame();
+    /**
+     * @brief startGame
+     * @param startPlayer
+     */
+    void startGame();
 protected slots:
+    /**
+     * @brief updateTimer
+     */
     void updateTimer();
 protected:
     void loadUIButtons();

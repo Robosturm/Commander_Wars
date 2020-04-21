@@ -842,6 +842,7 @@ void Multiplayermenu::countdown()
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
+            QThread::msleep(200);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             addRef();
             oxygine::Actor::detach();

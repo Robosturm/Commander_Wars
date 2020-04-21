@@ -526,6 +526,16 @@ void Player::changeBuildlist(const QString unitID, bool remove)
     }
 }
 
+quint64 Player::getSocketId() const
+{
+    return m_socketId;
+}
+
+void Player::setSocketId(const quint64 &socketId)
+{
+    m_socketId = socketId;
+}
+
 bool Player::getBuildlistChanged() const
 {
     return m_BuildlistChanged;

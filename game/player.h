@@ -73,6 +73,16 @@ public:
      * @param BuildlistChanged
      */
     void setBuildlistChanged(bool BuildlistChanged);
+    /**
+     * @brief getSocketId
+     * @return
+     */
+    quint64 getSocketId() const;
+    /**
+     * @brief setSocketId
+     * @param socketId
+     */
+    void setSocketId(const quint64 &socketId);
 signals:
 
 public slots:
@@ -429,6 +439,7 @@ private:
     QStringList m_BuildList;
     bool m_BuildlistChanged{false};
     ScriptVariables m_Variables;
+    quint64 m_socketId{0};
 };
 
 #endif // PLAYER_H

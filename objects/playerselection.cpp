@@ -1107,6 +1107,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             else
             {
                 pPlayer->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes_ProxyAi));
+                pPlayer->setSocketId(socketID);
                 m_playerAIs[player]->setCurrentItemText(username);
                 m_PlayerSockets[player] = socketID;
             }

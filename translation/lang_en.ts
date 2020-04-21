@@ -2077,77 +2077,77 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="221"/>
+        <location filename="../menue/gamemenue.cpp" line="234"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="319"/>
+        <location filename="../menue/gamemenue.cpp" line="334"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="327"/>
+        <location filename="../menue/gamemenue.cpp" line="342"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="367"/>
+        <location filename="../menue/gamemenue.cpp" line="382"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="869"/>
+        <location filename="../menue/gamemenue.cpp" line="885"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="885"/>
+        <location filename="../menue/gamemenue.cpp" line="901"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="894"/>
+        <location filename="../menue/gamemenue.cpp" line="910"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1197"/>
+        <location filename="../menue/gamemenue.cpp" line="1218"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1212"/>
+        <location filename="../menue/gamemenue.cpp" line="1236"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>

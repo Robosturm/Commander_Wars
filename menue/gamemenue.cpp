@@ -80,6 +80,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+        connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
 
         m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100));
         m_pChat->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
@@ -88,11 +89,11 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     }
     else
     {
+        startGame();
         gameStarted = true;
     }
     loadGameMenue();
     loadUIButtons();
-    startGame();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -136,13 +137,11 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 }
                 if (ready)
                 {
-                    gameStarted = true;
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::STARTGAME;
                     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                     emit sigGameStarted();
-                    emit sigActionPerformed();
                 }
             }
         }
@@ -150,9 +149,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             if (!m_pNetworkInterface->getIsServer())
             {
-                gameStarted = true;
                 emit sigGameStarted();
-                emit sigActionPerformed();
             }
         }
     }
@@ -206,21 +203,39 @@ void GameMenue::playerJoined(quint64 socketID)
     }
 }
 
-void GameMenue::disconnected(quint64)
+void GameMenue::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+        bool showDisconnect = false;
+        GameMap* pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            quint64 playerSocketID = pPlayer->getSocketId();
+            if (socketID == playerSocketID &&
+                !pPlayer->getIsDefeated())
+            {
+                showDisconnect = true;
+                break;
+            }
+        }
+
         if (m_pNetworkInterface.get() != nullptr)
         {
             emit m_pNetworkInterface->sig_close();
             m_pNetworkInterface = nullptr;
         }
-        gameStarted = false;
-        spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
-        addChild(pDialogMessageBox);
+        if (showDisconnect)
+        {
+            gameStarted = false;
+            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+            addChild(pDialogMessageBox);
+        }
         pApp->continueThread();
+
     }
 }
 
@@ -549,7 +564,8 @@ void GameMenue::performAction(GameAction* pGameAction)
         }
         // send action to other players if needed
         if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
-            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi &&
+            gameStarted)
         {
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
@@ -1068,11 +1084,16 @@ void GameMenue::startGame()
         pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();
         updatePlayerinfo();
-        emit sigActionPerformed();
-    }
+        if ((m_pNetworkInterface->getIsServer() ||
+            m_pNetworkInterface.get() != nullptr) &&
+            !gameStarted)
+        {
+            emit sigActionPerformed();
+        }
+    }    
+    gameStarted = true;
     pApp->continueThread();
 }
-
 
 void GameMenue::keyInput(oxygine::KeyEvent event)
 {
@@ -1206,27 +1227,29 @@ void GameMenue::showExitGame()
 
 void GameMenue::showSurrenderGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_Focused = false;
-    spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
-    connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
-    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human)
     {
-        m_Focused = true;
-    });
-    addChild(pSurrender);
-    pApp->continueThread();
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        m_Focused = false;
+        spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
+        connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
+        connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+        {
+            m_Focused = true;
+        });
+        addChild(pSurrender);
+        pApp->continueThread();
+    }
 }
 
 void GameMenue::surrenderGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
-    pMap->getCurrentPlayer()->defeatPlayer(nullptr);
     GameAction* pAction = new GameAction();
-    pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+    pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
     m_Focused = true;
     pApp->continueThread();
