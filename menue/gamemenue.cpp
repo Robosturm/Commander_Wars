@@ -286,7 +286,7 @@ void GameMenue::loadGameMenue()
 
 void GameMenue::connectMap()
 {
-     GameMap* pMap = GameMap::getInstance();
+    GameMap* pMap = GameMap::getInstance();
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -504,7 +504,7 @@ void GameMenue::performAction(GameAction* pGameAction)
         GameMap* pMap = GameMap::getInstance();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                           gameStarted;
+                                                        gameStarted;
 
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
@@ -766,7 +766,7 @@ void GameMenue::skipAnimations()
     }
 }
 
-void GameMenue::actionPerformed()
+void GameMenue::finishActionPerformed()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -779,6 +779,14 @@ void GameMenue::actionPerformed()
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
+    pApp->continueThread();
+}
+
+void GameMenue::actionPerformed()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    finishActionPerformed();
 
     m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
     m_IngameInfoBar->updateMinimap();
@@ -792,6 +800,7 @@ void GameMenue::actionPerformed()
         else
         {
             Mainapp::setUseSeed(false);
+            GameMap* pMap = GameMap::getInstance();
             pMap->getGameRules()->resumeRoundTime();
             emit sigActionPerformed();
         }
@@ -1038,6 +1047,29 @@ void GameMenue::saveGame()
     pApp->continueThread();
 }
 
+void GameMenue::showSaveAndExitGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QVector<QString> wildcards;
+    if (m_pNetworkInterface.get() != nullptr ||
+        m_Multiplayer)
+    {
+        wildcards.append("*.msav");
+    }
+    else
+    {
+        wildcards.append("*.sav");
+    }
+    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+    this->addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
+    setFocused(false);
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
 void GameMenue::victoryInfo()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -1065,6 +1097,13 @@ void GameMenue::saveMap(QString filename)
     }
     setFocused(true);
     pApp->continueThread();
+}
+
+void GameMenue::saveMapAndExit(QString filename)
+{
+    finishActionPerformed();
+    saveMap(filename);
+    exitGame();
 }
 
 void GameMenue::exitGame()
@@ -1105,13 +1144,13 @@ void GameMenue::startGame()
         pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();
         updatePlayerinfo();
-        if ((m_pNetworkInterface->getIsServer() ||
-            m_pNetworkInterface.get() != nullptr) &&
+        if ((m_pNetworkInterface.get() == nullptr ||
+            m_pNetworkInterface->getIsServer()) &&
             !gameStarted)
         {
             emit sigActionPerformed();
         }
-    }    
+    }
     gameStarted = true;
     pApp->continueThread();
 }

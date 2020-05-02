@@ -772,6 +772,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+GameRules::DayToDayScreen GameRules::getDayToDayScreen() const
+{
+    return m_DayToDayScreen;
+}
+
+void GameRules::setDayToDayScreen(const DayToDayScreen &DayToDayScreen)
+{
+    m_DayToDayScreen = DayToDayScreen;
+}
+
 bool GameRules::getBuildingVisionHide() const
 {
     return m_BuildingVisionHide;
@@ -869,6 +879,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_coUnits;
     pStream << m_VisionBlock;
     pStream << m_BuildingVisionHide;
+    pStream << static_cast<quint8>(m_DayToDayScreen);
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1048,5 +1059,11 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 8)
     {
         pStream >> m_BuildingVisionHide;
+    }
+    if (version > 9)
+    {
+        quint8 value = 0;
+        pStream >> value;
+        m_DayToDayScreen = static_cast<DayToDayScreen>(value);
     }
 }

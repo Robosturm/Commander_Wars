@@ -117,6 +117,7 @@ QJSValue Interpreter::doFunction(QString func, QJSValueList& args)
     QJSValue funcPointer = globalObject().property(func);
     if (funcPointer.isCallable())
     {
+        Console::print("JS-Calling " + func, Console::eDEBUG);
         ret = funcPointer.call(args);
         if (ret.isError())
         {
@@ -140,6 +141,7 @@ QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& 
     QJSValue objPointer = globalObject().property(obj);
     if (objPointer.isObject())
     {
+        Console::print("JS-Calling " + obj + "." + func, Console::eDEBUG);
         QJSValue funcPointer = objPointer.property(func);
         if (funcPointer.isCallable())
         {

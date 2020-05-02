@@ -284,6 +284,23 @@ void RuleSelection::showRuleSelection()
     pTimeSpinbox->setCurrentValue(pMap->getGameRules()->getRoundTimeMs());
     connect(pTimeSpinbox.get(), &TimeSpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setRoundTimeMs, Qt::QueuedConnection);
 
+    y += 50;
+    textField = new Label(textWidth - 10);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Day Screen: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    QVector<QString> dayModes = {tr("Default"), tr("Permanent")};
+    spDropDownmenu pDropDownmenu = new DropDownmenu(300, dayModes);
+    pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war."));
+    pDropDownmenu->setPosition(textWidth, textField->getY());
+    addChild(pDropDownmenu);
+    pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getDayToDayScreen()));
+    connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    {
+        pMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
+    });
+
 
     y += 50;
     textField = new Label(textWidth - 10);

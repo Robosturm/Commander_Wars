@@ -31,6 +31,12 @@ class GameRules : public QObject, public FileSerializable, public oxygine::ref_c
 {
     Q_OBJECT
 public:
+    enum class DayToDayScreen
+    {
+        Default,
+        Permanent
+    };
+
     explicit GameRules();
     virtual ~GameRules() = default;
     /**
@@ -49,7 +55,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 9;
+        return 10;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -66,6 +72,9 @@ public:
      */
     void init();
 
+
+    DayToDayScreen getDayToDayScreen() const;
+    void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
 signals:
     void signalVictory(qint32 team);
@@ -355,6 +364,7 @@ private:
     bool m_coUnits{true};
     bool m_VisionBlock{false};
     bool m_BuildingVisionHide{false};
+    DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
 };
 
 #endif // GAMERULES_H

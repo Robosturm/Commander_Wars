@@ -38,6 +38,7 @@ public:
         Animation,
         Objects = 31998,
         FocusedObjects,
+        AnimationFullScreen,
         Dialogs,
         DropDownList,
         Tooltip,

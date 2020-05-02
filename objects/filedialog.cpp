@@ -21,7 +21,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
     // current folder
     m_CurrentFolder = new Textbox(Settings::getWidth() - 60);

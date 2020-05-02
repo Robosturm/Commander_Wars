@@ -2035,7 +2035,12 @@ This is immediatly applied.</source>
 <context>
     <name>GameAnimationNextDay</name>
     <message>
-        <location filename="../game/gameanimationnextday.cpp" line="125"/>
+        <location filename="../game/gameanimationnextday.cpp" line="126"/>
+        <source>Save and Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gameanimationnextday.cpp" line="135"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2102,57 +2107,57 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="906"/>
+        <location filename="../menue/gamemenue.cpp" line="915"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="922"/>
+        <location filename="../menue/gamemenue.cpp" line="931"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="931"/>
+        <location filename="../menue/gamemenue.cpp" line="940"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1244"/>
+        <location filename="../menue/gamemenue.cpp" line="1283"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1262"/>
+        <location filename="../menue/gamemenue.cpp" line="1301"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3818,7 +3823,27 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="290"/>
+        <source>Day Screen: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="293"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="293"/>
+        <source>Permanent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="295"/>
+        <source>Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="310"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6750,7 +6775,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="103"/>
-        <source> infantry units.</source>
+        <source> infantry units and capture buildings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16864,7 +16889,7 @@ Units have 30% increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="106"/>
-        <source>ground units. No attack capability.</source>
+        <source>ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -103,7 +103,7 @@ var Constructor = function()
     {
         return "<r>" + qsTr("Air unit. ") + "</r>" +
                "<div c='#00ff00'>" + qsTr("Carries X 2 ") + "</div>" +
-               "<r>" + qsTr("ground units. No attack capability.") + "</r>";
+               "<r>" + qsTr("ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.") + "</r>";
     };
     this.getUnitType = function()
     {

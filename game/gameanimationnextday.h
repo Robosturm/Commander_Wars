@@ -17,6 +17,7 @@ public:
     virtual void stop() override;
 
 signals:
+    void sigShowSaveAndExit();
     void sigRightClick();
 public slots:
     void rightClick();

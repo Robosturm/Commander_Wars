@@ -100,7 +100,7 @@ var Constructor = function()
                "<div c='#00ff00'>" + qsTr("repair other units.") + "</div>" +
                "<r>" + qsTr(" Can ") + "</r>" +
                "<div c='#00ff00'>" + qsTr("carry X 1") + "</div>" +
-               "<r>" + qsTr(" infantry units.") + "</r>";
+               "<r>" + qsTr(" infantry units and capture buildings.") + "</r>";
     };
     this.getUnitType = function()
     {

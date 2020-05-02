@@ -83,6 +83,10 @@ public slots:
      */
     void performAction(GameAction* pGameAction);
     /**
+     * @brief finsihActionPerformed
+     */
+    void finishActionPerformed();
+    /**
      * @brief skipAnimations
      */
     void skipAnimations();
@@ -131,6 +135,11 @@ public slots:
      * @param file
      */
     void saveMap(QString filename);
+    /**
+     * @brief saveMapAndExit
+     * @param filename
+     */
+    void saveMapAndExit(QString filename);
     /**
      * @brief exitGame
      */
@@ -183,6 +192,10 @@ public slots:
      * @param startPlayer
      */
     void startGame();
+    /**
+     * @brief showSaveAndExitGame
+     */
+    void showSaveAndExitGame();
 protected slots:
     /**
      * @brief updateTimer

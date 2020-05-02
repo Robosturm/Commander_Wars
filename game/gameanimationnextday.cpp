@@ -38,7 +38,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (permanent)
     {
         pSprite->setColor(color);
-        this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+        this->setPriority(static_cast<short>(Mainapp::ZOrder::AnimationFullScreen));
     }
     else
     {
@@ -122,9 +122,19 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     }
     else
     {
-        oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 150);
+        GameMenue* pMenue = GameMenue::getInstance();
+        oxygine::spButton pButtonSaveAndExit = ObjectManager::createButton(tr("Save and Exit"), 220);
+        pButtonSaveAndExit->attachTo(this);
+        pButtonSaveAndExit->setPosition(Settings::getWidth() / 2 - pButtonSaveAndExit->getWidth() - 10, Settings::getHeight() - 50);
+        pButtonSaveAndExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowSaveAndExit();
+        });
+        connect(this, &GameAnimationNextDay::sigShowSaveAndExit, pMenue, &GameMenue::showSaveAndExitGame, Qt::QueuedConnection);
+
+        oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 220);
         pButtonContinue->attachTo(this);
-        pButtonContinue->setPosition(Settings::getWidth() / 2 - pButtonContinue->getWidth() / 2, Settings::getHeight() - 50);
+        pButtonContinue->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 50);
         pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {
             emit sigRightClick();
