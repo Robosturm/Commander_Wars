@@ -35,6 +35,13 @@ public:
      * @param width
      */
     void createTransportTable(Unit* pUnit, qint32& y, qint32 width);
+    /**
+     * @brief createActionTable
+     * @param pUnit
+     * @param y
+     * @param width
+     */
+    void createActionTable(Unit* pUnit, qint32& y, qint32 width);
 signals:
     /**
      * @brief sigShowLink

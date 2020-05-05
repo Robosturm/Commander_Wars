@@ -108,6 +108,7 @@ QString Settings::getLanguage()
 
 void Settings::setLanguage(const QString &language)
 {
+    QGuiApplication::removeTranslator(&m_Translator);
     m_language = language;
     // load language file and install it
     if(m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
@@ -121,6 +122,11 @@ void Settings::setLanguage(const QString &language)
         m_Translator.load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm");
     }
     QGuiApplication::installTranslator(&m_Translator);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter != nullptr)
+    {
+        pInterpreter->installExtensions(QJSEngine::Extension::AllExtensions);
+    }
 }
 
 QStringList Settings::getActiveModVersions()

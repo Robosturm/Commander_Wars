@@ -556,8 +556,10 @@ void OptionMenue::reloadSettings()
     Console::print("Leaving Option Menue", Console::eDEBUG);
     addRef();
     oxygine::Actor::detach();
-
-    oxygine::getStage()->addChild(new OptionMenue());
+    OptionMenue* newMenu = new OptionMenue();
+    // carry over restart flag
+    newMenu->restartNeeded = restartNeeded;
+    oxygine::getStage()->addChild(newMenu);
     deleteLater();
     pApp->continueThread();
 }
@@ -850,6 +852,7 @@ void OptionMenue::showSettings()
             [=](qint32 item)
     {
         Settings::setLanguage(languages[item]);
+        restartNeeded = true;
         emit sigReloadSettings();
     });
     y += 40;

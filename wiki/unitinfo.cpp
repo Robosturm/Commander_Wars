@@ -14,10 +14,13 @@
 
 #include "resource_management/objectmanager.h"
 
+#include "resource_management/gamemanager.h"
+
 #include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
 #include "game/battleanimationsprite.h"
+#include "game/gameaction.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -230,14 +233,21 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(headerStyle);
+    pLabel->setHtmlText(tr("Actions"));
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    addChild(pLabel);
+    y += 80;
+    createActionTable(pUnit, y, width);
+    y += 40;
+
+    pLabel = new oxygine::TextField();
+    pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Transporters"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
     addChild(pLabel);
     y += 80;
     createTransportTable(pUnit, y, width);
     y += 40;
-
-
 
     if (y - yStart < 210)
     {
@@ -264,7 +274,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(terrainId);
+            emit sigShowLink(terrainId);
         });
         addChild(pTerrain);
 
@@ -312,7 +322,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(pBuildingSpriteManager->getID(i));
+            emit sigShowLink(pBuildingSpriteManager->getID(i));
         });
         addChild(pTerrain);
         pLabel = new oxygine::TextField();
@@ -379,7 +389,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         spUnit pDummy = new Unit(sortedUnits[i], pUnit->getOwner(), false);
         pDummy->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(sortedUnits[i]);
+            emit sigShowLink(sortedUnits[i]);
         });
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
@@ -415,7 +425,7 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {
-           emit sigShowLink(unitID);
+            emit sigShowLink(unitID);
         });
         addChild(pDummy);
         x += GameMap::Imagesize * 1.5f;
@@ -440,9 +450,40 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
             pDummy->setPosition(x, y);
             pDummy->addClickListener([=](oxygine::Event*)
             {
-               emit sigShowLink(unitID);
+                emit sigShowLink(unitID);
             });
             addChild(pDummy);
+            x += GameMap::Imagesize * 1.5f;
+            if (x + GameMap::Imagesize * 1.5f > width)
+            {
+                x = 0;
+                y += 40;
+            }
+        }
+    }
+}
+
+void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
+{
+    qint32 x = 0;
+    QStringList actions = pUnit->getActionList();
+    GameManager* pGameManager = GameManager::getInstance();
+    for (const auto & action : actions)
+    {
+        // QString text = GameAction::getActionText(action);
+        QString icon = GameAction::getActionIcon(action);
+        oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon, oxygine::ep_ignore_error);
+        if (pAnim != nullptr)
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+            pSprite->setPosition(x, y);
+            pSprite->addClickListener([=](oxygine::Event*)
+            {
+                emit sigShowLink(action);
+            });
+            addChild(pSprite);
             x += GameMap::Imagesize * 1.5f;
             if (x + GameMap::Imagesize * 1.5f > width)
             {
