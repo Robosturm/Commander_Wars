@@ -226,6 +226,17 @@ var Constructor = function()
         return 0;
     };
 
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "HARBOUR" ||
+            buildingId === "TEMPORARY_HARBOUR")
+        {
+            return ["ZCOUNIT_MISSILE_SUB"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function()
     {
@@ -245,7 +256,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNaval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger") +
+        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger") +
                qsTr("\n\nCO Zone Effect: \nNaval units have 30% increased firepower.");
     };
     this.getPowerDescription = function()

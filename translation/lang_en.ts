@@ -8346,34 +8346,34 @@ Units gain 2% firepower for own units in vision range.</source>
 <context>
     <name>co_drake</name>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="243"/>
         <source>A bighearted former pirate who hates fighting. Also a great surfer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="247"/>
         <source>The sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="251"/>
         <source>High places</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="255"/>
         <source>Naval units have superior firepower, but air units have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="259"/>
         <source>
 Global Effect: 
 Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="260"/>
         <source>
 
 CO Zone Effect: 
@@ -8381,77 +8381,77 @@ Naval units have 30% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="264"/>
         <source>Causes a tidal wave that does one HP of damage to all enemy units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="268"/>
         <source>Tsunami</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="272"/>
         <source>Causes a giant tidal wave that does two HP of damage to all enemy units and weather changes to rain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="276"/>
         <source>Typhoon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="280"/>
         <source>Panic is for landlubbers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="281"/>
         <source>Prepare to be washed away!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="282"/>
         <source>Time to show you how we do things at sea!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="283"/>
         <source>Wave good-bye to your troops!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="284"/>
         <source>Can&apos;t you just feel the riptide washing you out to open sea?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="285"/>
         <source>Drake is taking the helm!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="289"/>
         <source>I&apos;m just glad I survived that...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="290"/>
         <source>That was some rough sailing!|Blow me down... we finally won.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="294"/>
         <source>A job well done! You&apos;ve beaten me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="295"/>
         <source>Curses! I&apos;ve been defeated. Time to hoist sail and flee!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_drake.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_drake.js" line="299"/>
         <source>Drake</source>
         <translation type="unfinished"></translation>
     </message>
