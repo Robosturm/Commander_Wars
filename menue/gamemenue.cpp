@@ -26,6 +26,7 @@
 #include "objects/dialogvictoryconditions.h"
 #include "objects/dialogconnecting.h"
 #include "objects/dialogmessagebox.h"
+#include "objects/dialogtextinput.h"
 
 #include "coreengine/tweenaddcolorall.h"
 
@@ -278,7 +279,9 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);    
+    connect(this, &GameMenue::sigNicknameUnit, this, &GameMenue::nicknameUnit, Qt::QueuedConnection);
+
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
@@ -297,6 +300,7 @@ void GameMenue::connectMap()
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
 }
 
@@ -1320,3 +1324,37 @@ void GameMenue::surrenderGame()
     pApp->continueThread();
 }
 
+void GameMenue::showNicknameUnit(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spUnit pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
+    if (pUnit.get() != nullptr)
+    {
+        spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Nickname for the Unit:"), true, pUnit->getName());
+        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
+        {
+            emit sigNicknameUnit(x, y, value);
+        });
+        connect(pDialogTextInput.get(), &DialogTextInput::sigCancel, [=]()
+        {
+            m_Focused = true;
+        });
+        addChild(pDialogTextInput);
+        m_Focused = false;
+    }
+    pApp->continueThread();
+}
+
+void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameAction* pAction = new GameAction();
+    pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
+    pAction->setTarget(QPoint(x, y));
+    pAction->writeDataString(name);
+    performAction(pAction);
+    m_Focused = true;
+    pApp->continueThread();
+}

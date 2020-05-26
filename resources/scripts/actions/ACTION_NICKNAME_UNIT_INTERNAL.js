@@ -7,23 +7,27 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("Surrender Game");
+        return "unknown";
     };
     this.getIcon = function()
     {
-        return "surrender";
+        return "";
     };
     this.perform = function(action)
     {
-        map.surrenderGame();
+		 action.startReading();
+		var name = action.readDataString()
+		var unit = action.getTargetUnit();
+        if (unit !== null)
+        {
+           unit.setCustomName(name);
+        }
     };
     this.isFinalStep = function(action)
     {
-        action.setIsLocal(true);
         return true;
     };
 }
 
-
 Constructor.prototype = ACTION;
-var ACTION_SURRENDER = new Constructor();
+var ACTION_NICKNAME_UNIT_INTERNAL = new Constructor();

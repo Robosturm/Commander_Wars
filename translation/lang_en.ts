@@ -161,7 +161,7 @@
 <context>
     <name>ACTION_DELETE_UNIT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="11"/>
+        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="23"/>
         <source>Delete Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1233,113 +1233,119 @@
 <context>
     <name>DialogModifyUnit</name>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="42"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="43"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="84"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="91"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="90"/>
-        <source>HP: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="93"/>
-        <source>HP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="94"/>
-        <source>Selects the HP of the current unit. This is immediatly applied.</source>
+        <location filename="../objects/dialogmodifyunit.cpp" line="97"/>
+        <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="107"/>
-        <source>Fuel: </source>
+        <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="110"/>
-        <source>Fuel</source>
+        <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="111"/>
+        <source>Selects the HP of the current unit. This is immediatly applied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="124"/>
+        <source>Fuel: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="127"/>
+        <source>Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="128"/>
         <source>Selects the Fuel of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="133"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="150"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="136"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="162"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="153"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="179"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="137"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="154"/>
         <source>Selects the Ammo 1 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="159"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="163"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="180"/>
         <source>Selects the Ammo 2 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="184"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="191"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="208"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="194"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="211"/>
         <source>Selects the Owner of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="207"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="224"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="210"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="210"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="210"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="210"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="212"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="229"/>
         <source>Selects how the AI uses this unit
  Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1349,32 +1355,32 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="224"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="241"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="233"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="250"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="234"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="251"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="236"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="253"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="280"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="297"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="294"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="311"/>
         <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2077,88 +2083,93 @@ This is immediatly applied.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="81"/>
+        <location filename="../menue/gamemenue.cpp" line="82"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="234"/>
+        <location filename="../menue/gamemenue.cpp" line="235"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="334"/>
+        <location filename="../menue/gamemenue.cpp" line="338"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="342"/>
+        <location filename="../menue/gamemenue.cpp" line="346"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="382"/>
+        <location filename="../menue/gamemenue.cpp" line="386"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="514"/>
+        <location filename="../menue/gamemenue.cpp" line="518"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="915"/>
+        <location filename="../menue/gamemenue.cpp" line="919"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="931"/>
+        <location filename="../menue/gamemenue.cpp" line="935"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="940"/>
+        <location filename="../menue/gamemenue.cpp" line="944"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1283"/>
+        <location filename="../menue/gamemenue.cpp" line="1287"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1301"/>
+        <location filename="../menue/gamemenue.cpp" line="1305"/>
         <source>Do you want to surrender the current game?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="1334"/>
+        <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6041,6 +6052,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>ZCOUNIT_MISSILE_SUB</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_MISSILE_SUB.js" line="64"/>
+        <source>Missile Submarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ZCOUNIT_NEOSPIDER_TANK</name>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_NEOSPIDER_TANK.js" line="51"/>
@@ -8368,6 +8387,9 @@ Units gain 2% firepower for own units in vision range.</source>
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="259"/>
         <source>
+Special Unit:
+Missile Submarine
+
 Global Effect: 
 Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
         <translation type="unfinished"></translation>
@@ -9636,34 +9658,37 @@ Units have 15% offensive bonus.</source>
 <context>
     <name>co_greyfield</name>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="235"/>
         <source>Wants to rule as the supreme global leader. Ambitious and power-hungry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="239"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="243"/>
         <source>Insubordinates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="247"/>
         <source>Copter, seaplanes and sea units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="251"/>
         <source>
+Special Unit:
+Missile Submarine
+
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="252"/>
         <source>
 
 CO Zone Effect: 
@@ -9671,72 +9696,72 @@ CO Zone Effect:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="256"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="260"/>
         <source>Supply Chain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="264"/>
         <source>All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="268"/>
         <source>Naval War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="272"/>
         <source>I will brook no opposition. The enemy will be eleminated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="273"/>
         <source>Overwhelming forces need overwhelming supplies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="274"/>
         <source>Supplies are here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="275"/>
         <source>Admiral Greyfield here. Attack and eleminate them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="279"/>
         <source>Disloyalty will be punished with death.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="280"/>
         <source>Anyone who opposes me will be crushed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="281"/>
         <source>The Teal Isles Army will prevail.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="285"/>
         <source>Nooo... this is not the end of Teal Isles!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="286"/>
         <source>What? My army has been crushed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_greyfield.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_greyfield.js" line="290"/>
         <source>Greyfield</source>
         <translation type="unfinished"></translation>
     </message>

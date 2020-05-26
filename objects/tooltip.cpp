@@ -48,7 +48,10 @@ Tooltip::~Tooltip()
 
 void Tooltip::restartTooltiptimer()
 {
-    m_TooltipTimer.start(std::chrono::milliseconds(500));
+    if (!m_disabled)
+    {
+        m_TooltipTimer.start(std::chrono::milliseconds(500));
+    }
     emit sigHideTooltip();
 }
 
@@ -69,69 +72,78 @@ void Tooltip::setTooltipText(const QString &tooltipText)
 
 void Tooltip::showTooltip()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    hideTooltip();
-
-    if (oxygine::getStage()->isDescendant(this) && m_enabled)
+    if (!m_disabled)
     {
-        if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        hideTooltip();
+
+        if (oxygine::getStage()->isDescendant(this) && m_enabled)
         {
-            QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
-
-            m_Tooltip = new oxygine::Actor();
-            m_Tooltip->setPriority(static_cast<short>(Mainapp::ZOrder::Tooltip));
-            oxygine::getStage()->addChild(m_Tooltip);
-
-            oxygine::TextStyle style = FontManager::getMainFont24();
-            style.color = FontManager::getFontColor();
-            style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-            style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-            style.multiline = true;
-
-            ObjectManager* pObjectManager = ObjectManager::getInstance();
-            oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
-            oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-            pSpriteBox->setResAnim(pAnim);
-
-            pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-            pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-            m_Tooltip->addChild(pSpriteBox);
-            pSpriteBox->setPosition(0, 0);
-            pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-            oxygine::spTextField pText = new oxygine::TextField();
-            pText->setHtmlText(m_tooltipText);
-            pText->setWidth(Settings::getWidth() / 4);
-            pText->setStyle(style);
-            pText->setPosition(10, 10);
-            pSpriteBox->addChild(pText);
-            pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
-
-            if (curPos.x() + 5 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
+            if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
             {
-                m_Tooltip->setX(Settings::getWidth() - 5 - pSpriteBox->getWidth());
-            }
-            else
-            {
-                m_Tooltip->setX(curPos.x() + 5);
-            }
-            if (curPos.y() + 5 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
-            {
-                m_Tooltip->setY(Settings::getHeight() - 5 - pSpriteBox->getHeight());
-            }
-            else
-            {
-                m_Tooltip->setY(curPos.y() + 5);
+                QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+
+                m_Tooltip = new oxygine::Actor();
+                m_Tooltip->setPriority(static_cast<short>(Mainapp::ZOrder::Tooltip));
+                oxygine::getStage()->addChild(m_Tooltip);
+
+                oxygine::TextStyle style = FontManager::getMainFont24();
+                style.color = FontManager::getFontColor();
+                style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+                style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+                style.multiline = true;
+
+                ObjectManager* pObjectManager = ObjectManager::getInstance();
+                oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+                pSpriteBox->setResAnim(pAnim);
+
+                pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
+                pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
+                m_Tooltip->addChild(pSpriteBox);
+                pSpriteBox->setPosition(0, 0);
+                pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+                oxygine::spTextField pText = new oxygine::TextField();
+                pText->setHtmlText(m_tooltipText);
+                pText->setWidth(Settings::getWidth() / 4);
+                pText->setStyle(style);
+                pText->setPosition(10, 10);
+                pSpriteBox->addChild(pText);
+                pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
+
+                if (curPos.x() + 5 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
+                {
+                    m_Tooltip->setX(Settings::getWidth() - 5 - pSpriteBox->getWidth());
+                }
+                else
+                {
+                    m_Tooltip->setX(curPos.x() + 5);
+                }
+                if (curPos.y() + 5 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
+                {
+                    m_Tooltip->setY(Settings::getHeight() - 5 - pSpriteBox->getHeight());
+                }
+                else
+                {
+                    m_Tooltip->setY(curPos.y() + 5);
+                }
             }
         }
+        pApp->continueThread();
     }
-    pApp->continueThread();
+}
+
+void Tooltip::enableTooltip()
+{
+    m_disabled = false;
 }
 
 void Tooltip::disableTooltip()
 {
+    m_disabled = true;
     stopTooltiptimer();
-    hideTooltip();
+    hideTooltip();    
 }
 
 void Tooltip::hideTooltip()

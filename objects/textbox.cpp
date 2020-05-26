@@ -52,12 +52,12 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         m_focused = !m_focused;
         if (m_focused)
         {
-            Tooltip::setEnabled(false);
+            Tooltip::disableTooltip();
             curmsgpos = m_Text.size();
         }
         else
         {
-            Tooltip::setEnabled(true);
+            Tooltip::enableTooltip();
         }
     });
     this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
@@ -73,7 +73,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
         {
             m_focused = false;
         }
-        Tooltip::setEnabled(true);
+        Tooltip::enableTooltip();
     });
     toggle.start();
 

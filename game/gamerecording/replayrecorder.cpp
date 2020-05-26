@@ -69,7 +69,7 @@ void ReplayRecorder::startRecording()
 
 void ReplayRecorder::recordAction(GameAction* pAction)
 {
-    if (m_recording)
+    if (m_recording && !pAction->getIsLocal())
     {
         GameMap* pMap = GameMap::getInstance();
         qint32 curDay = pMap->getCurrentDay();

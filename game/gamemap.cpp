@@ -975,6 +975,11 @@ void GameMap::surrenderGame()
     emit sigSurrenderGame();
 }
 
+void GameMap::nicknameUnit(qint32 x, qint32 y)
+{
+    emit sigShowNicknameUnit(x, y);
+}
+
 void GameMap::saveGame()
 {
     emit signalSaveGame();

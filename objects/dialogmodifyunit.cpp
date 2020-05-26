@@ -19,6 +19,7 @@
 #include "objects/slider.h"
 #include "objects/dropdownmenu.h"
 #include "objects/label.h"
+#include "objects/textbox.h"
 
 DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     : QObject(),
@@ -78,12 +79,28 @@ void DialogModifyUnit::updateData()
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = new Label(sliderOffset - 10);
-    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    spLabel pLabel = new Label(sliderOffset - 10);    
     pLabel->setStyle(headerStyle);
-    pLabel->setHtmlText((tr("Unit: ") + m_pUnit->getName()));
+    pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
     pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
+
+    qint32 y = 30 + pLabel->getTextRect().getHeight();
+    pLabel = new Label(sliderOffset - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Unit: "));
+    pLabel->setPosition(10, y);
+    m_pPanel->addItem(pLabel);
+    spTextbox pTexbox = new Textbox(Settings::getWidth() - 40 - sliderOffset);
+    pTexbox->setPosition(sliderOffset - 160, y);
+    pTexbox->setCurrentText(m_pUnit->getName());
+    pTexbox->setTooltipText(tr("Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name"));
+    connect(pTexbox.get(), &Textbox::sigTextChanged, [=](QString value)
+    {
+        m_pUnit->setCustomName(value);
+    });
+    m_pPanel->addItem(pTexbox);
+    y += 40;
 
     pLabel = new Label(sliderOffset - 10);
     pLabel->setStyle(style);

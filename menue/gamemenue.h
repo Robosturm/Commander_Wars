@@ -72,6 +72,7 @@ signals:
     void sigExitGame();
     void sigShowExitGame();
     void sigShowSurrenderGame();
+    void sigNicknameUnit(qint32 x, qint32 y, QString name);
 public slots:
     /**
      * @brief actionPerformed
@@ -148,6 +149,17 @@ public slots:
      * @brief surrenderGame
      */
     void surrenderGame();
+    /**
+     * @brief nicknameUnit
+     */
+    void showNicknameUnit(qint32 x, qint32 y);
+    /**
+     * @brief nicknameUnit
+     * @param x
+     * @param y
+     * @param name
+     */
+    void nicknameUnit(qint32 x, qint32 y, QString name);
     /**
      * @brief keyInput
      * @param event

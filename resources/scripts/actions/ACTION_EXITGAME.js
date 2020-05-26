@@ -15,7 +15,6 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        action.setIsLocal(true);
         map.exitGame();
     };
     this.isFinalStep = function(action)

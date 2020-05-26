@@ -311,6 +311,7 @@ signals:
     void sigShowAttackLog();
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
+    void sigShowNicknameUnit(qint32 x, qint32 y);
 public slots:
     QmlVectorPoint* getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
     /**
@@ -649,6 +650,12 @@ public slots:
      * @brief surrenderGame the current player surrenders the game
      */
     void surrenderGame();
+    /**
+     * @brief nicknameUnit
+     * @param x
+     * @param y
+     */
+    void nicknameUnit(qint32 x, qint32 y);
 private:
     static spGameMap m_pInstance;
     QString mapName;

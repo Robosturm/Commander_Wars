@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 14;
+        return 15;
     }
 
 
@@ -125,6 +125,16 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getCustomName
+     * @return
+     */
+    QString getCustomName() const;
+    /**
+     * @brief setCustomName
+     * @param customName
+     */
+    void setCustomName(const QString &customName);
     /**
      * @brief getVisionHigh
      * @return
@@ -792,6 +802,10 @@ private:
      * @brief m_UnitID the id of this unit
      */
     QString m_UnitID;
+    /**
+     * @brief m_customName
+     */
+    QString m_customName;
     /**
      * @brief m_Owner our owner a nullptr means we're a neutral building
      */

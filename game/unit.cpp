@@ -263,17 +263,21 @@ Player* Unit::getOwner()
 
 QString Unit::getName()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getName";
-    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
-    if (ret.isString())
+    if (m_customName.isEmpty())
     {
-        return ret.toString();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "getName";
+        QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
+        if (ret.isString())
+        {
+            return ret.toString();
+        }
+        else
+        {
+            return "";
+        }
     }
-    else
-    {
-        return "";
-    }
+    return m_customName;
 }
 
 GameEnums::UnitType Unit::getUnitType()
@@ -2292,6 +2296,16 @@ qint32 Unit::getBonus(QVector<QPoint>& data)
     return ret;
 }
 
+QString Unit::getCustomName() const
+{
+    return m_customName;
+}
+
+void Unit::setCustomName(const QString &customName)
+{
+    m_customName = customName;
+}
+
 qint32 Unit::getVisionHigh() const
 {
     return m_VisionHigh;
@@ -2642,6 +2656,7 @@ void Unit::serializeObject(QDataStream& pStream)
     }
     pStream << m_cloaked;
     pStream << m_VisionHigh;
+    pStream << m_customName;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2806,6 +2821,10 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 13)
     {
         pStream >> m_VisionHigh;
+    }
+    if (version > 14)
+    {
+        pStream >> m_customName;
     }
 }
 

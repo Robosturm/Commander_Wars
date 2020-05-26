@@ -3,33 +3,25 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-        var units = map.getCurrentPlayer().getUnits();
-        var ret = false;
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            if (unit.getHasMoved() === false)
-            {
-                ret = true;
-                break;
-            }
-        }
-        units.remove();
+		var units = map.getCurrentPlayer().getUnits();
+		var ret = (units.size() > 0);
+		units.remove();
         return ret;
     };
     
     this.getActionText = function()
     {
-        return qsTr("Delete Unit");
+        return qsTr("Nickname Unit");
     };
     this.getIcon = function()
     {
-        return "destroy";
+        return "help";
     };
     this.isFinalStep = function(action)
     {
+		action.setIsLocal(true);
         if (action.getInputStep() === 1)
-        {
+        {			
             return true;
         }
         else
@@ -46,15 +38,8 @@ var Constructor = function()
         var unit = map.getTerrain(x, y).getUnit();
         if (unit !== null)
         {
-            unit.killUnit();
+            map.nicknameUnit(x, y);
         }
-    };
-    this.getStepCursor = function(action, cursorData)
-    {
-        cursorData.setCursor("cursor+delete");
-        cursorData.setXOffset(0);
-        cursorData.setYOffset(0);
-        cursorData.setScale(1.0);
     };
     this.getStepData = function(action, data)
     {
@@ -62,10 +47,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getHasMoved() === false)
-            {
-                data.addPoint(Qt.point(unit.getX(), unit.getY()));
-            }
+            data.addPoint(Qt.point(unit.getX(), unit.getY()));
         }
         data.setShowZData(false);
         data.setColor("#C8FF0000");
@@ -78,4 +60,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = ACTION;
-var ACTION_DELETE_UNIT = new Constructor();
+var ACTION_NICKNAME_UNIT = new Constructor();

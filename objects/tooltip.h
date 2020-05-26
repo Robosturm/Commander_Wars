@@ -29,11 +29,13 @@ public slots:
     void showTooltip();
     void hideTooltip();
     void disableTooltip();
+    void enableTooltip();
 protected:
     oxygine::spActor m_Tooltip;
 private:
     QString m_tooltipText;
     QTimer m_TooltipTimer;
+    bool m_disabled{false};
 };
 
 #endif // TOOLTIP_H
