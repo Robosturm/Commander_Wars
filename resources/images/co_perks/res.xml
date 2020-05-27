@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/co_perks/" />
+	<atlas>
+		<!-- battle sprite -->
+		<image file="apcboost.png" />
+		<image file="apcguard.png" />
+		<image file="brawler.png" />
+		<image file="combatpay.png" />
+		
+		<image file="dive.png" />
+		<image file="eagleeye.png" />
+		<image file="goldrush.png" />
+		<image file="hachisoul.png" />
+		<image file="highanddry.png" />
+		<image file="icebreaker.png" />
+		<image file="invader.png" />
+		<image file="luck.png" />
+		<image file="mechanic.png" />
+		<image file="mistwalker.png" />
+		<image file="mountaineer.png" />
+		<image file="prairiedog.png" />
+		<image file="ranger.png" />
+		<image file="roadrage.png" />
+		<image file="saleprice.png" />
+		<image file="sandscorpion.png" />
+		<image file="seamanship.png" />
+		<image file="sharpshooter.png" />
+		<image file="slamguard.png" />
+		<image file="sneaky.png" />
+		<image file="snipeguard.png" />
+		<image file="towerpower.png" />		
+	</atlas>
+</resources>
+

@@ -59,7 +59,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     });
 
     // show co info button
-    m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 150);
+    m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 250);
     m_ShowCOInfoButton->setPosition(Settings::getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, Settings::getHeight() - 30 - m_ShowCOInfoButton->getHeight());
     pSpriteBox->addChild(m_ShowCOInfoButton);
     m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

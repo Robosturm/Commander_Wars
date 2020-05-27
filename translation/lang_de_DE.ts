@@ -510,7 +510,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="280"/>
+        <location filename="../game/co.cpp" line="291"/>
         <source>Unknown</source>
         <translation></translation>
     </message>

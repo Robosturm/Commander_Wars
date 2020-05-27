@@ -464,6 +464,21 @@ public slots:
     GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
                                        qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
                                        GameEnums::AiTurnMode turnMode);
+    /**
+     * @brief getPerkList
+     * @return
+     */
+    QStringList getPerkList();
+    /**
+     * @brief addPerk
+     * @param perk
+     */
+    void addPerk(QString perk);
+    /**
+     * @brief addPerk
+     * @param perk
+     */
+    void removePerk(QString perk);
 private:
     Player* m_Owner;
     QString coID;
@@ -474,6 +489,8 @@ private:
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
     qint32 powerUsed{0};
+
+    QStringList m_perkList;
 };
 
 #endif // KO_H

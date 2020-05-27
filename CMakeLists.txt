@@ -222,6 +222,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/cospritemanager.cpp
         resource_management/gamerulemanager.cpp
         resource_management/battleanimationmanager.cpp
+        resource_management/coperkmanager.cpp
 
         # core engine
         coreengine/mainapp.cpp

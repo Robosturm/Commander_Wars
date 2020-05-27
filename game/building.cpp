@@ -423,7 +423,7 @@ QStringList Building::getActionList()
         for (qint32 i = 0; i < actionModifierList.size(); i++)
         {
             QString action = actionModifierList[i];
-            if (!action.startsWith("-"))
+            if (!action.startsWith("-") && !action.isEmpty())
             {
                 if (!retList.contains(action))
                 {
@@ -434,7 +434,7 @@ QStringList Building::getActionList()
         for (qint32 i = 0; i < actionModifierList.size(); i++)
         {
             QString action = actionModifierList[i];
-            if (action.startsWith("-"))
+            if (action.startsWith("-") && !action.isEmpty())
             {
                 qint32 index = retList.indexOf(action.replace("-", ""));
                 if (index >= 0)
