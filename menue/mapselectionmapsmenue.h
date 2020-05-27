@@ -67,6 +67,10 @@ public slots:
      */
     virtual void startGame();
     /**
+     * @brief defeatClosedPlayers
+     */
+    void defeatClosedPlayers();
+    /**
      * @brief showRandomMap
      */
     void showRandomMap();

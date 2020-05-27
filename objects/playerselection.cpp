@@ -310,7 +310,7 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")};
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Closed")};
     QVector<QString> aiList = defaultAiList;
     if (m_pCampaign.get() != nullptr)
     {

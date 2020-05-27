@@ -112,6 +112,11 @@ BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
             ret = nullptr;
             break;
         }
+        case GameEnums::AiTypes_Closed:
+        {
+            ret = nullptr;
+            break;
+        }
         default: // fall back case for damaged files or unset ai's
         {
             ret = new HumanPlayerInput();

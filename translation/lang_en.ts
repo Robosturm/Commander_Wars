@@ -3401,6 +3401,11 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/playerselection.cpp" line="313"/>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/playerselection.cpp" line="320"/>
         <location filename="../objects/playerselection.cpp" line="327"/>
         <location filename="../objects/playerselection.cpp" line="331"/>

@@ -824,6 +824,7 @@ void Multiplayermenu::countdown()
         {
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
+            defeatClosedPlayers();
             GameMap* pMap = GameMap::getInstance();
             pMap->initPlayers();
             QByteArray data;

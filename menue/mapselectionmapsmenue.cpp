@@ -355,6 +355,7 @@ void MapSelectionMapsMenue::startGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    defeatClosedPlayers();
     GameMap* pMap = GameMap::getInstance();
     pMap->initPlayers();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
@@ -367,6 +368,19 @@ void MapSelectionMapsMenue::startGame()
     oxygine::Actor::detach();
     deleteLater();
     pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::defeatClosedPlayers()
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+    {
+        GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+        if (aiType == GameEnums::AiTypes::AiTypes_Closed)
+        {
+            pMap->getPlayer(i)->setIsDefeated(true);
+        }
+    }
 }
 
 void MapSelectionMapsMenue::showRandomMap()
