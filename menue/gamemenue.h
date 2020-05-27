@@ -132,6 +132,10 @@ public slots:
      */
     void showAttackLog();
     /**
+     * @brief showAttackLog
+     */
+    void showUnitInfo();
+    /**
      * @brief saveMap
      * @param file
      */

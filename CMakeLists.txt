@@ -186,6 +186,7 @@ set(${PROJECT_NAME}_SRCS
         objects/cobannlistdialog.cpp
         objects/tooltip.cpp
         objects/dialogattacklog.cpp
+        objects/dialogunitinfo.cpp
         objects/dropdownmenusprite.cpp
         objects/dropdownmenubase.cpp
         objects/label.cpp

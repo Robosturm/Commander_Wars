@@ -38,6 +38,7 @@
 
 #include "objects/tableview.h"
 #include "objects/dialogattacklog.h"
+#include "objects/dialogunitinfo.h"
 
 #include <QFile>
 #include <QTime>
@@ -299,6 +300,7 @@ void GameMenue::connectMap()
     connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
@@ -908,6 +910,21 @@ void GameMenue::showAttackLog()
         m_Focused = true;
     });
     addChild(pAttackLog);
+    pApp->continueThread();
+}
+
+void GameMenue::showUnitInfo()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+
+    spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getCurrentPlayer());
+    connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pDialogUnitInfo);
     pApp->continueThread();
 }
 

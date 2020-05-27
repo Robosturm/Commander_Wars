@@ -1006,6 +1006,11 @@ void GameMap::showAttackLog()
     emit sigShowAttackLog();
 }
 
+void GameMap::showUnitInfo()
+{
+    emit sigShowUnitInfo();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

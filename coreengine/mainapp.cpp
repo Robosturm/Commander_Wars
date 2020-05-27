@@ -513,3 +513,8 @@ void Mainapp::showCrashReport(QString log)
         crashMutex.unlock();
     }
 }
+
+QStringList Mainapp::getActiveMods()
+{
+    return Settings::getMods();
+}

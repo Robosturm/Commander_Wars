@@ -309,6 +309,7 @@ signals:
     void signalShowCOInfo();
     void sigShowGameInfo();
     void sigShowAttackLog();
+    void sigShowUnitInfo();
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
@@ -430,6 +431,10 @@ public slots:
      * @brief showAttackLog
      */
     void showAttackLog();
+    /**
+     * @brief showUnitInfo
+     */
+    void showUnitInfo();
     /**
      * @brief getBuildingCount
      * @param buildingID

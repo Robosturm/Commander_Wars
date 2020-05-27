@@ -95,7 +95,7 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
     textField->setHtmlText(text);
     textField->setY(5);
     clipRect->addChild(textField);
-    clipRect->setSize(m_Textfield->getWidth(), m_Textfield->getHeight());
+    clipRect->setSize(m_Textfield->getWidth() + 20, m_Textfield->getHeight());
     auto size = addDropDownItem(clipRect.get(), id);
     textField->setSize(size);
 }

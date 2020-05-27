@@ -138,6 +138,11 @@ public slots:
      */
     static qint32 getDistance(QPoint p1, QPoint p2);
     /**
+     * @brief getActiveMods
+     * @return
+     */
+    static QStringList getActiveMods();
+    /**
      * @brief getEmptyPointArray
      * @return
      */
