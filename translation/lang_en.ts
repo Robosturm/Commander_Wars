@@ -2627,7 +2627,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="63"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="761"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="763"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2657,13 +2657,13 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="521"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="539"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="522"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="535"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="757"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="759"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

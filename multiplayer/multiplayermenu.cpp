@@ -472,9 +472,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 QString mapFile;
                 stream >> mapFile;
+                GameMap* pNewMap = nullptr;
                 if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
                 {
-                    new GameMap(stream);
+                    pNewMap = new GameMap(stream);
                 }
                 else
                 {
@@ -525,12 +526,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                                 return;
                             }
                         }
-                        m_pMapSelectionView->setCurrentMap(new GameMap(mapFile, true));
-                        loadMultiplayerMap();
-                        QByteArray sendData;
-                        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                        sendStream << NetworkCommands::REQUESTRULE;
-                        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                        pNewMap = new GameMap(mapFile, true);
                     }
                     else
                     {
@@ -543,6 +539,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         return;
                     }
                 }
+                m_pMapSelectionView->setCurrentMap(pNewMap);
+                loadMultiplayerMap();
+                QByteArray sendData;
+                QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                sendStream << NetworkCommands::REQUESTRULE;
+                m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
         }
         else if (messageType == NetworkCommands::INITGAME)
