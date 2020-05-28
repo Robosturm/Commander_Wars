@@ -7,12 +7,12 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+                (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+                (action.getMovementTarget() === null))
         {
             if (unit.hasAmmo1())
             {
@@ -86,6 +86,10 @@ var Constructor = function()
     };
     this.performPostAnimation = function(postAnimation)
     {
+        var animation = GameAnimationFactory.createAnimation(ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
+        animation.addSprite("flare_explosion", -map.getImageSize() - 36, -map.getImageSize() - 37, 0, 1.5);
+        audio.playSound("flare_launch.wav");
+        audio.playSound("flare_explosion.wav", 1, "resources/sounds/", 300);
         var fields = globals.getCircle(0, 2);
         for (var i = 0; i < fields.size(); i++)
         {
@@ -93,7 +97,7 @@ var Constructor = function()
             var y = fields.at(i).y + ACTION_FLARE.postAnimationTargetY;
             if (map.onMap(x, y))
             {
-               ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
+                ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
             }
         }
         ACTION_FLARE.postAnimationTargetX = -1;

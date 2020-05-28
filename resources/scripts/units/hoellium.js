@@ -49,7 +49,7 @@ var Constructor = function()
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSprite(unitID + "+walk+mask", true, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
-        animation.setSound("moveheavytank.wav", -2);
+        animation.setSound("hoellium_move.wav", -2);
         return animation;
     };
 

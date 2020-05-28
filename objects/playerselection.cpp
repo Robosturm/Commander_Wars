@@ -12,6 +12,7 @@
 
 #include "objects/buildlistdialog.h"
 #include "objects/coselectiondialog.h"
+#include "objects/perkselectiondialog.h"
 
 #include "gameinput/humanplayerinput.h"
 #include "ai/veryeasyai.h"
@@ -30,6 +31,7 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
                                          heigth),
                                    QSize(Settings::getWidth() - 70, 100));
     connect(this, &PlayerSelection::sigShowSelectCO, this, &PlayerSelection::showSelectCO, Qt::QueuedConnection);
+    connect(this, &PlayerSelection::sigShowSelectCOPerks, this, &PlayerSelection::showSelectCOPerks, Qt::QueuedConnection);
     connect(this, &PlayerSelection::buttonShowPlayerBuildList, this, &PlayerSelection::slotShowPlayerBuildList, Qt::QueuedConnection);
     connect(this, &PlayerSelection::sigAiChanged, this, &PlayerSelection::selectAI, Qt::QueuedConnection);
 
@@ -436,10 +438,19 @@ void PlayerSelection::showPlayerSelection()
         spriteCO2->setDisableColor(QColor(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO2);
         m_playerCO2.append(spriteCO2);
-                spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowSelectCO(i, 1);
         });
+
+        oxygine::spButton pIconButton = ObjectManager::createIconButton("perk");
+        pIconButton->setPosition(xPositions[itemIndex] + 75, y + 10);
+        m_pPlayerSelection->addItem(pIconButton);
+        pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigShowSelectCOPerks(i);
+        });
+
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
             (ai > 0 && m_pCampaign.get() != nullptr))
@@ -893,6 +904,19 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
         {
             playerCO2Changed("CO_RANDOM", i);
         }
+    }
+    pApp->continueThread();
+}
+
+void PlayerSelection::showSelectCOPerks(qint32 player)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Player* pPlayer = GameMap::getInstance()->getPlayer(player);
+    if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
+    {
+        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer);
+        oxygine::getStage()->addChild(pPerkSelectionDialog);
     }
     pApp->continueThread();
 }

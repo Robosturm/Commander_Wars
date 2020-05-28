@@ -43,7 +43,7 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     void init();
     /**
@@ -469,6 +469,11 @@ public slots:
      * @return
      */
     QStringList getPerkList();
+    /**
+     * @brief setPerkList
+     * @param perks
+     */
+    void setPerkList(QStringList perks);
     /**
      * @brief addPerk
      * @param perk

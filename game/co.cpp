@@ -1144,6 +1144,13 @@ QStringList CO::getPerkList()
     return ret;
 }
 
+void CO::setPerkList(QStringList perks)
+{
+    m_perkList.clear();
+    m_perkList.append(coID);
+    m_perkList.append(perks);
+}
+
 void CO::addPerk(QString perk)
 {
     if (!m_perkList.contains(perk))
@@ -1247,6 +1254,11 @@ void CO::serializeObject(QDataStream& pStream)
     pStream << static_cast<qint32>(m_PowerMode);
     m_Variables.serializeObject(pStream);
     pStream << powerUsed;
+    pStream << static_cast<qint32>(m_perkList.size());
+    for (const auto & perk : m_perkList)
+    {
+        pStream << perk;
+    }
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -1278,6 +1290,17 @@ void CO::deserializeObject(QDataStream& pStream)
     if (version > 2)
     {
         pStream >> powerUsed;
+    }
+    if (version > 3)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString perk;
+            pStream >> perk;
+            m_perkList.append(perk);
+        }
     }
     init();
 }

@@ -69,6 +69,7 @@ public:
 signals:
     void sigCOsRandom(qint32 mode);
     void sigShowSelectCO(qint32 player, quint8 co);
+    void sigShowSelectCOPerks(qint32 player);
     void buttonShowAllBuildList();
     void buttonShowPlayerBuildList(qint32 player);
     void sigAiChanged(qint32 player);
@@ -96,7 +97,11 @@ public slots:
     void slotChangeAllBuildList(qint32, QStringList buildList);
     void slotChangePlayerBuildList(qint32 player, QStringList buildList);
     void selectAI(qint32 player);
-
+    /**
+     * @brief showSelectCOPerks
+     * @param player
+     */
+    void showSelectCOPerks(qint32 player);
     // network stuff
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     void disconnected(quint64 socketID);

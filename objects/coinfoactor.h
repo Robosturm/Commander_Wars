@@ -44,6 +44,13 @@ public slots:
      */
     void showLink(QString pageID);
 protected:
+    /**
+     * @brief showPerks
+     * @param pCO
+     * @param y
+     */
+    void showPerks(spCO pCO, qint32 & y);
+protected:
     oxygine::spSprite m_pCurrentCO;
 
     oxygine::spTextField m_COName;
@@ -69,6 +76,9 @@ protected:
     oxygine::spTextField m_SynergyText;
     QVector<oxygine::spTextField> m_SynergyCONames;
     QVector<oxygine::spActor> m_SynergyStarActors;
+
+    oxygine::spTextField m_PerkText;
+    QVector<oxygine::spActor> m_PerkActors;
 
     QVector<oxygine::spActor> m_UnitDataActors;
 };

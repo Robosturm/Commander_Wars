@@ -1535,6 +1535,7 @@ void GameMap::initPlayers()
         {
             QStringList bannList = m_Rules->getCOBannlist();
             qint32 count = 0;
+            QStringList perkList = pPlayer->getCO(0)->getPerkList();
             while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
             {
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 0);
@@ -1545,11 +1546,16 @@ void GameMap::initPlayers()
                     break;
                 }
             }
+            if (pPlayer->getCO(0) != nullptr)
+            {
+                pPlayer->getCO(0)->setPerkList(perkList);
+            }
         }
         if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
         {
             QStringList bannList = m_Rules->getCOBannlist();
             qint32 count = 0;
+            QStringList perkList = pPlayer->getCO(1)->getPerkList();
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
                    (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
                    (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
@@ -1560,6 +1566,10 @@ void GameMap::initPlayers()
                     pPlayer->setCO("", 1);
                     break;
                 }
+            }
+            if (pPlayer->getCO(1) != nullptr)
+            {
+                pPlayer->getCO(1)->setPerkList(perkList);
             }
         }
         // define army of this player

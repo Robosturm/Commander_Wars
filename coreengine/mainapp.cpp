@@ -37,6 +37,7 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/battleanimationmanager.h"
+#include "resource_management/coperkmanager.h"
 
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
@@ -283,6 +284,7 @@ void Mainapp::loadRessources()
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
     BattleAnimationManager::getInstance();
+    COPerkManager::getInstance();
     WikiDatabase::getInstance();
     Userdata::getInstance();
 

@@ -576,32 +576,37 @@
 <context>
     <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="38"/>
+        <location filename="../objects/coinfoactor.cpp" line="42"/>
         <source>CO Information</source>
         <translation>KO Information</translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="67"/>
+        <location filename="../objects/coinfoactor.cpp" line="71"/>
         <source>Hit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="86"/>
+        <location filename="../objects/coinfoactor.cpp" line="90"/>
         <source>Miss</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="106"/>
+        <location filename="../objects/coinfoactor.cpp" line="110"/>
         <source>Info</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="148"/>
+        <location filename="../objects/coinfoactor.cpp" line="152"/>
         <source>Synergy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="251"/>
+        <location filename="../objects/coinfoactor.cpp" line="158"/>
+        <source>Active Perks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfoactor.cpp" line="261"/>
         <source>CO-Zone-Range: </source>
         <translation>KO-Zone: </translation>
     </message>
@@ -2408,18 +2413,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="486"/>
+        <location filename="../coreengine/mainapp.cpp" line="488"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="492"/>
+        <location filename="../coreengine/mainapp.cpp" line="494"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="494"/>
+        <location filename="../coreengine/mainapp.cpp" line="496"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3310,6 +3315,14 @@ Version: </source>
     </message>
 </context>
 <context>
+    <name>PerkSelectionDialog</name>
+    <message>
+        <location filename="../objects/perkselectiondialog.cpp" line="27"/>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+</context>
+<context>
     <name>PlayerInfo</name>
     <message>
         <location filename="../game/playerinfo.cpp" line="216"/>
@@ -3330,144 +3343,144 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
         <source>CO&apos;s</source>
         <translation>KO&apos;s</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
         <source>AI Strength</source>
         <translation>KI</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
         <source>Startfunds</source>
         <translation>Startfonds</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
         <source>Income Modifier</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
-        <location filename="../objects/playerselection.cpp" line="311"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <source>Team</source>
         <translation>Team</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="186"/>
-        <location filename="../objects/playerselection.cpp" line="292"/>
-        <location filename="../objects/playerselection.cpp" line="604"/>
+        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="294"/>
+        <location filename="../objects/playerselection.cpp" line="615"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="189"/>
+        <location filename="../objects/playerselection.cpp" line="191"/>
         <source>Connected</source>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="221"/>
+        <location filename="../objects/playerselection.cpp" line="223"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="226"/>
+        <location filename="../objects/playerselection.cpp" line="228"/>
         <source>All Random</source>
         <translation>Alle Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="234"/>
+        <location filename="../objects/playerselection.cpp" line="236"/>
         <source>CO 1 Random</source>
         <translation>KO 1 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="243"/>
+        <location filename="../objects/playerselection.cpp" line="245"/>
         <source>CO 2 Random</source>
         <translation>KO 2 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="263"/>
+        <location filename="../objects/playerselection.cpp" line="265"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="278"/>
+        <location filename="../objects/playerselection.cpp" line="280"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
-        <location filename="../objects/playerselection.cpp" line="317"/>
-        <location filename="../objects/playerselection.cpp" line="331"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="333"/>
         <source>Human</source>
         <translation>Mensch</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Very Easy</source>
         <translation>Sehr Leicht</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Normal Off.</source>
         <translation>Normal Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Normal Def.</source>
         <translation>Normal Def.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <location filename="../objects/playerselection.cpp" line="331"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
+        <location filename="../objects/playerselection.cpp" line="329"/>
+        <location filename="../objects/playerselection.cpp" line="333"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="464"/>
+        <location filename="../objects/playerselection.cpp" line="475"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="482"/>
+        <location filename="../objects/playerselection.cpp" line="493"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="549"/>
+        <location filename="../objects/playerselection.cpp" line="560"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="568"/>
+        <location filename="../objects/playerselection.cpp" line="579"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="587"/>
+        <location filename="../objects/playerselection.cpp" line="598"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="623"/>
+        <location filename="../objects/playerselection.cpp" line="634"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6054,7 +6067,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="36"/>
+        <location filename="../wiki/wikipage.cpp" line="37"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>

@@ -14,7 +14,11 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "resource_management/coperkmanager.h"
+
 #include "game/gamemap.h"
+
+#include "objects/label.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -148,6 +152,12 @@ COInfoActor::COInfoActor(qint32 width)
     m_SynergyText->setHtmlText(tr("Synergy"));
     m_SynergyText->setX(10);
     addChild(m_SynergyText);
+
+    m_PerkText = new oxygine::TextField();
+    m_PerkText->setStyle(style);
+    m_PerkText->setHtmlText(tr("Active Perks"));
+    m_PerkText->setX(10);
+    addChild(m_PerkText);
 
 }
 
@@ -347,7 +357,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     addChild(pText);
                     m_SynergyCONames.append(pText);
                     oxygine::spActor pActor = new oxygine::Actor();
-                    pActor->setX(120);
+                    pActor->setX(220);
                     pActor->setY(y);
                     for (qint32 i2 = 0; i2 < synergy; i2++)
                     {
@@ -365,13 +375,16 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
 
+    m_PerkText->setPosition(10, y);
+    y += 40;
+    showPerks(pCO, y);
+    y += 40;
 
     for (qint32 i = 0; i < m_UnitDataActors.size(); i++)
     {
         m_UnitDataActors[i]->detach();
     }
     m_UnitDataActors.clear();
-
 
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -470,6 +483,60 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     setHeight(y + 100);
     connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
     pApp->continueThread();
+}
+
+void COInfoActor::showPerks(spCO pCO, qint32 & y)
+{
+    for (qint32 i = 0; i < m_PerkActors.size(); i++)
+    {
+        m_PerkActors[i]->detach();
+    }
+    m_PerkActors.clear();
+    if (pCO.get() != nullptr)
+    {
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::getFontColor();
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
+        COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+        QStringList perks = pCO->getPerkList();
+        qint32 x = 10;
+        const qint32 width = 290;
+        for (const auto & perk : perks)
+        {
+            oxygine::spActor perkActor = new oxygine::Actor();
+            qint32 i = pCOPerkManager->getIndex(perk);
+            QString id = pCOPerkManager->getID(i);
+            QString name = pCOPerkManager->getName(i);
+            QString icon = pCOPerkManager->getIcon(i);
+            oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
+            QString description = pCOPerkManager->getDescription(i);
+
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            if (pAnim != nullptr)
+            {
+                pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
+            }
+            pSprite->setPosition(x, 0);
+            perkActor->addChild(pSprite);
+            spLabel pLabel = new Label(200);
+            pLabel->setStyle(style);
+            pLabel->setText(name);
+            pLabel->setPosition(x + GameMap::Imagesize * 2 + 10, 10);
+            perkActor->addChild(pLabel);
+            perkActor->setPosition(x, y);
+            addChild(perkActor);
+            m_PerkActors.append(perkActor);
+            x += width;
+            if (x + width > m_pCurrentCO->getX() - 50)
+            {
+                x = 10;
+                y += GameMap::Imagesize * 2 + 10;
+            }
+        }
+    }
 }
 
 void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint32 y)

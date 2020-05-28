@@ -19,6 +19,7 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamerulemanager.h"
 #include "resource_management/battleanimationmanager.h"
+#include "resource_management/coperkmanager.h"
 #include "wiki/wikidatabase.h"
 
 WorkerThread::WorkerThread()
@@ -82,6 +83,8 @@ void WorkerThread::start()
     pWeaponManager->loadAll();
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+    pCOPerkManager->loadAll();
     WikiDatabase::getInstance()->load();
 
     oxygine::getStage()->addChild(new Mainwindow());

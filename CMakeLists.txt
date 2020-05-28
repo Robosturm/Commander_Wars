@@ -190,6 +190,8 @@ set(${PROJECT_NAME}_SRCS
         objects/dropdownmenusprite.cpp
         objects/dropdownmenubase.cpp
         objects/label.cpp
+        objects/perkselection.cpp
+        objects/perkselectiondialog.cpp
 
         #modding
         modding/csvtableimporter.cpp
@@ -371,6 +373,7 @@ set(${PROJECT_NAME}_SRCS
         wiki/fieldinfo.cpp
         wiki/wikidatabase.cpp
         wiki/wikipage.cpp
+        wiki/defaultwikipage.cpp
 
         # spriting support
         spritingsupport/spritecreator.cpp

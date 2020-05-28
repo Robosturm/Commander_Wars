@@ -4,6 +4,7 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/terrainmanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/coperkmanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -14,6 +15,7 @@
 #include "objects/coinfoactor.h"
 
 #include "wiki/fieldinfo.h"
+#include "wiki/defaultwikipage.h"
 
 #include "qfile.h"
 
@@ -74,6 +76,13 @@ void WikiDatabase::load()
     for (const auto& unitId : sortedUnits)
     {
         m_Entries.append(pageData(pUnitSpriteManager->getName(unitId), unitId, "Unit"));
+    }
+
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+    QStringList perks = pCOPerkManager->getLoadedRessources();
+    for (const auto& perk : perks)
+    {
+        m_Entries.append(pageData(pCOPerkManager->getName(perk), perk, "Perk"));
     }
 
     // load general wiki page
@@ -222,7 +231,7 @@ spWikipage WikiDatabase::getPage(pageData data)
         spUnit pUnit = new Unit(id, pPlayer.get(), false);
         ret = new FieldInfo(nullptr, pUnit.get());
     }
-    else
+    else if (QFile::exists(id))
     {
         // default loader
         ret = new Wikipage();
@@ -232,6 +241,10 @@ spWikipage WikiDatabase::getPage(pageData data)
         QJSValue obj1 = pInterpreter->newQObject(ret.get());
         args << obj1;
         QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
+    }
+    else
+    {
+        ret = new DefaultWikipage(id);
     }
     pApp->continueThread();
     return ret;

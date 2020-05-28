@@ -11,6 +11,7 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/coperkmanager.h"
 #include "wiki/wikidatabase.h"
 
 Wikipage::Wikipage()
@@ -93,6 +94,10 @@ void Wikipage::loadImage(QString file, float scale, QString pageID)
     if (pAnim == nullptr)
     {
         pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim != nullptr)
     {

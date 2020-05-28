@@ -9,6 +9,19 @@ class COPerkManager : public QObject, public RessourceManagement<COPerkManager>
 protected:
     friend RessourceManagement<COPerkManager>;
     COPerkManager();
+public:
+    /**
+     * @brief getIcon
+     * @param index
+     * @return
+     */
+    QString getIcon(qint32 position);
+    /**
+     * @brief getDescription
+     * @param position
+     * @return
+     */
+    QString getDescription(qint32 position);
 private:
     virtual ~COPerkManager() = default;
 };
