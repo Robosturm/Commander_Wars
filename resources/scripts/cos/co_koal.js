@@ -129,17 +129,20 @@ var Constructor = function()
             if (map.onMap(atkPosX, atkPosY))
             {
                 var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                var isStreet = (terrainID === "STREET") ||
+                               (terrainID === "BRIDGE") ||
+                               (terrainID === "DESERT_PATH");
                 switch (co.getPowerMode())
                 {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    if (terrainID === "STREET")
+                    if (isStreet)
                     {
                         return 40;
                     }
                     return 10;
                 case GameEnums.PowerMode_Power:
-                    if (terrainID === "STREET")
+                    if (isStreet)
                     {
                         return 30;
                     }
@@ -147,7 +150,7 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        if (terrainID === "STREET")
+                        if (isStreet)
                         {
                             return 30;
                         }

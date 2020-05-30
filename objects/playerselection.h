@@ -158,6 +158,7 @@ private:
 
     QVector<oxygine::spSprite> m_playerCO1;
     QVector<oxygine::spSprite> m_playerCO2;
+    QVector<oxygine::spButton> m_playerPerks;
     QVector<spDropDownmenuColor> m_playerColors;
     QVector<spSpinBox> m_playerIncomes;
     QVector<spSpinBox> m_playerStartFunds;

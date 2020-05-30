@@ -50,6 +50,14 @@ protected:
      * @param y
      */
     void showPerks(spCO pCO, qint32 & y);
+    /**
+     * @brief showCOBoost
+     * @param pUnit
+     * @param pCO
+     * @param x
+     * @param y
+     */
+    void showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y);
 protected:
     oxygine::spSprite m_pCurrentCO;
 
@@ -72,6 +80,9 @@ protected:
     oxygine::spSprite m_SuperPowerSprite;
     oxygine::spTextField m_SuperPowername;
     oxygine::spTextField m_SuperPowerDesc;
+
+    oxygine::spTextField m_GlobalBoosts;
+    oxygine::spTextField m_CoBoost;
 
     oxygine::spTextField m_SynergyText;
     QVector<oxygine::spTextField> m_SynergyCONames;

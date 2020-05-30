@@ -159,6 +159,17 @@ COInfoActor::COInfoActor(qint32 width)
     m_PerkText->setX(10);
     addChild(m_PerkText);
 
+    m_GlobalBoosts = new oxygine::TextField();
+    m_GlobalBoosts->setStyle(style);
+    m_GlobalBoosts->setHtmlText(tr("Global Boosts"));
+    m_GlobalBoosts->setX(10);
+    addChild(m_GlobalBoosts);
+
+    m_CoBoost = new oxygine::TextField();
+    m_CoBoost->setStyle(style);
+    m_CoBoost->setHtmlText(tr("CO Zone Boosts"));
+    m_CoBoost->setX(10);
+    addChild(m_CoBoost);
 }
 
 void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
@@ -389,100 +400,129 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    m_GlobalBoosts->setPosition(10, y);
+    y += 40;
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
         QString unitID = sortedUnits[i];
-        m_UnitDataActors.append(new oxygine::Actor());
-        m_UnitDataActors[i]->setPosition(x, y);
-        m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
-        {
-           emit sigShowLink(unitID);
-        });
-        addChild(m_UnitDataActors[i]);
         spUnit pUnit = new Unit(unitID, pPlayer.get(), false);
-        // gather basic co information
-        qint32 offBonus = 0;
-        qint32 defBonus = 0;
-        qint32 firerangeBonus = 0;
-        qint32 movementBonus = 0;
-        // not sure which one is better for ingame data
-        //        if (m_Ingame)
-        //        {
-        //            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-        //            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-        //            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
-        //            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
-        //        }
-        //        else
-        if (pCO.get() != nullptr)
-        {
-            offBonus = pCO->getOffensiveBonus(pUnit.get(), QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-            defBonus = pCO->getDeffensiveBonus(nullptr, QPoint(-1, -1), pUnit.get(), QPoint(-1, -1), false);
-            firerangeBonus = pCO->getFirerangeModifier(pUnit.get(), QPoint(-1, -1));
-            movementBonus = pCO->getMovementpointModifier(pUnit.get(), QPoint(-1, -1));
-        }
-
-        createStrengthBar(m_UnitDataActors[i], offBonus, 0);
-        createStrengthBar(m_UnitDataActors[i], defBonus, GameMap::Imagesize / 2);
-
-        if (firerangeBonus != 0)
-        {
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pCOSpriteManager->getResAnim("atkRange"));
-            pSprite->setY(5 +  GameMap::Imagesize);
-            pSprite->setScale(2.0f);
-            m_UnitDataActors[i]->addChild(pSprite);
-            oxygine::spTextField pText = new oxygine::TextField();
-            pText->setStyle(style);
-            if (firerangeBonus > 0)
-            {
-                pText->setHtmlText(("+" + QString::number(firerangeBonus)));
-            }
-            else
-            {
-                pText->setHtmlText((QString::number(firerangeBonus)));
-            }
-            pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
-            pText->setScale(0.75f);
-            m_UnitDataActors[i]->addChild(pText);
-        }
-        if (movementBonus != 0)
-        {
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
-            pSprite->setPosition(25 +  GameMap::Imagesize, 5 +  GameMap::Imagesize);
-            pSprite->setScale(2.0f);
-            m_UnitDataActors[i]->addChild(pSprite);
-            oxygine::spTextField pText = new oxygine::TextField();
-            pText->setStyle(style);
-            if (movementBonus > 0)
-            {
-                pText->setHtmlText(("+" + QString::number(movementBonus)));
-            }
-            else
-            {
-                pText->setHtmlText((QString::number(movementBonus)));
-            }
-
-            pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
-            pText->setScale(0.75f);
-            m_UnitDataActors[i]->addChild(pText);
-        }
-
-        m_UnitDataActors[i]->addChild(pUnit);
-        if (x + 120 > m_pCurrentCO->getX() - 50)
-        {
-            x = 10;
-            y += 60;
-        }
-        else
-        {
-            x += 100;
-        }
+        pUnit->setVirtuellX(-2);
+        pUnit->setVirtuellY(-2);
+        showCOBoost(pUnit, pCO, x, y);
+    }
+    x = 10;
+    y += 40;
+    m_CoBoost->setPosition(10, y);
+    y += 40;
+    for (qint32 i = 0; i < sortedUnits.size(); i++)
+    {
+        QString unitID = sortedUnits[i];
+        spUnit pUnit = new Unit(unitID, pPlayer.get(), false);
+        showCOBoost(pUnit, pCO, x, y);
     }
     setHeight(y + 100);
     connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
     pApp->continueThread();
+}
+
+void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    m_UnitDataActors.append(new oxygine::Actor());
+    qint32 i = m_UnitDataActors.size() - 1;
+    m_UnitDataActors[i]->setPosition(x, y);
+    m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
+    {
+       emit sigShowLink(pUnit->getUnitID());
+    });
+    addChild(m_UnitDataActors[i]);
+
+    // gather basic co information
+    qint32 offBonus = 0;
+    qint32 defBonus = 0;
+    qint32 firerangeBonus = 0;
+    qint32 movementBonus = 0;
+    // not sure which one is better for ingame data
+    //        if (m_Ingame)
+    //        {
+    //            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
+    //            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
+    //            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
+    //            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
+    //        }
+    //        else
+    if (pCO.get() != nullptr)
+    {
+        offBonus = pCO->getOffensiveBonus(pUnit.get(), pUnit->getPosition(), nullptr, pUnit->getPosition(), false);
+        defBonus = pCO->getDeffensiveBonus(nullptr, pUnit->getPosition(), pUnit.get(), pUnit->getPosition(), false);
+        firerangeBonus = pCO->getFirerangeModifier(pUnit.get(), pUnit->getPosition());
+        movementBonus = pCO->getMovementpointModifier(pUnit.get(), pUnit->getPosition());
+    }
+
+    createStrengthBar(m_UnitDataActors[i], offBonus, 0);
+    createStrengthBar(m_UnitDataActors[i], defBonus, GameMap::Imagesize / 2);
+
+    if (firerangeBonus != 0)
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pCOSpriteManager->getResAnim("atkRange"));
+        pSprite->setY(5 +  GameMap::Imagesize);
+        pSprite->setScale(2.0f);
+        m_UnitDataActors[i]->addChild(pSprite);
+        oxygine::spTextField pText = new oxygine::TextField();
+        pText->setStyle(style);
+        if (firerangeBonus > 0)
+        {
+            pText->setHtmlText(("+" + QString::number(firerangeBonus)));
+        }
+        else
+        {
+            pText->setHtmlText((QString::number(firerangeBonus)));
+        }
+        pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
+        pText->setScale(0.75f);
+        m_UnitDataActors[i]->addChild(pText);
+    }
+    if (movementBonus != 0)
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
+        pSprite->setPosition(25 +  GameMap::Imagesize, 5 +  GameMap::Imagesize);
+        pSprite->setScale(2.0f);
+        m_UnitDataActors[i]->addChild(pSprite);
+        oxygine::spTextField pText = new oxygine::TextField();
+        pText->setStyle(style);
+        if (movementBonus > 0)
+        {
+            pText->setHtmlText(("+" + QString::number(movementBonus)));
+        }
+        else
+        {
+            pText->setHtmlText((QString::number(movementBonus)));
+        }
+
+        pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
+        pText->setScale(0.75f);
+        m_UnitDataActors[i]->addChild(pText);
+    }
+
+    m_UnitDataActors[i]->addChild(pUnit);
+    if (x + 120 > m_pCurrentCO->getX() - 50)
+    {
+        x = 10;
+        y += 60;
+    }
+    else
+    {
+        x += 100;
+    }
 }
 
 void COInfoActor::showPerks(spCO pCO, qint32 & y)
@@ -502,7 +542,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
         COPerkManager* pCOPerkManager = COPerkManager::getInstance();
         QStringList perks = pCO->getPerkList();
         qint32 x = 10;
-        const qint32 width = 290;
+        const qint32 width = 300;
         for (const auto & perk : perks)
         {
             oxygine::spActor perkActor = new oxygine::Actor();
@@ -521,13 +561,17 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             }
             pSprite->setPosition(x, 0);
             perkActor->addChild(pSprite);
-            spLabel pLabel = new Label(200);
+            spLabel pLabel = new Label(250);
             pLabel->setStyle(style);
             pLabel->setText(name);
             pLabel->setPosition(x + GameMap::Imagesize * 2 + 10, 10);
             perkActor->addChild(pLabel);
             perkActor->setPosition(x, y);
             addChild(perkActor);
+            perkActor->addClickListener([=](oxygine::Event*)
+            {
+                emit sigShowLink(perk);
+            });
             m_PerkActors.append(perkActor);
             x += width;
             if (x + width > m_pCurrentCO->getX() - 50)

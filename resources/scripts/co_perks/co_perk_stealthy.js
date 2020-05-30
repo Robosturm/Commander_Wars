@@ -1,12 +1,12 @@
 var Constructor = function()
 {
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getFuelCostModifier = function(co, unit, costs)
     {
 		if (CO_PERK.isActive(co))
 		{
-			if (unit.isTransporter())
+			if (unit.getHidden())
 			{
-				return 1;
+				return -2;
 			}
 		}
         return 0;
@@ -14,17 +14,17 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the movement range of all transporters by 1.";
+        return "Dive/Hide fuel cost -2.";
     };
     this.getIcon = function()
     {
-        return "apcboost";
+        return "sneaky";
     };
     this.getName = function()
     {
-        return "Boost +1";
+        return "Stealthy";
     };
 };
 
 Constructor.prototype = CO_PERK;
-var CO_PERK_APCBOOST = new Constructor();
+var CO_PERK_STEALTHY = new Constructor();

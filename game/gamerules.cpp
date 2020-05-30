@@ -772,6 +772,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+qint32 GameRules::getMaxPerkCount() const
+{
+    return m_maxPerkCount;
+}
+
+void GameRules::setMaxPerkCount(const qint32 &maxPerkCount)
+{
+    m_maxPerkCount = maxPerkCount;
+}
+
 GameRules::DayToDayScreen GameRules::getDayToDayScreen() const
 {
     return m_DayToDayScreen;
@@ -880,6 +890,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_VisionBlock;
     pStream << m_BuildingVisionHide;
     pStream << static_cast<quint8>(m_DayToDayScreen);
+    pStream << m_maxPerkCount;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1065,5 +1076,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
         quint8 value = 0;
         pStream >> value;
         m_DayToDayScreen = static_cast<DayToDayScreen>(value);
+    }
+    if (version > 10)
+    {
+        pStream >> m_maxPerkCount;
     }
 }

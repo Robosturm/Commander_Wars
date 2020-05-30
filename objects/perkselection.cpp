@@ -5,14 +5,15 @@
 
 #include "game/gamemap.h"
 #include "objects/label.h"
-#include "objects/checkbox.h"
 
-PerkSelection::PerkSelection(CO* pCO, qint32 width)
-    : m_pCO(pCO)
+PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks)
+    : m_pCO(pCO),
+      m_maxPerks(maxPerks)
 {
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    connect(this, &PerkSelection::sigUpdatePerkCount, this, &PerkSelection::updatePerkCount, Qt::QueuedConnection);
     updatePerksView(pCO);
 }
 
@@ -33,7 +34,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     qint32 count = pCOPerkManager->getCount();
     qint32 y = 0;
     qint32 x = 0;
-    const qint32 width = 320;
+    const qint32 width = 370;
     for (qint32 i = 0; i < count; i++)
     {
         QString id = pCOPerkManager->getID(i);
@@ -42,21 +43,8 @@ void PerkSelection::updatePerksView(CO* pCO)
         oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
         QString description = pCOPerkManager->getDescription(i);
 
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        pSprite->setResAnim(pAnim);
-        if (pAnim != nullptr)
-        {
-            pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
-        }
-        pSprite->setPosition(x, y);
-        addChild(pSprite);
-        spLabel pLabel = new Label(200);
-        pLabel->setStyle(style);
-        pLabel->setText(name);
-        pLabel->setPosition(x + GameMap::Imagesize * 2 + 10, y + 10);
-        addChild(pLabel);
         spCheckbox pCheckbox = new Checkbox();
-        pCheckbox->setPosition(pLabel->getX() + 200 + 10, y + 5);
+        pCheckbox->setPosition(x, y + 5);
         pCheckbox->setTooltipText(description);
         pCheckbox->setChecked(perkList.contains(id));
         connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
@@ -69,8 +57,25 @@ void PerkSelection::updatePerksView(CO* pCO)
             {
                 m_pCO->removePerk(id);
             }
+            emit sigUpdatePerkCount();
         });
+        m_Checkboxes.append(pCheckbox);
         addChild(pCheckbox);
+
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        if (pAnim != nullptr)
+        {
+            pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
+        }
+        pSprite->setPosition(x + 45, y);
+        addChild(pSprite);
+        spLabel pLabel = new Label(250);
+        pLabel->setStyle(style);
+        pLabel->setText(name);
+        pLabel->setPosition(x + GameMap::Imagesize * 2 + 50, y + 10);
+        addChild(pLabel);
+
 
         x += width;
         if (x + width > getWidth())
@@ -81,5 +86,25 @@ void PerkSelection::updatePerksView(CO* pCO)
     }
     y += GameMap::Imagesize * 2 + 10;
     setHeight(y);
+    updatePerkCount();
+    pApp->continueThread();
+}
+
+void PerkSelection::updatePerkCount()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
+    for (auto & checkbox : m_Checkboxes)
+    {
+        if (enable || checkbox->getChecked())
+        {
+            checkbox->setEnabled(true);
+        }
+        else
+        {
+            checkbox->setEnabled(false);
+        }
+    }
     pApp->continueThread();
 }

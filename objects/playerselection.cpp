@@ -19,6 +19,8 @@
 
 #include "multiplayer/networkcommands.h"
 
+#include "coreengine/filesupport.h"
+
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
 {
@@ -446,10 +448,17 @@ void PlayerSelection::showPlayerSelection()
         oxygine::spButton pIconButton = ObjectManager::createIconButton("perk");
         pIconButton->setPosition(xPositions[itemIndex] + 75, y + 10);
         m_pPlayerSelection->addItem(pIconButton);
+        m_playerPerks.append(pIconButton);
         pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowSelectCOPerks(i);
         });
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            (ai > 0 && m_pCampaign.get() != nullptr))
+        {
+            pIconButton->setEnabled(false);
+        }
 
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
@@ -864,19 +873,25 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         sendStream << NetworkCommands::CODATA;
         sendStream << playerIdx;
         CO* pCO = pPlayer->getCO(0);
-        QString coid = "no_co";
+        QString coid = "";
+        QStringList perks;
         if (pCO != nullptr)
         {
             coid = pCO->getCoID();
+            perks = pCO->getPerkList();
         }
         sendStream << coid;
+        Filesupport::writeVectorList(sendStream, perks);
         pCO = pPlayer->getCO(1);
-        coid = "no_co";
+        coid = "";
+        perks.clear();
         if (pCO != nullptr)
         {
             coid = pCO->getCoID();
+            perks = pCO->getPerkList();
         }
         sendStream << coid;
+        Filesupport::writeVectorList(sendStream, perks);
         m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
 }
@@ -912,11 +927,16 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    Player* pPlayer = GameMap::getInstance()->getPlayer(player);
+    GameMap* pMap = GameMap::getInstance();
+    Player* pPlayer = pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
-        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer);
+        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount());
         oxygine::getStage()->addChild(pPerkSelectionDialog);
+        connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
+        {
+            updateCOData(player);
+        });
     }
     pApp->continueThread();
 }
@@ -1280,10 +1300,22 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     QString coid;
     stream >> playerIdx;
     stream >> coid;
+    QStringList perks = Filesupport::readVectorList<QString, QList>(stream);
     pMap->getPlayer(playerIdx)->setCO(coid, 0);
+    CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
+    if (pCO != nullptr)
+    {
+        pCO->setPerkList(perks);
+    }
     updateCO1Sprite(coid, playerIdx);
     stream >> coid;
+    perks = Filesupport::readVectorList<QString, QList>(stream);
     pMap->getPlayer(playerIdx)->setCO(coid, 1);
+    pCO = pMap->getPlayer(playerIdx)->getCO(1);
+    if (pCO != nullptr)
+    {
+        pCO->setPerkList(perks);
+    }
     updateCO2Sprite(coid, playerIdx);
     pApp->continueThread();
 }
@@ -1367,13 +1399,14 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerColors[player]->setEnabled(true);
                 m_playerCO1[player]->setEnabled(true);
                 m_playerCO2[player]->setEnabled(true);
-
+                m_playerPerks[player]->setEnabled(true);
             }
             else
             {
                 m_playerColors[player]->setEnabled(false);
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
+                m_playerPerks[player]->setEnabled(false);
             }
 
             if (pPlayer->getBaseGameInput() != nullptr &&
@@ -1396,12 +1429,14 @@ void PlayerSelection::updatePlayerData(qint32 player)
                     m_playerColors[player]->setEnabled(true);
                     m_playerCO1[player]->setEnabled(true);
                     m_playerCO2[player]->setEnabled(true);
+                    m_playerPerks[player]->setEnabled(true);
                 }
                 else
                 {
                     m_playerColors[player]->setEnabled(false);
                     m_playerCO1[player]->setEnabled(false);
                     m_playerCO2[player]->setEnabled(false);
+                    m_playerPerks[player]->setEnabled(false);
                 }
             }
             else
@@ -1410,6 +1445,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerColors[player]->setEnabled(false);
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
+                m_playerPerks[player]->setEnabled(false);
             }
         }
         if (m_pCampaign.get() != nullptr)
@@ -1419,6 +1455,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerAIs[player]->setEnabled(false);
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
+                m_playerPerks[player]->setEnabled(false);
             }
             m_playerColors[player]->setEnabled(false);
         }

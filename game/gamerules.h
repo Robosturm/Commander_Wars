@@ -55,7 +55,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 10;
+        return 11;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -76,9 +76,21 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getMaxPerkCount
+     * @return
+     */
+    qint32 getMaxPerkCount() const;
+    /**
+     * @brief setMaxPerkCount
+     * @param maxPerkCount
+     */
+    void setMaxPerkCount(const qint32 &maxPerkCount);
     /**
      * @brief getVisionBuildingVisionHide
      * @return
@@ -365,6 +377,7 @@ private:
     bool m_VisionBlock{false};
     bool m_BuildingVisionHide{false};
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
+    qint32 m_maxPerkCount{4};
 };
 
 #endif // GAMERULES_H

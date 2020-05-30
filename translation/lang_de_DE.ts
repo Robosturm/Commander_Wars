@@ -606,7 +606,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="261"/>
+        <location filename="../objects/coinfoactor.cpp" line="164"/>
+        <source>Global Boosts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfoactor.cpp" line="170"/>
+        <source>CO Zone Boosts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfoactor.cpp" line="272"/>
         <source>CO-Zone-Range: </source>
         <translation>KO-Zone: </translation>
     </message>
@@ -3343,144 +3353,144 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>CO&apos;s</source>
         <translation>KO&apos;s</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>AI Strength</source>
         <translation>KI</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Startfunds</source>
         <translation>Startfonds</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Income Modifier</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
-        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Team</source>
         <translation>Team</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="188"/>
-        <location filename="../objects/playerselection.cpp" line="294"/>
-        <location filename="../objects/playerselection.cpp" line="615"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="296"/>
+        <location filename="../objects/playerselection.cpp" line="624"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="191"/>
+        <location filename="../objects/playerselection.cpp" line="193"/>
         <source>Connected</source>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="223"/>
+        <location filename="../objects/playerselection.cpp" line="225"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="228"/>
+        <location filename="../objects/playerselection.cpp" line="230"/>
         <source>All Random</source>
         <translation>Alle Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="236"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
         <source>CO 1 Random</source>
         <translation>KO 1 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="245"/>
+        <location filename="../objects/playerselection.cpp" line="247"/>
         <source>CO 2 Random</source>
         <translation>KO 2 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="265"/>
+        <location filename="../objects/playerselection.cpp" line="267"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="280"/>
+        <location filename="../objects/playerselection.cpp" line="282"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
-        <location filename="../objects/playerselection.cpp" line="319"/>
-        <location filename="../objects/playerselection.cpp" line="333"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="335"/>
         <source>Human</source>
         <translation>Mensch</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Very Easy</source>
         <translation>Sehr Leicht</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal Off.</source>
         <translation>Normal Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal Def.</source>
         <translation>Normal Def.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="322"/>
-        <location filename="../objects/playerselection.cpp" line="329"/>
-        <location filename="../objects/playerselection.cpp" line="333"/>
+        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="331"/>
+        <location filename="../objects/playerselection.cpp" line="335"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="475"/>
+        <location filename="../objects/playerselection.cpp" line="484"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="493"/>
+        <location filename="../objects/playerselection.cpp" line="502"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="560"/>
+        <location filename="../objects/playerselection.cpp" line="569"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="579"/>
+        <location filename="../objects/playerselection.cpp" line="588"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="598"/>
+        <location filename="../objects/playerselection.cpp" line="607"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="634"/>
+        <location filename="../objects/playerselection.cpp" line="643"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3860,56 +3870,66 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="250"/>
+        <source>CO Perks: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="254"/>
+        <source>Selects the amount of CO Perks that can be assigned per CO.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="264"/>
         <source>Building Vision Denial: </source>
         <translation>Gebäudeschatten: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="254"/>
+        <location filename="../objects/ruleselection.cpp" line="268"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="263"/>
+        <location filename="../objects/ruleselection.cpp" line="277"/>
         <source>Unit Limit: </source>
         <translation>Einheitenlimit: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="267"/>
+        <location filename="../objects/ruleselection.cpp" line="281"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="277"/>
+        <location filename="../objects/ruleselection.cpp" line="291"/>
         <source>Round Time: </source>
         <translation>Rundenlimit: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="281"/>
+        <location filename="../objects/ruleselection.cpp" line="295"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="290"/>
+        <location filename="../objects/ruleselection.cpp" line="304"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="293"/>
+        <location filename="../objects/ruleselection.cpp" line="307"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="293"/>
+        <location filename="../objects/ruleselection.cpp" line="307"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="295"/>
+        <location filename="../objects/ruleselection.cpp" line="309"/>
         <source>Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="310"/>
+        <location filename="../objects/ruleselection.cpp" line="324"/>
         <source>Victory Rules</source>
         <translation>Sieg Regeln</translation>
     </message>
@@ -11461,34 +11481,34 @@ Units on buildings have 50% increased firepower.</source>
 <context>
     <name>co_koal</name>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="194"/>
         <source>A commander of the Black Hole army who is always planning his next destructive act.Endless March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="198"/>
         <source>Proverbs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="202"/>
         <source>Fondue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="206"/>
         <source>A master of road-based battles. Firepower of all units increased on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="210"/>
         <source>
 Global Effect: 
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="211"/>
         <source>
 
 CO Zone Effect: 
@@ -11496,82 +11516,82 @@ Units gain 30% increased firepower on street.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="215"/>
         <source>Movement range for all units is increased by one space. Units have more firepower on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="219"/>
         <source>Forced March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="223"/>
         <source>Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="227"/>
         <source>Trail of Woe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="231"/>
         <source>I will crush your units, one by one!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="232"/>
         <source>I am a warrior and a scholar. My victory is all but certain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="233"/>
         <source>Heh heh heh. I&apos;ll not surrender! Bend your knees and beg for mercy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="234"/>
         <source>Heh heh heh... None shall escape.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="235"/>
         <source>My speed knows no equal!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="236"/>
         <source>Heh heh heh... Fate has smiled on me this day!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="240"/>
         <source>I have no equal on the field of war!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="241"/>
         <source>Wallow in your shame, swine! Wallow, I say</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="242"/>
         <source>Victory is no accident.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="246"/>
         <source>He! He! He!...??? What?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="247"/>
         <source>One time you win and another time you loose.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="251"/>
         <source>Koal</source>
         <translation type="unfinished"></translation>
     </message>

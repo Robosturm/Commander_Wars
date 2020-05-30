@@ -5,7 +5,7 @@
 #include "objects/label.h"
 #include "objects/dropdownmenu.h"
 
-PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer)
+PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount)
     : m_pPlayer(pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -68,7 +68,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer)
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());
     m_pPanel = new  Panel(true, size, size);
     m_pPanel->setPosition(30, 75);
-    m_pPerkSelection = new PerkSelection(firstCO, Settings::getWidth() - 80);
+    m_pPerkSelection = new PerkSelection(firstCO, Settings::getWidth() - 80, maxPerkcount);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getHeight() + 40);
     m_pPanel->setContentWidth(m_pPerkSelection->getWidth());

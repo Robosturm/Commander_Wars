@@ -1029,7 +1029,12 @@ qint32 CO::getCORange()
 
 bool CO::inCORange(QPoint position, Unit* pUnit)
 {
-    if (position.x() < 0 && position.y() < 0)
+    if (position.x() == -2 && position.y() == -2)
+    {
+        // return false for intel information
+        return false;
+    }
+    else if (position.x() < 0 && position.y() < 0)
     {
         // return true for intel information
         return true;

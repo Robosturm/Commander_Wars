@@ -1,5 +1,10 @@
 var CO_PERK =
 {
+    isActive : function(co)
+    {
+        return true;
+    },
+
     onCOUnitLost : function(co)
     {
         // called when a co unit got destroyed

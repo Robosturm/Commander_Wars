@@ -230,7 +230,7 @@ void RuleSelection::showRuleSelection()
         pMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
     });
     addChild(fogOfWar);
-    y += 50;
+    y += 40;
 
     textField = new Label(textWidth - 10);
     textField->setStyle(style);
@@ -243,6 +243,20 @@ void RuleSelection::showRuleSelection()
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getVisionBlock());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 10);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("CO Perks: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    spSpinBox pSpinbox = new SpinBox(300, 0, 900);
+    pSpinbox->setTooltipText(tr("Selects the amount of CO Perks that can be assigned per CO."));
+    pSpinbox->setPosition(textWidth, textField->getY());
+    pSpinbox->setInfinityValue(-1);
+    addChild(pSpinbox);
+    pSpinbox->setCurrentValue(pMap->getGameRules()->getMaxPerkCount());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setMaxPerkCount, Qt::QueuedConnection);
     y += 40;
 
     textField = new Label(textWidth - 10);
@@ -263,7 +277,7 @@ void RuleSelection::showRuleSelection()
     textField->setHtmlText(tr("Unit Limit: "));
     textField->setPosition(30, y);
     addChild(textField);
-    spSpinBox pSpinbox = new SpinBox(200, 0, 9999);
+    pSpinbox = new SpinBox(200, 0, 9999);
     pSpinbox->setTooltipText(tr("The maximum amount of units a single player can own at any time."));
     pSpinbox->setInfinityValue(0.0);
     pSpinbox->setPosition(textWidth, textField->getY());
