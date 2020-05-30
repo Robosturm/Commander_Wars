@@ -30,7 +30,9 @@
 		<image file="sneaky.png" />
 		<image file="snipeguard.png" />
 		<image file="towerpower.png" />		
-		<image file="co0.png" />	
+		<image file="co0.png" />
+		<image file="starpower.png" />
+		<image file="ration.png" />		
 	</atlas>
 </resources>
 
