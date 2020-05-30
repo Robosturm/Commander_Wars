@@ -1,28 +1,28 @@
 var Constructor = function()
 {
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
-		if (CO_PERK.isActive(co))
-		{
-			if (typeof map !== 'undefined')
-			{
-				if (map.onMap(atkPosX, atkPosY))
-				{
-					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-					var isStreet = 	(terrainID === "MOUNTAIN") ||
-									(terrainID === "DESERT_ROCK") ||
-									(terrainID === "SNOW_MOUNTAIN");
-					if (isStreet)
+        if (CO_PERK.isActive(co))
+        {
+            if (typeof map !== 'undefined')
+            {
+                if (map.onMap(atkPosX, atkPosY))
+                {
+                    var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                    var isMountain = (terrainID === "MOUNTAIN") ||
+                            (terrainID === "DESERT_ROCK") ||
+                            (terrainID === "SNOW_MOUNTAIN");
+                    if (isMountain)
                     {
                         return 10;
                     }
-				}
-			}
-		}
+                }
+            }
+        }
         return 0;
     };
-	// Perk - Intel
+    // Perk - Intel
     this.getDescription = function()
     {
         return "Increases the attack from mountains by 10%.";

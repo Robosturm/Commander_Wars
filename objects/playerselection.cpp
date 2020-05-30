@@ -808,7 +808,18 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
         pCO == nullptr ||
         pCO->getCoID() != coid)
     {
+        QStringList perks;
+        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
+        if (pCurrentCO != nullptr)
+        {
+            perks = pCurrentCO->getPerkList();
+        }
         pMap->getPlayer(playerIdx)->setCO(coid, 0);
+        pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
+        if (pCurrentCO != nullptr)
+        {
+            pCurrentCO->setPerkList(perks);
+        }
         updateCO1Sprite(coid, playerIdx);
         updateCOData(playerIdx);
     }
@@ -840,7 +851,18 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
         pCO == nullptr ||
         pCO->getCoID() != coid)
     {
+        QStringList perks;
+        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
+        if (pCurrentCO != nullptr)
+        {
+            perks = pCurrentCO->getPerkList();
+        }
         pMap->getPlayer(playerIdx)->setCO(coid, 1);
+        pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
+        if (pCurrentCO != nullptr)
+        {
+            pCurrentCO->setPerkList(perks);
+        }
         updateCO2Sprite(coid, playerIdx);
         updateCOData(playerIdx);
     }

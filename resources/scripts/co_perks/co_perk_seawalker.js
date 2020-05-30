@@ -1,22 +1,21 @@
 var Constructor = function()
 {
-    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+    this.getMovementcostModifier = function(co, unit, posX, posY)
     {
 		if (CO_PERK.isActive(co))
 		{
 			if (typeof map !== 'undefined')
 			{
-				if (map.onMap(atkPosX, atkPosY))
+				if (map.onMap(posX, posY))
 				{
-					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-                    var isSea = 	(terrainID === "SEA") ||
+					var terrainID = map.getTerrain(posX, posY).getID();
+					var isSea = 	(terrainID === "SEA") ||
 									(terrainID === "REAF") ||
 									(terrainID === "ROUGH_SEA") ||
 									(terrainID === "FOG");
                     if (isSea)
                     {
-                        return 10;
+                        return -999;
                     }
 				}
 			}
@@ -26,7 +25,7 @@ var Constructor = function()
 	// Perk - Intel
     this.getDescription = function()
     {
-        return "Increases the attack from sea by 10%.";
+        return "Sets movement costs on sea to 1.";
     };
     this.getIcon = function()
     {
@@ -34,9 +33,9 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Seamanship";
+        return "Seawalker";
     };
 };
 
 Constructor.prototype = CO_PERK;
-var CO_PERK_SEAMANSHIP = new Constructor();
+var CO_PERK_SEAWALKER = new Constructor();

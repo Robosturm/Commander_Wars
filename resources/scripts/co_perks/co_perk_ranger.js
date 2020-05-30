@@ -10,10 +10,10 @@ var Constructor = function()
 				if (map.onMap(atkPosX, atkPosY))
 				{
 					var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-					var isStreet = 	(terrainID === "FOREST") ||
+                    var isForest = 	(terrainID === "FOREST") ||
 									(terrainID === "DESERT_FOREST") ||
 									(terrainID === "SNOW_FOREST");
-					if (isStreet)
+                    if (isForest)
                     {
                         return 10;
                     }
