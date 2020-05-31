@@ -389,7 +389,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_PerkText->setPosition(10, y);
     y += 40;
     showPerks(pCO, y);
-    y += 40;
+    y += 50;
 
     for (qint32 i = 0; i < m_UnitDataActors.size(); i++)
     {
@@ -559,12 +559,12 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             {
                 pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
             }
-            pSprite->setPosition(x, 0);
+            pSprite->setPosition(0, 0);
             perkActor->addChild(pSprite);
             spLabel pLabel = new Label(250);
             pLabel->setStyle(style);
             pLabel->setText(name);
-            pLabel->setPosition(x + GameMap::Imagesize * 2 + 10, 10);
+            pLabel->setPosition(GameMap::Imagesize * 2 + 10, 10);
             perkActor->addChild(pLabel);
             perkActor->setPosition(x, y);
             addChild(perkActor);

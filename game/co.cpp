@@ -1298,6 +1298,7 @@ void CO::deserializeObject(QDataStream& pStream)
     }
     if (version > 3)
     {
+        m_perkList.clear();
         qint32 size = 0;
         pStream >> size;
         for (qint32 i = 0; i < size; i++)

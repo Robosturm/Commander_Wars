@@ -64,6 +64,14 @@ signals:
      * @brief sigShowExitBox
      */
     void sigShowExitBox();
+    /**
+     * @brief sigDuplicateEvent
+     */
+    void sigDuplicateEvent();
+    /**
+     * @brief sigDuplicateCondition
+     */
+    void sigDuplicateCondition();
 public slots:
     /**
      * @brief saveScript
@@ -131,6 +139,14 @@ public slots:
      * @brief exitEditor
      */
     void exitEditor();
+    /**
+     * @brief duplicateEvent
+     */
+    void duplicateEvent();
+    /**
+     * @brief duplicateCondition
+     */
+    void duplicateCondition();
 private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;

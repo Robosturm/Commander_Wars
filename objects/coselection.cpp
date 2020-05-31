@@ -132,7 +132,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
 
-    m_COName = new oxygine::TextField();
+    m_COName = new Label(m_CoDescription->getWidth());
     m_COName->setStyle(headerStyle);
     m_COName->setSize(width, 55);
     m_COName->setPosition(0, 10);
@@ -144,11 +144,11 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_COPower = new oxygine::TextField();
+    m_COPower = new Label(m_CoDescription->getWidth());
     m_COPower->setStyle(style);
     m_COPower->setPosition(0, 70);
     m_CoDescription->addItem(m_COPower);
-    m_COSuperpower = new oxygine::TextField();
+    m_COSuperpower = new Label(m_CoDescription->getWidth());
     m_COSuperpower->setStyle(style);
     m_COSuperpower->setPosition(0, 100);
     m_CoDescription->addItem(m_COSuperpower);
@@ -410,11 +410,12 @@ void COSelection::hoveredCOChanged(QString coid)
             coSuperpower = value.toString();
         }
         m_COName->setHtmlText(coName);
-        m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
-        if (m_COName->getX() < 5)
-        {
-            m_COName->setX(5);
-        }
+        m_COName->setX(5);
+//        m_COName->setX(m_CoDescription->getWidth() / 2 - m_COName->getTextRect().getWidth() / 2 - 35);
+//        if (m_COName->getX() < 5)
+//        {
+//            m_COName->setX(5);
+//        }
 
         m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);

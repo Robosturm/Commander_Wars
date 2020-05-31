@@ -531,7 +531,7 @@ void PlayerSelection::showPlayerSelection()
             }
             else
             {
-                ai = aiList.size() - 3;
+                ai = aiList.size() - 4;
                 playerAi->setCurrentItem(ai);
                 playerAi->setEnabled(false);
             }
@@ -540,7 +540,7 @@ void PlayerSelection::showPlayerSelection()
         {
             if (i > 0)
             {
-                ai = aiList.size() - 3;
+                ai = aiList.size() - 4;
                 playerAi->setCurrentItem(ai);
 
             }

@@ -35,6 +35,11 @@ public:
     {
         return _textField->getTextRect(localScale);
     }
+    /**
+     * @brief setWidth
+     * @param width
+     */
+    void setWidth(qint32 width);
 protected:
     oxygine::spTextField _textField;
     oxygine::spClipRectActor _clipRect;

@@ -13,6 +13,7 @@
 #include "game/gamemap.h"
 
 #include "objects/panel.h"
+#include "objects/label.h"
 
 #include "objects/dialogtextinput.h"
 
@@ -114,10 +115,14 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    spLabel pLabel = new Label(pPanel->getWidth() - 40);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("CO Bann List"));
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
+    if (pLabel->getX() < 20)
+    {
+        pLabel->setX(20);
+    }
     pPanel->addItem(pLabel);
 
     // load default army and co sets
@@ -175,16 +180,16 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         oxygine::spSprite pCo = new oxygine::Sprite();
         pCo->setResAnim(pAnim, 0, 0);
 
-        pLabel = new oxygine::TextField();
+        pLabel = new Label(250);
         pLabel->setStyle(style);
 
         pLabel->setHtmlText(pCOSpriteManager->getName(coID));
 
-        pLabel->setPosition(x, y);
-        pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
+        pLabel->setPosition(x + 80, y);
+        pCo->setPosition(x + 45, y);
         pCo->setScale(0.75f);
         spCheckbox pCheckbox = new Checkbox();
-        pCheckbox->setPosition(x + 220, y);
+        pCheckbox->setPosition(x, y);
         m_Checkboxes.append(pCheckbox);
 
         if (m_CurrentCOBannList.contains(coID))
@@ -211,15 +216,12 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         pPanel->addItem(pLabel);
         pPanel->addItem(pCo);
 
-        if (x + 320 > pPanel->getContentWidth())
+        x += 340;
+        if (x + 340 > pPanel->getContentWidth())
         {
             y += 40;
             x = 10;
-            pLabel->setPosition(x, y);
-            pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
-            pCheckbox->setPosition(x + 220, y);
         }
-        x += 280;
     }
     pPanel->setContentHeigth(y + 50);
 }

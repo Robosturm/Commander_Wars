@@ -75,6 +75,15 @@ ScriptEditor::ScriptEditor()
     });
     connect(this, &ScriptEditor::sigAddCondition, this, &ScriptEditor::addCondition, Qt::QueuedConnection);
 
+    oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
+    pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
+    pSpriteBox->addChild(pConditionButton);
+    pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigDuplicateCondition();
+    });
+    connect(this, &ScriptEditor::sigDuplicateCondition, this, &ScriptEditor::duplicateCondition, Qt::QueuedConnection);
+
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
@@ -108,6 +117,15 @@ ScriptEditor::ScriptEditor()
         emit sigAddEvent();
     });
     connect(this, &ScriptEditor::sigAddEvent, this, &ScriptEditor::addEvent, Qt::QueuedConnection);
+
+    oxygine::spButton pEventDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
+    pEventDuplicate->setPosition(pEventButton->getX() + pEventButton->getWidth() + 10, Settings::getHeight() - 115);
+    pSpriteBox->addChild(pEventDuplicate);
+    pEventDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigDuplicateEvent();
+    });
+    connect(this, &ScriptEditor::sigDuplicateEvent, this, &ScriptEditor::duplicateEvent, Qt::QueuedConnection);
 
 
 
@@ -474,4 +492,14 @@ void ScriptEditor::showEditEvent(spScriptEvent pEvent)
     pApp->suspendThread();
     pEvent->showEditEvent(this);
     pApp->continueThread();
+}
+
+void ScriptEditor::duplicateEvent()
+{
+
+}
+
+void ScriptEditor::duplicateCondition()
+{
+
 }

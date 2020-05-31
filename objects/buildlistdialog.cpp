@@ -15,6 +15,7 @@
 #include "objects/panel.h"
 
 #include "objects/dialogtextinput.h"
+#include "objects/label.h"
 
 BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     : QObject(),
@@ -116,7 +117,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    spLabel pLabel = new Label(pPanel->getWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
@@ -134,15 +135,15 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
         spUnit pUnit = new Unit(unitID, pMap->getPlayer(player), false);
 
-        pLabel = new oxygine::TextField();
+        pLabel = new Label(250);
         pLabel->setStyle(style);
         pLabel->setHtmlText(pUnit->getName());
 
-        pLabel->setPosition(x, y);
-        pUnit->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
+        pLabel->setPosition(x + 80, y);
+        pUnit->setPosition(x + 45, y);
         pUnit->setScale(pUnit->getScale() * 1.25f);
         spCheckbox pCheckbox = new Checkbox();
-        pCheckbox->setPosition(x + 220, y);
+        pCheckbox->setPosition(x, y);
         m_Checkboxes.append(pCheckbox);
 
         if (m_CurrentBuildList.contains(unitID))
@@ -169,15 +170,12 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         pPanel->addItem(pLabel);
         pPanel->addItem(pUnit);
 
-        if (x + 320 > pPanel->getContentWidth())
+        x += 340;
+        if (x + 340 > pPanel->getContentWidth())
         {
             y += 40;
             x = 10;
-            pLabel->setPosition(x, y);
-            pUnit->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
-            pCheckbox->setPosition(x + 220, y);
         }
-        x += 280;
     }
     pPanel->setContentHeigth(y + 50);
 }

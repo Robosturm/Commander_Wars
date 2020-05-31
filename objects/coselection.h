@@ -12,6 +12,7 @@
 #include "oxygine-framework.h"
 
 #include "objects/panel.h"
+#include "objects/label.h"
 
 class COSelection;
 typedef oxygine::intrusive_ptr<COSelection> spCOSelection;
@@ -50,11 +51,11 @@ private:
     spPanel m_CoFieldPanel;
 
 
-    oxygine::spTextField m_COName;
+    spLabel m_COName;
     oxygine::spTextField m_COBio;
     oxygine::spTextField m_CODesc;
-    oxygine::spTextField m_COPower;
-    oxygine::spTextField m_COSuperpower;
+    spLabel m_COPower;
+    spLabel m_COSuperpower;
     oxygine::spSprite m_pCurrentCO;
     spPanel m_CoDescription;
 

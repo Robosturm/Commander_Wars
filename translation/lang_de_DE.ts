@@ -452,57 +452,57 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="39"/>
+        <location filename="../objects/buildlistdialog.cpp" line="40"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="49"/>
+        <location filename="../objects/buildlistdialog.cpp" line="50"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="58"/>
+        <location filename="../objects/buildlistdialog.cpp" line="59"/>
         <source>Un/Select All</source>
         <translation>Keine/Alle</translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="71"/>
+        <location filename="../objects/buildlistdialog.cpp" line="72"/>
         <source>Commander Wars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="72"/>
+        <location filename="../objects/buildlistdialog.cpp" line="73"/>
         <source>Advance Wars DoR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="73"/>
+        <location filename="../objects/buildlistdialog.cpp" line="74"/>
         <source>Advance Wars DS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="74"/>
+        <location filename="../objects/buildlistdialog.cpp" line="75"/>
         <source>Advance Wars 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="75"/>
+        <location filename="../objects/buildlistdialog.cpp" line="76"/>
         <source>Advance Wars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="93"/>
+        <location filename="../objects/buildlistdialog.cpp" line="94"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="121"/>
+        <location filename="../objects/buildlistdialog.cpp" line="122"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="250"/>
+        <location filename="../objects/buildlistdialog.cpp" line="248"/>
         <source>Bannlist Name</source>
         <translation>Baulistenname</translation>
     </message>
@@ -518,57 +518,57 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="38"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="48"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="57"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
         <translation>Keine/Alle</translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="69"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="70"/>
         <source>Commander Wars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="70"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="71"/>
         <source>Advance Wars DoR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="71"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="72"/>
         <source>Advance Wars DS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="72"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="73"/>
         <source>Advance Wars 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="73"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="74"/>
         <source>Advance Wars</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="90"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="91"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="119"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="120"/>
         <source>CO Bann List</source>
         <translation>KO Bannliste</translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="300"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="302"/>
         <source>Bannlist Name</source>
         <translation>Bannliste</translation>
     </message>
@@ -4566,64 +4566,70 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="80"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
+        <source>Duplicate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="89"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="108"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="103"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="145"/>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="153"/>
         <source>Save</source>
         <translation type="unfinished">Speichern</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="160"/>
         <source>Load</source>
         <translation type="unfinished">Laden</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="162"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="180"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="303"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="384"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="321"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="402"/>
         <source>Edit</source>
         <translation type="unfinished">Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="310"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="391"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="328"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="409"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="336"/>
         <source>Select</source>
         <translation type="unfinished">Auswahl</translation>
     </message>

@@ -4,6 +4,7 @@
 
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
+#include "objects/label.h"
 
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
@@ -18,27 +19,29 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     pButton->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
     //Create Actor with Text and add it to button as child
-    oxygine::spTextField textField = new oxygine::TextField();
+    spLabel textField = new Label(width - 10);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_MIDDLE;
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
     if (width < 0)
     {
         width = textField->getTextRect().getWidth();
-        if (width < 150)
+        if (width < 180)
         {
-            width = 150;
+            width = 180;
         }
     }
-    else
+    textField->setWidth(width - 10);
+    textField->setPosition(width / 2 - textField->getTextRect().getWidth() / 2, 5);
+    if (textField->getX() < 5)
     {
-        width -= 30;
+        textField->setX(5);
     }
-    pButton->setSize(width + 30, 40);
+    pButton->setSize(width, 40);
     oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
     clipRect->setSize(pButton->getSize());
     textField->setSize(pButton->getSize());
