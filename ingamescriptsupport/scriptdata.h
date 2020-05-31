@@ -48,18 +48,18 @@ public:
      * @brief addVictoryCondition
      * @param type
      */
-    spScriptCondition addVictoryCondition();
+    spScriptCondition addVictoryCondition(spScriptCondition condition);
     /**
      * @brief addDayCondition
      * @param type
      */
-    spScriptCondition addDayCondition(ScriptCondition::ConditionType type);
+    spScriptCondition addDayCondition(spScriptCondition condition);
     /**
      * @brief addActionCondition
      * @param type
      * @return
      */
-    spScriptCondition addActionCondition(ScriptCondition::ConditionType type);
+    spScriptCondition addActionCondition(spScriptCondition condition);
     /**
      * @brief removeCondition
      * @param condition

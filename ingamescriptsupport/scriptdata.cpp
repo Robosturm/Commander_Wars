@@ -267,23 +267,20 @@ void ScriptData::removeCondition(QVector<spScriptCondition>& data, spScriptCondi
     }
 }
 
-spScriptCondition ScriptData::addVictoryCondition()
+spScriptCondition ScriptData::addVictoryCondition(spScriptCondition condition)
 {
-    spScriptCondition condition = ScriptCondition::createCondition(ScriptCondition::ConditionType::victory);
     m_Victory.append(condition);
     return condition;
 }
 
-spScriptCondition ScriptData::addDayCondition(ScriptCondition::ConditionType type)
+spScriptCondition ScriptData::addDayCondition(spScriptCondition condition)
 {
-    spScriptCondition condition = ScriptCondition::createCondition(type);
     m_DayConditions.append(condition);
     return condition;
 }
 
-spScriptCondition ScriptData::addActionCondition(ScriptCondition::ConditionType type)
+spScriptCondition ScriptData::addActionCondition(spScriptCondition condition)
 {
-    spScriptCondition condition = ScriptCondition::createCondition(type);
     m_ActionConditions.append(condition);
     return condition;
 }

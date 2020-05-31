@@ -67,7 +67,7 @@ signals:
     /**
      * @brief sigDuplicateEvent
      */
-    void sigDuplicateEvent();
+    void sigDuplicateEvent(spScriptEvent pEvent);
     /**
      * @brief sigDuplicateCondition
      */
@@ -142,11 +142,16 @@ public slots:
     /**
      * @brief duplicateEvent
      */
-    void duplicateEvent();
+    void duplicateEvent(spScriptEvent pEvent);
     /**
      * @brief duplicateCondition
      */
     void duplicateCondition();
+    /**
+     * @brief addConditionToData
+     * @param pCondition
+     */
+    void addConditionToData(spScriptCondition pCondition);
 private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;

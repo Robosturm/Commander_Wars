@@ -4559,7 +4559,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="407"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4579,49 +4579,49 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="123"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="127"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="153"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="160"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="149"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="180"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="170"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="321"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="402"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="311"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="392"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="328"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="409"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="399"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="336"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="326"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5068,108 +5068,108 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>SelectKey</name>
     <message>
-        <location filename="../objects/selectkey.cpp" line="17"/>
+        <location filename="../objects/selectkey.cpp" line="19"/>
         <source>Press Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="41"/>
-        <location filename="../objects/selectkey.cpp" line="129"/>
+        <location filename="../objects/selectkey.cpp" line="48"/>
+        <location filename="../objects/selectkey.cpp" line="136"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="45"/>
+        <location filename="../objects/selectkey.cpp" line="52"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="49"/>
+        <location filename="../objects/selectkey.cpp" line="56"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="53"/>
+        <location filename="../objects/selectkey.cpp" line="60"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="57"/>
+        <location filename="../objects/selectkey.cpp" line="64"/>
         <source>F4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="61"/>
+        <location filename="../objects/selectkey.cpp" line="68"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="65"/>
+        <location filename="../objects/selectkey.cpp" line="72"/>
         <source>F6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="69"/>
+        <location filename="../objects/selectkey.cpp" line="76"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="73"/>
+        <location filename="../objects/selectkey.cpp" line="80"/>
         <source>F8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="77"/>
+        <location filename="../objects/selectkey.cpp" line="84"/>
         <source>F9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="81"/>
+        <location filename="../objects/selectkey.cpp" line="88"/>
         <source>F10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="85"/>
+        <location filename="../objects/selectkey.cpp" line="92"/>
         <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="89"/>
+        <location filename="../objects/selectkey.cpp" line="96"/>
         <source>F12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="93"/>
+        <location filename="../objects/selectkey.cpp" line="100"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="97"/>
+        <location filename="../objects/selectkey.cpp" line="104"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="101"/>
+        <location filename="../objects/selectkey.cpp" line="108"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="105"/>
+        <location filename="../objects/selectkey.cpp" line="112"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="109"/>
+        <location filename="../objects/selectkey.cpp" line="116"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="113"/>
+        <location filename="../objects/selectkey.cpp" line="120"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="133"/>
+        <location filename="../objects/selectkey.cpp" line="140"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>

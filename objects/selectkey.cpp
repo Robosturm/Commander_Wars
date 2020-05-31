@@ -5,6 +5,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "objects/label.h"
+
 SelectKey::SelectKey(Qt::Key code)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -13,8 +15,13 @@ SelectKey::SelectKey(Qt::Key code)
     m_Button = ObjectManager::createButton("");
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());
         pText->setHtmlText(tr("Press Key"));
+        pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        if (pText->getX() < 5)
+        {
+            pText->setX(5);
+        }
         active = true;
     });
     addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event * )->void
@@ -129,8 +136,13 @@ void SelectKey::setKeycode(Qt::Key code)
     if (codeText != tr("Unknown"))
     {
         currentCode = code;
-        oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild()->getFirstChild().get());
+        Label* pText = dynamic_cast<Label*>(m_Button->getFirstChild()->getFirstChild().get());
         pText->setHtmlText((tr("Key ") + codeText));
+        pText->setX(m_Button->getWidth() / 2 - pText->getTextRect().getWidth() / 2);
+        if (pText->getX() < 5)
+        {
+            pText->setX(5);
+        }
         active = false;
         emit sigKeyChanged(currentCode);
     }

@@ -77,7 +77,7 @@ ScriptEditor::ScriptEditor()
 
     oxygine::spButton pConditionDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
     pConditionDuplicate->setPosition(pConditionButton->getX() + pConditionButton->getWidth() + 10, Settings::getHeight() / 2 - 45);
-    pSpriteBox->addChild(pConditionButton);
+    pSpriteBox->addChild(pConditionDuplicate);
     pConditionDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigDuplicateCondition();
@@ -117,17 +117,6 @@ ScriptEditor::ScriptEditor()
         emit sigAddEvent();
     });
     connect(this, &ScriptEditor::sigAddEvent, this, &ScriptEditor::addEvent, Qt::QueuedConnection);
-
-    oxygine::spButton pEventDuplicate = pObjectManager->createButton(tr("Duplicate"), 200);
-    pEventDuplicate->setPosition(pEventButton->getX() + pEventButton->getWidth() + 10, Settings::getHeight() - 115);
-    pSpriteBox->addChild(pEventDuplicate);
-    pEventDuplicate->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-    {
-        emit sigDuplicateEvent();
-    });
-    connect(this, &ScriptEditor::sigDuplicateEvent, this, &ScriptEditor::duplicateEvent, Qt::QueuedConnection);
-
-
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
@@ -170,6 +159,7 @@ ScriptEditor::ScriptEditor()
     connect(this, &ScriptEditor::sigUpdateEvents, this, &ScriptEditor::updateEvents, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigShowEditCondition, this, &ScriptEditor::showEditCondition, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigShowEditEvent, this, &ScriptEditor::showEditEvent, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigDuplicateEvent, this, &ScriptEditor::duplicateEvent, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigShowExitBox, this, &ScriptEditor::showExitBox, Qt::QueuedConnection);
 }
 
@@ -303,7 +293,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     pSpritebox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pSpritebox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pSpritebox->setResAnim(pAnim);
-    pSpritebox->setSize(x + 100 * 3 + 10, 50);
+    pSpritebox->setSize(x + 140 * 3 + 10, 50);
     pSpritebox->setPosition(5, y);
     m_ConditionBoxes.append(pSpritebox);
     m_ConditionPanel->addItem(pSpritebox);
@@ -318,23 +308,23 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
         text->setPosition(10, boxY);
         pSpritebox->addChild(text);
 
-        oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
+        oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
         pEditButton->setPosition(x, boxY);
         pSpritebox->addChild(pEditButton);
         pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowEditCondition(condition);
         });
-        oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
-        pRemoveButton->setPosition(x + 100, boxY);
+        oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
+        pRemoveButton->setPosition(x + 140, boxY);
         pSpritebox->addChild(pRemoveButton);
         pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             m_Data->removeCondition(condition);
             emit sigUpdateConditions();
         });
-        oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 90);
-        pSelectButton->setPosition(x + 100 * 2, boxY);
+        oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 130);
+        pSelectButton->setPosition(x + 140 * 2, boxY);
         pSpritebox->addChild(pSelectButton);
         pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
@@ -362,7 +352,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     }
 
     y += 54 + boxY;
-    m_ConditionPanel->setContentWidth(x + 100 * 3 + 30);
+    m_ConditionPanel->setContentWidth(x + 140 * 3 + 30);
 }
 
 void ScriptEditor::updateEvents()
@@ -387,7 +377,7 @@ void ScriptEditor::updateEvents()
 
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
 {
-    qint32 x = 250;
+    qint32 x = 450;
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -399,23 +389,31 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     text->setPosition(10, y);
     m_EventPanel->addItem(text);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
+    oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 130);
     pEditButton->setPosition(x, y);
     m_EventPanel->addItem(pEditButton);
     pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigShowEditEvent(pEvent);
     });
-    oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
-    pRemoveButton->setPosition(x + 100, y);
+    oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 130);
+    pRemoveButton->setPosition(x + 140, y);
     m_EventPanel->addItem(pRemoveButton);
     pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         m_CurrentCondition->removeEvent(pEvent);
         emit sigUpdateEvents();
     });
+    oxygine::spButton pDuplicateButton = pObjectManager->createButton(tr("Duplicate"), 130);
+    pDuplicateButton->setPosition(x + 140 * 2, y);
+    m_EventPanel->addItem(pDuplicateButton);
+    pDuplicateButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigDuplicateEvent(pEvent);
+    });
+
     y += 40;
-    m_EventPanel->setContentWidth(x + 100 * 2 + 10);
+    m_EventPanel->setContentWidth(x + 140 * 3 + 10);
 }
 
 void ScriptEditor::addCondition()
@@ -436,34 +434,7 @@ void ScriptEditor::addCondition()
     }
     else
     {
-        switch (type)
-        {
-            case ScriptCondition::ConditionType::victory:
-            {
-                pCondition = m_Data->addVictoryCondition();
-                break;
-            }
-            case ScriptCondition::ConditionType::startOfTurn:
-            case ScriptCondition::ConditionType::eachDay:
-            {
-                pCondition = m_Data->addDayCondition(type);
-                break;
-            }
-            case ScriptCondition::ConditionType::buildingDestroyed:
-            case ScriptCondition::ConditionType::terrainDestroyed:
-            case ScriptCondition::ConditionType::buildingCaptured:
-            case ScriptCondition::ConditionType::playerDefeated:
-            case ScriptCondition::ConditionType::unitsDestroyed:
-            case ScriptCondition::ConditionType::buildingsOwned:
-            case ScriptCondition::ConditionType::unitDestroyed:
-            case ScriptCondition::ConditionType::unitReachedArea:
-            case ScriptCondition::ConditionType::playerReachedArea:
-            case ScriptCondition::ConditionType::checkVariable:
-            {
-                pCondition = m_Data->addActionCondition(type);
-                break;
-            }
-        }
+        addConditionToData(ScriptCondition::createCondition(type));
     }
     updateConditios();
 }
@@ -494,12 +465,61 @@ void ScriptEditor::showEditEvent(spScriptEvent pEvent)
     pApp->continueThread();
 }
 
-void ScriptEditor::duplicateEvent()
+void ScriptEditor::duplicateEvent(spScriptEvent pEvent)
 {
-
+    QString data;
+    QTextStream stream(&data);
+    pEvent->writeEvent(stream);
+    spScriptEvent pNewEvent = ScriptEvent::createEvent(pEvent->getEventType());
+    stream.seek(0);
+    pNewEvent->readEvent(stream);
+    m_CurrentCondition->addEvent(pNewEvent);
+    updateEvents();
 }
 
 void ScriptEditor::duplicateCondition()
 {
+    if (m_CurrentCondition.get() != nullptr)
+    {
+        QString data;
+        QTextStream stream(&data);
+        m_CurrentCondition->writeCondition(stream);
+        spScriptCondition pNewCondition = ScriptCondition::createCondition(m_CurrentCondition->getType());
+        stream.seek(0);
+        pNewCondition->readCondition(stream);
+        addConditionToData(pNewCondition);
+        updateConditios();
+    }
+}
 
+void ScriptEditor::addConditionToData(spScriptCondition pCondition)
+{
+    switch (pCondition->getType())
+    {
+        case ScriptCondition::ConditionType::victory:
+        {
+            m_Data->addVictoryCondition(pCondition);
+            break;
+        }
+        case ScriptCondition::ConditionType::startOfTurn:
+        case ScriptCondition::ConditionType::eachDay:
+        {
+            m_Data->addDayCondition(pCondition);
+            break;
+        }
+        case ScriptCondition::ConditionType::buildingDestroyed:
+        case ScriptCondition::ConditionType::terrainDestroyed:
+        case ScriptCondition::ConditionType::buildingCaptured:
+        case ScriptCondition::ConditionType::playerDefeated:
+        case ScriptCondition::ConditionType::unitsDestroyed:
+        case ScriptCondition::ConditionType::buildingsOwned:
+        case ScriptCondition::ConditionType::unitDestroyed:
+        case ScriptCondition::ConditionType::unitReachedArea:
+        case ScriptCondition::ConditionType::playerReachedArea:
+        case ScriptCondition::ConditionType::checkVariable:
+        {
+            m_Data->addActionCondition(pCondition);
+            break;
+        }
+    }
 }
