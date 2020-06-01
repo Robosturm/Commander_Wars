@@ -54,13 +54,10 @@ float CO::getUnitBuildValue(QString unitID)
     args1 << unitID;
 
     float ergValue = 0.0f;
-    for (const auto & perk : m_perkList)
+    QJSValue erg = pInterpreter->doFunction(coID, function1, args1);
+    if (erg.isNumber())
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
-        if (erg.isNumber())
-        {
-            ergValue += erg.toNumber();
-        }
+        ergValue += erg.toNumber();
     }
     return ergValue;
 }

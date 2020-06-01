@@ -1461,6 +1461,7 @@ void GameMap::nextTurn()
         pMenu->updatePlayerinfo();
     }
 
+
     m_CurrentPlayer->loadCOMusic();
     pApp->getAudioThread()->playRandom();
     bool permanent = false;
@@ -1476,7 +1477,8 @@ void GameMap::nextTurn()
             for (qint32 i = currentPlayerID - 1; i >= 0; i--)
             {
                 if (players[i]->getBaseGameInput() != nullptr &&
-                    players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                    players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                    !players[i]->getIsDefeated())
                 {
                     if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
                     {

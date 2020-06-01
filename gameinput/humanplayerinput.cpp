@@ -381,6 +381,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             else
             {
                 delete m_pGameAction;
+                m_pGameAction = nullptr;
             }
         }
         // we want to select an action
