@@ -407,8 +407,8 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         }
         pLabel->setPosition(x + 30, y - 5);
         addChild(pLabel);
-        x += 100;
-        if (x + 110 > width && i < pUnitSpriteManager->getCount() - 1)
+        x += 140;
+        if (x + 150 > width && i < pUnitSpriteManager->getCount() - 1)
         {
             x = 0;
             y += 40;

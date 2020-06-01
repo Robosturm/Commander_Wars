@@ -857,6 +857,19 @@ void OptionMenue::showSettings()
     });
     y += 40;
 
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Record Games: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked games will be recorded and you can rewatch them in the replay section."));
+    pCheckbox->setChecked(Settings::getRecord());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, Settings::getInstance(), &Settings::setRecord, Qt::QueuedConnection);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
     pTextfield = new Label(800);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Network Settings"));
@@ -928,7 +941,7 @@ void OptionMenue::showSettings()
     pTextfield->setHtmlText(tr("Server: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox = new Checkbox();
     pCheckbox->setTooltipText(tr("Enables this game as global server."));
     pCheckbox->setChecked(Settings::getServer());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)

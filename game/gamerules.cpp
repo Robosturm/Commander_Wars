@@ -352,10 +352,10 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
             if (day >= m_WeatherDays.size())
             {
                 m_WeatherDays.append(QVector<qint32>(playerCount, -1));
-                if (startPlayer > 0)
-                {
-                    m_WeatherDays.append(QVector<qint32>(playerCount, -1));
-                }
+            }
+            if (startPlayer > 0 && day + 1 >= m_WeatherDays.size())
+            {
+                m_WeatherDays.append(QVector<qint32>(playerCount, -1));
             }
             // current player to end
             for (qint32 i = startPlayer; i < playerCount; i++)

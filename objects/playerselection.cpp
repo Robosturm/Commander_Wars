@@ -227,7 +227,7 @@ void PlayerSelection::showPlayerSelection()
     m_pPlayerSelection->addItem(pLabel);
 
     qint32 itemIndex = 0;
-    oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
+    oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"), labelminStepSize - 10);
     pButtonAllCOs->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllCOs);
     pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -235,7 +235,7 @@ void PlayerSelection::showPlayerSelection()
         emit sigCOsRandom(-1);
     });
     itemIndex = 1;
-    oxygine::spButton pButtonCOs1 = ObjectManager::createButton(tr("CO 1 Random"));
+    oxygine::spButton pButtonCOs1 = ObjectManager::createButton(tr("CO 1 Random"), labelminStepSize - 10);
     pButtonCOs1->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonCOs1);
     pButtonCOs1->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -244,7 +244,7 @@ void PlayerSelection::showPlayerSelection()
     });
 
     itemIndex = 2;
-    oxygine::spButton pButtonCOs2 = ObjectManager::createButton(tr("CO 2 Random"));
+    oxygine::spButton pButtonCOs2 = ObjectManager::createButton(tr("CO 2 Random"), labelminStepSize - 10);
     pButtonCOs2->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonCOs2);
     pButtonCOs2->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void

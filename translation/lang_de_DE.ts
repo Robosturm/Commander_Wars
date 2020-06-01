@@ -3189,61 +3189,71 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="862"/>
+        <source>Record Games: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="866"/>
+        <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="875"/>
         <source>Network Settings</source>
         <translation>Netzwerk</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="869"/>
+        <location filename="../menue/optionmenue.cpp" line="882"/>
         <source>Username: </source>
         <translation>Benutzer: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="873"/>
+        <location filename="../menue/optionmenue.cpp" line="886"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="896"/>
+        <location filename="../menue/optionmenue.cpp" line="909"/>
         <source>Server Adress: </source>
         <translation>Serveradresse: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="900"/>
+        <location filename="../menue/optionmenue.cpp" line="913"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="912"/>
+        <location filename="../menue/optionmenue.cpp" line="925"/>
         <source>Lobby port: </source>
         <translation>Lobby Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="916"/>
+        <location filename="../menue/optionmenue.cpp" line="929"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="928"/>
+        <location filename="../menue/optionmenue.cpp" line="941"/>
         <source>Server: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="932"/>
+        <location filename="../menue/optionmenue.cpp" line="945"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="945"/>
+        <location filename="../menue/optionmenue.cpp" line="958"/>
         <source>Game port: </source>
         <translation>Spieleport: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="949"/>
+        <location filename="../menue/optionmenue.cpp" line="962"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1069"/>
+        <location filename="../menue/optionmenue.cpp" line="1082"/>
         <source>
 Version: </source>
         <translation></translation>
@@ -3880,8 +3890,12 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="264"/>
+        <source>Building Hidding:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Building Vision Denial: </source>
-        <translation>Gebäudeschatten: </translation>
+        <translation type="vanished">Gebäudeschatten: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="268"/>

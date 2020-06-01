@@ -76,7 +76,7 @@ void RuleSelection::showRuleSelection()
     QColor headerColor(0, 255, 0, 255);
 
     qint32 textWidth = 300;
-    spLabel textField = new Label(500);
+    spLabel textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -103,7 +103,7 @@ void RuleSelection::showRuleSelection()
     connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &RuleSelection::weatherChancesChanged, Qt::QueuedConnection);
 
     y += m_pWeatherSlider->getHeight();
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Random Weather: "));
     textField->setPosition(30, y);
@@ -116,7 +116,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
     y += 40;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Start Weather: "));
     textField->setPosition(30, pCheckbox->getY() + 40);
@@ -131,7 +131,7 @@ void RuleSelection::showRuleSelection()
     startWeatherChanged(pMap->getGameRules()->getStartWeather());
     y += 50;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Weather Forecast: "));
     textField->setPosition(30, y);
@@ -144,7 +144,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setWeatherPrediction, Qt::QueuedConnection);
 
     y = textField->getY() + 50;
-    textField = new Label(textWidth - 10);
+    textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -152,7 +152,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     y += 60;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Unit Ranking: "));
     textField->setPosition(30, y);
@@ -165,7 +165,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
 
     y += 40;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Bannlist: "));
     textField->setPosition(30, y);
@@ -179,7 +179,7 @@ void RuleSelection::showRuleSelection()
     addChild(coBannlist);
     connect(this, &RuleSelection::sigShowCOBannlist, this, &RuleSelection::showCOBannlist, Qt::QueuedConnection);
     y += 40;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("No CO Powers: "));
     textField->setPosition(30, y);
@@ -191,7 +191,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Specific Units: "));
     textField->setPosition(30, y);
@@ -203,7 +203,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getCoUnits());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCoUnits, Qt::QueuedConnection);
     y += 40;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("AI Attack Terrain: "));
     textField->setPosition(30, y);
@@ -215,7 +215,7 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getAiAttackTerrain());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAiAttackTerrain, Qt::QueuedConnection);
     y += 40;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
@@ -232,7 +232,7 @@ void RuleSelection::showRuleSelection()
     addChild(fogOfWar);
     y += 40;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Vision Block: "));
     textField->setPosition(30, y);
@@ -245,7 +245,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
     y += 40;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Perks: "));
     textField->setPosition(30, y);
@@ -259,9 +259,9 @@ void RuleSelection::showRuleSelection()
     connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setMaxPerkCount, Qt::QueuedConnection);
     y += 40;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
-    textField->setHtmlText(tr("Building Vision Denial: "));
+    textField->setHtmlText(tr("Building Hidding:"));
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
@@ -272,7 +272,7 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setBuildingVisionHide, Qt::QueuedConnection);
     y += 40;
 
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Unit Limit: "));
     textField->setPosition(30, y);
@@ -286,7 +286,7 @@ void RuleSelection::showRuleSelection()
     connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
 
     y += 50;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Round Time: "));
     textField->setPosition(30, y);
@@ -299,7 +299,7 @@ void RuleSelection::showRuleSelection()
     connect(pTimeSpinbox.get(), &TimeSpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setRoundTimeMs, Qt::QueuedConnection);
 
     y += 50;
-    textField = new Label(textWidth - 10);
+    textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("Day Screen: "));
     textField->setPosition(30, y);
@@ -317,7 +317,7 @@ void RuleSelection::showRuleSelection()
 
 
     y += 50;
-    textField = new Label(textWidth - 10);
+    textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
@@ -365,7 +365,7 @@ void RuleSelection::showRuleSelection()
             QString descriptiopn = pRule->getRuleDescription(i2);
             // add a cool check box and a cool text
             QString labelName = pRule->getRuleName(i2);
-            textField = new Label(textWidth - 10);
+            textField = new Label(textWidth - 40);
             textField->setStyle(style);
             textField->setHtmlText(labelName);
             textField->setPosition(xPos + 30, i * 50 + y);
