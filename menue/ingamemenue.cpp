@@ -64,24 +64,28 @@ void InGameMenue::loadBackground()
 
 void InGameMenue::loadHandling()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
+    if (!handlingLoaded)
     {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
+        handlingLoaded = true;
+        Mainapp* pApp = Mainapp::getInstance();
+        addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
         {
-            if (m_Focused)
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
             {
-                pEvent->stopPropagation();
-                emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y / 100));
+                if (m_Focused)
+                {
+                    pEvent->stopPropagation();
+                    emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y / 100));
+                }
             }
-        }
-    });
-    connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
-    connectMapCursor();
+        });
+        connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
+        connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
+        connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
+        connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
+        connectMapCursor();
+    }
 }
 
 void InGameMenue::connectMapCursor()

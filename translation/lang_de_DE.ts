@@ -3592,22 +3592,22 @@ Version: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="140"/>
+        <location filename="../menue/replaymenu.cpp" line="136"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="174"/>
+        <location filename="../menue/replaymenu.cpp" line="170"/>
         <source>Exit</source>
         <translation type="unfinished">Verkassen</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="441"/>
+        <location filename="../menue/replaymenu.cpp" line="437"/>
         <source>Team </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="425"/>
+        <location filename="../menue/replaymenu.cpp" line="421"/>
         <source>Current Team</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3617,123 +3617,123 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="270"/>
-        <location filename="../menue/replaymenu.cpp" line="309"/>
+        <location filename="../menue/replaymenu.cpp" line="266"/>
+        <location filename="../menue/replaymenu.cpp" line="305"/>
         <source>Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="426"/>
+        <location filename="../menue/replaymenu.cpp" line="422"/>
         <source>All Teams</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="466"/>
+        <location filename="../menue/replaymenu.cpp" line="462"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished">Spieleinstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="473"/>
+        <location filename="../menue/replaymenu.cpp" line="469"/>
         <source>Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="476"/>
+        <location filename="../menue/replaymenu.cpp" line="472"/>
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="476"/>
+        <location filename="../menue/replaymenu.cpp" line="472"/>
         <source>None</source>
         <translation type="unfinished">Keine</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="476"/>
+        <location filename="../menue/replaymenu.cpp" line="472"/>
         <source>Own</source>
         <translation type="unfinished">Eigene</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="476"/>
+        <location filename="../menue/replaymenu.cpp" line="472"/>
         <source>Ally</source>
         <translation type="unfinished">Allierte</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="476"/>
+        <location filename="../menue/replaymenu.cpp" line="472"/>
         <source>Enemy</source>
         <translation type="unfinished">Gegner</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="477"/>
+        <location filename="../menue/replaymenu.cpp" line="473"/>
         <source>Only Detailed Battle All</source>
         <translation type="unfinished">Nur alle Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="477"/>
+        <location filename="../menue/replaymenu.cpp" line="473"/>
         <source>Only Detailed Battle Own</source>
         <translation type="unfinished">Nur eigene Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="478"/>
+        <location filename="../menue/replaymenu.cpp" line="474"/>
         <source>Only Detailed Battle Ally</source>
         <translation type="unfinished">Nur allierte Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="478"/>
+        <location filename="../menue/replaymenu.cpp" line="474"/>
         <source>Only Detailed Battle Enemy</source>
         <translation type="unfinished">Nur Gegner Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="482"/>
+        <location filename="../menue/replaymenu.cpp" line="478"/>
         <source>Select which ingame animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="492"/>
+        <location filename="../menue/replaymenu.cpp" line="488"/>
         <source>Battle Animations: </source>
         <translation type="unfinished">Kampfanimationen: </translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="495"/>
+        <location filename="../menue/replaymenu.cpp" line="491"/>
         <source>Detailed</source>
         <translation type="unfinished">Animation</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="495"/>
+        <location filename="../menue/replaymenu.cpp" line="491"/>
         <source>Overworld</source>
         <translation type="unfinished">Schlacht</translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="497"/>
+        <location filename="../menue/replaymenu.cpp" line="493"/>
         <source>Selects which battle animations are played when fighting an enemy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="509"/>
+        <location filename="../menue/replaymenu.cpp" line="505"/>
         <source>Animation Speed: </source>
         <translation type="unfinished">Animationsgeschwindigkeit: </translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="513"/>
+        <location filename="../menue/replaymenu.cpp" line="509"/>
         <source>Selects the speed at which animations are played. Except battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="525"/>
+        <location filename="../menue/replaymenu.cpp" line="521"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="529"/>
+        <location filename="../menue/replaymenu.cpp" line="525"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="427"/>
+        <location filename="../menue/replaymenu.cpp" line="423"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="446"/>
+        <location filename="../menue/replaymenu.cpp" line="442"/>
         <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>

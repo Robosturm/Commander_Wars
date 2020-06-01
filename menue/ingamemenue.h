@@ -55,6 +55,8 @@ protected:
 
     QThread m_MapMoveThread;
     spMapMover m_MapMover;
+
+    bool handlingLoaded{false};
 };
 
 #endif // INGAMEMENUE_H
