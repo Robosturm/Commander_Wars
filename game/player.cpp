@@ -739,6 +739,7 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
             return (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear);
         }
     }
+    return false;
 }
 
 GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
@@ -760,6 +761,7 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
             return GameEnums::VisionType_Shrouded;
         }
     }
+    return GameEnums::VisionType_Fogged;
 }
 
 bool Player::getFieldDirectVisible(qint32 x, qint32 y)

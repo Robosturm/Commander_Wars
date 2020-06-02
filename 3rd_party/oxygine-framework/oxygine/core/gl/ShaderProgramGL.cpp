@@ -45,7 +45,7 @@ namespace oxygine
 
     int ShaderProgramGL::getUniformLocation(const char* id) const
     {
-         return _program.uniformLocation(id);
+        return _program.uniformLocation(id);
     }
 
     void ShaderProgramGL::compileShader(QOpenGLShader& shader, QString data)

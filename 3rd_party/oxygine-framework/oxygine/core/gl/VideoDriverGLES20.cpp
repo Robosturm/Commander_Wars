@@ -48,14 +48,16 @@ namespace oxygine
 
     void VideoDriverGLES20::clear(const QColor& color)
     {
+        GameWindow* window = oxygine::GameWindow::getWindow();
         Vector4 c = Vector4(color.redF(), color.greenF(), color.blueF(), color.alphaF());
-        glClearColor(c.x, c.y, c.z, c.w);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        window->glClearColor(c.x, c.y, c.z, c.w);
+        window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void VideoDriverGLES20::setViewport(const Rect& viewport)
     {
-        glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        window->glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
     }
 
     void VideoDriverGLES20::setShaderProgram(ShaderProgram* prog_)
@@ -71,11 +73,11 @@ namespace oxygine
         window->glActiveTexture(GL_TEXTURE0 + sampler);
         if (t)
         {
-            glBindTexture(GL_TEXTURE_2D, (GLuint)((size_t)t->getHandle()));
+            window->glBindTexture(GL_TEXTURE_2D, (GLuint)((size_t)t->getHandle()));
         }
         else
         {
-            glBindTexture(GL_TEXTURE_2D, 0);
+            window->glBindTexture(GL_TEXTURE_2D, 0);
         }
     }
 
@@ -100,7 +102,7 @@ namespace oxygine
         }
 
         size_t primitives = verticesDataSize / decl->size;
-        glDrawArrays(getPT(pt), 0, (GLsizei)primitives);
+        window->glDrawArrays(getPT(pt), 0, (GLsizei)primitives);
 
         el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
@@ -128,7 +130,7 @@ namespace oxygine
             el++;
         }
 
-        glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
+        window->glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
 
         el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
@@ -140,11 +142,12 @@ namespace oxygine
 
     void VideoDriverGLES20::setDefaultSettings()
     {
-        glDisable(GL_SCISSOR_TEST);
-        glDisable(GL_DEPTH_TEST);
-        glDisable(GL_BLEND);
-        glDepthMask(GL_FALSE);
-        glCullFace(GL_FRONT_AND_BACK);
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        window->glDisable(GL_SCISSOR_TEST);
+        window->glDisable(GL_DEPTH_TEST);
+        window->glDisable(GL_BLEND);
+        window->glDepthMask(GL_FALSE);
+        window->glCullFace(GL_FRONT_AND_BACK);
     }
 
     void VideoDriverGLES20::setUniformInt(const char* id, int v)

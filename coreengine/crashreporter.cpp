@@ -84,7 +84,7 @@ namespace crashReporter
 
             for ( const QString &data : cReportHeader + inFrameInfoList )
             {
-                stream << data << endl;
+                stream << data << Qt::endl;
                 ret += data + "\n";
                 stream.flush();
             }
@@ -94,7 +94,7 @@ namespace crashReporter
             QList<QString> consoleOutput = Console::getInstance()->getConsoleLog();
             for (qint32 i = 0; i < consoleOutput.size(); i++)
             {
-                stream << consoleOutput[i] << endl;
+                stream << consoleOutput[i] << Qt::endl;
                 ret += consoleOutput[i] + "\n";
                 stream.flush();
             }

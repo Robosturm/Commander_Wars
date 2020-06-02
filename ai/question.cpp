@@ -89,6 +89,7 @@ QString Question::print()
             return "Index " + QString::number(m_Index) + " Question " +  QString::number(m_MinValue, 'f', 1) + " > value";
         }
     }
+    return "";
 }
 
 void Question::serializeObject(QDataStream& pStream)

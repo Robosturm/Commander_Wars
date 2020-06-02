@@ -3516,8 +3516,8 @@ Version: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="70"/>
-        <location filename="../main.cpp" line="78"/>
+        <location filename="../main.cpp" line="68"/>
+        <location filename="../main.cpp" line="76"/>
         <source>Commander Wars</source>
         <translation></translation>
     </message>

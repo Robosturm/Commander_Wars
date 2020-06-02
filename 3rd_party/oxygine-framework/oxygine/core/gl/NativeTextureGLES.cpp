@@ -40,16 +40,16 @@ namespace oxygine
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLuint id = 0;
-        glGenTextures(1, &id);
+        window->glGenTextures(1, &id);
         window->glActiveTexture(GL_TEXTURE7);
-        glBindTexture(GL_TEXTURE_2D, id);
+        window->glBindTexture(GL_TEXTURE_2D, id);
 
         unsigned int f = GL_LINEAR;
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
         NativeTextureGLES::created++;
 
@@ -76,15 +76,13 @@ namespace oxygine
         size_t id = createTexture();
 
         glPixel p = SurfaceFormat2GL(tf);
-        glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
+        window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
 
         if (rt)
         {
             int prevFBO = 0;
-            glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-
+            window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
+            window->glBindTexture(GL_TEXTURE_2D, 0);
             unsigned int fbo = 0;
             window->glGenFramebuffers(1, &fbo);
             window->glBindFramebuffer(GL_FRAMEBUFFER, fbo);
@@ -100,14 +98,14 @@ namespace oxygine
                 qCritical("status != GL_FRAMEBUFFER_COMPLETE_OES");
             }
 
-            glViewport(0, 0, w, h);
-            glClearColor(0, 0, 0, 0);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            window->glViewport(0, 0, w, h);
+            window->glClearColor(0, 0, 0, 0);
+            window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             window->glBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
             //qDebug("fbo bind\n");
 
-            glBindTexture(GL_TEXTURE_2D, 0);
+            window->glBindTexture(GL_TEXTURE_2D, 0);
 
             _fbo = fbo;
         }
@@ -140,7 +138,7 @@ namespace oxygine
         }
         else
         {
-            glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, p.format, p.type, src.data);
+            window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, p.format, p.type, src.data);
         }
 
         Q_ASSERT(sysMemCopy == false);
@@ -152,38 +150,38 @@ namespace oxygine
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE7);
-        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
+        window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
     }
 
     void NativeTextureGLES::setClamp2Edge(bool clamp2edge)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE7);
-        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
+        window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, f);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, f);
     }
 
     void NativeTextureGLES::release()
     {
+        GameWindow* window = oxygine::GameWindow::getWindow();
         if (_id)
         {
             NativeTextureGLES::created--;
-            glDeleteTextures(1, (GLuint*)&_id);
+            window->glDeleteTextures(1, (GLuint*)&_id);
             _id = 0;
         }
 
 
         if (_fbo)
         {
-            GameWindow* window = oxygine::GameWindow::getWindow();
             window->glDeleteFramebuffers(1, (GLuint*)&_fbo);
             _fbo = 0;
         }
@@ -268,14 +266,13 @@ namespace oxygine
         {
             GameWindow* window = oxygine::GameWindow::getWindow();
             window->glActiveTexture(GL_TEXTURE7);
-            glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
-            GLenum er = glGetError();
-
+            window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
+            GLenum er = window->glGetError();
             ImageData src = ImageData(_width, _height, (int)(_data.size() / _height), _format, &_data.front());
             ImageData locked = src.getRect(_lockRect);
 
             //glPixelStorei (GL_UNPACK_ALIGNMENT,  1);//byte align
-            er = glGetError();
+            er = window->glGetError();
 
             //todo add EXT_unpack_subimage support
 
@@ -289,11 +286,11 @@ namespace oxygine
 
 
 
-            glTexSubImage2D(GL_TEXTURE_2D, 0,
-                            _lockRect.getX(), _lockRect.getY(), _lockRect.getWidth(), _lockRect.getHeight(),
-                            glp.format, glp.type, locked.data);
+            window->glTexSubImage2D(GL_TEXTURE_2D, 0,
+                                    _lockRect.getX(), _lockRect.getY(), _lockRect.getWidth(), _lockRect.getHeight(),
+                                    glp.format, glp.type, locked.data);
 
-            er = glGetError();
+            er = window->glGetError();
 
             _lockFlags = 0;
         }
@@ -310,7 +307,7 @@ namespace oxygine
         assert(_height >= data.h - y);
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE7);
-        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
+        window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         glPixel glp = SurfaceFormat2GL(_format);
         //saveImage(data, "test1.png");
@@ -325,9 +322,9 @@ namespace oxygine
             data = mt.lock();
         }
 
-        glTexSubImage2D(GL_TEXTURE_2D, 0,
-                        x, y, data.w, data.h,
-                        glp.format, glp.type, data.data);
+        window->glTexSubImage2D(GL_TEXTURE_2D, 0,
+                                x, y, data.w, data.h,
+                                glp.format, glp.type, data.data);
     }
 
     void NativeTextureGLES::apply(const Rect*)

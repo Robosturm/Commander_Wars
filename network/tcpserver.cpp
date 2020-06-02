@@ -122,7 +122,7 @@ void TCPServer::onConnect()
         pTCPSockets.append(nextSocket);
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
         QObject::connect(nextSocket, &QTcpSocket::disconnected, this, &TCPServer::disconnectSocket, Qt::QueuedConnection);
-        QObject::connect(nextSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPServer::displayError);
+        QObject::connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayError, Qt::QueuedConnection);
         m_idCounter++;
         if (m_idCounter == 0)
         {
@@ -134,13 +134,13 @@ void TCPServer::onConnect()
         RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
-        QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData);
+        QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
-        QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send);
+        QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
 
         Console::print(tr("New Client connection."), Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);

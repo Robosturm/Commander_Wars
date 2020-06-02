@@ -313,6 +313,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
             }
         }
     }
+    return false;
 }
 
 void ScriptCondition::writePreCondition(QTextStream& rStream)

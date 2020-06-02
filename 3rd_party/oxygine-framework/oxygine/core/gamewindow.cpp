@@ -162,6 +162,14 @@ namespace oxygine
     void GameWindow::initializeGL()
     {
         initializeOpenGLFunctions();
+        if (!hasOpenGLFeature(QOpenGLFunctions::Shaders))
+        {
+            qWarning("Shaders are not supported by open gl. This may result in a black screen.");
+        }
+        if (!hasOpenGLFeature(QOpenGLFunctions::Multitexture))
+        {
+            qWarning("Multitextures are not supported by open gl. This may result in a black screen.");
+        }
         // init oxygine engine
         qDebug("initialize oxygine");
         qDebug("Qt build");

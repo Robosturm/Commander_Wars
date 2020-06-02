@@ -167,6 +167,8 @@ private:
     QVector<QVector3D> m_FieldPoints;
     MarkedFieldData* m_pMarkedFieldData{nullptr};
 
+    QVector<oxygine::spActor> m_InfoFields;
+
     QVector<oxygine::spActor> m_Arrows;
     QVector<QPoint> m_ArrowPoints;
 

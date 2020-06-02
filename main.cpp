@@ -54,8 +54,6 @@
 
 #include "oxygine/KeyEvent.h"
 
-#include "QDomDocument"
-
 #include "coreengine/crashreporter.h"
 
 int main(int argc, char* argv[])
@@ -107,45 +105,36 @@ int main(int argc, char* argv[])
     qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
 
-    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
-    qmlRegisterInterface<Terrain>("Terrain");
-    qmlRegisterInterface<Player>("Player");
-    qmlRegisterInterface<Building>("Building");
-    qmlRegisterInterface<Unit>("Unit");
-    qmlRegisterInterface<CO>("CO");
-    qmlRegisterInterface<GameAction>("GameAction");
-    qmlRegisterInterface<GameAnimation>("GameAnimation");
-    qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
-    qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
-    qmlRegisterInterface<GameAnimationDialog>("GameAnimationDialog");
-    qmlRegisterInterface<GameAnimationPower>("GameAnimationPower");
-    qmlRegisterInterface<GameAnimationNextDay>("GameAnimationNextDay");
-    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
-    qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
-    qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");
-    qmlRegisterInterface<Mainapp>("Mainapp");
-    qmlRegisterInterface<CursorData>("CursorData");    
-    qmlRegisterInterface<VictoryRule>("VictoryRule");
-    qmlRegisterInterface<GameRules>("GameRules");
-    qmlRegisterInterface<ScriptVariable>("ScriptVariable");
-    qmlRegisterInterface<ScriptVariables>("ScriptVariables");
-    qmlRegisterInterface<Weather>("Weather");
-    qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
-    qmlRegisterInterface<GameRecorder>("GameRecorder");
-    qmlRegisterInterface<GameScript>("GameScript");
-    qmlRegisterInterface<Campaign>("Campaign");
-    qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
-    qmlRegisterInterface<Settings>("Settings");
-    qmlRegisterInterface<Wikipage>("Wikipage");
-    qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
-
-    /*************************************************************************************************/
-    // setup network session support
-    QNetworkConfigurationManager manager;
-    // If the saved network configuration is not currently discovered use the system default
-    QNetworkConfiguration config = manager.defaultConfiguration();
-    QNetworkSession networkSession(config);
-    networkSession.open();
+    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
+    qmlRegisterInterface<Terrain>("Terrain", 1);
+    qmlRegisterInterface<Player>("Player", 1);
+    qmlRegisterInterface<Building>("Building", 1);
+    qmlRegisterInterface<Unit>("Unit", 1);
+    qmlRegisterInterface<CO>("CO", 1);
+    qmlRegisterInterface<GameAction>("GameAction", 1);
+    qmlRegisterInterface<GameAnimation>("GameAnimation", 1);
+    qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk", 1);
+    qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture", 1);
+    qmlRegisterInterface<GameAnimationDialog>("GameAnimationDialog", 1);
+    qmlRegisterInterface<GameAnimationPower>("GameAnimationPower", 1);
+    qmlRegisterInterface<GameAnimationNextDay>("GameAnimationNextDay", 1);
+    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
+    qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit", 1);
+    qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding", 1);
+    qmlRegisterInterface<Mainapp>("Mainapp", 1);
+    qmlRegisterInterface<CursorData>("CursorData", 1);
+    qmlRegisterInterface<VictoryRule>("VictoryRule", 1);
+    qmlRegisterInterface<GameRules>("GameRules", 1);
+    qmlRegisterInterface<ScriptVariable>("ScriptVariable", 1);
+    qmlRegisterInterface<ScriptVariables>("ScriptVariables", 1);
+    qmlRegisterInterface<Weather>("Weather", 1);
+    qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem", 1);
+    qmlRegisterInterface<GameRecorder>("GameRecorder", 1);
+    qmlRegisterInterface<GameScript>("GameScript", 1);
+    qmlRegisterInterface<Campaign>("Campaign", 1);
+    qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF", 1);
+    qmlRegisterInterface<Settings>("Settings", 1);
+    qmlRegisterInterface<Wikipage>("Wikipage", 1);
 
     /*************************************************************************************************/
     // show window according to window mode
@@ -171,12 +160,11 @@ int main(int argc, char* argv[])
         window.stopGameServer();
         QThread::msleep(200);
     }
-    networkSession.close();
 
     //end
     if (returncode == 1)
     {
-        QProcess::startDetached(QCoreApplication::applicationFilePath());
+        QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList());
     }
     return returncode;
 }

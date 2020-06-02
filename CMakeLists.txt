@@ -44,7 +44,7 @@ add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
     -DMINOR=12
-    -DREVISION=0
+    -DREVISION=1
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
@@ -472,7 +472,9 @@ set(${PROJECT_NAME}_INSTALL_QT_LIBS
     ${QT_BIN_DIR}/libGLESv2.dll
     ${QT_BIN_DIR}/Qt5Svg.dll
     ${QT_BIN_DIR}/Qt5Xml.dll
-    ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
+    ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
+    ${QT_BIN_DIR}/libGLESv2.dll
+    ${QT_BIN_DIR}/libEGL.dll
 )
 
 set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS

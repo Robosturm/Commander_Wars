@@ -9,7 +9,8 @@ namespace oxygine
     {
         _rt = new NativeTextureGLES;
         GLint fbo = 0;
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
         _rt->_fbo = fbo;
     }
 
@@ -69,10 +70,11 @@ namespace oxygine
 
     bool VideoDriverGL::getScissorRect(Rect& r) const
     {
-        GLboolean scrTest = glIsEnabled(GL_SCISSOR_TEST);
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        GLboolean scrTest = window->glIsEnabled(GL_SCISSOR_TEST);
 
         GLint box[4];
-        glGetIntegerv(GL_SCISSOR_BOX, box);
+        window->glGetIntegerv(GL_SCISSOR_BOX, box);
         r = Rect(box[0], box[1], box[2], box[3]);
 
         return scrTest ? true : false;
@@ -91,7 +93,8 @@ namespace oxygine
     void VideoDriverGL::getViewport(Rect& r) const
     {
         GLint vp[4];
-        glGetIntegerv(GL_VIEWPORT, vp);
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        window->glGetIntegerv(GL_VIEWPORT, vp);
 
         r = Rect(vp[0], vp[1], vp[2], vp[3]);;
         //qDebug("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
@@ -99,13 +102,16 @@ namespace oxygine
 
     void VideoDriverGL::setScissorRect(const Rect* rect)
     {
+        GameWindow* window = oxygine::GameWindow::getWindow();
         if (rect)
         {
-            glEnable(GL_SCISSOR_TEST);
-            glScissor(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
+            window->glEnable(GL_SCISSOR_TEST);
+            window->glScissor(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
         }
         else
-            glDisable(GL_SCISSOR_TEST);
+        {
+            window->glDisable(GL_SCISSOR_TEST);
+        }
     }
 
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
@@ -117,47 +123,54 @@ namespace oxygine
 
     void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)
     {
+        GameWindow* window = oxygine::GameWindow::getWindow();
         //  qDebug("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
-        glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
-        glDisable(GL_SCISSOR_TEST);
+        window->glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
+        window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
             Vector4 c = Vector4(clearColor->redF(), clearColor->greenF(), clearColor->blueF(), clearColor->alphaF());
-            glClearColor(c.x, c.y, c.z, c.w);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            window->glClearColor(c.x, c.y, c.z, c.w);
+            window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
         else
         {
-            glClear(GL_DEPTH_BUFFER_BIT);
+            window->glClear(GL_DEPTH_BUFFER_BIT);
         }
     }
 
     void VideoDriverGL::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
     {
-        glBlendFunc(getBT(src), getBT(dest));
+        GameWindow* window = oxygine::GameWindow::getWindow();
+        window->glBlendFunc(getBT(src), getBT(dest));
     }
 
     void VideoDriverGL::setState(STATE state, unsigned int value)
     {
+        GameWindow* window = oxygine::GameWindow::getWindow();
         switch (state)
         {
             case STATE_BLEND:
                 if (value)
-                    glEnable(GL_BLEND);
+                {
+                    window->glEnable(GL_BLEND);
+                }
                 else
-                    glDisable(GL_BLEND);
+                {
+                    window->glDisable(GL_BLEND);
+                }
                 break;
             case STATE_CULL_FACE:
                 switch (value)
                 {
                     case CULL_FACE_FRONT_AND_BACK:
-                        glCullFace(GL_FRONT_AND_BACK);
+                        window->glCullFace(GL_FRONT_AND_BACK);
                         break;
                     case CULL_FACE_FRONT:
-                        glCullFace(GL_FRONT);
+                        window->glCullFace(GL_FRONT);
                         break;
                     case CULL_FACE_BACK:
-                        glCullFace(GL_BACK);
+                        window->glCullFace(GL_BACK);
                         break;
                     default:
                         break;
