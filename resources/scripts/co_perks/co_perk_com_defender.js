@@ -21,7 +21,7 @@ var Constructor = function()
     };
     this.getName = function()
     {
-        return "Com Attacker";
+        return "Com Defender";
     };
 };
 
