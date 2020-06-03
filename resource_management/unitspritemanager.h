@@ -15,7 +15,12 @@ public:
      * @return
      */
     GameEnums::UnitType getUnitType(qint32 i);
-
+    /**
+     * @brief UnitSpriteManager::getUnitType
+     * @param id
+     * @return
+     */
+    GameEnums::UnitType getUnitType(QString id);
     /**
      * @brief getUnitsSorted
      * @return

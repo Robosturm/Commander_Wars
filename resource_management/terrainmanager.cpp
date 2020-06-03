@@ -21,6 +21,33 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
     return 0;
 }
 
+
+qint32 TerrainManager::getTerrainGroup(QString id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTerrainGroup";
+    QJSValue ret = pInterpreter->doFunction(id, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
+}
+
+QString getTerrainGroupName(qint32 group)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTerrainGroupName";
+    QJSValueList args;
+    args << group;
+    QJSValue ret = pInterpreter->doFunction("TERRAIN", function1, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "Unknown";
+}
+
 QStringList TerrainManager::getTerrainsSorted()
 {
     QStringList sortedTerrains;

@@ -48,11 +48,11 @@ public:
     }
     inline QString getCurrentTerrainID()
     {
-        return m_Terrains.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getTerrainID();
+        return m_Terrains.at(m_selectedItem)->getTerrainID();
     }
     inline QString getCurrentBuildingID()
     {
-        return m_Buildings.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getBuildingID();
+        return m_Buildings.at(m_selectedItem)->getBuildingID();
     }
     /**
      * @brief getCurrentSpBuilding the current selected unit
@@ -73,7 +73,6 @@ public:
     void createPlayerSelection();
 
 signals:
-   void sigClickedPlacementSelection(qint32 x, qint32 y);
    void sigUpdateSelectedPlayer();
    void sigSelectionChanged();
    void sigChangeSelectedPlayer(qint32 player);
@@ -81,7 +80,6 @@ signals:
    void sigUpdateBuildingView();
    void sigUpdateUnitView();
 public slots:
-    void ClickedPlacementSelection(qint32 x, qint32 y);
     void selectTerrain(QString terrainID);
     void selectBuilding(QString buildingID);
     void selectUnit(QString unitID);
@@ -91,6 +89,28 @@ public slots:
     void updateTerrainView();
     void updateBuildingView();
     void updateUnitView();
+private:
+    /**
+     * @brief selectBuilding
+     * @param building
+     */
+    void selectBuilding(qint32 building);
+    /**
+     * @brief selectUnit
+     * @param unit
+     */
+    void selectUnit(qint32 unit);
+    /**
+     * @brief selectTerrain
+     * @param terrain
+     */
+    void selectTerrain(qint32 terrain);
+    /**
+     * @brief getPosX
+     * @param xCounter
+     * @return
+     */
+    qint32 getPosX(qint32 xCounter);
 private:
     // small hints for the ui
     static const qint32 frameSize = 30;
@@ -105,6 +125,7 @@ private:
     EditorMode m_Mode{EditorMode::Terrain};
     PlacementSize m_SizeMode{PlacementSize::Small};
     qint32 m_StartIndex{0};
+    qint32 m_xCount{0};
 
     oxygine::spSlidingActor m_PlacementSelectionSlider;
     oxygine::spActor m_PlacementActor;
@@ -125,7 +146,7 @@ private:
     oxygine::spSprite m_pSpriteBuildingMode;
     oxygine::spSprite m_pSpriteUnitMode;
 
-    QVector3D m_selectedIndex{0, 0, 0};
+    qint32 m_selectedItem{0};
     /**
      * @brief current selected player
      */

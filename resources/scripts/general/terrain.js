@@ -12,6 +12,19 @@ var TERRAIN =
         // everthing else is open to use
         return 0;
     },
+    terrainGroupNameMapping = [qsTr("Sea"),
+                               qsTr("Normal"),
+                               qsTr("Desert"),
+                               qsTr("Snow")],
+
+    getTerrainGroupName : function(item)
+    {
+        if (item >= 0 && item < terrainGroupNameMapping.length)
+        {
+            return terrainGroupNameMapping[item];
+        }
+        return qsTr("Unknown");
+    },
 
     // loader for stuff which needs C++ Support
     init : function (terrain)

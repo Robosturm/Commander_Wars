@@ -21,6 +21,19 @@ GameEnums::UnitType UnitSpriteManager::getUnitType(qint32 i)
     return GameEnums::UnitType_Ground;
 }
 
+
+GameEnums::UnitType UnitSpriteManager::getUnitType(QString id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getUnitType";
+    QJSValue ret = pInterpreter->doFunction(id, function1);
+    if (ret.isNumber())
+    {
+        return static_cast<GameEnums::UnitType>(ret.toInt());
+    }
+    return GameEnums::UnitType_Ground;
+}
+
 QStringList UnitSpriteManager::getUnitsSorted()
 {
     QStringList sortedUnits;
