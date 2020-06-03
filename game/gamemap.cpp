@@ -746,31 +746,34 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         spTerrain pTerrainOld = fields.at(y)->at(x);
-        pTerrainOld->removeBuilding();
-        pTerrainOld->setUnit(nullptr);
-
-        spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
-
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function1 = "useTerrainAsBaseTerrain";
-        QJSValue terrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
-
-        if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && canBePlaced(terrainID, x, y))
+        if (pTerrainOld->getTerrainID() != terrainID)
         {
-            pTerrainOld->detach();
-            pTerrain->setBaseTerrain(pTerrainOld);
-            fields.at(y)->replace(x, pTerrain);
-            this->addChild(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
-        }
-        else
-        {
-            pTerrainOld->detach();
-            fields.at(y)->replace(x, pTerrain);
-            this->addChild(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+            pTerrainOld->removeBuilding();
+            pTerrainOld->setUnit(nullptr);
+
+            spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
+
+            Interpreter* pInterpreter = Interpreter::getInstance();
+            QString function1 = "useTerrainAsBaseTerrain";
+            QJSValue terrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
+
+            if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && canBePlaced(terrainID, x, y))
+            {
+                pTerrainOld->detach();
+                pTerrain->setBaseTerrain(pTerrainOld);
+                fields.at(y)->replace(x, pTerrain);
+                this->addChild(pTerrain);
+                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+            }
+            else
+            {
+                pTerrainOld->detach();
+                fields.at(y)->replace(x, pTerrain);
+                this->addChild(pTerrain);
+                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+            }
         }
         updateTerrain(x, y);
         if (updateSprites)

@@ -42,34 +42,7 @@ var Constructor = function()
         {
             terrain.loadOverlaySprite("sea" + surroundings);
         }
-        // load river overlay
-        var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All, false);
-        var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
-        var surroundingsRiver2 = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1);
-        // load overlay north
-        if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")) &&
-             surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
-        {
-            terrain.loadOverlaySprite("riverending+N");
-        }
-        // load overlay east
-        if ((surroundingsRiver.includes("+E") || surroundingsRiver2.includes("+E")) &&
-             surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
-        {
-            terrain.loadOverlaySprite("riverending+E");
-        }
-        // load overlay south
-        if ((surroundingsRiver.includes("+S") || surroundingsRiver2.includes("+S")) &&
-             surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
-        {
-            terrain.loadOverlaySprite("riverending+S");
-        }
-        // load overlay west
-        if ((surroundingsRiver.includes("+W") || surroundingsRiver2.includes("+W")) &&
-             surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
-        {
-            terrain.loadOverlaySprite("riverending+W");
-        }
+
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
         {
@@ -105,6 +78,34 @@ var Constructor = function()
             {
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
+        }
+        // load river overlay
+        var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All, false);
+        var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
+        var surroundingsRiver2 = terrain.getSurroundings("RIVER", true, false, GameEnums.Directions_Direct, false, false, 1);
+        // load overlay north
+        if ((surroundingsRiver.includes("+N") || surroundingsRiver2.includes("+N")) &&
+             surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
+        {
+            terrain.loadOverlaySprite("riverending+N");
+        }
+        // load overlay east
+        if ((surroundingsRiver.includes("+E") || surroundingsRiver2.includes("+E")) &&
+             surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
+        {
+            terrain.loadOverlaySprite("riverending+E");
+        }
+        // load overlay south
+        if ((surroundingsRiver.includes("+S") || surroundingsRiver2.includes("+S")) &&
+             surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
+        {
+            terrain.loadOverlaySprite("riverending+S");
+        }
+        // load overlay west
+        if ((surroundingsRiver.includes("+W") || surroundingsRiver2.includes("+W")) &&
+             surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
+        {
+            terrain.loadOverlaySprite("riverending+W");
         }
     };
     this.getMiniMapIcon = function()

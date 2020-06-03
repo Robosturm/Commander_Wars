@@ -1283,13 +1283,16 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         }
         if (canBuildingBePlaced(curX, curY))
         {
-            Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-            pBuilding->setOwner(pCurrentBuilding->getOwner());
-            pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
-            if (points.size() < 14)
+            if (pCurrentBuilding->getBuildingID() != pMap->getTerrain(curX, curY)->getTerrainID())
             {
-                pMap->updateTerrain(points.at(i).x(), points.at(i).y());
-                pMap->updateSprites(points.at(i).x(), points.at(i).y());
+                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                pBuilding->setOwner(pCurrentBuilding->getOwner());
+                pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                if (points.size() < 14)
+                {
+                    pMap->updateTerrain(points.at(i).x(), points.at(i).y());
+                    pMap->updateSprites(points.at(i).x(), points.at(i).y());
+                }
             }
         }
     }

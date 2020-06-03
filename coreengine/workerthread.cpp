@@ -41,7 +41,7 @@ void WorkerThread::start()
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::getStage()->addChild(pConsole);
-    m_pInterpreter = Interpreter::createInstance();
+    Interpreter* pInterpreter = Interpreter::createInstance();
     pConsole->init();
     // load General-Base Scripts
     QStringList searchPaths;
@@ -61,7 +61,7 @@ void WorkerThread::start()
         {
             dirIter.next();
             QString file = dirIter.fileInfo().absoluteFilePath();
-            m_pInterpreter->openScript(file, true);
+            pInterpreter->openScript(file, true);
         }
     }
 

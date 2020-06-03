@@ -38,6 +38,7 @@ public:
      * @param runtime
      */
     static void reloadInterpreter(QString runtime);
+
 signals:
 
 public slots:
@@ -71,7 +72,10 @@ public slots:
 
 
 private:
-    explicit Interpreter();
+    explicit Interpreter();    
+    /**
+     * @brief init
+     */
     void init();
     static QString m_runtimeData;
     static Interpreter* m_pInstance;

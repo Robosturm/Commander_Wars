@@ -6,6 +6,7 @@
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
 #include <QJSEngine>
+#include <QQmlContext>
 #endif
 
 #include "coreengine/audiothread.h"
@@ -62,7 +63,8 @@ int main(int argc, char* argv[])
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG
-    qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
+    QQmlDebuggingEnabler enabler;
+
 #endif
     QApplication app(argc, argv);
     app.setApplicationName(QObject::tr("Commander Wars"));

@@ -3516,8 +3516,8 @@ Version: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="68"/>
-        <location filename="../main.cpp" line="76"/>
+        <location filename="../main.cpp" line="70"/>
+        <location filename="../main.cpp" line="78"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3962,7 +3962,7 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="124"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="125"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -13,17 +13,11 @@ public:
     WorkerThread();
     virtual ~WorkerThread();
     bool getStarted() const;
-
-    inline Interpreter *getInterpreter() const
-    {
-        return m_pInterpreter;
-    }
 signals:
     void sigStart();
 protected slots:
     void start();
 private:
-    Interpreter* m_pInterpreter{nullptr};
     bool started{false};
 };
 

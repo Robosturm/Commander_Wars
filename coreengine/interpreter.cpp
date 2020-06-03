@@ -25,8 +25,6 @@ Interpreter::Interpreter()
     : QQmlEngine()
 {
     setCppOwnerShip(this);
-    Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
     init();
 }
@@ -41,6 +39,7 @@ void Interpreter::reloadInterpreter(QString runtime)
 void Interpreter::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     QJSValue globals = newQObject(pApp);
     globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());

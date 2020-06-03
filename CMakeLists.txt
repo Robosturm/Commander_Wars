@@ -502,6 +502,17 @@ set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
      ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
 )
 
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
+        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
+        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
+        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
+        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
+        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
+    )
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling")
+endif()
+
 # install  folders
 install(DIRECTORY system DESTINATION ".")
 install(DIRECTORY resources DESTINATION ".")
