@@ -443,6 +443,18 @@ qint32 Player::calcIncome(float modifier)
     return ret;
 }
 
+qint32 Player::calcArmyValue()
+{
+    auto pUnits = GameMap::getInstance()->getUnits(this);
+    qint32 armyValue = 0;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        armyValue += pUnits->at(i)->getUnitValue();
+    }
+    delete pUnits;
+    return armyValue;
+}
+
 void Player::earnMoney(float modifier)
 {
     setFunds(funds + calcIncome(modifier));

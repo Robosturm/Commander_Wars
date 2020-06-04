@@ -20,7 +20,6 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
@@ -47,37 +46,45 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         detach();
         emit sigFinished();
     });
-    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                               QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
-    pPanel->setPosition(30, 30);
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
+                               QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
+    pPanel->setPosition(30, 70);
     pSpriteBox->addChild(pPanel);
 
-    qint32 y = 10;
+    qint32 y = 30;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    spLabel pText = new Label(140);
+    pText->setHtmlText("HP");
+    pText->setStyle(style);
+    pText->setPosition(160 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+
+    pText = new Label(140);
     pText->setHtmlText("Fuel");
     pText->setStyle(style);
-    pText->setPosition(150, y);
-    pPanel->addItem(pText);
+    pText->setPosition(310 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
 
-    pText = new oxygine::TextField();
+    pText = new Label(140);
     pText->setHtmlText("Ammo 1");
     pText->setStyle(style);
-    pText->setPosition(300, y);
-    pPanel->addItem(pText);
+    pText->setPosition(460 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
 
-    pText = new oxygine::TextField();
+    pText = new Label(140);
     pText->setHtmlText("Ammo 2");
     pText->setStyle(style);
-    pText->setPosition(450, y);
-    pPanel->addItem(pText);
+    pText->setPosition(610 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
 
     y += 40;
     QmlVectorUnit* pUnits = pPlayer->getUnits();
 
+    y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        pText = new oxygine::TextField();
+        pText = new Label(140);
         pText->setHtmlText(QString::number(i + 1));
         pText->setStyle(style);
         pText->setPosition(10, y);
@@ -92,7 +99,13 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pActor->setPosition(100, y + 8);
         pPanel->addItem(pActor);
 
-        pText = new oxygine::TextField();
+        pText = new Label(140);
+        pText->setHtmlText(QString::number(pUnit->getHpRounded()));
+        pText->setStyle(style);
+        pText->setPosition(150, y);
+        pPanel->addItem(pText);
+
+        pText = new Label(140);
         if (pUnit->getMaxFuel() > 0)
         {
             pText->setHtmlText(QString::number(pUnit->getFuel()) + "/" + QString::number(pUnit->getMaxFuel()));
@@ -102,10 +115,10 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
             pText->setHtmlText("-/-");
         }
         pText->setStyle(style);
-        pText->setPosition(150, y);
+        pText->setPosition(300, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
+        pText = new Label(140);
         if (pUnit->getMaxAmmo1() > 0)
         {
             pText->setHtmlText(QString::number(pUnit->getAmmo1()) + "/" + QString::number(pUnit->getMaxAmmo1()));
@@ -115,10 +128,10 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
             pText->setHtmlText("-/-");
         }
         pText->setStyle(style);
-        pText->setPosition(300, y);
+        pText->setPosition(450, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
+        pText = new Label(140);
         if (pUnit->getMaxAmmo2() > 0)
         {
             pText->setHtmlText(QString::number(pUnit->getAmmo2()) + "/" + QString::number(pUnit->getMaxAmmo2()));
@@ -128,11 +141,11 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
             pText->setHtmlText("-/-");
         }
         pText->setStyle(style);
-        pText->setPosition(450, y);
+        pText->setPosition(750, y);
         pPanel->addItem(pText);
 
         oxygine::spButton pButton = ObjectManager::createButton(tr("Go to Unit"));
-        pButton->setPosition(600, y);
+        pButton->setPosition(750, y);
         qint32 posX = pUnit->getX();
         qint32 posY = pUnit->getY();
         pButton->addClickListener([=](oxygine::Event*)
@@ -143,7 +156,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         y += 40;
     }
     delete pUnits;
-    pPanel->setContentWidth(800);
+    pPanel->setContentWidth(950);
     pPanel->setContentHeigth(y + 40);
 
     connect(this, &DialogUnitInfo::sigMoveToUnit, this, &DialogUnitInfo::moveToUnit, Qt::QueuedConnection);

@@ -50,7 +50,7 @@ void Tooltip::restartTooltiptimer()
 {
     if (!m_disabled)
     {
-        m_TooltipTimer.start(std::chrono::milliseconds(500));
+        m_TooltipTimer.start(std::chrono::milliseconds(1000));
     }
     emit sigHideTooltip();
 }

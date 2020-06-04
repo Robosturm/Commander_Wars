@@ -8,6 +8,7 @@
 #include "gameinput/humanplayerinput.h"
 
 #include "objects/panel.h"
+#include "objects/label.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/gamemanager.h"
@@ -51,14 +52,62 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         emit sigFinished();
     });
 
-    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
-                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
-    pPanel->setPosition(30, 30);
+    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
+                                     QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
+    pPanel->setPosition(30, 70);
 
     pSpriteBox->addChild(pPanel);
+    qint32 y = 30;
+    spLabel pText = new Label(130);
+    pText->setHtmlText("Attacker");
+    pText->setStyle(style);
+    pText->setPosition(10 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(80);
+    pText->setHtmlText("X");
+    pText->setStyle(style);
+    pText->setPosition(140 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(80);
+    pText->setHtmlText("Y");
+    pText->setStyle(style);
+    pText->setPosition(240 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(100);
+    pText->setHtmlText("Dealt");
+    pText->setStyle(style);
+    pText->setPosition(330 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(130);
+    pText->setHtmlText("Defender");
+    pText->setStyle(style);
+    pText->setPosition(440 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(80);
+    pText->setHtmlText("X");
+    pText->setStyle(style);
+    pText->setPosition(580 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(80);
+    pText->setHtmlText("Y");
+    pText->setStyle(style);
+    pText->setPosition(670 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
+
+    pText = new Label(100);
+    pText->setHtmlText("Dealt");
+    pText->setStyle(style);
+    pText->setPosition(760 + pPanel->getX(), y);
+    pSpriteBox->addChild(pText);
 
     qint32 currentDay = -1;
-    qint32 y = 10;
+    y = 10;
     for (qint32 i = m_Log.size() - 1; i >= 0; i--)
     {
         const spAttackReport& log = m_Log[i];
@@ -73,17 +122,11 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             y += 40;
         }
 
-        oxygine::spTextField pText = new oxygine::TextField();
-        pText->setHtmlText(tr("Attacker: "));
-        pText->setStyle(style);
-        pText->setPosition(10, y);
-        pPanel->addItem(pText);
-
         Terrain* pTerrain = pMap->getTerrain(log->attackerX, log->attackerY);
         spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
         pActor->addChild(new Unit(log->attackerID, pMap->getPlayer(log->attackerOwnerID), false));
-        pActor->setPosition(140, y + 8);
+        pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
         {
             oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -95,34 +138,22 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         }
         pPanel->addItem(pActor);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" at X: ") + QString::number(log->attackerX));
+        pText = new Label(80);
+        pText->setHtmlText(QString::number(log->attackerX));
         pText->setStyle(style);
-        pText->setPosition(200, y);
+        pText->setPosition(130, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" Y: ") + QString::number(log->attackerY));
+        pText = new Label(80);
+        pText->setHtmlText(QString::number(log->attackerY));
         pText->setStyle(style);
-        pText->setPosition(300, y);
+        pText->setPosition(230, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" dealt "));
-        pText->setStyle(style);
-        pText->setPosition(370, y);
-        pPanel->addItem(pText);
-
-        pText = new oxygine::TextField();
+        pText = new Label(100);
         pText->setHtmlText(QString::number(log->attackerDamage) + tr("Hp"));
         pText->setStyle(style);
-        pText->setPosition(440, y);
-        pPanel->addItem(pText);
-
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr("to Defender "));
-        pText->setStyle(style);
-        pText->setPosition(500, y);
+        pText->setPosition(320, y);
         pPanel->addItem(pText);
 
         pTerrain = pMap->getTerrain(log->defenderX, log->defenderY);
@@ -138,35 +169,29 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             pSprite->setPosition(0, GameMap::Imagesize * 1.0f / 4.0f);
             pActor->addChild(pSprite);
         }
-        pActor->setPosition(650, y + 8);
+        pActor->setPosition(500, y + 8);
         pPanel->addItem(pActor);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" at X: ") + QString::number(log->defenderX));
+        pText = new Label(80);
+        pText->setHtmlText(QString::number(log->defenderX));
         pText->setStyle(style);
-        pText->setPosition(700, y);
+        pText->setPosition(570, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" Y: ") + QString::number(log->defenderY));
+        pText = new Label(80);
+        pText->setHtmlText(QString::number(log->defenderY));
         pText->setStyle(style);
-        pText->setPosition(800, y);
+        pText->setPosition(660, y);
         pPanel->addItem(pText);
 
-        pText = new oxygine::TextField();
-        pText->setHtmlText(tr(" and recieved "));
-        pText->setStyle(style);
-        pText->setPosition(870, y);
-        pPanel->addItem(pText);
-
-        pText = new oxygine::TextField();
+        pText = new Label(100);
         pText->setHtmlText(QString::number(log->defenderDamage) + tr("Hp"));
         pText->setStyle(style);
-        pText->setPosition(1000, y);
+        pText->setPosition(750, y);
         pPanel->addItem(pText);
 
-        oxygine::spButton pButton = ObjectManager::createButton(tr("Show Fields"));
-        pButton->setPosition(1050, y);
+        oxygine::spButton pButton = ObjectManager::createButton(tr("Show"), 100);
+        pButton->setPosition(860, y);
 
         // to copy less data for the lambda
         qint32 posAtkX = log->attackerX;
@@ -182,7 +207,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pPanel->addItem(pButton);
         y += 40;
     }
-    pPanel->setContentWidth(1300);
+    pPanel->setContentWidth(1000);
     pPanel->setContentHeigth(y + 40);
 
     connect(this, &DialogAttackLog::sigShowAttack, this, &DialogAttackLog::showAttack, Qt::QueuedConnection);

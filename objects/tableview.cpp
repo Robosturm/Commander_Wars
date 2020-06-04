@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-
+#include "objects/label.h"
 
 TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header, bool selectable)
     : QObject(),
@@ -37,14 +37,11 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
     addChild(secondLine);
     for (qint32 i = 0; i < header.size(); i++)
     {
-        oxygine::spClipRectActor pClipRect = new oxygine::ClipRectActor();
-        pClipRect->setSize(fieldWidth, 40);
-        pClipRect->setPosition(i * (fieldWidth + 5) + 5, 13);
-        oxygine::spTextField pTextfield = new oxygine::TextField();
+        spLabel pTextfield = new Label(fieldWidth, 40);
+        pTextfield->setPosition(i * (fieldWidth + 5) + 5, 13);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
-        pClipRect->addChild(pTextfield);
-        addChild(pClipRect);
+        addChild(pTextfield);
 
         oxygine::spColorRectSprite line = new oxygine::ColorRectSprite();
         line->setSize(5, 40);
@@ -97,17 +94,14 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
                     });
                 }
             }
-            oxygine::spClipRectActor pClipRect = new oxygine::ClipRectActor();
-            pClipRect->setSize(fieldWidth, 40);
-            pClipRect->setPosition(i2 * (fieldWidth + 5) + 5, 13 + (i + 1) * 40);
-            oxygine::spTextField pTextfield = new oxygine::TextField();
+            spLabel pTextfield = new Label(fieldWidth, 40);
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(data[i][i2]);
-            pClipRect->addChild(pTextfield);
-            addChild(pClipRect);
+            pTextfield->setPosition(i2 * (fieldWidth + 5) + 5, 13 + (i + 1) * 40);
+            addChild(pTextfield);
             if (selectable)
             {
-                pClipRect->addClickListener([=](oxygine::Event*)
+                pTextfield->addClickListener([=](oxygine::Event*)
                 {
                     setCurrentItem(i);
                     emit sigItemClicked();

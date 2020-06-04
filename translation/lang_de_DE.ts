@@ -1135,57 +1135,45 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="45"/>
+        <location filename="../objects/dialogattacklog.cpp" line="46"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="69"/>
+        <location filename="../objects/dialogattacklog.cpp" line="118"/>
         <source>Day </source>
         <translation>Tag </translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="77"/>
         <source>Attacker: </source>
-        <translation>Angreifer: </translation>
+        <translation type="vanished">Angreifer: </translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="99"/>
-        <location filename="../objects/dialogattacklog.cpp" line="145"/>
         <source> at X: </source>
-        <translation> X: </translation>
+        <translation type="vanished"> X: </translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="105"/>
-        <location filename="../objects/dialogattacklog.cpp" line="151"/>
         <source> Y: </source>
-        <translation> Y: </translation>
+        <translation type="vanished"> Y: </translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="111"/>
-        <source> dealt </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogattacklog.cpp" line="117"/>
-        <location filename="../objects/dialogattacklog.cpp" line="163"/>
+        <location filename="../objects/dialogattacklog.cpp" line="154"/>
+        <location filename="../objects/dialogattacklog.cpp" line="188"/>
         <source>Hp</source>
         <translation>KP</translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="123"/>
         <source>to Defender </source>
-        <translation>Verteidiger </translation>
+        <translation type="vanished">Verteidiger </translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="157"/>
-        <source> and recieved </source>
+        <location filename="../objects/dialogattacklog.cpp" line="193"/>
+        <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="168"/>
         <source>Show Fields</source>
-        <translation>Anzeigen</translation>
+        <translation type="vanished">Anzeigen</translation>
     </message>
 </context>
 <context>
@@ -1593,12 +1581,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogUnitInfo</name>
     <message>
-        <location filename="../objects/dialogunitinfo.cpp" line="42"/>
+        <location filename="../objects/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
     <message>
-        <location filename="../objects/dialogunitinfo.cpp" line="134"/>
+        <location filename="../objects/dialogunitinfo.cpp" line="147"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2192,27 +2180,32 @@ This is immediatly applied.</source>
         <translation>Basen</translation>
     </message>
     <message>
+        <location filename="../menue/gamemenue.cpp" line="936"/>
+        <source>Army Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/gamemenue.cpp" line="952"/>
         <source>Player </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="961"/>
+        <location filename="../menue/gamemenue.cpp" line="962"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1304"/>
+        <location filename="../menue/gamemenue.cpp" line="1305"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1322"/>
+        <location filename="../menue/gamemenue.cpp" line="1323"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1351"/>
+        <location filename="../menue/gamemenue.cpp" line="1352"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16941,6 +16934,34 @@ Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/temporary_harbour.js" line="60"/>
         <source>units is possible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>terrain</name>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="15"/>
+        <source>Sea</source>
+        <translation type="unfinished">See</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="16"/>
+        <source>Normal</source>
+        <translation type="unfinished">Normal</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="17"/>
+        <source>Desert</source>
+        <translation type="unfinished">Wüste</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="18"/>
+        <source>Snow</source>
+        <translation type="unfinished">Schnee</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

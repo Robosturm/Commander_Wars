@@ -185,6 +185,11 @@ public slots:
      */
     qint32 calcIncome(float modifier = 1.0f);
     /**
+     * @brief calcArmyValue
+     * @return
+     */
+    qint32 calcArmyValue();
+    /**
      * @brief getBonusIncome
      * @param pBuilding
      * @param income
