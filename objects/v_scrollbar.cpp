@@ -131,22 +131,19 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_slider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    m_slider->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         if (m_enabled)
         {
-            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
-            m_slider->setResAnim(pAnimState);
-            pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+            setSliding(false);
+            emit sigEndEditValue(m_Scrollvalue);
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         if (m_enabled)
         {
-            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar_pressed");
-            m_slider->setResAnim(pAnimState);
-            m_sliding = true;
+            setSliding(true);
             emit sigStartEditValue();
         }
     });
@@ -154,9 +151,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
-            oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
-            m_slider->setResAnim(pAnimState);
-            m_sliding = false;
+            setSliding(false);
             emit sigEndEditValue(m_Scrollvalue);
         }
     });
@@ -199,6 +194,27 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
             }
             emit sigScrollValueChanged(m_Scrollvalue);
         }
+    }
+}
+
+bool V_Scrollbar::getSliding() const
+{
+    return m_sliding;
+}
+
+void V_Scrollbar::setSliding(bool sliding)
+{
+    m_sliding = sliding;
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    if (sliding)
+    {
+        oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar_pressed");
+        m_slider->setResAnim(pAnimState);
+    }
+    else
+    {
+        oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
+        m_slider->setResAnim(pAnimState);
     }
 }
 

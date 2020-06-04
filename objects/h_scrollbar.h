@@ -27,6 +27,9 @@ public:
     virtual void update(const oxygine::UpdateState&) override;
 
     virtual void setHeight(float h) override;
+    bool getSliding() const;
+    void setSliding(bool sliding);
+
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f

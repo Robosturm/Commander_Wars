@@ -34,6 +34,9 @@ public:
 
     float getScrollvalue() const;
     void setScrollvalue(float Scrollvalue);
+    bool getSliding() const;
+    void setSliding(bool sliding);
+
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
