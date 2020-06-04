@@ -83,7 +83,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief update
@@ -122,8 +122,17 @@ public:
      */
     bool isValid();
 
-
 public slots:
+    /**
+     * @brief getTerrainDescription
+     * @return
+     */
+    QString getTerrainDescription() const;
+    /**
+     * @brief setTerrainDescription
+     * @param terrainDescription
+     */
+    void setTerrainDescription(const QString &terrainDescription);
     /**
      * @brief getVisionHigh
      * @return
@@ -351,6 +360,10 @@ private:
      * @brief terrainName terrain name shown in the game
      */
     QString terrainName;
+    /**
+     * @brief m_terrainDescription
+     */
+    QString m_terrainDescription;
     /**
      * @brief terrainID our terrain id
      */

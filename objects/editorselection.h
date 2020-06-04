@@ -111,6 +111,37 @@ private:
      * @return
      */
     qint32 getPosX(qint32 xCounter);
+    /**
+     * @brief initTerrainSection
+     */
+    void initTerrainSection();
+    /**
+     * @brief createTerrainSectionLabel
+     * @param currentIdentifier
+     * @param xCounter
+     * @param posY
+     */
+    void createTerrainSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY);
+    /**
+     * @brief initBuildingSection
+     */
+    void initBuildingSection();
+    /**
+     * @brief initUnitSelection
+     */
+    void initUnitSelection();
+    /**
+     * @brief createUnitSectionLabel
+     * @param item
+     * @param currentIdentifier
+     * @param xCounter
+     * @param posY
+     */
+    void createUnitSectionLabel(qint32 item, GameEnums::UnitType & currentIdentifier, qint32 & xCounter, qint32 & posY);
+    /**
+     * @brief hideSelection
+     */
+    void hideSelection();
 private:
     // small hints for the ui
     static const qint32 frameSize = 30;
@@ -126,12 +157,15 @@ private:
     PlacementSize m_SizeMode{PlacementSize::Small};
     qint32 m_StartIndex{0};
     qint32 m_xCount{0};
+    qint32 m_labelWidth{0};
 
     oxygine::spSlidingActor m_PlacementSelectionSlider;
     oxygine::spActor m_PlacementActor;
     QVector<spTerrain> m_Terrains;
+    QVector<oxygine::spActor> m_terrainActors;
     QVector<spBuilding> m_Buildings;
     QVector<spUnit> m_Units;
+    QVector<oxygine::spActor> m_unitActors;
 
     oxygine::spSprite m_BoxPlacementSize;
     oxygine::spSprite m_BoxSelectionType;

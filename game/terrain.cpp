@@ -61,6 +61,16 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
 }
 
+QString Terrain::getTerrainDescription() const
+{
+    return m_terrainDescription;
+}
+
+void Terrain::setTerrainDescription(const QString &terrainDescription)
+{
+    m_terrainDescription = terrainDescription;
+}
+
 qint32 Terrain::getVisionHigh() const
 {
     return m_VisionHigh;
@@ -228,19 +238,19 @@ qint32 Terrain::getTerrainGroup()
 
 QString Terrain::getDescription()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    // load sprite of the base terrain
-    QString function = "getDescription";
-    QJSValue ret = pInterpreter->doFunction(terrainID, function, args);
-    if (ret.isString())
+    if (m_terrainDescription.isEmpty())
     {
-        return ret.toString();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        // load sprite of the base terrain
+        QString function = "getDescription";
+        QJSValue ret = pInterpreter->doFunction(terrainID, function, args);
+        if (ret.isString())
+        {
+            return ret.toString();
+        }
     }
-    else
-    {
-        return "";
-    }
+    return m_terrainDescription;
 }
 
 void Terrain::setBaseTerrain(spTerrain terrain)
@@ -1030,6 +1040,9 @@ void Terrain::serializeObject(QDataStream& pStream)
         m_Unit->serializeObject(pStream);
     }
     pStream << hp;
+
+    pStream << terrainName;
+    pStream << m_terrainDescription;
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1110,6 +1123,11 @@ void Terrain::deserializeObject(QDataStream& pStream)
         {
             hp = newHp;
         }
+    }
+    if (version > 4)
+    {
+        pStream >> terrainName;
+        pStream >> m_terrainDescription;
     }
 }
 

@@ -37,7 +37,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
     addChild(secondLine);
     for (qint32 i = 0; i < header.size(); i++)
     {
-        spLabel pTextfield = new Label(fieldWidth, 40);
+        spLabel pTextfield = new Label(fieldWidth);
         pTextfield->setPosition(i * (fieldWidth + 5) + 5, 13);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
@@ -94,7 +94,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
                     });
                 }
             }
-            spLabel pTextfield = new Label(fieldWidth, 40);
+            spLabel pTextfield = new Label(fieldWidth);
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(data[i][i2]);
             pTextfield->setPosition(i2 * (fieldWidth + 5) + 5, 13 + (i + 1) * 40);

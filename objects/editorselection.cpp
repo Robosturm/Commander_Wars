@@ -11,6 +11,8 @@
 
 #include "game/co.h"
 
+#include "objects/label.h"
+
 const float EditorSelection::xFactor = 1.5f;
 const float EditorSelection::yFactor = 2.5f;
 
@@ -36,7 +38,8 @@ EditorSelection::EditorSelection()
     m_PlacementActor->setY(-GameMap::Imagesize);
     m_PlacementSelectionSlider->setContent(m_PlacementActor);
 
-    m_xCount = (m_PlacementSelectionSlider->getWidth() - GameMap::Imagesize - frameSize - frameSize) / (GameMap::Imagesize * xFactor) + 1;
+    m_labelWidth = m_PlacementSelectionSlider->getWidth() - GameMap::Imagesize - frameSize - frameSize;
+    m_xCount = m_labelWidth / (GameMap::Imagesize * xFactor) + 1;
     createBoxPlacementSize();
     createBoxSelectionMode();
     createPlayerSelection();
@@ -195,7 +198,7 @@ EditorSelection::EditorSelection()
         m_PlacementActor->addChild(unit);
     }
 
-
+    initSelection();
     // select terrains view
     updateTerrainView();
 }
@@ -507,15 +510,19 @@ void EditorSelection::updateTerrainView()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    initSelection();
+    hideSelection();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = m_StartIndex; i < pTerrainManager->getCount(); i++)
     {
         m_Terrains[i]->setVisible(true);
     }
+    for (auto & item : m_terrainActors)
+    {
+        item->setVisible(true);
+    }
     m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+    selectTerrain(0);
     pApp->continueThread();
 }
 
@@ -523,14 +530,14 @@ void EditorSelection::updateBuildingView()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    initSelection();
+    hideSelection();
     for (qint32 i = m_StartIndex; i < m_Buildings.size(); i++)
     {
         m_Buildings[i]->setVisible(true);
     }
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+    selectBuilding(0);
     pApp->continueThread();
 }
 
@@ -538,30 +545,56 @@ void EditorSelection::updateUnitView()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    initSelection();
+    hideSelection();
     for (qint32 i = m_StartIndex; i < m_Units.size(); i++)
     {
         m_Units[i]->setVisible(true);
     }
+    for (auto & item : m_unitActors)
+    {
+        item->setVisible(true);
+    }
     m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+    selectUnit(0);
     pApp->continueThread();
+}
+
+void EditorSelection::hideSelection()
+{
+    for (auto & item : m_Terrains)
+    {
+        item->setVisible(false);
+    }
+    for (auto & item : m_terrainActors)
+    {
+        item->setVisible(false);
+    }
+    for (auto & item : m_Buildings)
+    {
+        item->setVisible(false);
+    }
+    for (auto & item : m_Units)
+    {
+        item->setVisible(false);
+    }
+    for (auto & item : m_unitActors)
+    {
+        item->setVisible(false);
+    }
 }
 
 void EditorSelection::initSelection()
 {
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
+    initBuildingSection();
+    initTerrainSection();
+    initUnitSelection();
+}
 
+void EditorSelection::initBuildingSection()
+{
     qint32 posY = startH;
     qint32 xCounter = 0;
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    qint32 currentIdentifier = 0;
-    qint32 yCounter = 0;
     for (qint32 i = 0; i < m_Buildings.size(); i++)
     {
         qint32 posX = getPosX(xCounter);
@@ -569,7 +602,6 @@ void EditorSelection::initSelection()
         {
             posY += GameMap::Imagesize * yFactor;
             xCounter = 0;
-            yCounter++;
             posX = frameSize;
         }
         qint32 width = m_Buildings[i]->getBuildingWidth();
@@ -583,21 +615,21 @@ void EditorSelection::initSelection()
         });
         xCounter++;
     }
-    posY = startH;
-    xCounter = 0;
-    currentIdentifier = m_Terrains[0]->getTerrainGroup();
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+}
 
-    xCounter++;
-    yCounter = 0;
+void EditorSelection::initTerrainSection()
+{
+    qint32 posY = startH - GameMap::Imagesize;
+    qint32 xCounter = 0;
+    qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
+        createTerrainSectionLabel(i, currentIdentifier, xCounter, posY);
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
             posY += GameMap::Imagesize * yFactor;
             xCounter = 0;
-            yCounter++;
             posX = frameSize;
         }
         m_Terrains[i]->setPosition(posX, posY);
@@ -608,17 +640,47 @@ void EditorSelection::initSelection()
         });
         xCounter++;
     }
-    posY = startH;
-    xCounter = 0;
-    yCounter = 0;
+}
+
+void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY)
+{
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    qint32 newIdentifier = m_Terrains[item]->getTerrainGroup();
+    if (newIdentifier != currentIdentifier)
+    {
+        posY += GameMap::Imagesize;
+        currentIdentifier = newIdentifier;
+        xCounter = 0;
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::getFontColor();
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+
+        spLabel pTextfield = new Label(m_labelWidth);
+        pTextfield->setStyle(style);
+        pTextfield->setPosition(getPosX(xCounter), posY);
+        pTextfield->setHtmlText(pTerrainManager->getTerrainGroupName(currentIdentifier));
+        pTextfield->setVisible(false);
+        m_PlacementActor->addChild(pTextfield);
+        m_terrainActors.append(pTextfield);
+        posY += GameMap::Imagesize * yFactor;
+    }
+}
+
+void EditorSelection::initUnitSelection()
+{
+    qint32 posY = startH - GameMap::Imagesize;
+    qint32 xCounter = 0;
+    GameEnums::UnitType currentIdentifier = static_cast<GameEnums::UnitType>(std::numeric_limits<qint32>::min());
     for (qint32 i = 0; i < m_Units.size(); i++)
     {
+        createUnitSectionLabel(i, currentIdentifier, xCounter, posY);
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
-            posY += GameMap::Imagesize * yFactor;
+            posY += GameMap::Imagesize * 1.5f;
             xCounter = 0;
-            yCounter++;
             posX = frameSize;
         }
         m_Units[i]->setPosition(posX, posY);
@@ -628,6 +690,31 @@ void EditorSelection::initSelection()
             selectUnit(i);
         });
         xCounter++;
+    }
+}
+
+void EditorSelection::createUnitSectionLabel(qint32 item, GameEnums::UnitType & currentIdentifier, qint32 & xCounter, qint32 & posY)
+{
+    GameEnums::UnitType newIdentifier = m_Units[item]->getUnitType();
+    if (newIdentifier != currentIdentifier)
+    {
+        posY += GameMap::Imagesize;
+        currentIdentifier = newIdentifier;
+        xCounter = 0;
+        oxygine::TextStyle style = FontManager::getMainFont24();
+        style.color = FontManager::getFontColor();
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+
+        spLabel pTextfield = new Label(m_labelWidth);
+        pTextfield->setStyle(style);
+        pTextfield->setPosition(getPosX(xCounter), posY);
+        pTextfield->setHtmlText(GameEnums::getUnitTypeText(currentIdentifier));
+        pTextfield->setVisible(false);
+        m_PlacementActor->addChild(pTextfield);
+        m_unitActors.append(pTextfield);
+        posY += GameMap::Imagesize * 1.5f;
     }
 }
 

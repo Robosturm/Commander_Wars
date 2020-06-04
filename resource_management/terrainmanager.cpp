@@ -34,7 +34,7 @@ qint32 TerrainManager::getTerrainGroup(QString id)
     return 0;
 }
 
-QString getTerrainGroupName(qint32 group)
+QString TerrainManager::getTerrainGroupName(qint32 group)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainGroupName";

@@ -1,9 +1,10 @@
 #include "label.h"
 
-Label::Label(qint32 width, qint32 heigth)
+Label::Label(qint32 width)
 {
     _clipRect = new oxygine::ClipRectActor();
-    _clipRect->setSize(width, heigth);
+    _clipRect->setWidth(width);
+    _clipRect->setHeight(24);
     setWidth(width);
     _textField = new oxygine::TextField();
     _clipRect->addChild(_textField);
@@ -25,6 +26,7 @@ void Label::setText(QString str)
 void Label::setHtmlText(QString str)
 {
     _textField->setHtmlText(str);
+    _clipRect->setHeight(getTextRect().getHeight() * 1.3f);
     setTooltipText(str);
 }
 
