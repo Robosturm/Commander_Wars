@@ -179,9 +179,8 @@ var CO_PERK =
         return 0;
     },
 
-    gainPowerstar : function(co, fundsDamage, x, y)
+    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender)
     {
-        co.setPowerFilled(co.getPowerFilled() + fundsDamage / 11000)
     },
 
     getCOUnitRange : function(co)

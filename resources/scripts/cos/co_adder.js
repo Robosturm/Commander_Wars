@@ -163,10 +163,11 @@ var Constructor = function()
         return 0;
     };
 	
-	this.gainPowerstar = function(co, fundsDamage, x, y)
+    this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender)
     {
 		// adder gains more power than other co's
-        co.setPowerFilled(co.getPowerFilled() + (fundsDamage / 11000) * 1.2)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+        co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
     };
 
     // CO - Intel

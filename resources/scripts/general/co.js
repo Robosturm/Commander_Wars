@@ -190,9 +190,27 @@ var CO =
         return "OS";
     },
 
-    gainPowerstar : function(co, fundsDamage, x, y)
+    getStarGain : function(co, fundsDamage, x, y, hpDamage, defender)
     {
-        co.setPowerFilled(co.getPowerFilled() + fundsDamage / 11000)
+        var powerGain = fundsDamage;
+        // reduce power meter filling based on power usages
+        powerGain *= 1 / (1.0 + co.getPowerUsed() * 0.1);
+        if (!inCORange(Qt.point(x, y), null))
+        {
+           // reduce power meter gain when not in co range
+           powerGain /= 2.0;
+        }
+        if (!defender)
+        {
+            powerGain /= 4.0;
+        }
+        return powerGain / 11000;
+    },
+
+    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender)
+    {
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+        co.setPowerFilled(co.getPowerFilled() + powerGain)
     },
 
     getCOUnitRange : function(co)

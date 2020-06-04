@@ -1,5 +1,6 @@
-CO.gainPowerstar = function(co, fundsDamage, x, y)
+CO.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender)
 {
-    co.setPowerFilled(co.getPowerFilled() + (fundsDamage / 11000) * 2);
+    var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+    co.setPowerFilled(co.getPowerFilled() + powerGain * 2);
 };
 

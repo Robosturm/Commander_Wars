@@ -944,26 +944,21 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
     m_PowerMode = PowerMode;
 }
 
-void CO::gainPowerstar(qint32 fundsDamage, QPoint position)
+void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender)
 {
-    double powerGain = fundsDamage;
-    // reduce power meter filling based on power usages
-    powerGain *= 1 / (1.0 + powerUsed * 0.1);
-    if (!inCORange(position, nullptr))
-    {
-        // reduce power meter gain when not in co range
-        powerGain /= 2.0;
-    }
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function1 = "gainPowerstar";
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        args1 << powerGain;
+        args1 << fundsDamage;
         args1 << position.x();
         args1 << position.y();
+        args1 << hpDamage;
+        args1 << defender;
+        // call co bonus
+        QString function1 = "gainPowerstar";
         for (const auto & perk : m_perkList)
         {
             pInterpreter->doFunction(perk, function1, args1);
@@ -1164,6 +1159,16 @@ void CO::addPerk(QString perk)
 void CO::removePerk(QString perk)
 {
     m_perkList.removeAll(perk);
+}
+
+qint32 CO::getPowerUsed() const
+{
+    return powerUsed;
+}
+
+void CO::setPowerUsed(const qint32 &value)
+{
+    powerUsed = value;
 }
 
 void CO::loadCOMusic()

@@ -51,9 +51,21 @@ public:
      * @return
      */
     bool isValid();
+
+
 signals:
 
 public slots:
+    /**
+     * @brief getPowerUsed
+     * @return
+     */
+    qint32 getPowerUsed() const;
+    /**
+     * @brief setPowerUsed
+     * @param value
+     */
+    void setPowerUsed(const qint32 &value);
     /**
      * @brief getUnitBuildValue
      * @param unitID
@@ -331,7 +343,7 @@ public slots:
      * @param fundsDamage
      * @param position
      */
-    void gainPowerstar(qint32 fundsDamage, QPoint position);
+    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender);
     /**
      * @brief startOfTurn called at the start of our turn
      */

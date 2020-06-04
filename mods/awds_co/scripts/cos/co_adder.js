@@ -41,8 +41,8 @@ CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y)
+CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage)
 {
-    // adder gains more power than other co's
-    co.setPowerFilled(co.getPowerFilled() + (fundsDamage / 11000) * 2 * 1.2)
+    var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+    co.setPowerFilled(co.getPowerFilled() + powerGain * 2 * 1.2);
 };
