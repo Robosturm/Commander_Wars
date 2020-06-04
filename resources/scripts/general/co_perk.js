@@ -7,8 +7,6 @@ var CO_PERK =
 
     onCOUnitLost : function(co)
     {
-        // called when a co unit got destroyed
-        co.setPowerFilled(co.getPowerFilled() / 2.0);
     },
 
     getMovementpointModifier : function(co, unit, posX, posY)

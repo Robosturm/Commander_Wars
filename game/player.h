@@ -224,7 +224,7 @@ public slots:
      * @brief gainPowerstar
      * @param fundsDamage
      */
-    void gainPowerstar(qint32 fundsDamage, QPoint position);
+    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender);
     /**
      * @brief startOfTurn
      */

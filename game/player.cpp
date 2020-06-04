@@ -794,15 +794,15 @@ qint32 Player::getCosts(QString id)
     return costs;
 }
 
-void Player::gainPowerstar(qint32 fundsDamage, QPoint position)
+void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender)
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->gainPowerstar(fundsDamage, position);
+       playerCOs[0]->gainPowerstar(fundsDamage, position, hpDamage, defender);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->gainPowerstar(fundsDamage, position);
+       playerCOs[1]->gainPowerstar(fundsDamage, position, hpDamage, defender);
     }
     if (GameMenue::getInstance() != nullptr)
     {

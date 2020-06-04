@@ -104,7 +104,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Each Day: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spSpinBox spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("Periodic cycle in which this condition is executing it's events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(intervall);
@@ -116,7 +116,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Start Day: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 9999);
+    spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("The first day at which the events get executed."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(day);
@@ -128,7 +128,7 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 9999);
+    spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("The first day at which the events get executed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);

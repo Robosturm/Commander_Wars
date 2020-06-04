@@ -2751,502 +2751,517 @@ This is immediatly applied.</source>
         <translation>Spiel  &amp;amp; Tastatur</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="160"/>
+        <location filename="../menue/optionmenue.cpp" line="165"/>
         <source>Gameplay Settings</source>
         <translation>Spieleinstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="170"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>None</source>
         <translation>Keine</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="170"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="170"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>Own</source>
         <translation>Eigene</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="170"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>Ally</source>
         <translation>Allierte</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="170"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>Enemy</source>
         <translation>Gegner</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="171"/>
+        <location filename="../menue/optionmenue.cpp" line="176"/>
         <source>Only Detailed Battle All</source>
         <translation>Nur alle Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="171"/>
+        <location filename="../menue/optionmenue.cpp" line="176"/>
         <source>Only Detailed Battle Own</source>
         <translation>Nur eigene Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="172"/>
+        <location filename="../menue/optionmenue.cpp" line="177"/>
         <source>Only Detailed Battle Ally</source>
         <translation>Nur allierte Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="172"/>
+        <location filename="../menue/optionmenue.cpp" line="177"/>
         <source>Only Detailed Battle Enemy</source>
         <translation>Nur Gegner Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="176"/>
+        <location filename="../menue/optionmenue.cpp" line="181"/>
         <source>Select which ingame animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="186"/>
+        <location filename="../menue/optionmenue.cpp" line="191"/>
         <source>Battle Animations: </source>
         <translation>Kampfanimationen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="189"/>
+        <location filename="../menue/optionmenue.cpp" line="194"/>
         <source>Detailed</source>
         <translation>Animation</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="189"/>
+        <location filename="../menue/optionmenue.cpp" line="194"/>
         <source>Overworld</source>
         <translation>Schlacht</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="191"/>
+        <location filename="../menue/optionmenue.cpp" line="196"/>
         <source>Selects which battle animations are played when fighting an enemy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="203"/>
+        <location filename="../menue/optionmenue.cpp" line="208"/>
         <source>Animation Speed: </source>
         <translation>Animationsgeschwindigkeit: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="207"/>
+        <location filename="../menue/optionmenue.cpp" line="212"/>
         <source>Selects the speed at which animations are played. Except battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="223"/>
+        <location filename="../menue/optionmenue.cpp" line="228"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="235"/>
+        <location filename="../menue/optionmenue.cpp" line="240"/>
         <source>Multi Turn Plantime: </source>
         <translation>Rundenplanung: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="239"/>
+        <location filename="../menue/optionmenue.cpp" line="244"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="251"/>
+        <location filename="../menue/optionmenue.cpp" line="256"/>
         <source>Auto End Turn: </source>
         <translation>Auto Rundenende: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="255"/>
+        <location filename="../menue/optionmenue.cpp" line="260"/>
         <source>If active the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="267"/>
+        <location filename="../menue/optionmenue.cpp" line="272"/>
         <source>Menu Heigth: </source>
         <translation>Menühöhe: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="271"/>
+        <location filename="../menue/optionmenue.cpp" line="276"/>
         <source>Amount of items per row for ingame menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="287"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="167"/>
+        <location filename="../menue/optionmenue.cpp" line="172"/>
         <source>Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="219"/>
+        <location filename="../menue/optionmenue.cpp" line="224"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="283"/>
+        <location filename="../menue/optionmenue.cpp" line="288"/>
         <source>Show PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="299"/>
+        <location filename="../menue/optionmenue.cpp" line="304"/>
         <source>Animated Markers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="303"/>
+        <location filename="../menue/optionmenue.cpp" line="308"/>
         <source>If active the currently selectable fiedls get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="315"/>
+        <location filename="../menue/optionmenue.cpp" line="320"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="322"/>
+        <location filename="../menue/optionmenue.cpp" line="327"/>
         <source>Key Up: </source>
         <translation>Hoch: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="326"/>
+        <location filename="../menue/optionmenue.cpp" line="331"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="334"/>
+        <location filename="../menue/optionmenue.cpp" line="339"/>
         <source>Key Left: </source>
         <translation>Links: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="338"/>
+        <location filename="../menue/optionmenue.cpp" line="343"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="346"/>
+        <location filename="../menue/optionmenue.cpp" line="351"/>
         <source>Key Down: </source>
         <translation>Unten: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="350"/>
+        <location filename="../menue/optionmenue.cpp" line="355"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="358"/>
+        <location filename="../menue/optionmenue.cpp" line="363"/>
         <source>Key Right: </source>
         <translation>Rechts: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="362"/>
+        <location filename="../menue/optionmenue.cpp" line="367"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="370"/>
+        <location filename="../menue/optionmenue.cpp" line="375"/>
         <source>Key Confirm: </source>
         <translation>Bestätigen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="374"/>
+        <location filename="../menue/optionmenue.cpp" line="379"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="382"/>
+        <location filename="../menue/optionmenue.cpp" line="387"/>
         <source>Key Cancel: </source>
         <translation>Abbrechen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="386"/>
+        <location filename="../menue/optionmenue.cpp" line="391"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="394"/>
+        <location filename="../menue/optionmenue.cpp" line="399"/>
         <source>Key Next: </source>
         <translation>Nächste: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="398"/>
+        <location filename="../menue/optionmenue.cpp" line="403"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="406"/>
+        <location filename="../menue/optionmenue.cpp" line="411"/>
         <source>Key Previous: </source>
         <translation>Vorige: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="410"/>
+        <location filename="../menue/optionmenue.cpp" line="415"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="418"/>
+        <location filename="../menue/optionmenue.cpp" line="423"/>
         <source>Key Quicksave 1: </source>
         <translation>Schnellspeichern 1: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="422"/>
+        <location filename="../menue/optionmenue.cpp" line="427"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="430"/>
+        <location filename="../menue/optionmenue.cpp" line="435"/>
         <source>Key Quickload 1: </source>
         <translation>Schnellladen 1: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="434"/>
+        <location filename="../menue/optionmenue.cpp" line="439"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="442"/>
+        <location filename="../menue/optionmenue.cpp" line="447"/>
         <source>Key Quicksave 2: </source>
         <translation>Schnellspeichern 2: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="446"/>
+        <location filename="../menue/optionmenue.cpp" line="451"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="454"/>
+        <location filename="../menue/optionmenue.cpp" line="459"/>
         <source>Key Quickload 2: </source>
         <translation>Schnellladen 2: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="458"/>
+        <location filename="../menue/optionmenue.cpp" line="463"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="471"/>
         <source>Key Information: </source>
         <translation>Information: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="470"/>
+        <location filename="../menue/optionmenue.cpp" line="475"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="478"/>
+        <location filename="../menue/optionmenue.cpp" line="483"/>
         <source>Key Move Map Up: </source>
         <translation>Karte Hoch: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="482"/>
+        <location filename="../menue/optionmenue.cpp" line="487"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="490"/>
+        <location filename="../menue/optionmenue.cpp" line="495"/>
         <source>Key Move Map Left: </source>
         <translation>Karte Links: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="494"/>
+        <location filename="../menue/optionmenue.cpp" line="499"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="502"/>
+        <location filename="../menue/optionmenue.cpp" line="507"/>
         <source>Key Move Map Down: </source>
         <translation>Karte Runter: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="506"/>
+        <location filename="../menue/optionmenue.cpp" line="511"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="514"/>
+        <location filename="../menue/optionmenue.cpp" line="519"/>
         <source>Key Move Map Right: </source>
         <translation>Karte Rechts: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="518"/>
+        <location filename="../menue/optionmenue.cpp" line="523"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="526"/>
+        <location filename="../menue/optionmenue.cpp" line="531"/>
         <source>Key Zoom In: </source>
         <translation>Reinzoomen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="530"/>
+        <location filename="../menue/optionmenue.cpp" line="535"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="538"/>
+        <location filename="../menue/optionmenue.cpp" line="543"/>
         <source>Key Zoom Out: </source>
         <translation>Rauszoomen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="542"/>
+        <location filename="../menue/optionmenue.cpp" line="547"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="724"/>
+        <location filename="../menue/optionmenue.cpp" line="730"/>
         <source>Screen Settings</source>
         <translation>Bildschirm</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="732"/>
+        <location filename="../menue/optionmenue.cpp" line="738"/>
         <source>Screen Resolution: </source>
         <translation>Auflösung: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="738"/>
+        <location filename="../menue/optionmenue.cpp" line="744"/>
         <source>Selects the screen resolution for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="749"/>
+        <location filename="../menue/optionmenue.cpp" line="755"/>
         <source>Screen Mode: </source>
         <translation>Modus: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="752"/>
+        <location filename="../menue/optionmenue.cpp" line="758"/>
         <source>Window</source>
         <translation>Fenster</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="752"/>
+        <location filename="../menue/optionmenue.cpp" line="758"/>
         <source>Bordered</source>
         <translation>Randlos</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="752"/>
+        <location filename="../menue/optionmenue.cpp" line="758"/>
         <source>Fullscreen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="754"/>
+        <location filename="../menue/optionmenue.cpp" line="760"/>
         <source>Selects the screen mode for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="763"/>
+        <location filename="../menue/optionmenue.cpp" line="769"/>
         <source>Audio Settings</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="769"/>
+        <location filename="../menue/optionmenue.cpp" line="775"/>
         <source>Global Volume: </source>
         <translation>Global: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="773"/>
+        <location filename="../menue/optionmenue.cpp" line="779"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="786"/>
+        <location filename="../menue/optionmenue.cpp" line="792"/>
         <source>Music Volume: </source>
         <translation>Musik: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="790"/>
+        <location filename="../menue/optionmenue.cpp" line="796"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="803"/>
+        <location filename="../menue/optionmenue.cpp" line="809"/>
         <source>Sound Volume: </source>
         <translation>Sound: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="807"/>
+        <location filename="../menue/optionmenue.cpp" line="813"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="819"/>
+        <location filename="../menue/optionmenue.cpp" line="825"/>
         <source>Language: </source>
         <translation>Sprache: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="847"/>
+        <location filename="../menue/optionmenue.cpp" line="853"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="862"/>
+        <location filename="../menue/optionmenue.cpp" line="868"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="866"/>
+        <location filename="../menue/optionmenue.cpp" line="872"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="875"/>
+        <location filename="../menue/optionmenue.cpp" line="881"/>
         <source>Network Settings</source>
         <translation>Netzwerk</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="882"/>
+        <location filename="../menue/optionmenue.cpp" line="888"/>
         <source>Username: </source>
         <translation>Benutzer: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="886"/>
+        <location filename="../menue/optionmenue.cpp" line="892"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="909"/>
+        <location filename="../menue/optionmenue.cpp" line="915"/>
         <source>Server Adress: </source>
         <translation>Serveradresse: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="913"/>
+        <location filename="../menue/optionmenue.cpp" line="919"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="925"/>
+        <location filename="../menue/optionmenue.cpp" line="931"/>
         <source>Lobby port: </source>
         <translation>Lobby Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="929"/>
+        <location filename="../menue/optionmenue.cpp" line="935"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="941"/>
+        <location filename="../menue/optionmenue.cpp" line="947"/>
         <source>Server: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="945"/>
+        <location filename="../menue/optionmenue.cpp" line="951"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="958"/>
+        <location filename="../menue/optionmenue.cpp" line="964"/>
         <source>Game port: </source>
         <translation>Spieleport: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="962"/>
+        <location filename="../menue/optionmenue.cpp" line="968"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1082"/>
+        <location filename="../menue/optionmenue.cpp" line="1013"/>
+        <source>Commander Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1014"/>
+        <source>Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1015"/>
+        <source>Advance Wars DoR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1100"/>
         <source>
 Version: </source>
         <translation></translation>
@@ -7138,34 +7153,34 @@ Units gain additional 20% firepower and finish off units when they are within ba
 <context>
     <name>co_adder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="176"/>
         <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="180"/>
         <source>His own Face</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="184"/>
         <source>Dirty Things</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="188"/>
         <source>Adept at making quick command decisions, he stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="192"/>
         <source>
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="193"/>
         <source>
 
 CO Zone Effect: 
@@ -7173,112 +7188,112 @@ Units gain additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="197"/>
         <source>Movement range for all units is increased by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="201"/>
         <source>Sideslip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
         <source>Movement range for all units is increased by two spaces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
         <source>Sidewinder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
         <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="214"/>
         <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="215"/>
         <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="216"/>
         <source>Heh heh heh... It only hurts for a moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
         <source>Heh heh heh... Kneel before Adder!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
         <source>Hee hee. Your skills are laughable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="220"/>
         <source>It&apos;s already too late for you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="221"/>
         <source>Let me hear your last words!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="222"/>
         <source>Check out my new and improved powers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="223"/>
         <source>Wriggle worm... wriggle!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="224"/>
         <source>My venom courses through your veins!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
         <source>Heh heh heh... What did you expect?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
         <source>My apologies. Should I have gone easier on you?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="230"/>
         <source>Don&apos;t forget me now. That would be a shame.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="234"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="235"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="239"/>
         <source>Adder</source>
         <translation type="unfinished"></translation>
     </message>

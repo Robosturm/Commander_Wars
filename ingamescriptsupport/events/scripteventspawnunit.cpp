@@ -116,7 +116,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 9999);
+    spSpinBox spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("X Location at which the unit gets spawned."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(x);
@@ -128,7 +128,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Y Location at which the unit gets spawned."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(y);
@@ -140,7 +140,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 9999);
+    spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("Player for which the unit gets spawned."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
@@ -191,7 +191,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Spawn Radius: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can't move over the given field."));
     spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(radius);

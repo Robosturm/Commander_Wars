@@ -59,7 +59,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 9999);
+    spSpinBox spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("X Location at which the terrain gets modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
@@ -71,7 +71,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Y Location at which the terrain gets modified."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);

@@ -85,7 +85,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 9999);
+    spSpinBox spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Field X on which the animation will be shown."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(x);
@@ -101,7 +101,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Field Y on which the animation will be shown."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(getY());
@@ -117,7 +117,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Offset X: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -9999, 9999);
+    spinBox = new SpinBox(300, -9999, 9999);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("X-Offset of the animation. Moving it away from the center."));
     spinBox->setPosition(width, y);
@@ -134,7 +134,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Offset Y: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -9999, 9999);
+    spinBox = new SpinBox(300, -9999, 9999);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("Y-Offset of the animation. Moving it away from the center."));
     spinBox->setPosition(width, y);
@@ -168,7 +168,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Sleep after finish: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("Time in ms the animation remains visible after all frames were played."));
     spinBox->setPosition(width, y);
@@ -185,7 +185,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Scale X: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999, SpinBox::Mode::Float);
+    spinBox = new SpinBox(300, 0, 9999, SpinBox::Mode::Float);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("X-Scaling of the actual sprite."));
     spinBox->setPosition(width, y);
@@ -202,7 +202,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Scale Y: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999, SpinBox::Mode::Float);
+    spinBox = new SpinBox(300, 0, 9999, SpinBox::Mode::Float);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("Y-Scaling of the actual sprite."));
     spinBox->setPosition(width, y);
@@ -219,7 +219,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Delay: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("Time in ms before the animation gets played."));
     spinBox->setPosition(width, y);
@@ -259,7 +259,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Frames: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setInfinityValue(std::numeric_limits<qint32>::min());
     spinBox->setTooltipText(tr("Amount of frames for the animation. Only has an effect on custom animations."));
     spinBox->setPosition(width, y);

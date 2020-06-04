@@ -195,7 +195,7 @@ var CO =
         var powerGain = fundsDamage;
         // reduce power meter filling based on power usages
         powerGain *= 1 / (1.0 + co.getPowerUsed() * 0.1);
-        if (!inCORange(Qt.point(x, y), null))
+        if (!co.inCORange(Qt.point(x, y), null))
         {
            // reduce power meter gain when not in co range
            powerGain /= 2.0;

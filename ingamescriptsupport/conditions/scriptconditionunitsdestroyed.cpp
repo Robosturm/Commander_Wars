@@ -130,7 +130,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     pText->setHtmlText(tr("Count: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 1, 99999);
+    spSpinBox spinBox = new SpinBox(300, 1, 99999);
     spinBox->setTooltipText(tr("Amount of units that has to be killed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
@@ -147,7 +147,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     spinBox->setTooltipText(tr("Player who has to kill the units."));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 99999);
+    spinBox = new SpinBox(300, 1, 99999);
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

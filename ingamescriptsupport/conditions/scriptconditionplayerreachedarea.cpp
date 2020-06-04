@@ -186,7 +186,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spSpinBox spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area X Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_x);
@@ -203,7 +203,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area Y Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_y);
@@ -220,7 +220,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area width which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
@@ -237,7 +237,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
@@ -261,7 +261,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Add Player: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 99999);
+    spinBox = new SpinBox(300, 1, 99999);
     spinBox->setTooltipText(tr("Player to add to the Player reached Area list."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(1);

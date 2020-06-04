@@ -94,7 +94,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("At Day: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spSpinBox spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("Day at which the events get executed at the start of this turn."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(day);
@@ -106,7 +106,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 9999);
+    spinBox = new SpinBox(300, 1, 9999);
     spinBox->setTooltipText(tr("Player at which the events get executed at the start of this turn."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(player + 1);

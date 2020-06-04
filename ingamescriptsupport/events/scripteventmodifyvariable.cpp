@@ -126,7 +126,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 999999);
+    spSpinBox spinBox = new SpinBox(300, 0, 999999);
     spinBox->setTooltipText(tr("The value modifying the variable."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);

@@ -35,6 +35,7 @@ private:
 
     spPanel m_pMods;
     spPanel m_pModDescription;
+    oxygine::spActor m_ModSelector;
     oxygine::spTextField m_ModDescriptionText;
     QVector<oxygine::spActor> m_ModBoxes;
 

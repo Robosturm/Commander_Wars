@@ -63,7 +63,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 9999);
+    spSpinBox spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("X Location at which the unit gets modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
@@ -75,7 +75,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 9999);
+    spinBox = new SpinBox(300, 0, 9999);
     spinBox->setTooltipText(tr("Y Location at which the unit gets modified."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
@@ -88,7 +88,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modify HP: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -10, 10);
+    spinBox = new SpinBox(300, -10, 10);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("HP change for the unit."));
     spinBox->setPosition(width, 110);
@@ -101,7 +101,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modify Ammo 1: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -100, 100);
+    spinBox = new SpinBox(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Ammo 1 change for the unit."));
     spinBox->setPosition(width, 150);
@@ -114,7 +114,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modify Ammo 2: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -100, 100);
+    spinBox = new SpinBox(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Ammo 2 change for the unit."));
     spinBox->setPosition(width, 190);
@@ -127,7 +127,7 @@ void ScriptEventModifyUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modify Fuel: "));
     pText->setPosition(30, 230);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, -100, 100);
+    spinBox = new SpinBox(300, -100, 100);
     spinBox->setInfinityValue(-200000);
     spinBox->setTooltipText(tr("Fuel change for the unit."));
     spinBox->setPosition(width, 230);

@@ -99,14 +99,17 @@ OptionMenue::OptionMenue()
     m_pOptions->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pOptions);
 
-    size.setWidth(Settings::getWidth() / 2 - 40);
-    m_pMods = new  Panel(true,  size, size);
-    m_pMods->setPosition(10, 20 + pButtonMods->getHeight());
+    size.setWidth(Settings::getWidth() / 2 - 50);
+    m_pMods = new  Panel(true,  size - QSize(0, 50), size);
+    m_pMods->setPosition(10, 20 + pButtonMods->getHeight() + 50);
     addChild(m_pMods);
-    m_pModDescription = new  Panel(true,  size, size);
-    m_pModDescription->setPosition(Settings::getWidth() / 2 + 10, 20 + pButtonMods->getHeight());
+    m_pModDescription = new  Panel(true,  size - QSize(0, 40), size);
+    m_pModDescription->setPosition(Settings::getWidth() / 2 + 10, 20 + pButtonMods->getHeight() + 50);
     addChild(m_pModDescription);
+    m_ModSelector = new oxygine::Actor();
+    m_ModSelector->setPosition(10, 20 + pButtonMods->getHeight());
 
+    addChild(m_ModSelector);
     showSettings();
 }
 
@@ -146,6 +149,8 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->setVisible(true);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
+    m_ModSelector->setVisible(false);
+
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -574,6 +579,7 @@ void OptionMenue::showSettings()
     m_pOptions->setVisible(true);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
+    m_ModSelector->setVisible(false);
 
     AudioThread* pAudio = pApp->getAudioThread();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -983,6 +989,9 @@ void OptionMenue::showMods()
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
     m_pModDescription->setVisible(true);
+    m_ModSelector->setVisible(true);
+    m_ModSelector->removeChildren();
+
 
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -995,6 +1004,15 @@ void OptionMenue::showMods()
     m_ModDescriptionText->setStyle(style);
     m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
     m_pModDescription->addItem(m_ModDescriptionText);
+
+    spLabel pLabel = new Label(200);
+    style.multiline = false;
+    pLabel->setStyle(style);
+    pLabel->setText("Advance Wars Game:");
+    m_ModSelector->addChild(pLabel);
+    QVector<QString> versions = {tr("Commander Wars"),
+                                 tr("Advance Wars DS"),
+                                 tr("Advance Wars DoR")};
 
     qint32 width = 0;
     qint32 mods = 0;

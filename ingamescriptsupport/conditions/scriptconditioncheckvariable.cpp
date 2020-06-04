@@ -147,7 +147,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, -999999, 999999);
+    spSpinBox spinBox = new SpinBox(300, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);

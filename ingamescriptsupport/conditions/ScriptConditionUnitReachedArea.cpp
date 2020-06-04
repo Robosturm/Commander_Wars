@@ -187,7 +187,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Unit X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spSpinBox spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Start X of the unit that should reach the area."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_UnitX);
@@ -203,7 +203,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Unit Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Start Y of the unit that should reach the area."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_UnitY);
@@ -219,7 +219,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area X Position which the unit needs to reach."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_x);
@@ -235,7 +235,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area Y Position which the unit needs to reach."));
     spinBox->setPosition(width, 150);
     spinBox->setCurrentValue(m_y);
@@ -267,7 +267,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, 230);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the unit needs to reach."));
     spinBox->setPosition(width, 230);
     spinBox->setCurrentValue(m_heigth);
