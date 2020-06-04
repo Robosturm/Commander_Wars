@@ -36,5 +36,7 @@ void ScriptVariable::deserializeObject(QDataStream& pStream)
     qint32 version = 0;
     pStream >> version;
     pStream >> m_Id;
-    buffer.setData(Filesupport::readByteArray(pStream));
+    auto data = Filesupport::readByteArray(pStream);
+    buffer.seek(0);
+    buffer.write(data);
 }
