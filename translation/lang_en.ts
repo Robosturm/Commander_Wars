@@ -1204,27 +1204,47 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="34"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="35"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="91"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="65"/>
+        <source>Custom Name of the Terrain. Empty name equals the default name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="62"/>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="75"/>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="78"/>
+        <source>Custom Description of the Terrain. Empty description equals the default description.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="119"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="95"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="123"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="100"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="128"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="108"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="136"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>

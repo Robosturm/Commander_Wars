@@ -11,6 +11,7 @@
 #include "game/gamemap.h"
 
 #include "objects/filedialog.h"
+#include "objects/label.h"
 
 DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     : QObject(),
@@ -50,6 +51,37 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
 
     qint32 x = 20;
     qint32 y = 20;
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    spLabel pLabel = new Label(190);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Name:"));
+    pLabel->setPosition(10, y);
+    spTextbox pTextbox = new Textbox(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
+    pTextbox->setTooltipText(tr("Custom Name of the Terrain. Empty name equals the default name."));
+    pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
+    pTextbox->setCurrentText(pTerrain->getTerrainName());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainName, Qt::QueuedConnection);
+    m_pPanel->addItem(pTextbox);
+    m_pPanel->addItem(pLabel);
+    y += 40;
+
+    pLabel = new Label(190);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Description:"));
+    pLabel->setPosition(10, y);
+    pTextbox = new Textbox(m_pPanel->getContentWidth() - 100 - 200 - pLabel->getWidth());
+    pTextbox->setTooltipText(tr("Custom Description of the Terrain. Empty description equals the default description."));
+    pTextbox->setPosition(200 + 20 + pLabel->getX(), y);
+    pTextbox->setCurrentText(pTerrain->getTerrainDescription());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, pTerrain, &Terrain::setTerrainDescription, Qt::QueuedConnection);
+    m_pPanel->addItem(pTextbox);
+    m_pPanel->addItem(pLabel);
+    y += 60;
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = 0; i < pTerrainStyles.size(); i++)
@@ -80,13 +112,9 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     }
     y += GameMap::Imagesize * 3;
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
 
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+
+    spLabel pTextfield = new Label(180);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Terrain Style"));
     pTextfield->setPosition(10, y);
