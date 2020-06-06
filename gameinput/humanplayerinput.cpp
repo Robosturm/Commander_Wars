@@ -162,9 +162,10 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
     {
         if (pUnit->hasAmmo1() || pUnit->hasAmmo2())
         {
+            qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
+            qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
+            QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-            qint32 minRange = pUnit->getMinRange(QPoint(x, y));
-
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             QVector<QPoint> points = pfs.getAllNodePoints();
@@ -173,8 +174,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                 if (pUnit->canMoveAndFire(QPoint(x, y)) ||
                    (points[i].x() == x && points[i].y() == y))
                 {
-                    qint32 maxRange = pUnit->getMaxRange(QPoint(x, y));
-                    QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
+
                     for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
                     {
                         QPoint target = pPoints->at(i2) + points[i];
@@ -183,9 +183,9 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                             createMarkedField(target, QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
                         }
                     }
-                    delete pPoints;
                 }
             }
+            delete pPoints;
         }
     }
     else
@@ -260,6 +260,11 @@ void HumanPlayerInput::clearMarkedFields()
         m_ZInformationLabel->detach();
         m_ZInformationLabel = nullptr;
     }
+    for (auto & fields : m_InfoFields)
+    {
+        fields->detach();
+    }
+    m_InfoFields.clear();
 }
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
@@ -632,51 +637,64 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(point.x(), point.y()))
     {
-        GameManager* pGameManager = GameManager::getInstance();
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
-        if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
-        {
-            float initFrame = 0;
-            if (point.x() % 2 == 0 &&
-                point.y() % 2 != 0)
-            {
-                initFrame = 0.5f;
-            }
-            else if (point.y() % 2 == 0 &&
-                     point.x() % 2 != 0)
-            {
-                initFrame = 0.5f;
-            }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
-            pSprite->addTween(tween);
-        }
-        else
-        {
-            pSprite->setResAnim(pAnim);
-        }
-        oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), color.alpha()));
-        oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-        pSprite->addTween(tween2);
-
+        oxygine::spSprite pSprite = createMarkedFieldActor(point, color, drawPriority);
         if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
         {
-            pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-            pSprite->setPosition(point.x() * GameMap::Imagesize, point.y() * GameMap::Imagesize);
-            pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
-            pMap->addChild(pSprite);
             m_FieldPoints.append(QVector3D(point.x(), point.y(), 1));
         }
         else
         {
-            pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-            pSprite->setPriority(static_cast<qint16>(drawPriority));
-            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-            pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
             m_FieldPoints.append(QVector3D(point.x(), point.y(), 0));
-        }
+        }        
         m_Fields.append(pSprite);
     }
+}
+
+oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
+{
+    GameMap* pMap = GameMap::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
+    if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
+    {
+        float initFrame = 0;
+        if (point.x() % 2 == 0 &&
+            point.y() % 2 != 0)
+        {
+            initFrame = 0.5f;
+        }
+        else if (point.y() % 2 == 0 &&
+                 point.x() % 2 != 0)
+        {
+            initFrame = 0.5f;
+        }
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
+        pSprite->addTween(tween);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), color.alpha()));
+    oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
+    pSprite->addTween(tween2);
+
+    if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
+    {
+        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
+        pSprite->setPosition(point.x() * GameMap::Imagesize, point.y() * GameMap::Imagesize);
+        pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
+        pMap->addChild(pSprite);
+    }
+    else
+    {
+        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
+        pSprite->setPriority(static_cast<qint16>(drawPriority));
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+    }
+    return pSprite;
 }
 
 void HumanPlayerInput::createMarkedMoveFields()
@@ -1019,21 +1037,117 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
                     previousSelectOption();
                 }
             }
+            else if (cur == Settings::getKey_ShowAttackFields())
+            {
+                showSelectedUnitAttackableFields(true);
+            }
+            else if (cur == Settings::getKey_ShowIndirectAttackFields())
+            {
+                showSelectedUnitAttackableFields(false);
+            }
         }
     }
 }
 
-void HumanPlayerInput::keyUp(oxygine::KeyEvent)
+void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
-    if (GameMenue::getInstance() != nullptr &&
-        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
-        GameMenue::getInstance()->getFocused())
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (m_pUnitPathFindingSystem != nullptr &&
+        m_pGameAction != nullptr &&
+        m_CurrentMenu.get() == nullptr)
     {
-        if (GameAnimationFactory::getAnimationCount() == 0)
+        if (m_InfoFields.size() > 0)
         {
+            for (auto & fields : m_InfoFields)
+            {
+                fields->detach();
+            }
+            m_InfoFields.clear();
+            for (auto & fields : m_Fields)
+            {
+                fields->setVisible(true);
+            }
+        }
+        else
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+            for (auto & fields : m_Fields)
+            {
+                fields->setVisible(false);
+            }
+            Unit* currentUnit = m_pGameAction->getTargetUnit();
+            QPoint position = currentUnit->getPosition();
+            qint32 distance = currentUnit->getMovementpoints(position);
+            distance += currentUnit->getMaxRange(position);
 
+            QVector<QPoint> usedFields;
+            GameMap* pMap = GameMap::getInstance();
+            for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+            {
+                for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+                {
+                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    if ((pUnit != nullptr) &&
+                        m_pPlayer->isEnemyUnit(pUnit) &&
+                        (!pUnit->isStealthed(m_pPlayer)))
+                    {
+                        QPoint unitPositionpUnit(x, y);
+                        qint32 currentMaxDistance = distance;
+                        currentMaxDistance += pUnit->getMovementpoints(unitPositionpUnit);
+                        currentMaxDistance += pUnit->getMaxRange(unitPositionpUnit);
+                        if (pApp->getDistance(unitPositionpUnit, position) <= currentMaxDistance)
+                        {
+                            if(all || pUnit->getBaseMaxRange() > 1)
+                            {
+                                showUnitAttackFields(pUnit, usedFields);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+    pApp->continueThread();
+}
+
+void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)
+{
+    UnitPathFindingSystem pfs(pUnit, m_pPlayer);
+    QVector<QPoint> points;
+    QPoint position = pUnit->getPosition();
+    bool canMoveAndFire = pUnit->canMoveAndFire(position);
+    if (canMoveAndFire)
+    {
+        pfs.explore();
+        points = pfs.getAllNodePoints();
+    }
+    else
+    {
+        points.append(position);
+    }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 maxRange = pUnit->getMaxRange(position);
+    qint32 minRange = pUnit->getMinRange(position);
+    QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
+    for (qint32 i = 0; i < points.size(); i++)
+    {
+        if (canMoveAndFire ||
+            (points[i].x() == position.x() && points[i].y() == position.y()))
+        {
+            for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
+            {
+                QPoint target = pPoints->at(i2) + points[i];
+                if (pMap->onMap(target.x(), target.y()) &&
+                    !usedFields.contains(QPoint(target.x(), target.y())))
+                {
+                    usedFields.append(target);
+                    m_InfoFields.append(createMarkedFieldActor(target, QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap));
+                }
+            }
+        }
+    }
+    delete pPoints;
 }
 
 void HumanPlayerInput::nextMarkedField()

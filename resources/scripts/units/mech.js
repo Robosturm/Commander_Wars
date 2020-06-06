@@ -69,7 +69,7 @@ var Constructor = function()
         }
         animation.loadSprite("mech+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("mech+" + armyName + "+walk", false, zoom);
-        animation.setSound("movefeet.wav", -2);
+        animation.setSound("moveboots.wav", -2);
         return animation;
     };
     this.getName = function()

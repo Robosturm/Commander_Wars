@@ -53,7 +53,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         animation.loadSprite("zeppelin+walk+mask", true, 1.5);
         animation.loadSprite("zeppelin+walk", false, 1.5);
-        animation.setSound("moveair.wav", -2);
+        animation.setSound("movemassiveair.wav", -2);
         return animation;
     };
     this.canMoveAndFire = function()

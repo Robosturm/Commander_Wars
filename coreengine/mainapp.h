@@ -162,10 +162,8 @@ public slots:
     static void showCrashReport(QString log);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
-    virtual void keyReleaseEvent(QKeyEvent *event) override;
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
-    void sigKeyUp(oxygine::KeyEvent event);
 
     void sigConsoleKeyDown(oxygine::KeyEvent event);
     void sigConsoleKeyUp(oxygine::KeyEvent event);

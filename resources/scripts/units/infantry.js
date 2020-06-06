@@ -64,7 +64,7 @@ var Constructor = function()
         }
         animation.loadSprite("infantry+" + armyName + "+walk+mask", true, 1.5);
         animation.loadSprite("infantry+" + armyName + "+walk", false, 1.5);
-        animation.setSound("movefeet.wav", -2);
+        animation.setSound("movewalk.wav", -2);
         return animation;
     };
     this.getBaseCost = function()

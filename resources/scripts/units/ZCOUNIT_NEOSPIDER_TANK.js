@@ -35,7 +35,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         animation.loadSprite("neospider_tank+walk+mask", true, 1.5);
         animation.loadSprite("neospider_tank+walk", false, 1.5);
-        animation.setSound("movefeet.wav", -2);
+        animation.setSound("movewalker.wav", -2);
         return animation;
     };
     this.getMovementType = function()

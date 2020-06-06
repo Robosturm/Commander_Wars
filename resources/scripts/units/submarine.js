@@ -67,7 +67,7 @@ var Constructor = function()
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSprite(unitID + "+walk+mask", true, 1);
         animation.loadSprite(unitID + "+walk", false, 1);
-        animation.setSound("moveship.wav", -2);
+        animation.setSound("movesub.wav", -2);
         return animation;
     };
     this.getActions = function()

@@ -55,7 +55,7 @@ var Constructor = function()
         }
         else
         {
-            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+            animation.addSprite("submerge", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
         }
         ACTION_STEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_STEALTH.postAnimationUnit.setHidden(true);

@@ -53,7 +53,7 @@ var Constructor = function()
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSprite(unitID + "+walk+mask", true, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
-        animation.setSound("movetire.wav", -2);
+        animation.setSound("movebike.wav", -2);
         return animation;
     };
 

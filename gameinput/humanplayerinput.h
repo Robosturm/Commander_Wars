@@ -149,7 +149,6 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void keyDown(oxygine::KeyEvent event);
-    void keyUp(oxygine::KeyEvent event);
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
@@ -159,6 +158,16 @@ protected:
     void previousMarkedField();
     void nextSelectOption();
     void previousSelectOption();
+    void showSelectedUnitAttackableFields(bool all);
+    void showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields);
+    /**
+     * @brief HumanPlayerInput::createMarkedFieldActor
+     * @param point
+     * @param color
+     * @param drawPriority
+     * @return
+     */
+    oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
 private:
     GameAction* m_pGameAction{nullptr};
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};

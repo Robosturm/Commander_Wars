@@ -83,7 +83,6 @@ void InGameMenue::loadHandling()
         connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
         connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
-        connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
         connectMapCursor();
     }
 }
@@ -301,19 +300,6 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
         else if (cur == Settings::getKey_cancel())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-        }
-    }
-}
-
-void InGameMenue::keyUp(oxygine::KeyEvent event)
-{
-    if (m_Focused)
-    {
-        // for debugging
-        Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_cancel())
-        {
-            emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
     }
 }

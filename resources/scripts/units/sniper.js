@@ -69,7 +69,7 @@ var Constructor = function()
 		}
         animation.loadSprite("sniper+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("sniper+" + armyName + "+walk", false, zoom);
-        animation.setSound("movefeet.wav", -2);
+        animation.setSound("movewalk.wav", -2);
         return animation;
     };
     this.getBaseCost = function()

@@ -549,6 +549,30 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Show Indirects: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_ShowIndirectAttackFields());
+    pSelectKey->setTooltipText(tr("Key to show where all enemy indirect units can attack near the selected unit."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowIndirectAttackFields, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Show all: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_ShowAttackFields());
+    pSelectKey->setTooltipText(tr("Key to show where all enemy units can attack near the selected unit."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowAttackFields, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
     m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();
 }

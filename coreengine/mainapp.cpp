@@ -412,17 +412,6 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         }
     }
 }
-void Mainapp::keyReleaseEvent(QKeyEvent *event)
-{
-    if (Console::getInstance()->getVisible())
-    {
-        emit sigConsoleKeyUp(oxygine::KeyEvent(event));
-    }
-    else
-    {
-        emit sigKeyUp(oxygine::KeyEvent(event));
-    }
-}
 
 bool Mainapp::getUseSeed()
 {

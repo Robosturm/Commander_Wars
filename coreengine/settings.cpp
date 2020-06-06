@@ -20,27 +20,29 @@ qint32 Settings::m_width             = 1024;
 qint32 Settings::m_height            = 800;
 bool Settings::m_borderless       = false;
 bool Settings::m_fullscreen       = false;
-Qt::Key Settings::m_key_escape      = Qt::Key_Escape;
-Qt::Key Settings::m_key_console     = Qt::Key_F1;
-Qt::Key Settings::m_key_up          = Qt::Key_W;
-Qt::Key Settings::m_key_down        = Qt::Key_S;
-Qt::Key Settings::m_key_right       = Qt::Key_D;
-Qt::Key Settings::m_key_left        = Qt::Key_A;
-Qt::Key Settings::m_key_confirm     = Qt::Key_Space;
-Qt::Key Settings::m_key_cancel      = Qt::Key_B;
-Qt::Key Settings::m_key_next        = Qt::Key_E;
-Qt::Key Settings::m_key_previous    = Qt::Key_Q;
-Qt::Key Settings::m_key_quicksave1  = Qt::Key_F9;
-Qt::Key Settings::m_key_quicksave2  = Qt::Key_F11;
-Qt::Key Settings::m_key_quickload1  = Qt::Key_F10;
-Qt::Key Settings::m_key_quickload2  = Qt::Key_F12;
-Qt::Key Settings::m_key_information = Qt::Key_I;
-Qt::Key Settings::m_key_moveMapUp   = Qt::Key_Up;
-Qt::Key Settings::m_key_moveMapDown = Qt::Key_Down;
-Qt::Key Settings::m_key_moveMapRight= Qt::Key_Right;
-Qt::Key Settings::m_key_moveMapLeft = Qt::Key_Left;
-Qt::Key Settings::m_key_MapZoomOut  = Qt::Key_Minus;
-Qt::Key Settings::m_key_MapZoomIn   = Qt::Key_Plus;
+Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
+Qt::Key Settings::m_key_console                     = Qt::Key_F1;
+Qt::Key Settings::m_key_up                          = Qt::Key_W;
+Qt::Key Settings::m_key_down                        = Qt::Key_S;
+Qt::Key Settings::m_key_right                       = Qt::Key_D;
+Qt::Key Settings::m_key_left                        = Qt::Key_A;
+Qt::Key Settings::m_key_confirm                     = Qt::Key_Space;
+Qt::Key Settings::m_key_cancel                      = Qt::Key_B;
+Qt::Key Settings::m_key_next                        = Qt::Key_E;
+Qt::Key Settings::m_key_previous                    = Qt::Key_Q;
+Qt::Key Settings::m_key_quicksave1                  = Qt::Key_F9;
+Qt::Key Settings::m_key_quicksave2                  = Qt::Key_F11;
+Qt::Key Settings::m_key_quickload1                  = Qt::Key_F10;
+Qt::Key Settings::m_key_quickload2                  = Qt::Key_F12;
+Qt::Key Settings::m_key_information                 = Qt::Key_I;
+Qt::Key Settings::m_key_moveMapUp                   = Qt::Key_Up;
+Qt::Key Settings::m_key_moveMapDown                 = Qt::Key_Down;
+Qt::Key Settings::m_key_moveMapRight                = Qt::Key_Right;
+Qt::Key Settings::m_key_moveMapLeft                 = Qt::Key_Left;
+Qt::Key Settings::m_key_MapZoomOut                  = Qt::Key_Minus;
+Qt::Key Settings::m_key_MapZoomIn                   = Qt::Key_Plus;
+Qt::Key Settings::m_key_ShowAttackFields            = Qt::Key_2;
+Qt::Key Settings::m_key_ShowIndirectAttackFields    = Qt::Key_1;
 
 QString Settings::m_language      = "en";
 // Sound
@@ -89,6 +91,26 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+Qt::Key Settings::getKey_ShowAttackFields()
+{
+    return m_key_ShowAttackFields;
+}
+
+void Settings::setKey_ShowAttackFields(const Qt::Key &key_ShowAttackFields)
+{
+    m_key_ShowAttackFields = key_ShowAttackFields;
+}
+
+Qt::Key Settings::getKey_ShowIndirectAttackFields()
+{
+    return m_key_ShowIndirectAttackFields;
+}
+
+void Settings::setKey_ShowIndirectAttackFields(const Qt::Key &key_ShowIndirectAttackFields)
+{
+    m_key_ShowIndirectAttackFields = key_ShowIndirectAttackFields;
 }
 
 bool Settings::getLogActions()
@@ -338,6 +360,21 @@ void Settings::loadSettings()
         m_key_MapZoomIn = Qt::Key_Plus;
     }
 
+    m_key_ShowAttackFields = static_cast<Qt::Key>(settings.value("key_ShowAttackFields", Qt::Key_2).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowAttackFields";
+        Console::print(error, Console::eERROR);
+        m_key_MapZoomIn = Qt::Key_2;
+    }
+
+    m_key_ShowIndirectAttackFields = static_cast<Qt::Key>(settings.value("key_ShowIndirectAttackFields", Qt::Key_1).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowIndirectAttackFields";
+        Console::print(error, Console::eERROR);
+        m_key_MapZoomIn = Qt::Key_1;
+    }
     settings.endGroup();
 
     // Sound
@@ -492,28 +529,29 @@ void Settings::saveSettings(){
     settings.endGroup();
 
     settings.beginGroup("Keys");
-    settings.setValue("key_escape",                 m_key_escape);
-    settings.setValue("key_console",                m_key_console);
-    settings.setValue("key_up",                     m_key_up);
-    settings.setValue("key_down",                   m_key_down);
-    settings.setValue("key_right",                  m_key_right);
-    settings.setValue("key_left",                   m_key_left);
-    settings.setValue("key_confirm",                m_key_confirm);
-    settings.setValue("key_cancel",                 m_key_cancel);
-    settings.setValue("key_next",                   m_key_next);
-    settings.setValue("key_previous",               m_key_previous);
-    settings.setValue("key_quicksave1",             m_key_quicksave1);
-    settings.setValue("key_quicksave2",             m_key_quicksave2);
-    settings.setValue("key_quickload1",             m_key_quickload1);
-    settings.setValue("key_quickload2",             m_key_quickload2);
-    settings.setValue("key_information",            m_key_information);
-    settings.setValue("key_moveMapUp",              m_key_moveMapUp);
-    settings.setValue("key_moveMapDown",            m_key_moveMapDown);
-    settings.setValue("key_moveMapRight",           m_key_moveMapRight);
-    settings.setValue("key_moveMapLeft",            m_key_moveMapLeft);
-    settings.setValue("key_MapZoomIn",              m_key_MapZoomIn);
-    settings.setValue("key_MapZoomOut",             m_key_MapZoomOut);
-
+    settings.setValue("key_escape",                     m_key_escape);
+    settings.setValue("key_console",                    m_key_console);
+    settings.setValue("key_up",                         m_key_up);
+    settings.setValue("key_down",                       m_key_down);
+    settings.setValue("key_right",                      m_key_right);
+    settings.setValue("key_left",                       m_key_left);
+    settings.setValue("key_confirm",                    m_key_confirm);
+    settings.setValue("key_cancel",                     m_key_cancel);
+    settings.setValue("key_next",                       m_key_next);
+    settings.setValue("key_previous",                   m_key_previous);
+    settings.setValue("key_quicksave1",                 m_key_quicksave1);
+    settings.setValue("key_quicksave2",                 m_key_quicksave2);
+    settings.setValue("key_quickload1",                 m_key_quickload1);
+    settings.setValue("key_quickload2",                 m_key_quickload2);
+    settings.setValue("key_information",                m_key_information);
+    settings.setValue("key_moveMapUp",                  m_key_moveMapUp);
+    settings.setValue("key_moveMapDown",                m_key_moveMapDown);
+    settings.setValue("key_moveMapRight",               m_key_moveMapRight);
+    settings.setValue("key_moveMapLeft",                m_key_moveMapLeft);
+    settings.setValue("key_MapZoomIn",                  m_key_MapZoomIn);
+    settings.setValue("key_MapZoomOut",                 m_key_MapZoomOut);
+    settings.setValue("key_ShowAttackFields",           m_key_ShowAttackFields);
+    settings.setValue("key_ShowIndirectAttackFields",   m_key_ShowIndirectAttackFields);
     settings.endGroup();
 
     // Sound

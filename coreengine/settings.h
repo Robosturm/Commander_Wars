@@ -39,7 +39,13 @@ public:
     static bool getLogActions();
     static void setLogActions(bool LogActions);
 
+
 public slots:
+    static Qt::Key getKey_ShowIndirectAttackFields();
+    static void setKey_ShowIndirectAttackFields(const Qt::Key &key_ShowIndirectAttackFields);
+
+    static Qt::Key getKey_ShowAttackFields();
+    static void setKey_ShowAttackFields(const Qt::Key &key_ShowAttackFields);
 
     static QString getLanguage();
     static void setLanguage(const QString &language);
@@ -268,6 +274,9 @@ private:
     static Qt::Key m_key_moveMapLeft;
     static Qt::Key m_key_MapZoomOut;
     static Qt::Key m_key_MapZoomIn;
+    static Qt::Key m_key_ShowAttackFields;
+    static Qt::Key m_key_ShowIndirectAttackFields;
+
 
     static QString m_language;
     // Sound

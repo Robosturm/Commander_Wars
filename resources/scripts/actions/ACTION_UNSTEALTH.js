@@ -51,11 +51,11 @@ var Constructor = function()
         var animation = GameAnimationFactory.createAnimation(ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
         if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE")
         {
-            animation.addSprite("undive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+            animation.addSprite("emerge", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
         }
         else
         {
-            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+            animation.addSprite("unstealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
         }
         ACTION_UNSTEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_UNSTEALTH.postAnimationUnit.setHidden(false);
