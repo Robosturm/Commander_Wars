@@ -1435,7 +1435,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         }
     }
 
-    QVector<float> data(15, 0);
+    QVector<float> data(BuildItems::Max, 0);
     qint32 productionBuildings = 0;
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
@@ -1540,28 +1540,28 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     // position 0 direct to indirect ratio
     if (indirectUnits > 0)
     {
-        data[0] = static_cast<float>(directUnits) / static_cast<float>(indirectUnits);
+        data[DirectUnitRatio] = static_cast<float>(directUnits) / static_cast<float>(indirectUnits);
     }
     else
     {
-        data[0] = static_cast<float>(directUnits);
+        data[DirectUnitRatio] = static_cast<float>(directUnits);
     }
     // position 1 infatry to unit count ratio
     if (pUnits->size() > 0)
     {
-        data[1] = infantryUnits / static_cast<float>(pUnits->size());
+        data[InfantryUnitRatio] = infantryUnits / static_cast<float>(pUnits->size());
     }
     else
     {
-        data[1] = 0.0;
+        data[InfantryUnitRatio] = 0.0;
     }
-    data[9] = infantryUnits;
-    data[12] = (pUnits->size() + 10) / (pEnemyUnits->size() + 10);
+    data[InfantryCount] = infantryUnits;
+    data[UnitEnemyRatio] = (pUnits->size() + 10) / (pEnemyUnits->size() + 10);
     if (enemeyCount > 1)
     {
-        data[12] *= (enemeyCount - 1);
+        data[UnitEnemyRatio] *= (enemeyCount - 1);
     }
-    data[13] = pUnits->size();
+    data[UnitCount] = pUnits->size();
 
     GameAction* pAction = new GameAction(ACTION_BUILD_UNITS);
     float bestScore = std::numeric_limits<float>::lowest();
@@ -1598,6 +1598,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                         qint32 buildingY = pBuilding->getY();
                         dummy.setVirtuellX(buildingX);
                         dummy.setVirtuellY(buildingY);
+                        data[UnitCost] = dummy.getUnitCosts();
                         createIslandMap(dummy.getMovementType(), dummy.getUnitID());
                         bool canMove = false;
 
@@ -1622,53 +1623,53 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                             {
                                 if (dummy.getBaseMaxRange() > 1)
                                 {
-                                    data[2] = 1.0;
-                                    data[3] = 0.0;
+                                    data[IndirectUnit] = 1.0;
+                                    data[DirectUnit] = 0.0;
                                 }
                                 else
                                 {
-                                    data[2] = 0.0;
-                                    data[3] = 1.0;
+                                    data[IndirectUnit] = 0.0;
+                                    data[DirectUnit] = 1.0;
                                 }
                                 if (dummy.getActionList().contains(ACTION_CAPTURE) &&
                                     dummy.getLoadingPlace() == 0)
                                 {
-                                    data[4] = 1.0;
+                                    data[InfantryUnit] = 1.0;
                                 }
                                 else
                                 {
-                                    data[4] = 0.0;
+                                    data[InfantryUnit] = 0.0;
                                 }
-                                data[5] = dummy.getUnitCosts() / fundsPerFactory;
+                                data[FundsFactoryRatio] = dummy.getUnitCosts() / fundsPerFactory;
                                 if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
                                 {
-                                    data[6] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
+                                    data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
                                 }
                                 else
                                 {
-                                    data[6] = 0.0;
+                                    data[BuildingEnemyRatio] = 0.0;
                                 }
                                 float bonusFactor = 1.0f;
-                                if ((data[0] > directIndirectRatio && dummy.getBaseMaxRange() > 1) ||
-                                    (data[0] < directIndirectRatio && dummy.getBaseMaxRange() == 1))
+                                if ((data[DirectUnitRatio] > directIndirectRatio && dummy.getBaseMaxRange() > 1) ||
+                                    (data[DirectUnitRatio] < directIndirectRatio && dummy.getBaseMaxRange() == 1))
                                 {
                                     bonusFactor = 1.2f;
                                 }
                                 auto damageData = calcExpectedFundsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
-                                data[7] = std::get<1>(damageData);
-                                data[8] =  std::get<0>(damageData);
+                                data[NotAttackableCount] = std::get<1>(damageData);
+                                data[DamageData] =  std::get<0>(damageData);
 
                                 if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
                                     dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
                                 {
-                                    data[10] = 1;
+                                    data[COBonus] = 1;
                                 }
                                 else
                                 {
-                                    data[10] = 0;
+                                    data[COBonus] = 0;
                                 }
-                                data[11] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
-                                data[14] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
+                                data[Movementpoints] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
+                                data[ReachDistance] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
                                 score = calcBuildScore(data);
                             }
                             else
@@ -1878,6 +1879,11 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                         if (mult > 1.5f)
                         {
                             mult = 1.5f;
+                        }
+                        if (myFirerange > 1)
+                        {
+                            // increased bonus for indirects since they should be attacked less often and attack more often
+                            mult += 1.0f;
                         }
                         resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
                                     counterDmg / 100.0f * pEnemyUnit->getUnitValue();
@@ -2213,70 +2219,81 @@ float NormalAi::calcBuildScore(QVector<float>& data)
 {
     float score = 0;
     // used index 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11
-    if (data[2] == 1.0f)
+    if (data[IndirectUnit] == 1.0f)
     {
         // indirect unit
-        if (data[0] > directIndirectRatio)
+        if (data[DirectUnitRatio] > directIndirectRatio)
         {
-            score += 3 * (data[0] - directIndirectRatio) / 0.1f;
+            score += 3 * (data[DirectUnitRatio] - directIndirectRatio) / 0.1f;
         }
-        else if (data[0] < 1.5f)
+        else if (data[DirectUnitRatio] < directIndirectRatio / 2)
         {
-            score -= 2 * (1.5f - data[0]) / 0.1f;
+            score -= 4 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+        }
+        else if (data[DirectUnitRatio] < directIndirectRatio)
+        {
+            score -= 2 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
         }
     }
-    else if (data[3] == 1.0f)
+    else if (data[DirectUnit] == 1.0f)
     {
         // direct unit
-        if (data[0] < directIndirectRatio)
+        if (data[DirectUnitRatio] < directIndirectRatio)
         {
-            score += 3 * (directIndirectRatio - data[0]) / 0.2f;
+            score += 3 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
         }
-        else if (data[0] > directIndirectRatio)
+        else if (data[DirectUnitRatio] > directIndirectRatio * 2)
         {
-            score -= 2 * (data[0] - directIndirectRatio) / 0.1f;
+            score -= 4 * (data[DirectUnitRatio] - directIndirectRatio) / 0.1f;
+        }
+        else if (data[DirectUnitRatio] > directIndirectRatio)
+        {
+            score -= 2 * (data[DirectUnitRatio] - directIndirectRatio) / 0.1f;
         }
     }
-    if (data[13] > 3)
+    if (data[UnitCount] > 3)
     {
         // apply damage bonus
-        score += data[8] / 100.0f;
+        score += data[DamageData] / 100.0f;
     }
     // infantry bonus
-    if (data[4] == 1.0f)
+    if (data[InfantryUnit] == 1.0f)
     {
-        if (data[9] < 6 && data[6] < 1.25f)
+        if (data[InfantryCount] < 6 && data[BuildingEnemyRatio] < 1.25f)
         {
-            score += (5 - data[9]) * 5 + (1.25f - data[6]) / 0.02f;
+            score += (5 - data[InfantryCount]) * 5 + (1.25f - data[BuildingEnemyRatio]) / 0.02f;
         }
-        else if (data[1] < 0.4f)
+        else if (data[InfantryUnitRatio] < 0.4f)
         {
-            score += (1.25f - data[6]) / 0.15f * 4;
+            score += (1.25f - data[BuildingEnemyRatio]) / 0.15f * 4;
         }
         else
         {
-            score += (1.0f - data[6]) / 0.15f * 4;
+            score += (1.0f - data[BuildingEnemyRatio]) / 0.15f * 4;
         }
-        if (data[9] >= 6)
+        if (data[InfantryCount] >= 6)
         {
-            score -= data[9];
+            score -= data[InfantryCount];
         }
-
     }
     score += calcCostScore(data);
     // apply movement bonus
-    score += data[11] * 0.33f;
-    if (data[13] > 3)
+    score += data[Movementpoints] * 0.33f;
+    if (data[UnitCount] > 3)
     {
         // apply not attackable unit bonus
-        score += data[7] * 30.0f;
+        score += data[NotAttackableCount] * 30.0f;
+    }
+    if (data[UnitCost] > 0)
+    {
+        score += data[DamageData] * 20 / data[UnitCost];
     }
     // apply co buff bonus
-    score += data[10] * 17;
+    score += data[COBonus] * 17;
 
-    if (data[14] > 0 && data[11] > 0)
+    if (data[ReachDistance] > 0 && data[Movementpoints] > 0)
     {
-        score += 10.0f / Mainapp::roundUp(data[14] / data[11]);
+        score += 10.0f / Mainapp::roundUp(data[ReachDistance] / data[Movementpoints]);
     }
     return score;
 }
@@ -2285,17 +2302,17 @@ float NormalAi::calcCostScore(QVector<float>& data)
 {
     float score = 0;
     // funds bonus;
-    if (data[5] > 2.5f + data[12])
+    if (data[FundsFactoryRatio] > 2.5f + data[UnitEnemyRatio])
     {
-        score -= (data[5] - 2.5f + data[12]) * 5;
+        score -= (data[FundsFactoryRatio] - 2.5f + data[UnitEnemyRatio]) * 5;
     }
-    else if (data[5] < 0.8f)
+    else if (data[FundsFactoryRatio] < 0.8f)
     {
-        score += (0.9f - data[5]) / 0.05f * 2;
+        score += (0.9f - data[FundsFactoryRatio]) / 0.05f * 2;
     }
     else
     {
-        score += (2.5f + data[12] - data[5]) / 0.10f;
+        score += (2.5f + data[UnitEnemyRatio] - data[FundsFactoryRatio]) / 0.10f;
     }
     return score;
 }

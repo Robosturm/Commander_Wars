@@ -17,7 +17,26 @@ class NormalAi : public CoreAI
 {
     Q_OBJECT
 public:
-
+    enum BuildItems
+    {
+        DirectUnitRatio = 0,
+        InfantryUnitRatio = 1,
+        IndirectUnit = 2,
+        DirectUnit = 3,
+        InfantryUnit = 4,
+        FundsFactoryRatio = 5,
+        BuildingEnemyRatio = 6,
+        NotAttackableCount = 7,
+        DamageData = 8,
+        InfantryCount = 9,
+        COBonus = 10,
+        Movementpoints = 11,
+        UnitEnemyRatio = 12,
+        UnitCount = 13,
+        ReachDistance = 14,
+        UnitCost = 15,
+        Max,
+    };
 
     explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f,
                       float spamingFunds = 7500);
