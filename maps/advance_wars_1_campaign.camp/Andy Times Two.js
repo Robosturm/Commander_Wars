@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("We've won... for the time being."),
@@ -92,7 +92,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Who is that?"),
@@ -162,7 +162,7 @@ var Constructor = function()
 
     this.day1Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("I'll make him suffer for fooling eagle."),
@@ -170,7 +170,7 @@ var Constructor = function()
     };
     this.day1BHDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Maelstrom come... All who oppose me..."),

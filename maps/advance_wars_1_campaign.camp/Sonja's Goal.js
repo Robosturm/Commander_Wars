@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
@@ -118,7 +118,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Andy! Are you okay?"),
@@ -176,7 +176,7 @@ var Constructor = function()
 
     this.day1Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("This is the last test... Show me what you do, Andy!"),
@@ -185,7 +185,7 @@ var Constructor = function()
 
     this.day2Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Um, ") + playername + qsTr("? What's the deal with Sonja and Sami? Do they not get along?"),

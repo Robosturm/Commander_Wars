@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("A job well done! You've beaten me."),
@@ -64,7 +64,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Blow ye winds o' the mornin'! Blow ye winds hi ho."),

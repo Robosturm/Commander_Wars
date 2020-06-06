@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("Same old shanty! I just can't beat you guys."),
@@ -92,7 +92,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("I saw his face! That had to be Andy, but...."),
@@ -167,7 +167,7 @@ var Constructor = function()
 
     this.day1Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Let's take stock: anti-air and md tank units on the ground... cruisers to prevent escape by transport copter... All right! Everything's shipshape. There's no escape for that unit! Time to make a big splash and give Eagle some cover."),

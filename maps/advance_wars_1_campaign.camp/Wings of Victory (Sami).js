@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("Start talking, Eagle. I'm listening."),
@@ -112,7 +112,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Aye, like I said, that's a rough opponent. Doesn't this old sea dog deserve some smooth sailing now and then?"),
@@ -162,7 +162,7 @@ var Constructor = function()
 
     this.day1Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("I don't want to fight Sami, but... it looks like I've got no choice. To the skies!"),

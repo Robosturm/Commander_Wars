@@ -1298,9 +1298,9 @@ void CO::deserializeObject(QDataStream& pStream)
     {
         pStream >> powerUsed;
     }
+    m_perkList.clear();
     if (version > 3)
     {
-        m_perkList.clear();
         qint32 size = 0;
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
@@ -1309,6 +1309,10 @@ void CO::deserializeObject(QDataStream& pStream)
             pStream >> perk;
             m_perkList.append(perk);
         }
+    }
+    else
+    {
+        m_perkList.append(coID);
     }
     init();
 }

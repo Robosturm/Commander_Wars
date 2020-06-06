@@ -11,7 +11,7 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            var playername = globals.getSettings().getUsername();
+            var playername = settings.getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("I... I lost? Huh? It's you! Andy!"),
@@ -79,7 +79,7 @@ var Constructor = function()
 
     this.initDialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Hmmmm... What have we here?"),
@@ -117,7 +117,7 @@ var Constructor = function()
 
     this.day4Dialog = function()
     {
-        var playername = globals.getSettings().getUsername();
+        var playername = settings.getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     playername + qsTr("! I've got it! I know who you've encountered! Those are Green Earth troops! Rumor has it that there's an independent battalion roaming about. I believe you've found them. Watch out for their air units. They're supposed to be brutal!"),

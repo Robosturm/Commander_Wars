@@ -48,6 +48,8 @@ void Interpreter::init()
     globalObject().setProperty("GameConsole", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());
     globalObject().setProperty("FontManager", fontManager);
+    QJSValue settings = newQObject(Settings::getInstance());
+    globalObject().setProperty("settings", settings);
     GameEnums::registerEnums();
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
