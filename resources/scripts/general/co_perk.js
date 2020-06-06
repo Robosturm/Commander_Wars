@@ -177,7 +177,7 @@ var CO_PERK =
         return 0;
     },
 
-    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender)
+    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
     },
 

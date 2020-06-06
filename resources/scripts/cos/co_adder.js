@@ -163,10 +163,10 @@ var Constructor = function()
         return 0;
     };
 	
-    this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender)
+    this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
 		// adder gains more power than other co's
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
         co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
     };
 

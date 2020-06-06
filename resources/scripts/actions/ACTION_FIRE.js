@@ -397,14 +397,14 @@ var Constructor = function()
             {
                 power = costs * defUnit.getHp() / 10;
                 damage = defUnit.getHp();
-                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true);
-                attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false);
+                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true, false);
+                attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false, false);
             }
             else
             {
                 power = costs * damage / 10;
-                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true);
-                attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false);
+                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()), damage, true, false);
+                attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), damage, false, false);
             }
             // deal damage
             defUnit.setHp(defUnit.getHp() - attackerDamage / 10.0);
@@ -426,14 +426,14 @@ var Constructor = function()
                 {
                     power = costs * attacker.getHp() / 10;
                     counterdamage = attacker.getHp();
-                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), counterdamage, true);
-                    defOwner.gainPowerstar(power, Qt.point(defUnitX, defUnitY), counterdamage, false);
+                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), counterdamage, true, true);
+                    defOwner.gainPowerstar(power, Qt.point(defUnitX, defUnitY), counterdamage, false, true);
                 }
                 else
                 {
                     power = costs * counterdamage / 10;
-                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), counterdamage, true);
-                    defOwner.gainPowerstar(power, Qt.point(defUnitX, defUnitY), counterdamage, false);
+                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()), counterdamage, true, true);
+                    defOwner.gainPowerstar(power, Qt.point(defUnitX, defUnitY), counterdamage, false, true);
                 }
                 // deal damage
                 attacker.setHp(attacker.getHp() - defenderDamage / 10.0);

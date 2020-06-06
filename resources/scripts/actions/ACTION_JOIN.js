@@ -90,11 +90,11 @@ var Constructor = function()
         ACTION_JOIN.postAnimationTargetUnit.setHp(hp);
         ACTION_JOIN.postAnimationUnit.removeUnit();
         // handle co unit creation here
-        if (ACTION_JOIN.postAnimationTargetUnit.getUnitRank() === GameEnums.UnitRank_CO0)
+        if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO0)
         {
             ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(0);
         }
-        else if (ACTION_JOIN.postAnimationTargetUnit.getUnitRank() === GameEnums.UnitRank_CO1)
+        else if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO1)
         {
             ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(1);
         }

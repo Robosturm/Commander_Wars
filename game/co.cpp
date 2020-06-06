@@ -944,7 +944,7 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
     m_PowerMode = PowerMode;
 }
 
-void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender)
+void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack)
 {
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
@@ -957,6 +957,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
         args1 << position.y();
         args1 << hpDamage;
         args1 << defender;
+        args1 << counterAttack;
         // call co bonus
         QString function1 = "gainPowerstar";
         for (const auto & perk : m_perkList)

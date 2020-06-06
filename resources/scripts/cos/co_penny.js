@@ -97,7 +97,7 @@ var Constructor = function()
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
                         // apply sandstorm buff :)
-                        return 15;
+                        return 25;
                     }
                     return 10;
                 default:

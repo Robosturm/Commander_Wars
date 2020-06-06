@@ -190,7 +190,7 @@ var CO =
         return "OS";
     },
 
-    getStarGain : function(co, fundsDamage, x, y, hpDamage, defender)
+    getStarGain : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
         var powerGain = fundsDamage;
         // reduce power meter filling based on power usages
@@ -207,9 +207,9 @@ var CO =
         return powerGain / 11000;
     },
 
-    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender)
+    gainPowerstar : function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
-        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+        var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
         co.setPowerFilled(co.getPowerFilled() + powerGain)
     },
 

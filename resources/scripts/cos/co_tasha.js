@@ -175,7 +175,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))

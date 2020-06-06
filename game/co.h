@@ -343,7 +343,7 @@ public slots:
      * @param fundsDamage
      * @param position
      */
-    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender);
+    void gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack);
     /**
      * @brief startOfTurn called at the start of our turn
      */

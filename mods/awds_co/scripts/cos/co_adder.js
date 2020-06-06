@@ -41,8 +41,8 @@ CO_ADDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage)
+CO_ADDER.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, counterAttack)
 {
-    var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender)
+    var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     co.setPowerFilled(co.getPowerFilled() + powerGain * 2 * 1.2);
 };
