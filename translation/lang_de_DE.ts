@@ -2751,518 +2751,528 @@ This is immediatly applied.</source>
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="54"/>
+        <location filename="../menue/optionmenue.cpp" line="53"/>
         <source>Exit</source>
         <translation>Verkassen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="66"/>
+        <location filename="../menue/optionmenue.cpp" line="65"/>
         <source>Mods</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="75"/>
+        <location filename="../menue/optionmenue.cpp" line="74"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="87"/>
+        <location filename="../menue/optionmenue.cpp" line="86"/>
         <source>Gameplay &amp;amp; Keys</source>
         <translation>Spiel  &amp;amp; Tastatur</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="165"/>
+        <location filename="../menue/optionmenue.cpp" line="164"/>
         <source>Gameplay Settings</source>
         <translation>Spieleinstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="174"/>
         <source>None</source>
         <translation>Keine</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="174"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="174"/>
         <source>Own</source>
         <translation>Eigene</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="174"/>
         <source>Ally</source>
         <translation>Allierte</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="174"/>
         <source>Enemy</source>
         <translation>Gegner</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="176"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>Only Detailed Battle All</source>
         <translation>Nur alle Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="176"/>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
         <source>Only Detailed Battle Own</source>
         <translation>Nur eigene Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="177"/>
+        <location filename="../menue/optionmenue.cpp" line="176"/>
         <source>Only Detailed Battle Ally</source>
         <translation>Nur allierte Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="177"/>
+        <location filename="../menue/optionmenue.cpp" line="176"/>
         <source>Only Detailed Battle Enemy</source>
         <translation>Nur Gegner Kämpfe</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="181"/>
+        <location filename="../menue/optionmenue.cpp" line="180"/>
         <source>Select which ingame animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="191"/>
+        <location filename="../menue/optionmenue.cpp" line="190"/>
         <source>Battle Animations: </source>
         <translation>Kampfanimationen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="194"/>
+        <location filename="../menue/optionmenue.cpp" line="193"/>
         <source>Detailed</source>
         <translation>Animation</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="194"/>
+        <location filename="../menue/optionmenue.cpp" line="193"/>
         <source>Overworld</source>
         <translation>Schlacht</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="196"/>
+        <location filename="../menue/optionmenue.cpp" line="195"/>
         <source>Selects which battle animations are played when fighting an enemy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="208"/>
+        <location filename="../menue/optionmenue.cpp" line="207"/>
         <source>Animation Speed: </source>
         <translation>Animationsgeschwindigkeit: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="212"/>
+        <location filename="../menue/optionmenue.cpp" line="211"/>
         <source>Selects the speed at which animations are played. Except battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="228"/>
+        <location filename="../menue/optionmenue.cpp" line="227"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="240"/>
+        <location filename="../menue/optionmenue.cpp" line="239"/>
         <source>Multi Turn Plantime: </source>
         <translation>Rundenplanung: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="243"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="256"/>
+        <location filename="../menue/optionmenue.cpp" line="255"/>
         <source>Auto End Turn: </source>
         <translation>Auto Rundenende: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="260"/>
+        <location filename="../menue/optionmenue.cpp" line="259"/>
         <source>If active the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="272"/>
+        <location filename="../menue/optionmenue.cpp" line="271"/>
         <source>Menu Heigth: </source>
         <translation>Menühöhe: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <location filename="../menue/optionmenue.cpp" line="275"/>
         <source>Amount of items per row for ingame menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="292"/>
+        <location filename="../menue/optionmenue.cpp" line="291"/>
         <source>If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="172"/>
+        <location filename="../menue/optionmenue.cpp" line="171"/>
         <source>Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="224"/>
+        <location filename="../menue/optionmenue.cpp" line="223"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="288"/>
+        <location filename="../menue/optionmenue.cpp" line="287"/>
         <source>Show PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="304"/>
+        <location filename="../menue/optionmenue.cpp" line="303"/>
         <source>Animated Markers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="308"/>
+        <location filename="../menue/optionmenue.cpp" line="307"/>
         <source>If active the currently selectable fiedls get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="320"/>
+        <location filename="../menue/optionmenue.cpp" line="319"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="327"/>
+        <location filename="../menue/optionmenue.cpp" line="326"/>
         <source>Key Up: </source>
         <translation>Hoch: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="331"/>
+        <location filename="../menue/optionmenue.cpp" line="330"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="339"/>
+        <location filename="../menue/optionmenue.cpp" line="338"/>
         <source>Key Left: </source>
         <translation>Links: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="343"/>
+        <location filename="../menue/optionmenue.cpp" line="342"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="351"/>
+        <location filename="../menue/optionmenue.cpp" line="350"/>
         <source>Key Down: </source>
         <translation>Unten: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="355"/>
+        <location filename="../menue/optionmenue.cpp" line="354"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="363"/>
+        <location filename="../menue/optionmenue.cpp" line="362"/>
         <source>Key Right: </source>
         <translation>Rechts: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="367"/>
+        <location filename="../menue/optionmenue.cpp" line="366"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="375"/>
+        <location filename="../menue/optionmenue.cpp" line="374"/>
         <source>Key Confirm: </source>
         <translation>Bestätigen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="379"/>
+        <location filename="../menue/optionmenue.cpp" line="378"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="387"/>
+        <location filename="../menue/optionmenue.cpp" line="386"/>
         <source>Key Cancel: </source>
         <translation>Abbrechen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="391"/>
+        <location filename="../menue/optionmenue.cpp" line="390"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="399"/>
+        <location filename="../menue/optionmenue.cpp" line="398"/>
         <source>Key Next: </source>
         <translation>Nächste: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="403"/>
+        <location filename="../menue/optionmenue.cpp" line="402"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="411"/>
+        <location filename="../menue/optionmenue.cpp" line="410"/>
         <source>Key Previous: </source>
         <translation>Vorige: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="415"/>
+        <location filename="../menue/optionmenue.cpp" line="414"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="423"/>
+        <location filename="../menue/optionmenue.cpp" line="422"/>
         <source>Key Quicksave 1: </source>
         <translation>Schnellspeichern 1: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="427"/>
+        <location filename="../menue/optionmenue.cpp" line="426"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="435"/>
+        <location filename="../menue/optionmenue.cpp" line="434"/>
         <source>Key Quickload 1: </source>
         <translation>Schnellladen 1: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="439"/>
+        <location filename="../menue/optionmenue.cpp" line="438"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="447"/>
+        <location filename="../menue/optionmenue.cpp" line="446"/>
         <source>Key Quicksave 2: </source>
         <translation>Schnellspeichern 2: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="451"/>
+        <location filename="../menue/optionmenue.cpp" line="450"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="459"/>
+        <location filename="../menue/optionmenue.cpp" line="458"/>
         <source>Key Quickload 2: </source>
         <translation>Schnellladen 2: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="463"/>
+        <location filename="../menue/optionmenue.cpp" line="462"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="471"/>
+        <location filename="../menue/optionmenue.cpp" line="470"/>
         <source>Key Information: </source>
         <translation>Information: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="475"/>
+        <location filename="../menue/optionmenue.cpp" line="474"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="483"/>
+        <location filename="../menue/optionmenue.cpp" line="482"/>
         <source>Key Move Map Up: </source>
         <translation>Karte Hoch: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="487"/>
+        <location filename="../menue/optionmenue.cpp" line="486"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="495"/>
+        <location filename="../menue/optionmenue.cpp" line="494"/>
         <source>Key Move Map Left: </source>
         <translation>Karte Links: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="499"/>
+        <location filename="../menue/optionmenue.cpp" line="498"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="507"/>
+        <location filename="../menue/optionmenue.cpp" line="506"/>
         <source>Key Move Map Down: </source>
         <translation>Karte Runter: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="511"/>
+        <location filename="../menue/optionmenue.cpp" line="510"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="519"/>
+        <location filename="../menue/optionmenue.cpp" line="518"/>
         <source>Key Move Map Right: </source>
         <translation>Karte Rechts: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="523"/>
+        <location filename="../menue/optionmenue.cpp" line="522"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="531"/>
+        <location filename="../menue/optionmenue.cpp" line="530"/>
         <source>Key Zoom In: </source>
         <translation>Reinzoomen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="535"/>
+        <location filename="../menue/optionmenue.cpp" line="534"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="543"/>
+        <location filename="../menue/optionmenue.cpp" line="542"/>
         <source>Key Zoom Out: </source>
         <translation>Rauszoomen: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="547"/>
+        <location filename="../menue/optionmenue.cpp" line="546"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="730"/>
+        <location filename="../menue/optionmenue.cpp" line="729"/>
         <source>Screen Settings</source>
         <translation>Bildschirm</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="738"/>
+        <location filename="../menue/optionmenue.cpp" line="737"/>
         <source>Screen Resolution: </source>
         <translation>Auflösung: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="744"/>
+        <location filename="../menue/optionmenue.cpp" line="743"/>
         <source>Selects the screen resolution for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="755"/>
+        <location filename="../menue/optionmenue.cpp" line="754"/>
         <source>Screen Mode: </source>
         <translation>Modus: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="758"/>
+        <location filename="../menue/optionmenue.cpp" line="757"/>
         <source>Window</source>
         <translation>Fenster</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="758"/>
+        <location filename="../menue/optionmenue.cpp" line="757"/>
         <source>Bordered</source>
         <translation>Randlos</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="758"/>
+        <location filename="../menue/optionmenue.cpp" line="757"/>
         <source>Fullscreen</source>
         <translation>Vollbild</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="760"/>
+        <location filename="../menue/optionmenue.cpp" line="759"/>
         <source>Selects the screen mode for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="769"/>
+        <location filename="../menue/optionmenue.cpp" line="768"/>
         <source>Audio Settings</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="775"/>
+        <location filename="../menue/optionmenue.cpp" line="774"/>
         <source>Global Volume: </source>
         <translation>Global: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="779"/>
+        <location filename="../menue/optionmenue.cpp" line="778"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="792"/>
+        <location filename="../menue/optionmenue.cpp" line="791"/>
         <source>Music Volume: </source>
         <translation>Musik: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="796"/>
+        <location filename="../menue/optionmenue.cpp" line="795"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="809"/>
+        <location filename="../menue/optionmenue.cpp" line="808"/>
         <source>Sound Volume: </source>
         <translation>Sound: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="813"/>
+        <location filename="../menue/optionmenue.cpp" line="812"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="825"/>
+        <location filename="../menue/optionmenue.cpp" line="824"/>
         <source>Language: </source>
         <translation>Sprache: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="853"/>
+        <location filename="../menue/optionmenue.cpp" line="852"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="868"/>
+        <location filename="../menue/optionmenue.cpp" line="867"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="872"/>
+        <location filename="../menue/optionmenue.cpp" line="871"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="881"/>
+        <location filename="../menue/optionmenue.cpp" line="880"/>
         <source>Network Settings</source>
         <translation>Netzwerk</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="888"/>
+        <location filename="../menue/optionmenue.cpp" line="887"/>
         <source>Username: </source>
         <translation>Benutzer: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="892"/>
+        <location filename="../menue/optionmenue.cpp" line="891"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="915"/>
+        <location filename="../menue/optionmenue.cpp" line="914"/>
         <source>Server Adress: </source>
         <translation>Serveradresse: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="919"/>
+        <location filename="../menue/optionmenue.cpp" line="918"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="931"/>
+        <location filename="../menue/optionmenue.cpp" line="930"/>
         <source>Lobby port: </source>
         <translation>Lobby Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="935"/>
+        <location filename="../menue/optionmenue.cpp" line="934"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="947"/>
+        <location filename="../menue/optionmenue.cpp" line="946"/>
         <source>Server: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="951"/>
+        <location filename="../menue/optionmenue.cpp" line="950"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="964"/>
+        <location filename="../menue/optionmenue.cpp" line="963"/>
         <source>Game port: </source>
         <translation>Spieleport: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="968"/>
+        <location filename="../menue/optionmenue.cpp" line="967"/>
         <source>Selects the game port for used to play the game with the server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1010"/>
+        <source>Advance Wars Game:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1012"/>
+        <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3281,7 +3291,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="1100"/>
+        <location filename="../menue/optionmenue.cpp" line="1017"/>
+        <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="1105"/>
         <source>
 Version: </source>
         <translation></translation>

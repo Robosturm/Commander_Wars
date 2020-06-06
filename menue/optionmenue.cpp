@@ -12,7 +12,6 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/checkbox.h"
 #include "objects/slider.h"
 #include "objects/dropdownmenu.h"
 #include "objects/selectkey.h"
@@ -1005,14 +1004,20 @@ void OptionMenue::showMods()
     m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
     m_pModDescription->addItem(m_ModDescriptionText);
 
-    spLabel pLabel = new Label(200);
+    spLabel pLabel = new Label(250);
     style.multiline = false;
     pLabel->setStyle(style);
-    pLabel->setText("Advance Wars Game:");
+    pLabel->setText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
-    QVector<QString> versions = {tr("Commander Wars"),
+    QVector<QString> versions = {tr("Unkown"),
+                                 tr("Commander Wars"),
                                  tr("Advance Wars DS"),
                                  tr("Advance Wars DoR")};
+    spDropDownmenu pModSelection = new DropDownmenu(300, versions);
+    pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
+    pModSelection->setX(260);
+    connect(pModSelection.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::selectMods, Qt::QueuedConnection);
+    m_ModSelector->addChild(pModSelection);
 
     qint32 width = 0;
     qint32 mods = 0;
@@ -1106,6 +1111,58 @@ void OptionMenue::showMods()
     }
     m_pMods->setContentWidth(width);
     m_pMods->setContentHeigth(50 + mods * 50);
+    pApp->continueThread();
+}
+
+void OptionMenue::selectMods(qint32 item)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QStringList removeList;
+    QStringList addList;
+    switch (item)
+    {
+        case 1:
+        {
+            removeList.append("mods/aw_unloading");
+            removeList.append("mods/aw2_damage_formula");
+            removeList.append("mods/awds_unit");
+            removeList.append("mods/awds_co");
+            removeList.append("mods/awdc_co");
+            removeList.append("mods/awdc_unit");
+            break;
+        }
+        case 2:
+        {
+            addList.append("mods/aw_unloading");
+            addList.append("mods/aw2_damage_formula");
+            addList.append("mods/awds_unit");
+            addList.append("mods/awds_co");
+            removeList.append("mods/awdc_co");
+            removeList.append("mods/awdc_unit");
+            break;
+        }
+        case 3:
+        {
+            addList.append("mods/aw_unloading");
+            removeList.append("mods/aw2_damage_formula");
+            removeList.append("mods/awds_unit");
+            removeList.append("mods/awds_co");
+            addList.append("mods/awdc_co");
+            addList.append("mods/awdc_unit");
+            break;
+        }
+    }
+    for (auto & removeMod : removeList)
+    {
+        Settings::removeMod(removeMod);
+    }
+    for (auto & addMod : addList)
+    {
+        Settings::addMod(addMod);
+    }
+    restartNeeded = true;
+    showMods();
     pApp->continueThread();
 }
 

@@ -8,6 +8,7 @@
 #include "oxygine-framework.h"
 
 #include "objects/panel.h"
+#include "objects/checkbox.h"
 
 class OptionMenue : public QObject, public oxygine::Actor
 {
@@ -28,7 +29,7 @@ public slots:
     void restart();
     void showSettings();
     void showGameplayAndKeys();
-
+    void selectMods(qint32 item);
     void reloadSettings();
 private:
     spPanel m_pOptions;
