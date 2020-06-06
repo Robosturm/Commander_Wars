@@ -233,13 +233,13 @@ namespace oxygine
         //<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
         int fontSize = info.attribute("size").toInt() / downsample;
 
-        QDomElement common = info.firstChildElement("common");
+        QDomElement common = root.firstChildElement("common");
         int lineHeight = common.attribute("lineHeight").toInt() / downsample;
         int base = common.attribute("base").toInt() / downsample;
         int tw = common.attribute("scaleW").toInt();
         int th = common.attribute("scaleH").toInt();
 
-        QDomElement pages = common.firstChildElement("pages");
+        QDomElement pages = root.firstChildElement("pages");
         tw /= downsample;
         th /= downsample;
 
@@ -268,7 +268,7 @@ namespace oxygine
             _font->setScale(scale);
         }
 
-        QDomElement chars = pages.firstChildElement("chars");
+        QDomElement chars = root.firstChildElement("chars");
         QDomElement child = chars.firstChildElement();
         while (!child.isNull())
         {
