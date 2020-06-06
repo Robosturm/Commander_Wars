@@ -179,6 +179,7 @@ void RuleSelection::showRuleSelection()
     addChild(coBannlist);
     connect(this, &RuleSelection::sigShowCOBannlist, this, &RuleSelection::showCOBannlist, Qt::QueuedConnection);
     y += 40;
+
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("No CO Powers: "));
@@ -191,6 +192,20 @@ void RuleSelection::showRuleSelection()
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Unique CO's: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked CO's that are randomly selected are unique. Note: If not enough CO's are available this may select no co for a player"));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getSingleRandomCO());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setSingleRandomCO, Qt::QueuedConnection);
+    y += 40;
+
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
     textField->setHtmlText(tr("CO Specific Units: "));

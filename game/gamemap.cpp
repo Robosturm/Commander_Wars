@@ -1521,6 +1521,8 @@ void GameMap::nextTurn()
 
 void GameMap::initPlayers()
 {
+    QStringList usedCOs;
+    bool singleCO = m_Rules->getSingleRandomCO();
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
@@ -1541,11 +1543,12 @@ void GameMap::initPlayers()
             QStringList bannList = m_Rules->getCOBannlist();
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
-            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
+            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") ||
+                   (singleCO && usedCOs.contains(pPlayer->getCO(0)->getCoID())))
             {
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 0);
                 count++;
-                if (count > 1000 * bannList.size())
+                if (count > 2000 * bannList.size())
                 {
                     pPlayer->setCO("", 0);
                     break;
@@ -1556,6 +1559,10 @@ void GameMap::initPlayers()
                 pPlayer->getCO(0)->setPerkList(perkList);
             }
         }
+        if (pPlayer->getCO(0) != nullptr)
+        {
+            usedCOs.append(pPlayer->getCO(0)->getCoID());
+        }
         if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
         {
             QStringList bannList = m_Rules->getCOBannlist();
@@ -1563,10 +1570,11 @@ void GameMap::initPlayers()
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
                    (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
-                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
+                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")) ||
+                   (singleCO && usedCOs.contains(pPlayer->getCO(1)->getCoID())))
             {
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 1);
-                if (count > 1000 * bannList.size())
+                if (count > 2000 * bannList.size())
                 {
                     pPlayer->setCO("", 1);
                     break;
@@ -1576,6 +1584,10 @@ void GameMap::initPlayers()
             {
                 pPlayer->getCO(1)->setPerkList(perkList);
             }
+        }
+        if (pPlayer->getCO(1) != nullptr)
+        {
+            usedCOs.append(pPlayer->getCO(1)->getCoID());
         }
         // define army of this player
         pPlayer->defineArmy();

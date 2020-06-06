@@ -772,6 +772,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getSingleRandomCO() const
+{
+    return m_singleRandomCO;
+}
+
+void GameRules::setSingleRandomCO(bool singleRandomCO)
+{
+    m_singleRandomCO = singleRandomCO;
+}
+
 qint32 GameRules::getMaxPerkCount() const
 {
     return m_maxPerkCount;
@@ -891,6 +901,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_BuildingVisionHide;
     pStream << static_cast<quint8>(m_DayToDayScreen);
     pStream << m_maxPerkCount;
+    pStream << m_singleRandomCO;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1080,5 +1091,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 10)
     {
         pStream >> m_maxPerkCount;
+    }
+    if (version > 11)
+    {
+        pStream >> m_singleRandomCO;
     }
 }

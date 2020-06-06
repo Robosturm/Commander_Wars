@@ -55,7 +55,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 11;
+        return 12;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -77,10 +77,19 @@ public:
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
 
-
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getSingleRandomCO
+     * @return
+     */
+    bool getSingleRandomCO() const;
+    /**
+     * @brief setSingleRandomCO
+     * @param singleRandomCO
+     */
+    void setSingleRandomCO(bool singleRandomCO);
     /**
      * @brief getMaxPerkCount
      * @return
@@ -376,6 +385,7 @@ private:
     bool m_coUnits{true};
     bool m_VisionBlock{false};
     bool m_BuildingVisionHide{false};
+    bool m_singleRandomCO{false};
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
     qint32 m_maxPerkCount{4};
 };
