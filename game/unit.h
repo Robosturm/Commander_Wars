@@ -17,7 +17,7 @@ class Terrain;
 class Unit;
 typedef oxygine::intrusive_ptr<Unit> spUnit;
 
-class Unit : public QObject, public oxygine::VStyleActor, public FileSerializable
+class Unit : public QObject, public oxygine::Sprite, public FileSerializable
 {
     Q_OBJECT
 public:

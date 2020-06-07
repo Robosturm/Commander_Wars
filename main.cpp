@@ -47,6 +47,8 @@
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
 
+#include "ai/heavyai.h"
+
 #include "game/GameEnums.h"
 
 #include "ingamescriptsupport/events/scriptevent.h"
@@ -137,6 +139,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF", 1);
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
+    qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
 
     /*************************************************************************************************/
     // show window according to window mode

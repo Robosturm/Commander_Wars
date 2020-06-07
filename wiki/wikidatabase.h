@@ -47,6 +47,12 @@ public:
      */
     pageData getEntry(qint32 entry);
     /**
+     * @brief hasEntry
+     * @param file1
+     * @return
+     */
+    bool hasEntry(QString file1);
+    /**
      * @brief getEntry
      * @param id
      * @return
@@ -64,6 +70,12 @@ public:
      * @return
      */
     QVector<QString> getTags();
+    /**
+     * @brief getIcon
+     * @param file
+     * @return
+     */
+    oxygine::spSprite getIcon(QString file);
 signals:
 
 public slots:

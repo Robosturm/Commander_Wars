@@ -322,6 +322,7 @@ set(${PROJECT_NAME}_SRCS
         ai/coreai_predefinedai.cpp
         ai/proxyai.cpp
         ai/normalai.cpp
+        ai/heavyai.cpp
 
         # multiplayer
         multiplayer/lobbymenu.cpp

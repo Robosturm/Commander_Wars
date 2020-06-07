@@ -6,6 +6,7 @@
 #include "ai/veryeasyai.h"
 #include "ai/proxyai.h"
 #include "ai/normalai.h"
+#include "ai/heavyai.h"
 
 #include "coreengine/mainapp.h"
 
@@ -105,6 +106,11 @@ BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
         case GameEnums::AiTypes_ProxyAi:
         {
             ret = new ProxyAi();
+            break;
+        }
+        case GameEnums::AiTypes_Heavy:
+        {
+            ret = new HeavyAi();
             break;
         }
         case GameEnums::AiTypes_Open:

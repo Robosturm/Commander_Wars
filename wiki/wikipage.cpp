@@ -84,54 +84,6 @@ void Wikipage::loadText(QString text)
     y += pLabel->getTextRect().getHeight() + 10;
 }
 
-void Wikipage::loadImage(QString file, float scale, QString pageID)
-{
-    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    if (pAnim == nullptr)
-    {
-        pAnim = COSpriteManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim == nullptr)
-    {
-        pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
-    }
-    if (pAnim != nullptr)
-    {
-         oxygine::spSprite pSprite = new oxygine::Sprite();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScale(scale);
-        pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
-        pSprite->addClickListener([=](oxygine::Event*)
-        {
-           emit sigShowLink(pageID);
-        });
-        m_pPanel->addItem(pSprite);
-        y += pSprite->getScaledHeight() + 10;
-    }
-    else
-    {
-        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-        if (pUnitSpriteManager->exists(file))
-        {
-            spPlayer pPlayer = new Player();
-            pPlayer->init();
-            spUnit pSprite = new Unit(file, pPlayer.get(), false);
-            pSprite->setOwner(nullptr);
-            pSprite->setScale(scale);
-            pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
-            pSprite->addClickListener([=](oxygine::Event*)
-            {
-               emit sigShowLink(pageID);
-            });
-            m_pPanel->addItem(pSprite);
-            y += pSprite->getScaledHeight() + 10;
-        }
-    }
-}
 
 void Wikipage::loadHeadline(QString text)
 {
@@ -160,4 +112,18 @@ void Wikipage::showLink(QString pageID)
        oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
     pApp->continueThread();
+}
+
+void Wikipage::loadImage(QString file, float scale, QString pageID)
+{
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    oxygine::spSprite pSprite = pWikiDatabase->getIcon(file);
+    pSprite->setScale(scale);
+    pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+    pSprite->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowLink(pageID);
+    });
+    m_pPanel->addItem(pSprite);
+    y += pSprite->getScaledHeight() + 10;
 }

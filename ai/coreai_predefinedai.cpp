@@ -135,8 +135,6 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     return false;
 }
 
-
-
 bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporters)
 {
     aiStep = step;

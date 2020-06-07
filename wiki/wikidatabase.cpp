@@ -5,6 +5,7 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/coperkmanager.h"
+#include "resource_management/gamemanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -87,12 +88,11 @@ void WikiDatabase::load()
 
     // load general wiki page
     QStringList searchPaths;
-    searchPaths.append("resources/scripts/wiki");
-    // make sure to overwrite existing js stuff
     for (qint32 i = 0; i < Settings::getMods().size(); i++)
     {
         searchPaths.append(Settings::getMods().at(i) + "/scripts/wiki");
     }
+    searchPaths.append("resources/scripts/wiki");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
@@ -103,18 +103,21 @@ void WikiDatabase::load()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().absoluteFilePath();
-            Interpreter* pInterpreter = Interpreter::getInstance();
-            pInterpreter->openScript(file, false);
-            QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getName");
-            QString name = "";
-            if (erg.isString())
+            if (!hasEntry(file))
             {
-                name = erg.toString();
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                pInterpreter->openScript(file, false);
+                QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getName");
+                QString name = "";
+                if (erg.isString())
+                {
+                    name = erg.toString();
+                }
+                QStringList tags;
+                erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
+                tags = erg.toVariant().toStringList();
+                m_Entries.append(pageData(name, file, tags));
             }
-            QStringList tags;
-            erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
-            tags = erg.toVariant().toStringList();
-            m_Entries.append(pageData(name, file, tags));
         }
     }
 }
@@ -131,6 +134,26 @@ QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm, boo
         }
     }
     return ret;
+}
+
+bool WikiDatabase::hasEntry(QString file1)
+{
+    QString entry2 = file1;
+    entry2 = entry2.replace(".js", "");
+    entry2 = entry2.remove(0, entry2.lastIndexOf("/") + 1);
+    entry2 = entry2.remove(0, entry2.lastIndexOf("\\") + 1);
+    for (auto & entryInfo : m_Entries)
+    {
+        QString entry = std::get<1>(entryInfo);
+        entry = entry.replace(".js", "");
+        entry = entry.remove(0, entry.lastIndexOf("/") + 1);
+        entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
+        if (entry == entry2)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 QVector<QString> WikiDatabase::getTags()
@@ -248,4 +271,40 @@ spWikipage WikiDatabase::getPage(pageData data)
     }
     pApp->continueThread();
     return ret;
+}
+
+
+oxygine::spSprite WikiDatabase::getIcon(QString file)
+{
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    if (pAnim == nullptr)
+    {
+        pAnim = COSpriteManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim != nullptr)
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    else
+    {
+        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        if (pUnitSpriteManager->exists(file))
+        {
+            spPlayer pPlayer = new Player();
+            pPlayer->init();
+            spUnit pUnit = new Unit(file, pPlayer.get(), false);
+            pUnit->setOwner(nullptr);
+            pSprite = pUnit.get();
+        }
+    }
+    return pSprite;
 }

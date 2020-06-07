@@ -467,29 +467,23 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
 {
     qint32 x = 0;
     QStringList actions = pUnit->getActionList();
-    GameManager* pGameManager = GameManager::getInstance();
     for (const auto & action : actions)
     {
         // QString text = GameAction::getActionText(action);
         QString icon = GameAction::getActionIcon(action);
-        oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon, oxygine::ep_ignore_error);
-        if (pAnim != nullptr)
+        WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon);
+        pSprite->setPosition(x, y);
+        pSprite->addClickListener([=](oxygine::Event*)
         {
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pAnim);
-            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-            pSprite->setPosition(x, y);
-            pSprite->addClickListener([=](oxygine::Event*)
-            {
-                emit sigShowLink(action);
-            });
-            addChild(pSprite);
-            x += GameMap::Imagesize * 1.5f;
-            if (x + GameMap::Imagesize * 1.5f > width)
-            {
-                x = 0;
-                y += 40;
-            }
+            emit sigShowLink(action);
+        });
+        addChild(pSprite);
+        x += GameMap::Imagesize * 1.5f;
+        if (x + GameMap::Imagesize * 1.5f > width)
+        {
+            x = 0;
+            y += 40;
         }
     }
 }
