@@ -3287,7 +3287,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="1039"/>
-        <source>Advance Wars DoR</source>
+        <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

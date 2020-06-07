@@ -83,7 +83,7 @@ OptionMenue::OptionMenue()
     connect(this, &OptionMenue::sigReloadSettings, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"));
+    oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay &amp; Keys"), 220);
     pButtonGameplayAndKeys->attachTo(this);
     pButtonGameplayAndKeys->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
     pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -1036,7 +1036,7 @@ void OptionMenue::showMods()
     QVector<QString> versions = {tr("Unkown"),
                                  tr("Commander Wars"),
                                  tr("Advance Wars DS"),
-                                 tr("Advance Wars DoR")};
+                                 tr("Advance Wars DC")};
     spDropDownmenu pModSelection = new DropDownmenu(300, versions);
     pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
     pModSelection->setX(260);
@@ -1154,6 +1154,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awds_co");
             removeList.append("mods/awdc_co");
             removeList.append("mods/awdc_unit");
+            removeList.append("mods/awdc_powergain");
             break;
         }
         case 2:
@@ -1164,6 +1165,7 @@ void OptionMenue::selectMods(qint32 item)
             addList.append("mods/awds_co");
             removeList.append("mods/awdc_co");
             removeList.append("mods/awdc_unit");
+            removeList.append("mods/awdc_powergain");
             break;
         }
         case 3:
@@ -1174,6 +1176,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awds_co");
             addList.append("mods/awdc_co");
             addList.append("mods/awdc_unit");
+            addList.append("mods/awdc_powergain");
             break;
         }
     }
