@@ -5,6 +5,7 @@
 #include "qfile.h"
 
 #include "coreengine/settings.h"
+#include "coreengine/interpreter.h"
 
 Userdata* Userdata::m_pInstance = nullptr;
 
@@ -20,6 +21,7 @@ Userdata* Userdata::getInstance()
 Userdata::Userdata()
     : QObject()
 {
+    Interpreter::setCppOwnerShip(this);
     changeUser();
 }
 
@@ -91,6 +93,40 @@ std::tuple<QString, QString, QImage, QImage, bool>* Userdata::getCOStyle(QString
     return nullptr;
 }
 
+void Userdata::increaseAchievement(QString id, qint32 value)
+{
+    for (auto & achievement : m_achievements)
+    {
+        if (achievement.id == id)
+        {
+            achievement.progress += value;
+        }
+    }
+}
+
+void Userdata::addAchievement(QString id)
+{
+    bool found = false;
+    for (auto & achievement : m_achievements)
+    {
+        if (achievement.id == id)
+        {
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        Achievement achievement;
+        achievement.id = id;
+        m_achievements.append(achievement);
+    }
+}
+
+QVector<Userdata::Achievement>* Userdata::getAchievements()
+{
+    return &m_achievements;
+}
+
 void Userdata::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
@@ -107,6 +143,12 @@ void Userdata::serializeObject(QDataStream& pStream)
             pStream << std::get<3>(m_customCOStyles[i]).pixel(x, 0);
         }
         pStream << std::get<4>(m_customCOStyles[i]);
+    }
+    pStream << static_cast<qint32>(m_achievements.size());
+    for (qint32 i = 0; i < m_achievements.size(); i++)
+    {
+        pStream << m_achievements[i].id;
+        pStream << m_achievements[i].progress;
     }
 }
 
@@ -154,5 +196,15 @@ void Userdata::deserializeObject(QDataStream& pStream)
         maskTable.convertTo(QImage::Format_ARGB32);
         pCOSpriteManager->loadResAnim(coid, file, colorTable, maskTable, useColorBox);
         m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
+    }
+    if (version > 3)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            m_achievements.append(Achievement());
+            pStream >> m_achievements[i].id;
+            pStream >> m_achievements[i].progress;
+        }
     }
 }

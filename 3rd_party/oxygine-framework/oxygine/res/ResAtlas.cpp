@@ -58,14 +58,14 @@ namespace oxygine
         atl.base = IVideoDriver::instance->createTexture();
         atl.base_path = base;
         atl.base->setName(base);
-        atl.base->init(nullptr, w, h, tf);
+        atl.base->init(0, w, h, tf);
 
         if (!alpha.isEmpty())
         {
             atl.alpha = IVideoDriver::instance->createTexture();
             atl.alpha_path = alpha;
             atl.alpha->setName(alpha);
-            atl.alpha->init(nullptr, w, h, tf);
+            atl.alpha->init(0, w, h, tf);
         }
 
         _atlasses.push_back(atl);
@@ -107,7 +107,8 @@ namespace oxygine
     void ResAtlas::loadBase(QDomElement node)
     {
         QVariant value = QVariant(node.attribute("linearFilter"));
-        if (value.type() == QVariant::Type::Bool)
+        if (value.type() == QVariant::Type::String &&
+            !value.isNull())
         {
             _linearFilter = value.toBool();
         }
@@ -116,7 +117,8 @@ namespace oxygine
             _linearFilter = true;
         }
         value = QVariant(node.attribute("clamp2edge"));
-        if (value.type() == QVariant::Type::Bool)
+        if (value.type() == QVariant::Type::String &&
+            !value.isNull())
         {
             _clamp2edge = value.toBool();
         }

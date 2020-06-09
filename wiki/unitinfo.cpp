@@ -472,7 +472,7 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
         // QString text = GameAction::getActionText(action);
         QString icon = GameAction::getActionIcon(action);
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon);
+        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon, GameMap::Imagesize);
         pSprite->setPosition(x, y);
         pSprite->addClickListener([=](oxygine::Event*)
         {

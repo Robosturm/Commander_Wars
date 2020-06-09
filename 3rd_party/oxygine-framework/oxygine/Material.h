@@ -102,6 +102,7 @@ namespace oxygine
         }
 
         spNativeTexture    _base;
+        spNativeTexture    _table;
         spNativeTexture    _alpha;
         blend_mode         _blend;
         UberShaderProgram* _uberShader;

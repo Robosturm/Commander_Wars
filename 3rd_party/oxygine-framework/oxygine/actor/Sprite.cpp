@@ -196,6 +196,25 @@ namespace oxygine
         setAnimFrame(resanim, col, row);
     }
 
+    void Sprite::setColorTable(const oxygine::ResAnim* pAnim)
+    {
+        if (pAnim != nullptr)
+        {
+            const auto & frame = pAnim->getFrame(0, 0);
+            if (_mat->_table != frame.getDiffuse().base)
+            {
+                _mat = _mat->clone();
+                _mat->_table = frame.getDiffuse().base;
+                _mat = mc().cache(*_mat.get());
+                matChanged();
+            }
+        }
+        else
+        {
+            _mat->_table = nullptr;
+        }
+    }
+
     void Sprite::setAnimFrame(const ResAnim* resanim, int col, int row)
     {
         //Q_ASSERT(resanim);
@@ -218,25 +237,34 @@ namespace oxygine
         }
     }
 
+
     void Sprite::changeAnimFrame(const AnimationFrame& frame)
     {
         if (_flags & flag_manageResAnim)
         {
             ResAnim* rs = _frame.getResAnim();
             if (rs)
+            {
                 rs->getAtlas()->unload();
+            }
 
             rs = frame.getResAnim();
             if (rs)
+            {
                 rs->getAtlas()->load();
+            }
         }
 
         bool flipX = (_flags & flag_flipX) != 0;
         bool flipY = (_flags & flag_flipY) != 0;
         if (flipX || flipY)
+        {
             _frame = frame.getFlipped(flipY, flipX);
+        }
         else
+        {
             _frame = frame;
+        }
         _setSize(_frame.getSize().mult(_localScale));
 
 

@@ -155,7 +155,9 @@ namespace oxygine
         p.texture->setName(p.file);
 
         if (tw)
-            p.texture->init(nullptr, tw, th, ImageData::TF_UNDEFINED);
+        {
+            p.texture->init(0, tw, th, ImageData::TF_UNDEFINED);
+        }
 
         _pages.push_back(p);
     }

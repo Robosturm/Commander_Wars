@@ -16,7 +16,7 @@ namespace oxygine
         virtual void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget = false) = 0;
         virtual void init(const ImageData& src, bool sysMemCopy = false) = 0;
         //virtual void release() = 0;
-        virtual GLuint getId() = 0;
+        virtual void GLuint getId() = 0;
 
         virtual ImageData lock(lock_flags, const Rect* src) = 0;
         virtual void unlock() = 0;
@@ -31,6 +31,8 @@ namespace oxygine
 
         /**returns handle (ptr) to HW texture ID*/
         virtual nativeTextureHandle getHandle() const = 0;
+
+        virtual
 
         static QVector<spNativeTexture> getCreatedTextures();
         /**debug counter of created textures*/

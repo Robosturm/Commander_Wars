@@ -18,7 +18,7 @@ namespace oxygine
         UberShaderProgramBase();
         ~UberShaderProgramBase();
 
-        void init(const QString& baseShader, QString prepend = "", QString append = "");
+        void init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader);
 
         void release();
 
@@ -35,7 +35,9 @@ namespace oxygine
         void* _getRestorableObject() {return this;}
         void _restore(Restorable*, void*);
 
-        QString _data;
+        QString _fracShader;
+        QString _vertexShader;
+        QString _fracTableShader;
         ShaderUniformsCallback _cb;
 
         virtual void releaseShaders() {}
@@ -54,12 +56,14 @@ namespace oxygine
             MASK_R_CHANNEL = 1 << 2,
             MASK = 1 << 3,
             ADD_COLOR = 1 << 4,
-            _SIZE = 1 << 5
+            COLOR_TABLE = 1 << 5,
+            _SIZE = 1 << 6
         };
 
         enum
         {
             SAMPLER_BASE,
+            SAMPLER_TABLE,
             SAMPLER_ALPHA,
             SAMPLER_MASK,
             SAMPLER_NUM,

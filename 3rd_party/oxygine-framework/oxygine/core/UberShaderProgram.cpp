@@ -11,9 +11,11 @@ namespace oxygine
 
     }
 
-    void UberShaderProgramBase::init(const QString& baseShader, QString prepend, QString append)
+    void UberShaderProgramBase::init(const QString& fracShader, const QString& vertexShader, const QString& fracTableShader)
     {
-        _data = prepend + baseShader + append;
+        _fracShader = fracShader;
+        _vertexShader = vertexShader;
+        _fracTableShader = fracTableShader;
         reg(CLOSURE(this, &UberShaderProgramBase::_restore), 0);
     }
 
@@ -62,17 +64,22 @@ namespace oxygine
             {
                 prepend += "#define ADD_COLOR\n";
             }
-            QString fs = QString("#define program_main_ps main\n") +
-                         QString("#define PS\n") +
-                         prepend + _data;
-            QString vs = QString("#define program_main_vs main\n") +
-                         QString("#define VS\n") +
-                         prepend + _data;
+            QString fs = prepend;
+            if (flags & COLOR_TABLE)
+            {
+                fs += _fracTableShader;
+            }
+            else
+            {
+                fs  += _fracShader;
+            }
+            QString vs = prepend + _vertexShader;
             VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance);
             const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
             ShaderProgramGL* pgl = new ShaderProgramGL(vs, fs, decl);
             driver->setShaderProgram(pgl);
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
+            driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);
             driver->setUniformInt("alpha_texture", UberShaderProgram::SAMPLER_ALPHA);
             driver->setUniformInt("mask_texture", UberShaderProgram::SAMPLER_MASK);
             s.program = pgl;

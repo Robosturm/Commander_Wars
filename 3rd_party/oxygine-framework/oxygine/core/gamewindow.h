@@ -44,6 +44,11 @@ namespace oxygine
         {
             m_quit = true;
         }
+        void loadResAnim(oxygine::spResAnim pAnim, const QImage & image);
+    signals:
+        void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
+    protected slots:
+        void loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
 
     protected:
         virtual void initializeGL() override;

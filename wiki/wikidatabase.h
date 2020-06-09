@@ -75,7 +75,7 @@ public:
      * @param file
      * @return
      */
-    oxygine::spSprite getIcon(QString file);
+    oxygine::spSprite getIcon(QString file, qint32 size);
 signals:
 
 public slots:

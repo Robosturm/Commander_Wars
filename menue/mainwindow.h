@@ -39,4 +39,6 @@ public slots:
     void enterCOStyleMenu();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
+
+    oxygine::spResAnim test;
 };

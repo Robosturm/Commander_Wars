@@ -14,6 +14,12 @@ class Userdata : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
+    struct Achievement
+    {
+        QString id;
+        qint32 progress{0};
+    };
+
     static Userdata* getInstance();
     void changeUser();
     void storeUser();
@@ -36,7 +42,7 @@ public slots:
      */
     virtual qint32 getVersion()
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief addCOStyle
@@ -57,12 +63,29 @@ public slots:
      * @return
      */
     std::tuple<QString, QString, QImage, QImage, bool>* getCOStyle(QString coid);
+    /**
+     * @brief addAchievement
+     * @param id
+     * @param value
+     */
+    void increaseAchievement(QString id, qint32 value);
+    /**
+     * @brief addAchievement
+     * @param id
+     */
+    void addAchievement(QString id);
+    /**
+     * @brief getAchievements
+     * @return
+     */
+    QVector<Achievement>* getAchievements();
 private:
     explicit Userdata();
 
     static Userdata* m_pInstance;
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
+    QVector<Achievement> m_achievements;
 };
 
 #endif // USERDATA_H

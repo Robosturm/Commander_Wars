@@ -36,7 +36,7 @@ namespace oxygine
         return pixel;
     }
 
-    size_t createTexture()
+    GLuint createTexture()
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         GLuint id = 0;
@@ -73,7 +73,7 @@ namespace oxygine
 
         GameWindow* window = oxygine::GameWindow::getWindow();
 
-        size_t id = createTexture();
+        GLuint id = createTexture();
 
         glPixel p = SurfaceFormat2GL(tf);
         window->glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
@@ -116,10 +116,10 @@ namespace oxygine
         _format = tf;
     }
 
-    void NativeTextureGLES::init(nativeTextureHandle id, int w, int h, ImageData::TextureFormat tf)
+    void NativeTextureGLES::init(GLuint id, int w, int h, ImageData::TextureFormat tf)
     {
         release();
-        _id = (size_t)id;
+        _id = id;
         _width = w;
         _height = h;
         _format = tf;
@@ -127,7 +127,7 @@ namespace oxygine
 
     void NativeTextureGLES::init(const ImageData& src, bool sysMemCopy)
     {
-        size_t id = createTexture();
+        GLuint id = createTexture();
 
         glPixel p = SurfaceFormat2GL(src.format);
         GameWindow* window = oxygine::GameWindow::getWindow();
@@ -143,7 +143,7 @@ namespace oxygine
 
         Q_ASSERT(sysMemCopy == false);
 
-        init((nativeTextureHandle)id, src.w, src.h, src.format);
+        init(id, src.w, src.h, src.format);
     }
 
     void NativeTextureGLES::setLinearFilter(bool enable)
@@ -154,7 +154,7 @@ namespace oxygine
 
         unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
-        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     }
 
     void NativeTextureGLES::setClamp2Edge(bool clamp2edge)

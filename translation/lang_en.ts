@@ -2416,18 +2416,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="477"/>
+        <location filename="../coreengine/mainapp.cpp" line="478"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="483"/>
+        <location filename="../coreengine/mainapp.cpp" line="484"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="485"/>
+        <location filename="../coreengine/mainapp.cpp" line="486"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -2436,62 +2436,62 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="60"/>
+        <location filename="../menue/mainwindow.cpp" line="77"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="72"/>
+        <location filename="../menue/mainwindow.cpp" line="89"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="83"/>
+        <location filename="../menue/mainwindow.cpp" line="100"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="94"/>
+        <location filename="../menue/mainwindow.cpp" line="111"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="105"/>
+        <location filename="../menue/mainwindow.cpp" line="122"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="116"/>
+        <location filename="../menue/mainwindow.cpp" line="133"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="127"/>
+        <location filename="../menue/mainwindow.cpp" line="144"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="138"/>
+        <location filename="../menue/mainwindow.cpp" line="155"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="149"/>
+        <location filename="../menue/mainwindow.cpp" line="166"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="160"/>
+        <location filename="../menue/mainwindow.cpp" line="177"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="171"/>
+        <location filename="../menue/mainwindow.cpp" line="188"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="183"/>
+        <location filename="../menue/mainwindow.cpp" line="200"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>

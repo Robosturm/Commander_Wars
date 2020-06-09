@@ -38,6 +38,8 @@ namespace oxygine
         : _dispatcher(new EventDispatcher())
     {
         _window = this;
+
+        connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
     }
 
     GameWindow::~GameWindow()
@@ -91,22 +93,25 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
-        QMutexLocker lock(&m_Mutex);
-        updateData();
-        oxygine::getStage()->update();
-        if (beginRendering())
+        if (m_Mutex.tryLock())
         {
-            QColor clearColor(181, 255, 32, 255);
-            QSize size = oxygine::GameWindow::getWindow()->size();
-            oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
-            // Render all actors inside the stage. Actor::render will also be called for all its children
-            oxygine::getStage()->render(clearColor, viewport);
-            swapDisplayBuffers();
-        }
-        // check for termination
-        if (m_quit)
-        {
-           QApplication::exit();
+            updateData();
+            oxygine::getStage()->update();
+            if (beginRendering())
+            {
+                QColor clearColor(181, 255, 32, 255);
+                QSize size = oxygine::GameWindow::getWindow()->size();
+                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
+                // Render all actors inside the stage. Actor::render will also be called for all its children
+                oxygine::getStage()->render(clearColor, viewport);
+                swapDisplayBuffers();
+            }
+            // check for termination
+            if (m_quit)
+            {
+                QApplication::exit();
+            }
+            m_Mutex.unlock();
         }
     }
 
@@ -207,6 +212,16 @@ namespace oxygine
         Restorable::restoreAll();
         oxygine::Stage::instance->setSize(w, h);
         qDebug("core::restore() done");
+    }
+
+    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, const QImage & image)
+    {
+        emit sigLoadSingleResAnim(pAnim, image);
+    }
+
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image)
+    {
+        pAnim->init(image);
     }
 
     void GameWindow::mousePressEvent(QMouseEvent *event)

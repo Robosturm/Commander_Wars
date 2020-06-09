@@ -26,7 +26,9 @@ namespace oxygine
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
-    QString STDRenderer::uberShaderBody;
+    QString STDRenderer::fracShaderBody;
+    QString STDRenderer::fracTableShaderBody;
+    QString STDRenderer::vertexShaderBody;
 
 
     RenderStateCache& rsCache()
@@ -184,14 +186,28 @@ namespace oxygine
 
         maxVertices = indices16.size() / 3 * 2;
 
-        if (QFile::exists("system/shader.glsl"))
+        if (QFile::exists("system/frac_shader.glsl"))
         {
-            QFile file("system/shader.glsl");
+            QFile file("system/frac_shader.glsl");
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
-            uberShaderBody = stream.readAll();
+            fracShaderBody = stream.readAll();
         }
-        uberShader.init(uberShaderBody);
+        if (QFile::exists("system/vertex_shader.glsl"))
+        {
+            QFile file("system/vertex_shader.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            vertexShaderBody = stream.readAll();
+        }
+        if (QFile::exists("system/frac_table_shader.glsl"))
+        {
+            QFile file("system/frac_table_shader.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            fracTableShaderBody = stream.readAll();
+        }
+        uberShader.init(fracShaderBody, vertexShaderBody, fracTableShaderBody);
 
         restore();
     }
@@ -200,7 +216,9 @@ namespace oxygine
     {
         indices16.clear();
         uberShader.release();
-        uberShaderBody.clear();
+        fracShaderBody.clear();
+        vertexShaderBody.clear();
+        fracTableShaderBody.clear();
         if (white)
             white->release();
         white = 0;
@@ -244,14 +262,16 @@ namespace oxygine
         white = IVideoDriver::instance->createTexture();
         white->setName("!renderer. white");
         white->init(im, false);
-        white->setLinearFilter(false);
+        white->setLinearFilter(true);
+        white->setClamp2Edge(false);
 
 
         memwhite.fillZero();
         invisible = IVideoDriver::instance->createTexture();
         invisible->setName("!renderer. invisible");
         invisible->init(im, false);
-        invisible->setLinearFilter(false);
+        invisible->setLinearFilter(true);
+        invisible->setClamp2Edge(false);
 
         _restored = true;
     }

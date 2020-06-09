@@ -22,12 +22,9 @@
 #include "objects/filedialog.h"
 #include "objects/dialogtextinput.h"
 
-#include "game/co.h"
-
 #include <QFile>
 
-#include "objects/dropdownmenusprite.h"
-#include "resource_management/cospritemanager.h"
+#include "resource_management/gamemanager.h"
 
 Mainwindow::Mainwindow()
 {

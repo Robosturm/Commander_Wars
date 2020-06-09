@@ -61,6 +61,13 @@ namespace oxygine
         init(&mt, columns, rows, scaleFactor);
     }
 
+    void ResAnim::init(const QImage & img, int columns, int rows, float scaleFactor)
+    {
+        Image mt;
+        mt.init(img, true);
+        init(&mt, columns, rows, scaleFactor);
+    }
+
     void ResAnim::init(Image* original, int columns, int rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;

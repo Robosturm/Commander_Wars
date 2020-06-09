@@ -12,6 +12,7 @@
 #include "game/unit.h"
 #include "game/building.h"
 #include "game/terrain.h"
+#include "game/gamemap.h"
 
 #include "objects/coinfoactor.h"
 
@@ -274,7 +275,7 @@ spWikipage WikiDatabase::getPage(pageData data)
 }
 
 
-oxygine::spSprite WikiDatabase::getIcon(QString file)
+oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
 {
     oxygine::spSprite pSprite = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
@@ -293,6 +294,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file)
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
+        pSprite->setScale(size / pAnim->getWidth());
     }
     else
     {
@@ -302,6 +304,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file)
             spPlayer pPlayer = new Player();
             pPlayer->init();
             spUnit pUnit = new Unit(file, pPlayer.get(), false);
+            pUnit->setScale(size / GameMap::Imagesize);
             pUnit->setOwner(nullptr);
             pSprite = pUnit.get();
         }

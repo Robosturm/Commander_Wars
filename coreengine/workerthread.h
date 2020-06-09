@@ -15,8 +15,10 @@ public:
     bool getStarted() const;
 signals:
     void sigStart();
+    void sigShowMainwindow();
 protected slots:
     void start();
+    void showMainwindow();
 private:
     bool started{false};
 };

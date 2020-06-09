@@ -49,7 +49,8 @@ var Constructor = function()
     {
         // disable unit commandments for this turn
         var animation = GameAnimationFactory.createAnimation(ACTION_UNSTEALTH.postAnimationUnit.getX(), ACTION_UNSTEALTH.postAnimationUnit.getY());
-        if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE")
+        if (ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "SUBMARINE" ||
+            ACTION_UNSTEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
         {
             animation.addSprite("emerge", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
         }

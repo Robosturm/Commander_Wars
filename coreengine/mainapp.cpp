@@ -309,6 +309,7 @@ void Mainapp::loadRessources()
         emit m_pGameServer->sig_connect("", Settings::getServerPort());
     }
     m_Timer.start(1, this);
+    emit m_Worker->sigShowMainwindow();
 }
 
 

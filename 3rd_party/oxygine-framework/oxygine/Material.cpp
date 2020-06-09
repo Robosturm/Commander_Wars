@@ -11,18 +11,16 @@ namespace oxygine
 
     bool STDMaterial::cmp(const STDMaterial& a, const STDMaterial& b)
     {
-        if (a._base != b._base)
+        if (a._base != b._base ||
+            a._table != b._table ||
+            a._alpha != b._alpha ||
+            a._blend != b._blend ||
+            a._flags != b._flags ||
+            a._uberShader != b._uberShader ||
+            a._addColor != b._addColor)
+        {
             return false;
-        if (a._alpha != b._alpha)
-            return false;
-        if (a._blend != b._blend)
-            return false;
-        if (a._flags != b._flags)
-            return false;
-        if (a._uberShader != b._uberShader)
-            return false;
-        if (a._addColor != b._addColor)
-            return false;
+        }
         return true;
     }
 
@@ -38,6 +36,7 @@ namespace oxygine
     {
         hash_combine(hash, _base.get());
         hash_combine(hash, _alpha.get());
+        hash_combine(hash, _table.get());
         hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
         hash_combine(hash, _uberShader);
@@ -48,18 +47,23 @@ namespace oxygine
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
-
+        int tempFlags = 0;
+        if (_table.get() != nullptr)
+        {
+            tempFlags |= UberShaderProgram::COLOR_TABLE;
+        }
         if (_addColor.rgba())
         {
-            r->setShaderFlags(_flags | UberShaderProgram::ADD_COLOR);
+            tempFlags |= UberShaderProgram::ADD_COLOR;
+        }
+        r->setShaderFlags(_flags | tempFlags);
+        if (_addColor.rgba())
+        {
             Vector4 vec = Vector4(_addColor.redF(), _addColor.greenF(), _addColor.blueF(), _addColor.alphaF());
             r->getDriver()->setUniform("add_color", vec);
         }
-        else
-        {
-            r->setShaderFlags(_flags);
-        }
 
+        rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, _table);
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
         rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
         rsCache().setBlendMode(_blend);

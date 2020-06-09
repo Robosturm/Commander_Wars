@@ -1,6 +1,7 @@
 #pragma once
 #include "../../oxygine-include.h"
 #include "../NativeTexture.h"
+#include <QOpenGLShader>
 
 namespace oxygine
 {
@@ -10,7 +11,7 @@ namespace oxygine
     public:
         ~NativeTextureGLES();
 
-        void init(nativeTextureHandle id, int w, int h, ImageData::TextureFormat tf);
+        void init(GLuint id, int w, int h, ImageData::TextureFormat tf);
         void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget);
         void init(const ImageData& src, bool sysMemCopy);
         void release();
@@ -31,13 +32,17 @@ namespace oxygine
         void updateRegion(int x, int y, const ImageData& data);
         void apply(const Rect* rect = 0);
 
+        GLuint getId() override
+        {
+            return _id;
+        }
     protected:
         void* _getRestorableObject() {return this;}
         friend class VideoDriverGL;
         friend class VideoDriverGLES20;
         NativeTextureGLES();
 
-        size_t _id;
+        GLuint _id;
         size_t _fbo;
 
         ImageData::TextureFormat _format;

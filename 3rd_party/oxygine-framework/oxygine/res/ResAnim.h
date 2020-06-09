@@ -17,6 +17,7 @@ namespace oxygine
         ~ResAnim();
 
         void init(QString file, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
+        void init(const QImage & img, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         virtual void init(Image* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/

@@ -27,6 +27,7 @@ WorkerThread::WorkerThread()
     Interpreter::setCppOwnerShip(this);
     moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
+    connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
 }
 
 WorkerThread::~WorkerThread()
@@ -86,11 +87,13 @@ void WorkerThread::start()
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     pCOPerkManager->loadAll();
     WikiDatabase::getInstance()->load();
-
-    oxygine::getStage()->addChild(new Mainwindow());
-
     started = true;
     pApp->continueThread();
+}
+
+void WorkerThread::showMainwindow()
+{
+    oxygine::getStage()->addChild(new Mainwindow());
 }
 
 bool WorkerThread::getStarted() const

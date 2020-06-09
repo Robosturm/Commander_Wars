@@ -59,7 +59,9 @@ namespace oxygine
     void VStyleActor::setAddColor(const QColor& color)
     {
         if (getAddColor() == color)
+        {
             return;
+        }
 
         _mat = _mat->clone();
         _mat->_addColor = color;

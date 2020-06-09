@@ -105,6 +105,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
     qRegisterMetaType<WikiDatabase::pageData>("WikiDatabase::pageData");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
+    qRegisterMetaType<oxygine::spResAnim>("oxygine::spResAnimf");
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
     qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
