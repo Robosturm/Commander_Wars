@@ -203,6 +203,18 @@ void Unit::removeShineTween()
 
 void Unit::loadSprite(QString spriteID, bool addPlayerColor)
 {
+    if (addPlayerColor)
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask);
+    }
+    else
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None);
+    }
+}
+
+void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
+{
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
@@ -223,12 +235,17 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
             pWaitSprite->setResAnim(pAnim);
         }
         // repaint the unit?
-        if (addPlayerColor)
+        if (mode == GameEnums::Recoloring_Mask)
         {
             QColor color = m_pOwner->getColor();
             oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
+        }
+        else if (mode == GameEnums::Recoloring_Table)
+        {
+            pSprite->setColorTable(m_pOwner->getColorTableAnim());
+            pWaitSprite->setColorTable(m_pOwner->getColorTableAnim());
         }
         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));

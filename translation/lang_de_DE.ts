@@ -1960,47 +1960,47 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="294"/>
+        <location filename="../menue/editormenue.cpp" line="304"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="526"/>
+        <location filename="../menue/editormenue.cpp" line="536"/>
         <source>Left: </source>
         <translation>Links: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="530"/>
+        <location filename="../menue/editormenue.cpp" line="540"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="539"/>
+        <location filename="../menue/editormenue.cpp" line="549"/>
         <source>Top: </source>
         <translation>Oben: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="543"/>
+        <location filename="../menue/editormenue.cpp" line="553"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="552"/>
+        <location filename="../menue/editormenue.cpp" line="562"/>
         <source>Right: </source>
         <translation>Rechts: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="556"/>
+        <location filename="../menue/editormenue.cpp" line="566"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="565"/>
+        <location filename="../menue/editormenue.cpp" line="575"/>
         <source>Bottom: </source>
         <translation>Unten: </translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="569"/>
+        <location filename="../menue/editormenue.cpp" line="579"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2106,28 +2106,28 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="122"/>
+        <location filename="../game/GameEnums.cpp" line="126"/>
         <source>Air</source>
         <translation>Luft</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="126"/>
+        <location filename="../game/GameEnums.cpp" line="130"/>
         <source>Naval</source>
         <translation>See</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="130"/>
-        <location filename="../game/GameEnums.cpp" line="141"/>
+        <location filename="../game/GameEnums.cpp" line="134"/>
+        <location filename="../game/GameEnums.cpp" line="145"/>
         <source>Ground</source>
         <translation>Boden</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="134"/>
+        <location filename="../game/GameEnums.cpp" line="138"/>
         <source>Infantry</source>
         <translation>Infantrie</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="138"/>
+        <location filename="../game/GameEnums.cpp" line="142"/>
         <source>Hovercraft</source>
         <translation></translation>
     </message>
@@ -2456,62 +2456,62 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="77"/>
+        <location filename="../menue/mainwindow.cpp" line="58"/>
         <source>Continue</source>
         <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="89"/>
+        <location filename="../menue/mainwindow.cpp" line="70"/>
         <source>Singleplayer</source>
         <translation>Einzelspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="100"/>
+        <location filename="../menue/mainwindow.cpp" line="81"/>
         <source>Multiplayer</source>
         <translation>Mehrspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="111"/>
+        <location filename="../menue/mainwindow.cpp" line="92"/>
         <source>Load Game</source>
         <translation>Spiel laden</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="122"/>
+        <location filename="../menue/mainwindow.cpp" line="103"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="133"/>
+        <location filename="../menue/mainwindow.cpp" line="114"/>
         <source>Map Editor</source>
         <translation>Karteneditor</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="144"/>
+        <location filename="../menue/mainwindow.cpp" line="125"/>
         <source>Options</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="155"/>
+        <location filename="../menue/mainwindow.cpp" line="136"/>
         <source>CO Style</source>
         <translation>KO Styl</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="166"/>
+        <location filename="../menue/mainwindow.cpp" line="147"/>
         <source>Wiki</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="177"/>
+        <location filename="../menue/mainwindow.cpp" line="158"/>
         <source>Credits</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="188"/>
+        <location filename="../menue/mainwindow.cpp" line="169"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="200"/>
+        <location filename="../menue/mainwindow.cpp" line="181"/>
         <source>Select Username</source>
         <translation>Benutzername auswählen</translation>
     </message>
@@ -2684,7 +2684,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="63"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="763"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="766"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -2720,7 +2720,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="759"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="762"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>

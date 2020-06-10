@@ -35,7 +35,7 @@ namespace oxygine
         void                    setAnimFrame(const AnimationFrame& f);
         /**Takes AnimationFrame from ResAnim and set it as current to Sprite. Shows assert is resanim is null. Using this method is more safe than 'setAnimFrame(const AnimationFrame &f)'*/
         void                    setAnimFrame(const ResAnim* resanim, int col = 0, int row = 0);
-        void                    setColorTable(const oxygine::ResAnim* pAnim);
+        void                    setColorTable(const oxygine::spResAnim pAnim);
         virtual void            setResAnim(const ResAnim* resanim, int col = 0, int row = 0);
         void                    setRow(int row);
         void                    setColumn(int column);
@@ -72,6 +72,7 @@ namespace oxygine
 
         Vector2 _localScale;
         AnimationFrame _frame;
+        oxygine::spResAnim m_colorTable;
 
         bool invertFlipX{false};
     };

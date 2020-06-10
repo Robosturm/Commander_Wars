@@ -48,6 +48,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
 void DropDownmenuColor::changeCurrentItem(QColor color)
 {
     setCurrentItem(color);
+    m_currentItem = -1;
     emit sigItemChanged(m_currentColor);
 }
 

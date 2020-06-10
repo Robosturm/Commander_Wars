@@ -25,6 +25,7 @@
 #include <QFile>
 
 #include "resource_management/gamemanager.h"
+#include "resource_management/unitspritemanager.h"
 
 Mainwindow::Mainwindow()
 {

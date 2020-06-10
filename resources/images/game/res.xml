@@ -2,7 +2,6 @@
 <resources>
 	<set path = "resources/images/game/" />
 	<atlas>
-		<image file="dummy.png" />
 		<!-- battle sprite -->
 		<image file="battlesprites/base_air.png" />
 		<image file="battlesprites/base_forest.png" />

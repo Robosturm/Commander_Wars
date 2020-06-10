@@ -135,12 +135,22 @@ EditorMenue::EditorMenue()
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
+            static qint32 lastX = -1;
+            static qint32 lastY = -1;
             if (pTouchEvent->getPointer()->isPressed(oxygine::MouseButton::MouseButton_Left))
             {
-                emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                if (m_Cursor->getMapPointX() != lastX ||
+                    m_Cursor->getMapPointY() != lastY)
+                {
+                    lastX = m_Cursor->getMapPointX();
+                    lastY = m_Cursor->getMapPointY();
+                    emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                }
             }
             else
             {
+                lastX = -1;
+                lastY = -1;
                 // ignore case
             }
         }

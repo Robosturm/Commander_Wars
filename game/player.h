@@ -44,7 +44,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 12;
+        return 13;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -83,6 +83,12 @@ public:
      * @param socketId
      */
     void setSocketId(const quint64 &socketId);
+    /**
+     * @brief getColorTableAnim
+     * @return
+     */
+    oxygine::spResAnim getColorTableAnim() const;
+
 signals:
 
 public slots:
@@ -123,7 +129,7 @@ public slots:
      * @brief setColor sets the color of this player. Note this want update existing sprites
      * @param Color
      */
-    void setColor(QColor Color);
+    void setColor(QColor Color, qint32 table = -1);
     /**
      * @brief getPlayerID player id of this player from 0 to n
      * @return
@@ -425,10 +431,15 @@ public slots:
         return &m_Variables;
     }
 private:
+    bool loadTable(qint32 table);
+    void createTable();
+private:
     qint32 funds{0};
     float fundsModifier{1.0f};
 
     QColor m_Color;
+    QImage m_colorTable;
+    oxygine::spResAnim m_ColorTableAnim{new oxygine::SingleResAnim()};
     QString playerArmy{""};
     qint32 team{0};
     spCO playerCOs[2]{nullptr, nullptr};

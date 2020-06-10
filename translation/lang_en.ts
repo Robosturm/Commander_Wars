@@ -1209,13 +1209,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="65"/>
-        <source>Custom Name of the Terrain. Empty name equals the default name.</source>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="62"/>
+        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="62"/>
-        <source>Name:</source>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="65"/>
+        <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1940,47 +1940,47 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="294"/>
+        <location filename="../menue/editormenue.cpp" line="304"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="526"/>
+        <location filename="../menue/editormenue.cpp" line="536"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="530"/>
+        <location filename="../menue/editormenue.cpp" line="540"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="539"/>
+        <location filename="../menue/editormenue.cpp" line="549"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="543"/>
+        <location filename="../menue/editormenue.cpp" line="553"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="552"/>
+        <location filename="../menue/editormenue.cpp" line="562"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="556"/>
+        <location filename="../menue/editormenue.cpp" line="566"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="565"/>
+        <location filename="../menue/editormenue.cpp" line="575"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="569"/>
+        <location filename="../menue/editormenue.cpp" line="579"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2086,28 +2086,28 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="122"/>
+        <location filename="../game/GameEnums.cpp" line="126"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="126"/>
+        <location filename="../game/GameEnums.cpp" line="130"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="130"/>
-        <location filename="../game/GameEnums.cpp" line="141"/>
+        <location filename="../game/GameEnums.cpp" line="134"/>
+        <location filename="../game/GameEnums.cpp" line="145"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="134"/>
+        <location filename="../game/GameEnums.cpp" line="138"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="138"/>
+        <location filename="../game/GameEnums.cpp" line="142"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2166,6 +2166,11 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="935"/>
+        <source>Army Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="935"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2177,11 +2182,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/gamemenue.cpp" line="935"/>
         <source>Bases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/gamemenue.cpp" line="935"/>
-        <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2436,62 +2436,62 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="77"/>
+        <location filename="../menue/mainwindow.cpp" line="58"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="89"/>
+        <location filename="../menue/mainwindow.cpp" line="70"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="100"/>
+        <location filename="../menue/mainwindow.cpp" line="81"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="111"/>
+        <location filename="../menue/mainwindow.cpp" line="92"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="122"/>
+        <location filename="../menue/mainwindow.cpp" line="103"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="133"/>
+        <location filename="../menue/mainwindow.cpp" line="114"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="144"/>
+        <location filename="../menue/mainwindow.cpp" line="125"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="155"/>
+        <location filename="../menue/mainwindow.cpp" line="136"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="166"/>
+        <location filename="../menue/mainwindow.cpp" line="147"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="177"/>
+        <location filename="../menue/mainwindow.cpp" line="158"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="188"/>
+        <location filename="../menue/mainwindow.cpp" line="169"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="200"/>
+        <location filename="../menue/mainwindow.cpp" line="181"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2664,7 +2664,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="63"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="763"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="766"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2700,7 +2700,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="759"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="762"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3507,12 +3507,12 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="317"/>
-        <source>Closed</source>
+        <source>Heavy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="317"/>
-        <source>Heavy</source>
+        <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3640,6 +3640,11 @@ Version: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
+        <location filename="../menue/replaymenu.cpp" line="72"/>
+        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/replaymenu.cpp" line="136"/>
         <source>Do you want to exit the current replay?</source>
         <translation type="unfinished"></translation>
@@ -3656,8 +3661,28 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/replaymenu.cpp" line="421"/>
+        <source>Current Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="422"/>
+        <source>All Teams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="423"/>
+        <source>Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/replaymenu.cpp" line="437"/>
         <source>Team </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="442"/>
+        <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3758,31 +3783,6 @@ Version: </source>
     <message>
         <location filename="../menue/replaymenu.cpp" line="525"/>
         <source>Selects the speed at which battle animations are played.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="421"/>
-        <source>Current Team</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="72"/>
-        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="422"/>
-        <source>All Teams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="423"/>
-        <source>Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="442"/>
-        <source>Teamview:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

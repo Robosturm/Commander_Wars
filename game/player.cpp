@@ -44,6 +44,7 @@ void Player::init()
     args << objArg;
     pInterpreter->doFunction("PLAYER", function, args);
     team = getPlayerID();
+    setColor(m_Color, team);
 }
 
 float Player::getUnitBuildValue(QString unitID)
@@ -135,9 +136,55 @@ void Player::swapCOs()
     }
 }
 
-void Player::setColor(QColor color)
+void Player::setColor(QColor color, qint32 table)
 {
     m_Color = color;
+    bool loaded = loadTable(table);
+    if (!loaded)
+    {
+        createTable();
+    }
+    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+}
+
+bool Player::loadTable(qint32 table)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    args << table;
+    QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTable", args);
+    QString tablename;
+    bool found = false;
+    if (erg.isString())
+    {
+        tablename = erg.toString();
+        QStringList searchPaths;
+        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        {
+            searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
+        }
+        searchPaths.append("resources/images/colortables/");
+        for (auto & path : searchPaths)
+        {
+            if (QFile::exists(path + tablename + ".png"))
+            {
+                m_colorTable.load(path + tablename + ".png");
+                found = true;
+            }
+        }
+    }
+    return found;
+}
+
+void Player::createTable()
+{
+    m_colorTable = QImage(256, 1, QImage::Format_RGBA8888);
+    m_colorTable.setPixelColor(0, 0, QColor(0,0, 0, 0));
+}
+
+oxygine::spResAnim Player::getColorTableAnim() const
+{
+    return m_ColorTableAnim;
 }
 
 qint32 Player::getPlayerID() const
@@ -1213,6 +1260,13 @@ void Player::serializeObject(QDataStream& pStream)
      pStream << m_BuildList;
      pStream << m_BuildlistChanged;
      m_Variables.serializeObject(pStream);
+
+     width = m_colorTable.width();
+     pStream << width;
+     for (qint32 x = 0; x < width; x++)
+     {
+         pStream << m_colorTable.pixel(x, 0);
+     }
 }
 void Player::deserializeObject(QDataStream& pStream)
 {
@@ -1353,5 +1407,18 @@ void Player::deserializeObject(QDataStream& pStream)
     if (version <= 5)
     {
         loadVisionFields();
+    }
+    if (version > 12)
+    {
+        qint32 width = 0;
+        pStream >> width;
+        m_colorTable = QImage(width, 1, QImage::Format_RGBA8888);
+        QRgb rgb;
+        for (qint32 x = 0; x < width; x++)
+        {
+            pStream >> rgb;
+            m_colorTable.setPixel(x, 0, rgb);
+        }
+        Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
     }
 }

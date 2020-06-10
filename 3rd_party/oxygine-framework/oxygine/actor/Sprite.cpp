@@ -196,9 +196,10 @@ namespace oxygine
         setAnimFrame(resanim, col, row);
     }
 
-    void Sprite::setColorTable(const oxygine::ResAnim* pAnim)
+    void Sprite::setColorTable(const oxygine::spResAnim pAnim)
     {
-        if (pAnim != nullptr)
+        m_colorTable = pAnim;
+        if (pAnim.get() != nullptr)
         {
             const auto & frame = pAnim->getFrame(0, 0);
             if (_mat->_table != frame.getDiffuse().base)

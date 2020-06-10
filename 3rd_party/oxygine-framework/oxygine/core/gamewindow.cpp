@@ -121,10 +121,10 @@ namespace oxygine
         {
             return false;
         }
-//        if (!QWindow::isActive())
-//        {
-//           return false;
-//        }
+        //        if (!QWindow::isActive())
+        //        {
+        //           return false;
+        //        }
 
         bool ready = STDRenderer::isReady();
         if (ready)
@@ -226,87 +226,99 @@ namespace oxygine
 
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
-        QMutexLocker lock(&m_Mutex);
-        if (!_useTouchAPI)
+        if (m_Mutex.tryLock(25))
         {
-            MouseButton b = MouseButton_Left;
-            switch (event->button())
+            if (!_useTouchAPI)
             {
-                case Qt::MouseButton::LeftButton:
+                MouseButton b = MouseButton_Left;
+                switch (event->button())
                 {
-                    b = MouseButton_Left;
-                    break;
+                    case Qt::MouseButton::LeftButton:
+                    {
+                        b = MouseButton_Left;
+                        break;
+                    }
+                    case Qt::MouseButton::MiddleButton:
+                    {
+                        b = MouseButton_Middle;
+                        break;
+                    }
+                    case Qt::MouseButton::RightButton:
+                    {
+                        b = MouseButton_Right;
+                        break;
+                    }
+                    default:
+                    {
+                        // do nothing
+                    }
                 }
-                case Qt::MouseButton::MiddleButton:
-                {
-                    b = MouseButton_Middle;
-                    break;
-                }
-                case Qt::MouseButton::RightButton:
-                {
-                    b = MouseButton_Right;
-                    break;
-                }
-                default:
-                {
-                    // do nothing
-                }
-            }
 
-            Input* input = &Input::instance;
-            input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
-                                          TouchEvent::TOUCH_DOWN, &input->_pointerMouse);
+                Input* input = &Input::instance;
+                input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
+                                              TouchEvent::TOUCH_DOWN, &input->_pointerMouse);
+            }
+            m_Mutex.unlock();
         }
     }
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
     {
-        QMutexLocker lock(&m_Mutex);
-        if (!_useTouchAPI)
+        if (m_Mutex.tryLock(25))
         {
-            MouseButton b = MouseButton_Left;
-            switch (event->button())
+            if (!_useTouchAPI)
             {
-                case Qt::MouseButton::LeftButton:
+                MouseButton b = MouseButton_Left;
+                switch (event->button())
                 {
-                    b = MouseButton_Left;
-                    break;
+                    case Qt::MouseButton::LeftButton:
+                    {
+                        b = MouseButton_Left;
+                        break;
+                    }
+                    case Qt::MouseButton::MiddleButton:
+                    {
+                        b = MouseButton_Middle;
+                        break;
+                    }
+                    case Qt::MouseButton::RightButton:
+                    {
+                        b = MouseButton_Right;
+                        break;
+                    }
+                    default:
+                    {
+                        // do nothing
+                    }
                 }
-                case Qt::MouseButton::MiddleButton:
-                {
-                    b = MouseButton_Middle;
-                    break;
-                }
-                case Qt::MouseButton::RightButton:
-                {
-                    b = MouseButton_Right;
-                    break;
-                }
-                default:
-                {
-                    // do nothing
-                }
-            }
 
-            Input* input = &Input::instance;
-            input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
-                                          TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                Input* input = &Input::instance;
+                input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
+                                              TouchEvent::TOUCH_UP, &input->_pointerMouse);
+            }
+            m_Mutex.unlock();
         }
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
     {
-        QMutexLocker lock(&m_Mutex);
-        Input* input = &Input::instance;
-        input->sendPointerWheelEvent(oxygine::getStage(), Vector2(event->angleDelta().x(), event->angleDelta().y()), &input->_pointerMouse);
+        if (m_Mutex.tryLock(25))
+        {
+            Input* input = &Input::instance;
+            input->sendPointerWheelEvent(oxygine::getStage(), Vector2(event->angleDelta().x(), event->angleDelta().y()), &input->_pointerMouse);
+            m_Mutex.unlock();
+        }
     }
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
-        QMutexLocker lock(&m_Mutex);
-        if (!_useTouchAPI)
+        if (m_Mutex.tryLock(25))
         {
-            Input* input = &Input::instance;
-            input->sendPointerMotionEvent(oxygine::getStage(), event->x(), event->y(), 1.0f, &input->_pointerMouse);
+            if (!_useTouchAPI)
+            {
+                Input* input = &Input::instance;
+                input->sendPointerMotionEvent(oxygine::getStage(), event->x(), event->y(), 1.0f, &input->_pointerMouse);
+            }
+            m_Mutex.unlock();
         }
     }
 

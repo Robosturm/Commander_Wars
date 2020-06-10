@@ -98,6 +98,32 @@ var PLAYER =
         return color;
     },
 
+    getColorTable : function(index)
+    {
+        switch (index)
+        {
+            case 0:
+                return "orange_star";
+            case 1:
+                return "blue_moon";
+            case 2:
+                return "green_earth";
+            case 3:
+                return "yellow_comet";
+            case 4:
+                return "black_hole";
+            case 6:
+                return "metal_army";
+            case 8:
+                return "brown_desert";
+            case 10:
+                return "pink_frontier";
+            case 11:
+                return "teal_isle"
+        };
+        return "";
+    },
+
     // return the default set for colors
     loadDefaultPlayerColor : function (player)
     {

@@ -195,6 +195,14 @@ public:
     };
     Q_ENUM(RandomMapTerrainType)
 
+    enum Recoloring
+    {
+        Recoloring_None,
+        Recoloring_Mask,
+        Recoloring_Table
+    };
+    Q_ENUM(Recoloring)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

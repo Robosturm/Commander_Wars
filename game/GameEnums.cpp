@@ -110,6 +110,10 @@ void GameEnums::registerEnums()
     value.setProperty("RandomMapTerrainType_Group", RandomMapTerrainType_Group);
     value.setProperty("RandomMapTerrainType_Line", RandomMapTerrainType_Line);
 
+    value.setProperty("Recoloring_None", Recoloring_None);
+    value.setProperty("Recoloring_Mask", Recoloring_Mask);
+    value.setProperty("Recoloring_Table", Recoloring_Table);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

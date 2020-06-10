@@ -350,6 +350,12 @@ public slots:
      */
     void loadSprite(QString spriteID, bool addPlayerColor);
     /**
+     * @brief loadSpriteV2
+     * @param spriteID
+     * @param mode
+     */
+    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    /**
      * @brief addShineTween
      */
     void addShineTween();
