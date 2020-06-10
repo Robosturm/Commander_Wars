@@ -462,7 +462,7 @@ void GameAction::deserializeObject(QDataStream& stream)
         for (qint32 i = 0; i < size; i++)
         {
             QPoint point;
-            stream << point;
+            stream >> point;
             m_MultiTurnPath.append(point);
         }
     }
