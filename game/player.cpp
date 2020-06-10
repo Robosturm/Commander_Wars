@@ -179,7 +179,39 @@ bool Player::loadTable(qint32 table)
 void Player::createTable()
 {
     m_colorTable = QImage(256, 1, QImage::Format_RGBA8888);
+    m_colorTable.fill(Qt::black);
     m_colorTable.setPixelColor(0, 0, QColor(0,0, 0, 0));
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorTableCount");
+    qint32 size = 0;
+    if (erg.isNumber())
+    {
+        size = erg.toInt();
+    }
+    for (qint32 i = 0; i < size; i++)
+    {
+        QJSValueList args;
+        args << i;
+        QJSValue erg = pInterpreter->doFunction("PLAYER", "getColorForTable", args);
+        qint32 value = 100;
+        if (erg.isNumber())
+        {
+            value = erg.toInt();
+        }
+        QColor color;
+        if (value >= 100)
+        {
+            color = m_Color.lighter(value);
+        }
+        else
+        {
+            color = m_Color.darker(200 - value);
+        }
+        m_colorTable.setPixelColor(1 + i * 3, 0, color);
+        m_colorTable.setPixelColor(2 + i * 3, 0, color);
+        m_colorTable.setPixelColor(3 + i * 3, 0, color);
+    }
+    m_colorTable.save("dummy.png");
 }
 
 oxygine::spResAnim Player::getColorTableAnim() const

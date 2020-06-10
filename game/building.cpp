@@ -127,6 +127,18 @@ qint32 Building::getOwnerID()
 
 void Building::loadSprite(QString spriteID, bool addPlayerColor)
 {
+    if (addPlayerColor)
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask);
+    }
+    else
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None);
+    }
+}
+
+void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
+{
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
@@ -142,18 +154,22 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
             pSprite->setResAnim(pAnim);
         }
         // repaint the building?
-        if (addPlayerColor && m_pOwner != nullptr)
+        if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
             oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
-        else if (addPlayerColor)
+        else if (mode == GameEnums::Recoloring_Mask)
         {
             oxygine::Sprite::TweenColor tweenColor(QColor(150, 150, 150, 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
+        }
+        else if (mode == GameEnums::Recoloring_Table && m_pOwner != nullptr)
+        {
+            pSprite->setColorTable(m_pOwner->getColorTableAnim());
         }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
@@ -169,7 +185,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         }
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
-        m_addPlayerColor.append(addPlayerColor);
+        m_addPlayerColor.append(mode);
     }
     else
     {
@@ -191,10 +207,14 @@ void Building::updatePlayerColor(bool visible)
             {
                 for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
                 {
-                    if (m_addPlayerColor[i])
+                    if (m_addPlayerColor[i] == GameEnums::Recoloring_Mask)
                     {
                         QColor color = m_pOwner->getColor();
                         m_pBuildingSprites[i]->setColor(color);
+                    }
+                    else if (m_addPlayerColor[i] == GameEnums::Recoloring_Table)
+                    {
+                        m_pBuildingSprites[i]->setColorTable(m_pOwner->getColorTableAnim());
                     }
                 }
             }

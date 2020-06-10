@@ -66,6 +66,18 @@ GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y
 
 void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float scaling)
 {
+    if (addPlayerColor)
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, scaling);
+    }
+    else
+    {
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, scaling);
+    }
+}
+
+void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, float scaling)
+{
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
@@ -179,14 +191,18 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
         pSprite->addTween(queueAnimating);
 
         // repaint the unit?
-        if (addPlayerColor)
+        if (mode == GameEnums::Recoloring_Mask)
         {
             QColor color = m_pUnit->getOwner()->getColor();
             oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-
             pSprite->addTween(tween);
         }
+        else if (mode == GameEnums::Recoloring_Table)
+        {
+            pSprite->setColorTable(m_pUnit->getOwner()->getColorTableAnim());
+        }
+
         this->addChild(pSprite);
     }
     else

@@ -11,6 +11,73 @@
 
 const qint32 SpriteCreator::colorBoxSize = 43;
 
+void SpriteCreator::createColorTableSprites(const QString& folder, const QString& filter, qint32 startIndex, qint32 maxColors)
+{
+    QStringList filters;
+    filters << filter;
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        createColorTableSprite(file, startIndex, maxColors);
+    }
+}
+void SpriteCreator::createColorTableSprite(const QString& file, qint32 startIndex, qint32 maxColors)
+{
+    QImage org(file);
+    QVector<QColor> colorsUnsorted;
+    for (qint32 x = 0; x < org.width(); x++)
+    {
+        for (qint32 y = 0; y < org.height(); y++)
+        {
+            // color pixel or another one?
+            QColor color = org.pixelColor(x, y);
+            if (color.alpha() > 0)
+            {
+                if (!colorsUnsorted.contains(color))
+                {
+                    colorsUnsorted.append(color);
+                }
+            }
+        }
+    }
+    QVector<QColor> colors;
+    while (colorsUnsorted.size() > 0)
+    {
+        QColor color = colorsUnsorted[0];
+        for (qint32 i = 1; i < colorsUnsorted.size(); i++)
+        {
+            if (color.red() < colorsUnsorted[i].red())
+            {
+                color = colorsUnsorted[i];
+            }
+        }
+        colors.append(color);
+        colorsUnsorted.removeAll(color);
+    }
+    qint32 maxUsedColors = maxColors;
+    if (colors.size() < maxColors)
+    {
+        maxUsedColors = colors.size();
+    }
+    for (qint32 x = 0; x < org.width(); x++)
+    {
+        for (qint32 y = 0; y < org.height(); y++)
+        {
+            QColor color = org.pixelColor(x, y);
+            if (color.alpha() > 0)
+            {
+                float progress = colors.indexOf(color) / static_cast<float>(colors.size() - 1);
+                qint32 index = static_cast<qint32>(((maxColors - 1) - progress * (maxUsedColors - 1))) * 3 + startIndex;
+                org.setPixelColor(x, y, QColor(index, 255 * (1.0f - progress), 255 * (1.0f - progress), 255));
+            }
+        }
+    }
+    QFile::remove(file);
+    org.save(file);
+}
+
 void SpriteCreator::createSprites(QString input, QString colorTable, QString maskTable)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))

@@ -155,6 +155,12 @@ public slots:
      */
     void loadSprite(QString sprite, bool addPlayerColor);
     /**
+     * @brief loadSpriteV2
+     * @param spriteID
+     * @param mode
+     */
+    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    /**
      * @brief updatePlayerColor
      * @param visible
      */
@@ -330,7 +336,7 @@ public slots:
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
 
-    QVector<bool> m_addPlayerColor;
+    QVector<GameEnums::Recoloring> m_addPlayerColor;
     /**
      * @brief m_BuildingID the id of this building
      */

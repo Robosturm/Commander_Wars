@@ -64,6 +64,14 @@ public slots:
      */
     void createSprites(QString input, QString colorTable, QString maskTable);
     /**
+     * @brief createColorTableSprites
+     * @param folder
+     * @param filter
+     * @param startIndex
+     * @param maxColors
+     */
+    void createColorTableSprites(QString folder, QString filter, qint32 startIndex, qint32 maxColors);
+    /**
      * @brief updateMaskImages
      * @param folder
      * @param filter

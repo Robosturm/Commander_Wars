@@ -49,6 +49,7 @@ const QString Console::functions[] =
     QString("connectToServer"),
     QString("getServerAdresse"),
     QString("createSprites"),
+    QString("createColorTableSprites"),
     QString("updateMaskImages"),
     QString("help"),
     QString("logActions"),
@@ -110,6 +111,11 @@ void Console::init()
 void Console::createSprites(QString input, QString colorTable, QString maskTable)
 {
     SpriteCreator::createSprites(input, colorTable, maskTable);
+}
+
+void Console::createColorTableSprites(QString folder, QString filter, qint32 startIndex, qint32 maxColors)
+{
+    SpriteCreator::createColorTableSprites(folder, filter, startIndex, maxColors);
 }
 
 void Console::updateMaskImages(QString folder, QString filter, qint32 min)

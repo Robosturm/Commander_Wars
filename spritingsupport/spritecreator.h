@@ -27,6 +27,21 @@ public:
      */
     static void createSprites(QString file, QImage& colorTable, QImage maskTable);
     /**
+     * @brief createColorTableSprites
+     * @param folder
+     * @param filter
+     * @param startIndex
+     * @param maxColors
+     */
+    static void createColorTableSprites(const QString& folder, const QString& filter, qint32 startIndex, qint32 maxColors);
+    /**
+     * @brief createColorTableSprite
+     * @param file
+     * @param startIndex
+     * @param maxColors
+     */
+    static void createColorTableSprite(const QString& file, qint32 startIndex, qint32 maxColors);
+    /**
      * @brief createAnim
      * @param input
      * @param colorTable

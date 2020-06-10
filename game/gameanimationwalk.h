@@ -34,6 +34,13 @@ public slots:
      */
     void loadSprite(QString spriteID, bool addPlayerColor, float scaling);
     /**
+     * @brief loadSpriteV2
+     * @param spriteID
+     * @param mode
+     * @param scaling
+     */
+    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, float scaling);
+    /**
      * @brief onFinished called when the animation has finished
      */
     virtual bool onFinished() override;
