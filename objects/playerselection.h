@@ -84,7 +84,7 @@ public slots:
     void allPlayerStartFundsChanged(float value);
     void playerStartFundsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
-    void playerColorChanged(QColor value, qint32 playerIdx);
+    void playerColorChanged(QColor value, qint32 playerIdx, qint32 item);
     void showSelectCO(qint32 player, quint8 co);
     void playerCO1Changed(QString coid, qint32 playerIdx);
     void updateCO1Sprite(QString coid, qint32 playerIdx);

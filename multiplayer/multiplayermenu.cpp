@@ -583,8 +583,11 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
     GameMap* pMap = GameMap::getInstance();
-    pMap->initPlayers();
-    pMap->getGameScript()->gameStart();
+    if (!saveGame)
+    {
+        pMap->initPlayers();
+        pMap->getGameScript()->gameStart();
+    }
     pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
@@ -828,7 +831,10 @@ void Multiplayermenu::countdown()
             pApp->suspendThread();
             defeatClosedPlayers();
             GameMap* pMap = GameMap::getInstance();
-            pMap->initPlayers();
+            if (!saveGame)
+            {
+                pMap->initPlayers();
+            }
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::INITGAME;
@@ -839,8 +845,11 @@ void Multiplayermenu::countdown()
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
-            }            
-            pMap->getGameScript()->gameStart();
+            }
+            if (!saveGame)
+            {
+                pMap->getGameScript()->gameStart();
+            }
             pMap->updateSprites();
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);

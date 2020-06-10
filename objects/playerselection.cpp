@@ -487,7 +487,7 @@ void PlayerSelection::showPlayerSelection()
         m_pPlayerSelection->addItem(playerColor);
         connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
         {
-            playerColorChanged(value, i);
+            playerColorChanged(value, i, playerColor->getCurrentItem());
         }, Qt::QueuedConnection);
         m_playerColors.append(playerColor);
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
@@ -777,12 +777,12 @@ void PlayerSelection::playerDataChanged()
     }
 }
 
-void PlayerSelection::playerColorChanged(QColor value, qint32 playerIdx)
+void PlayerSelection::playerColorChanged(QColor value, qint32 playerIdx, qint32 item)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-    pMap->getPlayer(playerIdx)->setColor(value);
+    pMap->getPlayer(playerIdx)->setColor(value, item);
     if (m_pNetworkInterface.get() != nullptr)
     {
         GameMap* pMap = GameMap::getInstance();
@@ -801,28 +801,31 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
-    CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
-    if (coid == "" ||
-        coid == "CO_RANDOM" ||
-        pCO == nullptr ||
-        pCO->getCoID() != coid)
+    if (!saveGame)
     {
-        QStringList perks;
-        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
-        if (pCurrentCO != nullptr)
+        GameMap* pMap = GameMap::getInstance();
+        CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
+        if (coid == "" ||
+            coid == "CO_RANDOM" ||
+            pCO == nullptr ||
+            pCO->getCoID() != coid)
         {
-            perks = pCurrentCO->getPerkList();
+            QStringList perks;
+            CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
+            if (pCurrentCO != nullptr)
+            {
+                perks = pCurrentCO->getPerkList();
+            }
+            pMap->getPlayer(playerIdx)->setCO(coid, 0);
+            pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
+            if (pCurrentCO != nullptr)
+            {
+                pCurrentCO->setPerkList(perks);
+            }
+            updateCOData(playerIdx);
         }
-        pMap->getPlayer(playerIdx)->setCO(coid, 0);
-        pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
-        if (pCurrentCO != nullptr)
-        {
-            pCurrentCO->setPerkList(perks);
-        }
-        updateCO1Sprite(coid, playerIdx);
-        updateCOData(playerIdx);
     }
+    updateCO1Sprite(coid, playerIdx);
     m_pPlayerSelection->setVisible(true);
     pApp->continueThread();
 }
@@ -844,28 +847,31 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
-    CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
-    if (coid == "" ||
-        coid == "CO_RANDOM" ||
-        pCO == nullptr ||
-        pCO->getCoID() != coid)
+    if (!saveGame)
     {
-        QStringList perks;
-        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
-        if (pCurrentCO != nullptr)
+        GameMap* pMap = GameMap::getInstance();
+        CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
+        if (coid == "" ||
+            coid == "CO_RANDOM" ||
+            pCO == nullptr ||
+            pCO->getCoID() != coid)
         {
-            perks = pCurrentCO->getPerkList();
+            QStringList perks;
+            CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
+            if (pCurrentCO != nullptr)
+            {
+                perks = pCurrentCO->getPerkList();
+            }
+            pMap->getPlayer(playerIdx)->setCO(coid, 1);
+            pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
+            if (pCurrentCO != nullptr)
+            {
+                pCurrentCO->setPerkList(perks);
+            }
+            updateCOData(playerIdx);
         }
-        pMap->getPlayer(playerIdx)->setCO(coid, 1);
-        pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
-        if (pCurrentCO != nullptr)
-        {
-            pCurrentCO->setPerkList(perks);
-        }
-        updateCO2Sprite(coid, playerIdx);
-        updateCOData(playerIdx);
     }
+    updateCO2Sprite(coid, playerIdx);
     m_pPlayerSelection->setVisible(true);
     pApp->continueThread();
 }
