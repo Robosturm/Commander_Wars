@@ -35,7 +35,7 @@ var Constructor = function()
         }
         // load sprites
         unit.loadSprite("mech+" + armyName, false, 1.5);
-        unit.loadSprite("mech+" + armyName +"+mask", true, 1.5);
+        unit.loadSpriteV2("mech+" + armyName +"+mask", GameEnums.Recoloring_Table, 1.5);
     };
     this.getMovementType = function()
     {
@@ -67,7 +67,7 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        animation.loadSprite("mech+" + armyName + "+walk+mask", true, zoom);
+        animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, zoom);
         animation.loadSprite("mech+" + armyName + "+walk", false, zoom);
         animation.setSound("moveboots.wav", -2);
         return animation;

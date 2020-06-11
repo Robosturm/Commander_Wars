@@ -27,13 +27,13 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("neospider_tank", false);
-        unit.loadSprite("neospider_tank+mask", true);
+        unit.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Table);
     };
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSprite("neospider_tank+walk+mask", true, 1.5);
+        animation.loadSpriteV2("neospider_tank+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite("neospider_tank+walk", false, 1.5);
         animation.setSound("movewalker.wav", -2);
         return animation;

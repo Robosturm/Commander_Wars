@@ -489,7 +489,7 @@ QStringList  Building::getConstructionList()
     {
         for (qint32 i = 0; i < coUnits.size(); i++)
         {
-            if (coUnits.startsWith("-"))
+            if (coUnits[i].startsWith("-"))
             {
                 buildList.removeAll(coUnits[i].replace("-", ""));
             }

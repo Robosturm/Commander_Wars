@@ -23,7 +23,7 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("zeppelin", false);
-        unit.loadSprite("zeppelin+mask", true);
+        unit.loadSpriteV2("zeppelin+mask", GameEnums.Recoloring_Table);
     };
     this.getMovementType = function()
     {
@@ -51,7 +51,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSprite("zeppelin+walk+mask", true, 1.5);
+        animation.loadSpriteV2("zeppelin+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite("zeppelin+walk", false, 1.5);
         animation.setSound("movemassiveair.wav", -2);
         return animation;

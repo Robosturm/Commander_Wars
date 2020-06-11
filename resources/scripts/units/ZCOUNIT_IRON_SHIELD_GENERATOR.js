@@ -32,7 +32,7 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("iron_shield_generator", false);
-        unit.loadSprite("iron_shield_generator+mask", true);
+        unit.loadSpriteV2("iron_shield_generator+mask", GameEnums.Recoloring_Table);
     };
     this.getMovementType = function()
     {
@@ -50,7 +50,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSprite("iron_shield_generator+walk+mask", true, 1.5);
+        animation.loadSpriteV2("iron_shield_generator+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite("iron_shield_generator+walk", false, 1.5);
         animation.setSound("movetank.wav", -2);
         return animation;

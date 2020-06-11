@@ -124,6 +124,44 @@ var PLAYER =
         return "";
     },
 
+    getColorForTable(index)
+    {
+        switch (index)
+        {
+            case 0:
+                return 40;
+            case 1:
+                return 70;
+            case 2:
+                return 100;
+            case 3:
+                return 130;
+            case 4:
+                return 160;
+            case 5:
+                return 190;
+            case 6:
+                return 100;
+            case 7:
+                return 20;
+            case 8:
+                return 60;
+            case 9:
+                return 90;
+            case 10:
+                return 120;
+            case 11:
+                return 150;
+        }
+        return 100;
+    },
+
+    getColorTableCount : function()
+    {
+        // amount of different colors in the table (minus transparent)
+        return 12;
+    },
+
     // return the default set for colors
     loadDefaultPlayerColor : function (player)
     {
@@ -143,31 +181,31 @@ var PLAYER =
         switch (army)
         {
             case "OS":
-                return tr("Orange Star");
+                return qsTr("Orange Star");
             case "BM":
-                return tr("Blue Moon");
+                return qsTr("Blue Moon");
             case "GE":
-                return tr("Green Earth");
+                return qsTr("Green Earth");
             case "YC":
-                return tr("Yellow Comet");
+                return qsTr("Yellow Comet");
             case "BH":
-                return tr("Black Hole");
+                return qsTr("Black Hole");
             case "BG":
-                return tr("Bolt Guard");
+                return qsTr("Bolt Guard");
             case "ML":
-                return tr("Metall Army");
+                return qsTr("Metall Army");
             case "AC":
-                return tr("Amber Corona");
+                return qsTr("Amber Corona");
             case "BT":
-                return tr("Brown Desert");
+                return qsTr("Brown Desert");
             case "GS":
-                return tr("Jade Sun");
+                return qsTr("Jade Sun");
             case "PF":
-                return tr("Pink Crystal");
+                return qsTr("Pink Crystal");
             case "TI":
-                return tr("Teal Guard");
+                return qsTr("Teal Guard");
             case "DM":
-                return tr("Dark Matters");
+                return qsTr("Dark Matters");
         }
     },
 

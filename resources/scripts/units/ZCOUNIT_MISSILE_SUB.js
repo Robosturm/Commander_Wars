@@ -49,7 +49,7 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("missile_sub", false);
-        unit.loadSprite("missile_sub+mask", true);
+        unit.loadSpriteV2("missile_sub+mask", GameEnums.Recoloring_Table);
     };
     this.getMovementType = function()
     {
@@ -74,7 +74,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        animation.loadSprite("missile_sub+walk+mask", true, 1.5);
+        animation.loadSpriteV2("missile_sub+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite("missile_sub+walk", false, 1.5);
         animation.setSound("moveship.wav", -2);
         return animation;

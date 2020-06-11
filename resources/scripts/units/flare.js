@@ -22,14 +22,14 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("flare", false);
-        unit.loadSprite("flare+mask", true);
+        unit.loadSpriteV2("flare+mask", GameEnums.Recoloring_Table);
     };
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("movetank.wav", -2);
         return animation;

@@ -31,7 +31,7 @@ var Constructor = function()
         }
         // load sprites
         unit.loadSprite("sniper+" + armyName, false, 1.5);
-        unit.loadSprite("sniper+" + armyName +"+mask", true, 1.5);
+        unit.loadSpriteV2("sniper+" + armyName +"+mask", GameEnums.Recoloring_Table, 1.5);
     };
     this.getMovementType = function()
     {
@@ -67,7 +67,7 @@ var Constructor = function()
 		{
 			zoom = 1.5;
 		}
-        animation.loadSprite("sniper+" + armyName + "+walk+mask", true, zoom);
+        animation.loadSpriteV2("sniper+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, zoom);
         animation.loadSprite("sniper+" + armyName + "+walk", false, zoom);
         animation.setSound("movewalk.wav", -2);
         return animation;

@@ -22,7 +22,7 @@ var Constructor = function()
     {
         // none neutral player
         unit.loadSprite("cruiser", false);
-        unit.loadSprite("cruiser+mask", true);
+        unit.loadSpriteV2("cruiser+mask", GameEnums.Recoloring_Table);
     };
     this.getMovementType = function()
     {
@@ -62,7 +62,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("moveship.wav", -2);
         return animation;

@@ -1453,4 +1453,9 @@ void Player::deserializeObject(QDataStream& pStream)
         }
         Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
     }
+    else
+    {
+        createTable();
+        Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+    }
 }

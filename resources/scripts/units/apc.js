@@ -22,7 +22,7 @@ var Constructor = function()
     {
         // load sprites
         unit.loadSprite("apc", false);
-        unit.loadSprite("apc+mask", true);
+        unit.loadSpriteV2("apc+mask", GameEnums.Recoloring_Table);
     };
     this.getMovementType = function()
     {
@@ -46,7 +46,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("movetank.wav", -2);
         return animation;
