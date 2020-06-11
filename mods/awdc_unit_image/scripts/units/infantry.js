@@ -3,13 +3,13 @@ INFANTRY.loadSprites = function(unit)
 {
     // load sprites
     unit.loadSprite("infantry+os", false);
-    unit.loadSprite("infantry+os+mask", true);
+    unit.loadSpriteV2("infantry+os+mask", GameEnums.Recoloring_Table);
 };
 INFANTRY.doWalkingAnimation = function(action)
 {
     var unit = action.getTargetUnit();
     var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-    animation.loadSprite("infantry+os+walk+mask", true, 1);
+    animation.loadSpriteV2("infantry+os+walk+mask", GameEnums.Recoloring_Table, 1);
     animation.loadSprite("infantry+os+walk", false, 1);
     animation.setSound("movefeet.wav", -2);
     return animation;
