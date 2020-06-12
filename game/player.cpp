@@ -99,11 +99,11 @@ void Player::loadCOMusic()
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->loadCOMusic();
+        playerCOs[0]->loadCOMusic();
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->loadCOMusic();
+        playerCOs[1]->loadCOMusic();
     }
     if (playerCOs[0].get() == nullptr &&
         playerCOs[0].get() == nullptr)
@@ -142,7 +142,7 @@ void Player::setColor(QColor color, qint32 table)
     bool loaded = loadTable(table);
     if (!loaded)
     {
-        createTable();
+        createTable(m_Color);
     }
     Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
 }
@@ -158,25 +158,143 @@ bool Player::loadTable(qint32 table)
     if (erg.isString())
     {
         tablename = erg.toString();
-        QStringList searchPaths;
-        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        found = loadTableFromFile(tablename);
+    }
+    return found;
+}
+
+bool Player::loadTableFromFile(QString tablename)
+{
+    bool found = false;
+    QStringList searchPaths;
+    for (qint32 i = 0; i < Settings::getMods().size(); i++)
+    {
+        searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
+    }
+    searchPaths.append("resources/images/colortables/");
+    for (auto & path : searchPaths)
+    {
+        if (QFile::exists(path + tablename + ".png"))
         {
-            searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
-        }
-        searchPaths.append("resources/images/colortables/");
-        for (auto & path : searchPaths)
-        {
-            if (QFile::exists(path + tablename + ".png"))
-            {
-                m_colorTable.load(path + tablename + ".png");
-                found = true;
-            }
+            m_colorTable.load(path + tablename + ".png");
+            found = true;
         }
     }
     return found;
 }
 
-void Player::createTable()
+bool Player::colorToTable(QColor baseColor)
+{
+    bool found = false;
+    if (baseColor == QColor("#ff5a00"))
+    {
+        loadTableFromFile("orange_star");
+        found = true;
+    }
+    else if (baseColor == QColor("#0068e8"))
+    {
+        loadTableFromFile("blue_moon");
+        found = true;
+    }
+    else if (baseColor == QColor("#00c010"))
+    {
+        loadTableFromFile("green_earth");
+        found = true;
+    }
+    else if (baseColor == QColor("#f8c000"))
+    {
+        loadTableFromFile("yellow_comet");
+        found = true;
+    }
+    else if (baseColor == QColor("#5f11b7"))
+    {
+        loadTableFromFile("black_hole");
+        found = true;
+    }
+    else if (baseColor == QColor("#2d2dd5"))
+    {
+        loadTableFromFile("bolt_guard");
+        found = true;
+    }
+    else if (baseColor == QColor("lightsteelblue"))
+    {
+        loadTableFromFile("metal_army");
+        found = true;
+    }
+    else if (baseColor == QColor("coral"))
+    {
+        loadTableFromFile("amber_corona");
+        found = true;
+    }
+    else if (baseColor == QColor("peru"))
+    {
+        loadTableFromFile("brown_desert");
+        found = true;
+    }
+    else if (baseColor == QColor("goldenrod"))
+    {
+        loadTableFromFile("golden_sun");
+        found = true;
+    }
+    else if (baseColor == QColor("magenta"))
+    {
+        loadTableFromFile("pink_frontier");
+        found = true;
+    }
+    else if (baseColor == QColor("teal"))
+    {
+        loadTableFromFile("teal_isle");
+        found = true;
+    }
+    else if (baseColor == QColor("purple"))
+    {
+        loadTableFromFile("dark_matter");
+        found = true;
+    }
+    else if (baseColor == QColor("#cyan"))
+    {
+        loadTableFromFile("cyan");
+        found = true;
+    }
+    else if (baseColor == QColor("#00FF00"))
+    {
+        loadTableFromFile("dark_green");
+        found = true;
+    }
+    else if (baseColor == QColor("#FF0000"))
+    {
+        loadTableFromFile("red");
+        found = true;
+    }
+    else if (baseColor == QColor("firebrick"))
+    {
+        loadTableFromFile("red_fire");
+        found = true;
+    }
+    else if (baseColor == QColor("#FFFF00"))
+    {
+        loadTableFromFile("light_grey");
+        found = true;
+    }
+    else if (baseColor == QColor("#olive"))
+    {
+        loadTableFromFile("olive");
+        found = true;
+    }
+    else if (baseColor == QColor("#0000FF"))
+    {
+        loadTableFromFile("cobalt_ice");
+        found = true;
+    }
+    else if (baseColor == QColor("silver"))
+    {
+        loadTableFromFile("silver");
+        found = true;
+    }
+    return found;
+}
+
+void Player::createTable(QColor baseColor)
 {
     m_colorTable = QImage(256, 1, QImage::Format_RGBA8888);
     m_colorTable.fill(Qt::black);
@@ -201,17 +319,17 @@ void Player::createTable()
         QColor color;
         if (value >= 100)
         {
-            color = m_Color.lighter(value);
+            color = baseColor.lighter(value);
         }
         else
         {
-            color = m_Color.darker(200 - value);
+            color = baseColor.darker(200 - value);
         }
         m_colorTable.setPixelColor(1 + i * 3, 0, color);
         m_colorTable.setPixelColor(2 + i * 3, 0, color);
         m_colorTable.setPixelColor(3 + i * 3, 0, color);
     }
-    m_colorTable.save("dummy.png");
+    m_colorTable.save(baseColor.name() + ".png");
 }
 
 oxygine::spResAnim Player::getColorTableAnim() const
@@ -544,11 +662,11 @@ qint32 Player::getCostModifier(QString id, qint32 baseCost)
     qint32 costModifier = 0;
     if (playerCOs[0].get() != nullptr)
     {
-       costModifier += playerCOs[0]->getCostModifier(id, baseCost);
+        costModifier += playerCOs[0]->getCostModifier(id, baseCost);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       costModifier += playerCOs[1]->getCostModifier(id, baseCost);
+        costModifier += playerCOs[1]->getCostModifier(id, baseCost);
     }
     return costModifier;
 }
@@ -557,11 +675,11 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+        playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+        playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
     }
 }
 
@@ -569,11 +687,11 @@ void Player::buildedUnit(Unit* pUnit)
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->buildedUnit(pUnit);
+        playerCOs[0]->buildedUnit(pUnit);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->buildedUnit(pUnit);
+        playerCOs[1]->buildedUnit(pUnit);
     }
 }
 
@@ -587,11 +705,11 @@ QStringList Player::getCOUnits(Building* pBuilding)
     QStringList ret;
     if (playerCOs[0].get() != nullptr)
     {
-       ret.append(playerCOs[0]->getCOUnits(pBuilding));
+        ret.append(playerCOs[0]->getCOUnits(pBuilding));
     }
     if (playerCOs[1].get() != nullptr)
     {
-       ret.append(playerCOs[1]->getCOUnits(pBuilding));
+        ret.append(playerCOs[1]->getCOUnits(pBuilding));
     }
     return ret;
 }
@@ -703,7 +821,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     }
                     else
                     {
-                      pPoints = Mainapp::getCircle(0, visionRange);
+                        pPoints = Mainapp::getCircle(0, visionRange);
                     }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
@@ -740,7 +858,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                         }
                         else
                         {
-                          pPoints = Mainapp::getCircle(0, visionRange);
+                            pPoints = Mainapp::getCircle(0, visionRange);
                         }
                         for (qint32 i = 0; i < pPoints->size(); i++)
                         {
@@ -781,7 +899,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     }
                     else
                     {
-                      pPoints = Mainapp::getCircle(0, visionRange);
+                        pPoints = Mainapp::getCircle(0, visionRange);
                     }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
@@ -877,11 +995,11 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
+        playerCOs[0]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
+        playerCOs[1]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
     }
     if (GameMenue::getInstance() != nullptr)
     {
@@ -894,11 +1012,11 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     qint32 modifier = 0;
     if (playerCOs[0].get() != nullptr)
     {
-       modifier += playerCOs[0]->getMovementcostModifier(pUnit, position);
+        modifier += playerCOs[0]->getMovementcostModifier(pUnit, position);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       modifier += playerCOs[1]->getMovementcostModifier(pUnit, position);
+        modifier += playerCOs[1]->getMovementcostModifier(pUnit, position);
     }
     if (pUnit->getOwner() == this)
     {
@@ -912,13 +1030,13 @@ void Player::startOfTurn()
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
-       playerCOs[0]->startOfTurn();
+        playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
+        playerCOs[0]->startOfTurn();
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
-       playerCOs[1]->startOfTurn();
+        playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
+        playerCOs[1]->startOfTurn();
     }
 }
 
@@ -963,7 +1081,7 @@ QmlVectorUnit* Player::getEnemyUnits()
             {
                 if ((isEnemyUnit(pUnit)))
                 {
-                   ret->append(pUnit);
+                    ret->append(pUnit);
                 }
             }
         }
@@ -986,7 +1104,7 @@ QVector<spUnit> Player::getSpEnemyUnits()
             {
                 if ((isEnemyUnit(pUnit.get())))
                 {
-                   ret.append(pUnit);
+                    ret.append(pUnit);
                 }
             }
         }
@@ -1009,7 +1127,7 @@ QmlVectorBuilding* Player::getEnemyBuildings()
             {
                 if (isEnemy(pBuilding->getOwner()))
                 {
-                   ret->append(pBuilding);
+                    ret->append(pBuilding);
                 }
             }
         }
@@ -1026,10 +1144,10 @@ void Player::updateVisualCORange()
 {
     if (playerCOs[0].get() != nullptr)
     {
-       if (playerCOs[0]->getCOUnit() != nullptr)
-       {
-           playerCOs[0]->getCOUnit()->createCORange(playerCOs[0]->getCORange());
-       }
+        if (playerCOs[0]->getCOUnit() != nullptr)
+        {
+            playerCOs[0]->getCOUnit()->createCORange(playerCOs[0]->getCORange());
+        }
     }
     if (playerCOs[1].get() != nullptr)
     {
@@ -1137,7 +1255,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
         QJSValue erg = pInterpreter->doFunction(unitId, function1);
         if (erg.isNumber())
         {
-             averageCosts += erg.toInt();
+            averageCosts += erg.toInt();
         }
     }
     averageCosts = averageCosts / pUnitSpriteManager->getCount();
@@ -1269,36 +1387,36 @@ void Player::serializeObject(QDataStream& pStream)
         pStream << true;
         playerCOs[1]->serializeObject(pStream);
     }
-     pStream << team;
-     pStream << isDefeated;
-     BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
-     qint32 width = m_FogVisionFields.size();
-     qint32 heigth = 0;
-     if (width > 0)
-     {
+    pStream << team;
+    pStream << isDefeated;
+    BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
+    qint32 width = m_FogVisionFields.size();
+    qint32 heigth = 0;
+    if (width > 0)
+    {
         heigth = m_FogVisionFields[0].size();
-     }
-     pStream << width;
-     pStream << heigth;
-     for (qint32 x = 0; x < width; x++)
-     {
-         for (qint32 y = 0; y < heigth; y++)
-         {
-             pStream << static_cast<qint32>(std::get<0>(m_FogVisionFields[x][y]));
-             pStream << std::get<1>(m_FogVisionFields[x][y]);
-             pStream << std::get<2>(m_FogVisionFields[x][y]);
-         }
-     }
-     pStream << m_BuildList;
-     pStream << m_BuildlistChanged;
-     m_Variables.serializeObject(pStream);
+    }
+    pStream << width;
+    pStream << heigth;
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            pStream << static_cast<qint32>(std::get<0>(m_FogVisionFields[x][y]));
+            pStream << std::get<1>(m_FogVisionFields[x][y]);
+            pStream << std::get<2>(m_FogVisionFields[x][y]);
+        }
+    }
+    pStream << m_BuildList;
+    pStream << m_BuildlistChanged;
+    m_Variables.serializeObject(pStream);
 
-     width = m_colorTable.width();
-     pStream << width;
-     for (qint32 x = 0; x < width; x++)
-     {
-         pStream << m_colorTable.pixel(x, 0);
-     }
+    width = m_colorTable.width();
+    pStream << width;
+    for (qint32 x = 0; x < width; x++)
+    {
+        pStream << m_colorTable.pixel(x, 0);
+    }
 }
 void Player::deserializeObject(QDataStream& pStream)
 {
@@ -1367,7 +1485,7 @@ void Player::deserializeObject(QDataStream& pStream)
             {
                 m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());
                 for (qint32 y = 0; y < heigth; y++)
-                {                    
+                {
                     GameEnums::VisionType value = GameEnums::VisionType_Shrouded;
                     qint32 duration = 0;
                     bool directView = false;
@@ -1455,7 +1573,10 @@ void Player::deserializeObject(QDataStream& pStream)
     }
     else
     {
-        createTable();
+        if (!colorToTable(m_Color))
+        {
+            createTable(m_Color.darker(160));
+        }
         Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
     }
 }

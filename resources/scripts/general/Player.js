@@ -55,7 +55,7 @@ var PLAYER =
                 color = "cyan";
                 break;
             case 14:
-                color = "#00FF00";
+                color = "#006400";
                 break;
             case 15:
                 color = "#FF0000";
@@ -64,7 +64,7 @@ var PLAYER =
                 color = "firebrick";
                 break;
             case 17:
-                color = "#FFFF00";
+                color = "#a29db9";
                 break;
             case 18:
                 color = "olive";
@@ -112,16 +112,38 @@ var PLAYER =
                 return "yellow_comet";
             case 4:
                 return "black_hole";
+            case 5:
+                return "bolt_guard";
             case 6:
                 return "metal_army";
             case 7:
                 return "amber_corona"
             case 8:
                 return "brown_desert";
+            case 9:
+                return "golden_sun";
             case 10:
                 return "pink_frontier";
             case 11:
-                return "teal_isle"
+                return "teal_isle";
+            case 12:
+                return "dark_matter";
+            case 13:
+                return "cyan";
+            case 14:
+                return "dark_green";
+            case 15:
+                return "red";
+            case 16:
+                return "red_fire";
+            case 17:
+                return "light_grey";
+            case 18:
+                return "olive";
+            case 19:
+                return "cobalt_ice";
+            case 20:
+                return "silver";
         };
         return "";
     },
@@ -143,17 +165,13 @@ var PLAYER =
             case 5:
                 return 190;
             case 6:
-                return 100;
+                return 55;
             case 7:
-                return 20;
-            case 8:
-                return 60;
-            case 9:
                 return 90;
-            case 10:
-                return 120;
-            case 11:
-                return 150;
+            case 8:
+                return 140;
+            case 9:
+                return 170;
         }
         return 100;
     },
@@ -161,7 +179,7 @@ var PLAYER =
     getColorTableCount : function()
     {
         // amount of different colors in the table (minus transparent)
-        return 12;
+        return 10;
     },
 
     // return the default set for colors

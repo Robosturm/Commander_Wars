@@ -432,7 +432,9 @@ public slots:
     }
 private:
     bool loadTable(qint32 table);
-    void createTable();
+    bool loadTableFromFile(QString tablename);
+    bool colorToTable(QColor baseColor);
+    void createTable(QColor baseColor);
 private:
     qint32 funds{0};
     float fundsModifier{1.0f};

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "mods/awdc_unit_image/images/units/" />
-	<atlas>		
+	<atlas linearFilter = "false">		
 		<!-- aircraftcarrier -->
 		<image file="aircraftcarrier.png" cols = "4" />
 		<image file="aircraftcarrier+mask.png" cols = "4" />
