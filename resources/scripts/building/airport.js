@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("airport", false);
-            building.loadSprite("airport+mask", true);
+            building.loadSpriteV2("airport+mask", GameEnums.Recoloring_Table);
         }
         else
         {

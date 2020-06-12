@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/building/" />
-	<atlas>
+	<atlas linearFilter = "false">
 		<!-- factory -->
 		<image file="factory.png" cols = "2" />
 		<image file="factory+mask.png" cols = "2" />

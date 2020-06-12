@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("radar", false);
-            building.loadSprite("radar+mask", true);
+            building.loadSpriteV2("radar+mask", GameEnums.Recoloring_Table);
         }
         else
         {

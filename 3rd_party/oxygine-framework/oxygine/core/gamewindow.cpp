@@ -37,6 +37,10 @@ namespace oxygine
     GameWindow::GameWindow()
         : _dispatcher(new EventDispatcher())
     {
+        QSurfaceFormat newFormat = format();
+        newFormat.setSamples(2);    // Set the number of samples used for multisampling
+        setFormat(newFormat);
+
         _window = this;
 
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);

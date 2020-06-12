@@ -114,6 +114,8 @@ var PLAYER =
                 return "black_hole";
             case 6:
                 return "metal_army";
+            case 7:
+                return "amber_corona"
             case 8:
                 return "brown_desert";
             case 10:

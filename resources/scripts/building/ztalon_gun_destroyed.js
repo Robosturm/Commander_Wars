@@ -8,7 +8,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(building)
     {
-		 building.loadSprite("talon+gun+destroyed", true);
+         building.loadSpriteV2("talon+gun+destroyed", GameEnums.Recoloring_Table);
     };
     this.getBaseIncome = function()
     {

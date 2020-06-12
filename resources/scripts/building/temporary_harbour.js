@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("temporary_harbour", false);
-            building.loadSprite("temporary_harbour+mask", true);
+            building.loadSpriteV2("temporary_harbour+mask", GameEnums.Recoloring_Table);
         }
         else
         {

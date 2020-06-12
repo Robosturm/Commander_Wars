@@ -9,7 +9,7 @@ var Constructor = function()
     this.loadSprites = function(building)
     {
         building.loadSprite("black_cannon+E", false);
-        building.loadSprite("black_cannon+E+mask", true);
+        building.loadSpriteV2("black_cannon+E+mask", GameEnums.Recoloring_Table);
     };
     this.getBaseIncome = function()
     {

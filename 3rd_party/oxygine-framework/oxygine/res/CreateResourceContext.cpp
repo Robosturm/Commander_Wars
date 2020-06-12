@@ -20,14 +20,8 @@ namespace oxygine
 
     void CreateTextureTask::ready() const
     {
-        if (!linearFilter)
-        {
-            dest->setLinearFilter(linearFilter);
-        }
-        if (!clamp2edge)
-        {
-            dest->setClamp2Edge(clamp2edge);
-        }
+        dest->setLinearFilter(linearFilter);
+        dest->setClamp2Edge(clamp2edge);
     }
 
     XmlWalker::XmlWalker(QString path, float scaleFactor, bool load, bool alpha, QDomElement xml)

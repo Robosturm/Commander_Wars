@@ -726,7 +726,11 @@ qint32 EditorSelection::getPosX(qint32 xCounter)
 void EditorSelection::selectBuilding(qint32 building)
 {
     m_selectedItem = building;
-    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition());
+    qint32 width = m_Buildings[building]->getBuildingWidth();
+    qint32 heigth = m_Buildings[building]->getBuildingHeigth();
+    qint32 x = GameMap::Imagesize * (width - 1) / (width);
+    qint32 y = GameMap::Imagesize * (heigth - 1) / (heigth);
+    m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Vector2(x, y));
     emit sigSelectionChanged();
 }
 

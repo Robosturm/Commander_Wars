@@ -154,7 +154,7 @@ namespace oxygine
 
         unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
-        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
     }
 
     void NativeTextureGLES::setClamp2Edge(bool clamp2edge)

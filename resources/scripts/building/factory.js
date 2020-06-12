@@ -7,7 +7,7 @@ var Constructor = function()
         {
             // none neutral player
             building.loadSprite("factory", false);
-            building.loadSprite("factory+mask", true);
+            building.loadSpriteV2("factory+mask", GameEnums.Recoloring_Table);
         }
         else
         {

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/units/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- icon -->
 		<image file="icons/1.png"  />
 		<image file="icons/2.png"  />

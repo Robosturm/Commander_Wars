@@ -13,7 +13,7 @@ var Constructor = function()
                 armyName = "bh"
             }
             building.loadSprite("hq+" + armyName, false);
-            building.loadSprite("hq+" + armyName + "+mask", true);
+            building.loadSpriteV2("hq+" + armyName + "+mask", GameEnums.Recoloring_Table);
         }
         else
         {

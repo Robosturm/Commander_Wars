@@ -3408,67 +3408,67 @@ Version: </source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="184"/>
+        <location filename="../resources/scripts/general/Player.js" line="186"/>
         <source>Orange Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="186"/>
+        <location filename="../resources/scripts/general/Player.js" line="188"/>
         <source>Blue Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="188"/>
+        <location filename="../resources/scripts/general/Player.js" line="190"/>
         <source>Green Earth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="190"/>
+        <location filename="../resources/scripts/general/Player.js" line="192"/>
         <source>Yellow Comet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="192"/>
+        <location filename="../resources/scripts/general/Player.js" line="194"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="194"/>
+        <location filename="../resources/scripts/general/Player.js" line="196"/>
         <source>Bolt Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="196"/>
+        <location filename="../resources/scripts/general/Player.js" line="198"/>
         <source>Metall Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="198"/>
+        <location filename="../resources/scripts/general/Player.js" line="200"/>
         <source>Amber Corona</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="200"/>
+        <location filename="../resources/scripts/general/Player.js" line="202"/>
         <source>Brown Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="202"/>
+        <location filename="../resources/scripts/general/Player.js" line="204"/>
         <source>Jade Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="204"/>
+        <location filename="../resources/scripts/general/Player.js" line="206"/>
         <source>Pink Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="206"/>
+        <location filename="../resources/scripts/general/Player.js" line="208"/>
         <source>Teal Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="208"/>
+        <location filename="../resources/scripts/general/Player.js" line="210"/>
         <source>Dark Matters</source>
         <translation type="unfinished"></translation>
     </message>
