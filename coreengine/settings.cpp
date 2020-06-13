@@ -55,6 +55,9 @@ quint16 Settings::m_ServerPort        = 9002;
 QString Settings::m_ServerAdress      = "";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
+// auto saving
+std::chrono::seconds Settings::autoSavingCylceTime = std::chrono::minutes(0);
+qint32 Settings::autoSavingCycle = 0;
 
 // ingame options
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
@@ -91,6 +94,26 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getAutoSavingCycle()
+{
+    return autoSavingCycle;
+}
+
+void Settings::setAutoSavingCycle(const qint32 &value)
+{
+    autoSavingCycle = value;
+}
+
+std::chrono::seconds Settings::getAutoSavingCylceTime()
+{
+    return autoSavingCylceTime;
+}
+
+void Settings::setAutoSavingCylceTime(const std::chrono::seconds &value)
+{
+    autoSavingCylceTime = value;
 }
 
 Qt::Key Settings::getKey_ShowAttackFields()
@@ -470,6 +493,19 @@ void Settings::loadSettings()
     m_Server  = settings.value("Server", false).toBool();
     settings.endGroup();
 
+    // sounds
+    settings.beginGroup("Auto Saving");
+    autoSavingCylceTime = std::chrono::seconds(settings.value("AutoSavingTime", 0).toUInt(&ok));
+    if (!ok)
+    {
+        autoSavingCylceTime = std::chrono::seconds(0);
+    }
+    autoSavingCycle = settings.value("AutoSavingCycle", 0).toUInt(&ok);
+    if (!ok)
+    {
+        autoSavingCycle = 0;
+    }
+
     // mods
     settings.beginGroup("Mods");
     QString modList = settings.value("Mods", "").toString();
@@ -581,6 +617,11 @@ void Settings::saveSettings(){
     settings.setValue("GamePort",                  m_GamePort);
     settings.setValue("ServerPort",                m_ServerPort);
     settings.setValue("Server",                    m_Server);
+    settings.endGroup();
+
+    settings.beginGroup("Auto Saving");
+    settings.setValue("AutoSavingTime",           autoSavingCylceTime.count());
+    settings.setValue("AutoSavingCycle",                  autoSavingCycle);
     settings.endGroup();
 
     // mods

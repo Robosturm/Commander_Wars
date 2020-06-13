@@ -18,6 +18,7 @@
 #include "objects/spinbox.h"
 #include "objects/textbox.h"
 #include "objects/label.h"
+#include "objects/timespinbox.h"
 
 #include <QDir>
 #include <QFileInfoList>
@@ -885,6 +886,36 @@ void OptionMenue::showSettings()
         emit sigReloadSettings();
     });
     y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Auto Saving Time: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spTimeSpinBox autoSavingCycleTime = new TimeSpinBox(200);
+    autoSavingCycleTime->setTooltipText(tr("Selects the auto saving cycle in hours:minutes:seconds"));
+    autoSavingCycleTime->setCurrentValue(std::chrono::duration_cast<std::chrono::milliseconds>(Settings::getAutoSavingCylceTime()).count());
+    autoSavingCycleTime->setPosition(sliderOffset - 130, y);
+    connect(autoSavingCycleTime.get(), &TimeSpinBox::sigValueChanged, [=](qint32 value)
+    {
+        Settings::setAutoSavingCylceTime(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::milliseconds(value)));
+    });
+    m_pOptions->addItem(autoSavingCycleTime);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Auto Saving Cycle: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox autoSavingCycle = new SpinBox(200, 0, std::numeric_limits<quint16>::max());
+    autoSavingCycle->setTooltipText(tr("Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature."));
+    autoSavingCycle->setCurrentValue(Settings::getAutoSavingCycle());
+    autoSavingCycle->setPosition(sliderOffset - 130, y);
+    connect(autoSavingCycle.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setAutoSavingCycle);
+    m_pOptions->addItem(autoSavingCycle);
+    y += 40;
+
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);

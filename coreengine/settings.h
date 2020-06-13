@@ -41,6 +41,12 @@ public:
 
 
 public slots:
+    static std::chrono::seconds getAutoSavingCylceTime();
+    static void setAutoSavingCylceTime(const std::chrono::seconds &value);
+
+    static qint32 getAutoSavingCycle();
+    static void setAutoSavingCycle(const qint32 &value);
+
     static Qt::Key getKey_ShowIndirectAttackFields();
     static void setKey_ShowIndirectAttackFields(const Qt::Key &key_ShowIndirectAttackFields);
 
@@ -289,6 +295,9 @@ private:
     static QString m_ServerAdress;
     static QString m_Username;
     static bool m_Server;
+    // auto saving
+    static std::chrono::seconds autoSavingCylceTime;
+    static qint32 autoSavingCycle;
 
     // ingame options
     static GameEnums::AnimationMode showAnimations;

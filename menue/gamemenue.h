@@ -141,6 +141,10 @@ public slots:
      */
     void saveMap(QString filename);
     /**
+     * @brief autoSaveMap
+     */
+    void autoSaveMap();
+    /**
      * @brief saveMapAndExit
      * @param filename
      */
@@ -222,6 +226,7 @@ protected:
     void loadGameMenue();
     void connectMap();
     void keyInputAll(Qt::Key cur);
+    QString getSaveFileEnding();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
@@ -239,10 +244,12 @@ protected:
     bool m_Multiplayer{false};
 
     QTimer m_UpdateTimer;
+    QTimer m_AutoSavingTimer;
     GameAction* m_pStoredAction{nullptr};
     spUnit m_CurrentActionUnit{nullptr};
 
     qint64 m_syncCounter{0};
+    qint32 m_autoSaveCounter{0};
 };
 
 #endif // GAMEMENUE_H

@@ -285,6 +285,7 @@ void GameMenue::loadGameMenue()
     addChild(m_pPlayerinfo);
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
+    connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);
     connectMap();
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
@@ -383,6 +384,15 @@ void GameMenue::loadUIButtons()
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
+
+    std::chrono::seconds time = Settings::getAutoSavingCylceTime();
+    qint32 cycles = Settings::getAutoSavingCycle();
+    if (cycles > 0 && time.count() > 0)
+    {
+        m_AutoSavingTimer.setSingleShot(false);
+        m_AutoSavingTimer.setInterval(time);
+        m_AutoSavingTimer.start();
+    }
 
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -1060,15 +1070,7 @@ void GameMenue::saveGame()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     QVector<QString> wildcards;
-    if (m_pNetworkInterface.get() != nullptr ||
-        m_Multiplayer)
-    {
-        wildcards.append("*.msav");
-    }
-    else
-    {
-        wildcards.append("*.sav");
-    }
+    wildcards.append("*" + getSaveFileEnding());
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
@@ -1076,6 +1078,19 @@ void GameMenue::saveGame()
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
     pApp->continueThread();
+}
+
+QString GameMenue::getSaveFileEnding()
+{
+    if (m_pNetworkInterface.get() != nullptr ||
+        m_Multiplayer)
+    {
+        return ".msav";
+    }
+    else
+    {
+        return ".sav";
+    }
 }
 
 void GameMenue::showSaveAndExitGame()
@@ -1110,6 +1125,16 @@ void GameMenue::victoryInfo()
     setFocused(false);
     connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
     pApp->continueThread();
+}
+
+void GameMenue::autoSaveMap()
+{
+    saveMap("savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding());
+    m_autoSaveCounter++;
+    if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
+    {
+        m_autoSaveCounter = 0;
+    }
 }
 
 void GameMenue::saveMap(QString filename)
