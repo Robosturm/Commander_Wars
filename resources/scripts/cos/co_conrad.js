@@ -134,7 +134,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return visionCount * 2 + 10;
+                    return visionCount * 5 + 10;
                 }
                 break;
         }
@@ -243,7 +243,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nUnits deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 2% firepower for own units in vision range.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain 5% firepower for own units in vision range.");
     };
     this.getPowerDescription = function()
     {

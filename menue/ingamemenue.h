@@ -27,6 +27,7 @@ public:
     bool getFocused() const;
     void setFocused(bool Focused);
     void calcNewMousePosition(qint32 x, qint32 y);
+    QPoint getMousePos(qint32 x, qint32 y);
     void MoveMap(qint32 x, qint32 y);
     virtual void autoScroll();
 signals:

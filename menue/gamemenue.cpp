@@ -380,6 +380,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    m_XYButtonBox = pButtonBox;
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
@@ -840,6 +841,27 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
+        QPoint pos = getMousePos(x, y);
+        bool flip = false;
+        qint32 screenWidth = Settings::getWidth() - m_IngameInfoBar->getScaledWidth();
+        if (pos.x() < (screenWidth) / 2)
+        {
+            flip = true;
+            m_pPlayerinfo->setX(screenWidth);
+            m_XYButtonBox->setX(0);
+        }
+        else
+        {
+            m_pPlayerinfo->setX(0);
+            m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
+        }
+        if (flip != m_pPlayerinfo->getFlippedX())
+        {
+            m_pPlayerinfo->setFlippedX(flip);
+            m_pPlayerinfo->updateData();
+        }
+
+
         pApp->continueThread();
     }
 }
@@ -1190,7 +1212,10 @@ void GameMenue::startGame()
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
-        pAction->setSeed(pApp->getSeed());
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            pAction->setSeed(pApp->getSeed());
+        }
         performAction(pAction);
     }
     else

@@ -69,6 +69,11 @@ void PlayerInfo::updateData()
             QColor color = pPlayer->getColor();
             pSprite->setColor(color);
             pSprite->setY(yPos);
+            pSprite->setFlippedX(m_flippedX);
+            if (m_flippedX)
+            {
+                pSprite->setX(-pSprite->getScaledWidth());
+            }
             this->addChild(pSprite);
             qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
 
@@ -85,6 +90,11 @@ void PlayerInfo::updateData()
             pSprite->setResAnim(pAnim);
             pSprite->setY(yPos);
             pSprite->setScale(2.0f);
+            pSprite->setFlippedX(m_flippedX);
+            if (m_flippedX)
+            {
+                pSprite->setX(-pSprite->getScaledWidth());
+            }
             this->addChild(pSprite);
             if (pCO != nullptr)
             {
@@ -100,6 +110,11 @@ void PlayerInfo::updateData()
                 pSprite->setY(yPos + 62);
                 drawPowerMeter(pCO, pSprite->getY());
                 pSprite->setScale(2.0f);
+                pSprite->setFlippedX(m_flippedX);
+                if (m_flippedX)
+                {
+                    pSprite->setX(-pSprite->getScaledWidth());
+                }
                 this->addChild(pSprite);
             }
             oxygine::TextStyle style = FontManager::getMainFont24();
@@ -115,8 +130,14 @@ void PlayerInfo::updateData()
             }
             Text->setHtmlText(number);
             Text->setY(yPos + 30);
-            Text->setX(0);
-            Text->setScale(1.0f);
+            if (m_flippedX)
+            {
+                Text->setX(-10 - Text->getTextRect().getWidth());
+            }
+            else
+            {
+                Text->setX(0);
+            }
             this->addChild(Text);
 
             yPos += itemHeigth;
@@ -140,6 +161,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
         float powerFilled = pCO->getPowerFilled();
         switch (pCO->getPowerMode())
         {
+            case GameEnums::PowerMode_Unknown:
             case GameEnums::PowerMode_Off:
             {
                 for (qint32 i2 = 0; i2 < power + superpower; i2++)
@@ -165,7 +187,15 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         }
                         pSprite->setResAnim(pAnim);
                         pSprite->setY(yPos + 7);
-                        pSprite->setX(68 + power * 16 + 20 * (i2 - power));
+                        qint32 x = 68 + power * 16 + 20 * (i2 - power);
+                        if (m_flippedX)
+                        {
+                            pSprite->setX(-x - 16);
+                        }
+                        else
+                        {
+                            pSprite->setX(x);
+                        }
                         pSprite->setScale(2.0f);
                         if (useSuperpower)
                         {
@@ -195,7 +225,15 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         }
                         pSprite->setResAnim(pAnim);
                         pSprite->setY(yPos + 8);
-                        pSprite->setX(68 + i2 * 16);
+                        qint32 x = 68 + i2 * 16;
+                        if (m_flippedX)
+                        {
+                            pSprite->setX(-x - 16);
+                        }
+                        else
+                        {
+                            pSprite->setX(x);
+                        }
                         pSprite->setScale(2.0f);
                         if (usePower)
                         {
@@ -215,8 +253,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Power"));
                 Text->setY(yPos);
-                Text->setX(68);
-                Text->setScale(1.0f);
+                if (m_flippedX)
+                {
+                    Text->setX(-78 - Text->getTextRect().getWidth());
+                }
+                else
+                {
+                    Text->setX(68);
+                }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
@@ -240,8 +284,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Superpower"));
                 Text->setY(yPos);
-                Text->setX(68);
-                Text->setScale(1.0f);
+                if (m_flippedX)
+                {
+                    Text->setX(-78 - Text->getTextRect().getWidth());
+                }
+                else
+                {
+                    Text->setX(68);
+                }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
@@ -265,8 +315,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Tagpower"));
                 Text->setY(yPos - 4);
-                Text->setX(68);
-                Text->setScale(1.0f);
+                if (m_flippedX)
+                {
+                    Text->setX(-78 - Text->getTextRect().getWidth());
+                }
+                else
+                {
+                    Text->setX(68);
+                }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
@@ -286,3 +342,12 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
     }
 }
 
+bool PlayerInfo::getFlippedX() const
+{
+    return m_flippedX;
+}
+
+void PlayerInfo::setFlippedX(bool value)
+{
+    m_flippedX = value;
+}

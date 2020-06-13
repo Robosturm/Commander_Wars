@@ -150,7 +150,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -191,7 +191,7 @@ var Constructor = function()
                     }
                     else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
-                        return -5;
+                        return 0;
                     }
                     return 10;
                 }
@@ -203,7 +203,7 @@ var Constructor = function()
         }
         if (attacker.getUnitType() === GameEnums.UnitType_Air)
         {
-            return -15;
+            return -10;
         }
         return 0;
     };

@@ -2155,77 +2155,77 @@ This is immediatly applied.</source>
         <translation>Verkassen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="407"/>
+        <location filename="../menue/gamemenue.cpp" line="408"/>
         <source>Show Chat</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="539"/>
+        <location filename="../menue/gamemenue.cpp" line="540"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Player</source>
         <translation>Spieler</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Produced</source>
         <translation>Produziert</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Lost</source>
         <translation>Verluste</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Killed</source>
         <translation>Besiegt</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Income</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Funds</source>
         <translation>Fonds</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Bases</source>
         <translation>Basen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="955"/>
+        <location filename="../menue/gamemenue.cpp" line="977"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="971"/>
+        <location filename="../menue/gamemenue.cpp" line="993"/>
         <source>Player </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="981"/>
+        <location filename="../menue/gamemenue.cpp" line="1003"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1340"/>
+        <location filename="../menue/gamemenue.cpp" line="1365"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1358"/>
+        <location filename="../menue/gamemenue.cpp" line="1383"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1387"/>
+        <location filename="../menue/gamemenue.cpp" line="1412"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3496,17 +3496,17 @@ Version: </source>
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/playerinfo.cpp" line="216"/>
+        <location filename="../game/playerinfo.cpp" line="254"/>
         <source>Power</source>
         <translation>Gabe</translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="241"/>
+        <location filename="../game/playerinfo.cpp" line="285"/>
         <source>Superpower</source>
         <translation>Spezialgabe</translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="266"/>
+        <location filename="../game/playerinfo.cpp" line="316"/>
         <source>Tagpower</source>
         <translation>Doppelgabe</translation>
     </message>
@@ -8203,7 +8203,7 @@ No bonus.</source>
         <source>
 
 CO Zone Effect: 
-Units gain additional 30% firepower when attacking units with equal or less health.</source>
+Units gain additional 50% firepower when attacking units with equal or less health.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8543,7 +8543,7 @@ Units deal no luck damage. Units gain 1% firepower for own units in vision range
         <source>
 
 CO Zone Effect: 
-Units gain 2% firepower for own units in vision range.</source>
+Units gain 5% firepower for own units in vision range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

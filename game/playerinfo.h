@@ -15,15 +15,21 @@ class PlayerInfo : public QObject, public oxygine::Actor
 public:
     explicit PlayerInfo();
 
+
+
 signals:
 
 public slots:
     void updateData();
 
+
+    void setFlippedX(bool value);
+    bool getFlippedX() const;
 protected:
     void drawPowerMeter(CO* pCO, qint32 yPos);
 private:
     QVector<oxygine::spSprite> playerBackground;
+    bool m_flippedX{false};
 };
 
 #endif // PLAYERINFO_H

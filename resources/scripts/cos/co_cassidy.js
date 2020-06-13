@@ -161,7 +161,7 @@ var Constructor = function()
                 {
                     if (attacker.getHp() >= defender.getHp())
                     {
-                        return 30;
+                        return 50;
                     }
                     return 10;
                 }
@@ -202,7 +202,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional 30% firepower when attacking units with equal or less health.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional 50% firepower when attacking units with equal or less health.");
     };
     this.getPowerDescription = function()
     {
