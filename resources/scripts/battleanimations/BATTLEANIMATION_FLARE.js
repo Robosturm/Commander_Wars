@@ -19,7 +19,7 @@ var Constructor = function()
         }
         sprite.loadSprite("flare" + armyName,  false,
                           BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
-        sprite.loadSprite("flare" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("flare" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-38, 5));
     };
 

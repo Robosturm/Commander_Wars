@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("hoellium",  false,
                           BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSprite("hoellium+mask",  true,
+        sprite.loadSpriteV2("hoellium+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));
     };
 };

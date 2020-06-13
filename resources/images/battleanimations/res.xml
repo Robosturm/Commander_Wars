@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/battleanimations/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- general stuff -->
 		<image file="GeneralSprites/artillery_shot.png" cols = "4" />
 		<image file="GeneralSprites/bazooka_ge.png" />
@@ -22,8 +22,8 @@
 		<image file="GeneralSprites/vehicle_dust.png" cols = "7" />
 		
 		<!-- aircraft carrier -->
-		<image file="aircraftcarrier/aircraftcarrier.png" />
-		<image file="aircraftcarrier/aircraftcarrier+mask.png" />
+		<image file="aircraftcarrier/aircraftcarrier.png" cols = "4" />
+		<image file="aircraftcarrier/aircraftcarrier+mask.png" cols = "4" />
 		
 		<!-- anti tank cannon -->
 		<image file="antitankcannon/antitankcannon.png" />
@@ -142,24 +142,35 @@
 		<image file="fighter/fighter+ma+mask.png" />
 		
 		<!-- flak -->
-		<image file="flak/flak+bh.png" />
-		<image file="flak/flak+bh+mask.png" />
+		
 		<image file="flak/flak+bm.png" />
 		<image file="flak/flak+bm+mask.png" />
+		<image file="flak/flak+bm+fire+ground+mask.png" cols = "4" />
+		<image file="flak/flak+bm+fire+ground.png" cols = "4" />
+		<image file="flak/flak+bm+fire+air+mask.png" cols = "4" />
+		<image file="flak/flak+bm+fire+air.png" cols = "4" />
 		<image file="flak/flak+ge.png" />
 		<image file="flak/flak+ge+mask.png" />
-		<image file="flak/flak+os.png" />
-		<image file="flak/flak+os+mask.png" />
+		<image file="flak/flak+ge+fire+ground+mask.png" cols = "4" />
+		<image file="flak/flak+ge+fire+ground.png" cols = "4" />
+		<image file="flak/flak+ge+fire+air+mask.png" cols = "4" />
+		<image file="flak/flak+ge+fire+air.png" cols = "4" />
 		<image file="flak/flak+yc.png" />
 		<image file="flak/flak+yc+mask.png" />
+		<image file="flak/flak+yc+fire+ground+mask.png" cols = "4" />
+		<image file="flak/flak+yc+fire+ground.png" cols = "4" />
+		<image file="flak/flak+yc+fire+air+mask.png" cols = "4" />
+		<image file="flak/flak+yc+fire+air.png" cols = "4" />
 		<image file="flak/flak+ma.png" />
 		<image file="flak/flak+ma+mask.png" />
-
+		<image file="flak/flak+bh.png" />
+		<image file="flak/flak+bh+mask.png" />
 		<image file="flak/flak+bh+fire+ground+mask.png" cols = "4" />
 		<image file="flak/flak+bh+fire+ground.png" cols = "4" />
 		<image file="flak/flak+bh+fire+air+mask.png" cols = "4" />
 		<image file="flak/flak+bh+fire+air.png" cols = "4" />
-		
+		<image file="flak/flak+os.png" />
+		<image file="flak/flak+os+mask.png" />
 		<image file="flak/flak+os+fire+ground+mask.png" cols = "4" />
 		<image file="flak/flak+os+fire+ground.png" cols = "4" />
 		<image file="flak/flak+os+fire+air+mask.png" cols = "4" />

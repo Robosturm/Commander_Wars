@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("transportplane",  false,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40));
-        sprite.loadSprite("transportplane+mask",  true,
+        sprite.loadSpriteV2("transportplane+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40));
     };
 };

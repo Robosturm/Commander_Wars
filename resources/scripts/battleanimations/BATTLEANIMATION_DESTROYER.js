@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("destroyer",  false,
                           BATTLEANIMATION_DESTROYER.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("destroyer+mask",  true,
+        sprite.loadSpriteV2("destroyer+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_DESTROYER.getMaxUnitCount(), Qt.point(0, 20));
     };
 

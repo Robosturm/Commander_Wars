@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("duster",  false,
                           BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
-        sprite.loadSprite("duster+mask",  true,
+        sprite.loadSpriteV2("duster+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
     };
 

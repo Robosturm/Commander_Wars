@@ -26,7 +26,7 @@ var Constructor = function()
         }
         sprite.loadSprite("apc+" + armyName,  false,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSprite("apc+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("apc+" + armyName + "+mask",  GameEnums.Recoloring_Table,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
     };
 };

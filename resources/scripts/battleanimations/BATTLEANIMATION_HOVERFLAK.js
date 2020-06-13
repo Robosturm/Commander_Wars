@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("hoverflak",  false,
                           BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));
-        sprite.loadSprite("hoverflak+mask",  true,
+        sprite.loadSpriteV2("hoverflak+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));
     };
 

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("artillerycraft",  false,
                           BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), Qt.point(-55, 5));
-        sprite.loadSprite("artillerycraft+mask",  true,
+        sprite.loadSpriteV2("artillerycraft+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ARTILLERYCRAFT.getMaxUnitCount(), Qt.point(-55, 5));
     };
 

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("repair_tank",  false,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSprite("repair_tank+mask",  true,
+        sprite.loadSpriteV2("repair_tank+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
     };
 };

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("heavy_hovercraft",  false,
                           BATTLEANIMATION_HEAVY_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
-        sprite.loadSprite("heavy_hovercraft+mask",  true,
+        sprite.loadSpriteV2("heavy_hovercraft+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_HEAVY_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
     };
 

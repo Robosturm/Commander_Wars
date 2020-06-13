@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("stealthbomber",  false,
                           BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60));
-        sprite.loadSprite("stealthbomber+mask",  true,
+        sprite.loadSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60));
     };
 

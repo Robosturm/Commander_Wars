@@ -29,7 +29,7 @@ var Constructor = function()
         }
         sprite.loadSprite("flak+" + armyName,  false,
                           BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
-        sprite.loadSprite("flak+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("flak+" + armyName + "+mask",  GameEnums.Recoloring_Table,
                           BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
     };
 
@@ -53,28 +53,11 @@ var Constructor = function()
         }
 
         var offset = Qt.point(-5, 5);
-        if (armyName === "yc")
-        {
-            offset = Qt.point(37, 30);
-        }
-        else if (armyName === "ge")
-        {
-            offset = Qt.point(38, 28);
-        }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(35, 24);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(-38, 5);
-        }
-        else if (armyName === "ma")
+        if (armyName === "ma")
         {
             offset = Qt.point(24, 48);
         }
-        if (armyName === "bh" ||
-            armyName === "os")
+        if (armyName !== "ma")
         {
             if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
@@ -82,13 +65,17 @@ var Constructor = function()
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSprite("flak+" + armyName + "+fire+air+mask",  true,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                                  2, 1, 0, 0);
             }
             else
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+ground",  false,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
-                sprite.loadSprite("flak+" + armyName + "+fire+ground+mask",  true,
+                sprite.loadSpriteV2("flak+" + armyName + "+fire+ground+mask",  GameEnums.Recoloring_Table,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                                  2, 1, 0, 0);
             }
         }
         else

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("antitankcannon",  false,
                           BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
-        sprite.loadSprite("antitankcannon+mask",  true,
+        sprite.loadSpriteV2("antitankcannon+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
     };
 

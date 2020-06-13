@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("neospider_tank",  false,
                           BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(25, 25));
-        sprite.loadSprite("neospider_tank+mask",  true,
+        sprite.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(25, 25));
     };
 

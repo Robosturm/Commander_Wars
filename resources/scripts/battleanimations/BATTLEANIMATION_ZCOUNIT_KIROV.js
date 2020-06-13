@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("zeppelin",  false,
                           BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80));
-        sprite.loadSprite("zeppelin+mask",  true,
+        sprite.loadSpriteV2("zeppelin+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80));
     };
 

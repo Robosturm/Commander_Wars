@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("cannonboat",  false,
                           BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("cannonboat+mask",  true,
+        sprite.loadSpriteV2("cannonboat+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20));
     };
 

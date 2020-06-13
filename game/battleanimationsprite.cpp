@@ -237,7 +237,7 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
             position = getUnitPosition(i, maxUnitCount);
         }
         QPoint posOffset = getUnitPositionOffset(i);
-        loadSingleMovingSprite(spriteID, mode, offset + position + posOffset, movement, moveTime, deleteAfter,
+        loadSingleMovingSpriteV2(spriteID, mode, offset + position + posOffset, movement, moveTime, deleteAfter,
                                loops, scale, i + priority, showDelay, _invertFlipX);
     }
 }

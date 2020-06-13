@@ -24,7 +24,7 @@ var Constructor = function()
         }
         sprite.loadSprite("bomber+" + armyName,  false,
                           BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
-        sprite.loadSprite("bomber+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
     };
 

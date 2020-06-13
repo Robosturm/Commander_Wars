@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("iron_shield_generator",  false,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
-        sprite.loadSprite("iron_shield_generator+mask",  true,
+        sprite.loadSpriteV2("iron_shield_generator+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_APC.getMaxUnitCount(), Qt.point(10, 10));
     };
 };

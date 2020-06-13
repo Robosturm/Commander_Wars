@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("missile_sub",  false,
                           BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("missile_sub+mask",  true,
+        sprite.loadSpriteV2("missile_sub+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20));
     };
 
