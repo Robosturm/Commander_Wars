@@ -171,6 +171,10 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         {
             pSprite->setColorTable(m_pOwner->getColorTableAnim());
         }
+        else if (mode == GameEnums::Recoloring_Table)
+        {
+            pSprite->setColorTable(Player::getNeutralTableAnim());
+        }
         qint32 width = getBuildingWidth();
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)

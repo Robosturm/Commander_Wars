@@ -19,10 +19,10 @@ var Constructor = function()
     {
         return qsTr("Base");
     };
-    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("factory+mask", startColor , capturedColor, true);
-        animation.addBuildingSprite("factory", startColor , capturedColor, false);
+        animation.addBuildingSprite("factory+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("factory", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     };
 
     this.getActions = function()

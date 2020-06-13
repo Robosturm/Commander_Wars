@@ -15,6 +15,11 @@ var Constructor = function()
             building.loadSprite("labor+neutral", false);
         }
     };
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
+    {
+        animation.addBuildingSprite("labor+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("labor", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
+    };
     this.getName = function()
     {
         return qsTr("Labor");

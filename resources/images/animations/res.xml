@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/animations/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- backgrounds -->
 		<image file="capture_background.png" />
 	

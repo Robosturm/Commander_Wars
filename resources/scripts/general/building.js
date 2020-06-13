@@ -44,10 +44,10 @@ var BUILDING =
         return ["PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
     },
 
-    addCaptureAnimationBuilding : function(animation, building, startColor, capturedColor)
+    addCaptureAnimationBuilding : function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("town+mask", startColor , capturedColor, true);
-        animation.addBuildingSprite("town", startColor , capturedColor, false);
+        animation.addBuildingSprite("town+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("town", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     },
 
     canLargeBuildingPlaced : function(terrain, building, width, heigth)

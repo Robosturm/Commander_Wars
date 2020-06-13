@@ -3,10 +3,18 @@
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
 
+#include "qthread.h"
+#include "qapplication.h"
+
 namespace oxygine
 {
+
     void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest);
 
+    SingleResAnim::SingleResAnim()
+    {
+        moveToThread(QApplication::instance()->thread());
+    }
 
     void SingleResAnim::init(QString file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)
     {
@@ -15,6 +23,7 @@ namespace oxygine
 
     void SingleResAnim::init(Image* original, int columns, int rows, float scaleFactor)
     {
+
         _scaleFactor = scaleFactor;
         if (!original)
             return;

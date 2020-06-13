@@ -104,18 +104,9 @@ var Constructor = function()
             {
                 armyName = "os";
             }
-            var color;
-            if (building.getOwner() === null)
-            {
-                color = "#FFFFFF";
-            }
-            else
-            {
-                color = building.getOwner().getColor();
-            }
-            Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, ACTION_CAPTURE.postAnimationUnit.getOwner().getColor());
-            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner().getColor(), true);
-            captureAnimation.addSoldierSprite("soldier+" + armyName , ACTION_CAPTURE.postAnimationUnit.getOwner().getColor(), false);
+            Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, building.getOwner(), ACTION_CAPTURE.postAnimationUnit.getOwner());
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_Table);
+            captureAnimation.addSoldierSprite("soldier+" + armyName , ACTION_CAPTURE.postAnimationUnit.getOwner(), GameEnums.Recoloring_None);
         }
 
         if (captured)

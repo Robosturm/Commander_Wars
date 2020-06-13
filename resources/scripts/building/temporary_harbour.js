@@ -15,10 +15,10 @@ var Constructor = function()
             building.loadSprite("temporary_harbour+neutral", false);
         }
     };
-    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("harbour+mask", startColor , capturedColor, true);
-        animation.addBuildingSprite("harbour", startColor , capturedColor, false);
+        animation.addBuildingSprite("harbour+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("harbour", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     };
     this.getName = function()
     {

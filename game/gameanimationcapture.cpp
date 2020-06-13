@@ -24,7 +24,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
     Interpreter::setCppOwnerShip(this);
 }
 
-void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor, QColor capturedColor, bool addColor)
+void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
@@ -84,7 +84,8 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
         queueMoving->add(tween2);
         if (m_endPoints == 0)
         {
-            if (!addColor)
+            QColor capturedColor = capturedPlayer->getColor();
+            if (mode != GameEnums::Recoloring_Mask)
             {
                 capturedColor.setRgb(255, 255, 255);
             }
@@ -96,6 +97,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
             queueMoving->add(tween6);
             tween6->addDoneCallback([=](oxygine::Event *)
             {
+                if (mode == GameEnums::Recoloring_Table)
+                {
+                    pSprite->setColorTable(capturedPlayer->getColorTableAnim());
+                }
                 Mainapp::getInstance()->getAudioThread()->playSound("capture.wav");
             });
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
@@ -104,17 +109,30 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
             oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
             queueMoving->add(tween4);
         }
-
-
-
         pSprite->addTween(queueAnimating);
         pSprite->addTween(queueMoving);
 
-        if (addColor)
+        if (mode == GameEnums::Recoloring_Mask)
         {
-            oxygine::Sprite::TweenColor tweenColor(startColor);
-            oxygine::spTween tween7 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween7);
+            if (startPlayer == nullptr)
+            {
+                pSprite->setColor(QColor(255, 255, 255));
+            }
+            else
+            {
+                pSprite->setColor(startPlayer->getColor());
+            }
+        }
+        else if (mode == GameEnums::Recoloring_Table)
+        {
+            if (startPlayer == nullptr)
+            {
+                pSprite->setColorTable(Player::getNeutralTableAnim());
+            }
+            else
+            {
+                pSprite->setColorTable(startPlayer->getColorTableAnim());
+            }
         }
 
 
@@ -125,7 +143,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
     }
 }
 
-void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool addColor)
+void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
@@ -189,11 +207,15 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
             pSprite->setResAnim(pAnim);
         }
 
-        if (addColor)
+        if (mode == GameEnums::Recoloring_Mask)
         {
-            oxygine::Sprite::TweenColor tweenColor(color);
+            oxygine::Sprite::TweenColor tweenColor(pPlayer->getColor());
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
+        }
+        else if (mode == GameEnums::Recoloring_Table)
+        {
+            pSprite->setColorTable(pPlayer->getColorTableAnim());
         }
         pSprite->setPosition(12, startPosition);
         pSprite->setPriority(20);
@@ -203,7 +225,6 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
     {
         Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
     }
-
 }
 
 void GameAnimationCapture::addBackgroundSprite(QString spriteID)

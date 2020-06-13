@@ -9,6 +9,8 @@
 
 #include "oxygine-framework.h"
 
+class Player;
+
 class GameAnimation;
 typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
 
@@ -76,6 +78,19 @@ public slots:
       * @param delay
       */
     void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0);
+    /**
+     * @brief addSpriteAnimTable
+     * @param spriteID
+     * @param offsetX
+     * @param offsetY
+     * @param pPlayer
+     * @param sleepAfterFinish
+     * @param scaleX
+     * @param scaleY
+     * @param delay
+     * @param frames
+     */
+    void addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 frames);
     /**
      * @brief addBox
      * @param spriteID
@@ -263,6 +278,18 @@ private:
      * @param delay
      */
     void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
+    /**
+     * @brief loadSpriteAnimTable
+     * @param pAnim
+     * @param offsetX
+     * @param offsetY
+     * @param pPlayer
+     * @param sleepAfterFinish
+     * @param scaleX
+     * @param scaleY
+     * @param delay
+     */
+    void loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
     /**
      * @brief setPreviousAnimation
      * @param previousAnimation

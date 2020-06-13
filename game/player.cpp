@@ -21,6 +21,8 @@
 
 #include "resource_management/unitspritemanager.h"
 
+oxygine::spResAnim Player::m_neutralTableAnim = nullptr;
+
 Player::Player()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -178,6 +180,7 @@ bool Player::loadTableFromFile(QString tablename)
         {
             m_colorTable.load(path + tablename + ".png");
             found = true;
+            break;
         }
     }
     return found;
@@ -329,12 +332,34 @@ void Player::createTable(QColor baseColor)
         m_colorTable.setPixelColor(2 + i * 3, 0, color);
         m_colorTable.setPixelColor(3 + i * 3, 0, color);
     }
-    m_colorTable.save(baseColor.name() + ".png");
 }
 
 oxygine::spResAnim Player::getColorTableAnim() const
 {
     return m_ColorTableAnim;
+}
+
+oxygine::spResAnim Player::getNeutralTableAnim()
+{
+    if (m_neutralTableAnim.get() == nullptr)
+    {
+        m_neutralTableAnim = new oxygine::SingleResAnim();
+        QStringList searchPaths;
+        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        {
+            searchPaths.append(Settings::getMods().at(i) + "/images/colortables/");
+        }
+        searchPaths.append("resources/images/colortables/");
+        for (auto & path : searchPaths)
+        {
+            if (QFile::exists(path + "neutral.png"))
+            {
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim, QImage(path + "neutral.png"));
+                break;
+            }
+        }
+    }
+    return m_neutralTableAnim;
 }
 
 qint32 Player::getPlayerID() const

@@ -25,7 +25,7 @@ var Constructor = function()
     {
         return qsTr("HQ");
     };
-    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
         var player = building.getOwner();
         // get army name
@@ -46,8 +46,8 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        animation.addBuildingSprite("hq+" + armyName + "+mask", startColor , capturedColor, true);
-        animation.addBuildingSprite("hq+" + armyName, startColor , capturedColor, false);
+        animation.addBuildingSprite("hq+" + armyName + "+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("hq+" + armyName, startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     };
     this.getDefense = function()
     {

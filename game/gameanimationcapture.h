@@ -5,6 +5,9 @@
 
 #include "game/gameanimation.h"
 
+#include "game/GameEnums.h"
+#include "game/player.h"
+
 class GameAnimationCapture : public GameAnimation
 {
     Q_OBJECT
@@ -23,7 +26,7 @@ public slots:
      * @param color color we want to add to the sprite only applied if addColor is true
      * @param addColor true if we want to repaint the sprite with the unit color
      */
-    void addSoldierSprite(QString spriteID, QColor color, bool addColor);
+    void addSoldierSprite(QString spriteID, Player*  pPlayer, GameEnums::Recoloring mode);
     /**
      * @brief addBuildingSprite adds the cool building sprite that's getting streched in and out.
      * @param spriteID string id of the sprite in the res file
@@ -31,7 +34,7 @@ public slots:
      * @param capturedColor color of the capturing player
      * @param addColor true if we want to repaint the sprite with the unit color
      */
-    void addBuildingSprite(QString spriteID, QColor startColor, QColor capturedColor, bool addColor);
+    void addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode);
 private:
     qint32 m_startPoints{0};
     qint32 m_endPoints{0};

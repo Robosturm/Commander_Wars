@@ -70,10 +70,9 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        var color = "#FFFFFF";
-        Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
-        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
-        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
+        Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, null, unit.getOwner());
+        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner(), GameEnums.Recoloring_Table);
+        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner(), GameEnums.Recoloring_None);
 
         animation.queueAnimation(captureAnimation);
 

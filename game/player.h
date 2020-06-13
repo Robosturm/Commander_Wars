@@ -88,6 +88,11 @@ public:
      * @return
      */
     oxygine::spResAnim getColorTableAnim() const;
+    /**
+     * @brief getColorTableAnim
+     * @return
+     */
+    static oxygine::spResAnim getNeutralTableAnim();
 
 signals:
 
@@ -441,7 +446,7 @@ private:
 
     QColor m_Color;
     QImage m_colorTable;
-    oxygine::spResAnim m_ColorTableAnim{new oxygine::SingleResAnim()};
+    oxygine::spResAnim m_ColorTableAnim{new oxygine::SingleResAnim()};    
     QString playerArmy{""};
     qint32 team{0};
     spCO playerCOs[2]{nullptr, nullptr};
@@ -458,6 +463,7 @@ private:
     bool m_BuildlistChanged{false};
     ScriptVariables m_Variables;
     quint64 m_socketId{0};
+    static oxygine::spResAnim m_neutralTableAnim;
 };
 
 #endif // PLAYER_H

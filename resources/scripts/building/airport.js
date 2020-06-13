@@ -16,10 +16,10 @@ var Constructor = function()
         }
     };
 
-    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
-        animation.addBuildingSprite("airport+mask", startColor , capturedColor, true);
-        animation.addBuildingSprite("airport", startColor , capturedColor, false);
+        animation.addBuildingSprite("airport+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
+        animation.addBuildingSprite("airport", startPlayer , capturedPlayer, GameEnums.Recoloring_None);
     };
     this.getName = function()
     {

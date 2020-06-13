@@ -3408,67 +3408,67 @@ Version: </source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="192"/>
+        <location filename="../resources/scripts/general/Player.js" line="204"/>
         <source>Orange Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="194"/>
+        <location filename="../resources/scripts/general/Player.js" line="206"/>
         <source>Blue Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="196"/>
+        <location filename="../resources/scripts/general/Player.js" line="208"/>
         <source>Green Earth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="198"/>
+        <location filename="../resources/scripts/general/Player.js" line="210"/>
         <source>Yellow Comet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="200"/>
+        <location filename="../resources/scripts/general/Player.js" line="212"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="202"/>
+        <location filename="../resources/scripts/general/Player.js" line="214"/>
         <source>Bolt Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="204"/>
+        <location filename="../resources/scripts/general/Player.js" line="216"/>
         <source>Metall Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="206"/>
+        <location filename="../resources/scripts/general/Player.js" line="218"/>
         <source>Amber Corona</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="208"/>
+        <location filename="../resources/scripts/general/Player.js" line="220"/>
         <source>Brown Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="210"/>
+        <location filename="../resources/scripts/general/Player.js" line="222"/>
         <source>Jade Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="212"/>
+        <location filename="../resources/scripts/general/Player.js" line="224"/>
         <source>Pink Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="214"/>
+        <location filename="../resources/scripts/general/Player.js" line="226"/>
         <source>Teal Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="216"/>
+        <location filename="../resources/scripts/general/Player.js" line="228"/>
         <source>Dark Matters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16458,32 +16458,32 @@ Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>labor</name>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="20"/>
+        <location filename="../resources/scripts/building/labor.js" line="25"/>
         <source>Labor</source>
         <translation>Labor</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="35"/>
+        <location filename="../resources/scripts/building/labor.js" line="40"/>
         <source>Once captured can be used for </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="36"/>
+        <location filename="../resources/scripts/building/labor.js" line="41"/>
         <source>production</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="37"/>
+        <location filename="../resources/scripts/building/labor.js" line="42"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="38"/>
+        <location filename="../resources/scripts/building/labor.js" line="43"/>
         <source>oozium</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/labor.js" line="39"/>
+        <location filename="../resources/scripts/building/labor.js" line="44"/>
         <source>units.</source>
         <translation type="unfinished"></translation>
     </message>
