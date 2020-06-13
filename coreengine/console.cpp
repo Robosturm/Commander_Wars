@@ -304,7 +304,7 @@ void Console::logActions(bool log)
 void Console::createfunnymessage(qint32 message){
     if (message < 0)
     {
-        message = Mainapp::randInt(0,327);
+        message = Mainapp::randIntBase(0,327);
     }
     QString printmessage;
     switch(message)

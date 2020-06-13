@@ -107,7 +107,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 delete pPoints;
                 if (bestTargets.size() > 0 && maxDamage > 0)
                 {
-                    QPoint target = bestTargets[Mainapp::randInt(0, bestTargets.size() - 1)];
+                    QPoint target = bestTargets[Mainapp::randIntBase(0, bestTargets.size() - 1)];
                     QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     addSelectedFieldData(pAction, target);
@@ -281,7 +281,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
     getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (ret.size() > 0)
     {
-        qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
@@ -318,7 +318,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
     }
     if (ret.size() > 0 && ret[0].z() >= minDamage)
     {
-        qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QPoint point = pAction->getTarget();
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
@@ -361,7 +361,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
     bool performed = false;
     if (ret.size() > 0)
     {
-        qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QPoint point = pAction->getTarget();
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||

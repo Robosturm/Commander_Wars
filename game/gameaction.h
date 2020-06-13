@@ -69,7 +69,10 @@ public:
      * @param syncCounter
      */
     void setSyncCounter(const qint64 &syncCounter);
-
+    /**
+     * @brief setSeed
+     */
+    void setSeed(quint32 seed);
 signals:
 
 public slots:
@@ -321,7 +324,7 @@ private:
     QBuffer* buffer{new QBuffer()};
     QDataStream actionData{buffer};
 
-    quint32 seed;
+    quint32 _seed;
     /**
       * needed for ai simulations
       */

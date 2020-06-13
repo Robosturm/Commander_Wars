@@ -1624,7 +1624,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                         }
                         if (index < 0)
                         {
-                            target = points->at(Mainapp::randInt(0, points->size() -1));
+                            target = points->at(Mainapp::randIntBase(0, points->size() -1));
                         }
                         else
                         {

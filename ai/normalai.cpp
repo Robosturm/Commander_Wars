@@ -680,7 +680,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                             addMenuItemData(pAction, actions[0], costs);
                             unloaded = true;
                             MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                            qint32 field = Mainapp::randInt(0, pFields->getPoints()->size() - 1);
+                            qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
                             addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                             delete pFields;
                         }
@@ -826,7 +826,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                 getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
                 if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
                 {
-                    qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+                    qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
                     QVector3D target = ret[selection];
                     CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                                  static_cast<qint32>(target.y())));
@@ -887,7 +887,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                         if (pAction->canBePerformed())
                         {
                             MarkedFieldData* pData = pAction->getMarkedFieldStepData();
-                            QPoint point = pData->getPoints()->at(Mainapp::randInt(0, pData->getPoints()->size() - 1));
+                            QPoint point = pData->getPoints()->at(Mainapp::randIntBase(0, pData->getPoints()->size() - 1));
                             CoreAI::addSelectedFieldData(pAction, point);
                             delete pData;
                             emit performAction(pAction);
@@ -906,7 +906,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                     getBestAttacksFromField(pUnit, pAction, ret, moveTargets);
                     if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
                     {
-                        qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+                        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
                         QVector3D target = ret[selection];
                         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                                      static_cast<qint32>(target.y())));
@@ -947,7 +947,7 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
     CoreAI::getBestTarget(pUnit, pAction, &turnPfs, ret, moveTargetFields);
     if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() * minSuicideDamage)
     {
-        qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QVector<QPoint> path = turnPfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
                                                static_cast<qint32>(moveTargetFields[selection].y()));
@@ -1736,7 +1736,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
 
     if (buildingIdx.size() > 0)
     {
-        qint32 item = Mainapp::randInt(0, buildingIdx.size() - 1);
+        qint32 item = Mainapp::randIntBase(0, buildingIdx.size() - 1);
         Building* pBuilding = pBuildings->at(buildingIdx[item]);
         pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
         if (transporters[item])

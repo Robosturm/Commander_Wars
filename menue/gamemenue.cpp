@@ -118,6 +118,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
+        Mainapp* pApp = Mainapp::getInstance();
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
@@ -141,6 +142,11 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::STARTGAME;
+
+                    quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+                    pApp->seed(seed);
+                    pApp->setUseSeed(true);
+                    sendStream << seed;
                     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                     emit sigGameStarted();
                 }
@@ -150,6 +156,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         {
             if (!m_pNetworkInterface->getIsServer())
             {
+                quint32 seed = 0;
+                stream >> seed;
+                pApp->seed(seed);
+                pApp->setUseSeed(true);
                 emit sigGameStarted();
             }
         }
@@ -1155,6 +1165,7 @@ void GameMenue::startGame()
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        pAction->setSeed(pApp->getSeed());
         performAction(pAction);
     }
     else

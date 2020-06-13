@@ -25,7 +25,7 @@ float Leaf::getDecision(QVector<float>&)
 {
     if (m_Answers.size() > 1)
     {
-        qint32 chance = Mainapp::randInt(1, totalChance);
+        qint32 chance = Mainapp::randIntBase(1, totalChance);
         qint32 lowThreshold = 1;
         for (qint32 i = 0; i < m_AnswersChances.size(); i++)
         {

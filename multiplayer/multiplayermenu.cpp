@@ -574,14 +574,14 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     pApp->suspendThread();
     quint32 seed;
     stream >> seed;
-    Mainapp::seed(seed);
-    Mainapp::setUseSeed(true);
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         GameEnums::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
+    Mainapp::seed(seed);
+    Mainapp::setUseSeed(true);
     GameMap* pMap = GameMap::getInstance();
     if (!saveGame)
     {
@@ -831,23 +831,20 @@ void Multiplayermenu::countdown()
             pApp->suspendThread();
             defeatClosedPlayers();
             GameMap* pMap = GameMap::getInstance();
-            if (!saveGame)
-            {
-                pMap->initPlayers();
-            }
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::INITGAME;
             quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
-            Mainapp::seed(seed);
-            Mainapp::setUseSeed(true);
             stream << seed;
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
             }
+            Mainapp::seed(seed);
+            Mainapp::setUseSeed(true);
             if (!saveGame)
             {
+                pMap->initPlayers();
                 pMap->getGameScript()->gameStart();
             }
             pMap->updateSprites();

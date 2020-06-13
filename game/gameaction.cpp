@@ -13,7 +13,7 @@ GameAction::GameAction()
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     buffer->open(QIODevice::ReadWrite);
-    seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+    _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 GameAction::GameAction(QString actionID)
@@ -24,7 +24,12 @@ GameAction::GameAction(QString actionID)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     buffer->open(QIODevice::ReadWrite);
-    seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+    _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+}
+
+void GameAction::setSeed(quint32 seed)
+{
+    _seed = seed;
 }
 
 GameAction::~GameAction()
@@ -103,7 +108,7 @@ void GameAction::printAction()
     Console::print("Target X " + QString::number(m_target.x()) +
                    "Target Y " + QString::number(m_target.y()), Console::eINFO);
     Console::print("Costs " + QString::number(costs), Console::eINFO);
-    Console::print("Seed " + QString::number(seed), Console::eINFO);
+    Console::print("Seed " + QString::number(_seed), Console::eINFO);
     Unit* pUnit = getTargetUnit();
     Building* pBuilding = getTargetBuilding();
     if (pUnit != nullptr)
@@ -323,7 +328,7 @@ MarkedFieldData* GameAction::getMarkedFieldStepData()
 
 quint32 GameAction::getSeed() const
 {
-    return seed;
+    return _seed;
 }
 
 void GameAction::setTarget(QPoint point)
@@ -418,7 +423,7 @@ void GameAction::serializeObject(QDataStream& stream)
     {
         stream << static_cast<qint8>(data[i]);
     }
-    stream << seed;
+    stream << _seed;
     qint32 size = m_MultiTurnPath.size();
     stream << size;
     for (qint32 i = 0; i < size; i++)
@@ -454,7 +459,7 @@ void GameAction::deserializeObject(QDataStream& stream)
         // stream into action buffer
         actionData << value;
     }
-    stream >> seed;
+    stream >> _seed;
     if (version > 1)
     {
         qint32 size = m_MultiTurnPath.size();

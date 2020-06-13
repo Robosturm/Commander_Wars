@@ -45,6 +45,7 @@ QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 bool Mainapp::m_useSeed{false};
+quint32 Mainapp::m_seed = 0;
 QMutex Mainapp::crashMutex;
 
 Mainapp::Mainapp()
@@ -79,7 +80,14 @@ Mainapp* Mainapp::getInstance()
 
 void Mainapp::seed(quint32 seed)
 {
+    m_seed = seed;
     randGenerator.seed(seed);
+    Console::print("Seeding with " + QString::number(m_seed), Console::eDEBUG);
+}
+
+quint32 Mainapp::getSeed()
+{
+    return m_seed;
 }
 
 qint32 Mainapp::randInt(qint32 low, qint32 high)
@@ -94,8 +102,18 @@ qint32 Mainapp::randInt(qint32 low, qint32 high)
     }
     else
     {
-        return QRandomGenerator::global()->bounded(low, high + 1);
+        return randIntBase(low, high);
     }
+}
+
+
+qint32 Mainapp::randIntBase(qint32 low, qint32 high)
+{
+    if (high <= low)
+    {
+        return low;
+    }
+    return QRandomGenerator::global()->bounded(low, high + 1);
 }
 
 qint32 Mainapp::roundUp(float value)

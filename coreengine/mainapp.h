@@ -102,9 +102,18 @@ public:
      */
     static std::tuple<QString, QStringList> readList(QString file, QString folder);
 
-
+    static qint32 randIntBase(qint32 low, qint32 high);
 public slots:
+    /**
+     * @brief seed
+     * @param seed
+     */
     static void seed(quint32 seed);
+    /**
+     * @brief getSeed
+     * @return
+     */
+    static quint32 getSeed();
     static qint32 randInt(qint32 low, qint32 high);
     /**
      * @brief roundUp rounds all numbers up. 9.1 -> 10
@@ -191,6 +200,7 @@ private:
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
     static QMutex crashMutex;
+    static quint32 m_seed;
 
     static QThread m_Workerthread;
     static QThread m_AudioWorker;

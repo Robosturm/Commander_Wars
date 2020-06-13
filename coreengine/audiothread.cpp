@@ -163,9 +163,9 @@ void AudioThread::bufferAudio()
         qint32 size = m_playList->mediaCount();
         if (size > 0)
         {
-            qint32 newMedia = Mainapp::randInt(0, size - 1);
+            qint32 newMedia = Mainapp::randIntBase(0, size - 1);
             // load buffer on second player
-            qint32 newMedia2 = Mainapp::randInt(0, size - 1);
+            qint32 newMedia2 = Mainapp::randIntBase(0, size - 1);
             m_playList2->setCurrentIndex(newMedia2);
             if (std::get<0>(m_PlayListdata[newMedia2]) > 0  && newMedia2 == newMedia)
             {
@@ -186,7 +186,7 @@ void AudioThread::stopSecondPlayer()
     qint32 size = m_playList->mediaCount();
     if (size > 0)
     {
-        qint32 newMedia = Mainapp::randInt(0, size - 1);
+        qint32 newMedia = Mainapp::randIntBase(0, size - 1);
         if (currentPlayer == 0)
         {
             // load buffe on current player

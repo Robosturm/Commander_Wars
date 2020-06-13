@@ -304,7 +304,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
         }
         if (ret.size() > 0 && ret[0].z() >= minDamage)
         {
-            qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+            qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
             QVector3D target = ret[selection];
             QPoint point = pAction->getTarget();
             if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
@@ -527,7 +527,7 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
                         addMenuItemData(pAction, actions[0], costs);
                     }
                     MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                    qint32 field = Mainapp::randInt(0, pFields->getPoints()->size() - 1);
+                    qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
                     addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                     delete pFields;
                 }
@@ -586,7 +586,7 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
                     if (pAction->canBePerformed())
                     {
                         MarkedFieldData* pData = pAction->getMarkedFieldStepData();
-                        QPoint point = pData->getPoints()->at(Mainapp::randInt(0, pData->getPoints()->size() - 1));
+                        QPoint point = pData->getPoints()->at(Mainapp::randIntBase(0, pData->getPoints()->size() - 1));
                         CoreAI::addSelectedFieldData(pAction, point);
                         delete pData;
                         emit performAction(pAction);

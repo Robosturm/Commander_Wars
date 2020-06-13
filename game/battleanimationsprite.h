@@ -104,6 +104,22 @@ public slots:
                     qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
                     bool _invertFlipX = false, bool deleteAfter = false);
     /**
+     * @brief loadSprite loads a standing animated sprite for every shown model
+     * @param spriteID the sprite resource which should be loaded
+     * @param mode how the player color is applied to the sprite
+     * @param maxUnitCount maximum unit count. Needed to create the amount of models of this sprite based on the units hp
+     * @param offset offset from the original model position
+     * @param loop the amount of loops played for an animated sprite
+     * @param scale scale of the sprite 1.0 -> no scaling
+     * @param priority priority order in which this sprite will be shown
+     * @param showDelay delay before showing this sprite
+     * @param invertFlipX if true the flipping of the sprite is inverted needed for impacts of rockets etc.
+     * @param deleteAfter deletes the sprite after finished movement or animation
+     */
+    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
+                      qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                      bool _invertFlipX = false, bool deleteAfter = false);
+    /**
      * @brief loadMovingSprite loads a moving sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
      * @param addPlayerColor apply the player color to this sprite or not
@@ -119,9 +135,28 @@ public slots:
      * @param invertFlipX if true the flipping of the sprite is inverted needed for impacts of rockets etc.
      */
     void loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
-                    QPoint movement, qint32 moveTime, bool deleteAfter = false,
-                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                    bool _invertFlipX = false);
+                          QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                          qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                          bool _invertFlipX = false);
+    /**
+     * @brief loadMovingSprite loads a moving sprite for every shown model
+     * @param spriteID the sprite resource which should be loaded
+    * @param mode how the player color is applied to the sprite
+     * @param maxUnitCount maximum unit count. Needed to create the amount of models of this sprite based on the units hp
+     * @param offset offset from the original model position
+     * @param movement movement of the animation as point. Amount of pixels the sprite should move.
+     * @param moveTime time to reach the target
+     * @param deleteAfter deletes the sprite after finished movement or animation
+     * @param loop the amount of loops played for an animated sprite
+     * @param scale scale of the sprite 1.0 -> no scaling
+     * @param priority priority order in which this sprite will be shown
+     * @param showDelay delay before showing this sprite
+     * @param invertFlipX if true the flipping of the sprite is inverted needed for impacts of rockets etc.
+     */
+    void loadMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
+                            QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                            qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                            bool _invertFlipX = false);
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -138,9 +173,28 @@ public slots:
      * @param invertFlipX if true the flipping of the sprite is inverted needed for impacts of rockets etc.
      */
     void loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
-                    QPoint movement, qint32 moveTime, bool deleteAfter = false,
-                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                    bool _invertFlipX = false);
+                                QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                                qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                                bool _invertFlipX = false);
+    /**
+     * @brief loadSingleMovingSprite loads a single sprite for a unit
+     * @param spriteID the sprite resource which should be loaded
+    * @param mode how the player color is applied to the sprite
+     * @param maxUnitCount maximum unit count. Needed to create the amount of models of this sprite based on the units hp
+     * @param offset offset from the original model position
+     * @param movement movement of the animation as point
+     * @param moveTime time to reach the target
+     * @param deleteAfter deletes the sprite after finished movement or animation
+     * @param loop the amount of loops played for an animated sprite
+     * @param scale scale of the sprite 1.0 -> no scaling
+     * @param priority priority order in which this sprite will be shown
+     * @param showDelay delay before showing this sprite
+     * @param invertFlipX if true the flipping of the sprite is inverted needed for impacts of rockets etc.
+     */
+    void loadSingleMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
+                                  QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                                  qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                                  bool _invertFlipX = false);
     /**
      * @brief getImpactDurationMS
      * @return
