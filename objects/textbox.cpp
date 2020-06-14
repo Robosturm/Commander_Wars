@@ -256,3 +256,8 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
         pApp->continueThread();
     }
 }
+
+bool Textbox::getFocused() const
+{
+    return m_focused;
+}

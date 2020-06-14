@@ -39,6 +39,8 @@ signals:
 public slots:
     void showFolder(QString folder);
     void filterChanged(qint32);
+    void KeyInput(oxygine::KeyEvent event);
+    void deleteItem();
 private:
     spTextbox m_CurrentFolder;
     spTextbox m_CurrentFile;
@@ -51,6 +53,7 @@ private:
      */
     QVector<oxygine::spBox9Sprite> m_Items;
     bool m_preview{false};
+    bool m_focused{true};
     QVector<oxygine::spResAnim> m_ResAnims;
     QVector<std::tuple<oxygine::spSprite, QString>> m_UpdateList;
 };

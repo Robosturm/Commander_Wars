@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+#include "objects/dialogmessagebox.h"
 
 #include "QDir"
 
@@ -103,6 +104,9 @@ FolderDialog::FolderDialog(QString startFolder)
     });
     connect(this, &FolderDialog::sigShowFolder, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
+
+    Mainapp* pMainapp = Mainapp::getInstance();
+    connect(pMainapp, &Mainapp::sigKeyDown, this, &FolderDialog::KeyInput, Qt::QueuedConnection);
 }
 
 FolderDialog::~FolderDialog()
@@ -200,4 +204,50 @@ void FolderDialog::showFolder(QString folder)
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
     pApp->continueThread();
+}
+
+void FolderDialog::deleteItem()
+{
+    QString folder = m_CurrentFolder->getCurrentText();
+    QDir dir(folder);
+    dir.removeRecursively();
+    dir.cdUp();
+    showFolder(dir.path());
+    m_CurrentFolder->setCurrentText(dir.path());
+    m_focused = true;
+}
+
+void FolderDialog::KeyInput(oxygine::KeyEvent event)
+{
+    // for debugging
+    Qt::Key cur = event.getKey();
+    if (!m_CurrentFolder->getFocused() &&
+         m_focused)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        switch(cur)
+        {
+            case Qt::Key_Delete:
+            {
+                if (QFile::exists(m_CurrentFolder->getCurrentText()))
+                {
+                    m_focused = false;
+                    spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to delete the folder ") + m_CurrentFolder->getCurrentText() + "?", true);
+                    connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FolderDialog::deleteItem, Qt::QueuedConnection);
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+                    {
+                        m_focused = true;
+                    });
+                    addChild(pSurrender);
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        pApp->continueThread();
+    }
 }

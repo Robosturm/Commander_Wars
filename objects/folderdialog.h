@@ -33,6 +33,9 @@ signals:
     void sigShowFolder(QString folder);
 public slots:
     void showFolder(QString folder);
+    void KeyInput(oxygine::KeyEvent event);
+    void deleteItem();
+
 private:
     spTextbox m_CurrentFolder;
     spPanel m_MainPanel;
@@ -42,6 +45,7 @@ private:
      * @brief m_Items items directories or folders
      */
     QVector<oxygine::spBox9Sprite> m_Items;
+    bool m_focused{true};
 };
 
 #endif // FOLDERDIALOG_H

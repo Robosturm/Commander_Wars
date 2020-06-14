@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+#include "objects/dialogmessagebox.h"
 
 #include "QDir"
 
@@ -131,6 +132,9 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     });
     connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
+
+    Mainapp* pMainapp = Mainapp::getInstance();
+    connect(pMainapp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
 }
 
 FileDialog::~FileDialog()
@@ -281,3 +285,48 @@ void FileDialog::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
+void FileDialog::deleteItem()
+{
+    QFile::remove(m_CurrentFolder->getCurrentText() + "/" +
+                  m_CurrentFile->getCurrentText());
+    showFolder(m_CurrentFolder->getCurrentText());
+    m_focused = true;
+}
+
+void FileDialog::KeyInput(oxygine::KeyEvent event)
+{
+    // for debugging
+    Qt::Key cur = event.getKey();
+    if (!m_CurrentFolder->getFocused() &&
+        !m_CurrentFile->getFocused() &&
+        m_focused)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        switch(cur)
+        {
+            case Qt::Key_Delete:
+            {
+                if (QFile::exists(m_CurrentFolder->getCurrentText() + "/" +
+                                  m_CurrentFile->getCurrentText()))
+                {
+                    m_focused = false;
+                    spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                                                                         m_CurrentFile->getCurrentText() + "?", true);
+                    connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
+                    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+                    {
+                        m_focused = true;
+                    });
+                    addChild(pSurrender);
+                }
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        pApp->continueThread();
+    }
+}

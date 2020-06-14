@@ -171,11 +171,21 @@ void AudioThread::bufferAudio()
             {
                 m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia2]));
             }
+            else
+            {
+                m_Player2->setPosition(0);
+            }
             m_Player2->stop();
             m_playList->setCurrentIndex(newMedia);
-            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0  &&
+                currentPlayer >= 0 &&
+                newMedia2 == newMedia)
             {
                 m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            }
+            else
+            {
+                m_Player->setPosition(0);
             }
         }
     }

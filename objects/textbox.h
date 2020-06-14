@@ -35,6 +35,8 @@ public:
      * @param text
      */
     void setCurrentText(QString text);
+    bool getFocused() const;
+
 signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);

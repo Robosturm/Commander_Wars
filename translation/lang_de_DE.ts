@@ -1773,19 +1773,9 @@ This is immediatly applied.</source>
         <translation>Flippen X</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="86"/>
-        <source>Flips the map at the x-axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Flip Map Y</source>
         <translation>Flippen Y</translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="87"/>
-        <source>Flips the map at the y-axis</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="88"/>
@@ -1793,18 +1783,28 @@ This is immediatly applied.</source>
         <translation>Rotieren X</translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="88"/>
-        <source>Flips and rotates the map at the x-axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Rotate Map Y</source>
         <translation>Rotieren Y</translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="86"/>
+        <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="87"/>
+        <source>Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="88"/>
+        <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
-        <source>Flips and rotates the map at the y-axis</source>
+        <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2085,27 +2085,37 @@ This is immediatly applied.</source>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/filedialog.cpp" line="42"/>
+        <location filename="../objects/filedialog.cpp" line="43"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/filedialog.cpp" line="80"/>
+        <location filename="../objects/filedialog.cpp" line="81"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../objects/filedialog.cpp" line="314"/>
+        <source>Do you want to delete the item </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FolderDialog</name>
     <message>
-        <location filename="../objects/folderdialog.cpp" line="37"/>
+        <location filename="../objects/folderdialog.cpp" line="38"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/folderdialog.cpp" line="51"/>
+        <location filename="../objects/folderdialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../objects/folderdialog.cpp" line="236"/>
+        <source>Do you want to delete the folder </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
