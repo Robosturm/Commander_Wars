@@ -285,6 +285,20 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Shown Players: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox showCoCount = new SpinBox(200, 0, std::numeric_limits<qint32>::max());
+    showCoCount->setInfinityValue(0);
+    showCoCount->setTooltipText(tr("Selects the amount of players shown in game on the sidebar."));
+    showCoCount->setCurrentValue(Settings::getShowCoCount());
+    showCoCount->setPosition(sliderOffset - 130, y);
+    connect(showCoCount.get(), &SpinBox::sigValueChanged, Settings::getInstance(), &Settings::setShowCoCount);
+    m_pOptions->addItem(showCoCount);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Show PC Cursor: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

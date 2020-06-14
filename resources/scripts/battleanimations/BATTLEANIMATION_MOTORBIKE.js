@@ -21,7 +21,7 @@ var Constructor = function()
         }
         sprite.loadSprite("motorbike" + armyName,  false,
                           BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
-        sprite.loadSprite("motorbike" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("motorbike" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
     };
 

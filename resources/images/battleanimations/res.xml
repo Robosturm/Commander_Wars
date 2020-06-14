@@ -80,8 +80,8 @@
 		<image file="battleship/battleship+ma+mask.png" />
 		
 		<!-- black_boat -->
-		<image file="black_boat/black_boat.png" />
-		<image file="black_boat/black_boat+mask.png" />
+		<image file="black_boat/black_boat.png" cols = "4" />
+		<image file="black_boat/black_boat+mask.png" cols = "4" />
 		
 		<!-- black_bomb -->
 		<image file="black_bomb/black_bomb.png" />

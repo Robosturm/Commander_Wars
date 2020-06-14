@@ -39,8 +39,10 @@ public:
     static bool getLogActions();
     static void setLogActions(bool LogActions);
 
-
 public slots:
+    static qint32 getShowCoCount();
+    static void setShowCoCount(const qint32 &showCoCount);
+
     static std::chrono::seconds getAutoSavingCylceTime();
     static void setAutoSavingCylceTime(const std::chrono::seconds &value);
 
@@ -312,6 +314,7 @@ private:
     static bool m_StaticMarkedFields;
     static float m_mouseSensitivity;
     static bool m_record;
+    static qint32 m_showCoCount;
 
     // internal members
     static Settings* m_pInstance;

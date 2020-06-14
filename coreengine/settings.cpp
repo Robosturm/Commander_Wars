@@ -71,6 +71,7 @@ bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
 bool Settings::m_StaticMarkedFields = false;
+qint32 Settings::m_showCoCount = 0;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -94,6 +95,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+qint32 Settings::getShowCoCount()
+{
+    return m_showCoCount;
+}
+
+void Settings::setShowCoCount(const qint32 &showCoCount)
+{
+    m_showCoCount = showCoCount;
 }
 
 qint32 Settings::getAutoSavingCycle()
@@ -471,6 +482,14 @@ void Settings::loadSettings()
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
 
+    m_showCoCount = settings.value("ShowCoCount", 0).toInt(&ok);
+    if(!ok || m_showCoCount < 0)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " ShowCoCount";
+        Console::print(error, Console::eERROR);
+        m_showCoCount = 0;
+    }
+
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
@@ -609,6 +628,7 @@ void Settings::saveSettings(){
     settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
     settings.setValue("MenuItemCount",                  m_MenuItemCount);
     settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
+    settings.setValue("ShowCoCount",                    m_showCoCount);
     settings.endGroup();
 
     // network

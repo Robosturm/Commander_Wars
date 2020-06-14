@@ -45,7 +45,14 @@ void PlayerInfo::updateData()
     Player* pViewPlayer = pMap->getCurrentViewPlayer();
     qint32 yPos = 0;
     qint32 currentPlayer = playerIdx;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+
+    qint32 count = pMap->getPlayerCount();
+    if (Settings::getShowCoCount() > 0 &&
+        Settings::getShowCoCount() < pMap->getPlayerCount())
+    {
+        count = Settings::getShowCoCount();
+    }
+    for (qint32 i = 0; i < count; i++)
     {
         currentPlayer = playerIdx + i;
         if (currentPlayer >= pMap->getPlayerCount())

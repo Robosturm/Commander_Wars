@@ -8,9 +8,9 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("black_boat",  false,
-                          BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("black_boat+mask",  true,
-                          BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20));
+                          BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), -1);
+        sprite.loadSpriteV2("black_boat+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), -1);
     };
 };
 

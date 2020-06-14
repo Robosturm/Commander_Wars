@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("black_bomb",  false,
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40));
-        sprite.loadSprite("black_bomb+mask",  true,
+        sprite.loadSpriteV2("black_bomb+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40));
     };
 };
