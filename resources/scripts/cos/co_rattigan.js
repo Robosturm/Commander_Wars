@@ -159,7 +159,7 @@ var Constructor = function()
                 {
                     if (count > 0)
                     {
-                        return 30;
+                        return 50;
                     }
                     return 0;
                 }
@@ -252,8 +252,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 30% increased firepower against large regiments of units.");
+        return qsTr("\nGlobal Effect: \nUnits have increased firepower against large regiments of units and reduced firepower against lone units.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower against large regiments of units.");
     };
     this.getPowerDescription = function()
     {

@@ -261,7 +261,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return 15;
                 }
         }
     };
@@ -332,7 +332,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional 10% firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
     this.getPowerDescription = function()
     {

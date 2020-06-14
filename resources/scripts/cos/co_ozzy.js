@@ -160,7 +160,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 40;
+                    return 50;
                 }
                 break;
         }
@@ -187,7 +187,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effect.") +
-               qsTr("\n\nCO Zone Effect: \nDefense is increased by 40%.");
+               qsTr("\n\nCO Zone Effect: \nDefense is increased.");
     };
     this.getPowerDescription = function()
     {

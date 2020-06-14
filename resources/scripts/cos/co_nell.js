@@ -177,7 +177,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 15% Luck.");
+               qsTr("\n\nCO Zone Effect: \nUnits have more luck.");
     };
     this.getPowerDescription = function()
     {

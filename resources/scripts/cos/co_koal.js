@@ -138,13 +138,13 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (isStreet)
                     {
-                        return 40;
+                        return 70;
                     }
                     return 10;
                 case GameEnums.PowerMode_Power:
                     if (isStreet)
                     {
-                        return 30;
+                        return 50;
                     }
                     return 10;
                 default:
@@ -152,7 +152,7 @@ var Constructor = function()
                     {
                         if (isStreet)
                         {
-                            return 30;
+                            return 50;
                         }
                         return 10;
                     }
@@ -208,7 +208,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 30% increased firepower on street.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain increased firepower on street.");
     };
     this.getPowerDescription = function()
     {

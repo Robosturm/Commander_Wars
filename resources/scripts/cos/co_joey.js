@@ -130,7 +130,7 @@ var Constructor = function()
                     }
                     else if (attackerValue < defenderValue)
                     {
-                        return 40;
+                        return 60;
                     }
                     else
                     {
@@ -143,7 +143,7 @@ var Constructor = function()
                     }
                     else if (attackerValue < defenderValue)
                     {
-                        return 40;
+                        return 60;
                     }
                     else
                     {
@@ -162,7 +162,7 @@ var Constructor = function()
                     {
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            return 30;
+                            return 60;
                         }
                         return 10;
                     }
@@ -260,8 +260,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.") +
-               qsTr("\n\nCO Zone Effect: \nUnits are 30% stronger when engaging stronger units");
+        return qsTr("\nGlobal Effect: \nUnits are stronger when engaging stronger units, but firepower is reduced by when engaging a weaker unit.") +
+               qsTr("\n\nCO Zone Effect: \nUnits are way stronger when engaging stronger units");
     };
     this.getPowerDescription = function()
     {

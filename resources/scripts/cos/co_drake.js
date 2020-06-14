@@ -165,7 +165,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 20;
+                    return 40;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
@@ -175,7 +175,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
-                    return 20;
+                    return 40;
                 }
                 else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
@@ -187,7 +187,7 @@ var Constructor = function()
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
-                        return 30;
+                        return 40;
                     }
                     else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
@@ -256,8 +256,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger") +
-               qsTr("\n\nCO Zone Effect: \nNaval units have 30% increased firepower.");
+        return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are weaker and Sea units stronger") +
+               qsTr("\n\nCO Zone Effect: \nNaval units have ncreased firepower.");
     };
     this.getPowerDescription = function()
     {

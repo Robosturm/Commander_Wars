@@ -171,9 +171,13 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     return 2;
                 default:
-                    return 1;
+                    if (co.inCORange(Qt.point(posX, posY), unit))
+                    {
+                        return 2;
+                    }
             }
         }
+        return 0;
     };
     this.getRepairBonus = function(co, unit, posX, posY)
     {
@@ -202,7 +206,7 @@ var Constructor = function()
                     case GameEnums.PowerMode_Power:
                         if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                         {
-                            return 30;
+                            return 50;
                         }
                         return 10;
                     default:
@@ -210,7 +214,7 @@ var Constructor = function()
                         {
                             if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                             {
-                                return 30;
+                                return 50;
                             }
                             return 10;
                         }
@@ -250,12 +254,12 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain an additional 30% firepower on natural terrain.");
+        return qsTr("\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain an additional firepower on natural terrain and increased terrain defence stars.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Units on natural terrain restore three HP of health. Effects of natural terrain are increased by one star.");
+        return qsTr("Units on natural terrain restore three HP of health. Effects of natural terrain are increased.");
     };
     this.getPowerName = function()
     {
@@ -263,7 +267,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased by one star.");
+        return qsTr("Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased.");
     };
     this.getSuperPowerName = function()
     {

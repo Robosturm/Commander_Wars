@@ -140,7 +140,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (nearMountains === true)
                 {
-                    return 50;
+                    return 80;
                 }
                 else
                 {
@@ -149,7 +149,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (nearMountains === true)
                 {
-                    return 50;
+                    return 70;
                 }
                 else
                 {
@@ -160,7 +160,7 @@ var Constructor = function()
                 {
                     if (nearMountains === true)
                     {
-                        return 40;
+                        return 70;
                     }
                     return 10;
                 }
@@ -261,7 +261,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain an additional 40% firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain additional firepower.");
     };
     this.getPowerDescription = function()
     {

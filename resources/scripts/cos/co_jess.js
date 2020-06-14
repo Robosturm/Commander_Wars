@@ -170,7 +170,7 @@ var Constructor = function()
                         (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
                     {
 
-                        return 30;
+                        return 40;
                     }
                     else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
                              (attacker.getUnitType() === GameEnums.UnitType_Naval))
@@ -179,10 +179,15 @@ var Constructor = function()
                     }
                     return 10;
                 }
-
                 break;
         }
-        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+        if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
+            (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+            (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
+        {
+            return 10;
+        }
+        else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
             (attacker.getUnitType() === GameEnums.UnitType_Naval))
         {
             return -10;
@@ -242,8 +247,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nAir and Sea Units are 10% weaker and Ground Units have 10% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nGround Units have 30% increased firepower.");
+        return qsTr("\nGlobal Effect: \nAir and Sea Units are weaker and Ground Units have increased firepower.") +
+               qsTr("\n\nCO Zone Effect: \nGround Units have increased firepower.");
     };
     this.getPowerDescription = function()
     {

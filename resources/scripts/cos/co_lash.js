@@ -136,13 +136,13 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     if (attacker.useTerrainDefense())
                     {
-                        return terrainDefense * 10 + 10;
+                        return terrainDefense * 15 + 10;
                     }
                     return 10;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return terrainDefense * 10 + 10;
+                        return terrainDefense * 15 + 10;
                     }
                     break;
                 }
@@ -222,7 +222,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nNeo Spider Tank\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 10% increased firepower per defense star.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain increased firepower per defense star.");
     };
     this.getPowerDescription = function()
     {

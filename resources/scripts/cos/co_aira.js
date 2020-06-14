@@ -196,7 +196,7 @@ var Constructor = function()
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return 10;
+                return 20;
             }
             return 0;
         };
@@ -232,7 +232,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional 20% firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
     this.getPowerDescription = function()
     {

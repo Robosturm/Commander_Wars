@@ -126,7 +126,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return 20;
                 }
                 break;
         }
@@ -174,7 +174,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional 10% firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
     this.getPowerDescription = function()
     {

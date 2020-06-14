@@ -122,13 +122,13 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    return 40;
+                    return 80;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
                 if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    return 40;
+                    return 80;
                 }
                 return 10;
             default:
@@ -136,7 +136,7 @@ var Constructor = function()
                 {
                     if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                     {
-                        return 40;
+                        return 80;
                     }
                     return 10;
                 }
@@ -221,7 +221,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
-               qsTr("\n\nCO Zone Effect: \nHovercrafts gain a 40% firepower boost.");
+               qsTr("\n\nCO Zone Effect: \nHovercrafts gain a firepower boost.");
     };
     this.getPowerDescription = function()
     {

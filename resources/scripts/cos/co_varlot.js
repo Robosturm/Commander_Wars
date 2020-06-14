@@ -189,7 +189,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return 20;
         }
         return 0;
     };
@@ -245,7 +245,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nIncome is reduced for buildings he captures.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 20% increased firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
     };
     this.getPowerDescription = function()
     {

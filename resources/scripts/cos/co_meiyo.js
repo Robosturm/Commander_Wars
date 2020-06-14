@@ -173,13 +173,13 @@ var Constructor = function()
                 switch (attacker.getUnitRank())
                 {
                 case 0:
-                    return 5;
+                    return 10;
                 case 1:
-                    return 15;
-                case 2:
                     return 20;
-                default:
+                case 2:
                     return 30;
+                default:
+                    return 50;
                 }
             }
             else
@@ -235,11 +235,11 @@ var Constructor = function()
                 case 0:
                     return 10;
                 case 1:
-                    return 15;
-                case 2:
                     return 20;
-                default:
+                case 2:
                     return 30;
+                default:
+                    return 50;
                 }
             }
             else
@@ -277,8 +277,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnit Ranks are 50% more effective. Units without a Rank loose 5% firepower.") +
-                qsTr("\n\nCO Zone Effect: \nUnit Ranks are 100% more effective.");
+        return qsTr("\nGlobal Effect: \nUnit Ranks are more effective. Units without a Rank loose firepower.") +
+                qsTr("\n\nCO Zone Effect: \nUnit Ranks are way more effective.");
     };
     this.getPowerDescription = function()
     {

@@ -213,7 +213,7 @@ var Constructor = function()
                     {
                         if (building !== null)
                         {
-                            return 50;
+                            return 70;
                         }
                         return 10;
                     }
@@ -255,7 +255,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits on buildings have 50% increased firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits on buildings have increased firepower.");
     };
     this.getPowerDescription = function()
     {

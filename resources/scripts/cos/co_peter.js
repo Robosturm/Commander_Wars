@@ -150,7 +150,7 @@ var Constructor = function()
         case GameEnums.PowerMode_Superpower:
             if (defender.getBaseMaxRange() === 1)
             {
-                bonus += 40;
+                bonus += 60;
             }
             bonus += 10;
             break;
@@ -166,7 +166,7 @@ var Constructor = function()
             {
                 if (defender.getBaseMaxRange() === 1)
                 {
-                    bonus = 20;
+                    bonus = 50;
                 }
                 bonus += 10;
             }
@@ -211,8 +211,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nDirect Units have 7% increased firepower and loose additional 5% firepower per terrain star.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units have 30% increased firepower.");
+        return qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
     };
     this.getPowerDescription = function()
     {

@@ -141,7 +141,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 25;
+        return 30;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -172,8 +172,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have 20% reduced defense and 25% increased firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 50% offensive bonus and 10% defensive malus.");
+        return qsTr("\nGlobal Effect: \nUnits have reduced defense and increased firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have high offensive bonus and a defensive malus.");
     };
     this.getPowerDescription = function()
     {

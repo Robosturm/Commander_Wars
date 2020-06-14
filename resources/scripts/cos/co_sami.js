@@ -158,7 +158,7 @@ var Constructor = function()
                 {
                     if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
-                        return 40;
+                        return 50;
                     }
                     else if (attacker.getBaseMaxRange() === 1)
                     {
@@ -243,8 +243,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.") +
-               qsTr("\n\nCO Zone Effect: \nInfantry Units have 40% increased firepower.");
+        return qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.") +
+               qsTr("\n\nCO Zone Effect: \nInfantry Units have increased firepower.");
     };
     this.getPowerDescription = function()
     {

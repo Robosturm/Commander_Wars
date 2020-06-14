@@ -145,9 +145,9 @@ var Constructor = function()
                             map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                         {
                             // apply sandstorm buff :)
-                            return 45;
+                            return 70;
                         }
-                        return 10;
+                        return 20;
                     }
                     break;
             }
@@ -166,7 +166,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return 20;
         }
         return 0;
     };
@@ -214,8 +214,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and have 10% increased firepower during sandstorm.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 30% increased firepower during sandstorm.");
+        return qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and have increased firepower during sandstorm.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower during sandstorm.");
     };
     this.getPowerDescription = function()
     {

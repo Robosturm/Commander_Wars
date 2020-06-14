@@ -219,7 +219,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by 10% in doing so. Normal attacks are 10% stronger.");
+               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by doing so. Normal attacks are stronger.");
     };
     this.getPowerDescription = function()
     {

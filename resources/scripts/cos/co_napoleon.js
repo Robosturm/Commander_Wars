@@ -119,13 +119,13 @@ var Constructor = function()
             {
                 terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
             }
-            return terrainDefense * 10 + 10;
+            return terrainDefense * 10 + 20;
         case GameEnums.PowerMode_Power:
-            return 10;
+            return 20;
         default:
             if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
-                return 10;
+                return 20;
             }
             break;
         }
@@ -197,11 +197,11 @@ var Constructor = function()
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
-                        return 45;
+                        return 60;
                     }
                     else
                     {
-                        return 25;
+                        return 40;
                     }
                 }
                 break;
@@ -245,7 +245,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDefense is increased by 25% and by 45% against indirect units.");
+               qsTr("\n\nCO Zone Effect: \nDefense is increased and even more against indirect units.");
     };
     this.getPowerDescription = function()
     {

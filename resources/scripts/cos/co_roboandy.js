@@ -125,11 +125,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return co.getPowerFilled() * 4 + 10;
+                    return co.getPowerFilled() * 10 + 10;
                 }
                 break;
         }
-        return co.getPowerFilled();
+        return co.getPowerFilled() * 3;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender)
@@ -153,7 +153,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return co.getPowerFilled();
+                    return co.getPowerFilled() * 2;
                 }
                 break;
         }
@@ -216,8 +216,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain 1% firepower and 1% misfortune per star.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 4% firepower and 1% misfortune per star.");
+        return qsTr("\nGlobal Effect: \nUnits gain irepower and misfortune per star.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower and misfortune per star.");
     };
     this.getPowerDescription = function()
     {

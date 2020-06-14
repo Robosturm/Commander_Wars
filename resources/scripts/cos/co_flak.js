@@ -197,8 +197,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have 10% Luck and 5% Misfortune") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 25% Luck and 10% Misfortune");
+        return qsTr("\nGlobal Effect: \nUnits have more luck and misfortune") +
+               qsTr("\n\nCO Zone Effect: \nUnits have even more luck and misfortune");
     };
     this.getPowerDescription = function()
     {

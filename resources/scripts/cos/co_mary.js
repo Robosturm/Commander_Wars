@@ -201,7 +201,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return 20;
                 }
                 return 0;
         }
@@ -317,7 +317,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 10% firepower and defense.");
+               qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
     };
     this.getPowerDescription = function()
     {

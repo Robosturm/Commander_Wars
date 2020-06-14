@@ -161,7 +161,7 @@ var Constructor = function()
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return 35;
+                        return 45;
                     }
                     return 15;
                 }
@@ -189,6 +189,7 @@ var Constructor = function()
         {
             return -1;
         }
+        return 0;
     };
     this.getCOArmy = function()
     {
@@ -235,8 +236,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nDirect Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain 35% additional firepower.");
+        return qsTr("\nGlobal Effect: \nDirect Units gain additional firepower and indirect Units loose firepower and 1 firerange.") +
+               qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower.");
     };
     this.getPowerDescription = function()
     {

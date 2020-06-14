@@ -196,7 +196,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 20% increased defense against indirect units. Units gain additional 5% firepower and defense per Comtower.");
+               qsTr("\n\nCO Zone Effect: \nUnits have increased defense against indirect units. Units gain additional firepower and defense per Comtower.");
     };
     this.getPowerDescription = function()
     {

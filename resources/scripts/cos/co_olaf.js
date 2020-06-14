@@ -135,7 +135,7 @@ var Constructor = function()
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
                         // apply snow buff :)
-                        return 50;
+                        return 60;
                     }
                     else
                     {
@@ -145,7 +145,7 @@ var Constructor = function()
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
                         // apply snow buff :)
-                        return 50;
+                        return 60;
                     }
                     else
                     {
@@ -157,7 +157,7 @@ var Constructor = function()
                         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                         {
                             // apply snow buff :)
-                            return 30;
+                            return 60;
                         }
                         return 10;
                     }
@@ -209,7 +209,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops.") +
-               qsTr("\n\nCO Zone Effect: \nFirepower is increased by 30% during Snow.");
+               qsTr("\n\nCO Zone Effect: \nFirepower is increased by during Snow.");
     };
     this.getPowerDescription = function()
     {

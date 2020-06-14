@@ -133,13 +133,13 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (terrainID === "PLAINS")
                     {
-                        return 50;
+                        return 90;
                     }
                     return 10;
                 case GameEnums.PowerMode_Power:
                     if (terrainID === "PLAINS")
                     {
-                        return 30;
+                        return 70;
                     }
                     return 10;
                 default:
@@ -147,7 +147,7 @@ var Constructor = function()
                     {
                         if (terrainID === "PLAINS")
                         {
-                            return 30;
+                            return 70;
                         }
                         return 10;
                     }
@@ -225,7 +225,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 20% increased defense and firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits have increased defense and firepower and high firepower on plains.");
     };
     this.getPowerDescription = function()
     {

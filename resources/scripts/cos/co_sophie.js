@@ -207,7 +207,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return 20;
                 }
                 break;
         }
@@ -219,7 +219,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return 20;
         }
         return 0;
     };
@@ -248,7 +248,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects") +
-               qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.");
+               qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal less damage. Units gain firepower and defense.");
     };
     this.getPowerDescription = function()
     {

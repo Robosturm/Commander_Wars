@@ -131,7 +131,7 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
-                        healPercent = 0.2;
+                        healPercent = 0.4;
                     }
                     break;
 
@@ -198,7 +198,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 20% lifesteal.");
+               qsTr("\n\nCO Zone Effect: \nUnits have lifesteal.");
     };
     this.getPowerDescription = function()
     {

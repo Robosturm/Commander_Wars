@@ -155,13 +155,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 20;
+                return 40;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return 40;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 30;
+                    return 40;
                 }
                 break;
         }
@@ -173,7 +173,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return 20;
         }
         return 0;
     };
@@ -198,7 +198,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 30% more firepower.");
+               qsTr("\n\nCO Zone Effect: \nUnits have more firepower.");
     };
     this.getPowerDescription = function()
     {

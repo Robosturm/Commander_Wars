@@ -202,7 +202,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 20;
+                    return 30;
                 }
                 break;
         }
@@ -246,8 +246,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain 1 additional movementpoint and have 20% reduced firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 20% defense and have 10% reduced firepower.");
+        return qsTr("\nGlobal Effect: \nUnits gain 1 additional movementpoint and have reduced firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain defense and have reduced firepower.");
     };
     this.getPowerDescription = function()
     {

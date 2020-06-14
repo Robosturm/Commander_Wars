@@ -150,7 +150,7 @@ var Constructor = function()
                 {
                     if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        return 30;
+                        return 40;
                     }
                     else if (attacker.getUnitID() === "K_HELI")
                     {
@@ -164,7 +164,7 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitID() === "K_HELI")
                 {
-                    return 25;
+                    return 30;
                 }
                 break;
         }
@@ -213,8 +213,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nCopters have 25% increased firepower and Naval Units are 10% weaker.") +
-               qsTr("\n\nCO Zone Effect: \nCopters have 50% increased firepower and infantries have 30% increased firepower.");
+        return qsTr("\nGlobal Effect: \nCopters have increased firepower and Naval Units are weaker.") +
+               qsTr("\n\nCO Zone Effect: \nCopters have way more firepower and infantries higher firepower as well.");
     };
     this.getPowerDescription = function()
     {

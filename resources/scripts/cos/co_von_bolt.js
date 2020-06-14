@@ -129,13 +129,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 30;
+                return 40;
             case GameEnums.PowerMode_Power:
-                return 30;
+                return 40;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 30;
+                    return 40;
                 }
                 break;
         }
@@ -148,13 +148,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 20;
+                return 40;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return 40;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 20;
+                    return 40;
                 }
                 break;
         }
@@ -193,7 +193,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 30% increased firepower and 20% increased defense.");
+               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and increased defense.");
     };
     this.getPowerDescription = function()
     {
