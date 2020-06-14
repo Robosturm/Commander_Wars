@@ -158,7 +158,6 @@ set(${PROJECT_NAME}_SRCS
         objects/checkbox.cpp
         objects/slider.cpp
         objects/multislider.cpp
-        objects/ingameinfobar.cpp
         objects/rotatingsprite.cpp
         objects/colorselectiondialog.cpp
         objects/buildlistdialog.cpp
@@ -264,7 +263,6 @@ set(${PROJECT_NAME}_SRCS
         game/terrainfindingsystem.cpp
         game/gameaction.cpp
         game/unitpathfindingsystem.cpp
-        game/playerinfo.cpp
         game/GameEnums.cpp
         game/gamerules.cpp
         game/victoryrule.cpp
@@ -290,6 +288,11 @@ set(${PROJECT_NAME}_SRCS
         game/battleanimation.cpp
         # replay/observer
         game/viewplayer.cpp
+
+        #ui
+        game/ui/playerinfo.cpp
+        game/ui/ingameinfobar.cpp
+        game/ui/copowermeter.cpp
 
         # game input
         gameinput/basegameinputif.cpp

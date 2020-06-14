@@ -118,6 +118,9 @@ COInfoActor::COInfoActor(qint32 width)
     m_InfoText->setWidth(m_pCurrentCO->getX() - 50);
     addChild(m_InfoText);
 
+    m_pCoPowermeter = new CoPowermeter(nullptr);
+    addChild(m_pCoPowermeter);
+
     m_PowerSprite = new oxygine::Sprite();
     m_PowerSprite->setResAnim(pCOSpriteManager->getResAnim("power"));
     m_PowerSprite->setScale(2.5f);
@@ -163,7 +166,7 @@ COInfoActor::COInfoActor(qint32 width)
     m_GlobalBoosts->setStyle(style);
     m_GlobalBoosts->setHtmlText(tr("Global Boosts"));
     m_GlobalBoosts->setX(10);
-    addChild(m_GlobalBoosts);
+    addChild(m_GlobalBoosts);    
 
     m_CoBoost = new oxygine::TextField();
     m_CoBoost->setStyle(style);
@@ -187,7 +190,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
     }
-    m_pCurrentCO->setResAnim(pAnim);
+    m_pCurrentCO->setResAnim(pAnim);    
 
     QString coName = "";
     QString coBio = "";
@@ -288,7 +291,12 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             coPower = value.toString();
         }
     }
-    m_PowerSprite->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
+
+    m_pCoPowermeter->setCO(pCO.get());
+    m_pCoPowermeter->drawPowerMeter();
+    m_pCoPowermeter->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
+    m_pCoPowermeter->setX(20);
+    m_PowerSprite->setY(m_pCoPowermeter->getY() + 40);
     m_Powername->setY(m_PowerSprite->getY());
     m_PowerDesc->setY(m_Powername->getY() + 40);
     m_Powername->setHtmlText(coPower);

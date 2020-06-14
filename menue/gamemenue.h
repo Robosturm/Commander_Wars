@@ -6,8 +6,8 @@
 #include <menue/ingamemenue.h>
 #include "game/gameaction.h"
 #include "game/gamemap.h"
-#include "game/playerinfo.h"
-#include "objects/ingameinfobar.h"
+#include "game/ui/playerinfo.h"
+#include "game/ui/ingameinfobar.h"
 #include "objects/label.h"
 
 #include "network/NetworkInterface.h"
@@ -50,10 +50,6 @@ public:
     {
         return m_IngameInfoBar.get();
     }
-    /**
-     * @brief autoScroll
-     */
-    virtual void autoScroll() override;
     Chat* getChat() const;
     /**
      * @brief getCurrentViewPlayer

@@ -596,27 +596,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="152"/>
+        <location filename="../objects/coinfoactor.cpp" line="155"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="158"/>
+        <location filename="../objects/coinfoactor.cpp" line="161"/>
         <source>Active Perks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="164"/>
+        <location filename="../objects/coinfoactor.cpp" line="167"/>
         <source>Global Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="170"/>
+        <location filename="../objects/coinfoactor.cpp" line="173"/>
         <source>CO Zone Boosts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="272"/>
+        <location filename="../objects/coinfoactor.cpp" line="275"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -922,6 +922,24 @@
     <message>
         <location filename="../objects/chat.cpp" line="82"/>
         <source>Message to send via chat.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CoPowermeter</name>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="120"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="151"/>
+        <source>Superpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/copowermeter.cpp" line="182"/>
+        <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2125,87 +2143,87 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="350"/>
+        <location filename="../menue/gamemenue.cpp" line="353"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="358"/>
+        <location filename="../menue/gamemenue.cpp" line="361"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="408"/>
+        <location filename="../menue/gamemenue.cpp" line="411"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="540"/>
+        <location filename="../menue/gamemenue.cpp" line="543"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="977"/>
+        <location filename="../menue/gamemenue.cpp" line="980"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="993"/>
+        <location filename="../menue/gamemenue.cpp" line="996"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1003"/>
+        <location filename="../menue/gamemenue.cpp" line="1006"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1365"/>
+        <location filename="../menue/gamemenue.cpp" line="1352"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1383"/>
+        <location filename="../menue/gamemenue.cpp" line="1370"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1412"/>
+        <location filename="../menue/gamemenue.cpp" line="1399"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2234,117 +2252,117 @@ This is immediatly applied.</source>
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="217"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="217"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="224"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="224"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="235"/>
-        <location filename="../objects/ingameinfobar.cpp" line="239"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="235"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="239"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="248"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="248"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="255"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="255"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="330"/>
-        <location filename="../objects/ingameinfobar.cpp" line="374"/>
-        <location filename="../objects/ingameinfobar.cpp" line="378"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="330"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="374"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="378"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="418"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="418"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="434"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="434"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="450"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="450"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="466"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="466"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="483"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="483"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="500"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="500"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="640"/>
-        <location filename="../objects/ingameinfobar.cpp" line="685"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="640"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="685"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="649"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="649"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="658"/>
-        <location filename="../objects/ingameinfobar.cpp" line="667"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="658"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="667"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="694"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="694"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="705"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="705"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="714"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="714"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="722"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="722"/>
         <source>Movepoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="730"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="730"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="742"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="742"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="760"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="760"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3470,24 +3488,6 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="228"/>
         <source>Dark Matters</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlayerInfo</name>
-    <message>
-        <location filename="../game/playerinfo.cpp" line="254"/>
-        <source>Power</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/playerinfo.cpp" line="285"/>
-        <source>Superpower</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/playerinfo.cpp" line="316"/>
-        <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

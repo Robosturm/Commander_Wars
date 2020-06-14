@@ -107,6 +107,8 @@ void GameMap::loadMapData()
     Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
+    m_zoom = 2.0f;
+    setScale(m_zoom);
     setPriority(static_cast<short>(Mainapp::ZOrder::Map));
 }
 
@@ -736,7 +738,7 @@ void GameMap::zoom(float zoom)
         // all fine
     }
     this->setScale(m_zoom);
-    moveMap(0, 0);
+    // moveMap(0, 0);
 }
 
 void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)

@@ -264,6 +264,7 @@ void GameMenue::loadGameMenue()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+
     m_pInstance = this;
     if (m_pNetworkInterface.get() != nullptr)
     {
@@ -283,6 +284,8 @@ void GameMenue::loadGameMenue()
     m_pPlayerinfo->updateData();
     addChild(m_IngameInfoBar);
     addChild(m_pPlayerinfo);
+
+    autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getWidth(), 50);
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);
@@ -1339,22 +1342,6 @@ qint64 GameMenue::getSyncCounter() const
 Chat* GameMenue::getChat() const
 {
     return m_pChat.get();
-}
-
-void GameMenue::autoScroll()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    if (QGuiApplication::focusWindow() == pApp &&
-        m_Focused)
-    {
-        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
-        if ((curPos.y() > m_pPlayerinfo->getScaledHeight() && curPos.x() < autoScrollBorder.y()) || // mouse is below the co info part
-            (curPos.y() < m_pPlayerinfo->getScaledHeight() && curPos.x() > autoScrollBorder.x() - autoScrollBorder.y() && curPos.x() < autoScrollBorder.x()) || // mouse is in the co info part
-            (curPos.x() > autoScrollBorder.x())) // default case
-        {
-            InGameMenue::autoScroll();
-        }
-    }
 }
 
 void GameMenue::showExitGame()

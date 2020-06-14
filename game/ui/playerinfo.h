@@ -25,8 +25,6 @@ public slots:
 
     void setFlippedX(bool value);
     bool getFlippedX() const;
-protected:
-    void drawPowerMeter(CO* pCO, qint32 yPos);
 private:
     QVector<oxygine::spSprite> playerBackground;
     bool m_flippedX{false};

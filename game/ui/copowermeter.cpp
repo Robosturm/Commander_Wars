@@ -1,165 +1,31 @@
-#include "playerinfo.h"
+#include "copowermeter.h"
 
 #include "game/gamemap.h"
-
 #include "resource_management/gamemanager.h"
-
-#include "resource_management/cospritemanager.h"
-
 #include "resource_management/fontmanager.h"
 
-#include "game/player.h"
-
-#include "game/co.h"
-
-PlayerInfo::PlayerInfo()
-    : QObject()
+CoPowermeter::CoPowermeter(CO* pCO)
+    : QObject(),
+      _pCO(pCO)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    this->setScale(1.0f);
+
 }
 
-void PlayerInfo::updateData()
+void CoPowermeter::drawPowerMeter()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    // clean up
-    this->removeChildren();
-    // recreate the ui
-    GameMap* pMap = GameMap::getInstance();
-    qint32 playerIdx = 0;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-    {
-        if (pMap->getCurrentPlayer() == pMap->getPlayer(i))
-        {
-            playerIdx = i;
-            break;
-        }
-    }
-    GameManager* pGameManager = GameManager::getInstance();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-
-    Player* pViewPlayer = pMap->getCurrentViewPlayer();
-    qint32 yPos = 0;
-    qint32 currentPlayer = playerIdx;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-    {
-        currentPlayer = playerIdx + i;
-        if (currentPlayer >= pMap->getPlayerCount())
-        {
-            currentPlayer -= pMap->getPlayerCount();
-        }
-
-        spPlayer pPlayer = pMap->getspPlayer(currentPlayer);
-        // draw player if he is alive
-        if (!pPlayer->getIsDefeated())
-        {
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            oxygine::ResAnim* pAnim = nullptr;
-            if (pPlayer->getCO(1) == nullptr)
-            {
-                pAnim = pGameManager->getResAnim("co");
-            }
-            else
-            {
-                pAnim = pGameManager->getResAnim("2co");
-            }
-            pSprite->setResAnim(pAnim);
-            QColor color = pPlayer->getColor();
-            pSprite->setColor(color);
-            pSprite->setY(yPos);
-            pSprite->setFlippedX(m_flippedX);
-            if (m_flippedX)
-            {
-                pSprite->setX(-pSprite->getScaledWidth());
-            }
-            this->addChild(pSprite);
-            qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
-
-            CO* pCO = pPlayer->getCO(0);
-            if (pCO != nullptr)
-            {
-                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower());
-            }
-            else
-            {
-                pAnim = pCOSpriteManager->getResAnim("no_co+info");
-            }
-            pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pAnim);
-            pSprite->setY(yPos);
-            pSprite->setScale(2.0f);
-            pSprite->setFlippedX(m_flippedX);
-            if (m_flippedX)
-            {
-                pSprite->setX(-pSprite->getScaledWidth());
-            }
-            this->addChild(pSprite);
-            if (pCO != nullptr)
-            {
-                drawPowerMeter(pCO, pSprite->getY());
-            }
-
-            if (pPlayer->getCO(1) != nullptr)
-            {
-                pCO = pPlayer->getCO(1);
-                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower());
-                pSprite = new oxygine::Sprite();
-                pSprite->setResAnim(pAnim);
-                pSprite->setY(yPos + 62);
-                drawPowerMeter(pCO, pSprite->getY());
-                pSprite->setScale(2.0f);
-                pSprite->setFlippedX(m_flippedX);
-                if (m_flippedX)
-                {
-                    pSprite->setX(-pSprite->getScaledWidth());
-                }
-                this->addChild(pSprite);
-            }
-            oxygine::TextStyle style = FontManager::getMainFont24();
-
-            oxygine::spTextField Text = new oxygine::TextField();
-
-            Text->setStyle(style);
-            QString number = QString::number(pPlayer->getFunds());
-            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
-            {
-                number = "?";
-            }
-            Text->setHtmlText(number);
-            Text->setY(yPos + 30);
-            if (m_flippedX)
-            {
-                Text->setX(-10 - Text->getTextRect().getWidth());
-            }
-            else
-            {
-                Text->setX(0);
-            }
-            this->addChild(Text);
-
-            yPos += itemHeigth;
-        }
-    }
-
-    setHeight(yPos);
-    pApp->continueThread();
-}
-
-void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
-{
-    if (!GameMap::getInstance()->getGameRules()->getNoPower())
+    removeChildren();
+    if ((GameMap::getInstance() == nullptr ||
+        !GameMap::getInstance()->getGameRules()->getNoPower()) &&
+        _pCO != nullptr)
     {
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = nullptr;
-        qint32 power = pCO->getPowerStars();
-        qint32 superpower = pCO->getSuperpowerStars();
-        bool usePower = pCO->canUsePower();
-        bool useSuperpower = pCO->canUseSuperpower();
-        float powerFilled = pCO->getPowerFilled();
-        switch (pCO->getPowerMode())
+        qint32 power = _pCO->getPowerStars();
+        qint32 superpower = _pCO->getSuperpowerStars();
+        bool usePower = _pCO->canUsePower();
+        bool useSuperpower = _pCO->canUseSuperpower();
+        float powerFilled = _pCO->getPowerFilled();
+        switch (_pCO->getPowerMode())
         {
             case GameEnums::PowerMode_Unknown:
             case GameEnums::PowerMode_Off:
@@ -186,8 +52,8 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                             pAnim = pGameManager->getResAnim("superpowerstar");
                         }
                         pSprite->setResAnim(pAnim);
-                        pSprite->setY(yPos + 7);
-                        qint32 x = 68 + power * 16 + 20 * (i2 - power);
+                        pSprite->setY(7);
+                        qint32 x = power * 16 + 20 * (i2 - power);
                         if (m_flippedX)
                         {
                             pSprite->setX(-x - 16);
@@ -224,8 +90,8 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                             pAnim = pGameManager->getResAnim("powerstar");
                         }
                         pSprite->setResAnim(pAnim);
-                        pSprite->setY(yPos + 8);
-                        qint32 x = 68 + i2 * 16;
+                        pSprite->setY(8);
+                        qint32 x = i2 * 16;
                         if (m_flippedX)
                         {
                             pSprite->setX(-x - 16);
@@ -252,14 +118,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Power"));
-                Text->setY(yPos);
+                Text->setY(0);
                 if (m_flippedX)
                 {
-                    Text->setX(-78 - Text->getTextRect().getWidth());
+                    Text->setX(-10 - Text->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(68);
+                    Text->setX(0);
                 }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -283,14 +149,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Superpower"));
-                Text->setY(yPos);
+                Text->setY(0);
                 if (m_flippedX)
                 {
-                    Text->setX(-78 - Text->getTextRect().getWidth());
+                    Text->setX(-10 - Text->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(68);
+                    Text->setX(0);
                 }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -314,14 +180,14 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Tagpower"));
-                Text->setY(yPos - 4);
+                Text->setY(- 4);
                 if (m_flippedX)
                 {
-                    Text->setX(-78 - Text->getTextRect().getWidth());
+                    Text->setX(-10 - Text->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(68);
+                    Text->setX(0);
                 }
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -342,12 +208,22 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
     }
 }
 
-bool PlayerInfo::getFlippedX() const
+CO *CoPowermeter::getCO() const
+{
+    return _pCO;
+}
+
+void CoPowermeter::setCO(CO *pCO)
+{
+    _pCO = pCO;
+}
+
+bool CoPowermeter::getFlippedX() const
 {
     return m_flippedX;
 }
 
-void PlayerInfo::setFlippedX(bool value)
+void CoPowermeter::setFlippedX(bool value)
 {
     m_flippedX = value;
 }

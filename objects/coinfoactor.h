@@ -9,6 +9,7 @@
 
 #include "game/player.h"
 #include "game/co.h"
+#include "game/ui/copowermeter.h"
 
 class COInfoActor;
 typedef oxygine::intrusive_ptr<COInfoActor> spCOInfoActor;
@@ -59,6 +60,8 @@ protected:
      */
     void showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y);
 protected:
+    spCoPowermeter m_pCoPowermeter{nullptr};
+
     oxygine::spSprite m_pCurrentCO;
 
     oxygine::spTextField m_COName;

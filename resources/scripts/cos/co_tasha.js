@@ -98,10 +98,10 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+                audio.addMusic("resources/music/cos/power_awdc.mp3", 992, 45321);
                 break;
             case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+                audio.addMusic("resources/music/cos/power_awdc.mp3", 1505, 49515);
                 break;
             case GameEnums.PowerMode_Tagpower:
                 audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
