@@ -804,6 +804,23 @@ void OptionMenue::showSettings()
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Sprite Aliasing: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked ingame sprites will be interpolated instead of scaling each pixel."));
+    pCheckbox->setChecked(Settings::getSpriteFilter());
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setSpriteFilter(value);
+        pApp->applyFilter(value);
+    });
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Audio Settings"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -936,7 +953,7 @@ void OptionMenue::showSettings()
     pTextfield->setHtmlText(tr("Record Games: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox = new Checkbox();
     pCheckbox->setTooltipText(tr("If checked games will be recorded and you can rewatch them in the replay section."));
     pCheckbox->setChecked(Settings::getRecord());
     pCheckbox->setPosition(sliderOffset - 130, y);

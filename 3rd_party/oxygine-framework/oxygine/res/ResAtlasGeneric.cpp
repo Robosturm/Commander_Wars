@@ -194,7 +194,9 @@ namespace oxygine
 
 
         if ((int)_atlasses.size() > _current)
+        {
             ad.texture = _atlasses[_current].base;
+        }
         else
         {
             ad.texture = IVideoDriver::instance->createTexture();

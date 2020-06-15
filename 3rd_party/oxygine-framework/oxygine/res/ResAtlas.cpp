@@ -52,6 +52,28 @@ namespace oxygine
         setNode(rs, node);
     }
 
+    bool ResAtlas::getLinearFilter() const
+    {
+        return _linearFilter;
+    }
+
+    void ResAtlas::setLinearFilter(bool linearFilter)
+    {
+        _linearFilter = linearFilter;
+        // apply filter
+        for (auto & atlas : _atlasses)
+        {
+            if (atlas.alpha.get() != nullptr)
+            {
+                atlas.alpha->setLinearFilter(linearFilter);
+            }
+            if (atlas.base.get() != nullptr)
+            {
+                atlas.base->setLinearFilter(linearFilter);
+            }
+        }
+    }
+
     void ResAtlas::addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, int w, int h)
     {
         atlas atl;

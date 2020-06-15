@@ -25,7 +25,9 @@ public:
 
     enum class Priorities
     {
+        Outline = 1,
         Waiting = 10,
+        OutlineWaiting,
         Icons = 20
     };
 

@@ -234,6 +234,8 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setResAnim(pAnim);
             pWaitSprite->setResAnim(pAnim);
         }
+
+        pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
         // repaint the unit?
         if (mode == GameEnums::Recoloring_Mask)
         {
@@ -247,6 +249,11 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setColorTable(m_pOwner->getColorTableAnim());
             pWaitSprite->setColorTable(m_pOwner->getColorTableAnim());
         }
+        else
+        {
+            pSprite->setPriority(static_cast<short>(Priorities::Outline));
+            pWaitSprite->setPriority(static_cast<short>(Priorities::OutlineWaiting));
+        }
         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
         this->addChild(pSprite);
@@ -257,7 +264,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         pWaitSprite->addTween(tweenWait);
         pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-        pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
+
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);

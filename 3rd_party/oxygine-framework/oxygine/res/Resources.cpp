@@ -322,4 +322,22 @@ namespace oxygine
         }
         return nullptr;
     }
+
+    void Resources::setLinearFilter(bool linearFilter)
+    {
+        for (auto & res : _resources)
+        {
+            res->setLinearFilter(linearFilter);
+        }
+    }
+
+    bool Resources::getLinearFilter() const
+    {
+        if (_resources.size() > 0)
+        {
+            return _resources[0]->getLinearFilter();
+        }
+        return false;
+    }
 }
+

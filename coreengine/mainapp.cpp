@@ -59,6 +59,7 @@ Mainapp::Mainapp()
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
+    connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
 }
 
 Mainapp::~Mainapp()
@@ -301,11 +302,12 @@ void Mainapp::loadRessources()
     ObjectManager::getInstance();
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
+    UnitSpriteManager::getInstance()->setLinearFilter(true);
     BattleAnimationManager::getInstance();
     COPerkManager::getInstance();
     WikiDatabase::getInstance();
     Userdata::getInstance();
-
+    applyFilter(Settings::getSpriteFilter());
     // start after ressource loading
     m_AudioWorker.setObjectName("AudioThread");
     m_Networkthread.setObjectName("NetworkThread");
@@ -330,6 +332,20 @@ void Mainapp::loadRessources()
     emit m_Worker->sigShowMainwindow();
 }
 
+void Mainapp::applyFilter(bool filter)
+{
+    // load ressources by creating the singletons
+    BuildingSpriteManager::getInstance()->setLinearFilter(filter);
+    COSpriteManager::getInstance()->setLinearFilter(filter);
+    GameAnimationManager::getInstance()->setLinearFilter(filter);
+    GameManager::getInstance()->setLinearFilter(filter);
+    GameRuleManager::getInstance()->setLinearFilter(filter);
+    TerrainManager::getInstance()->setLinearFilter(filter);
+    UnitSpriteManager::getInstance()->setLinearFilter(filter);
+    BattleAnimationManager::getInstance()->setLinearFilter(filter);
+    COPerkManager::getInstance()->setLinearFilter(filter);
+    WikiDatabase::getInstance()->setLinearFilter(filter);
+}
 
 void Mainapp::changeScreenMode(qint32 mode)
 {

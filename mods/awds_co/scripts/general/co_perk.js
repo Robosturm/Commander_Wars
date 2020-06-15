@@ -1,4 +1,4 @@
-CO_PERK.isActive : function(co)
+CO_PERK.isActive = function(co)
 {
 	if (co.getIsCO0() === true)
     {

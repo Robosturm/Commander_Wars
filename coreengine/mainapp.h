@@ -104,6 +104,12 @@ public:
 
     static qint32 randIntBase(qint32 low, qint32 high);
 public slots:
+    void changeScreenMode(qint32 mode);
+    void changeScreenSize(qint32 width, qint32 heigth);
+    void changePosition(QPoint pos, bool invert);
+    qint32 getScreenMode();
+
+    void applyFilter(bool filter);
     /**
      * @brief seed
      * @param seed
@@ -169,8 +175,6 @@ public slots:
      * @param log
      */
     static void showCrashReport(QString log);
-protected:
-    virtual void keyPressEvent(QKeyEvent *event) override;
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
 
@@ -190,11 +194,13 @@ signals:
      * @param log
      */
     void sigShowCrashReport(QString log);
-public slots:
-    void changeScreenMode(qint32 mode);
-    void changeScreenSize(qint32 width, qint32 heigth);
-    void changePosition(QPoint pos, bool invert);
-    qint32 getScreenMode();
+    /**
+     * @brief sigApplyFilter
+     * @param filter
+     */
+    void sigApplyFilter(bool filter);
+protected:
+    virtual void keyPressEvent(QKeyEvent *event) override;
 private:
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;

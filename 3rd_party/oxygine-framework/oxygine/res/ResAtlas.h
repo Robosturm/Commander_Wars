@@ -28,6 +28,9 @@ namespace oxygine
         const atlas& getAtlas(int i) const {return _atlasses[i];}
         int          getNum() const { return (int)_atlasses.size(); }
 
+        virtual void setLinearFilter(bool linearFilter) override;
+        virtual bool getLinearFilter() const override;
+
     protected:
         void _restore(Restorable* r, void* user);
 

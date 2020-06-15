@@ -40,6 +40,10 @@ public:
     static void setLogActions(bool LogActions);
 
 public slots:
+
+    static bool getSpriteFilter();
+    static void setSpriteFilter(bool spriteFilter);
+
     static qint32 getShowCoCount();
     static void setShowCoCount(const qint32 &showCoCount);
 
@@ -315,6 +319,7 @@ private:
     static float m_mouseSensitivity;
     static bool m_record;
     static qint32 m_showCoCount;
+    static bool m_spriteFilter;
 
     // internal members
     static Settings* m_pInstance;

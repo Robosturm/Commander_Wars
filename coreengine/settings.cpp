@@ -72,6 +72,7 @@ bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
+bool Settings::m_spriteFilter = true;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -95,6 +96,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getSpriteFilter()
+{
+    return m_spriteFilter;
+}
+
+void Settings::setSpriteFilter(bool spriteFilter)
+{
+    m_spriteFilter = spriteFilter;
 }
 
 qint32 Settings::getShowCoCount()
@@ -481,6 +492,7 @@ void Settings::loadSettings()
         m_MenuItemCount = 13;
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
+    m_StaticMarkedFields = settings.value("SpriteFilter", true).toBool();
 
     m_showCoCount = settings.value("ShowCoCount", 0).toInt(&ok);
     if(!ok || m_showCoCount < 0)
@@ -513,7 +525,7 @@ void Settings::loadSettings()
     settings.endGroup();
 
     // sounds
-    settings.beginGroup("Auto Saving");
+    settings.beginGroup("Autosaving");
     autoSavingCylceTime = std::chrono::seconds(settings.value("AutoSavingTime", 0).toUInt(&ok));
     if (!ok)
     {
@@ -524,6 +536,7 @@ void Settings::loadSettings()
     {
         autoSavingCycle = 0;
     }
+    settings.endGroup();
 
     // mods
     settings.beginGroup("Mods");
@@ -629,6 +642,7 @@ void Settings::saveSettings(){
     settings.setValue("MenuItemCount",                  m_MenuItemCount);
     settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
     settings.setValue("ShowCoCount",                    m_showCoCount);
+    settings.setValue("SpriteFilter",                   m_spriteFilter);
     settings.endGroup();
 
     // network
@@ -639,7 +653,7 @@ void Settings::saveSettings(){
     settings.setValue("Server",                    m_Server);
     settings.endGroup();
 
-    settings.beginGroup("Auto Saving");
+    settings.beginGroup("Autosaving");
     settings.setValue("AutoSavingTime",           autoSavingCylceTime.count());
     settings.setValue("AutoSavingCycle",                  autoSavingCycle);
     settings.endGroup();
