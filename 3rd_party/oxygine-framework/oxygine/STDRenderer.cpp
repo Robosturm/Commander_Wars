@@ -262,7 +262,7 @@ namespace oxygine
         white = IVideoDriver::instance->createTexture();
         white->setName("!renderer. white");
         white->init(im, false);
-        white->setLinearFilter(true);
+        white->setLinearFilter(GL_LINEAR);
         white->setClamp2Edge(false);
 
 
@@ -270,7 +270,7 @@ namespace oxygine
         invisible = IVideoDriver::instance->createTexture();
         invisible->setName("!renderer. invisible");
         invisible->init(im, false);
-        invisible->setLinearFilter(true);
+        invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
 
         _restored = true;

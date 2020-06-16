@@ -323,7 +323,7 @@ namespace oxygine
         return nullptr;
     }
 
-    void Resources::setLinearFilter(bool linearFilter)
+    void Resources::setLinearFilter(quint32 linearFilter)
     {
         for (auto & res : _resources)
         {
@@ -331,13 +331,13 @@ namespace oxygine
         }
     }
 
-    bool Resources::getLinearFilter() const
+    quint32 Resources::getLinearFilter() const
     {
         if (_resources.size() > 0)
         {
             return _resources[0]->getLinearFilter();
         }
-        return false;
+        return 0;
     }
 }
 

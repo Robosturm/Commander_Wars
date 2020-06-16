@@ -321,6 +321,16 @@ namespace oxygine
             _localScale.y = 1.0f;
     }
 
+    oxygine::RectF Sprite::getDestRecModifier() const
+    {
+        return m_DestRecModifier;
+    }
+
+    void Sprite::setDestRecModifier(const oxygine::RectF &DestRecModifier)
+    {
+        m_DestRecModifier = DestRecModifier;
+    }
+
     bool Sprite::getInvertFlipX() const
     {
         return invertFlipX;
@@ -341,6 +351,10 @@ namespace oxygine
         RectF r = _frame.getDestRect();
         r.pos = r.pos.mult(_localScale);
         r.size = r.size.mult(_localScale);
+
+        r.pos += m_DestRecModifier.pos;
+        r.size += m_DestRecModifier.size;
+
         return r;
     }
 

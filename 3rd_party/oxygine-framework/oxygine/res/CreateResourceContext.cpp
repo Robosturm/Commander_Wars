@@ -14,7 +14,7 @@ namespace oxygine
         return scontext;
     }
 
-    CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)
+    CreateTextureTask::CreateTextureTask(): linearFilter(GL_LINEAR), clamp2edge(true)
     {
     }
 

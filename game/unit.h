@@ -426,8 +426,9 @@ public slots:
     }
     /**
      * @brief refill fills up all ammo and fuel to max
+     * @param noMaterial if true material will not be refilled.
      */
-    void refill();
+    void refill(bool noMaterial = false);
 
     /**
      * @brief setHasMoved  changes if the unit has been moved or not

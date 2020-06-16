@@ -154,7 +154,7 @@ namespace oxygine
 
 
 
-    void ResAtlasGeneric::applyAtlas(atlas_data& ad, bool linear, bool clamp2edge)
+    void ResAtlasGeneric::applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge)
     {
         if (!ad.texture)
             return;
@@ -177,7 +177,7 @@ namespace oxygine
         mt->init(reg);
 
         CreateTextureTask task;
-        task.linearFilter = linear;
+        task.linearFilter = filter;
         task.clamp2edge = clamp2edge;
         task.src = mt;
         task.dest = ad.texture;

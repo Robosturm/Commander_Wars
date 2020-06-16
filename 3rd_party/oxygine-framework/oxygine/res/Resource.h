@@ -35,12 +35,12 @@ namespace oxygine
         static QString extractID(const QDomElement& node, QString file, QString def);
         static QString extractID(QString file);
 
-        virtual void setLinearFilter(bool)
+        virtual void setLinearFilter(quint32)
         {
         }
-        virtual bool getLinearFilter() const
+        virtual quint32 getLinearFilter() const
         {
-            return false;
+            return 0;
         }
     protected:
         static void setNode(Resource* res, const QDomElement& node) {res->_node = node;}

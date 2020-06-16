@@ -26,7 +26,7 @@ namespace oxygine
         ImageData lock(lock_flags, const Rect* src);
         void unlock();
 
-        void setLinearFilter(bool enable);
+        void setLinearFilter(quint32 filter) override;
         void setClamp2Edge(bool clamp2edge);
 
         void updateRegion(int x, int y, const ImageData& data);

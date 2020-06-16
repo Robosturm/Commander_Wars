@@ -121,7 +121,6 @@ public:
      * @return
      */
     bool isValid();
-
 public slots:
     /**
      * @brief getTerrainDescription

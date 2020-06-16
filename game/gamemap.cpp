@@ -1274,6 +1274,10 @@ void GameMap::startOfTurn(Player* pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    if (pPlayer != nullptr)
+    {
+        pPlayer->startOfTurn();
+    }
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
@@ -1305,10 +1309,6 @@ void GameMap::startOfTurn(Player* pPlayer)
                 fields.at(y)->at(x)->startOfDay();
             }
         }
-    }
-    if (pPlayer != nullptr)
-    {
-        pPlayer->startOfTurn();
     }
     pApp->continueThread();
 }

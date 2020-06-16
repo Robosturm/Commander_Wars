@@ -28,8 +28,8 @@ namespace oxygine
         const atlas& getAtlas(int i) const {return _atlasses[i];}
         int          getNum() const { return (int)_atlasses.size(); }
 
-        virtual void setLinearFilter(bool linearFilter) override;
-        virtual bool getLinearFilter() const override;
+        virtual void setLinearFilter(quint32 linearFilter) override;
+        virtual quint32 getLinearFilter() const override;
 
     protected:
         void _restore(Restorable* r, void* user);
@@ -43,7 +43,7 @@ namespace oxygine
 
     protected:
         //settings from xml
-        bool _linearFilter;
+        quint32 _linearFilter;
         bool _clamp2edge;
 
         void loadBase(QDomElement node);
@@ -54,7 +54,7 @@ namespace oxygine
         atlasses _atlasses;
     };
 
-    typedef void(*load_texture_hook)(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    typedef void(*load_texture_hook)(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-    void load_texture_internal(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

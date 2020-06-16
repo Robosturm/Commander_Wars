@@ -1888,11 +1888,17 @@ qint32 Unit::getY() const
     }
 }
 
-void Unit::refill()
+void Unit::refill(bool noMaterial)
 {
     setFuel(maxFuel);
-    setAmmo1(maxAmmo1);
-    setAmmo2(maxAmmo2);
+    if (!(noMaterial && weapon1ID.isEmpty()))
+    {
+        setAmmo1(maxAmmo1);
+    }
+    if (!(noMaterial && weapon2ID.isEmpty()))
+    {
+        setAmmo2(maxAmmo2);
+    }
 }
 
 void Unit::setHasMoved(bool value)

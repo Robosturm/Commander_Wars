@@ -72,7 +72,7 @@ bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
-bool Settings::m_spriteFilter = true;
+quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR ;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -98,12 +98,12 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
-bool Settings::getSpriteFilter()
+quint32 Settings::getSpriteFilter()
 {
     return m_spriteFilter;
 }
 
-void Settings::setSpriteFilter(bool spriteFilter)
+void Settings::setSpriteFilter(quint32 spriteFilter)
 {
     m_spriteFilter = spriteFilter;
 }

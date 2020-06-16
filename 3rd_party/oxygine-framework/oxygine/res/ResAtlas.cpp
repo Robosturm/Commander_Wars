@@ -14,7 +14,7 @@ namespace oxygine
         _hook = hook;
     }
 
-    void load_texture_internal(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spImage mt = new Image;
@@ -34,7 +34,7 @@ namespace oxygine
         load_context->createTexture(opt);
     }
 
-    void load_texture(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -52,12 +52,12 @@ namespace oxygine
         setNode(rs, node);
     }
 
-    bool ResAtlas::getLinearFilter() const
+    quint32 ResAtlas::getLinearFilter() const
     {
         return _linearFilter;
     }
 
-    void ResAtlas::setLinearFilter(bool linearFilter)
+    void ResAtlas::setLinearFilter(quint32 linearFilter)
     {
         _linearFilter = linearFilter;
         // apply filter
@@ -108,7 +108,7 @@ namespace oxygine
         return ra;
     }
 
-    ResAtlas::ResAtlas(): _linearFilter(true), _clamp2edge(true)
+    ResAtlas::ResAtlas(): _linearFilter(GL_LINEAR), _clamp2edge(true)
     {
 
     }
@@ -132,11 +132,18 @@ namespace oxygine
         if (value.type() == QVariant::Type::String &&
             !value.isNull())
         {
-            _linearFilter = value.toBool();
+            if (value.toBool())
+            {
+                _linearFilter = GL_LINEAR;
+            }
+            else
+            {
+                _linearFilter = GL_NEAREST;
+            }
         }
         else
         {
-            _linearFilter = true;
+            _linearFilter = GL_LINEAR;
         }
         value = QVariant(node.attribute("clamp2edge"));
         if (value.type() == QVariant::Type::String &&

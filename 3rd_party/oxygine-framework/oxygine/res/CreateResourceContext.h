@@ -70,7 +70,7 @@ namespace oxygine
 
         spImage src;
         spNativeTexture dest;
-        bool linearFilter;
+        quint32 linearFilter;
         bool clamp2edge;
 
         void ready() const;

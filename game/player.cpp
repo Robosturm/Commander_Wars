@@ -1603,6 +1603,7 @@ void Player::deserializeObject(QDataStream& pStream)
         {
             createTable(m_Color.darker(160));
         }
+        m_Color = m_colorTable.pixel(8, 0);
         Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
     }
 }

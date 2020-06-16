@@ -12,68 +12,68 @@ var PLAYER =
         var color = "#000000";
         switch (index)
         {
-            case 0:
-                color = "#ff5a00";
+            case 0: // os
+                color = "#f00008";
                 break;
-            case 1:
-                color = "#0068e8";
+            case 1: // bm
+                color = "#0098f8";
                 break;
-            case 2:
+            case 2: // ge
                 color = "#00c010";
                 break;
-            case 3:
-                color = "#f8c000";
+            case 3: // yc
+                color = "#d08000";
                 break;
-            case 4:
-                color = "#5f11b7";
+            case 4: // bh
+                color = "#6038a0";
                 break;
-            case 5:
-                color = "#2d2dd5";
+            case 5: // bg
+                color = "#5c5663";
                 break;
-            case 6:
-                color = "lightsteelblue";
+            case 6: // ma
+                color = "#797b78";
                 break;
-            case 7:
-                color = "coral";
+            case 7: // ac
+                color = "#e88613";
                 break;
-            case 8:
-                color = "peru";
+            case 8: // bd
+                color = "#bc8248";
                 break;
-            case 9:
-                color = "goldenrod";
+            case 9: // gs
+                color = "#bf901c";
                 break;                
-            case 10:
-                color = "magenta";
+            case 10: // pf
+                color = "#ff33cc";
                 break;                
-            case 11:
-                color = "teal";
+            case 11: // ti
+                color = "#17a195";
                 break;                
-            case 12:
-                color = "purple";
+            case 12: // dm
+                color = "#800080";
                 break;
             case 13:
-                color = "cyan";
+                color = "#01cbff";
                 break;
             case 14:
                 color = "#006400";
                 break;
             case 15:
-                color = "#FF0000";
+                color = "#ff0000";
                 break;
             case 16:
-                color = "firebrick";
+                color = "#c4443d";
                 break;
             case 17:
                 color = "#a29db9";
                 break;
             case 18:
-                color = "olive";
+                color = "#617c0e";
                 break;
             case 19:
-                color = "#0000FF";
+                color = "#2342ba";
                 break;
             case 20:
-                color = "silver";
+                color = "#85927b";
                 break;
             default:
                 // create a cool random color

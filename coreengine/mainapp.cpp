@@ -302,7 +302,6 @@ void Mainapp::loadRessources()
     ObjectManager::getInstance();
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
-    UnitSpriteManager::getInstance()->setLinearFilter(true);
     BattleAnimationManager::getInstance();
     COPerkManager::getInstance();
     WikiDatabase::getInstance();
@@ -332,7 +331,7 @@ void Mainapp::loadRessources()
     emit m_Worker->sigShowMainwindow();
 }
 
-void Mainapp::applyFilter(bool filter)
+void Mainapp::applyFilter(quint32 filter)
 {
     // load ressources by creating the singletons
     BuildingSpriteManager::getInstance()->setLinearFilter(filter);

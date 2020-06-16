@@ -68,7 +68,7 @@ namespace oxygine
 
     }
 
-    void NativeTextureNull::setLinearFilter(bool)
+    void NativeTextureNull::setLinearFilter(quint32 filter)
     {
 
     }

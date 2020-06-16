@@ -109,7 +109,7 @@ public slots:
     void changePosition(QPoint pos, bool invert);
     qint32 getScreenMode();
 
-    void applyFilter(bool filter);
+    void applyFilter(quint32 filter);
     /**
      * @brief seed
      * @param seed
@@ -198,7 +198,7 @@ signals:
      * @brief sigApplyFilter
      * @param filter
      */
-    void sigApplyFilter(bool filter);
+    void sigApplyFilter(quint32 filter);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
 private:

@@ -53,7 +53,7 @@ namespace oxygine
             dest->size = coordSize;
             dest->offset = offset;
             dest->index = i;
-            dest->normalized = true;
+            dest->normalized = false;
 
             offset += sizeof(float) * coordSize;
             ++i;

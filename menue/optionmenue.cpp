@@ -809,12 +809,20 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = new Checkbox();
     pCheckbox->setTooltipText(tr("If checked ingame sprites will be interpolated instead of scaling each pixel."));
-    pCheckbox->setChecked(Settings::getSpriteFilter());
+    pCheckbox->setChecked(Settings::getSpriteFilter() != GL_NEAREST);
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
-        Settings::setSpriteFilter(value);
-        pApp->applyFilter(value);
+        if (value)
+        {
+            Settings::setSpriteFilter(GL_NEAREST_MIPMAP_LINEAR);
+            pApp->applyFilter(GL_NEAREST_MIPMAP_LINEAR );
+        }
+        else
+        {
+            Settings::setSpriteFilter(GL_NEAREST);
+            pApp->applyFilter(GL_NEAREST);
+        }
     });
     m_pOptions->addItem(pCheckbox);
     y += 40;

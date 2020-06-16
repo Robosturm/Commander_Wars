@@ -49,7 +49,7 @@ CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 return 0;
             }
         default:
-            if (airUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 30;
             }

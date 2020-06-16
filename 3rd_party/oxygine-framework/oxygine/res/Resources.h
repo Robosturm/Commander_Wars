@@ -102,8 +102,8 @@ namespace oxygine
         resources& _getResources();
         resourcesMap& _getResourcesMap();
 
-        void setLinearFilter(bool linearFilter);
-        bool getLinearFilter() const;
+        void setLinearFilter(quint32 linearFilter);
+        quint32 getLinearFilter() const;
     protected:
         void updateName(QString filename);
         void _load(LoadResourcesContext* context) override;

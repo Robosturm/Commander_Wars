@@ -58,6 +58,8 @@ namespace oxygine
 
         void doRender(const RenderState&) override;
 
+        oxygine::RectF getDestRecModifier() const;
+        void setDestRecModifier(const oxygine::RectF &DestRecModifier);
 
     protected:
         enum
@@ -73,6 +75,8 @@ namespace oxygine
         Vector2 _localScale;
         AnimationFrame _frame;
         oxygine::spResAnim m_colorTable;
+
+        oxygine::RectF m_DestRecModifier;
 
         bool invertFlipX{false};
     };
