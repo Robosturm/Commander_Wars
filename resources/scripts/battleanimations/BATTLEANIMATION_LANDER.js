@@ -24,7 +24,7 @@ var Constructor = function()
         }
         sprite.loadSprite("lander+" + armyName,  false,
                           BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("lander+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
     };
 };

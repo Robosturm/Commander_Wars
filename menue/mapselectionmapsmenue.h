@@ -54,6 +54,7 @@ signals:
     void randomMap();
     void sigShowLoadRules();
     void sigShowSaveRules();
+    void sigShowSaveMap();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -88,6 +89,8 @@ public slots:
     void showSaveRules();
     void loadRules(QString filename);
     void saveRules(QString filename);
+    void showSaveMap();
+    void saveMap(QString filename);
 protected:
 
     // buttons
@@ -95,6 +98,7 @@ protected:
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
     oxygine::spButton m_pButtonBack;
+    oxygine::spButton m_pButtonSaveMap;
     oxygine::spButton m_pButtonSaveRules;
     oxygine::spButton m_pButtonLoadRules;
 

@@ -115,6 +115,15 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     });
     connect(this, &MapSelectionMapsMenue::sigShowSaveRules, this, &MapSelectionMapsMenue::showSaveRules, Qt::QueuedConnection);
 
+    m_pButtonSaveMap = ObjectManager::createButton(tr("Save Map"));
+    m_pButtonSaveMap->setPosition(m_pButtonBack->getX() + m_pButtonBack->getWidth() + 20, Settings::getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonSaveMap->attachTo(this);
+    m_pButtonSaveMap->setVisible(false);
+    m_pButtonSaveMap->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowSaveMap();
+    });
+    connect(this, &MapSelectionMapsMenue::sigShowSaveMap, this, &MapSelectionMapsMenue::showSaveMap, Qt::QueuedConnection);
 
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
@@ -340,6 +349,7 @@ void MapSelectionMapsMenue::showPlayerSelection()
 {
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
+    m_pButtonSaveMap->setVisible(true);
     m_pPlayerSelection->setVisible(true);
     m_pPlayerSelection->showPlayerSelection();
 }
@@ -348,6 +358,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 {
     m_pButtonStart->setVisible(false);
     m_pButtonNext->setVisible(true);
+    m_pButtonSaveMap->setVisible(false);
     m_pPlayerSelection->setVisible(false);
 }
 
@@ -471,6 +482,32 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         QDataStream stream(&file);
         GameMap* pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
+        file.close();
+    }
+    pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::showSaveMap()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.map");
+    QString path = QCoreApplication::applicationDirPath() + "/maps/";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
+}
+
+void MapSelectionMapsMenue::saveMap(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (filename.endsWith(".map"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        GameMap* pMap = GameMap::getInstance();
+        pMap->serializeObject(stream);
         file.close();
     }
     pApp->continueThread();

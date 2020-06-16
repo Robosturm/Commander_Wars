@@ -26,7 +26,7 @@ var Constructor = function()
         {
             sprite.loadSprite("submarine+hidden+" + armyName,  false,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
-            sprite.loadSprite("submarine+hidden+" + armyName + "+mask",  true,
+            sprite.loadSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Table,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
         }
         else

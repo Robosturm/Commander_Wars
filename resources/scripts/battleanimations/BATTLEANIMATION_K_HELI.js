@@ -29,7 +29,7 @@ var Constructor = function()
         }
         sprite.loadSprite("k_heli+" + armyName,  false,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
-        sprite.loadSprite("k_heli+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
     };
 

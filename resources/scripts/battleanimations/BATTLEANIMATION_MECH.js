@@ -26,7 +26,7 @@ var Constructor = function()
         {
             sprite.loadSprite("mech+" + armyName,  false,
                               BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-5, 5));
-            sprite.loadSprite("mech+" + armyName + "+mask",  true,
+            sprite.loadSpriteV2("mech+" + armyName + "+mask", GameEnums.Recoloring_Table,
                               BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-5, 5));
         }
         else

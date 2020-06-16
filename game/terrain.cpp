@@ -323,7 +323,7 @@ void Terrain::loadBaseTerrain(QString terrainID)
 
 void Terrain::loadBaseSprite(QString spriteID)
 {
-    const oxygine::RectF targetRectModifier = oxygine::RectF(0.5, 0.5, 0.5, 0.5f);
+    const oxygine::RectF targetRectModifier = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -538,7 +538,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
 
 void Terrain::loadOverlaySprite(QString spriteID)
 {
-    const oxygine::RectF targetRectModifier = oxygine::RectF(0.5, 0.5, 0.5, 0.5f);
+    const oxygine::RectF targetRectModifier = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
     oxygine::spSprite pSprite = new oxygine::Sprite();

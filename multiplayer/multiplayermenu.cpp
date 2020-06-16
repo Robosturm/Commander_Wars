@@ -444,6 +444,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << NetworkCommands::MAPDATA;
                 sendStream << file;
+                sendStream << scriptFile;
                 QFile mapFile(m_pMapSelectionView->getCurrentFile().filePath());
                 if (file.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
                 {
@@ -455,7 +456,6 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     sendStream << mapFile.readAll();
                     mapFile.close();
                 }
-                sendStream << scriptFile;
                 if (!scriptFile.isEmpty())
                 {
                     QFile script(scriptFile);
@@ -472,6 +472,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 QString mapFile;
                 stream >> mapFile;
+                QString scriptFile;
+                stream >> scriptFile;
                 GameMap* pNewMap = nullptr;
                 if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
                 {
@@ -479,11 +481,14 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 }
                 else
                 {
-                    QByteArray mapData;
-                    stream >> mapData;
                     QFile map(mapFile);
-                    if (!map.exists())
+                    QFile script(scriptFile);
+                    if (!map.exists() &&
+                        (scriptFile.isEmpty() ||
+                         !script.exists()))
                     {
+                        QByteArray mapData;
+                        stream >> mapData;
                         QFileInfo mapInfo(mapFile);
                         QDir dir;
                         QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
@@ -494,49 +499,27 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         {
                             mapFilestream << static_cast<quint8>(mapData[i]);
                         }
-                        map.close();
-                        QString scriptFile;
-                        stream >> scriptFile;
-                        QByteArray scriptData;
+                        map.close();                        
                         if (!scriptFile.isEmpty())
                         {
+                            QByteArray scriptData;
                             stream >> scriptData;
-                            QFile script(scriptFile);
-                            if (!script.exists())
+                            QFileInfo scriptInfo(scriptFile);
+                            fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
+                            dir.mkdir(fileDir);
+                            script.open(QIODevice::WriteOnly);
+                            QDataStream scriptFilestream(&map);
+                            for (qint32 i = 0; i < scriptData.size(); i++)
                             {
-                                QFileInfo scriptInfo(scriptFile);
-                                fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
-                                dir.mkdir(fileDir);
-                                script.open(QIODevice::WriteOnly);
-                                QDataStream scriptFilestream(&map);
-                                for (qint32 i = 0; i < scriptData.size(); i++)
-                                {
-                                    scriptFilestream << static_cast<quint8>(scriptData[i]);
-                                }
-                                script.close();
+                                scriptFilestream << static_cast<quint8>(scriptData[i]);
                             }
-                            else
-                            {
-                                Mainapp* pApp = Mainapp::getInstance();
-                                pApp->suspendThread();
-                                spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
-                                connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-                                addChild(pDialogMessageBox);
-                                pApp->continueThread();
-                                return;
-                            }
+                            script.close();
                         }
                         pNewMap = new GameMap(mapFile, true);
                     }
                     else
                     {
-                        Mainapp* pApp = Mainapp::getInstance();
-                        pApp->suspendThread();
-                        spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
-                        connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-                        addChild(pDialogMessageBox);
-                        pApp->continueThread();
-                        return;
+                        pNewMap = createMapFromStream(mapFile, scriptFile, stream);
                     }
                 }
                 m_pMapSelectionView->setCurrentMap(pNewMap);
@@ -559,6 +542,68 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             }
         }
     }
+}
+
+GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
+{
+    GameMap* pNewMap = nullptr;
+    mapFile = getNewFileName(mapFile);
+    QFile map(mapFile);
+    QFileInfo mapInfo(mapFile);
+    QDir dir;
+    QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
+    dir.mkdir(fileDir);
+    map.open(QIODevice::WriteOnly);
+    QDataStream mapFilestream(&map);
+    QByteArray mapData;
+    stream >> mapData;
+    for (qint32 i = 0; i < mapData.size(); i++)
+    {
+        mapFilestream << static_cast<quint8>(mapData[i]);
+    }
+    map.close();
+    pNewMap = new GameMap(mapFile, true);
+    if (!scriptFile.isEmpty())
+    {
+        QFile script(scriptFile);
+        scriptFile = getNewFileName(scriptFile);
+        QByteArray scriptData;
+        stream >> scriptData;
+        QFileInfo scriptInfo(scriptFile);
+        fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
+        dir.mkdir(fileDir);
+        script.open(QIODevice::WriteOnly);
+        QDataStream scriptFilestream(&map);
+        for (qint32 i = 0; i < scriptData.size(); i++)
+        {
+            scriptFilestream << static_cast<quint8>(scriptData[i]);
+        }
+        script.close();
+        scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath() + "/", "");
+        scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath(), "");
+        // save new script file
+        pNewMap->getGameScript()->setScriptFile(scriptFile);
+        map.open(QIODevice::WriteOnly);
+        QDataStream stream(&map);
+        pNewMap->serializeObject(stream);
+        map.close();
+    }
+    return pNewMap;
+}
+
+QString Multiplayermenu::getNewFileName(QString filename)
+{
+    bool found = false;
+    qint32 index = 0;
+    QString newName;
+    filename = filename.replace(".map", "");
+    while (!found)
+    {
+        newName = filename + "+" + QString::number(index) + ".map";
+        found = !QFile::exists(newName);
+        index++;
+    }
+    return newName;
 }
 
 void Multiplayermenu::loadMultiplayerMap()

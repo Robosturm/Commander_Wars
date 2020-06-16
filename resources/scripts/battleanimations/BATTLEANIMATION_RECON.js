@@ -29,7 +29,7 @@ var Constructor = function()
         }
         sprite.loadSprite("recon+" + armyName,  false,
                           BATTLEANIMATION_RECON.getMaxUnitCount(), offset);
-        sprite.loadSprite("recon+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("recon+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_RECON.getMaxUnitCount(), offset);
     };
 

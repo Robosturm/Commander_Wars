@@ -2660,7 +2660,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="120"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="118"/>
+        <source>Save Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="129"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2692,7 +2697,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="63"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="766"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="811"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2722,13 +2727,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="522"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="535"/>
-        <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="762"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="807"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

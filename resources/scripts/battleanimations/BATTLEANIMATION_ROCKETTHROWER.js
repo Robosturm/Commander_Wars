@@ -32,7 +32,7 @@ var Constructor = function()
         }
         sprite.loadSprite("rocketthrower+" + armyName,  false,
                           BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset);
-        sprite.loadSprite("rocketthrower+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("rocketthrower+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset);
     };
 

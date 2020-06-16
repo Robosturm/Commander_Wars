@@ -47,6 +47,7 @@ EditorSelection::EditorSelection()
     m_CurrentSelector = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
     m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_CurrentSelector->setDestRecModifier(oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f));
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);

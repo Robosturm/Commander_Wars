@@ -29,7 +29,7 @@ var Constructor = function()
         }
         sprite.loadSprite("artillery+" + armyName,  false,
                           BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset);
-        sprite.loadSprite("artillery+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("artillery+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset);
     };
 

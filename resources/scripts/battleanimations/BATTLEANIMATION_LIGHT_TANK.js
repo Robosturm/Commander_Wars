@@ -29,7 +29,7 @@ var Constructor = function()
         }
         sprite.loadSprite("light_tank+" + armyName,  false,
                           BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("light_tank+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
     };
 

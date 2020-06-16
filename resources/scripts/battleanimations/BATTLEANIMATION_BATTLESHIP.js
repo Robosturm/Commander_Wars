@@ -24,7 +24,7 @@ var Constructor = function()
         }
         sprite.loadSprite("battleship+" + armyName,  false,
                           BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("battleship+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20));
     };
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

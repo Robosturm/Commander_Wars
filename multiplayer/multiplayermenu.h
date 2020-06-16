@@ -62,6 +62,8 @@ protected:
     void initClientGame(quint64 socketID, QDataStream &stream);
     void loadMultiplayerMap();
     void showIPs();
+    GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
+    QString getNewFileName(QString filename);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

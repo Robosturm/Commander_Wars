@@ -20,7 +20,7 @@ var Constructor = function()
         }
         sprite.loadSprite("megatank" + armyName,  false,
                           BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(5, 10));
-        sprite.loadSprite("megatank" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(5, 10));
     };
 

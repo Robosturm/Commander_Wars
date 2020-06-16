@@ -24,7 +24,7 @@ var Constructor = function()
         }
         sprite.loadSprite("infantry+" + armyName,  false,
                           BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("infantry+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("infantry+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
     };
 

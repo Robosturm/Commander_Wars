@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("piperunner",  false,
                           BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(30, 30));
-        sprite.loadSprite("piperunner+mask",  true,
+        sprite.loadSpriteV2("piperunner+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(30, 30));
     };
 

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         sprite.loadSprite("neotank",  false,
                           BATTLEANIMATION_NEOTANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("neotank+mask",  true,
+        sprite.loadSpriteV2("neotank+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_NEOTANK.getMaxUnitCount(), Qt.point(-5, 5));
     };
 

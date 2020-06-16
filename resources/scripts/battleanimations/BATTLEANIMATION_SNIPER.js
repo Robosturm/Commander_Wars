@@ -25,7 +25,7 @@ var Constructor = function()
         }
         sprite.loadSprite("sniper+" + armyName,  false,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
-        sprite.loadSprite("sniper+" + armyName + "+mask",  true,
+        sprite.loadSpriteV2("sniper+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
     };
 
