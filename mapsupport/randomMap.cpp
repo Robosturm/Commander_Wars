@@ -24,6 +24,8 @@
 
 #include "resource_management/terrainmanager.h"
 
+#include "objects/loadingscreen.h"
+
 static const QString RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
 qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                           bool roadSupport, qint32 seed,
@@ -33,6 +35,11 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                           float startBaseSize)
 {
     clearMap();
+
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->show();
+    qint32 maxSteps = terrains.size() + buildings.size() + 1;
+    qint32 progress = 0;
 
     qint32 startSeed = seed;
     if (seed < 0)
@@ -52,7 +59,10 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
     float buildingchance = 0.0f;
     for (qint32 i = 0; i < terrains.size(); i++)
     {
+
         QString terrainID = std::get<0>(terrains[i]);
+        pLoadingScreen->setProgress(tr("Generating ") + terrainID, progress * 100 / maxSteps);
+        progress++;
         if (terrainID == "Buildings")
         {
             buildingchance = std::get<1>(terrains[i]);
@@ -80,10 +90,12 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
         fieldChance = minBuildings;
     }
     // place buildings
-    QVector<QPoint> basePoints = randomMapCreateBuildings(fieldChance, randInt, buildings, ownedBaseSize, startBaseSize);
+    QVector<QPoint> basePoints = randomMapCreateBuildings(fieldChance, randInt, buildings, ownedBaseSize,
+                                                          startBaseSize, progress, maxSteps);
 
     if (roadSupport)
     {
+        pLoadingScreen->setProgress(tr("Generating ") + "Roads", (progress - 1) * 100 / maxSteps);
         randomMapCreateRoad(randInt, basePoints);
     }
     pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "customStep");
@@ -91,6 +103,7 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
     updateSprites();
     centerMap(width / 2, heigth / 2);
 
+    pLoadingScreen->hide();
     return startSeed;
 }
 
@@ -492,7 +505,8 @@ void GameMap::randomMapCreateRoad(QRandomGenerator& randInt, QVector<QPoint>& pl
     }
 }
 
-QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize, float startBaseSize)
+QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
+                                                  float startBaseSize, qint32& progress, qint32 maxProgess)
 {
     QVector<QPoint> playerPositions;
     qint32 mapWidth = getMapWidth();
@@ -504,6 +518,8 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getHQBaseTerrainID");
     spUnit pUnit = new Unit("INFANTRY", players[0].get(), false);
     pUnit->setIgnoreUnitCollision(true);
+    qint32 days = minimalDistance / 2;
+    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "HQ's");
     for (qint32 i = 0; i < players.size(); i++)
     {
         QPoint position;
@@ -523,7 +539,7 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
                     }
                 }
                 UnitPathFindingSystem pfs(pUnit.get());
-                pfs.setMovepoints(-2);
+                pfs.setMovepoints(days);
                 pfs.setStartPoint(position.x(), position.y());
                 pfs.explore();
                 if (pfs.getAllNodePoints().size() < minimalDistance)
@@ -575,9 +591,12 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
     }
     buildings -= playerPositions.size();
 
+    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "Factory");
     for (qint32 i = 0; i < buildingDistributions.size(); i++)
     {
         QString buildingID = std::get<0>(buildingDistributions[i]);
+        LoadingScreen::getInstance()->setProgress(tr("Generating ") + buildingID, progress * 100 / maxProgess);
+        progress++;
         float buildingChance = std::get<1>(buildingDistributions[i]) / 100.0f;
         erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + buildingID + "BaseTerrainID");
         randomMapPlaceBuildings(buildingID, erg.toString(), buildings, playerPositions,

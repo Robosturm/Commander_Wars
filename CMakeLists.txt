@@ -191,6 +191,7 @@ set(${PROJECT_NAME}_SRCS
         objects/label.cpp
         objects/perkselection.cpp
         objects/perkselectiondialog.cpp
+        objects/loadingscreen.cpp
 
         #modding
         modding/csvtableimporter.cpp

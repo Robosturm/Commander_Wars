@@ -42,6 +42,7 @@ public:
         Dialogs,
         DropDownList,
         Tooltip,
+        Loadingscreen,
         Console
     };
 

@@ -2161,6 +2161,18 @@ This is immediatly applied.</source>
     </message>
 </context>
 <context>
+    <name>GameMap</name>
+    <message>
+        <location filename="../mapsupport/randomMap.cpp" line="64"/>
+        <location filename="../mapsupport/randomMap.cpp" line="98"/>
+        <location filename="../mapsupport/randomMap.cpp" line="522"/>
+        <location filename="../mapsupport/randomMap.cpp" line="594"/>
+        <location filename="../mapsupport/randomMap.cpp" line="598"/>
+        <source>Generating </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameMenue</name>
     <message>
         <location filename="../menue/gamemenue.cpp" line="83"/>
@@ -3229,7 +3241,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="827"/>
-        <source>If checked ingame sprites will be interpolated instead of scaling each pixel.</source>
+        <source>If checked ingame sprites will be aliased smoother.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

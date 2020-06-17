@@ -242,16 +242,16 @@
 		<image file="k_heli/k_heli+ma+mask.png" />
 		
 		<!-- lander -->
-		<image file="lander/lander+bh.png" />
-		<image file="lander/lander+bh+mask.png" />
-		<image file="lander/lander+bm.png" />
-		<image file="lander/lander+bm+mask.png" />
-		<image file="lander/lander+ge.png" />
-		<image file="lander/lander+ge+mask.png" />
-		<image file="lander/lander+os.png" />
-		<image file="lander/lander+os+mask.png" />
-		<image file="lander/lander+yc.png" />
-		<image file="lander/lander+yc+mask.png" />
+		<image file="lander/lander+bh.png" cols = "4" />
+		<image file="lander/lander+bh+mask.png" cols = "4" />
+		<image file="lander/lander+bm.png" cols = "4" />
+		<image file="lander/lander+bm+mask.png" cols = "4" />
+		<image file="lander/lander+ge.png" cols = "4" />
+		<image file="lander/lander+ge+mask.png" cols = "4" />
+		<image file="lander/lander+os.png" cols = "4" />
+		<image file="lander/lander+os+mask.png" cols = "4" />
+		<image file="lander/lander+yc.png" cols = "4" />
+		<image file="lander/lander+yc+mask.png" cols = "4" />
 		<image file="lander/lander+ma.png" />
 		<image file="lander/lander+ma+mask.png" />
 		

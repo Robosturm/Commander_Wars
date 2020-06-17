@@ -167,7 +167,8 @@ public:
      * @param randInt
      * @param noHarbour
      */
-    QVector<QPoint> randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize, float startBaseSize);
+    QVector<QPoint> randomMapCreateBuildings(qint32 buildings, QRandomGenerator& randInt, QVector<std::tuple<QString, float>> buildingDistributions, QVector<float> ownedBaseSize,
+                                             float startBaseSize, qint32& progress, qint32 maxProgess);
     /**
      * @brief createRoad
      */

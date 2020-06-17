@@ -22,10 +22,21 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("lander+" + armyName,  false,
-                          BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
+
+        if (armyName === "ma")
+        {
+            sprite.loadSprite("lander+" + armyName,  false,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
+            sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
+        }
+        else
+        {
+            sprite.loadSprite("lander+" + armyName,  false,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), -1);
+            sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), -1);
+        }
     };
 };
 
