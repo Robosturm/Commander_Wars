@@ -40,6 +40,9 @@ public:
     static void setLogActions(bool LogActions);
 
 public slots:
+    static quint32 getWalkAnimationSpeedValue();
+    static void setWalkAnimationSpeed(const quint32 &value);
+    static float getWalkAnimationSpeed();
 
     static quint32 getSpriteFilter();
     static void setSpriteFilter(quint32 spriteFilter);
@@ -309,6 +312,7 @@ private:
     static GameEnums::AnimationMode showAnimations;
     static GameEnums::BattleAnimationMode battleAnimations;
     static quint32 animationSpeed;
+    static quint32 walkAnimationSpeed;
     static quint32 battleAnimationSpeed;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;

@@ -21,6 +21,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false);
+    m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
 }
 
 bool GameAnimationWalk::onFinished()

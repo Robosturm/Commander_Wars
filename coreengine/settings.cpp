@@ -64,6 +64,7 @@ GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All
 GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
 quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
+quint32 Settings::walkAnimationSpeed = 1;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
@@ -96,6 +97,26 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+quint32 Settings::getWalkAnimationSpeedValue()
+{
+    return walkAnimationSpeed;
+}
+
+void Settings::setWalkAnimationSpeed(const quint32 &value)
+{
+    walkAnimationSpeed = value;
+}
+
+
+float Settings::getWalkAnimationSpeed()
+{
+    if (walkAnimationSpeed <= 100)
+    {
+        return 100.0f / (101.0f - walkAnimationSpeed);
+    }
+    return 100;
 }
 
 quint32 Settings::getSpriteFilter()
@@ -477,6 +498,14 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
+    walkAnimationSpeed = settings.value("WalkAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || walkAnimationSpeed <= 0 ||  walkAnimationSpeed > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " WalkAnimationSpeed";
+        Console::print(error, Console::eERROR);
+        walkAnimationSpeed = 1u;
+    }
+
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
     if(!ok || multiTurnCounter <= 0 || multiTurnCounter > 10u)
     {
@@ -492,7 +521,7 @@ void Settings::loadSettings()
         m_MenuItemCount = 13;
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
-    m_StaticMarkedFields = settings.value("SpriteFilter", true).toBool();
+    m_spriteFilter = settings.value("SpriteFilter", true).toBool();
 
     m_showCoCount = settings.value("ShowCoCount", 0).toInt(&ok);
     if(!ok || m_showCoCount < 0)
@@ -633,6 +662,7 @@ void Settings::saveSettings(){
     settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
     settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
     settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
+    settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
     settings.setValue("AnimationSpeed",                 animationSpeed);
     settings.setValue("MultiTurnCounter",               multiTurnCounter);
     settings.setValue("LastSaveGame",                   m_LastSaveGame);

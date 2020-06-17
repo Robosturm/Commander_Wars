@@ -190,7 +190,8 @@ bool Player::loadTableFromFile(QString tablename)
 bool Player::colorToTable(QColor baseColor)
 {
     bool found = false;
-    if (baseColor == QColor("#ff5a00"))
+    if (baseColor == QColor("#ff5a00") ||
+        baseColor == QColor("#f85800"))
     {
         loadTableFromFile("orange_star");
         found = true;
@@ -210,12 +211,15 @@ bool Player::colorToTable(QColor baseColor)
         loadTableFromFile("yellow_comet");
         found = true;
     }
-    else if (baseColor == QColor("#5f11b7"))
+    else if (baseColor == QColor("#5f11b7") ||
+             baseColor == QColor("#6038a0"))
     {
         loadTableFromFile("black_hole");
         found = true;
     }
-    else if (baseColor == QColor("#2d2dd5"))
+    else if (baseColor == QColor("#2d2dd5") ||
+             baseColor == QColor("#483d8b") ||
+             baseColor == QColor("#5c5c5c"))
     {
         loadTableFromFile("bolt_guard");
         found = true;
@@ -235,7 +239,8 @@ bool Player::colorToTable(QColor baseColor)
         loadTableFromFile("brown_desert");
         found = true;
     }
-    else if (baseColor == QColor("goldenrod"))
+    else if (baseColor == QColor("goldenrod") ||
+             baseColor == QColor("#808000"))
     {
         loadTableFromFile("golden_sun");
         found = true;
@@ -255,7 +260,8 @@ bool Player::colorToTable(QColor baseColor)
         loadTableFromFile("dark_matter");
         found = true;
     }
-    else if (baseColor == QColor("#cyan"))
+    else if (baseColor == QColor("#cyan") ||
+             baseColor == QColor("#00ffff"))
     {
         loadTableFromFile("cyan");
         found = true;
@@ -1601,6 +1607,7 @@ void Player::deserializeObject(QDataStream& pStream)
     {
         if (!colorToTable(m_Color))
         {
+            QString color = m_Color.name();
             createTable(m_Color.darker(160));
         }
         m_Color = m_colorTable.pixel(8, 0);

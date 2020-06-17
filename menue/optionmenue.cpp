@@ -209,13 +209,29 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pAnimationSpeed = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
-    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle and walking animations."));
     pAnimationSpeed->setPosition(sliderOffset - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getAnimationSpeedValue()));
     m_pOptions->addItem(pAnimationSpeed);
     connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Walk Speed: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pWalkSpeed = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
+    pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
+    pWalkSpeed->setPosition(sliderOffset - 130, y);
+    pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
+    m_pOptions->addItem(pWalkSpeed);
+    connect(pWalkSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setWalkAnimationSpeed(static_cast<quint32>(value));
     });
     y += 40;
 
@@ -808,15 +824,15 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = new Checkbox();
-    pCheckbox->setTooltipText(tr("If checked ingame sprites will be interpolated instead of scaling each pixel."));
+    pCheckbox->setTooltipText(tr("If checked ingame sprites will be aliased smoother."));
     pCheckbox->setChecked(Settings::getSpriteFilter() != GL_NEAREST);
     pCheckbox->setPosition(sliderOffset - 130, y);
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
         if (value)
         {
-            Settings::setSpriteFilter(GL_NEAREST_MIPMAP_LINEAR);
-            pApp->applyFilter(GL_NEAREST_MIPMAP_LINEAR );
+            Settings::setSpriteFilter(GL_LINEAR_MIPMAP_LINEAR);
+            pApp->applyFilter(GL_LINEAR_MIPMAP_LINEAR );
         }
         else
         {
