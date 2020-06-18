@@ -2151,6 +2151,41 @@ This is immediatly applied.</source>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="920"/>
+        <source>Loading Players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="944"/>
+        <source>Loading Map Row </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="944"/>
+        <source> of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="968"/>
+        <source>Loading Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="976"/>
+        <source>Loading Record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="984"/>
+        <source>Loading scripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="996"/>
+        <source>Loading Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GameMenue</name>

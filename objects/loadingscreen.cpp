@@ -63,9 +63,16 @@ void LoadingScreen::show()
 void LoadingScreen::triggerUpdate()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->continueThread();
+    qint32 counter = pApp->getLockCounter();
+    for (qint32 i = 0; i < counter; i++)
+    {
+        pApp->continueThread();
+    }
     m_semaphore.acquire();
-    pApp->suspendThread();
+    for (qint32 i = 0; i < counter; i++)
+    {
+        pApp->suspendThread();
+    }
 }
 
 void LoadingScreen::setProgress(QString workText, qint32 value)

@@ -158,7 +158,12 @@ namespace oxygine
         IVideoDriver::_stats.duration = Clock::getTimeMS() - IVideoDriver::_stats.start;
         //sleep(1000/50);
     }
-
+    
+    qint32 GameWindow::getLockCounter() const
+    {
+        return m_lockCounter;
+    }
+    
     void GameWindow::registerResourceTypes()
     {
         Resources::registerResourceType(ResAtlas::create, "atlas");

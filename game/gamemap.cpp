@@ -31,6 +31,8 @@
 
 #include "menue/gamemenue.h"
 
+#include "objects/loadingscreen.h"
+
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
@@ -882,7 +884,8 @@ void GameMap::serializeObject(QDataStream& pStream)
 void GameMap::deserializeObject(QDataStream& pStream)
 {
     clearMap();
-
+    static const qint32 loadingScreenSize = 900;
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
     qint32 version = 0;
     pStream >> version;
@@ -899,6 +902,11 @@ void GameMap::deserializeObject(QDataStream& pStream)
     qint32 width = 0;
     pStream >> width;
     pStream >> heigth;
+    qint32 mapSize = width * heigth;
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->show();
+    }
     if (version > 6)
     {
         pStream >> m_UniqueIdCounter;
@@ -906,6 +914,10 @@ void GameMap::deserializeObject(QDataStream& pStream)
     else
     {
         m_UniqueIdCounter = 0;
+    }
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
     qint32 playerCount = 0;
     pStream >> playerCount;
@@ -927,6 +939,10 @@ void GameMap::deserializeObject(QDataStream& pStream)
     // restore map
     for (qint32 y = 0; y < heigth; y++)
     {
+        if (mapSize >= loadingScreenSize)
+        {
+            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
+        }
         fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
@@ -947,13 +963,25 @@ void GameMap::deserializeObject(QDataStream& pStream)
     }
     setCurrentPlayer(currentPlayerIdx);
     m_Rules = new  GameRules();
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->setProgress(tr("Loading Rules"), 80);
+    }
     if (version > 2)
     {
         m_Rules->deserializeObject(pStream);
     }
-    if (version > 3)
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->setProgress(tr("Loading Record"), 85);
+    }
+    if (mapSize >= loadingScreenSize)
     {
         m_Recorder->deserializeObject(pStream);
+    }
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->setProgress(tr("Loading scripts"), 90);
     }
     if (version > 5)
     {
@@ -962,6 +990,10 @@ void GameMap::deserializeObject(QDataStream& pStream)
     else
     {
         m_GameScript = new GameScript();
+    }
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
     }
     if (version > 7)
     {
@@ -972,6 +1004,10 @@ void GameMap::deserializeObject(QDataStream& pStream)
             m_Campaign = new Campaign();
             m_Campaign->deserializeObject(pStream);
         }
+    }
+    if (mapSize >= loadingScreenSize)
+    {
+        pLoadingScreen->hide();
     }
 }
 

@@ -28,6 +28,7 @@ namespace oxygine
          */
         inline void suspendThread()
         {
+            m_lockCounter++;
             m_Mutex.lock();
         }
         /**
@@ -36,6 +37,7 @@ namespace oxygine
         inline void continueThread()
         {
             m_Mutex.unlock();
+            m_lockCounter--;
         }
         /**
          * @brief quitGame quits this game
@@ -45,6 +47,12 @@ namespace oxygine
             m_quit = true;
         }
         void loadResAnim(oxygine::spResAnim pAnim, const QImage & image);
+        /**
+         * @brief getLockCounter
+         * @return
+         */
+        qint32 getLockCounter() const;
+
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
     protected slots:
@@ -77,6 +85,8 @@ namespace oxygine
         QBasicTimer m_Timer;
 
         static GameWindow* _window;
+
+        qint32 m_lockCounter{0};
 
     };
 }
