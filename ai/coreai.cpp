@@ -1590,58 +1590,77 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
     {
         Building* pBuilding = pBuildings->at(i);
         QStringList actions = pBuilding->getActionList();
-        if (actions.size() == 1 &&
-            actions[0] != ACTION_BUILD_UNITS &&
+        if (actions.size() >= 1 &&
             !actions[0].isEmpty())
         {
-            GameAction* pAction = new GameAction(actions[0]);
-            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
-            if (pAction->canBePerformed())
+            for (qint32 i = 0; i < actions.size(); i++)
             {
-                if (pAction->isFinalStep())
+                if (actions[i] != ACTION_BUILD_UNITS)
                 {
-                    emit performAction(pAction);
-                    return true;
-                }
-                else
-                {
-                    if (pAction->getStepInputType() == "FIELD")
+                    GameAction* pAction = new GameAction(actions[i]);
+                    pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
+                    if (pAction->canBePerformed())
                     {
-                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
-                        QVector<QPoint>* points = pData->getPoints();
-                        qint32 index = -1;
-                        QPoint target;
-                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
-                        for (qint32 i2 = 0; i2 < points->size(); i2++)
-                        {
-                            Unit* pUnit = pMap->getTerrain(points->at(i2).x(), points->at(i2).y())->getUnit();
-                            qint32 unitValue = pUnit->getUnitValue();
-                            if (pUnit != nullptr && unitValue > maxValue)
-                            {
-                                maxValue = unitValue;
-                                index = i2;
-                            }
-                        }
-                        if (index < 0)
-                        {
-                            target = points->at(Mainapp::randIntBase(0, points->size() -1));
-                        }
-                        else
-                        {
-                            target = points->at(index);
-                        }
-                        delete pData;
-
-                        addSelectedFieldData(pAction, target);
                         if (pAction->isFinalStep())
                         {
                             emit performAction(pAction);
                             return true;
                         }
+                        else
+                        {
+                            while (!pAction->isFinalStep())
+                            {
+                                if (pAction->getStepInputType() == "FIELD")
+                                {
+                                    MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+                                    QVector<QPoint>* points = pData->getPoints();
+                                    qint32 index = -1;
+                                    QPoint target;
+                                    qint32 maxValue = std::numeric_limits<qint32>::lowest();
+                                    for (qint32 i2 = 0; i2 < points->size(); i2++)
+                                    {
+                                        Unit* pUnit = pMap->getTerrain(points->at(i2).x(), points->at(i2).y())->getUnit();
+                                        qint32 unitValue = pUnit->getUnitValue();
+                                        if (pUnit != nullptr && unitValue > maxValue)
+                                        {
+                                            maxValue = unitValue;
+                                            index = i2;
+                                        }
+                                    }
+                                    if (index < 0)
+                                    {
+                                        target = points->at(Mainapp::randIntBase(0, points->size() -1));
+                                    }
+                                    else
+                                    {
+                                        target = points->at(index);
+                                    }
+                                    delete pData;
+                                    addSelectedFieldData(pAction, target);
+                                }
+                                else if (pAction->getStepInputType() == "MENU")
+                                {
+                                    MenuData* pData = pAction->getMenuStepData();
+                                    QStringList items = pData->getActionIDs();
+                                    qint32 selection = Mainapp::randIntBase(0, items.size() - 1);
+                                    addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
+                                    delete pData;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            if (pAction->isFinalStep())
+                            {
+                                emit performAction(pAction);
+                                return true;
+                            }
+                        }
                     }
+                    delete pAction;
                 }
             }
-            delete pAction;
         }
     }
     return false;

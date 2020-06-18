@@ -169,6 +169,7 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
+
         // factory spawning comes here
         if (turn === 1 && player === 3)
         {
@@ -264,8 +265,8 @@ var Constructor = function()
         // than spawn some random units :)
         for (var i = 0; i <= amount; i++)
         {
-            var units = ["LIGHT_TANK", "FLAK", "ARTILLERY", "MECH", "HEAVY_TANK", "INFANTRY", "K_HELI", "T_HELI"];
-            var index = globals.randInt(0, 7);
+            var units = ["BOMBER", "FIGHTER", "NEOTANK", "LIGHT_TANK", "FLAK", "ARTILLERY", "MECH", "HEAVY_TANK", "INFANTRY", "K_HELI", "T_HELI"];
+            var index = globals.randInt(0, 10);
             var pos = globals.randInt(0, 2);
             map.spawnUnit(31 + pos, 6, units[index], map.getPlayer(2), 0);
         }

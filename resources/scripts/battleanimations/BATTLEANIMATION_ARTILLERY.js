@@ -35,7 +35,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ARTILLERY.loadStandingAnimation(sprite, unit, defender, weapon);
+        var offset = Qt.point(-5, 5);
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -43,7 +43,18 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        var offset = Qt.point(30, 37);
+        if (armyName !== "ma")
+        {
+            sprite.loadSprite("artillery+" + armyName + "+fire",  false,
+                              BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
+            sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
+                              BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
+        }
+        else
+        {
+            BATTLEANIMATION_ARTILLERY.loadStandingAnimation(sprite, unit, defender, weapon);
+        }
+        offset = Qt.point(30, 37);
         // gun
         if (armyName === "yc")
         {

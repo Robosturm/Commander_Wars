@@ -6,10 +6,10 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         var x = building.getX() - 1;
         var y = building.getY() + 1;
-		var firecount = building.getFireCount();
+        var firecount = building.getFireCount();
         if ((firecount === 2 || firecount === 3 || firecount === 6 || firecount === 7) &&
-            map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
-            ACTION_BLACKHOLEFACTORY_DOOR2.canBuildUnit(action))
+                map.onMap(x, y) && map.getTerrain(x, y).getUnit() === null &&
+                ACTION_BLACKHOLEFACTORY_DOOR2.canBuildUnit(action))
         {
             return true;
         }
@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.isFinalStep = function(action)
     {
-		if (action.getInputStep() === 0)
+        if (action.getInputStep() === 0)
         {
             return false;
         }
@@ -37,8 +37,8 @@ var Constructor = function()
             return true;
         }
     };
-	
-	this.getStepInputType = function(action)
+
+    this.getStepInputType = function(action)
     {
         // supported types are MENU and FIELD
         if (action.getInputStep() === 0)
@@ -57,7 +57,8 @@ var Constructor = function()
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0)
+            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+                Global[units[i]].getCOSpecificUnit() === false)
             {
                 return true;
             }
@@ -74,26 +75,27 @@ var Constructor = function()
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0)
+            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+                Global[units[i]].getCOSpecificUnit() === false)
             {
                 var name = Global[units[i]].getName();
                 data.addData(name, units[i], units[i], 0, true);
             }
         }
     }
-	
+
     this.perform = function(action)
     {
-		action.startReading();
+        action.startReading();
         var unitID = action.readDataString();
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
-		var player = building.getOwner();
+        var player = building.getOwner();
         var x = building.getX() - 1;
         var y = building.getY() + 1;
         building.setFireCount(building.getFireCount() - 2);
-		// spawn the unit
-		var unit = map.spawnUnit(x, y, unitID, player);
+        // spawn the unit
+        var unit = map.spawnUnit(x, y, unitID, player);
         map.getGameRecorder().buildUnit(player.getPlayerID());
         player.buildedUnit(unit);
     };
