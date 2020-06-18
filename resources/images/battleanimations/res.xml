@@ -354,29 +354,29 @@
 		<image file="rocketthrower/rocketthrower+ma+mask.png" />
 		
 		<!-- submarine -->
-		<image file="submarine/submarine+bh.png" />
-		<image file="submarine/submarine+bh+mask.png" />
-		<image file="submarine/submarine+bm.png" />
-		<image file="submarine/submarine+bm+mask.png" />
-		<image file="submarine/submarine+ge.png" />
-		<image file="submarine/submarine+ge+mask.png" />
-		<image file="submarine/submarine+os.png" />
-		<image file="submarine/submarine+os+mask.png" />
-		<image file="submarine/submarine+yc.png" />
-		<image file="submarine/submarine+yc+mask.png" />
+		<image file="submarine/submarine+bh.png" cols = "4" />
+		<image file="submarine/submarine+bh+mask.png" cols = "4" />
+		<image file="submarine/submarine+bm.png" cols = "4" />
+		<image file="submarine/submarine+bm+mask.png" cols = "4" />
+		<image file="submarine/submarine+ge.png" cols = "4" />
+		<image file="submarine/submarine+ge+mask.png" cols = "4" />
+		<image file="submarine/submarine+os.png" cols = "4" />
+		<image file="submarine/submarine+os+mask.png" cols = "4" />
+		<image file="submarine/submarine+yc.png" cols = "4" />
+		<image file="submarine/submarine+yc+mask.png" cols = "4" />
 		<image file="submarine/submarine+ma.png" />
 		<image file="submarine/submarine+ma+mask.png" />
 		
-		<image file="submarine/submarine+hidden+bh.png" />
-		<image file="submarine/submarine+hidden+bh+mask.png" />
-		<image file="submarine/submarine+hidden+bm.png" />
-		<image file="submarine/submarine+hidden+bm+mask.png" />
-		<image file="submarine/submarine+hidden+ge.png" />
-		<image file="submarine/submarine+hidden+ge+mask.png" />
-		<image file="submarine/submarine+hidden+os.png" />
-		<image file="submarine/submarine+hidden+os+mask.png" />
-		<image file="submarine/submarine+hidden+yc.png" />
-		<image file="submarine/submarine+hidden+yc+mask.png" />
+		<image file="submarine/submarine+hidden+bh.png" cols = "4" />
+		<image file="submarine/submarine+hidden+bh+mask.png" cols = "4" />
+		<image file="submarine/submarine+hidden+bm.png" cols = "4" />
+		<image file="submarine/submarine+hidden+bm+mask.png" cols = "4" />
+		<image file="submarine/submarine+hidden+ge.png" cols = "4" />
+		<image file="submarine/submarine+hidden+ge+mask.png" cols = "4" />
+		<image file="submarine/submarine+hidden+os.png" cols = "4" />
+		<image file="submarine/submarine+hidden+os+mask.png" cols = "4" />
+		<image file="submarine/submarine+hidden+yc.png" cols = "4" />
+		<image file="submarine/submarine+hidden+yc+mask.png" cols = "4" />
 		
 		<!-- t_heli -->
 		<image file="t_heli/t_heli+bm.png" />

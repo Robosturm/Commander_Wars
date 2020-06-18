@@ -22,19 +22,29 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        if(unit.getHidden() === true)
+        if (armyName === "ma")
         {
-            sprite.loadSprite("submarine+hidden+" + armyName,  false,
+            sprite.loadSprite("submarine+" + armyName,  false,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
-            sprite.loadSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Table,
+            sprite.loadSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
         }
         else
         {
-            sprite.loadSprite("submarine+" + armyName,  false,
-                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
-            sprite.loadSprite("submarine+" + armyName + "+mask",  true,
-                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+            if(unit.getHidden() === true)
+            {
+                sprite.loadSprite("submarine+hidden+" + armyName,  false,
+                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), -1);
+                sprite.loadSpriteV2("submarine+hidden+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), -1);
+            }
+            else
+            {
+                sprite.loadSprite("submarine+" + armyName,  false,
+                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), -1);
+                sprite.loadSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                                  BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), -1);
+            }
         }
     };
 

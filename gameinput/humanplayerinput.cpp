@@ -993,6 +993,7 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
                 pSprite->setColumn(static_cast<qint32>(Arrows::Up));
             }
         }
+        pSprite->setDestRecModifier(GameMap::mapRect);
     }
 }
 
