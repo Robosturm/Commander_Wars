@@ -64,6 +64,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getRepairTypes = function(building)
+    {
+        return [GameEnums.UnitType_Hovercraft, GameEnums.UnitType_Naval];
+    };
 }
 
 Constructor.prototype = BUILDING;

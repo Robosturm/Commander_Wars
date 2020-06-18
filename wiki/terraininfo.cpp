@@ -102,44 +102,34 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             pLabel->setStyle(headerStyle);
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
-                pLabel->setHtmlText(tr("Builds and Supplies"));
+                pLabel->setHtmlText(tr("Builds"));
+                pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+                addChild(pLabel);
+                y += 80;
+                showUnitList(productionList, y, width);
             }
-            else
-            {
-                pLabel->setHtmlText(tr("Supplies"));
-            }
+        }
+        auto repairList = pBuilding->getRepairTypes();
+        if (productionList.size() > 0 ||
+            repairList.size() > 0)
+        {
+            pLabel = new oxygine::TextField();
+            pLabel->setStyle(headerStyle);
+            pLabel->setHtmlText(tr("Supplies"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
             addChild(pLabel);
             y += 80;
-            qint32 x = 0;
-            GameMap* pMap = GameMap::getInstance();
-
-            if (pMap != nullptr)
+            UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+            for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
             {
-                m_pPlayer = pMap->getSpCurrentPlayer();
-            }
-            if (m_pPlayer.get() == nullptr)
-            {
-                m_pPlayer = new Player();
-                m_pPlayer->init();
-            }
-            for (qint32 i = 0; i < productionList.size(); i++)
-            {
-                spUnit pDummy = new Unit(productionList[i], m_pPlayer.get(), false);
-                pDummy->setPosition(x, y);
-                pDummy->addClickListener([=](oxygine::Event*)
+                QString unitID = pUnitSpriteManager->getID(i);
+                if (repairList.contains(static_cast<qint32>(pUnitSpriteManager->getUnitType(i))) &&
+                    !productionList.contains(unitID))
                 {
-                   emit sigShowLink(productionList[i]);
-                });
-                addChild(pDummy);
-                x += GameMap::Imagesize * 2;
-                if (x + GameMap::Imagesize * 2 > width && i < productionList.size() - 1)
-                {
-                    x = 0;
-                    y += 40;
+                    productionList.append(unitID);
                 }
             }
-            y += 40;
+            showUnitList(productionList, y, width);
         }
     }
 
@@ -174,10 +164,10 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         {
             pLabel->setHtmlText("-");
         }
-        pLabel->setPosition(x + 120, y);
+        pLabel->setPosition(x + 160, y);
         addChild(pLabel);
-        x += 170;
-        if (x + 210 > width && i < pMovementTableManager->getCount() - 1)
+        x += 210;
+        if (x + 250 > width && i < pMovementTableManager->getCount() - 1)
         {
             x = 0;
             y += 40;
@@ -195,4 +185,36 @@ void TerrainInfo::showLink(QString pageID)
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(pageID)));
     pApp->continueThread();
+}
+
+void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 width)
+{
+    qint32 x = 0;
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap != nullptr)
+    {
+        m_pPlayer = pMap->getSpCurrentPlayer();
+    }
+    if (m_pPlayer.get() == nullptr)
+    {
+        m_pPlayer = new Player();
+        m_pPlayer->init();
+    }
+    for (qint32 i = 0; i < productionList.size(); i++)
+    {
+        spUnit pDummy = new Unit(productionList[i], m_pPlayer.get(), false);
+        pDummy->setPosition(x, y);
+        pDummy->addClickListener([=](oxygine::Event*)
+        {
+           emit sigShowLink(productionList[i]);
+        });
+        addChild(pDummy);
+        x += GameMap::Imagesize * 2;
+        if (x + GameMap::Imagesize * 2 > width && i < productionList.size() - 1)
+        {
+            x = 0;
+            y += 40;
+        }
+    }
+    y += 40;
 }

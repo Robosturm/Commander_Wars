@@ -31,6 +31,8 @@ public slots:
      * @param pageID
      */
     void showLink(QString pageID);
+private:
+    void showUnitList(QStringList productionList, qint32& y, qint32 width);
 
 private:
     spPlayer m_pPlayer;

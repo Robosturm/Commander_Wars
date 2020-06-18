@@ -34,6 +34,8 @@
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
+const oxygine::RectF GameMap::mapRect = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
+
 spGameMap GameMap::m_pInstance = nullptr;
 
 

@@ -110,6 +110,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
     qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
+    qRegisterMetaType<QList<qint32>>("QList<qint32>");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);

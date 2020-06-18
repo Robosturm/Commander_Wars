@@ -694,6 +694,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
         pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
     }
+    pSprite->setDestRecModifier(GameMap::mapRect);
     return pSprite;
 }
 

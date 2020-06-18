@@ -24,10 +24,11 @@ var Constructor = function()
     this.getMovementCostModifier = function(weather, unit, terrain)
     {
         var id = terrain.getID();
-        if (id !== "STREET" &&
+        if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
+            (id !== "STREET" &&
             id !== "DESERT_PATH" &&
             id !== "TELEPORTTILE" &&
-            terrain.getBuilding() === null)
+            terrain.getBuilding() === null))
         {
             return 1;
         }

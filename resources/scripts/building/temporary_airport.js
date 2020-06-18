@@ -67,6 +67,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getRepairTypes = function(building)
+    {
+        return [GameEnums.UnitType_Air];
+    };
 }
 
 Constructor.prototype = BUILDING;

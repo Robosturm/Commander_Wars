@@ -1,6 +1,6 @@
 // this is the base class for terrain
 var BUILDING =
-{
+        {
 
     // loader for stuff which needs C++ Support
     init : function (building)
@@ -135,17 +135,23 @@ var BUILDING =
         return true;
     },
 
+    getRepairTypes : function(building)
+    {
+        return[];
+    },
+
     replenishUnit: function(building)
     {
         // default impl replenishes our units
         // gets called at the start of a turn
         var constructionList = building.getConstructionList();
+        var repairList = building.getRepairTypes();
         var unit = building.getTerrain().getUnit();
         if ((unit !== null) &&
-            (unit.getOwner() === building.getOwner()) &&
-            (constructionList.indexOf(unit.getUnitID()) >= 0))
+                (unit.getOwner() === building.getOwner()) &&
+                ((repairList.indexOf(unit.getUnitType()) >= 0) ||
+                 (constructionList.indexOf(unit.getUnitID()) >= 0)))
         {
-
             var x = unit.getX();
             var y = unit.getY();
             if (unit.canBeRepaired(Qt.point(x, y)))

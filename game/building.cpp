@@ -479,6 +479,24 @@ QStringList Building::getActionList()
     }
 }
 
+QList<qint32> Building::getRepairTypes()
+{
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRepairTypes";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    auto list = ret.toVariant().toList();
+    QList<qint32> retList;
+    for (auto & item : list)
+    {
+        retList.append(item.toInt());
+    }
+    return retList;
+}
+
 QStringList  Building::getConstructionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

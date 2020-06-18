@@ -6094,16 +6094,20 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="105"/>
-        <source>Builds and Supplies</source>
-        <translation>Produziert und Repariert</translation>
+        <source>Builds</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="109"/>
+        <source>Builds and Supplies</source>
+        <translation type="vanished">Produziert und Repariert</translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="118"/>
         <source>Supplies</source>
         <translation>Repariert</translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="148"/>
+        <location filename="../wiki/terraininfo.cpp" line="138"/>
         <source>Movement Costs</source>
         <translation>Bewegungskosten</translation>
     </message>
@@ -7236,7 +7240,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="161"/>
+        <location filename="../resources/scripts/general/building.js" line="167"/>
         <source>REPAIR</source>
         <translation>REPARIEREN</translation>
     </message>

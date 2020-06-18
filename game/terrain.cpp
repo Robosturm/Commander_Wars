@@ -323,8 +323,6 @@ void Terrain::loadBaseTerrain(QString terrainID)
 
 void Terrain::loadBaseSprite(QString spriteID)
 {
-    const oxygine::RectF targetRectModifier = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
-
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
@@ -345,7 +343,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
-        m_pTerrainSprite->setDestRecModifier(targetRectModifier);
+        m_pTerrainSprite->setDestRecModifier(GameMap::mapRect);
     }
     else if (QFile::exists(m_terrainSpriteName))
     {
@@ -354,7 +352,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
-        m_pTerrainSprite->setDestRecModifier(targetRectModifier);
+        m_pTerrainSprite->setDestRecModifier(GameMap::mapRect);
         loadSprite = true;
     }
     else
@@ -538,7 +536,6 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
 
 void Terrain::loadOverlaySprite(QString spriteID)
 {
-    const oxygine::RectF targetRectModifier = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
     oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -553,7 +550,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
     }
     pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-    pSprite->setDestRecModifier(targetRectModifier);
+    pSprite->setDestRecModifier(GameMap::mapRect);
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

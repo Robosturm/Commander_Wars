@@ -235,6 +235,11 @@ public slots:
      */
     QStringList getConstructionList();
     /**
+     * @brief getRepairTypes
+     * @return
+     */
+    QList<qint32> getRepairTypes();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();
