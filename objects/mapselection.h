@@ -2,6 +2,7 @@
 #define MAPSELECTION_H
 
 #include <QObject>
+#include <QTimer>
 
 #include <QVector>
 #include <QElapsedTimer>
@@ -37,9 +38,12 @@ signals:
     void changeSelection(qint32 index);
     void itemClicked(QString item);
     void itemChanged(QString item);
+    void sigStartItemChangeTimer();
 public slots:
+    void startItemChangeTimer();
     void changeFolder(QString folder);
     void updateSelection(qint32 startIndex);
+    void itemChangeTimerExpired();
 private:
     QString m_currentFolder;
     QString currentItem;
@@ -52,6 +56,7 @@ private:
     oxygine::spBox9Sprite m_SelectedItem;
     qint32 spin = 0;
     QElapsedTimer timer;
+    QTimer m_itemChangedTimer;
 
 };
 

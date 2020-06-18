@@ -14,6 +14,11 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    m_itemChangedTimer.setSingleShot(true);
+    m_itemChangedTimer.setInterval(350);
+    connect(&m_itemChangedTimer, &QTimer::timeout, this, &MapSelection::itemChangeTimerExpired, Qt::QueuedConnection);
+    connect(this, &MapSelection::sigStartItemChangeTimer, this, &MapSelection::startItemChangeTimer, Qt::QueuedConnection);
+
     oxygine::spButton pArrowUp = new oxygine::Button();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowUp->setResAnim(pAnim);
@@ -105,7 +110,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
                 m_SelectedItem->setY(y);
                 currentItem = m_Files[currentStartIndex + i];
                 currentIdx = currentStartIndex + i;
-                emit itemChanged(currentItem);
+                emit sigStartItemChangeTimer();
             }
         });
 
@@ -176,7 +181,7 @@ void MapSelection::setSelection(QString folder, QStringList files)
     if (m_Files.size() > 0)
     {
         currentItem = m_Files[0];
-        emit itemChanged(currentItem);
+        emit sigStartItemChangeTimer();
     }
     pApp->continueThread();
 }
@@ -237,7 +242,7 @@ void MapSelection::changeFolder(QString folder)
         if (currentIdx < m_Files.size())
         {
             currentItem = m_Files[currentIdx];
-            emit itemChanged(currentItem);
+            emit sigStartItemChangeTimer();
         }
     }
     pApp->continueThread();
@@ -333,7 +338,17 @@ void MapSelection::updateSelection(qint32 startIndex)
     if (currentIdx + currentStartIndex< m_Files.size())
     {
         currentItem = m_Files[currentIdx + currentStartIndex];
-        emit itemChanged(currentItem);
+        emit sigStartItemChangeTimer();
     }
     pApp->continueThread();
+}
+
+void MapSelection::itemChangeTimerExpired()
+{
+    emit itemChanged(currentItem);
+}
+
+void MapSelection::startItemChangeTimer()
+{
+    m_itemChangedTimer.start();
 }
