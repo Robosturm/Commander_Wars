@@ -57,7 +57,7 @@ private:
     qint32 spin = 0;
     QElapsedTimer timer;
     QTimer m_itemChangedTimer;
-
+    bool m_itemClicked{false};
 };
 
 #endif // MAPSELECTION_H

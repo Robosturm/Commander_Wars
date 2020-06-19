@@ -224,6 +224,7 @@ void HumanPlayerInput::cleanUpInput()
     {
         Cursor* pCursor = pMenue->getCursor();
         pCursor->changeCursor("cursor+default");
+        pCursor->resetCursorRangeOutline();
         cursorMoved(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
 }
@@ -505,7 +506,9 @@ void HumanPlayerInput::getNextStepData()
     clearMenu();
     clearMarkedFields();
     GameMenue* pMenue = GameMenue::getInstance();
-    pMenue->getCursor()->changeCursor("cursor+default");
+    Cursor* pCursor = pMenue->getCursor();
+    pCursor->changeCursor("cursor+default");
+    pCursor->resetCursorRangeOutline();
 
     QString stepType = m_pGameAction->getStepInputType();
     if (stepType.toUpper() == "MENU")
@@ -628,6 +631,19 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     {
         m_pUnitPathFindingSystem->setMovepoints(pUnit->getMovementpoints(QPoint(x, y)));
     }
+    qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
+    if (maxRange > 1)
+    {
+        GameMenue* pMenue = GameMenue::getInstance();
+        qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
+        Cursor* pCursor = pMenue->getCursor();
+        if (minRange > 1)
+        {
+            pCursor->addCursorRangeOutline(minRange - 1);
+        }
+        pCursor->addCursorRangeOutline(maxRange);
+    }
+
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
 }

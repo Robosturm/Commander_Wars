@@ -112,21 +112,21 @@ void Tooltip::showTooltip()
                 pSpriteBox->addChild(pText);
                 pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
 
-                if (curPos.x() + 5 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
+                if (curPos.x() + 10 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
                 {
-                    m_Tooltip->setX(Settings::getWidth() - 5 - pSpriteBox->getWidth());
+                    m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getWidth());
                 }
                 else
                 {
-                    m_Tooltip->setX(curPos.x() + 5);
+                    m_Tooltip->setX(curPos.x() + 10);
                 }
-                if (curPos.y() + 5 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
+                if (curPos.y() + 10 + pSpriteBox->getHeight() + 5 > Settings::getHeight())
                 {
-                    m_Tooltip->setY(Settings::getHeight() - 5 - pSpriteBox->getHeight());
+                    m_Tooltip->setY(curPos.y() - 10 - pSpriteBox->getHeight());
                 }
                 else
                 {
-                    m_Tooltip->setY(curPos.y() + 5);
+                    m_Tooltip->setY(curPos.y() + 10);
                 }
             }
         }

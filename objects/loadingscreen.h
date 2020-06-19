@@ -47,6 +47,8 @@ private:
 
     oxygine::spTextField m_workText;
     oxygine::spTextField m_loadingProgress;
+    oxygine::spColorRectSprite m_BackgroundBar;
+    oxygine::spColorRectSprite m_LoadingBar;
     QSemaphore m_semaphore;
 
     static spLoadingScreen m_pLoadingScreen;

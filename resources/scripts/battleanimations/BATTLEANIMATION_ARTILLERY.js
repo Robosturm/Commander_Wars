@@ -15,10 +15,10 @@ var Constructor = function()
             armyName = "bh"
         }
         if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
+                (armyName !== "ge") &&
+                (armyName !== "bm") &&
+                (armyName !== "bh") &&
+                (armyName !== "ma"))
         {
             armyName = "os";
         }
@@ -30,7 +30,7 @@ var Constructor = function()
         sprite.loadSprite("artillery+" + armyName,  false,
                           BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset);
         sprite.loadSpriteV2("artillery+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset);
+                            BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -43,12 +43,20 @@ var Constructor = function()
         {
             armyName = "bh"
         }
+        if ((armyName !== "yc") &&
+                (armyName !== "ge") &&
+                (armyName !== "bm") &&
+                (armyName !== "bh") &&
+                (armyName !== "ma"))
+        {
+            armyName = "os";
+        }
         if (armyName !== "ma")
         {
             sprite.loadSprite("artillery+" + armyName + "+fire",  false,
                               BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
             sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
+                                BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
         }
         else
         {

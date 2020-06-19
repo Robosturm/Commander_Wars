@@ -19,6 +19,15 @@ public:
 
     void changeCursor(QString spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
+     * @brief addCursorRangeOutline
+     * @param range
+     */
+    void addCursorRangeOutline(qint32 range);
+    /**
+     * @brief resetCursorRangeOutline
+     */
+    void resetCursorRangeOutline();
+    /**
      * @brief getMapPointX changes our cursor sprite
      * @return
      */
@@ -40,8 +49,14 @@ public slots:
      * @param mousePosY
      */
     void updatePosition(qint32 mousePosX, qint32 mousePosY);
+
+private:
+    void createOuterLeftRightOutline(qint32 range);
+    void createOuterTopBottomOutline(qint32 range);
+    void createOutline(qint32 i, qint32 range);
 private:
     oxygine::spSprite m_CurrentCursor;
+    QVector<oxygine::spSprite> m_cursorRangeOutline;
     bool onMap{false};
 
     qint32 m_MapPointX{-1};

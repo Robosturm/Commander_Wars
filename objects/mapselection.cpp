@@ -73,6 +73,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     this->addChild(m_SelectedItem);
     m_SelectedItem->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
+        m_itemClicked = true;
         emit itemClicked(currentItem);
     });
 
@@ -174,7 +175,7 @@ void MapSelection::setSelection(QString folder, QStringList files)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
     updateSelection(0);
@@ -190,7 +191,7 @@ void MapSelection::changeFolder(QString folder)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    m_itemClicked = false;
     QString newFolder = folder;
     if (folder == "")
     {
@@ -263,6 +264,7 @@ void MapSelection::updateSelection(qint32 startIndex)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_itemClicked = false;
     currentStartIndex = startIndex;
     if (currentStartIndex < 0)
     {
@@ -346,6 +348,11 @@ void MapSelection::updateSelection(qint32 startIndex)
 void MapSelection::itemChangeTimerExpired()
 {
     emit itemChanged(currentItem);
+    if (m_itemClicked)
+    {
+        m_itemClicked = false;
+        emit itemClicked(currentItem);
+    }
 }
 
 void MapSelection::startItemChangeTimer()

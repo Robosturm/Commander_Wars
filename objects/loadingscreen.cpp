@@ -39,6 +39,18 @@ void LoadingScreen::show()
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
         sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 
+        m_BackgroundBar = new oxygine::ColorRectSprite();
+        m_BackgroundBar->setSize(Settings::getWidth(), 60);
+        m_BackgroundBar->setY(Settings::getHeight() - 60);
+        m_BackgroundBar->setColor(Qt::white);
+        addChild(m_BackgroundBar);
+
+        m_LoadingBar = new oxygine::ColorRectSprite();
+        m_LoadingBar->setSize(Settings::getWidth(), 60);
+        m_LoadingBar->setY(Settings::getHeight() - 60);
+        m_LoadingBar->setColor(Qt::red);
+        addChild(m_LoadingBar);
+
         oxygine::TextStyle style = FontManager::getMainFont24();
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -54,9 +66,12 @@ void LoadingScreen::show()
         m_loadingProgress->setStyle(style);
         m_loadingProgress->setPosition(Settings::getWidth() / 2 - 40, Settings::getHeight() - 50);
         addChild(m_loadingProgress);
+
+
     }
     m_workText->setText("Loading...");
     m_loadingProgress->setText("0 %");
+    m_LoadingBar->setWidth(1);
     triggerUpdate();
 }
 
@@ -79,6 +94,7 @@ void LoadingScreen::setProgress(QString workText, qint32 value)
 {
     m_workText->setText(workText);
     m_loadingProgress->setText(QString::number(value) + " %");
+    m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
     triggerUpdate();
 }
 
