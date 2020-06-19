@@ -977,22 +977,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="102"/>
+        <location filename="../coreengine/console.cpp" line="103"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="103"/>
+        <location filename="../coreengine/console.cpp" line="104"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="104"/>
+        <location filename="../coreengine/console.cpp" line="105"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="105"/>
+        <location filename="../coreengine/console.cpp" line="106"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3512,67 +3512,67 @@ Version: </source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="204"/>
+        <location filename="../resources/scripts/general/Player.js" line="254"/>
         <source>Orange Star</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="206"/>
+        <location filename="../resources/scripts/general/Player.js" line="256"/>
         <source>Blue Moon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="208"/>
+        <location filename="../resources/scripts/general/Player.js" line="258"/>
         <source>Green Earth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="210"/>
+        <location filename="../resources/scripts/general/Player.js" line="260"/>
         <source>Yellow Comet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="212"/>
+        <location filename="../resources/scripts/general/Player.js" line="262"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="214"/>
+        <location filename="../resources/scripts/general/Player.js" line="264"/>
         <source>Bolt Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="216"/>
+        <location filename="../resources/scripts/general/Player.js" line="266"/>
         <source>Metall Army</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="218"/>
+        <location filename="../resources/scripts/general/Player.js" line="268"/>
         <source>Amber Corona</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="220"/>
+        <location filename="../resources/scripts/general/Player.js" line="270"/>
         <source>Brown Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="222"/>
+        <location filename="../resources/scripts/general/Player.js" line="272"/>
         <source>Jade Sun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="224"/>
+        <location filename="../resources/scripts/general/Player.js" line="274"/>
         <source>Pink Crystal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="226"/>
+        <location filename="../resources/scripts/general/Player.js" line="276"/>
         <source>Teal Guard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/Player.js" line="228"/>
+        <location filename="../resources/scripts/general/Player.js" line="278"/>
         <source>Dark Matters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5509,24 +5509,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>SpriteCreator</name>
     <message>
         <location filename="../spritingsupport/spritecreator.cpp" line="85"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="169"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="176"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="260"/>
         <source>The color table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="91"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="175"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="90"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="182"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="266"/>
         <source>The mask table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="101"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="181"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="192"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="272"/>
         <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="122"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="113"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="213"/>
         <source>Input directory or file doesn&apos;t exists. </source>
         <translation type="unfinished"></translation>
     </message>

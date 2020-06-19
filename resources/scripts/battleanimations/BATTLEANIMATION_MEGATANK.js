@@ -9,15 +9,15 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = "+" + player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "+os"))
-        {
-            armyName = "";
-        }
+        var armyName = ""; // "+" + player.getArmy().toLowerCase();
+//        if (armyName === "bg")
+//        {
+//            armyName = "bh"
+//        }
+//        if ((armyName !== "+os"))
+//        {
+//            armyName = "";
+//        }
         sprite.loadSprite("megatank" + armyName,  false,
                           BATTLEANIMATION_MEGATANK.getMaxUnitCount(), Qt.point(5, 10));
         sprite.loadSpriteV2("megatank" + armyName + "+mask", GameEnums.Recoloring_Table,

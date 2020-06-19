@@ -104,6 +104,22 @@ public:
      * @param file
      */
     static void updateMaskImage(QString& file, qint32 min);
+    /**
+     * @brief applyImagesTable
+     * @param input
+     * @param inTable
+     * @param outTable
+     * @param eraseColor
+     */
+    static void applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor = Qt::white);
+    /**
+     * @brief applyImageTable
+     * @param file
+     * @param inTableImg
+     * @param outTableImg
+     * @param eraseColor
+     */
+    static void applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor);
 };
 
 #endif // SPRITECREATOR_H

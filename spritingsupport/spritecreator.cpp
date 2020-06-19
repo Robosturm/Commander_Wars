@@ -78,6 +78,97 @@ void SpriteCreator::createColorTableSprite(const QString& file, qint32 startInde
     org.save(file);
 }
 
+void SpriteCreator::applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor)
+{
+    if (!QFile::exists(inTable) && inTable.endsWith(".png"))
+    {
+        Console::print(tr("The color table is not an existing file. ") + inTable, Console::eLogLevels::eERROR);
+        return;
+    }
+    if (!QFile::exists(outTable) && outTable.endsWith(".png"))
+    {
+        Console::print(tr("The mask table is not an existing file. ") + outTable, Console::eLogLevels::eERROR);
+        return;
+    }
+    QImage inTableImg(inTable);
+    QImage outTableImg(outTable);
+    QFileInfo inputInfo(input);
+    if (inputInfo.isDir())
+    {
+        QStringList filter;
+        filter << "*.png";
+        QDirIterator dirIter(input, filter, QDir::Files);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            applyImageTable(dirIter.fileInfo().absoluteFilePath(), inTableImg, outTableImg, eraseColor);
+        }
+    }
+    else if (inputInfo.isFile() && input.endsWith(".png"))
+    {
+        applyImageTable(input, inTableImg, outTableImg, eraseColor);
+    }
+    else
+    {
+        Console::print(tr("Input directory or file doesn't exists. ") + input, Console::eERROR);
+    }
+}
+
+void SpriteCreator::applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor)
+{
+    QString orgFile = file;
+    QString maskFile = file;
+    maskFile = maskFile.replace(".png", "+mask.png");
+    QFile::copy(file, orgFile.replace(".png", "_org.png"));
+    QImage orgImg(orgFile);
+    QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
+
+
+    for (qint32 y = 0; y < orgImg.height(); y++)
+    {
+        qint32 xPos = 0;
+        for (qint32 x = 0; x < orgImg.width(); x++)
+        {
+            // color pixel or another one?
+            QColor org = orgImg.pixelColor(xPos, y);
+            if (eraseColor != Qt::white &&
+                eraseColor != Qt::black)
+            {
+                while (eraseColor.rgba() == org.rgba())
+                {
+                    xPos++;
+                    if (xPos >= orgImg.width())
+                    {
+                        break;
+                    }
+                    org = orgImg.pixelColor(xPos, y);
+                }
+            }
+            if (xPos >= orgImg.width())
+            {
+                break;
+            }
+            for (qint32 i = 0; i < inTableImg.width(); i++)
+            {
+                QColor in = inTableImg.pixelColor(i, 0);
+                if (in.rgba() == org.rgba())
+                {
+                    mainImg.setPixelColor(x, y, outTableImg.pixelColor(i, 0));
+                    break;
+                }
+                else if (i == inTableImg.width() - 1)
+                {
+                    mainImg.setPixelColor(x, y, org);
+                    break;
+                }
+            }
+            xPos++;
+        }
+    }
+    QFile::remove(file);
+    mainImg.save(file);
+}
+
 void SpriteCreator::createSprites(QString input, QString colorTable, QString maskTable)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
@@ -162,7 +253,7 @@ void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskT
 }
 
 oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
-                                      qint32 columns, qint32  rows, float scaleFactor)
+                                            qint32 columns, qint32  rows, float scaleFactor)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
@@ -185,7 +276,7 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, Q
 }
 
 oxygine::ResAnim* SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg, bool useColorBox,
-                                      qint32 columns, qint32  rows, float scaleFactor)
+                                            qint32 columns, qint32  rows, float scaleFactor)
 {
     QFileInfo inputInfo(input);
     if (inputInfo.isFile() && inputInfo.exists())

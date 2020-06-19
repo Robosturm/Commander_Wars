@@ -297,8 +297,10 @@
 		<!-- megatank -->
 		<image file="megatank/megatank.png" />
 		<image file="megatank/megatank+mask.png" />
+		<!--
 		<image file="megatank/megatank+os.png" />
 		<image file="megatank/megatank+os+mask.png" />
+		-->
 		
 		<!-- missile -->
 		<image file="missile/missile+bh.png" />

@@ -78,6 +78,14 @@ public slots:
      */
     void updateMaskImages(QString folder, QString filter, qint32 min);
     /**
+     * @brief applyImagesTable
+     * @param input
+     * @param inTable
+     * @param outTable
+     * @param eraseColor
+     */
+    void applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor = Qt::white);
+    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end
