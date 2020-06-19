@@ -11,18 +11,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/zandra.mp3", 59, 57817);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/zandra.mp3", 59, 57817);
+            break;
         }
     };
 
@@ -71,7 +71,7 @@ var Constructor = function()
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
 
                 var units = enemyPlayer.getUnits();
@@ -117,45 +117,39 @@ var Constructor = function()
         return "BD";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         if (typeof map !== 'undefined')
         {
             switch (co.getPowerMode())
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                    {
-                        // apply sandstorm buff :)
-                        return 55;
-                    }
-                    return 10;
-                case GameEnums.PowerMode_Power:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                    {
-                        // apply sandstorm buff :)
-                        return 55;
-                    }
-                    return 10;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        if (map.getGameRules().getCurrentWeather() !== null &&
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                {
+                    // apply sandstorm buff :)
+                    return 55;
+                }
+                return 10;
+            case GameEnums.PowerMode_Power:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                {
+                    // apply sandstorm buff :)
+                    return 55;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (map.getGameRules().getCurrentWeather() !== null &&
                             map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                        {
-                            // apply sandstorm buff :)
-                            return 70;
-                        }
-                        return 20;
+                    {
+                        // apply sandstorm buff :)
+                        return 70;
                     }
-                    break;
-            }
-            if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-            {
-                // apply sandstorm buff :)
-                return 25;
+                    return 20;
+                }
+                break;
             }
         }
         return 0;
@@ -175,7 +169,7 @@ var Constructor = function()
         if (typeof map !== 'undefined')
         {
             if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 if (unit.getBaseMaxRange() > 1)
                 {
@@ -187,12 +181,21 @@ var Constructor = function()
                     case GameEnums.PowerMode_Power:
                         return 2;
                     default:
-                        return 1;
+                        return 0;
                     }
                 }
             }
         }
         return 0;
+    };
+
+    this.getWeatherImmune = function(co)
+    {
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+        {
+            return true;
+        }
+        return false;
     };
 
     // CO - Intel
@@ -215,7 +218,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and have increased firepower during sandstorm.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have increased firepower during sandstorm.");
+                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower during sandstorm.");
     };
     this.getPowerDescription = function()
     {

@@ -18,18 +18,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/olaf.mp3", 2618, 59888);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/olaf.mp3", 2618, 59888);
+            break;
         }
     };
 
@@ -78,7 +78,7 @@ var Constructor = function()
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
 
                 var units = enemyPlayer.getUnits();
@@ -124,69 +124,66 @@ var Constructor = function()
         return "BM";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         if (typeof map !== 'undefined')
         {
             switch (co.getPowerMode())
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                {
+                    // apply snow buff :)
+                    return 60;
+                }
+                else
+                {
+                    return 10;
+                }
+            case GameEnums.PowerMode_Power:
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                {
+                    // apply snow buff :)
+                    return 60;
+                }
+                else
+                {
+                    return 10;
+                }
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
                         // apply snow buff :)
                         return 60;
                     }
-                    else
-                    {
-                        return 10;
-                    }
-                case GameEnums.PowerMode_Power:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                    {
-                        // apply snow buff :)
-                        return 60;
-                    }
-                    else
-                    {
-                        return 10;
-                    }
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                        {
-                            // apply snow buff :)
-                            return 60;
-                        }
-                        return 10;
-                    }
-                    break;
+                    return 10;
+                }
+                break;
             }
         }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                           defender, defPosX, defPosY, isDefender)
-        {
-            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                    co.getPowerMode() > GameEnums.PowerMode_Off)
-            {
-                return 10;
-            }
-            return 0;
-        };
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+                                       defender, defPosX, defPosY, isDefender)
     {
-        if (unit.getOwner() === co.getOwner())
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-            {
-                // apply snow buff :)
-                return -1;
-            }
+            return 10;
         }
         return 0;
+    };
+
+    this.getWeatherImmune = function(co)
+    {
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return true;
+        }
+        return false;
     };
 
     // CO - Intel
@@ -209,7 +206,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops.") +
-               qsTr("\n\nCO Zone Effect: \nFirepower is increased by during Snow.");
+                qsTr("\n\nCO Zone Effect: \nFirepower is increased by during Snow.");
     };
     this.getPowerDescription = function()
     {

@@ -136,6 +136,27 @@ qint32 Weather::getMovementCostModifier(Unit* pUnit, Terrain* pTerrain)
     }
 }
 
+qint32 Weather::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMovementFuelCostModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    args1 << fuelCost;
+    QJSValue erg = pInterpreter->doFunction(m_WeatherId, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Weather::getVisionrangeModifier()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

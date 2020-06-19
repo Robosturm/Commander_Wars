@@ -419,6 +419,11 @@ public slots:
      */
     bool getPerfectVision();
     /**
+     * @brief getWeatherImmune
+     * @return
+     */
+    bool getWeatherImmune();
+    /**
      * @brief postBattleActions
      * @param pAttacker
      * @param atkDamage

@@ -15,3 +15,7 @@ MEGATANK.init = function(unit)
     unit.setMaxRange(1);
     unit.setVision(2);
 };
+MEGATANK.getName = function()
+{
+    return qsTr("War Tank");
+};

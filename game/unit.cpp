@@ -470,7 +470,10 @@ qint32 Unit::getVision(QPoint position)
         rangeModifier += pCO->getVisionrangeModifier(this, position);
     }
     GameMap* pMap = GameMap::getInstance();
-    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
+    if (!m_pOwner->getWeatherImmune())
+    {
+        rangeModifier += pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
+    }
     qint32 mapHeigth = pMap->getMapHeight();
     qint32 mapWidth = pMap->getMapWidth();
     for (qint32 x = 0; x < mapWidth; x++)
@@ -529,7 +532,10 @@ qint32 Unit::getBonusMaxRange(QPoint position)
     }
 
     GameMap* pMap = GameMap::getInstance();
-    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
+    if (!m_pOwner->getWeatherImmune())
+    {
+        rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
+    }
     // add terrain modifiers
     if (pMap->onMap(position.x(), position.y()))
     {
@@ -597,7 +603,10 @@ qint32 Unit::getBonusMinRange(QPoint position)
         rangeModifier += pCO->getMinFirerangeModifier(this, position);
     }
     GameMap* pMap = GameMap::getInstance();
-    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
+    if (!m_pOwner->getWeatherImmune())
+    {
+        rangeModifier += pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
+    }
     // add terrain modifiers
     if (pMap->onMap(position.x(), position.y()))
     {
@@ -1079,7 +1088,10 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
             }
         }
     }
-    bonus += pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
+    if (!m_pOwner->getWeatherImmune())
+    {
+        bonus += pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
+    }
     if (pMap->getGameRules()->getRankingSystem())
     {
         QString function1 = "getOffensiveBonus";
@@ -1245,7 +1257,10 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     {
         bonus += getTerrainDefense() * 10;
     }
-    bonus += pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
+    if (!m_pOwner->getWeatherImmune())
+    {
+        bonus += pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
+    }
     if (pMap->getGameRules()->getRankingSystem())
     {
         QString function1 = "getDefensiveBonus";
@@ -2064,6 +2079,10 @@ qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
                 ret += pCO->getMovementFuelCostModifier(this, fuelCost);
             }
         }
+    }
+    if (!m_pOwner->getWeatherImmune())
+    {
+        ret += pMap->getGameRules()->getCurrentWeather()->getMovementFuelCostModifier(this, fuelCost);
     }
     return ret;
 }

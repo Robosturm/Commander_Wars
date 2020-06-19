@@ -242,7 +242,10 @@ qint32 Building::getVision()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+    QJSValueList args1;
+    QJSValue obj2 = pInterpreter->newQObject(this);
+    args1 << obj2;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();

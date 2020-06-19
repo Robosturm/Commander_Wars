@@ -53,6 +53,12 @@ var WEATHER =
         return 0;
     },
 
+    getMovementFuelCostModifier: function(weather, unit, fuelCost)
+    {
+        // only called when the weather is active
+        return 0;
+    },
+
     activate : function(weather)
     {
         // called when the weather starts

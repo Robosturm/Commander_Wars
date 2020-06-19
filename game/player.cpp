@@ -727,6 +727,18 @@ void Player::buildedUnit(Unit* pUnit)
     }
 }
 
+bool Player::getWeatherImmune()
+{
+    if ((playerCOs[0].get() != nullptr &&
+        playerCOs[0]->getWeatherImmune()) ||
+        (playerCOs[1].get() != nullptr &&
+         playerCOs[1]->getWeatherImmune()))
+    {
+        return true;
+    }
+    return false;
+}
+
 QStringList Player::getBuildList() const
 {
     return m_BuildList;
@@ -843,7 +855,7 @@ void Player::updatePlayerVision(bool reduceTimer)
             {
                 // check terrain vision
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                qint32 visionRange = pTerrain->getVision();
+                qint32 visionRange = pTerrain->getVision(this);
                 if (visionRange >= 0)
                 {
                     QmlVectorPoint* pPoints;
@@ -1053,7 +1065,10 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     if (pUnit->getOwner() == this)
     {
         GameMap* pMap = GameMap::getInstance();
-        modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
+        if (!getWeatherImmune())
+        {
+            modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
+        }
     }
     return modifier;
 }

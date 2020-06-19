@@ -187,7 +187,7 @@ public slots:
      * @brief Terrain::getVision
      * @return
      */
-    qint32 getVision();
+    qint32 getVision(Player* pPlayer);
     /**
      * @brief getBonusVision
      * @param pUnit

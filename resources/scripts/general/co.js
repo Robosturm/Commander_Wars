@@ -85,6 +85,12 @@ var CO =
         return false;
     },
 
+    getWeatherImmune : function(co)
+    {
+        // return true if a weather has no effect for the co
+        return false;
+    },
+
     getHpHidden : function(co, unit, posX, posY)
     {
         // are the hp hidden of this unit?

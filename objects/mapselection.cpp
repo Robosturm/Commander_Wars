@@ -347,11 +347,15 @@ void MapSelection::updateSelection(qint32 startIndex)
 
 void MapSelection::itemChangeTimerExpired()
 {
-    emit itemChanged(currentItem);
-    if (m_itemClicked)
+    if (lastItem != currentItem)
     {
-        m_itemClicked = false;
-        emit itemClicked(currentItem);
+        lastItem = currentItem;
+        emit itemChanged(currentItem);
+        if (m_itemClicked)
+        {
+            m_itemClicked = false;
+            emit itemClicked(currentItem);
+        }
     }
 }
 

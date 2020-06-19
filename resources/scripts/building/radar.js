@@ -37,7 +37,7 @@ var Constructor = function()
                "<r>" + qsTr("area around them visible.") + "</r>";
     };
 
-    this.getVision = function()
+    this.getVision = function(building)
     {
         return 5;
     };

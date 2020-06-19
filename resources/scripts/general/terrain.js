@@ -66,7 +66,7 @@ var TERRAIN =
     },
 
     // vision created by this field
-    getVision : function()
+    getVision : function(player)
     {
         return -1;
     },

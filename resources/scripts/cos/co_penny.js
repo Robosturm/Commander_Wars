@@ -104,20 +104,9 @@ var Constructor = function()
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                             co.getPowerMode() > GameEnums.PowerMode_Off)
                     {
-                        if (map.getGameRules().getCurrentWeather() !== null &&
-                            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                        {
-                            // apply sandstorm buff :)
-                            return 25;
-                        }
                         return 10;
                     }
                     break;
-            }
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-            {
-                // apply sandstorm buff :)
-                return 15;
             }
         }
         return 0;
@@ -144,23 +133,14 @@ var Constructor = function()
                 {
                     return 3;
                 }
-                return 1;
             }
         }
         return 0;
     };
-    this.getMovementcostModifier = function(co, unit, posX, posY)
+
+    this.getWeatherImmune = function(co)
     {
-        if (unit.getOwner() === co.getOwner())
-        {
-            if (map.getGameRules().getCurrentWeather() !== null &&
-                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-            {
-                // apply snow buff :)
-                return -1;
-            }
-        }
-        return 0;
+        return true;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
@@ -185,7 +165,6 @@ var Constructor = function()
             {
                 return 3;
             }
-            return 1;
         }
         return 0;
     };

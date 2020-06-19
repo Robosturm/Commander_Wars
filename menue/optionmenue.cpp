@@ -1238,9 +1238,11 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/aw2_damage_formula");
             removeList.append("mods/awds_unit");
             removeList.append("mods/awds_co");
+            removeList.append("mods/awds_weather");
             removeList.append("mods/awdc_co");
             removeList.append("mods/awdc_unit");
             removeList.append("mods/awdc_powergain");
+            removeList.append("mods/awdc_weather");
             break;
         }
         case 2:
@@ -1249,9 +1251,11 @@ void OptionMenue::selectMods(qint32 item)
             addList.append("mods/aw2_damage_formula");
             addList.append("mods/awds_unit");
             addList.append("mods/awds_co");
+            addList.append("mods/awds_weather");
             removeList.append("mods/awdc_co");
             removeList.append("mods/awdc_unit");
             removeList.append("mods/awdc_powergain");
+            removeList.append("mods/awdc_weather");
             break;
         }
         case 3:
@@ -1260,9 +1264,11 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/aw2_damage_formula");
             removeList.append("mods/awds_unit");
             removeList.append("mods/awds_co");
+            removeList.append("mods/awds_weather");
             addList.append("mods/awdc_co");
             addList.append("mods/awdc_unit");
             addList.append("mods/awdc_powergain");
+            addList.append("mods/awdc_weather");
             break;
         }
     }

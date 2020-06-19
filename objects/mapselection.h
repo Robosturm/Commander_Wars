@@ -47,6 +47,7 @@ public slots:
 private:
     QString m_currentFolder;
     QString currentItem;
+    QString lastItem;
     qint32 currentIdx{0};
     QVector<oxygine::spTextField> m_Items;
     qint32 itemCount{0};

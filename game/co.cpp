@@ -1108,6 +1108,24 @@ bool CO::getPerfectVision()
     return false;
 }
 
+bool CO::getWeatherImmune()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getWeatherImmune";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    for (const auto & perk : m_perkList)
+    {
+        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        if (erg.isBool() && erg.toBool())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
                                    qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
                                    GameEnums::AiTurnMode turnMode)

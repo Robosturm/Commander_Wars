@@ -408,6 +408,11 @@ public slots:
      */
     void buildedUnit(Unit* pUnit);
     /**
+     * @brief getWeatherImmune
+     * @return
+     */
+    bool getWeatherImmune();
+    /**
      * @brief getBuildList
      * @return
      */

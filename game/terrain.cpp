@@ -915,11 +915,14 @@ void Terrain::setY(const qint32 &value)
     y = value;
 }
 
-qint32 Terrain::getVision()
+qint32 Terrain::getVision(Player* pPlayer)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVision";
-    QJSValue ret = pInterpreter->doFunction(terrainID, function1);
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(pPlayer);
+    args1 << obj1;
+    QJSValue ret = pInterpreter->doFunction(terrainID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();

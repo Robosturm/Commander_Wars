@@ -52,7 +52,7 @@ var Constructor = function()
     {
         return "minimap_fire";
     };
-    this.getVision = function()
+    this.getVision = function(player)
     {
         return 5;
     };

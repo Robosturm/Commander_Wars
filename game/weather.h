@@ -52,6 +52,7 @@ public slots:
     qint32 getFirerangeModifier();
     qint32 getMinFirerangeModifier();
     qint32 getVisionrangeModifier();
+    qint32 getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost);
     void activate();
     void deactivate();
     inline ScriptVariables* getVariables()
