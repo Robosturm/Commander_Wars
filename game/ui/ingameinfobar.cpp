@@ -204,7 +204,7 @@ void IngameInfoBar::updatePlayerInfo()
     }
 
 
-    oxygine::TextStyle style = FontManager::getMainFont24();
+    oxygine::TextStyle style = FontManager::getMainFont16();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -212,18 +212,29 @@ void IngameInfoBar::updatePlayerInfo()
 
     qint32 count = pPlayer->getBuildingCount();
     qint32 width = 285;
+    qint32 y = 110;
+
     spLabel pTextfield = new Label(width);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
-    pTextfield->setPosition(10, 100);
+    pTextfield->setHtmlText((tr("Day: ") + QString::number(pMap->getCurrentDay())));
+    pTextfield->setPosition(10, y);
     m_pGameInfoBox->addChild(pTextfield);
+    y += 25;
+
+    pTextfield = new Label(width);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
+    pTextfield->setPosition(10, y);
+    m_pGameInfoBox->addChild(pTextfield);
+    y += 25;
 
     count = pPlayer->getUnitCount();
     pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
-    pTextfield->setPosition(10, 135);
+    pTextfield->setPosition(10, y);
     m_pGameInfoBox->addChild(pTextfield);
+    y += 25;
 
     count = pPlayer->getFunds();
     pTextfield = new Label(width);
@@ -239,23 +250,26 @@ void IngameInfoBar::updatePlayerInfo()
         pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)));
     }
 
-    pTextfield->setPosition(10, 170);
+    pTextfield->setPosition(10, y);
     m_pGameInfoBox->addChild(pTextfield);
+    y += 25;
 
     count = pPlayer->getPlayerID();
     pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)));
-    pTextfield->setPosition(10, 205);
+    pTextfield->setPosition(10, y);
     m_pGameInfoBox->addChild(pTextfield);
+    y += 25;
 
     count = pPlayer->getTeam();
     pTextfield = new Label(width);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
-    pTextfield->setPosition(10, 240);
+    pTextfield->setPosition(10, y);
     m_pGameInfoBox->addChild(pTextfield);
     pApp->continueThread();
+    y += 25;
 }
 
 void IngameInfoBar::updateMinimap()
