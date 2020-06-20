@@ -2109,7 +2109,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
 
             if (transporter == 0)
             {
-                score += 35.0f;
+                score += 70.0f;
             }
             i++;
         }
@@ -2137,7 +2137,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     }
     if (transporterUnits.size() > 0 && loadingUnits.size() > 0)
     {
-        score += (transportTargets.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 15;
+        score += (transportTargets.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 20;
     }
     if (score >= 20)
     {
