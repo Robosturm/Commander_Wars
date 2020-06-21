@@ -7,6 +7,11 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_BOMBER.loadBomberSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+    };
+
+    this.loadBomberSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -22,10 +27,15 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("bomber+" + armyName,  false,
-                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
-        sprite.loadSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
+        sprite.loadMovingSprite("bomber+" + armyName,  false,
+                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+        sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_BOMBER.loadBomberSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -62,6 +72,18 @@ var Constructor = function()
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
     };
 };
 

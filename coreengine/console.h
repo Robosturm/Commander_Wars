@@ -78,6 +78,13 @@ public slots:
      */
     void updateMaskImages(QString folder, QString filter, qint32 min);
     /**
+     * @brief inversImagesFrames
+     * @param folder
+     * @param filter
+     * @param frames
+     */
+    void inversImagesFrames(QString folder, QString filter, qint32 frames);
+    /**
      * @brief applyImagesTable
      * @param input
      * @param inTable

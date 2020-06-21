@@ -977,22 +977,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="103"/>
+        <location filename="../coreengine/console.cpp" line="104"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="104"/>
+        <location filename="../coreengine/console.cpp" line="105"/>
         <source>Starting Game...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="105"/>
+        <location filename="../coreengine/console.cpp" line="106"/>
         <source>Prepare to Fight...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="106"/>
+        <location filename="../coreengine/console.cpp" line="107"/>
         <source>Read this message while waiting...</source>
         <translation></translation>
     </message>

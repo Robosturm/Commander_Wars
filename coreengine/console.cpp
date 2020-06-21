@@ -52,6 +52,7 @@ const QString Console::functions[] =
     QString("createColorTableSprites"),
     QString("applyImagesTable"),
     QString("updateMaskImages"),
+    QString("inversImagesFrames"),
     QString("help"),
     QString("logActions"),
     QString("")
@@ -122,6 +123,11 @@ void Console::createColorTableSprites(QString folder, QString filter, qint32 sta
 void Console::updateMaskImages(QString folder, QString filter, qint32 min)
 {
     SpriteCreator::updateMaskImages(folder, filter, min);
+}
+
+void Console::inversImagesFrames(QString folder, QString filter, qint32 frames)
+{
+    SpriteCreator::inversImagesFrames(folder, filter, frames);
 }
 
 void Console::applyImagesTable(QString input, QString inTable, QString outTable, QColor eraseColor)

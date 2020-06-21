@@ -21,8 +21,10 @@ public:
         WaitAfterIn,
         AttackerFire,
         AttackerImpact,
+        AttackerDying,
         DefenderFire,
         DefenderImpact,
+        DefenderDying,
         WaitAfterBattle,
         Finished,
     };
@@ -104,6 +106,15 @@ private:
      */
     void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
                              oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp);
+    /**
+     * @brief loadDyingAnimation
+     * @param pUnit1
+     * @param pUnit2
+     * @param pSprite
+     * @param endHp
+     * @param weapon
+     */
+    void loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, float endHp, qint32 weapon);
     /**
      * @brief nextAnimatinStep
      */

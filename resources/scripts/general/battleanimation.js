@@ -16,7 +16,18 @@ var BATTLEANIMATION =
         return false;
     },
 
+    hasDyingAnimation : function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return false;
+    },
+
     loadMoveInAnimation : function(sprite, unit, defender, weapon)
+    {
+        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+    },
+
+    loadDyingAnimation : function(sprite, unit, defender, weapon)
     {
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
@@ -69,5 +80,11 @@ var BATTLEANIMATION =
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
+    },
+
+    getDyingDurationMS : function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 0;
     },
 };

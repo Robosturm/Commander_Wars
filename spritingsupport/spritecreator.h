@@ -120,6 +120,19 @@ public:
      * @param eraseColor
      */
     static void applyImageTable(QString file, QImage inTableImg, QImage outTableImg, QColor eraseColor);
+    /**
+     * @brief inversImagesFrames
+     * @param folder
+     * @param filter
+     * @param frames
+     */
+    static void inversImagesFrames(QString& folder, QString& filter, qint32 frames);
+    /**
+     * @brief inversImageFrames
+     * @param file
+     * @param frames
+     */
+    static void inversImageFrames(QString& file, qint32 frames);
 };
 
 #endif // SPRITECREATOR_H

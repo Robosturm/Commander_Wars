@@ -22,10 +22,11 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("t_heli+" + armyName,  false,
-                          BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40));
         sprite.loadSpriteV2("t_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40));
+        sprite.loadSprite("t_heli+" + armyName,  false,
+                          BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), -1, 1.0, 0, 0,
+                          false, false, 30);
     };
 };
 

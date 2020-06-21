@@ -54,9 +54,9 @@ var Constructor = function()
         if (armyName !== "ma")
         {
             sprite.loadSprite("artillery+" + armyName + "+fire",  false,
-                              BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
+                              BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
             sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
-                                BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
+                                BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
         }
         else
         {
@@ -85,14 +85,14 @@ var Constructor = function()
             offset = Qt.point(30, 37);
         }
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
-                          1, 1.0, 0, 0);
-        sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
+                          1, 1.0, 0, 500);
+        sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 500);
     };
 
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 500;
+        return 1000;
     };
 };
 

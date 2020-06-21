@@ -385,6 +385,20 @@ void BattleAnimation::nextAnimatinStep()
                                 m_HealthBar1, m_defEndHp, m_AtkWeapon, m_atkStartHp);
             break;
         }
+        case AnimationProgress::AttackerDying:
+        {
+            qint32 count = m_pDefenderAnimation->getAnimationUnitCount();
+            if (m_pDefenderAnimation->hasDyingAnimation() &&
+                m_pDefenderAnimation->getUnitCount(count, m_defEndHp) < m_pDefenderAnimation->getUnitCount(count, m_defStartHp))
+            {
+                loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_defEndHp, m_DefWeapon);
+                break;
+            }
+            else
+            {
+                currentState = static_cast<AnimationProgress>(static_cast<qint32>(currentState) + 1);
+            }
+        }
         case AnimationProgress::DefenderFire:
         {
             m_pDefenderAnimation->setHpRounded(Mainapp::roundUp(m_defEndHp));
@@ -409,6 +423,20 @@ void BattleAnimation::nextAnimatinStep()
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
                                 m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
             break;
+        }
+        case AnimationProgress::DefenderDying:
+        {
+            qint32 count = m_pAttackerAnimation->getAnimationUnitCount();
+            if (m_pAttackerAnimation->hasDyingAnimation() &&
+                m_pAttackerAnimation->getUnitCount(count, m_atkEndHp) < m_pAttackerAnimation->getUnitCount(count, m_atkStartHp))
+            {
+                loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_atkEndHp, m_AtkWeapon);
+                break;
+            }
+            else
+            {
+                currentState = static_cast<AnimationProgress>(static_cast<qint32>(currentState) + 1);
+            }
         }
         case AnimationProgress::WaitAfterBattle:
         {
@@ -511,5 +539,16 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
     battleTimer.start(pSprite->getImpactDurationMS(pUnit2) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    pApp->continueThread();
+}
+
+
+void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, float, qint32 weapon)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    pSprite->loadAnimation(BattleAnimationSprite::dyingAnimation, pUnit1, pUnit2, weapon);
+    setSpritePosition(pSprite, pUnit1, pUnit2);
+    battleTimer.start(pSprite->getDyingDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
     pApp->continueThread();
 }

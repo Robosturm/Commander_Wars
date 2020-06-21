@@ -8,6 +8,7 @@
 #include "oxygine-framework.h"
 
 #include "game/unit.h"
+#include "game/gamemap.h"
 
 class BattleAnimationSprite;
 typedef oxygine::intrusive_ptr<BattleAnimationSprite> spBattleAnimationSprite;
@@ -21,6 +22,7 @@ public:
     static const QString fireAnimation;
     static const QString moveInAnimation;
     static const QString standingFiredAnimation;
+    static const QString dyingAnimation;
     explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
     /**
      * @brief loadAnimation
@@ -66,6 +68,18 @@ public slots:
      */
     qint32 getUnitCount(qint32 maxUnitCount);
     /**
+     * @brief getAnimationUnitCount
+     * @return
+     */
+    qint32 getAnimationUnitCount();
+    /**
+     * @brief getUnitCount
+     * @param maxUnitCount
+     * @param hp
+     * @return
+     */
+    qint32 getUnitCount(qint32 maxUnitCount, qint32 hp);
+    /**
      * @brief getHpRounded
      * @return hp rounded of the unit
      */
@@ -102,7 +116,7 @@ public slots:
      */
     void loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                     qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                    bool _invertFlipX = false, bool deleteAfter = false);
+                    bool _invertFlipX = false, bool deleteAfter = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief loadSprite loads a standing animated sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
@@ -118,7 +132,7 @@ public slots:
      */
     void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
                       qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                      bool _invertFlipX = false, bool deleteAfter = false);
+                      bool _invertFlipX = false, bool deleteAfter = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief loadMovingSprite loads a moving sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
@@ -137,7 +151,7 @@ public slots:
     void loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                           QPoint movement, qint32 moveTime, bool deleteAfter = false,
                           qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                          bool _invertFlipX = false);
+                          bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief loadMovingSprite loads a moving sprite for every shown model
      * @param spriteID the sprite resource which should be loaded
@@ -156,7 +170,7 @@ public slots:
     void loadMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
                             QPoint movement, qint32 moveTime, bool deleteAfter = false,
                             qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                            bool _invertFlipX = false);
+                            bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -175,7 +189,7 @@ public slots:
     void loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
                                 QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                 qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                                bool _invertFlipX = false);
+                                bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief loadSingleMovingSprite loads a single sprite for a unit
      * @param spriteID the sprite resource which should be loaded
@@ -194,7 +208,7 @@ public slots:
     void loadSingleMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
                                   QPoint movement, qint32 moveTime, bool deleteAfter = false,
                                   qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                                  bool _invertFlipX = false);
+                                  bool _invertFlipX = false, qint32 frameTime = GameMap::frameTime);
     /**
      * @brief getImpactDurationMS
      * @return
@@ -216,6 +230,16 @@ public slots:
      * @return
      */
     qint32 getMoveInDurationMS();
+    /**
+     * @brief getMoveInDurationMS
+     * @return
+     */
+    qint32 getDyingDurationMS();
+    /**
+     * @brief getMoveInDurationMS
+     * @return
+     */
+    bool hasDyingAnimation();
     /**
      * @brief hasMoveInAnimation
      * @return

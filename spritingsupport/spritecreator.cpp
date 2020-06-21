@@ -499,3 +499,37 @@ void SpriteCreator::updateMaskImage(QString& file, qint32 min)
     QFile::remove(file);
     mask.save(file);
 }
+
+void SpriteCreator::inversImagesFrames(QString& folder, QString& filter, qint32 frames)
+{
+    QStringList filters;
+    filters << filter;
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        inversImageFrames(file, frames);
+    }
+}
+
+void SpriteCreator::inversImageFrames(QString& file, qint32 frames)
+{
+    QImage picture(file);
+    QImage newPicture(picture.size(), picture.format());
+    qint32 frameWidth = picture.width() / frames;
+    for (qint32 i = 0; i < frames; i++)
+    {
+        for (qint32 x = 0; x < frameWidth; x++)
+        {
+            for (qint32 y = 0; y < picture.height(); y++)
+            {
+                // color pixel or another one?
+                QColor org = picture.pixelColor(picture.width() - (i + 1) * frameWidth + x, y);
+                newPicture.setPixelColor(x + i * frameWidth, y, org);
+            }
+        }
+    }
+    QFile::remove(file);
+    newPicture.save(file);
+}

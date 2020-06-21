@@ -22,9 +22,9 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("infantry+" + armyName,  false,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
         sprite.loadSpriteV2("infantry+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("infantry+" + armyName,  false,
                           BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
     };
 
