@@ -42,6 +42,11 @@ spGameMap GameMap::m_pInstance = nullptr;
 
 
 
+qint32 GameMap::getFrameTime()
+{
+    return frameTime;
+}
+
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())

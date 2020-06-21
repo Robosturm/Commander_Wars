@@ -26,7 +26,7 @@ var Constructor = function()
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40));
         sprite.loadSprite("t_heli+" + armyName,  false,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), -1, 1.0, 0, 0,
-                          false, false, 30);
+                          false, false, 50);
     };
 };
 

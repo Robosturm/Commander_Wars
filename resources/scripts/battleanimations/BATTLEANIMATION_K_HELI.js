@@ -27,10 +27,11 @@ var Constructor = function()
         {
             offset = Qt.point(-30, 20);
         }
-        sprite.loadSprite("k_heli+" + armyName,  false,
-                          BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
         sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
+        sprite.loadSprite("k_heli+" + armyName,  false,
+                          BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1.0, 0, 0,
+                          false, false, 30);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

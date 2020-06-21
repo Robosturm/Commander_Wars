@@ -23,9 +23,9 @@ var Constructor = function()
             armyName = "os";
         }
         sprite.loadSprite("cruiser+" + armyName,  false,
-                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20));
+                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), -1);
         sprite.loadSpriteV2("cruiser+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20));
+                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

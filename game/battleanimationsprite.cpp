@@ -218,22 +218,22 @@ QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCo
 
 void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                        qint32 loops, float scale, short priority, qint32 showDelay,
-                                       bool _invertFlipX, bool deleteAfter, qint32 frameTime)
+                                       bool _invertFlipX, bool deleteAfter, qint32 frameTime, qint32 frames)
 {
     loadMovingSprite(spriteID, addPlayerColor, maxUnitCount, offset,
                      QPoint(0, 0), 0, deleteAfter,
                      loops, scale, priority, showDelay,
-                     _invertFlipX, frameTime);
+                     _invertFlipX, frameTime, frames);
 }
 
 void BattleAnimationSprite::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
                                          qint32 loops, float scale, short priority, qint32 showDelay,
-                                         bool _invertFlipX, bool deleteAfter, qint32 frameTime)
+                                         bool _invertFlipX, bool deleteAfter, qint32 frameTime, qint32 frames)
 {
     loadMovingSpriteV2(spriteID, mode, maxUnitCount, offset,
                        QPoint(0, 0), 0, deleteAfter,
                        loops, scale, priority, showDelay,
-                       _invertFlipX,frameTime);
+                       _invertFlipX, frameTime, frames);
 }
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
@@ -249,24 +249,24 @@ qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount, qint32 hp)
 void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                              QPoint movement, qint32 moveTime, bool deleteAfter,
                                              qint32 loops, float scale, short priority, qint32 showDelay,
-                                             bool _invertFlipX, qint32 frameTime)
+                                             bool _invertFlipX, qint32 frameTime, qint32 frames)
 {    
     if (addPlayerColor)
     {
         loadMovingSpriteV2(spriteID, GameEnums::Recoloring_Mask, maxUnitCount, offset, movement,
-                           moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime);
+                           moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime, frames);
     }
     else
     {
         loadMovingSpriteV2(spriteID, GameEnums::Recoloring_None, maxUnitCount, offset, movement,
-                           moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime);
+                           moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime, frames);
     }
 }
 
 void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, qint32 maxUnitCount, QPoint offset,
                                                QPoint movement, qint32 moveTime, bool deleteAfter,
                                                qint32 loops, float scale, short priority, qint32 showDelay,
-                                               bool _invertFlipX, qint32 frameTime)
+                                               bool _invertFlipX, qint32 frameTime, qint32 frames)
 {
     qint32 value = getUnitCount(maxUnitCount);
     for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
@@ -278,14 +278,14 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
         }
         QPoint posOffset = getUnitPositionOffset(i);
         loadSingleMovingSpriteV2(spriteID, mode, offset + position + posOffset, movement, moveTime, deleteAfter,
-                               loops, scale, i + priority, showDelay, _invertFlipX, frameTime);
+                               loops, scale, i + priority, showDelay, _invertFlipX, frameTime, frames);
     }
 }
 
 void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums::Recoloring mode, QPoint offset,
                                                      QPoint movement, qint32 moveTime, bool deleteAfter,
                                                      qint32 loops, float scale, short priority, qint32 showDelay,
-                                                     bool _invertFlipX, qint32 frameTime)
+                                                     bool _invertFlipX, qint32 frameTime, qint32 frames)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -296,7 +296,11 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
+            if (frames < 0)
+            {
+                frames = pAnim->getColumns() - 1;
+            }
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, frames), oxygine::timeMS(pAnim->getTotalFrames() * frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(showDelay / Settings::getBattleAnimationSpeed())));
             pSprite->addTween(tween);
             if (deleteAfter && moveTime <= 0)
             {
@@ -370,17 +374,17 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
 void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
                                                    QPoint movement, qint32 moveTime, bool deleteAfter,
                                                    qint32 loops, float scale, short priority, qint32 showDelay,
-                                                   bool _invertFlipX, qint32 frameTime)
+                                                   bool _invertFlipX, qint32 frameTime, qint32 frames)
 {
     if (addPlayerColor)
     {
         loadSingleMovingSpriteV2(spriteID, GameEnums::Recoloring_Mask, offset, movement,
-                                 moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime);
+                                 moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime, frames);
     }
     else
     {
         loadSingleMovingSpriteV2(spriteID, GameEnums::Recoloring_None, offset, movement,
-                                 moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime);
+                                 moveTime, deleteAfter, loops, scale, priority, showDelay, _invertFlipX, frameTime, frames);
     }
 }
 

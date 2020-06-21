@@ -7,6 +7,11 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0);
+    };
+
+    this.baseStandingAnimation = function(sprite, unit, defender, weapon, fireFrames)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -23,13 +28,24 @@ var Constructor = function()
             armyName = "os";
         }
         sprite.loadSprite("battleship+" + armyName,  false,
-                          BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20));
+                          BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), -1);
         sprite.loadSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20));
+                            BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), -1);
+        if (armyName !== "ma")
+        {
+            sprite.loadSprite("battleship+" + armyName + "+fire",  false,
+                              BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
+                              1, 1.0, 0, 0, false, false, map.getFrameTime() , fireFrames);
+            sprite.loadSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Table,
+                                BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
+                                1, 1.0, 0, 0, false, false, map.getFrameTime() , fireFrames);
+        }
     };
+
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BATTLESHIP.loadStandingAnimation(sprite, unit, defender, weapon);
+        var count = sprite.getUnitCount(5);
+        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count);
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -59,7 +75,6 @@ var Constructor = function()
         {
             offset = Qt.point(54, 71);
         }
-        var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)
         {
             var offset2 = Qt.point(0, 0);

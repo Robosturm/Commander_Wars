@@ -303,6 +303,7 @@ public:
      * @return
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
+
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -315,6 +316,20 @@ signals:
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
 public slots:
+    /**
+     * @brief getFrameTime
+     * @return
+     */
+    static qint32 getFrameTime();
+    /**
+     * @brief getVisionCircle
+     * @param x
+     * @param y
+     * @param minVisionRange
+     * @param maxVisionRange
+     * @param visionHigh
+     * @return
+     */
     QmlVectorPoint* getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
     /**
      * @brief isUnitInArea
@@ -427,7 +442,7 @@ public slots:
     /**
      * @brief showGameInfo
      */
-    void showGameInfo();    
+    void showGameInfo();
     /**
      * @brief showAttackLog
      */
@@ -642,7 +657,7 @@ public slots:
     inline GameRules* getGameRules()
     {
         return m_Rules.get();
-    }    
+    }
     /**
      * @brief updateUnitIcons
      */

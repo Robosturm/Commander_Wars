@@ -2172,37 +2172,37 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="920"/>
+        <location filename="../game/gamemap.cpp" line="925"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="944"/>
+        <location filename="../game/gamemap.cpp" line="949"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="944"/>
+        <location filename="../game/gamemap.cpp" line="949"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="968"/>
+        <location filename="../game/gamemap.cpp" line="973"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="976"/>
+        <location filename="../game/gamemap.cpp" line="981"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="984"/>
+        <location filename="../game/gamemap.cpp" line="989"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="996"/>
+        <location filename="../game/gamemap.cpp" line="1001"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>

@@ -77,18 +77,30 @@
 		<image file="artillery/artillery+yc+fire+mask.png" cols = "8" />
 		
 		<!-- battleship -->
-		<image file="battleship/battleship+bh.png" />
-		<image file="battleship/battleship+bh+mask.png" />
-		<image file="battleship/battleship+bm.png" />
-		<image file="battleship/battleship+bm+mask.png" />
-		<image file="battleship/battleship+ge.png" />
-		<image file="battleship/battleship+ge+mask.png" />
-		<image file="battleship/battleship+os.png" />
-		<image file="battleship/battleship+os+mask.png" />
-		<image file="battleship/battleship+yc.png" />
-		<image file="battleship/battleship+yc+mask.png" />
+		<image file="battleship/battleship+bh.png" cols = "4" />
+		<image file="battleship/battleship+bh+mask.png" cols = "4" />
+		<image file="battleship/battleship+bm.png" cols = "4" />
+		<image file="battleship/battleship+bm+mask.png" cols = "4" />
+		<image file="battleship/battleship+ge.png" cols = "4" />
+		<image file="battleship/battleship+ge+mask.png" cols = "4" />
+		<image file="battleship/battleship+os.png" cols = "4" />
+		<image file="battleship/battleship+os+mask.png" cols = "4" />
+		<image file="battleship/battleship+yc.png" cols = "4" />
+		<image file="battleship/battleship+yc+mask.png" cols = "4" />
 		<image file="battleship/battleship+ma.png" />
 		<image file="battleship/battleship+ma+mask.png" />
+		
+		<!-- battleship fire -->
+		<image file="battleship/battleship+bh+fire.png" cols = "6" />
+		<image file="battleship/battleship+bh+fire+mask.png" cols = "6" />
+		<image file="battleship/battleship+bm+fire.png" cols = "6" />
+		<image file="battleship/battleship+bm+fire+mask.png" cols = "6" />
+		<image file="battleship/battleship+ge+fire.png" cols = "6" />
+		<image file="battleship/battleship+ge+fire+mask.png" cols = "6" />
+		<image file="battleship/battleship+os+fire.png" cols = "6" />
+		<image file="battleship/battleship+os+fire+mask.png" cols = "6" />
+		<image file="battleship/battleship+yc+fire.png" cols = "6" />
+		<image file="battleship/battleship+yc+fire+mask.png" cols = "6" />
 		
 		<!-- black_boat -->
 		<image file="black_boat/black_boat.png" cols = "4" />
@@ -117,16 +129,16 @@
 		<image file="cannonboat/cannonboat+mask.png" />
 		
 		<!-- cruiser -->
-		<image file="cruiser/cruiser+bh.png" />
-		<image file="cruiser/cruiser+bh+mask.png" />
-		<image file="cruiser/cruiser+bm.png" />
-		<image file="cruiser/cruiser+bm+mask.png" />
-		<image file="cruiser/cruiser+ge.png" />
-		<image file="cruiser/cruiser+ge+mask.png" />
-		<image file="cruiser/cruiser+os.png" />
-		<image file="cruiser/cruiser+os+mask.png" />
-		<image file="cruiser/cruiser+yc.png" />
-		<image file="cruiser/cruiser+yc+mask.png" />
+		<image file="cruiser/cruiser+bh.png" cols = "4" />
+		<image file="cruiser/cruiser+bh+mask.png" cols = "4" />
+		<image file="cruiser/cruiser+bm.png" cols = "4" />
+		<image file="cruiser/cruiser+bm+mask.png" cols = "4" />
+		<image file="cruiser/cruiser+ge.png" cols = "4" />
+		<image file="cruiser/cruiser+ge+mask.png" cols = "4" />
+		<image file="cruiser/cruiser+os.png" cols = "4" />
+		<image file="cruiser/cruiser+os+mask.png" cols = "4" />
+		<image file="cruiser/cruiser+yc.png" cols = "4" />
+		<image file="cruiser/cruiser+yc+mask.png" cols = "4" />
 		<image file="cruiser/cruiser+ma.png" />
 		<image file="cruiser/cruiser+ma+mask.png" />
 		
@@ -239,15 +251,15 @@
 		<image file="infantry/infantry+ma+mask.png" />
 		
 		<!-- k_heli -->
-		<image file="k_heli/k_heli+bh.png" />
+		<image file="k_heli/k_heli+bh.png" cols = "2" />
 		<image file="k_heli/k_heli+bh+mask.png" />
-		<image file="k_heli/k_heli+bm.png" />
+		<image file="k_heli/k_heli+bm.png" cols = "2" />
 		<image file="k_heli/k_heli+bm+mask.png" />
-		<image file="k_heli/k_heli+ge.png" />
+		<image file="k_heli/k_heli+ge.png" cols = "2" />
 		<image file="k_heli/k_heli+ge+mask.png" />
-		<image file="k_heli/k_heli+os.png" />
+		<image file="k_heli/k_heli+os.png" cols = "2" />
 		<image file="k_heli/k_heli+os+mask.png" />
-		<image file="k_heli/k_heli+yc.png" />
+		<image file="k_heli/k_heli+yc.png" cols = "2" />
 		<image file="k_heli/k_heli+yc+mask.png" />
 		<image file="k_heli/k_heli+ma.png" />
 		<image file="k_heli/k_heli+ma+mask.png" />

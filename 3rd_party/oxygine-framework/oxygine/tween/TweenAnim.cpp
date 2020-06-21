@@ -11,7 +11,9 @@ namespace oxygine
         _end(0)
     {
         if (_resAnim)
+        {
             _end = _resAnim->getColumns() - 1;
+        }
     }
 
     TweenAnim::TweenAnim(const ResAnim* resAnim, float initFrame, int row)

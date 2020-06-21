@@ -19,8 +19,9 @@ namespace oxygine
     {
         _scaleFactor = scaleFactor;
         if (!texture)
+        {
             return;
-
+        }
         int frame_width = originalSize.x / columns;
         int frame_height = originalSize.y / rows;
 
@@ -72,7 +73,9 @@ namespace oxygine
     {
         _scaleFactor = scaleFactor;
         if (!original)
+        {
             return;
+        }
 
         spNativeTexture texture = IVideoDriver::instance->createTexture();
         texture->init(original->lock(), false);
@@ -95,7 +98,9 @@ namespace oxygine
     void ResAnim::_load(LoadResourcesContext* c)
     {
         if (!_atlas)
+        {
             return;
+        }
         _atlas->load(c);
     }
 
@@ -149,7 +154,9 @@ namespace oxygine
     {
         Q_ASSERT(index < (int)_frames.size());
         if (index < (int)_frames.size())
+        {
             return _frames[index];
+        }
         return emptyFrame;
     }
 
@@ -158,7 +165,9 @@ namespace oxygine
         int i = row * _columns + col;
         Q_ASSERT(i < (int)_frames.size());
         if (i < (int)_frames.size())
+        {
             _frames[i] = frame;
+        }
     }
 
     const Vector2&  ResAnim::getSize() const
