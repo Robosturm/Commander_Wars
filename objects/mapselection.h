@@ -34,10 +34,10 @@ public:
      * @param files
      */
     void setSelection(QString folder, QStringList files);
-signals:
+signals:    
+    void itemChanged(QString item);
     void changeSelection(qint32 index);
     void itemClicked(QString item);
-    void itemChanged(QString item);
     void sigStartItemChangeTimer();
 public slots:
     void startItemChangeTimer();

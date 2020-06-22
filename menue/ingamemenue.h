@@ -42,6 +42,7 @@ signals:
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
     virtual void keyInput(oxygine::KeyEvent event);
+    virtual void keyUp(oxygine::KeyEvent event);
 protected:
     void loadBackground();
     void loadHandling();

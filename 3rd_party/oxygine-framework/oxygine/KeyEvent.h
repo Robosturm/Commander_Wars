@@ -19,7 +19,8 @@ namespace oxygine
         KeyEvent(QKeyEvent* event)
             : m_key(static_cast<Qt::Key>(event->key())),
               m_text(event->text()),
-              m_modifiers(event->modifiers())
+              m_modifiers(event->modifiers()),
+              m_continousPress(event->isAutoRepeat())
         {
         }
         inline Qt::Key getKey()
@@ -34,9 +35,14 @@ namespace oxygine
         {
             return m_modifiers;
         }
+        bool getContinousPress() const
+        {
+            return m_continousPress;
+        }
     private:
         Qt::Key m_key{static_cast<Qt::Key>(0)};
         QString m_text;
         Qt::KeyboardModifiers m_modifiers{Qt::KeyboardModifier::NoModifier};
+        bool m_continousPress{false};
     };
 }

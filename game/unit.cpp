@@ -55,7 +55,7 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
         setFuel(maxFuel);
         setAmmo1(maxAmmo1);
         setAmmo2(maxAmmo2);
-        updateSprites();
+        updateSprites(false);
         if (aquireId)
         {
             m_UniqueID = GameMap::getInstance()->getUniqueIdCounter();
@@ -162,7 +162,7 @@ void Unit::setOwner(Player* pOwner)
     if (m_pOwner != nullptr)
     {
         // update sprites :)
-        updateSprites();
+        updateSprites(false);
     }
 }
 
@@ -336,7 +336,7 @@ qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
     return modifier;
 }
 
-void Unit::updateSprites()
+void Unit::updateSprites(bool editor)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
@@ -361,19 +361,21 @@ void Unit::updateSprites()
     setAmmo1(ammo1);
     setAmmo2(ammo2);
     setUnitRank(m_UnitRank);
-
-    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    if (!editor)
     {
-        makeCOUnit(0);
-    }
-    else if (m_UnitRank == GameEnums::UnitRank_CO1)
-    {
-        makeCOUnit(1);
+        if (m_UnitRank == GameEnums::UnitRank_CO0)
+        {
+            makeCOUnit(0);
+        }
+        else if (m_UnitRank == GameEnums::UnitRank_CO1)
+        {
+            makeCOUnit(1);
+        }
     }
     setHasMoved(m_Moved);
     for (qint32 i = 0; i < m_TransportUnits.size(); i++)
     {
-        m_TransportUnits[i]->updateSprites();
+        m_TransportUnits[i]->updateSprites(false);
     }
     CO* pCO1 = m_pOwner->getCO(0);
     CO* pCO2 = m_pOwner->getCO(1);

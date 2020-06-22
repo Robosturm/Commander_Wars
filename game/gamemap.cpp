@@ -392,7 +392,7 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
-void GameMap::updateSprites(qint32 xInput, qint32 yInput)
+void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
 {
     if ((xInput < 0) && (yInput < 0))
     {
@@ -406,7 +406,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
                 fields.at(y)->at(x)->loadSprites();
                 if (fields.at(y)->at(x)->getUnit() != nullptr)
                 {
-                    fields.at(y)->at(x)->getUnit()->updateSprites();
+                    fields.at(y)->at(x)->getUnit()->updateSprites(editor);
                 }
                 if (fields.at(y)->at(x)->getBuilding() != nullptr)
                 {
@@ -427,7 +427,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
                     fields.at(y)->at(x)->loadSprites();
                     if (fields.at(y)->at(x)->getUnit() != nullptr)
                     {
-                        fields.at(y)->at(x)->getUnit()->updateSprites();
+                        fields.at(y)->at(x)->getUnit()->updateSprites(editor);
                     }
                     if (fields.at(y)->at(x)->getBuilding() != nullptr)
                     {

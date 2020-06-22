@@ -178,7 +178,7 @@ public slots:
     static void showCrashReport(QString log);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
-
+    void sigKeyUp(oxygine::KeyEvent event);
     void sigConsoleKeyDown(oxygine::KeyEvent event);
     void sigConsoleKeyUp(oxygine::KeyEvent event);
     /**
@@ -202,6 +202,7 @@ signals:
     void sigApplyFilter(quint32 filter);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
 private:
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;

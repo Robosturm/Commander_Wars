@@ -306,6 +306,17 @@
 		<image file="mech/mech+ma.png" />
 		<image file="mech/mech+ma+mask.png" />
 		
+		<image file="mech/mech+bh+river.png" />
+		<image file="mech/mech+bh+river+mask.png" />
+		<image file="mech/mech+bm+river.png" />
+		<image file="mech/mech+bm+river+mask.png" />
+		<image file="mech/mech+ge+river.png" />
+		<image file="mech/mech+ge+river+mask.png" />
+		<image file="mech/mech+os+river.png" />
+		<image file="mech/mech+os+river+mask.png" />
+		<image file="mech/mech+yc+river.png" />
+		<image file="mech/mech+yc+river+mask.png" />
+		
 		<!-- megatank -->
 		<image file="megatank/megatank.png" />
 		<image file="megatank/megatank+mask.png" />

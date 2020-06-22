@@ -658,7 +658,7 @@ public slots:
     /**
      * @brief updateSprites reloads all sprites
      */
-    void updateSprites();
+    void updateSprites(bool editor);
     /**
      * @brief getFuelCostModifier
      * @param pUnit

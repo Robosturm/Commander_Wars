@@ -24,10 +24,23 @@ var Constructor = function()
         }
         if (weapon === 1 || defender === null)
         {
-            sprite.loadSprite("mech+" + armyName,  false,
-                              BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-5, 5));
-            sprite.loadSpriteV2("mech+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-5, 5));
+            var terrainId = unit.getTerrain().getTerrainID();
+            if (terrainId === "RIVER" ||
+                terrainId === "DESERT_TRY_RIVER")
+            {
+                sprite.loadSprite("mech+" + armyName + "+river",  false,
+                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+                sprite.loadSpriteV2("mech+" + armyName + "+river+mask", GameEnums.Recoloring_Table,
+                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+            }
+            else
+            {
+                sprite.loadSprite("mech+" + armyName,  false,
+                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+                sprite.loadSpriteV2("mech+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+            }
+
         }
         else
         {
@@ -40,7 +53,7 @@ var Constructor = function()
         if (weapon === 1)
         {
             var weaponRes = "bazooka_os";
-            var offset = Qt.point(27, 23);
+            var offset = Qt.point(22, 23);
             var player = unit.getOwner();
             // get army name
             var armyName = player.getArmy().toLowerCase();
@@ -50,21 +63,21 @@ var Constructor = function()
             }
             if (armyName === "yc")
             {
-                offset = Qt.point(26, 17);
+                offset = Qt.point(21, 17);
             }
             else if (armyName === "ge")
             {
                 weaponRes = "bazooka_ge";
-                offset = Qt.point(28, 15);
+                offset = Qt.point(23, 15);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(27, 17);
+                offset = Qt.point(22, 17);
             }
             else if (armyName === "bh")
             {
                 weaponRes = "bazooka_bh"
-                offset = Qt.point(25, 14);
+                offset = Qt.point(20, 14);
             }
             BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,

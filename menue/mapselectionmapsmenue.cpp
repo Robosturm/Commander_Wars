@@ -65,8 +65,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     }
     addChild(m_pMapSelectionView);
 
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked);
 
     m_pButtonBack = ObjectManager::createButton(tr("Back"));
     m_pButtonBack->setPosition(10, Settings::getHeight() - 10 - m_pButtonBack->getHeight());

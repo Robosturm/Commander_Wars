@@ -2290,17 +2290,17 @@ This is immediatly applied.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1352"/>
+        <location filename="../menue/gamemenue.cpp" line="1355"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1370"/>
+        <location filename="../menue/gamemenue.cpp" line="1373"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1399"/>
+        <location filename="../menue/gamemenue.cpp" line="1402"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2516,18 +2516,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="511"/>
+        <location filename="../coreengine/mainapp.cpp" line="526"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="517"/>
+        <location filename="../coreengine/mainapp.cpp" line="532"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="519"/>
+        <location filename="../coreengine/mainapp.cpp" line="534"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3722,11 +3722,6 @@ Version: </source>
     <message>
         <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
-        <source>Heavy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

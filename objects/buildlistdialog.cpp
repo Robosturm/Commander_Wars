@@ -56,7 +56,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         detach();
     });
 
-    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 300);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -85,7 +85,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         items.append(std::get<0>(data));
     }
 
-    m_PredefinedLists = new DropDownmenu(230, items);
+    m_PredefinedLists = new DropDownmenu(300, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
@@ -198,7 +198,7 @@ void BuildListDialog::setBuildlist(qint32 item)
     {
         data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
                 QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
-                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("MEGATANK"),
                 QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
                 QString("MOTORBIKE"), QString("WATERPLANE")});
     }

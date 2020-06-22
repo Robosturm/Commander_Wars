@@ -78,14 +78,18 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
+
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             GameAnimationFactory::finishAllAnimations();
+            pApp->continueThread();
         }
         else if (m_pGameAction != nullptr)
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
@@ -119,15 +123,18 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 cancelActionInput();
             }
+            pApp->continueThread();
         }
         else
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction == nullptr)
             {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
                 showAttackableFields(x, y);
+                pApp->continueThread();
             }
-        }
-        pApp->continueThread();
+        }        
     }
 }
 

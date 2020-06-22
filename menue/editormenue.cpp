@@ -692,92 +692,95 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    InGameMenue::keyInput(event);
-    // for debugging
-    Qt::Key cur = event.getKey();
-    if (m_Focused)
+    if (!event.getContinousPress())
     {
-        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
+        InGameMenue::keyInput(event);
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (m_Focused)
         {
-            switch (cur)
+            if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
             {
-                case Qt::Key_Escape:
+                switch (cur)
                 {
-                    //                Console::print("Leaving Editor Menue", Console::eDEBUG);
-                    //                oxygine::getStage()->addChild(new Mainwindow());
-                    //                addRef();
-                    //                oxygine::Actor::detach();
-                    //                deleteLater();
-                    break;
-                }
-                case Qt::Key_Y:
-                {
-                    editorRedo();
-                    break;
-                }
-                case Qt::Key_Z:
-                {
-                    editorUndo();
-                    break;
-                }
-                case Qt::Key_C:
-                {
-                    m_EditorMode = EditorModes::CopySelection;
-                    copyRect = QRect(-1, -1, 0, 0);
-                    createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                    createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                    break;
-                }
-                case Qt::Key_V:
-                {
-                    if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
-                        copyRect.width() != 0 && copyRect.height() != 0)
+                    case Qt::Key_Escape:
                     {
-                        if ((event.getModifiers() & Qt::KeyboardModifier::ShiftModifier) > 0)
-                        {
-                            pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, EditorSelection::EditorMode::All);
-                        }
-                        else
-                        {
-                            pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, m_EditorSelection->getCurrentMode());
-                        }
+                        //                Console::print("Leaving Editor Menue", Console::eDEBUG);
+                        //                oxygine::getStage()->addChild(new Mainwindow());
+                        //                addRef();
+                        //                oxygine::Actor::detach();
+                        //                deleteLater();
+                        break;
                     }
-                    break;
+                    case Qt::Key_Y:
+                    {
+                        editorRedo();
+                        break;
+                    }
+                    case Qt::Key_Z:
+                    {
+                        editorUndo();
+                        break;
+                    }
+                    case Qt::Key_C:
+                    {
+                        m_EditorMode = EditorModes::CopySelection;
+                        copyRect = QRect(-1, -1, 0, 0);
+                        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                        createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                        break;
+                    }
+                    case Qt::Key_V:
+                    {
+                        if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
+                            copyRect.width() != 0 && copyRect.height() != 0)
+                        {
+                            if ((event.getModifiers() & Qt::KeyboardModifier::ShiftModifier) > 0)
+                            {
+                                pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, EditorSelection::EditorMode::All);
+                            }
+                            else
+                            {
+                                pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false, m_EditorSelection->getCurrentMode());
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        // do nothing
+                        break;
+                    }
                 }
-                default:
+            }
+            else if (cur == Settings::getKey_information())
+            {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
+                GameMap* pMap = GameMap::getInstance();
+                if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
-                    // do nothing
-                    break;
+                    Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
+                    this->addChild(fieldinfo);
+                    connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                    {
+                        setFocused(true);
+                    });
+                    setFocused(false);
                 }
+                pApp->continueThread();
             }
-        }
-        else if (cur == Settings::getKey_information())
-        {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            GameMap* pMap = GameMap::getInstance();
-            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            else if (cur == Settings::getKey_cancel())
             {
-                Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-                spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
-                this->addChild(fieldinfo);
-                connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                if (m_EditorMode == EditorModes::RemoveUnits)
                 {
-                    setFocused(true);
-                });
-                setFocused(false);
-            }
-            pApp->continueThread();
-        }
-        else if (cur == Settings::getKey_cancel())
-        {
-            if (m_EditorMode == EditorModes::RemoveUnits)
-            {
-                m_EditorMode = EditorModes::PlaceEditorSelection;
-            }
-            else
-            {
-                m_EditorMode = EditorModes::RemoveUnits;
+                    m_EditorMode = EditorModes::PlaceEditorSelection;
+                }
+                else
+                {
+                    m_EditorMode = EditorModes::RemoveUnits;
+                }
             }
         }
     }
@@ -1394,7 +1397,7 @@ void EditorMenue::loadMap(QString filename)
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
             GameMap* pMap = GameMap::getInstance();
-            pMap->updateSprites();
+            pMap->updateSprites(-1, -1, true);
             pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
             m_EditorSelection->createPlayerSelection();
         }

@@ -73,7 +73,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     this->addChild(m_SelectedItem);
     m_SelectedItem->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
     {
-        m_itemClicked = true;
+        this->m_itemClicked = true;
         emit itemClicked(currentItem);
     });
 

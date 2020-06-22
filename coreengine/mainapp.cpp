@@ -447,6 +447,21 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void Mainapp::keyReleaseEvent(QKeyEvent *event)
+{
+    if (!event->isAutoRepeat())
+    {
+        if (Console::getInstance()->getVisible())
+        {
+            emit sigConsoleKeyUp(oxygine::KeyEvent(event));
+        }
+        else
+        {
+            emit sigKeyUp(oxygine::KeyEvent(event));
+        }
+    }
+}
+
 bool Mainapp::getUseSeed()
 {
     return m_useSeed;

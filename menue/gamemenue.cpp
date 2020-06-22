@@ -1242,61 +1242,64 @@ void GameMenue::startGame()
 
 void GameMenue::keyInput(oxygine::KeyEvent event)
 {
-    InGameMenue::keyInput(event);
-    // for debugging
-    Qt::Key cur = event.getKey();
-    if (m_Focused && m_pNetworkInterface.get() == nullptr)
+    if (!event.getContinousPress())
     {
-        if (cur == Settings::getKey_quicksave1())
+        InGameMenue::keyInput(event);
+        // for debugging
+        Qt::Key cur = event.getKey();
+        if (m_Focused && m_pNetworkInterface.get() == nullptr)
         {
-            saveMap("savegames/quicksave1.sav");
-        }
-        else if (cur == Settings::getKey_quicksave2())
-        {
-            saveMap("savegames/quicksave2.sav");
-        }
-        else if (cur == Settings::getKey_quickload1())
-        {
-            if (QFile::exists("savegames/quicksave1.sav"))
+            if (cur == Settings::getKey_quicksave1())
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
-                Console::print("Leaving Game Menue", Console::eDEBUG);
-                addRef();
-                oxygine::Actor::detach();
-                deleteLater();
-                GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
-                oxygine::getStage()->addChild(pMenue);
-                pApp->getAudioThread()->clearPlayList();
-                pMenue->startGame();
-                pApp->continueThread();
+                saveMap("savegames/quicksave1.sav");
+            }
+            else if (cur == Settings::getKey_quicksave2())
+            {
+                saveMap("savegames/quicksave2.sav");
+            }
+            else if (cur == Settings::getKey_quickload1())
+            {
+                if (QFile::exists("savegames/quicksave1.sav"))
+                {
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->suspendThread();
+                    Console::print("Leaving Game Menue", Console::eDEBUG);
+                    addRef();
+                    oxygine::Actor::detach();
+                    deleteLater();
+                    GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                    oxygine::getStage()->addChild(pMenue);
+                    pApp->getAudioThread()->clearPlayList();
+                    pMenue->startGame();
+                    pApp->continueThread();
+                }
+            }
+            else if (cur == Settings::getKey_quickload2())
+            {
+                if (QFile::exists("savegames/quicksave2.sav"))
+                {
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->suspendThread();
+                    Console::print("Leaving Game Menue", Console::eDEBUG);
+                    addRef();
+                    oxygine::Actor::detach();
+                    deleteLater();
+                    GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                    oxygine::getStage()->addChild(pMenue);
+                    pApp->getAudioThread()->clearPlayList();
+                    pMenue->startGame();
+                    pApp->continueThread();
+                }
+            }
+            else
+            {
+                keyInputAll(cur);
             }
         }
-        else if (cur == Settings::getKey_quickload2())
-        {
-            if (QFile::exists("savegames/quicksave2.sav"))
-            {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
-                Console::print("Leaving Game Menue", Console::eDEBUG);
-                addRef();
-                oxygine::Actor::detach();
-                deleteLater();
-                GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
-                oxygine::getStage()->addChild(pMenue);
-                pApp->getAudioThread()->clearPlayList();
-                pMenue->startGame();
-                pApp->continueThread();
-            }
-        }
-        else
+        else if (m_Focused)
         {
             keyInputAll(cur);
         }
-    }
-    else if (m_Focused)
-    {
-        keyInputAll(cur);
     }
 }
 
