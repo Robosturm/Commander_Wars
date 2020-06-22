@@ -810,7 +810,8 @@ void CoreAI::addSelectedFieldData(GameAction* pGameAction, QPoint point)
 
 QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                                             QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                                            bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets)
+                                            bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
+                                            bool all)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -828,21 +829,22 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
             {
                 bool found = false;
                 bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
+                qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
+                qint32 loadingIsland = getIsland(pLoadingUnit);
+                QPoint loadingUnitPos = pLoadingUnit->getPosition();
                 if (ignoreCaptureTargets && canCapture)
                 {
                     // no targets found -> try to speed up those infis
                 }
                 else
                 {
-                    found = hasTargets(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings);
+                    found = hasTargets(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings,
+                                       loadingIslandIdx, loadingIsland);
                 }
                 if (!found)
                 {
                     // no targets for this unit :(
                     found = false;
-                    qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
-                    qint32 loadingIsland = getIsland(pLoadingUnit);
-                    QPoint loadingUnitPos = pLoadingUnit->getPosition();
                     qint32 distance = std::numeric_limits<qint32>::max();
                     qint32 targetX;
                     qint32 targetY;
@@ -850,31 +852,41 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                     {
                         for (qint32 y = 0; y < heigth; y++)
                         {
-                            qint32 dist = Mainapp::getDistance(loadingUnitPos, QPoint(x, y));
-                            if (dist < distance)
+                            // can be reached by both units and is empty
+                            // and not added yet
+                            if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
+                                (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                                ((pMap->getTerrain(x, y)->getUnit() == nullptr) ||
+                                 (pMap->getTerrain(x, y)->getUnit() == pUnit)))
                             {
-                                // can be reached by both units and is empty
-                                // and not added yet
-                                if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
-                                    (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                    ((pMap->getTerrain(x, y)->getUnit() == nullptr) ||
-                                     (pMap->getTerrain(x, y)->getUnit() == pUnit)))
+                                qint32 dist = Mainapp::getDistance(loadingUnitPos, QPoint(x, y));
+                                if (dist < distance)
                                 {
                                     found = true;
                                     distance = dist;
                                     targetX = x;
                                     targetY = y;
+                                    if (all)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
+                        }
+                        if (all && found)
+                        {
+                            break;
                         }
                     }
                     if (found && (virtualLoading || !targets.contains(QVector3D(targetX, targetY, 1))))
                     {
                         targets.append(QVector3D(targetX, targetY, 1));
                         transportUnits.append(pLoadingUnit);
-                        break;
+                        if (!all)
+                        {
+                            break;
+                        }
                     }
-
                 }
             }
         }
@@ -882,14 +894,15 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
     return transportUnits;
 }
 
-bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                        qint32 loadingIslandIdx, qint32 loadingIsland)
 {
     bool found = false;
     // check if we have anything to do here :)
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
         Unit* pEnemy = pEnemyUnits->at(i2);
-        if (onSameIsland(pLoadingUnit, pEnemy) &&
+        if (m_IslandMaps[loadingIslandIdx]->getIsland(pEnemy->getX(), pEnemy->getY()) == loadingIsland &&
             pLoadingUnit->isAttackable(pEnemy, true))
         {
             // this unit can do stuff skip it
@@ -905,7 +918,7 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEne
             for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
             {
                 Building* pBuilding = pEnemyBuildings->at(i2);
-                if (onSameIsland(pLoadingUnit, pBuilding) &&
+                if (m_IslandMaps[loadingIslandIdx]->getIsland(pBuilding->getX(), pBuilding->getY()) == loadingIsland &&
                     pBuilding->isCaptureOrMissileBuilding())
                 {
                     // this unit can do stuff skip it
@@ -1212,15 +1225,15 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qin
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
+            // check if this is the same island as we search for
+            // check if it's the same island our transporter is on if so we can reach the field
+            // the unloading area is also free
+            if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
+                m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
+                (pMap->getTerrain(x, y)->getUnit() == nullptr ||
+                 pMap->getTerrain(x, y)->getUnit() == pUnit))
             {
-                // check if this is the same island as we search for
-                // check if it's the same island our transporter is on if so we can reach the field
-                // the unloading area is also free
-                if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
-                    m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
-                    (pMap->getTerrain(x, y)->getUnit() == nullptr ||
-                    pMap->getTerrain(x, y)->getUnit() == pUnit))
+                if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
                 {
                     // and on top of that we have same free fields to unload the unit
                     for (qint32 i3 = 0; i3 < pUnloadArea->size(); i3++)
@@ -1271,37 +1284,37 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
         {
             Building* pBuilding = pEnemyBuildings->at(i);
             QPoint point(pBuilding->getX(), pBuilding->getY());
-                if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
+            if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
+            {
+                // we can capture it :)
+                if (pBuilding->isCaptureOrMissileBuilding() &&
+                    pBuilding->getTerrain()->getUnit() == nullptr)
                 {
-                    // we can capture it :)
-                    if (pBuilding->isCaptureOrMissileBuilding() &&
-                        pBuilding->getTerrain()->getUnit() == nullptr)
+                    // check unload fields
+                    for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)
                     {
-                        // check unload fields
-                        for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)
+                        qint32 x = point.x() + pUnloadArea->at(i2).x();
+                        qint32 y = point.y() + pUnloadArea->at(i2).y();
+                        if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
                         {
-                            qint32 x = point.x() + pUnloadArea->at(i2).x();
-                            qint32 y = point.y() + pUnloadArea->at(i2).y();
-                            if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
+                            if (!targets.contains(QVector3D(x, y, 1)) &&
+                                pMap->onMap(x, y) &&
+                                pMap->getTerrain(x, y)->getUnit() == nullptr)
                             {
-                                if (!targets.contains(QVector3D(x, y, 1)) &&
-                                    pMap->onMap(x, y) &&
-                                    pMap->getTerrain(x, y)->getUnit() == nullptr)
+                                // we can reach this unload field?
+                                if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
                                 {
-                                    // we can reach this unload field?
-                                    if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
+                                    for (qint32 i3 = 0; i3 < capturUnits.size(); i3++)
                                     {
-                                        for (qint32 i3 = 0; i3 < capturUnits.size(); i3++)
+                                        if (capturUnits[i3]->canMoveOver(x, y))
                                         {
-                                            if (capturUnits[i3]->canMoveOver(x, y))
-                                            {
-                                                targets.append(QVector3D(x, y, 1));
-                                                break;
-                                            }
+                                            targets.append(QVector3D(x, y, 1));
+                                            break;
                                         }
                                     }
                                 }
                             }
+                        }
                     }
                 }
             }

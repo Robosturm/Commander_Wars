@@ -293,7 +293,8 @@ protected:
                                          QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
     QVector<Unit*> appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                                         QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                                        bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets);
+                                        bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
+                                        bool all = false);
     /**
      * @brief hasTargets checks if a unit has anything to do on this island
      * @param pLoadingUnit
@@ -302,7 +303,8 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    bool hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                    qint32 loadingIslandIdx, qint32 loadingIsland);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit

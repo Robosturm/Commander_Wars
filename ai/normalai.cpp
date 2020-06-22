@@ -461,7 +461,8 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (isUsingUnit(pUnit) &&
+        if ((isUsingUnit(pUnit) || usedTransportSystem) &&
+            !pUnit->getHasMoved() &&
             pUnit->getBaseMaxRange() >= minfireRange &&
             pUnit->getBaseMaxRange() <= maxfireRange &&
             pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0)
@@ -1472,7 +1473,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         if (pUnit->getLoadingPlace() > 0)
         {
             QVector<QVector3D> ret;
-            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret);
+            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
             for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
             {
                 transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
@@ -2062,7 +2063,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     qint32 smallTransporterCount = 0;
     qint32 maxCounter = pMap->getMapWidth() * pMap->getMapHeight() / (movement * 2);
     qint32 counter = 1;
-    while (relevantUnits.size()  < loadingPlace * 2 &&
+    while (relevantUnits.size()  < loadingPlace * 3 &&
            pUnits->size() > loadingPlace * 2 &&
            counter <= maxCounter)
     {
@@ -2083,7 +2084,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
             }
         }
     }
-    QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, &relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets);
+    QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, &relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, true);
     QVector<Unit*> transporterUnits;
     for (qint32 i2 = 0; i2 < transportTargets.size(); i2++)
     {
@@ -2137,9 +2138,13 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     }
     if (transporterUnits.size() > 0 && loadingUnits.size() > 0)
     {
-        score += (transportTargets.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 20;
+        score += (loadingUnits.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 10;
     }
-    if (score >= 20)
+    else
+    {
+        score += loadingUnits.size() * 10;
+    }
+    if (loadingUnits.size() > 0 && score > 20)
     {
         score += dummy.getLoadingPlace() * 5;
         score += calcCostScore(data);

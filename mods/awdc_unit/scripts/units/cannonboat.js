@@ -10,10 +10,18 @@ BLACK_BOAT.init = function(unit)
 
     unit.setFuel(100);
     unit.setMaxFuel(100);
-    unit.setBaseMovementPoints(6);
+    unit.setBaseMovementPoints(7);
     unit.setMinRange(1);
     unit.setMaxRange(1);
     unit.setVision(2);
+};
+CANNONBOAT.getLoadingPlace = function()
+{
+    return 1;
+};
+CANNONBOAT.getTransportUnits = function()
+{
+    return ["INFANTRY", "MECH", "SNIPER"];
 };
 CANNONBOAT.getBaseCost = function()
 {
@@ -24,4 +32,9 @@ CANNONBOAT.getDescription = function()
     return "<r>" + qsTr("Naval unit can attack Naval units. Can ") + "</r>" +
             "<div c='#00ff00'>" + qsTr("transport X 2") + "</div>" +
             "<r>" + qsTr("infantry units.") + "</r>";
+};
+CANNONBOAT.getActions = function()
+{
+    // returns a string id list of the actions this unit can perform
+    return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
 };
