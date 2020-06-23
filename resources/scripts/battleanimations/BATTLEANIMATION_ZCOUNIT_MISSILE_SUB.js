@@ -7,10 +7,15 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("missile_sub",  false,
-                          BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSpriteV2("missile_sub+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20));
+        BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    {
+        sprite.loadMovingSprite("missile_sub",  false,
+                          BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+        sprite.loadMovingSpriteV2("missile_sub+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -48,6 +53,23 @@ var Constructor = function()
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1200;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_ZCOUNIT_MISSILE_SUB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 1000);
     };
 };
 

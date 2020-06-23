@@ -7,10 +7,10 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BOMBER.loadBomberSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
-    this.loadBomberSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
         var player = unit.getOwner();
         // get army name
@@ -31,11 +31,6 @@ var Constructor = function()
                           BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
         sprite.loadMovingSpriteV2("bomber+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
-    };
-
-    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
-    {
-        BATTLEANIMATION_BOMBER.loadBomberSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -85,6 +80,12 @@ var Constructor = function()
         // return true if the unit has an implementation for loadDyingAnimation
         return true;
     };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+    };
+
 };
 
 Constructor.prototype = BATTLEANIMATION;

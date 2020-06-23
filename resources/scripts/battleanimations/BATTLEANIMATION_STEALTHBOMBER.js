@@ -7,12 +7,16 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("stealthbomber",  false,
-                          BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60));
-        sprite.loadSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60));
+        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    {
+        sprite.loadMovingSprite("stealthbomber",  false,
+                          BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
+        sprite.loadMovingSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Table,
+                            BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
+    };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
@@ -67,6 +71,30 @@ var Constructor = function()
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1500;
+    };
+
+    this.getImpactDurationMS = function()
+    {
+        // should be a second or longer.
+        // the time will be scaled with animation speed inside the engine
+        return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
     };
 };
 

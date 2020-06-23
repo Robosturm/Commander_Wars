@@ -7,6 +7,11 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_LANDER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -25,18 +30,35 @@ var Constructor = function()
 
         if (armyName === "ma")
         {
-            sprite.loadSprite("lander+" + armyName,  false,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
-            sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20));
+            sprite.loadMovingSprite("lander+" + armyName,  false,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+            sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         }
         else
         {
-            sprite.loadSprite("lander+" + armyName,  false,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), -1);
-            sprite.loadSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), -1);
+            sprite.loadMovingSprite("lander+" + armyName,  false,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+            sprite.loadMovingSpriteV2("lander+" + armyName + "+mask", GameEnums.Recoloring_Table,
+                              BATTLEANIMATION_LANDER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         }
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1200;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_LANDER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 1000);
     };
 };
 

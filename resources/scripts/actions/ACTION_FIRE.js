@@ -134,7 +134,7 @@ var Constructor = function()
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
             if (luckMode !== GameEnums.LuckDamageMode_Off)
             {
-                var luck = attackerHp / 2 + attacker.getBonusLuck(attackerPosition);
+                var luck = attackerHp + attacker.getBonusLuck(attackerPosition);
                 var misfortune = attacker.getBonusMisfortune(attackerPosition);
                 if (luck > misfortune)
                 {

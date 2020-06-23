@@ -7,10 +7,15 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("zeppelin",  false,
-                          BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80));
-        sprite.loadSpriteV2("zeppelin+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80));
+        BATTLEANIMATION_ZCOUNIT_KIROV.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    {
+        sprite.loadMovingSprite("zeppelin",  false,
+                          BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80), movement, moveTime);
+        sprite.loadMovingSpriteV2("zeppelin+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_ZCOUNIT_KIROV.getMaxUnitCount(), Qt.point(0, 80), movement, moveTime);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -47,6 +52,23 @@ var Constructor = function()
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
+    };
+
+    this.hasDyingAnimation = function()
+    {
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_ZCOUNIT_KIROV.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
     };
 };
 
