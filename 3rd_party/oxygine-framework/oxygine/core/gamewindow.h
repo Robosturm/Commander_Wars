@@ -7,6 +7,7 @@
 #include <qopenglfunctions.h>
 #include <qmutex.h>
 #include <qbasictimer.h>
+#include <qthread.h>
 
 #include "QKeyEvent"
 
@@ -28,6 +29,7 @@ namespace oxygine
          */
         inline void suspendThread()
         {
+            Q_ASSERT(isWorker());
             m_lockCounter++;
             m_Mutex.lock();
         }
@@ -36,6 +38,7 @@ namespace oxygine
          */
         inline void continueThread()
         {
+            Q_ASSERT(isWorker());
             m_Mutex.unlock();
             m_lockCounter--;
         }
@@ -53,6 +56,7 @@ namespace oxygine
          */
         qint32 getLockCounter() const;
 
+        virtual bool isWorker() = 0;
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
     protected slots:
@@ -87,7 +91,6 @@ namespace oxygine
         static GameWindow* _window;
 
         qint32 m_lockCounter{0};
-
     };
 }
 

@@ -1295,11 +1295,11 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
                     {
                         qint32 x = point.x() + pUnloadArea->at(i2).x();
                         qint32 y = point.y() + pUnloadArea->at(i2).y();
-                        if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
+                        if (pMap->onMap(x, y) &&
+                            pMap->getTerrain(x, y)->getUnit() == nullptr &&
+                            !targets.contains(QVector3D(x, y, 1)))
                         {
-                            if (!targets.contains(QVector3D(x, y, 1)) &&
-                                pMap->onMap(x, y) &&
-                                pMap->getTerrain(x, y)->getUnit() == nullptr)
+                            if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
                             {
                                 // we can reach this unload field?
                                 if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)

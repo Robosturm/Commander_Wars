@@ -72,6 +72,7 @@ void LoadingScreen::show()
     m_workText->setText("Loading...");
     m_loadingProgress->setText("0 %");
     m_LoadingBar->setWidth(1);
+    setVisible(true);
     triggerUpdate();
 }
 

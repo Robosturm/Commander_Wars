@@ -17,34 +17,23 @@ MapMover::~MapMover()
 
 void MapMover::mouseWheel(qint32 direction)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap::getInstance()->zoom(direction);
-    pApp->continueThread();
 }
 
 void MapMover::autoScroll()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_pOwner->autoScroll();
-    pApp->continueThread();
 }
 
 void MapMover::MoveMap(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_pOwner->MoveMap(x, y);
-    pApp->continueThread();
 }
 
 void MapMover::keyInput(oxygine::KeyEvent event)
 {
     if (m_pOwner->getFocused())
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         // for debugging
         Qt::Key cur = event.getKey();
         Cursor* pCursor = m_pOwner->getCursor();
@@ -92,6 +81,5 @@ void MapMover::keyInput(oxygine::KeyEvent event)
         {
             GameMap::getInstance()->zoom(-1);
         }
-        pApp->continueThread();
     }
 }

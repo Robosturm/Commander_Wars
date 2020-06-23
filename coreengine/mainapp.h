@@ -80,6 +80,7 @@ public:
      * @brief loadRessources
      */
     virtual void loadRessources() override;
+    virtual bool isWorker() override;
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     /**

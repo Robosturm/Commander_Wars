@@ -74,6 +74,11 @@ Mainapp::~Mainapp()
     m_Networkthread.wait();
 }
 
+bool Mainapp::isWorker()
+{
+    return QThread::currentThread() == &m_Workerthread;
+}
+
 Mainapp* Mainapp::getInstance()
 {
     return m_pMainapp;

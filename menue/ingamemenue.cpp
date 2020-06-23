@@ -253,10 +253,7 @@ void InGameMenue::autoScroll()
 
 void InGameMenue::MoveMap(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap::getInstance()->moveMap(x, y);
-    pApp->continueThread();
 }
 
 bool InGameMenue::getFocused() const
@@ -333,7 +330,6 @@ QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
 void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
@@ -369,5 +365,4 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
         pApp->cursor().setPos(curPos);
         emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
     }
-    pApp->continueThread();
 }
