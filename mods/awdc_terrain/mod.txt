@@ -1,0 +1,3 @@
+name=Advance Wars Dark Conflict Unit Mod 
+description=This mod changes the defense of terrain to that of Advance Wars Dark Conflict. Created by Robosturm
+version=1.0.0

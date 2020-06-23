@@ -336,14 +336,14 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             {
                 pAnim = pObjectManager->getResAnim("barforeground");
                 pTextfield->setStyle(smallStyle);
+                pTextfield->setHtmlText(tr("HP: ") + QString::number(hp));
+                pTextfield->setPosition(10, 10);
+                m_pCursorInfoBox->addChild(pTextfield);
                 qint32 hpMax = 100;
                 if (hp > 100)
                 {
                     hpMax = hp;
                 }
-                pTextfield->setHtmlText((tr("HP: ") + QString::number(hp) + "/" + QString::number(hpMax)));
-                pTextfield->setPosition(10, 10);
-                m_pCursorInfoBox->addChild(pTextfield);
                 oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
                 float divider = static_cast<float>(hp) / static_cast<float>(hpMax);
                 if (divider > 2.0f / 3.0f)

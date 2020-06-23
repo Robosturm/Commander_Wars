@@ -2340,7 +2340,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="344"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="339"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="388"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="392"/>
         <source>HP: </source>
