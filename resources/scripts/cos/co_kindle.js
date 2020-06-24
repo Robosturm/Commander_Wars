@@ -71,10 +71,6 @@ var Constructor = function()
         units.remove();
 
         CO_KINDLE.kindleDamage(co, 3, animations, powerNameAnimation);
-
-        audio.clearPlayList();
-        CO_KINDLE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.kindleDamage = function(co, value, animations, powerNameAnimation)
@@ -169,10 +165,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_KINDLE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.getCOUnitRange = function(co)

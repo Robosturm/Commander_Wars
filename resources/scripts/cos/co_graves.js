@@ -38,9 +38,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_GRAVES.gravesDamage(co, 1, 3, powerNameAnimation);
-        audio.clearPlayList();
-        CO_GRAVES.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -50,9 +47,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_GRAVES.gravesDamage(co, 2, 4, powerNameAnimation);
-        audio.clearPlayList();
-        CO_GRAVES.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.gravesDamage = function(co, value, stunLevel, animation2)

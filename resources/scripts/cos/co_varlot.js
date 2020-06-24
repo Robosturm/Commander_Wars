@@ -26,10 +26,6 @@ var Constructor = function()
             }
         }
         player.addFunds(income / 4);
-
-        audio.clearPlayList();
-        CO_VARLOT.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -119,10 +115,6 @@ var Constructor = function()
                 }
             }
         }
-
-        audio.clearPlayList();
-        CO_VARLOT.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

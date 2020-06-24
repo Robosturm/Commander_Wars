@@ -33,9 +33,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_ROBOSTURM.power(co, 0, powerNameAnimation);
-        audio.clearPlayList();
-        CO_ROBOSTURM.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -45,9 +42,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_ROBOSTURM.power(co, 2, powerNameAnimation);
-        audio.clearPlayList();
-        CO_ROBOSTURM.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.power = function(co, value, powerNameAnimation)

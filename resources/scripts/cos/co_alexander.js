@@ -17,10 +17,6 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-
-        audio.clearPlayList();
-        CO_ALEXANDER.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -47,10 +43,6 @@ var Constructor = function()
                 player.addFunds(funds / 2);
             }
         }
-
-        audio.clearPlayList();
-        CO_ALEXANDER.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.startOfTurn = function(co)

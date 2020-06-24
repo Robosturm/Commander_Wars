@@ -40,10 +40,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_MEIYO.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -84,10 +80,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_MEIYO.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.postAnimationRanking = function(postAnimation)

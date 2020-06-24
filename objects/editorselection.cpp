@@ -29,16 +29,16 @@ EditorSelection::EditorSelection()
     m_BoxPlacementSize = createV9Box(0, startHPlacementSize, Settings::getWidth() / 4.0f, selectionHeight);
     m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, Settings::getWidth() / 4.0f, selectionHeight);
     m_BoxPlacementSelection = createV9Box(0, startHTerrain, Settings::getWidth() / 4.0f, Settings::getHeight() - startHTerrain);
-    m_PlacementSelectionSlider = new oxygine::SlidingActor();
-    m_PlacementSelectionSlider->setPosition(10, 50);
-    m_PlacementSelectionSlider->setSize(m_BoxPlacementSelection->getWidth() - 20,
+    m_PlacementSelectionClip = new oxygine::ClipRectActor();
+    m_PlacementSelectionClip->setPosition(10, 50);
+    m_PlacementSelectionClip->setSize(m_BoxPlacementSelection->getWidth() - 20,
                                         m_BoxPlacementSelection->getHeight() - 100);
-    m_BoxPlacementSelection->addChild(m_PlacementSelectionSlider);
+    m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = new oxygine::Actor();
     m_PlacementActor->setY(-GameMap::Imagesize);
-    m_PlacementSelectionSlider->setContent(m_PlacementActor);
+    m_PlacementSelectionClip->addChild(m_PlacementActor);
 
-    m_labelWidth = m_PlacementSelectionSlider->getWidth() - GameMap::Imagesize - frameSize - frameSize;
+    m_labelWidth = m_PlacementSelectionClip->getWidth() - GameMap::Imagesize - frameSize - frameSize;
     m_xCount = m_labelWidth / (GameMap::Imagesize * xFactor) + 1;
     createBoxPlacementSize();
     createBoxSelectionMode();
@@ -99,13 +99,13 @@ EditorSelection::EditorSelection()
     pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
-        if (m_PlacementActor->getHeight() < m_PlacementSelectionSlider->getHeight())
+        if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
         {
             m_PlacementActor->setY(-GameMap::Imagesize);
         }
-        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight())
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
         {
-            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight());
+            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight());
         }
     });
     pButtonDown->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, m_BoxPlacementSelection->getHeight() - pButtonDown->getHeight() - 18);

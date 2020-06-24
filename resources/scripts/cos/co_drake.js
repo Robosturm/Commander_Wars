@@ -25,9 +25,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_DRAKE.drakeDamage(co, 1, powerNameAnimation);
-        audio.clearPlayList();
-        CO_DRAKE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -43,9 +40,6 @@ var Constructor = function()
 
         map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
         CO_DRAKE.drakeDamage(co, 2, animation);
-        audio.clearPlayList();
-        CO_DRAKE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.drakeDamage = function(co, value, animation2)

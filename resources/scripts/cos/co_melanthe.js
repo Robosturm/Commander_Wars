@@ -38,9 +38,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_MELANTHE.melantheDamage(co, 3, 0, powerNameAnimation);
-        audio.clearPlayList();
-        CO_MELANTHE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.melantheDamage = function(co, heal, damage, powerNameAnimation)
@@ -137,9 +134,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_MELANTHE.melantheDamage(co, 4, 2, powerNameAnimation);
-        audio.clearPlayList();
-        CO_MELANTHE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.isNature = function(posX, posY)

@@ -23,10 +23,6 @@ var Constructor = function()
         // weather 0 is sun we don't want sun
         var newWeather = globals.randInt(1, count - 1);
         rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * 2);
-
-        audio.clearPlayList();
-        CO_PENNY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -45,10 +41,6 @@ var Constructor = function()
         // weather 0 is sun we don't want sun
         var newWeather = globals.randInt(1, count - 1);
         rules.changeWeather(rules.getWeather(newWeather).getWeatherId(), map.getPlayerCount() * 2);
-
-        audio.clearPlayList();
-        CO_PENNY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

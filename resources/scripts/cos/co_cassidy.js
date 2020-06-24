@@ -40,10 +40,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_CASSIDY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -53,10 +49,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_CASSIDY.cassidyDamage(co, 1, dialogAnimation);
-
-        audio.clearPlayList();
-        CO_CASSIDY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.cassidyDamage = function(co, value, animation2)

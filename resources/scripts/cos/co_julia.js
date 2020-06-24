@@ -14,10 +14,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_JULIA.juliaStun(co, 0.5, powerNameAnimation);
-
-        audio.clearPlayList();
-        CO_JULIA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -27,10 +23,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_JULIA.juliaStun(co, 1, powerNameAnimation);
-
-        audio.clearPlayList();
-        CO_JULIA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.juliaStun = function(co, amount, animation2)

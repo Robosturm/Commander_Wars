@@ -29,10 +29,7 @@ var Constructor = function()
         if (funds > 0)
         {
             player.addFunds(player.getFunds() * 0.5);
-        }
-        audio.clearPlayList();
-        CO_COLIN.loadCOMusic(co);
-        audio.playRandom();
+        }        
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -70,10 +67,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_COLIN.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

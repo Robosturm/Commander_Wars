@@ -247,6 +247,7 @@ protected:
     quint32 m_frameTime{1};
     bool m_stopped{false};
     bool finishQueued{false};
+    bool m_SoundStarted{false};
 private:
 
     QVector<GameAnimation*> m_QueuedAnimations;
@@ -257,7 +258,6 @@ private:
     QString m_soundFile;
     QString m_soundFolder;
     qint32 m_loops;
-    bool m_SoundStarted{false};
 
     /**
      * @brief animation data needed to perform this action

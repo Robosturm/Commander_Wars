@@ -7,16 +7,11 @@ var Constructor = function()
     };
 
     this.activatePower = function(co)
-    {        audio.clearPlayList();
-        CO_EMPTY_BH.loadCOMusic(co);
-        audio.playRandom();
+    {
     };
 
     this.activateSuperpower = function(co, powerMode)
     {
-        audio.clearPlayList();
-        CO_EMPTY_BH.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

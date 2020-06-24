@@ -58,11 +58,7 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-		
-        audio.clearPlayList();
-        CO_PETER.loadCOMusic(co);
-        audio.playRandom();
+        units.remove();		
     };
 
     this.peterDamage = function(co, value, animation2)
@@ -123,9 +119,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_PETER.peterDamage(co, 2, powerNameAnimation);
-        audio.clearPlayList();
-        CO_PETER.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.getCOUnitRange = function(co)

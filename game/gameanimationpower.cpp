@@ -11,6 +11,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/tweentogglevisibility.h"
 #include "coreengine/tweenwait.h"
+#include "coreengine/audiothread.h"
 
 #include "game/gameanimationfactory.h"
 
@@ -19,17 +20,18 @@
 
 GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
 
-GameAnimationPower* GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
+GameAnimationPower* GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
 {
     if (m_pGameAnimationPower == nullptr)
     {
-        m_pGameAnimationPower = new GameAnimationPower(frameTime, color, powerMode, coid);
+        m_pGameAnimationPower = new GameAnimationPower(frameTime, color, powerMode, pCO);
     }
     return m_pGameAnimationPower;
 }
 
-GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
-    : GameAnimation (frameTime)
+GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
+    : GameAnimation (frameTime),
+      m_pCO(pCO)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -68,6 +70,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     rotSprite->setDirection(3);
     addChild(rotSprite);
 
+    QString coid = m_pCO->getCoID();
     QString resAnim = coid.toLower() + "+nrm";
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
     oxygine::spSprite m_CO = new oxygine::Sprite();
@@ -192,6 +195,13 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 
 GameAnimationPower::~GameAnimationPower()
 {
+    if (!m_SoundStarted)
+    {
+        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        pAudioThread->clearPlayList();
+        m_pCO->loadCOMusic();
+        pAudioThread->playRandom();
+    }
     m_pGameAnimationPower = nullptr;
 }
 
@@ -203,6 +213,18 @@ void GameAnimationPower::rightClick()
 void GameAnimationPower::stop()
 {
     endTimer.stop();
+}
+
+void GameAnimationPower::update(const oxygine::UpdateState& us)
+{
+    if (!m_SoundStarted)
+    {
+        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        pAudioThread->clearPlayList();
+        m_pCO->loadCOMusic();
+        pAudioThread->playRandom();
+    }
+    GameAnimation::update(us);
 }
 
 void GameAnimationPower::restart()

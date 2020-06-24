@@ -45,9 +45,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation);
-        audio.clearPlayList();
-        CO_HAWKE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.hawkeDamage = function(co, value, powerNameAnimation)
@@ -135,9 +132,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation);
-        audio.clearPlayList();
-        CO_HAWKE.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.getCOUnitRange = function(co)

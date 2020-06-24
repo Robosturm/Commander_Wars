@@ -17,10 +17,6 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-
-        audio.clearPlayList();
-        CO_CONRAD.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -60,10 +56,6 @@ var Constructor = function()
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
         dmgModVar.writeDataFloat(50);
-
-        audio.clearPlayList();
-        CO_CONRAD.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

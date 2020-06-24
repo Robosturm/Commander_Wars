@@ -40,9 +40,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_SENSEI.spawnUnits(co, "INFANTRY", 9, powerNameAnimation);
-        audio.clearPlayList();
-        CO_SENSEI.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -52,9 +49,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_SENSEI.spawnUnits(co, "MECH", 9, powerNameAnimation);
-        audio.clearPlayList();
-        CO_SENSEI.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.spawnUnits = function(co, unitID, hp, powerNameAnimation)

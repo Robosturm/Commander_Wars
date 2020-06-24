@@ -66,9 +66,6 @@ var Constructor = function()
             }
         }
         units.remove();
-        audio.clearPlayList();
-        CO_RACHEL.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -80,9 +77,6 @@ var Constructor = function()
         var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0);
         ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret, 1);
         CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret, 2);
-        audio.clearPlayList();
-        CO_RACHEL.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.throwRocket = function(co, damage, targetType, animation2, index)

@@ -102,10 +102,11 @@ void GameAnimation::update(const oxygine::UpdateState& us)
     }
 
     if (!m_SoundStarted)
-    {
+    {        
         if (!m_soundFile.isEmpty())
         {
-            Mainapp::getInstance()->getAudioThread()->playSound(m_soundFile, m_loops, m_soundFolder);
+            AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+            pAudioThread->playSound(m_soundFile, m_loops, m_soundFolder);
         }
         m_SoundStarted = true;
     }

@@ -41,7 +41,6 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
@@ -59,50 +58,50 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     pSpriteBox->addChild(pPanel);
     qint32 y = 30;
     spLabel pText = new Label(130);
-    pText->setHtmlText("Attacker");
     pText->setStyle(style);
+    pText->setHtmlText("Attacker");
     pText->setPosition(10 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(80);
-    pText->setHtmlText("X");
     pText->setStyle(style);
+    pText->setHtmlText("X");
     pText->setPosition(140 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(80);
-    pText->setHtmlText("Y");
     pText->setStyle(style);
+    pText->setHtmlText("Y");
     pText->setPosition(240 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(100);
-    pText->setHtmlText("Dealt");
     pText->setStyle(style);
+    pText->setHtmlText("Dealt");
     pText->setPosition(330 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(130);
-    pText->setHtmlText("Defender");
     pText->setStyle(style);
+    pText->setHtmlText("Defender");
     pText->setPosition(440 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(80);
-    pText->setHtmlText("X");
     pText->setStyle(style);
+    pText->setHtmlText("X");
     pText->setPosition(580 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(80);
-    pText->setHtmlText("Y");
     pText->setStyle(style);
+    pText->setHtmlText("Y");
     pText->setPosition(670 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
     pText = new Label(100);
-    pText->setHtmlText("Dealt");
     pText->setStyle(style);
+    pText->setHtmlText("Dealt");
     pText->setPosition(760 + pPanel->getX(), y);
     pSpriteBox->addChild(pText);
 
@@ -139,20 +138,20 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pPanel->addItem(pActor);
 
         pText = new Label(80);
-        pText->setHtmlText(QString::number(log->attackerX));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->attackerX));
         pText->setPosition(130, y);
         pPanel->addItem(pText);
 
         pText = new Label(80);
-        pText->setHtmlText(QString::number(log->attackerY));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->attackerY));
         pText->setPosition(230, y);
         pPanel->addItem(pText);
 
         pText = new Label(100);
-        pText->setHtmlText(QString::number(log->attackerDamage) + tr("Hp"));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->attackerDamage) + tr("Hp"));
         pText->setPosition(320, y);
         pPanel->addItem(pText);
 
@@ -173,20 +172,20 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pPanel->addItem(pActor);
 
         pText = new Label(80);
-        pText->setHtmlText(QString::number(log->defenderX));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->defenderX));
         pText->setPosition(570, y);
         pPanel->addItem(pText);
 
         pText = new Label(80);
-        pText->setHtmlText(QString::number(log->defenderY));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->defenderY));
         pText->setPosition(660, y);
         pPanel->addItem(pText);
 
         pText = new Label(100);
-        pText->setHtmlText(QString::number(log->defenderDamage) + tr("Hp"));
         pText->setStyle(style);
+        pText->setHtmlText(QString::number(log->defenderDamage) + tr("Hp"));
         pText->setPosition(750, y);
         pPanel->addItem(pText);
 

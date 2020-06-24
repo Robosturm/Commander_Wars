@@ -17,10 +17,6 @@ var Constructor = function()
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation);
-
-        audio.clearPlayList();
-        CO_MARY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -56,10 +52,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_MARY.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

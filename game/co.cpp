@@ -1238,7 +1238,7 @@ QString CO::getVictorySentence()
 
 GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, coID);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, this);
     return pGameAnimationPower;
 }
 

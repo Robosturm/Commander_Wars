@@ -65,10 +65,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_SMITAN.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -110,10 +106,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_SMITAN.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)

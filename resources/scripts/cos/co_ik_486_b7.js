@@ -48,10 +48,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_IK_486_B7.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -90,10 +86,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_IK_486_B7.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

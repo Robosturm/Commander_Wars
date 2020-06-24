@@ -40,9 +40,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_STURM.throwMeteor(co, 4, powerNameAnimation);
-        audio.clearPlayList();
-        CO_STURM.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -52,9 +49,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_STURM.throwMeteor(co, 8, powerNameAnimation);
-        audio.clearPlayList();
-        CO_STURM.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.throwMeteor = function(co, damage, powerNameAnimation)

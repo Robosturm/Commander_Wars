@@ -13,10 +13,6 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
         CO_YUKIO.spawnUnits(co, 0.4, invasion, powerNameAnimation);
-
-        audio.clearPlayList();
-        CO_YUKIO.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -28,9 +24,6 @@ var Constructor = function()
 
         CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation);
         CO_YUKIO.yukioDamage(co, 3, powerNameAnimation);
-        audio.clearPlayList();
-        CO_YUKIO.loadCOMusic(co);
-        audio.playRandom();
     };
 
 

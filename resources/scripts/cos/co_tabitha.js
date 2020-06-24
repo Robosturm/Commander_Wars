@@ -33,9 +33,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_TABITHA.throwMeteor(co, 4, powerNameAnimation);
-        audio.clearPlayList();
-        CO_TABITHA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -45,9 +42,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_TABITHA.throwMeteor(co, 8, powerNameAnimation);
-        audio.clearPlayList();
-        CO_TABITHA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.throwMeteor = function(co, damage, powerNameAnimation)

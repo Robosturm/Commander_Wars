@@ -39,11 +39,7 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();
-
-        audio.clearPlayList();
-        CO_ADAM.loadCOMusic(co);
-        audio.playRandom();
+        units.remove();        
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -79,10 +75,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_ADAM.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.loadCOMusic = function(co)

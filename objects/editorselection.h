@@ -159,7 +159,7 @@ private:
     qint32 m_xCount{0};
     qint32 m_labelWidth{0};
 
-    oxygine::spSlidingActor m_PlacementSelectionSlider;
+    oxygine::spClipRectActor m_PlacementSelectionClip;
     oxygine::spActor m_PlacementActor;
     QVector<spTerrain> m_Terrains;
     QVector<oxygine::spActor> m_terrainActors;

@@ -15,6 +15,7 @@ class GameAnimationDialog;
 class GameAnimationPower;
 class GameAnimationNextDay;
 class GameAction;
+class CO;
 
 
 class GameAnimationFactory : public QObject
@@ -73,7 +74,7 @@ public slots:
      * @param frameTime
      * @return
      */
-    static GameAnimationPower* createAnimationPower(QColor color, GameEnums::PowerMode powerMode, QString coid, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationPower* createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createGameAnimationDialog
      * @param text

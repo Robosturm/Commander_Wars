@@ -40,9 +40,6 @@ var Constructor = function()
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation);
-        audio.clearPlayList();
-        CO_VON_BOLT.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -52,9 +49,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation);
-        audio.clearPlayList();
-        CO_VON_BOLT.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.throwLaserray = function(co, damage, range, powerNameAnimation)

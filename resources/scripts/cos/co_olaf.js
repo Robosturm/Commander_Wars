@@ -44,9 +44,6 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
         map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
-        audio.clearPlayList();
-        CO_OLAF.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -61,9 +58,6 @@ var Constructor = function()
         map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
         powerNameAnimation.queueAnimation(animation2);
         CO_OLAF.olafDamage(co, 2, animation2);
-        audio.clearPlayList();
-        CO_OLAF.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.olafDamage = function(co, value, animation2)

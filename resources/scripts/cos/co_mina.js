@@ -40,10 +40,6 @@ var Constructor = function()
             }
         }
         units.remove();
-
-        audio.clearPlayList();
-        CO_MINA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.activateSuperpower = function(co, powerMode)
@@ -53,10 +49,6 @@ var Constructor = function()
         powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_MINA.minaDamage(co, 4, powerNameAnimation);
-
-        audio.clearPlayList();
-        CO_MINA.loadCOMusic(co);
-        audio.playRandom();
     };
 
     this.minaDamage = function(co, value, animation2)
