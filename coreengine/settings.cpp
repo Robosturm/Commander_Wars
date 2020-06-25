@@ -521,7 +521,7 @@ void Settings::loadSettings()
         m_MenuItemCount = 13;
     }
     m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
-    m_spriteFilter = settings.value("SpriteFilter", GL_NEAREST).toInt(&ok);
+    m_spriteFilter = settings.value("SpriteFilter", GL_LINEAR_MIPMAP_LINEAR).toInt(&ok);
     if(!ok || m_spriteFilter < GL_NEAREST)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " SpriteFilter";

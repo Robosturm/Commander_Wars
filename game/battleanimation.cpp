@@ -389,7 +389,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             qint32 count = m_pDefenderAnimation->getAnimationUnitCount();
             if (m_pDefenderAnimation->hasDyingAnimation() &&
-                m_pDefenderAnimation->getUnitCount(count, m_defEndHp) < m_pDefenderAnimation->getUnitCount(count, m_defStartHp))
+                m_pDefenderAnimation->getUnitCount(count, Mainapp::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, Mainapp::roundUp(m_defStartHp)))
             {
                 loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_defEndHp, m_DefWeapon);
                 break;
@@ -428,7 +428,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             qint32 count = m_pAttackerAnimation->getAnimationUnitCount();
             if (m_pAttackerAnimation->hasDyingAnimation() &&
-                m_pAttackerAnimation->getUnitCount(count, m_atkEndHp) < m_pAttackerAnimation->getUnitCount(count, m_atkStartHp))
+                m_pAttackerAnimation->getUnitCount(count, Mainapp::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, Mainapp::roundUp(m_atkStartHp)))
             {
                 loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_atkEndHp, m_AtkWeapon);
                 break;

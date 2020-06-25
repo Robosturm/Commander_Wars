@@ -402,8 +402,6 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
 
 void EditorSelection::updateSelectedPlayer()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     for (qint32 i = 0; i < m_Players.size(); i++)
     {
         m_Players[i]->setVisible(false);
@@ -417,7 +415,6 @@ void EditorSelection::updateSelectedPlayer()
             m_Players[i]->setPosition(50 + frameSize * (i - m_playerStartIndex), 32);
         }
     }
-    pApp->continueThread();
 }
 
 qint32 EditorSelection::calcMaxPlayerSelection()

@@ -7,6 +7,11 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "");
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -15,11 +20,11 @@ var Constructor = function()
             armyName = "bh"
         }
         if ((armyName !== "ac") &&
-			(armyName !== "yc") &&
+            (armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-			(armyName !== "dm") &&
-			(armyName !== "ti") &&
+            (armyName !== "dm") &&
+            (armyName !== "ti") &&
             (armyName !== "bh") &&
             (armyName !== "ma"))
         {
@@ -30,15 +35,15 @@ var Constructor = function()
         {
             offset = Qt.point(-25, 5);
         }
-        sprite.loadSprite("rocketthrower+" + armyName,  false,
+        sprite.loadSprite("rocketthrower+" + armyName + ending,  false,
                           BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("rocketthrower+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset);
+        sprite.loadSpriteV2("rocketthrower+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
+                            BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_ROCKETTHROWER.loadStandingAnimation(sprite, unit, defender, weapon);
+
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -46,6 +51,15 @@ var Constructor = function()
         {
             armyName = "bh"
         }
+        if (armyName === "ma")
+        {
+            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon);
+        }
+        else
+        {
+            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
+        }
+
         var offset = Qt.point(0, 31);
         // rocket
         if (armyName === "yc")
@@ -84,6 +98,25 @@ var Constructor = function()
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
         sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        var player = unit.getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if (armyName === "ma")
+        {
+            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon);
+        }
+        else
+        {
+            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
+        }
     };
 
     this.getFireDurationMS = function()

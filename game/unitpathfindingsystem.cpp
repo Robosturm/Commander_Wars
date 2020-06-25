@@ -62,15 +62,15 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
         GameMap* pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
         {
-            if (!m_pUnit->getIgnoreUnitCollision())
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            // check for an enemy on the field
+            if (pUnit != nullptr)
             {
-                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-                // check for an enemy on the field
-                if (pUnit != nullptr)
+                // ignore unit if it's not an enemy unit or if it's stealthed
+                if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
+                    (!pUnit->isStealthed(m_pPlayer)))
                 {
-                    // ignore unit if it's not an enemy unit or if it's stealthed
-                    if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
-                        (!pUnit->isStealthed(m_pPlayer)))
+                    if (!m_pUnit->getIgnoreUnitCollision())
                     {
                         movecosts[index][direction] = -1;
                         return movecosts[index][direction];
@@ -233,10 +233,10 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
 bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints)
 {
     if ((pNodeUnit == nullptr || // empty field
-         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
-         (pNodeUnit == m_pUnit)) && // current field
-        (getCosts(getIndex(x, y), x, y, curX, curY) > 0) &&
-        (movepoints < 0 || movementCosts <= movepoints)) // inside given cost limits
+        (pNodeUnit == m_pUnit) || // current field
+        (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) &&  // oozium move
+        (movepoints < 0 || movementCosts <= movepoints) && // inside given cost limits
+        (getCosts(getIndex(x, y), x, y, curX, curY) > 0))
     {
         return true;
     }

@@ -7,6 +7,11 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
+        BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "");
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending)
+    {
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -27,15 +32,15 @@ var Constructor = function()
         {
             offset = Qt.point(-35, 5);
         }
-        sprite.loadSprite("missile+" + armyName,  false,
+        sprite.loadSprite("missile+" + armyName + ending,  false,
                           BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("missile+" + armyName + "+mask", GameEnums.Recoloring_Table,
+        sprite.loadSpriteV2("missile+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_MISSILE.loadStandingAnimation(sprite, unit, defender, weapon);
+        BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "+fired");
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -69,6 +74,11 @@ var Constructor = function()
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
         sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "+fired");
     };
 
     this.getFireDurationMS = function()

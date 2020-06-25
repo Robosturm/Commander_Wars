@@ -2172,7 +2172,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="928"/>
+        <location filename="../game/gamemap.cpp" line="935"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2193,7 +2193,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="952"/>
+        <location filename="../game/gamemap.cpp" line="959"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2205,27 +2205,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="952"/>
+        <location filename="../game/gamemap.cpp" line="959"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="976"/>
+        <location filename="../game/gamemap.cpp" line="983"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="984"/>
+        <location filename="../game/gamemap.cpp" line="991"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="992"/>
+        <location filename="../game/gamemap.cpp" line="999"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1004"/>
+        <location filename="../game/gamemap.cpp" line="1011"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2539,18 +2539,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="531"/>
+        <location filename="../coreengine/mainapp.cpp" line="533"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="537"/>
+        <location filename="../coreengine/mainapp.cpp" line="539"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="539"/>
+        <location filename="../coreengine/mainapp.cpp" line="541"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>

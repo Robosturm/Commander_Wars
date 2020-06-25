@@ -451,7 +451,6 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
     {
         for (qint32 x = 0; x < width; x++)
         {
-
             fields.at(y)->at(x)->syncAnimation();
         }
     }

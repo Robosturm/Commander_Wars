@@ -120,8 +120,10 @@ QJSValue Interpreter::doFunction(QString func, QJSValueList& args)
 {
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);
+#ifdef GAMEDEBUG
     if (funcPointer.isCallable())
     {
+#endif
         ret = funcPointer.call(args);
         if (ret.isError())
         {
@@ -130,12 +132,14 @@ QJSValue Interpreter::doFunction(QString func, QJSValueList& args)
                             ret.property("lineNumber").toString();
             Console::print(error, Console::eERROR);
         }
+#ifdef GAMEDEBUG
     }
     else
     {
         QString error = "Error: attemp to call a non function value. Call:" + func;
         Console::print(error, Console::eERROR);
     }
+#endif
     return ret;
 }
 
@@ -143,11 +147,15 @@ QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& 
 {
     QJSValue ret;
     QJSValue objPointer = globalObject().property(obj);
+#ifdef GAMEDEBUG
     if (objPointer.isObject())
     {
+#endif
         QJSValue funcPointer = objPointer.property(func);
+#ifdef GAMEDEBUG
         if (funcPointer.isCallable())
         {
+#endif
             ret = funcPointer.call(args);
             if (ret.isError())
             {
@@ -156,6 +164,7 @@ QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& 
                                 ret.property("lineNumber").toString();
                 Console::print(error, Console::eERROR);
             }
+#ifdef GAMEDEBUG
         }
         else
         {
@@ -168,6 +177,8 @@ QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& 
         QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
         Console::print(error, Console::eERROR);
     }
+
+#endif
     return ret;
 }
 
