@@ -636,10 +636,7 @@ void EditorMenue::playersChanged()
 
 void EditorMenue::rulesChanged()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     setFocused(true);
-    pApp->continueThread();
 }
 
 void EditorMenue::optimizePlayers()
@@ -1127,12 +1124,9 @@ void EditorMenue::campaignFinished()
 
 bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     bool ret = false;
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
     GameMap* pMap = GameMap::getInstance();
-
     if (pMap->onMap(x, y))
     {
         if (pMap->canBePlaced(terrainID, x, y))
@@ -1144,14 +1138,11 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
             }
         }
     }
-    pApp->continueThread();
     return ret;
 }
 
 bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     bool ret = false;
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
@@ -1159,14 +1150,11 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
         ret = pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y));
     }
-    pApp->continueThread();
     return ret;
 }
 
 bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     bool ret = false;
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
@@ -1178,14 +1166,11 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
             ret = true;
         }
     }
-    pApp->continueThread();
     return ret;
 }
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     QVector<QPoint> points;
     GameMap* pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
@@ -1226,6 +1211,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             if (points.size() < 14)
             {
                 pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
@@ -1234,19 +1221,18 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             {
                 pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
             }
+            pApp->continueThread();
         }
     }
     if (points.size() >= 14)
     {
         pMap->updateSprites();
     }
-    pApp->continueThread();
+
 }
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
 
     GameMap* pMap = GameMap::getInstance();
     QVector<QPoint> points;
@@ -1298,6 +1284,8 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             if (pCurrentBuilding->getBuildingID() != pMap->getTerrain(curX, curY)->getTerrainID())
             {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
@@ -1306,6 +1294,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
                     pMap->updateTerrain(points.at(i).x(), points.at(i).y());
                     pMap->updateSprites(points.at(i).x(), points.at(i).y());
                 }
+                pApp->continueThread();
             }
         }
     }
@@ -1313,13 +1302,11 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         pMap->updateSprites();
     }
-    pApp->continueThread();
+
 }
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
 
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
@@ -1352,14 +1339,17 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         qint32 curY = points.at(i).y();
         if (canUnitBePlaced(curX, curY))
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
+            pApp->continueThread();
         }
     }
-    pApp->continueThread();
+
 }
 
 void EditorMenue::saveMap(QString filename)

@@ -403,6 +403,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
         {
             for (qint32 x = 0; x < width; x++)
             {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
                 fields.at(y)->at(x)->loadSprites();
                 if (fields.at(y)->at(x)->getUnit() != nullptr)
                 {
@@ -412,6 +414,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
                 {
                     fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
                 }
+                pApp->continueThread();
             }
         }
     }
@@ -424,6 +427,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
             {
                 if (onMap(x, y))
                 {
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->suspendThread();
                     fields.at(y)->at(x)->loadSprites();
                     if (fields.at(y)->at(x)->getUnit() != nullptr)
                     {
@@ -433,23 +438,29 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
                     {
                         fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
                     }
+                    pApp->continueThread();
                 }
             }
         }
     }
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
         {
+
             fields.at(y)->at(x)->syncAnimation();
         }
     }
+    pApp->continueThread();
     if (m_Rules.get() != nullptr)
     {
         m_Rules->createWeatherSprites();
     }
+
 }
 
 void GameMap::removePlayer(qint32 index)
@@ -980,7 +991,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
     {
         pLoadingScreen->setProgress(tr("Loading Record"), 85);
     }
-    if (mapSize >= loadingScreenSize)
+    if (version > 3)
     {
         m_Recorder->deserializeObject(pStream);
     }
@@ -1190,8 +1201,6 @@ bool GameMap::nextPlayer()
 
 void GameMap::updateUnitIcons()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
 
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1202,11 +1211,13 @@ void GameMap::updateUnitIcons()
             spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
             if (pUnit.get() != nullptr)
             {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
                 pUnit->updateIcons(getCurrentViewPlayer());
+                pApp->continueThread();
             }
         }
     }
-    pApp->continueThread();
 }
 
 qint32 GameMap::getWinnerTeam()

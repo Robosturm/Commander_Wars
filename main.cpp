@@ -66,8 +66,8 @@ int main(int argc, char* argv[])
     srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG
     QQmlDebuggingEnabler enabler;
-
 #endif
+
     QApplication app(argc, argv);
     app.setApplicationName(QObject::tr("Commander Wars"));
     app.setApplicationVersion(Mainapp::getGameVersion());

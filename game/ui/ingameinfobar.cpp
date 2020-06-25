@@ -274,11 +274,7 @@ void IngameInfoBar::updatePlayerInfo()
 
 void IngameInfoBar::updateMinimap()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_pMinimap->updateMinimap(GameMap::getInstance(), true);
-    pApp->continueThread();
-
 }
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)

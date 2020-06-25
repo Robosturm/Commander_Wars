@@ -17,16 +17,20 @@
 
 #include "menue/editormenue.h"
 
+#include "objects/loadingscreen.h"
+
 void GameMap::importAWByWebMap(QString file)
 {
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     if (QFile::exists(file))
     {
-        clearMap();
+        clearMap();        
 
         QFile data(file);
         data.open(QFile::ReadOnly);
         QTextStream stream(&data);
         QVector<QVector<quint32>> mapIDs;
+        pLoadingScreen->setProgress(tr("Reading Map File"), 5);
         while (!stream.atEnd())
         {
             QStringList ids = stream.readLine().split(",");
@@ -43,6 +47,7 @@ void GameMap::importAWByWebMap(QString file)
                 }
             }
         }
+        pLoadingScreen->setProgress(tr("Creating Player"), 10);
         // load 16 players :)
         for (qint32 i = 0; i < 16; i++)
         {
@@ -50,8 +55,10 @@ void GameMap::importAWByWebMap(QString file)
             players[i]->init();
         }
         // load empty map
-        for (qint32 y = 0; y < mapIDs.size(); y++)
+        qint32 mapHeigth = mapIDs.size();
+        for (qint32 y = 0; y < mapHeigth; y++)
         {
+            pLoadingScreen->setProgress(tr("Loading Empty Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 10 + 20 * y / mapHeigth);
             fields.append(new QVector<spTerrain>());
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
@@ -65,6 +72,7 @@ void GameMap::importAWByWebMap(QString file)
 
         for (qint32 y = 0; y < mapIDs.size(); y++)
         {
+            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 30 + 50 * y / mapHeigth);
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
                 switch (mapIDs[y][x])
@@ -1030,5 +1038,6 @@ void GameMap::importAWByWebMap(QString file)
     }
     EditorMenue::getInstance()->optimizePlayers();
     // update the whole fucking map
+    pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();
 }

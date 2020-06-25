@@ -228,7 +228,7 @@ void Panel::clearContent()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_ContentRect->removeChildren();
+    pApp->continueThread();
     m_ContentRect->setX(0.0f);
     m_ContentRect->setY(0.0f);
-    pApp->continueThread();
 }

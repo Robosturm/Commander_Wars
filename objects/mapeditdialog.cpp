@@ -87,14 +87,10 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     pSpriteBox->addChild(m_MapScriptFile);
     m_ScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        QVector<QString> wildcards;
-        wildcards.append("*.js");
-        QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
-        this->addChild(fileDialog);
-        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
+        emit sigshowSelectScript();
     });
     y += 40;
+    connect(this, &MapEditDialog::sigshowSelectScript, this, &MapEditDialog::showSelectScript, Qt::QueuedConnection);
 
     // Label
     text = new Label(width - 10);
@@ -190,4 +186,14 @@ void MapEditDialog::scriptFileChanged(QString file)
     file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
     file = file.replace(QCoreApplication::applicationDirPath(), "");
     m_MapScriptFile->setCurrentText(file);
+}
+
+void MapEditDialog::showSelectScript()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.js");
+    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
 }

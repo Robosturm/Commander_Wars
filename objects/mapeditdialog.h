@@ -29,8 +29,10 @@ signals:
                       qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
                       qint32 turnLimit, quint32 buildLimit);
     void sigCanceled();
+    void sigshowSelectScript();
 public slots:
     void scriptFileChanged(QString file);
+    void showSelectScript();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ExitButton;

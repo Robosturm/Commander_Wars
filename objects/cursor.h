@@ -22,7 +22,7 @@ public:
      * @brief addCursorRangeOutline
      * @param range
      */
-    void addCursorRangeOutline(qint32 range);
+    void addCursorRangeOutline(qint32 range, QColor color);
     /**
      * @brief resetCursorRangeOutline
      */
@@ -51,9 +51,9 @@ public slots:
     void updatePosition(qint32 mousePosX, qint32 mousePosY);
 
 private:
-    void createOuterLeftRightOutline(qint32 range);
-    void createOuterTopBottomOutline(qint32 range);
-    void createOutline(qint32 i, qint32 range);
+    void createOuterLeftRightOutline(qint32 range, QColor color);
+    void createOuterTopBottomOutline(qint32 range, QColor color);
+    void createOutline(qint32 i, qint32 range, QColor color);
 private:
     oxygine::spSprite m_CurrentCursor;
     QVector<oxygine::spSprite> m_cursorRangeOutline;

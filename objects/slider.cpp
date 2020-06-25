@@ -30,13 +30,9 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
 
 void Slider::slotSliderValueChanged(float value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_CurrentValue = (m_maxValue - m_minValue) * value + m_minValue;
     m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit));
     emit sliderValueChanged(m_CurrentValue);
-
-    pApp->continueThread();
 }
 
 qint32 Slider::getCurrentValue() const
@@ -46,9 +42,6 @@ qint32 Slider::getCurrentValue() const
 
 void Slider::setCurrentValue(const qint32 &CurrentValue)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-
     m_CurrentValue = CurrentValue;
     if (m_CurrentValue < m_minValue)
     {
@@ -65,6 +58,4 @@ void Slider::setCurrentValue(const qint32 &CurrentValue)
     m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit));
     float scrollValue = static_cast<float>(m_CurrentValue - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);
-
-    pApp->continueThread();
 }

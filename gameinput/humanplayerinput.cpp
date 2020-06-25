@@ -646,9 +646,9 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
         Cursor* pCursor = pMenue->getCursor();
         if (minRange > 1)
         {
-            pCursor->addCursorRangeOutline(minRange - 1);
+            pCursor->addCursorRangeOutline(minRange - 1, Qt::green);
         }
-        pCursor->addCursorRangeOutline(maxRange);
+        pCursor->addCursorRangeOutline(maxRange, Qt::red);
     }
 
     m_pUnitPathFindingSystem->explore();

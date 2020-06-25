@@ -40,6 +40,9 @@ void Interpreter::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    setOutputWarningsToStandardError(false);
+    setIncubationController(nullptr);
+
     QJSValue globals = newQObject(pApp);
     globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());
@@ -51,6 +54,7 @@ void Interpreter::init()
     QJSValue settings = newQObject(Settings::getInstance());
     globalObject().setProperty("settings", settings);
     GameEnums::registerEnums();
+
     installExtensions(QJSEngine::Extension::AllExtensions);
 }
 

@@ -92,8 +92,6 @@ void PerkSelection::updatePerksView(CO* pCO)
 
 void PerkSelection::updatePerkCount()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
     for (auto & checkbox : m_Checkboxes)
     {
@@ -106,5 +104,4 @@ void PerkSelection::updatePerkCount()
             checkbox->setEnabled(false);
         }
     }
-    pApp->continueThread();
 }

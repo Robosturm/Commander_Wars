@@ -28,12 +28,14 @@ find_package(OpenGL REQUIRED)
 
 # build dependend defines
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    message("Compiling as Debug")
     add_definitions(
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
     )
 else("Release")
+    message("Compiling as Release")
     add_definitions(
         -DGAMERELEASE
     )

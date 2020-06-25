@@ -427,21 +427,15 @@ void RuleSelection::showRuleSelection()
 
 void RuleSelection::startWeatherChanged(qint32 value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap::getInstance()->getGameRules()->setStartWeather(value);
-    pApp->continueThread();
 }
 
 void RuleSelection::weatherChancesChanged()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     for (qint32 i = 0; i < GameMap::getInstance()->getGameRules()->getWeatherCount(); i++)
     {
         GameMap::getInstance()->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
-    pApp->continueThread();
 }
 
 void RuleSelection::showCOBannlist()

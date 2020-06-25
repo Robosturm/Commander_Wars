@@ -2152,37 +2152,60 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="925"/>
+        <location filename="../game/gamemap.cpp" line="928"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="949"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="33"/>
+        <source>Reading Map File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="50"/>
+        <source>Creating Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
+        <source>Loading Empty Map Row </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
+        <location filename="../game/gamemap.cpp" line="952"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="949"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1041"/>
+        <source>Loading Sprites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
+        <location filename="../game/gamemap.cpp" line="952"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="973"/>
+        <location filename="../game/gamemap.cpp" line="976"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="981"/>
+        <location filename="../game/gamemap.cpp" line="984"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="989"/>
+        <location filename="../game/gamemap.cpp" line="992"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1001"/>
+        <location filename="../game/gamemap.cpp" line="1004"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2340,91 +2363,91 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="339"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="335"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="384"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="388"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="392"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="432"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="428"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="448"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="444"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="464"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="460"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="480"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="476"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="497"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="493"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="514"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="510"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="654"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="699"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="650"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="695"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="663"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="659"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="672"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="681"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="668"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="677"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="708"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="704"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="719"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="715"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="728"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="724"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="736"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="732"/>
         <source>Movepoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="744"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="740"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="756"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="752"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="774"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="770"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2624,62 +2647,62 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="102"/>
+        <location filename="../objects/mapeditdialog.cpp" line="98"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="106"/>
+        <location filename="../objects/mapeditdialog.cpp" line="102"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="115"/>
+        <location filename="../objects/mapeditdialog.cpp" line="111"/>
         <source>Heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="119"/>
+        <location filename="../objects/mapeditdialog.cpp" line="115"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="128"/>
+        <location filename="../objects/mapeditdialog.cpp" line="124"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="132"/>
+        <location filename="../objects/mapeditdialog.cpp" line="128"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="141"/>
+        <location filename="../objects/mapeditdialog.cpp" line="137"/>
         <source>Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="145"/>
+        <location filename="../objects/mapeditdialog.cpp" line="141"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="154"/>
+        <location filename="../objects/mapeditdialog.cpp" line="150"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="158"/>
+        <location filename="../objects/mapeditdialog.cpp" line="154"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="164"/>
+        <location filename="../objects/mapeditdialog.cpp" line="160"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="178"/>
+        <location filename="../objects/mapeditdialog.cpp" line="174"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

@@ -143,7 +143,7 @@ void Tooltip::disableTooltip()
 {
     m_disabled = true;
     stopTooltiptimer();
-    hideTooltip();    
+    emit sigHideTooltip();
 }
 
 void Tooltip::hideTooltip()

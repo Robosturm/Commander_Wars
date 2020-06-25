@@ -43,8 +43,6 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
     qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
@@ -64,10 +62,9 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
         // provide cursor move signal
         emit sigCursorMoved(m_MapPointX, m_MapPointY);
     }
-    pApp->continueThread();
 }
 
-void Cursor::addCursorRangeOutline(qint32 range)
+void Cursor::addCursorRangeOutline(qint32 range, QColor color)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -75,21 +72,21 @@ void Cursor::addCursorRangeOutline(qint32 range)
     {
         if (i == 0)
         {
-            createOuterLeftRightOutline(range);
+            createOuterLeftRightOutline(range, color);
         }
         else if (i == range)
         {
-            createOuterTopBottomOutline(range);
+            createOuterTopBottomOutline(range, color);
         }
         else
         {
-             createOutline(i, range);
+             createOutline(i, range, color);
         }
     }
     pApp->continueThread();
 }
 
-void Cursor::createOuterLeftRightOutline(qint32 range)
+void Cursor::createOuterLeftRightOutline(qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim("cursor+border+bottom");
@@ -101,6 +98,7 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setResAnim(pAnimLeft);
     pSprite->setX(-range * GameMap::Imagesize - 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -109,6 +107,7 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setX(-range * GameMap::Imagesize);
     pSprite->setY(-2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -117,6 +116,7 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setX(-range * GameMap::Imagesize);
     pSprite->setY(2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -124,6 +124,7 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setResAnim(pAnimRight);
     pSprite->setX(range * GameMap::Imagesize + 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -132,6 +133,7 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setX(range * GameMap::Imagesize);
     pSprite->setY(-2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -140,11 +142,12 @@ void Cursor::createOuterLeftRightOutline(qint32 range)
     pSprite->setX(range * GameMap::Imagesize);
     pSprite->setY(2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 }
 
-void Cursor::createOuterTopBottomOutline(qint32 range)
+void Cursor::createOuterTopBottomOutline(qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim("cursor+border+bottom");
@@ -156,6 +159,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setResAnim(pAnimTop);
     pSprite->setY(-range * GameMap::Imagesize - 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -164,6 +168,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setX(-2);
     pSprite->setY(-range * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -172,6 +177,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setY(-range * GameMap::Imagesize);
     pSprite->setX(2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -179,6 +185,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setResAnim(pAnimBottom);
     pSprite->setY(range * GameMap::Imagesize + 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -187,6 +194,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setX(-2);
     pSprite->setY(range * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -195,11 +203,12 @@ void Cursor::createOuterTopBottomOutline(qint32 range)
     pSprite->setY(range * GameMap::Imagesize);
     pSprite->setX(2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 }
 
-void Cursor::createOutline(qint32 i, qint32 range)
+void Cursor::createOutline(qint32 i, qint32 range, QColor color)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnimBottom = pObjectManager->getResAnim("cursor+border+bottom");
@@ -213,6 +222,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX(-(range - i) * GameMap::Imagesize - 2);
     pSprite->setY(-i * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -221,6 +231,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX(-(range - i) * GameMap::Imagesize);
     pSprite->setY(-i * GameMap::Imagesize - 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -230,6 +241,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX(-(range - i) * GameMap::Imagesize - 2);
     pSprite->setY(i * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -238,6 +250,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX(-(range - i) * GameMap::Imagesize);
     pSprite->setY((i) * GameMap::Imagesize + 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -247,6 +260,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX((range - i) * GameMap::Imagesize + 2);
     pSprite->setY(-i * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -255,6 +269,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX((range - i) * GameMap::Imagesize);
     pSprite->setY(-i * GameMap::Imagesize - 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -264,6 +279,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX((range - i) * GameMap::Imagesize + 2);
     pSprite->setY(i * GameMap::Imagesize);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
@@ -272,6 +288,7 @@ void Cursor::createOutline(qint32 i, qint32 range)
     pSprite->setX((range - i) * GameMap::Imagesize);
     pSprite->setY((i) * GameMap::Imagesize + 2);
     pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 }
