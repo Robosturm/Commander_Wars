@@ -167,11 +167,7 @@ void Console::dotask(QString message)
 
 void Console::print(QString message, qint8 LogLevel)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    print(message, static_cast<eLogLevels>(LogLevel));
-    pApp->continueThread();
-}
+    print(message, static_cast<eLogLevels>(LogLevel));}
 
 void Console::print(QString message, eLogLevels MsgLogLevel)
 {
@@ -216,8 +212,6 @@ void Console::print(QString message, eLogLevels MsgLogLevel)
             default:
                 break;
         }
-
-
         output.append(prefix + msg);
         while (output.size() > outputSize)
         {
@@ -1338,6 +1332,7 @@ void Console::KeyInput(oxygine::KeyEvent event)
                 case Qt::Key_C:
                 {
                     QGuiApplication::clipboard()->setText(curmsg);
+                    curmsgpos += curmsg.size();
                     break;
                 }
                 case Qt::Key_X:

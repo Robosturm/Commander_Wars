@@ -205,7 +205,7 @@ var Constructor = function()
         {
             var destroyed = variables.createVariable("DESTROYED");
             if ((defender.getHp() <= 0.0) &&
-                (co.inCORange(attacker.getX(), attacker.getY(), attacker) ||
+                (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker) ||
                  co.getPowerMode() > GameEnums.PowerMode_Off))
             {
                 var powerMode = co.getPowerMode();

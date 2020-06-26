@@ -157,7 +157,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                 {
                     QString text = QGuiApplication::clipboard()->text();
                     m_Text = m_Text.insert(curmsgpos, text);
-                    curmsgpos = text.size();
+                    curmsgpos += text.size();
                     break;
                 }
                 case Qt::Key_C:

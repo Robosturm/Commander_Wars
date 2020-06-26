@@ -610,6 +610,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
     }
     m_CurrentMenu->setPosition(posX, posY);    
     pMenue->addChild(m_CurrentMenu);
+    m_CurrentMenu->moveMouseToItem(0, 0);
     pMenue->setFocused(false);
     connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
 

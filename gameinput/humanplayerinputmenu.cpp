@@ -221,9 +221,6 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::FocusedObjects));
     this->setHeight(maxY + bottomHeigth);
     this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
-    GameMenue* pGameMenue = GameMenue::getInstance();
-    connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
-    mouseMove(0, 0);
 }
 
 qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)
@@ -284,7 +281,7 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
         }
     }
     this->setPosition(x, y);
-    mouseMove(0, 0);
+    moveMouseToItem(0, 0);
 }
 
 void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
@@ -412,40 +409,10 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
     }
 }
 
-void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)
+void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
 {
-    qint32 newX = -1;
-    qint32 newY = -1;
-    GameMap* pMap = GameMap::getInstance();
-    if (x < this->getX() * pMap->getZoom())
-    {
-        newX = (this->getX() + 20) * pMap->getZoom();
-    }
-    if (x > (this->getX() + this->getWidth()) * pMap->getZoom())
-    {
-        newX = (this->getX() + this->getWidth() - 20) * pMap->getZoom();
-    }
-    if (y < (this->getY() + startY) * pMap->getZoom())
-    {
-        newY = (this->getY() + startY + itemHeigth / 2) * pMap->getZoom();
-        currentAction = 0;
-    }
-    else if (y > (this->getY() + getHeight() - startY) * pMap->getZoom())
-    {
-        newY = (this->getY() + getHeight() - itemHeigth / 2 - startY) * pMap->getZoom();
-        currentAction = m_ActionIDs.size() - 1;
-    }
-    if (newX < 0 && newY >= 0)
-    {
-        newX = x;
-    }
-    if (newY < 0 && newX >= 0)
-    {
-        newY = y;
-    }
-    if (newX >= 0 && newY >= 0)
-    {
-        // warp cursor to sweet nice position
-        // SDL_WarpMouseInWindow(oxygine::core::getWindow(), pMap->getX() + newX, pMap->getY() + newY);
-    }
+    oxygine::Vector2 pos = local2stage();
+    Mainapp* pApp = Mainapp::getInstance();
+    QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + itemWidth / 2 + itemWidth * x, pos.y + startY + itemHeigth / 2 + itemHeigth * y));
+    pApp->cursor().setPos(curPos);
 }

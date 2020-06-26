@@ -124,7 +124,7 @@ var Constructor = function()
             default:
                 if (isDefender === true)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
                         return damage * 0.2;
                     }

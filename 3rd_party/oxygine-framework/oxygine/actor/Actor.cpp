@@ -1228,7 +1228,9 @@ namespace oxygine
     Vector2 convert_local2stage(const Actor* actor, const Vector2& pos, const Actor* root)
     {
         if (!root)
+        {
             root = getStage().get();
+        }
         return convert_local2global_(actor, root, pos);
     }
 
