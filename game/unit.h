@@ -221,7 +221,7 @@ public slots:
      * @brief Unit::getUnitType
      * @return
      */
-    GameEnums::UnitType getUnitType();
+    qint32 getUnitType();
     /**
      * @brief getTerrainDefenseModifier the bonus defense for this unit
      * @return

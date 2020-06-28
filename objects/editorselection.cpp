@@ -670,7 +670,7 @@ void EditorSelection::initUnitSelection()
 {
     qint32 posY = startH - GameMap::Imagesize;
     qint32 xCounter = 0;
-    GameEnums::UnitType currentIdentifier = static_cast<GameEnums::UnitType>(std::numeric_limits<qint32>::min());
+    qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Units.size(); i++)
     {
         createUnitSectionLabel(i, currentIdentifier, xCounter, posY);
@@ -691,9 +691,9 @@ void EditorSelection::initUnitSelection()
     }
 }
 
-void EditorSelection::createUnitSectionLabel(qint32 item, GameEnums::UnitType & currentIdentifier, qint32 & xCounter, qint32 & posY)
+void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY)
 {
-    GameEnums::UnitType newIdentifier = m_Units[item]->getUnitType();
+    qint32 newIdentifier = m_Units[item]->getUnitType();
     if (newIdentifier != currentIdentifier)
     {
         posY += GameMap::Imagesize;
@@ -708,7 +708,7 @@ void EditorSelection::createUnitSectionLabel(qint32 item, GameEnums::UnitType & 
         spLabel pTextfield = new Label(m_labelWidth);
         pTextfield->setStyle(style);
         pTextfield->setPosition(getPosX(xCounter), posY);
-        pTextfield->setHtmlText(GameEnums::getUnitTypeText(currentIdentifier));
+        pTextfield->setHtmlText(UnitSpriteManager::getUnitTypeText(currentIdentifier));
         pTextfield->setVisible(false);
         m_PlacementActor->addChild(pTextfield);
         m_unitActors.append(pTextfield);

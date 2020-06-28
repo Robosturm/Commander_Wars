@@ -117,30 +117,3 @@ void GameEnums::registerEnums()
     pInterpreter->setGlobal("GameEnums", value);
 }
 
-QString GameEnums::getUnitTypeText(UnitType type)
-{
-    switch (type)
-    {
-        case GameEnums::UnitType_Air:
-        {
-            return tr("Air");
-        }
-        case GameEnums::UnitType_Naval:
-        {
-            return tr("Naval");
-        }
-        case GameEnums::UnitType_Ground:
-        {
-            return tr("Ground");
-        }
-        case GameEnums::UnitType_Infantry:
-        {
-            return tr("Infantry");
-        }
-        case GameEnums::UnitType_Hovercraft:
-        {
-            return tr("Hovercraft");
-        }
-    }
-    return tr("Ground");
-}

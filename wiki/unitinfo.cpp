@@ -92,7 +92,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(GameEnums::getUnitTypeText(pUnit->getUnitType()));
+    pLabel->setHtmlText(UnitSpriteManager::getUnitTypeText(pUnit->getUnitType()));
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
     y += 40;

@@ -1,5 +1,5 @@
 var UNIT =
-{
+        {
     getUnitDamageID : function()
     {
         // empty string will be replaced by the actual unit id to find the damage value in the table
@@ -206,7 +206,7 @@ var UNIT =
     unitTypeToGround : function(unitType)
     {
         if (unitType === GameEnums.UnitType_Hovercraft ||
-            unitType === GameEnums.UnitType_Ground)
+                unitType === GameEnums.UnitType_Ground)
         {
             return GameEnums.UnitType_Hovercraft;
         }
@@ -216,6 +216,23 @@ var UNIT =
     getCOSpecificUnit : function(building)
     {
         return false;
-    }
+    },
 
+    getUnitTypeText : function(unitType)
+    {
+        switch (unitType)
+        {
+        case GameEnums.UnitType_Air:
+            return qsTr("Air");
+        case GameEnums.UnitType_Naval:
+            return qsTr("Naval");
+        case GameEnums.UnitType_Ground:
+            return qsTr("Ground");
+        case GameEnums.UnitType_Infantry:
+            return qsTr("Infantry");
+        case GameEnums.UnitType_Hovercraft:
+            return qsTr("Hovercraft");
+        }
+        return tr("Ground");
+    },
 };

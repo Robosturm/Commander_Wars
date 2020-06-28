@@ -14,18 +14,24 @@ public:
      * @param i
      * @return
      */
-    GameEnums::UnitType getUnitType(qint32 i);
+    qint32 getUnitType(qint32 i);
     /**
      * @brief UnitSpriteManager::getUnitType
      * @param id
      * @return
      */
-    GameEnums::UnitType getUnitType(QString id);
+    qint32 getUnitType(QString id);
     /**
      * @brief getUnitsSorted
      * @return
      */
     QStringList getUnitsSorted();
+    /**
+     * @brief getUnitTypeText
+     * @param type
+     * @return
+     */
+    static QString getUnitTypeText(qint32 type);
 protected:
     friend RessourceManagement<UnitSpriteManager>;
     UnitSpriteManager();

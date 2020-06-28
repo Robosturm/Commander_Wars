@@ -163,7 +163,6 @@ public:
         UnitType_Naval = 16,
     };
     Q_ENUM(UnitType)
-    static QString getUnitTypeText(UnitType type);
 
     enum AiTurnMode
     {

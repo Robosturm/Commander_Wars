@@ -137,7 +137,7 @@ private:
      * @param xCounter
      * @param posY
      */
-    void createUnitSectionLabel(qint32 item, GameEnums::UnitType & currentIdentifier, qint32 & xCounter, qint32 & posY);
+    void createUnitSectionLabel(qint32 item, qint32 & currentIdentifier, qint32 & xCounter, qint32 & posY);
     /**
      * @brief hideSelection
      */

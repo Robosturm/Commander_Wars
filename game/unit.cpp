@@ -304,18 +304,18 @@ QString Unit::getName()
     return m_customName;
 }
 
-GameEnums::UnitType Unit::getUnitType()
+qint32 Unit::getUnitType()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
     if (ret.isNumber())
     {
-        return static_cast<GameEnums::UnitType>(ret.toInt());
+        return ret.toInt();
     }
     else
     {
-        return GameEnums::UnitType_Ground;
+        return static_cast<qint32>(GameEnums::UnitType_Ground);
     }
 }
 

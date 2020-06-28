@@ -6,7 +6,7 @@ UnitSpriteManager::UnitSpriteManager()
 {
 }
 
-GameEnums::UnitType UnitSpriteManager::getUnitType(qint32 i)
+qint32 UnitSpriteManager::getUnitType(qint32 i)
 {
     if ((i >= 0) && (i < m_loadedRessources.size()))
     {
@@ -15,32 +15,32 @@ GameEnums::UnitType UnitSpriteManager::getUnitType(qint32 i)
         QJSValue ret = pInterpreter->doFunction(m_loadedRessources[i], function1);
         if (ret.isNumber())
         {
-            return static_cast<GameEnums::UnitType>(ret.toInt());
+            return ret.toInt();
         }
     }
-    return GameEnums::UnitType_Ground;
+    return static_cast<qint32>(GameEnums::UnitType_Ground);
 }
 
 
-GameEnums::UnitType UnitSpriteManager::getUnitType(QString id)
+qint32 UnitSpriteManager::getUnitType(QString id)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";
     QJSValue ret = pInterpreter->doFunction(id, function1);
     if (ret.isNumber())
     {
-        return static_cast<GameEnums::UnitType>(ret.toInt());
+        return ret.toInt();
     }
-    return GameEnums::UnitType_Ground;
+    return static_cast<qint32>(GameEnums::UnitType_Ground);
 }
 
 QStringList UnitSpriteManager::getUnitsSorted()
 {
     QStringList sortedUnits;
-    QVector<GameEnums::UnitType> unitTypes;
+    QVector<qint32> unitTypes;
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
-        GameEnums::UnitType unitType = getUnitType(i);
+        qint32 unitType = getUnitType(i);
         if (!unitTypes.contains(unitType))
         {
             unitTypes.append(unitType);
@@ -57,4 +57,18 @@ QStringList UnitSpriteManager::getUnitsSorted()
         }
     }
     return sortedUnits;
+}
+
+QString UnitSpriteManager::getUnitTypeText(qint32 type)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getUnitTypeText";
+    QJSValueList args;
+    args << type;
+    QJSValue ret = pInterpreter->doFunction("UNIT", function1, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return tr("Ground");
 }
