@@ -2134,30 +2134,20 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="126"/>
         <source>Air</source>
-        <translation>Luft</translation>
+        <translation type="vanished">Luft</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="130"/>
         <source>Naval</source>
-        <translation>See</translation>
+        <translation type="vanished">See</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="134"/>
-        <location filename="../game/GameEnums.cpp" line="145"/>
         <source>Ground</source>
-        <translation>Boden</translation>
+        <translation type="vanished">Boden</translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="138"/>
         <source>Infantry</source>
-        <translation>Infantrie</translation>
-    </message>
-    <message>
-        <location filename="../game/GameEnums.cpp" line="142"/>
-        <source>Hovercraft</source>
-        <translation></translation>
+        <translation type="vanished">Infantrie</translation>
     </message>
 </context>
 <context>
@@ -6251,6 +6241,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../wiki/unitinfo.cpp" line="365"/>
         <source>Weapon 2 </source>
         <translation>Waffe 2 </translation>
+    </message>
+</context>
+<context>
+    <name>UnitSpriteManager</name>
+    <message>
+        <location filename="../resource_management/unitspritemanager.cpp" line="73"/>
+        <source>Ground</source>
+        <translation type="unfinished">Boden</translation>
     </message>
 </context>
 <context>
@@ -17351,6 +17349,34 @@ Units have increased firepower during sandstorm.</source>
         <location filename="../resources/scripts/units/transportplane.js" line="106"/>
         <source>ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>unit</name>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="226"/>
+        <source>Air</source>
+        <translation type="unfinished">Luft</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="228"/>
+        <source>Naval</source>
+        <translation type="unfinished">See</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="230"/>
+        <source>Ground</source>
+        <translation type="unfinished">Boden</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="232"/>
+        <source>Infantry</source>
+        <translation type="unfinished">Infantrie</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unit.js" line="234"/>
+        <source>Hovercraft</source>
+        <translation type="unfinished">Hovercraft</translation>
     </message>
 </context>
 <context>

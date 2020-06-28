@@ -66,6 +66,15 @@ QStringList Building::getBaseTerrain()
     return ret.toVariant().toStringList();
 }
 
+void Building::scaleAndShowOnSingleTile()
+{
+    qint32 width = getBuildingWidth();
+    qint32 heigth = getBuildingHeigth();
+    setScaleX(1.0f / static_cast<float>(width));
+    setScaleY(1.0f / static_cast<float>(heigth));
+    setX(GameMap::Imagesize * (width - 1) / (width));
+    setY(GameMap::Imagesize * (heigth - 1) / (heigth));
+}
 QString Building::getDescription()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

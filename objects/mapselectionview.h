@@ -15,6 +15,8 @@
 
 #include "game/campaign.h"
 
+#include "game/building.h"
+
 class GameMap;
 
 class MapSelectionView;
@@ -75,9 +77,11 @@ private:
     oxygine::spTextField m_MapDescription;
     spMinimap m_pMinimap;
     spPanel m_MinimapPanel;
-    QVector<oxygine::spActor> m_BuildingCountSprites;
+    QVector<spBuilding> m_BuildingCountSprites;
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
+    oxygine::spActor m_content;
+    oxygine::spSlidingActor m_contentSlider;
 };
 
 #endif // MAPSELECTIONVIEW_H

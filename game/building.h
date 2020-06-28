@@ -78,10 +78,17 @@ public:
      * @return
      */
     bool isValid();
-
+    /**
+     * @brief scaleAndShowOnSingleTile
+     */
+    void scaleAndShowOnSingleTile();
 signals:
 
 public slots:
+    /**
+     * @brief getVisionHide
+     * @return
+     */
     bool getVisionHide();
     /**
      * @brief getVisionHigh

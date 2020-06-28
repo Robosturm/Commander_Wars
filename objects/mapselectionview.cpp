@@ -103,32 +103,28 @@ MapSelectionView::MapSelectionView()
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
 
-    oxygine::spSlidingActor slider = new oxygine::SlidingActor();
-    slider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
-    oxygine::spActor content = new oxygine::Actor();
-    content->setSize(pBuildingSpriteManager->getCount()* (GameMap::Imagesize + 12), 100);
+    m_contentSlider = new oxygine::SlidingActor();
+    m_contentSlider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
+    m_content = new oxygine::Actor();
+    m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::Imagesize + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
         spBuilding building = new Building(pBuildingSpriteManager->getID(i));
         building->updateBuildingSprites(false);
-        qint32 width = building->getBuildingWidth();
-        qint32 heigth = building->getBuildingHeigth();
-        building->setScaleX(1.0f / static_cast<float>(width));
-        building->setScaleY(1.0f / static_cast<float>(heigth));
-        building->setPosition(i * (GameMap::Imagesize + 12) + GameMap::Imagesize * (width - 1) / (width),
-                              5 + GameMap::Imagesize / 2 + GameMap::Imagesize * (heigth - 1) / (heigth));
-        content->addChild(building);
+        building->setVisible(false);
+        m_content->addChild(building);
         m_BuildingCountSprites.push_back(building);
         oxygine::spTextField pText = new oxygine::TextField();
         pText->setHtmlText("0");
         pText->setPosition(2 + i * (GameMap::Imagesize + 12), 12 + GameMap::Imagesize * 1.2f);
         pText->setStyle(styleMain16);
-        content->addChild(pText);
+        pText->setVisible(false);
+        m_content->addChild(pText);
         m_BuildingCountTexts.push_back(pText);
     }
-    slider->setX(10);
-    slider->setContent(content);
-    m_pBuildingBackground->addChild(slider);
+    m_contentSlider->setX(10);
+    m_contentSlider->setContent(m_content);
+    m_pBuildingBackground->addChild(m_contentSlider);
     addChild(m_pBuildingBackground);
 
     oxygine::spButton pButtonTop = new oxygine::Button();
@@ -146,12 +142,12 @@ MapSelectionView::MapSelectionView()
     pButtonTop->setFlippedX(true);
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        if (content->getWidth() > slider->getWidth())
+        if (m_content->getWidth() > m_contentSlider->getWidth())
         {
-            content->setX(content->getX() - GameMap::Imagesize);
-            if (content->getX() + content->getWidth() < slider->getWidth())
+            m_content->setX(m_content->getX() - GameMap::Imagesize);
+            if (m_content->getX() + m_content->getWidth() < m_contentSlider->getWidth())
             {
-                content->setX(slider->getWidth() - content->getWidth());
+                m_content->setX(m_contentSlider->getWidth() - m_content->getWidth());
             }
         }
     });
@@ -172,13 +168,13 @@ MapSelectionView::MapSelectionView()
     });
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        content->setX(content->getX() + GameMap::Imagesize);
-        if (content->getX() > 0)
+        m_content->setX(m_content->getX() + GameMap::Imagesize);
+        if (m_content->getX() > 0)
         {
-            content->setX(0);
+            m_content->setX(0);
         }
     });
-    pButtonTop->setPosition(m_MapInfo->getX() + slider->getWidth() + 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
+    pButtonTop->setPosition(m_MapInfo->getX() + m_contentSlider->getWidth() + 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
     addChild(pButtonTop);
 }
 
@@ -208,11 +204,30 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_currentMapFile = info;
 
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+        qint32 pos = 0;
         for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
         {
             qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getID(i));
-            m_BuildingCountTexts[i]->setHtmlText(QString::number(count));
+            if (count > 0)
+            {
+                m_BuildingCountTexts[i]->setHtmlText(QString::number(count));
+                m_BuildingCountTexts[i]->setVisible(true);
+                m_BuildingCountTexts[i]->setPosition(2 + pos * (GameMap::Imagesize + 12), 12 + GameMap::Imagesize * 1.2f);
+                spBuilding building = m_BuildingCountSprites[i];
+                building->scaleAndShowOnSingleTile();
+                building->setX(building->oxygine::Actor::getX() + pos * (GameMap::Imagesize + 12));
+                building->setY(building->oxygine::Actor::getY() + 5 + GameMap::Imagesize / 2);
+                building->setVisible(true);
+                pos++;
+            }
+            else
+            {
+                m_BuildingCountTexts[i]->setVisible(false);
+                m_BuildingCountSprites[i]->setVisible(false);
+            }
         }
+        m_content->setSize(pos * (GameMap::Imagesize + 12), 100);
+        m_contentSlider->snap();
     }
     else if (info.isFile() && info.fileName().endsWith(".jsm"))
     {
