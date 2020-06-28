@@ -151,7 +151,7 @@ namespace oxygine
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glActiveTexture(GL_TEXTURE7);
         window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
-        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+        window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
         window->glGenerateMipmap(GL_TEXTURE_2D);
     }

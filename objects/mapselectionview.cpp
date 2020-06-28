@@ -118,6 +118,7 @@ MapSelectionView::MapSelectionView()
         building->setPosition(i * (GameMap::Imagesize + 12) + GameMap::Imagesize * (width - 1) / (width),
                               5 + GameMap::Imagesize / 2 + GameMap::Imagesize * (heigth - 1) / (heigth));
         content->addChild(building);
+        m_BuildingCountSprites.push_back(building);
         oxygine::spTextField pText = new oxygine::TextField();
         pText->setHtmlText("0");
         pText->setPosition(2 + i * (GameMap::Imagesize + 12), 12 + GameMap::Imagesize * 1.2f);

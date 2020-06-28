@@ -37,51 +37,55 @@ void PerkSelection::updatePerksView(CO* pCO)
     const qint32 width = 370;
     for (qint32 i = 0; i < count; i++)
     {
-        QString id = pCOPerkManager->getID(i);
-        QString name = pCOPerkManager->getName(i);
-        QString icon = pCOPerkManager->getIcon(i);
-        oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-        QString description = pCOPerkManager->getDescription(i);
-
-        spCheckbox pCheckbox = new Checkbox();
-        pCheckbox->setPosition(x, y + 5);
-        pCheckbox->setTooltipText(description);
-        pCheckbox->setChecked(perkList.contains(id));
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+        if (pCOPerkManager->isSelectable(i))
         {
-            if (value)
+            QString id = pCOPerkManager->getID(i);
+            QString name = pCOPerkManager->getName(i);
+            QString icon = pCOPerkManager->getIcon(i);
+
+            oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
+            QString description = pCOPerkManager->getDescription(i);
+
+            spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setPosition(x, y + 5);
+            pCheckbox->setTooltipText(description);
+            pCheckbox->setChecked(perkList.contains(id));
+            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
             {
-                m_pCO->addPerk(id);
-            }
-            else
+                if (value)
+                {
+                    m_pCO->addPerk(id);
+                }
+                else
+                {
+                    m_pCO->removePerk(id);
+                }
+                emit sigUpdatePerkCount();
+            });
+            m_Checkboxes.append(pCheckbox);
+            addChild(pCheckbox);
+
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            if (pAnim != nullptr)
             {
-                m_pCO->removePerk(id);
+                pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
             }
-            emit sigUpdatePerkCount();
-        });
-        m_Checkboxes.append(pCheckbox);
-        addChild(pCheckbox);
-
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        pSprite->setResAnim(pAnim);
-        if (pAnim != nullptr)
-        {
-            pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
-        }
-        pSprite->setPosition(x + 45, y);
-        addChild(pSprite);
-        spLabel pLabel = new Label(250);
-        pLabel->setStyle(style);
-        pLabel->setText(name);
-        pLabel->setPosition(x + GameMap::Imagesize * 2 + 50, y + 10);
-        addChild(pLabel);
+            pSprite->setPosition(x + 45, y);
+            addChild(pSprite);
+            spLabel pLabel = new Label(250);
+            pLabel->setStyle(style);
+            pLabel->setText(name);
+            pLabel->setPosition(x + GameMap::Imagesize * 2 + 50, y + 10);
+            addChild(pLabel);
 
 
-        x += width;
-        if (x + width > getWidth())
-        {
-            x = 0;
-            y += GameMap::Imagesize * 2 + 10;
+            x += width;
+            if (x + width > getWidth())
+            {
+                x = 0;
+                y += GameMap::Imagesize * 2 + 10;
+            }
         }
     }
     y += GameMap::Imagesize * 2 + 10;

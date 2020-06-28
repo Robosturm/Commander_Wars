@@ -5,6 +5,12 @@ var CO_PERK =
         return true;
     },
 
+    isSelectable : function()
+    {
+        // return false if the perk should not be selectable during the player selection
+         return true;
+    },
+
     onCOUnitLost : function(co)
     {
     },

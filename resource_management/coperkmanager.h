@@ -17,6 +17,12 @@ public:
      */
     QString getIcon(qint32 position);
     /**
+     * @brief isSelectable
+     * @param position
+     * @return
+     */
+    bool isSelectable(qint32 position);
+    /**
      * @brief getDescription
      * @param position
      * @return

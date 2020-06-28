@@ -20,6 +20,20 @@ QString COPerkManager::getIcon(qint32 position)
     return "";
 }
 
+bool COPerkManager::isSelectable(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedRessources.size()))
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue value = pInterpreter->doFunction(m_loadedRessources[position], "isSelectable");
+        if (value.isBool())
+        {
+            return value.toBool();
+        }
+    }
+    return true;
+}
+
 QString COPerkManager::getDescription(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedRessources.size()))

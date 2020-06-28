@@ -75,6 +75,7 @@ private:
     oxygine::spTextField m_MapDescription;
     spMinimap m_pMinimap;
     spPanel m_MinimapPanel;
+    QVector<oxygine::spActor> m_BuildingCountSprites;
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
 };
