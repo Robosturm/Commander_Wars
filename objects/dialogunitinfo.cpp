@@ -93,6 +93,15 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         Terrain* pTerrain = pMap->getTerrain(pUnit->getX(), pUnit->getY());
         spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
+        Building* pBuilding = pTerrain->getBuilding();
+        if (pBuilding != nullptr)
+        {
+            spBuilding pTerrainBuilding = new Building(pBuilding->getBuildingID());
+            pTerrainBuilding->setOwner(pBuilding->getOwner());
+            pTerrainBuilding->scaleAndShowOnSingleTile();
+            pActor->addChild(pTerrainBuilding);
+        }
+
         Unit* pDummy = new Unit(pUnit->getUnitID(), pUnit->getOwner(), false);
         pDummy->setHasMoved(pUnit->getHasMoved());
         pActor->addChild(pDummy);

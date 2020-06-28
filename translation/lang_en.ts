@@ -1153,23 +1153,23 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="45"/>
+        <location filename="../objects/dialogattacklog.cpp" line="46"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="117"/>
+        <location filename="../objects/dialogattacklog.cpp" line="118"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="154"/>
-        <location filename="../objects/dialogattacklog.cpp" line="188"/>
+        <location filename="../objects/dialogattacklog.cpp" line="180"/>
+        <location filename="../objects/dialogattacklog.cpp" line="236"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="192"/>
+        <location filename="../objects/dialogattacklog.cpp" line="240"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1604,7 +1604,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogunitinfo.cpp" line="147"/>
+        <location filename="../objects/dialogunitinfo.cpp" line="156"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>

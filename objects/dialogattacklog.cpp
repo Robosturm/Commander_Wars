@@ -15,7 +15,8 @@
 #include "resource_management/fontmanager.h"
 
 DialogAttackLog::DialogAttackLog(Player* pPlayer)
-    : QObject()
+    : QObject(),
+      m_pPlayer(pPlayer)
 {
     GameMap* pMap = GameMap::getInstance();
     m_Log = pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
@@ -124,6 +125,14 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         Terrain* pTerrain = pMap->getTerrain(log->attackerX, log->attackerY);
         spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
+        Building* pBuilding = pTerrain->getBuilding();
+        if (pBuilding != nullptr)
+        {
+            spBuilding pTerrainBuilding = new Building(pBuilding->getBuildingID());
+            pTerrainBuilding->setOwner(nullptr);
+            pTerrainBuilding->scaleAndShowOnSingleTile();
+            pActor->addChild(pTerrainBuilding);
+        }
         pActor->addChild(new Unit(log->attackerID, pMap->getPlayer(log->attackerOwnerID), false));
         pActor->setPosition(60, y + 8);
         if (log->attackerKilled)
@@ -139,13 +148,30 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
 
         pText = new Label(80);
         pText->setStyle(style);
-        pText->setHtmlText(QString::number(log->attackerX));
+        bool isDefender = (log->defenderOwnerID == pPlayer->getPlayerID());
+        if (log->attackerX >= 0 &&
+            ((log->defenderSeesAttacker && isDefender) || !isDefender))
+        {
+            pText->setHtmlText(QString::number(log->attackerX));
+        }
+        else
+        {
+            pText->setHtmlText("?");
+        }
         pText->setPosition(130, y);
         pPanel->addItem(pText);
 
         pText = new Label(80);
         pText->setStyle(style);
-        pText->setHtmlText(QString::number(log->attackerY));
+        if (log->attackerY >= 0 &&
+            ((log->defenderSeesAttacker && isDefender) || !isDefender))
+        {
+            pText->setHtmlText(QString::number(log->attackerY));
+        }
+        else
+        {
+            pText->setHtmlText("?");
+        }
         pText->setPosition(230, y);
         pPanel->addItem(pText);
 
@@ -157,7 +183,15 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
 
         pTerrain = pMap->getTerrain(log->defenderX, log->defenderY);
         pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
+        pBuilding = pTerrain->getBuilding();
         pActor->loadSprites();
+        if (pBuilding != nullptr)
+        {
+            spBuilding pTerrainBuilding = new Building(pBuilding->getBuildingID());
+            pTerrainBuilding->setOwner(nullptr);
+            pTerrainBuilding->scaleAndShowOnSingleTile();
+            pActor->addChild(pTerrainBuilding);
+        }
         pActor->addChild(new Unit(log->defenderID, pMap->getPlayer(log->defenderOwnerID), false));
         if (log->defenderKilled)
         {
@@ -173,13 +207,27 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
 
         pText = new Label(80);
         pText->setStyle(style);
-        pText->setHtmlText(QString::number(log->defenderX));
+        if (log->defenderX >= 0)
+        {
+            pText->setHtmlText(QString::number(log->defenderX));
+        }
+        else
+        {
+            pText->setHtmlText("?");
+        }
         pText->setPosition(570, y);
         pPanel->addItem(pText);
 
         pText = new Label(80);
         pText->setStyle(style);
-        pText->setHtmlText(QString::number(log->defenderY));
+        if (log->defenderY >= 0)
+        {
+            pText->setHtmlText(QString::number(log->defenderY));
+        }
+        else
+        {
+            pText->setHtmlText("?");
+        }
         pText->setPosition(660, y);
         pPanel->addItem(pText);
 
@@ -195,6 +243,11 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         // to copy less data for the lambda
         qint32 posAtkX = log->attackerX;
         qint32 posAtkY = log->attackerY;
+        if (!log->defenderSeesAttacker && isDefender)
+        {
+            posAtkX = -1;
+            posAtkY = -1;
+        }
         qint32 playerAtk = log->attackerOwnerID;
         qint32 posDefX = log->defenderX;
         qint32 posDefY = log->defenderY;

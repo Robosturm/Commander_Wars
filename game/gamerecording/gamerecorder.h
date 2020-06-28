@@ -69,6 +69,8 @@ public:
      * @brief defenderKilled
      */
     bool defenderKilled{false};
+
+    bool defenderSeesAttacker{true};
 };
 
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
@@ -103,7 +105,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief calculateRang
@@ -219,7 +221,7 @@ public slots:
      */
     void logAttack(qint32 day,
                    qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled);
+                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker = true);
     /**
      * @brief getAttackLog
      * @param player

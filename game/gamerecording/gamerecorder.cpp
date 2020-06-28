@@ -51,6 +51,7 @@ void GameRecorder::serializeObject(QDataStream& pStream)
         pStream << m_Attackreports[i]->defenderID;
         pStream << m_Attackreports[i]->defenderOwnerID;
         pStream << m_Attackreports[i]->defenderKilled;
+        pStream << m_Attackreports[i]->defenderSeesAttacker;
     }
 }
 
@@ -122,6 +123,14 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             pStream >> m_Attackreports[i]->defenderID;
             pStream >> m_Attackreports[i]->defenderOwnerID;
             pStream >> m_Attackreports[i]->defenderKilled;
+            if (version > 4)
+            {
+                pStream >> m_Attackreports[i]->defenderSeesAttacker;
+            }
+            else
+            {
+                m_Attackreports[i]->defenderSeesAttacker = true;
+            }
         }
     }
 }
@@ -241,7 +250,7 @@ void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialE
 
 void GameRecorder::logAttack(qint32 day,
                              qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
-                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled)
+                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker)
 {
     m_Attackreports.append(new AttackReport());
     m_Attackreports[m_Attackreports.size() - 1]->day = day;
@@ -257,6 +266,7 @@ void GameRecorder::logAttack(qint32 day,
     m_Attackreports[m_Attackreports.size() - 1]->defenderID = defenderID;
     m_Attackreports[m_Attackreports.size() - 1]->defenderOwnerID = defenderOwnerID;
     m_Attackreports[m_Attackreports.size() - 1]->defenderKilled = defenderKilled;
+    m_Attackreports[m_Attackreports.size() - 1]->defenderSeesAttacker = defenderSeesAttacker;
 }
 
 QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)
