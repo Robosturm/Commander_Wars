@@ -12,6 +12,11 @@
 #include "scripteventanimation.h"
 #include "scripteventvictoryinfo.h"
 #include "scripteventmodifyvariable.h"
+#include "scripteventchangeunitai.h"
+#include "scripteventchangeunitowner.h"
+#include "scripteventchangebuildingowner.h"
+#include "scripteventchangeplayerteam.h"
+#include "scripteventspawnbuilding.h"
 
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -25,6 +30,11 @@ const QString ScriptEvent::EventAnimation = "Animation";
 const QString ScriptEvent::EventModifyTerrain = "Modify Terrain";
 const QString ScriptEvent::EventVictoryInfo = "Victory Info";
 const QString ScriptEvent::EventModifyVariable = "Modify Variable";
+const QString ScriptEvent::EventChangeUnitAI = "Change Unit AI";
+const QString ScriptEvent::EventChangeBuildingOwner = "Change Building Owner";
+const QString ScriptEvent::EventChangeUnitOwner = "Change Unit Owner";
+const QString ScriptEvent::EventChangePlayerTeam = "Change Player Team";
+const QString ScriptEvent::EventSpawnBuilding = "Spawn Building";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
@@ -85,6 +95,26 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     else if (line.endsWith(EventModifyVariable))
     {
          ret = new ScriptEventModifyVariable();
+    }
+    else if (line.endsWith(EventChangeUnitAI))
+    {
+        ret = new ScriptEventChangeUnitAI();
+    }
+    else if (line.endsWith(EventChangeBuildingOwner))
+    {
+        ret = new ScriptEventChangeBuildingOwner();
+    }
+    else if (line.endsWith(EventChangeUnitOwner))
+    {
+        ret = new ScriptEventChangeUnitOwner();
+    }
+    else if (line.endsWith(EventChangePlayerTeam))
+    {
+        ret = new ScriptEventChangePlayerTeam();
+    }
+    else if (line.endsWith(EventSpawnBuilding))
+    {
+        ret = new ScriptEventSpawnBuilding();
     }
     if (ret != nullptr)
     {
@@ -149,6 +179,26 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         case EventType::modifyVariable:
         {
             return new ScriptEventModifyVariable();
+        }
+        case EventType::ChangeUnitAI:
+        {
+            return new ScriptEventChangeUnitAI();
+        }
+        case EventType::ChangeBuildingOwner:
+        {
+            return new ScriptEventChangeBuildingOwner();
+        }
+        case EventType::ChangeUnitOwner:
+        {
+            return new ScriptEventChangeUnitOwner();
+        }
+        case EventType::ChangePlayerTeam:
+        {
+            return new ScriptEventChangePlayerTeam();
+        }
+        case EventType::SpawnBuilding:
+        {
+            return new ScriptEventSpawnBuilding();
         }
     }
     return nullptr;

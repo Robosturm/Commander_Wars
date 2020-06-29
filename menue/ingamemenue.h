@@ -43,6 +43,7 @@ signals:
 public slots:
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
+    void centerMapOnCursor();
 protected:
     void loadBackground();
     void loadHandling();

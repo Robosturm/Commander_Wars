@@ -114,7 +114,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spTextbox textBox = new Textbox(300);
+    spTextbox textBox = new Textbox(500);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_Variable);

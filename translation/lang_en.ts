@@ -2123,7 +2123,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="935"/>
+        <location filename="../game/gamemap.cpp" line="949"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2144,7 +2144,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="959"/>
+        <location filename="../game/gamemap.cpp" line="973"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2156,27 +2156,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="959"/>
+        <location filename="../game/gamemap.cpp" line="973"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="983"/>
+        <location filename="../game/gamemap.cpp" line="997"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="991"/>
+        <location filename="../game/gamemap.cpp" line="1005"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="999"/>
+        <location filename="../game/gamemap.cpp" line="1013"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1011"/>
+        <location filename="../game/gamemap.cpp" line="1025"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4795,7 +4795,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="407"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="414"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4805,59 +4805,59 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="130"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="141"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="149"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="149"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="156"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="170"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="177"/>
         <source>Do you want to exit the script editor?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="311"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="392"/>
-        <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="399"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="325"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="406"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="326"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="333"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5000,6 +5000,39 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>ScriptEventChangeBuildingOwner</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="11"/>
+        <source>X Position of the Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="14"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="20"/>
+        <source>Y Position of the Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="23"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="29"/>
+        <source>New Owner of the Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="30"/>
+        <source>Owner: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptEventChangeBuildlist</name>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="92"/>
@@ -5062,6 +5095,115 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="128"/>
         <source>The amount of Stars that will be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangePlayerTeam</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="10"/>
+        <source>Player to change the team.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="11"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="19"/>
+        <source>New Team of the Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="22"/>
+        <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangeUnitAI</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="11"/>
+        <source>X Position of the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="14"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="20"/>
+        <source>Y Position of the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="23"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="29"/>
+        <source>New AI Mode for the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="30"/>
+        <source>AI Mode: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="41"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="42"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="43"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="44"/>
+        <source>Hold</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangeUnitOwner</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="11"/>
+        <source>X Position of the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="14"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="20"/>
+        <source>Y Position of the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="23"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="29"/>
+        <source>New Owner of the Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="30"/>
+        <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5237,6 +5379,39 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="146"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventSpawnBuilding</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="14"/>
+        <source>Building that gets spawned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="29"/>
+        <source>X Position of the Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="32"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="38"/>
+        <source>Y Position of the Building</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="41"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
+        <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

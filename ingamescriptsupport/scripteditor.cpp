@@ -92,18 +92,25 @@ ScriptEditor::ScriptEditor()
     m_EventPanel = new Panel(true, size, size);
     m_EventPanel->setPosition(30, Settings::getHeight() / 2 + 40);
     pSpriteBox->addChild(m_EventPanel);
-    items = {tr(ScriptEvent::EventDialog.toStdString().c_str()),
-             tr(ScriptEvent::EventSpawnUnit.toStdString().c_str()),
-             tr(ScriptEvent::EventDefeatPlayer.toStdString().c_str()),
-             tr(ScriptEvent::EventChangeBuildlist.toStdString().c_str()),
-             tr(ScriptEvent::EventAddFunds.toStdString().c_str()),
-             tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
-             tr(ScriptEvent::EventChangeCOBar.toStdString().c_str()),
-             tr(ScriptEvent::EventModifyTerrain.toStdString().c_str()),
-             tr(ScriptEvent::EventModifyUnit.toStdString().c_str()),
-             tr(ScriptEvent::EventAnimation.toStdString().c_str()),
-             tr(ScriptEvent::EventVictoryInfo.toStdString().c_str()),
-             tr(ScriptEvent::EventModifyVariable.toStdString().c_str())};
+    items = {
+        tr(ScriptEvent::EventDialog.toStdString().c_str()),
+        tr(ScriptEvent::EventSpawnUnit.toStdString().c_str()),
+        tr(ScriptEvent::EventDefeatPlayer.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeBuildlist.toStdString().c_str()),
+        tr(ScriptEvent::EventAddFunds.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeCOBar.toStdString().c_str()),
+        tr(ScriptEvent::EventModifyTerrain.toStdString().c_str()),
+        tr(ScriptEvent::EventModifyUnit.toStdString().c_str()),
+        tr(ScriptEvent::EventAnimation.toStdString().c_str()),
+        tr(ScriptEvent::EventVictoryInfo.toStdString().c_str()),
+        tr(ScriptEvent::EventModifyVariable.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeUnitAI.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeBuildingOwner.toStdString().c_str()),
+        tr(ScriptEvent::EventChangeUnitOwner.toStdString().c_str()),
+        tr(ScriptEvent::EventChangePlayerTeam.toStdString().c_str()),
+        tr(ScriptEvent::EventSpawnBuilding.toStdString().c_str())
+    };
     m_Events = new DropDownmenu(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, Settings::getHeight() - 115);
@@ -136,7 +143,7 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-         emit sigShowExitBox();
+        emit sigShowExitBox();
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save"), 150);
@@ -241,7 +248,7 @@ void ScriptEditor::loadScript(QString filename)
 
 void ScriptEditor::changeImmediateStart()
 {
-   m_Data->setStartMode(m_ImmediateStart->getChecked());
+    m_Data->setStartMode(m_ImmediateStart->getChecked());
 }
 
 void ScriptEditor::updateConditios()

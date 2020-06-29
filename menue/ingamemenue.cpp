@@ -366,3 +366,9 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
         emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
     }
 }
+
+void InGameMenue::centerMapOnCursor()
+{
+    GameMap* pMap = GameMap::getInstance();
+    pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+}

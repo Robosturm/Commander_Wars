@@ -552,6 +552,13 @@ public slots:
      */
     void replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
     /**
+     * @brief replaceBuilding
+     * @param buildingID
+     * @param x
+     * @param y
+     */
+    void replaceBuilding(QString buildingID, qint32 x, qint32 y);
+    /**
      * @brief getPlayerCount
      * @return number of players on the map
      */

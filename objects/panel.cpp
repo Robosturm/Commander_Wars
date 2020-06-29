@@ -130,8 +130,6 @@ void Panel::scrolledX(float value)
 
 void Panel::setContentHeigth(qint32 heigth)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (heigth <= this->getHeight())
@@ -163,7 +161,6 @@ void Panel::setContentHeigth(qint32 heigth)
     m_HScrollbar->setContentHeigth(heigth);
     m_ContentRect->setY(0);
     m_HScrollbar->setScrollvalue(0);
-    pApp->continueThread();
 }
 
 void Panel::setContentWidth(qint32 width)

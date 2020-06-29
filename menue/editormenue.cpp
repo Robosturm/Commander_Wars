@@ -907,8 +907,6 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     pApp->continueThread();
 }
 
-
-
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -993,7 +991,6 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
     }
     pApp->continueThread();
 }
-
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {

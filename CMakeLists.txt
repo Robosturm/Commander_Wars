@@ -373,6 +373,13 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/events/scripteventanimation.cpp
         ingamescriptsupport/events/scripteventvictoryinfo.cpp
         ingamescriptsupport/events/scripteventmodifyvariable.cpp
+        ingamescriptsupport/events/scripteventgeneric.cpp
+        ingamescriptsupport/events/scripteventchangeunitai.cpp
+        ingamescriptsupport/events/scripteventchangebuildingowner.cpp
+        ingamescriptsupport/events/scripteventchangeunitowner.cpp
+        ingamescriptsupport/events/scripteventchangeplayerteam.cpp
+        ingamescriptsupport/events/scripteventspawnbuilding.cpp
+
 
         # wiki stuff
         wiki/terraininfo.cpp

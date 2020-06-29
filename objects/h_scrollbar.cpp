@@ -175,8 +175,6 @@ void H_Scrollbar::setSliding(bool sliding)
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
     sliderHeight = ((this->getHeight() - 20 - 20) * this->getHeight()) / m_ContentHeigth;
@@ -191,7 +189,6 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
     changeScrollValue(m_Scrollvalue);
-    pApp->continueThread();
 }
 
 void H_Scrollbar::update(const oxygine::UpdateState&)
@@ -236,8 +233,6 @@ void H_Scrollbar::changeScrollValue(float value)
 
 void H_Scrollbar::setScrollvalue(float Scrollvalue)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     m_Scrollvalue = Scrollvalue;
     if (m_Scrollvalue < 0)
     {
@@ -252,17 +247,13 @@ void H_Scrollbar::setScrollvalue(float Scrollvalue)
         // all fine do nothing
     }
     m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
-    pApp->continueThread();
 }
 
 void H_Scrollbar::setHeight(float h)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     oxygine::Actor::setHeight(h);
     m_Heigth = h;
     m_pBox->setHeight(h);
     m_pArrowDown->setPosition(9, m_Heigth - m_pArrowDown->getHeight() - 8);
     setContentHeigth(m_ContentHeigth);
-    pApp->continueThread();
 }

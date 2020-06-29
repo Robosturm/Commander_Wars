@@ -18,6 +18,7 @@ MapMover::~MapMover()
 void MapMover::mouseWheel(qint32 direction)
 {
     GameMap::getInstance()->zoom(direction);
+    m_pOwner->centerMapOnCursor();
 }
 
 void MapMover::autoScroll()
@@ -76,10 +77,12 @@ void MapMover::keyInput(oxygine::KeyEvent event)
         else if (cur == Settings::getKey_MapZoomIn())
         {
             GameMap::getInstance()->zoom(1);
+            m_pOwner->centerMapOnCursor();
         }
         else if (cur == Settings::getKey_MapZoomOut())
         {
             GameMap::getInstance()->zoom(-1);
+            m_pOwner->centerMapOnCursor();
         }
     }
 }

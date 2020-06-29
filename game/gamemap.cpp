@@ -132,7 +132,6 @@ qint32 GameMap::getUniqueIdCounter()
     return m_UniqueIdCounter;
 }
 
-
 bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction)
 {
     for (qint32 x = area.x(); x < area.x() + area.width(); x++)
@@ -760,7 +759,6 @@ void GameMap::zoom(float zoom)
         // all fine
     }
     this->setScale(m_zoom);
-    // moveMap(0, 0);
 }
 
 void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
@@ -808,6 +806,22 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
     }
 }
 
+void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
+{
+    if (onMap(x, y))
+    {
+        spBuilding pBuilding = new Building(buildingID);
+        Terrain* pTerrain = getTerrain(x, y);
+        if (pBuilding->canBuildingBePlaced(pTerrain))
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            pTerrain->setBuilding(pBuilding.get());
+            pBuilding->setOwner(nullptr);
+            pApp->continueThread();
+        }
+    }
+}
 
 void GameMap::updateTerrain(qint32 x, qint32 y)
 {
@@ -1055,7 +1069,6 @@ void GameMap::showCOInfo()
 {
     emit signalShowCOInfo();
 }
-
 
 void GameMap::showGameInfo()
 {
