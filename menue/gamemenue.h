@@ -124,6 +124,10 @@ public slots:
      */
     void showGameInfo();
     /**
+     * @brief showOptions
+     */
+    void showOptions();
+    /**
      * @brief showAttackLog
      */
     void showAttackLog();

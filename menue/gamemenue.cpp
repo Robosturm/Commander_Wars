@@ -39,6 +39,7 @@
 #include "objects/tableview.h"
 #include "objects/dialogattacklog.h"
 #include "objects/dialogunitinfo.h"
+#include "objects/gameplayandkeys.h"
 
 #include <QFile>
 #include <QTime>
@@ -316,6 +317,8 @@ void GameMenue::connectMap()
     connect(pMap, &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
+
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
 }
 
@@ -969,6 +972,23 @@ void GameMenue::showUnitInfo()
         m_Focused = true;
     });
     addChild(pDialogUnitInfo);
+    pApp->continueThread();
+}
+
+void GameMenue::showOptions()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+    spGenericBox pDialogOptions = new GenericBox();
+    spGameplayAndKeys pGameplayAndKeys = new GameplayAndKeys(Settings::getHeight() - 80);
+    pGameplayAndKeys->setY(0);
+    pDialogOptions->addItem(pGameplayAndKeys);
+    connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pDialogOptions);
     pApp->continueThread();
 }
 

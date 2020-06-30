@@ -1045,6 +1045,11 @@ void GameMap::exitGame()
     emit signalExitGame();
 }
 
+void GameMap::options()
+{
+    emit sigShowOptions();
+}
+
 void GameMap::surrenderGame()
 {
     emit sigSurrenderGame();

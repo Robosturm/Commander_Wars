@@ -315,6 +315,7 @@ signals:
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
+    void sigShowOptions();
 public slots:
     /**
      * @brief getFrameTime
@@ -427,6 +428,10 @@ public slots:
      * @brief exitGame
      */
     void exitGame();
+    /**
+     * @brief options
+     */
+    void options();
     /**
      * @brief saveGame
      */
