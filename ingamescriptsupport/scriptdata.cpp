@@ -65,8 +65,9 @@ void ScriptData::readScript(QTextStream& rStream)
                         break;
                     }
                 }
+
             }
-            if (line.endsWith(immediateStart))
+            else if (line.endsWith(immediateStart))
             {
                 while (!rStream.atEnd())
                 {

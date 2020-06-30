@@ -2373,91 +2373,91 @@ This is immediatly applied.</source>
         <translation>Team: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="335"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="384"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="388"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="337"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="386"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="390"/>
         <source>HP: </source>
         <translation>KP: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="428"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="430"/>
         <source>Ammo1: </source>
         <translation>Muni 1: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="444"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="446"/>
         <source>Ammo1: -/-</source>
         <translation>Muni 1: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="460"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="462"/>
         <source>Ammo2: </source>
         <translation>Muni 2: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="476"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="478"/>
         <source>Ammo2: -/-</source>
         <translation>Muni 2: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="493"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="495"/>
         <source>Fuel: </source>
         <translation>Treib.: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="510"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="512"/>
         <source>Fuel: -/-</source>
         <translation>Treib.: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="650"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="695"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="652"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="697"/>
         <source>Owner: Player </source>
         <translation>Besitzer: Spieler </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="659"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="661"/>
         <source>Owner: Neutral</source>
         <translation>Besitzer: Neutral</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="668"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="677"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="670"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="679"/>
         <source>Resistance: </source>
         <translation>Widerstand: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="704"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="706"/>
         <source>Weapon 1: </source>
         <translation>Waffe 1: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="715"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="717"/>
         <source>Weapon 2: </source>
         <translation>Waffe 2: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="724"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="726"/>
         <source>Move: </source>
         <translation>Bew.art: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="732"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="734"/>
         <source>Movepoints: </source>
         <translation>Bew.punkte: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="740"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="742"/>
         <source>Vision: </source>
         <translation>Sicht: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="752"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="754"/>
         <source>Loaded Units</source>
         <translation>Ladung</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="770"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="772"/>
         <source>Loaded Units: ?</source>
         <translation>Ladung: ?</translation>
     </message>
