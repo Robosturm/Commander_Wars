@@ -82,7 +82,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
-                        return 45
+                        return 45;
                     }
                     return 30;
                 case GameEnums.PowerMode_Power:

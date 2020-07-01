@@ -21,6 +21,7 @@ const QString BattleAnimationSprite::fireAnimation = "loadFireAnimation";
 const QString BattleAnimationSprite::moveInAnimation = "loadMoveInAnimation";
 const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFiredAnimation";
 const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
+const QString BattleAnimationSprite::loadStopAnimation = "loadStopAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),

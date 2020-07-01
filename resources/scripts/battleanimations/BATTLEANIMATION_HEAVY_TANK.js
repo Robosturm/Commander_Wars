@@ -50,7 +50,14 @@ var Constructor = function()
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
-            BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire");
+            if (armyName === "ma")
+            {
+                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "");
+            }
+            else
+            {
+                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire");
+            }
             offset = Qt.point(22, 20);
             // gun
             if (armyName === "yc")

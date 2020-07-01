@@ -27,6 +27,11 @@ var BATTLEANIMATION =
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
 
+    loadStopAnimation : function(sprite, unit, defender, weapon)
+    {
+        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+    },
+
     loadDyingAnimation : function(sprite, unit, defender, weapon)
     {
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
@@ -77,6 +82,12 @@ var BATTLEANIMATION =
     },
 
     getMoveInDurationMS : function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 100;
+    },
+
+    getStopDurationMS : function()
     {
         // the time will be scaled with animation speed inside the engine
         return 100;

@@ -23,6 +23,8 @@ public:
     static const QString moveInAnimation;
     static const QString standingFiredAnimation;
     static const QString dyingAnimation;
+    static const QString loadStopAnimation;
+
     explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
     /**
      * @brief loadAnimation

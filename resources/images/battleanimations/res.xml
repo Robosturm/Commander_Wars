@@ -372,6 +372,9 @@
 		<!-- neotank -->
 		<image file="neotank/neotank.png" />
 		<image file="neotank/neotank+mask.png" />
+		<image file="neotank/neotank+cannon_fire.png" cols = "4" />
+		<image file="neotank/neotank+cannon_fire+mask.png" cols = "4" />
+		
 		
 		<!-- piperunner -->
 		<image file="piperunner/piperunner.png" />

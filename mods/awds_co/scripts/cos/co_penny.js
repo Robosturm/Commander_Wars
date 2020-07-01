@@ -11,7 +11,7 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 case GameEnums.PowerMode_Superpower:
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
-                        return 30
+                        return 45;
                     }
                     return 30;
                 case GameEnums.PowerMode_Power:
