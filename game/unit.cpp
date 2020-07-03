@@ -268,7 +268,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
-        if (!Mainapp::isEven(m_pOwner->getPlayerID()))
+        if (m_pOwner->getFlipUnitSprites())
         {
             pSprite->setFlippedX(true);
             pWaitSprite->setFlippedX(true);

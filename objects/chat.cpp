@@ -19,9 +19,10 @@ static const QString chatNotTeamTarget = "@!Team";
 static const QString chatAllyTarget = "@Ally";
 static const QString chatEnemyTarget = "@Enemy";
 
-Chat::Chat(spNetworkInterface pInterface, QSize size)
+Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode)
     : QObject(),
-      m_pInterface(pInterface)
+      m_pInterface(pInterface),
+      m_serviceMode(serviceMode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -95,9 +96,9 @@ void Chat::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
 {
-    if (service == NetworkInterface::NetworkSerives::Chat)
+    if (service == m_serviceMode)
     {
         QString message(data);
         addMessage(message);
@@ -215,7 +216,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            m_pInterface->sig_sendData(0, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
+            m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");
     }

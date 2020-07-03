@@ -268,6 +268,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_OPTIONS</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="10"/>
+        <source>Options</source>
+        <translation type="unfinished">Optionen</translation>
+    </message>
+</context>
+<context>
     <name>ACTION_PLACE_WATERMINE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="61"/>
@@ -881,46 +889,46 @@
 <context>
     <name>Chat</name>
     <message>
-        <location filename="../objects/chat.cpp" line="43"/>
+        <location filename="../objects/chat.cpp" line="44"/>
         <source>Send</source>
         <translation>Senden</translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="73"/>
+        <location filename="../objects/chat.cpp" line="74"/>
         <source>Message to send via chat. Start a message with one of the folling items to send </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="74"/>
+        <location filename="../objects/chat.cpp" line="75"/>
         <source>a message to specific targets. 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="75"/>
+        <location filename="../objects/chat.cpp" line="76"/>
         <source> send message to all your allies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="76"/>
+        <location filename="../objects/chat.cpp" line="77"/>
         <source> send message to all your enemies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="77"/>
+        <location filename="../objects/chat.cpp" line="78"/>
         <source> send message to the given team X.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="78"/>
+        <location filename="../objects/chat.cpp" line="79"/>
         <source> send message to the given player X.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="82"/>
+        <location filename="../objects/chat.cpp" line="83"/>
         <source>Message to send via chat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2253,67 +2261,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Player</source>
         <translation>Spieler</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Produced</source>
         <translation>Produziert</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Lost</source>
         <translation>Verluste</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Killed</source>
         <translation>Besiegt</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Income</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Funds</source>
         <translation>Fonds</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Bases</source>
         <translation>Basen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1000"/>
+        <location filename="../menue/gamemenue.cpp" line="1014"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1016"/>
+        <location filename="../menue/gamemenue.cpp" line="1030"/>
         <source>Player </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1026"/>
+        <location filename="../menue/gamemenue.cpp" line="1040"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1375"/>
+        <location filename="../menue/gamemenue.cpp" line="1389"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1393"/>
+        <location filename="../menue/gamemenue.cpp" line="1407"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1422"/>
+        <location filename="../menue/gamemenue.cpp" line="1436"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3170,7 +3178,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="63"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="811"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="812"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3200,7 +3208,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="807"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="808"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
@@ -3208,22 +3216,22 @@ This is immediatly applied.</source>
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="122"/>
+        <location filename="../network/NetworkInterface.h" line="128"/>
         <source>The server was closed by the peer.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="125"/>
+        <location filename="../network/NetworkInterface.h" line="131"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="128"/>
+        <location filename="../network/NetworkInterface.h" line="134"/>
         <source>The connection was refused by the peer.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="131"/>
+        <location filename="../network/NetworkInterface.h" line="137"/>
         <source>Error inside the Socket happened.</source>
         <translation></translation>
     </message>
@@ -4370,7 +4378,17 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="339"/>
+        <location filename="../objects/ruleselection.cpp" line="336"/>
+        <source>Team Facing :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="340"/>
+        <source>If checked units of the same time have the same direction rather than based on player order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="351"/>
         <source>Victory Rules</source>
         <translation>Sieg Regeln</translation>
     </message>
@@ -5944,14 +5962,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="52"/>
-        <location filename="../network/tcpserver.cpp" line="82"/>
-        <location filename="../network/tcpserver.cpp" line="106"/>
+        <location filename="../network/tcpserver.cpp" line="51"/>
+        <location filename="../network/tcpserver.cpp" line="80"/>
+        <location filename="../network/tcpserver.cpp" line="103"/>
         <source>Client disconnected.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="145"/>
+        <location filename="../network/tcpserver.cpp" line="141"/>
         <source>New Client connection.</source>
         <translation></translation>
     </message>

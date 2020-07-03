@@ -256,6 +256,7 @@ set(${PROJECT_NAME}_SRCS
         network/txtask.cpp
         network/rxtask.cpp
         network/NetworkInterface.h
+        network/networkgame.cpp
 
         # game
         game/gamemap.cpp

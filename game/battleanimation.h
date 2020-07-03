@@ -18,6 +18,7 @@ public:
     enum class AnimationProgress
     {
         MoveIn,
+        MoveStop,
         WaitAfterIn,
         AttackerFire,
         AttackerImpact,
@@ -88,6 +89,14 @@ private:
      * @param pSprite
      */
     void loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
+    /**
+     * @brief loadStopAnimation
+     * @param pSprite
+     * @param pUnit1
+     * @param pUnit2
+     * @param weapon
+     */
+    void loadStopAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
      * @brief loadFireAnimation
      * @param pSprite

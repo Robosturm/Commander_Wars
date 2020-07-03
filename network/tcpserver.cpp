@@ -37,7 +37,6 @@ TCPServer::~TCPServer()
 
 void TCPServer::disconnectTCP()
 {
-    QMutexLocker locker(&TaskMutex);
     if (pTCPServer != nullptr)
     {
         pTCPServer->pauseAccepting();
@@ -64,7 +63,6 @@ void TCPServer::disconnectTCP()
 
 void TCPServer::disconnectClient(quint64 socketID)
 {
-    QMutexLocker locker(&TaskMutex);
     for (qint32 i = 0; i < m_SocketIDs.size(); i++)
     {
         if (m_SocketIDs[i] == socketID)
@@ -88,7 +86,6 @@ void TCPServer::disconnectClient(quint64 socketID)
 
 void TCPServer::disconnectSocket()
 {
-    QMutexLocker locker(&TaskMutex);
     qint32 i = 0;
     while (i < pTCPSockets.size())
     {
@@ -115,7 +112,6 @@ void TCPServer::disconnectSocket()
 
 void TCPServer::onConnect()
 {
-    QMutexLocker locker(&TaskMutex);
     if (pTCPServer != nullptr)
     {
         QTcpSocket* nextSocket = pTCPServer->nextPendingConnection();
@@ -161,12 +157,14 @@ QTcpSocket* TCPServer::getSocket(quint64 socketID)
 
 void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    QMutexLocker locker(&TaskMutex);
-    for (qint32 i = 0; i < m_SocketIDs.size(); i++)
+    if (!m_gameServer)
     {
-        if (m_SocketIDs[i] != socketID)
+        for (qint32 i = 0; i < m_SocketIDs.size(); i++)
         {
-            pTXTasks[i]->send(0, data, service, false);
+            if (m_SocketIDs[i] != socketID)
+            {
+                pTXTasks[i]->send(0, data, service, false);
+            }
         }
     }
 }

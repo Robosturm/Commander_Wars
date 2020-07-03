@@ -329,9 +329,21 @@ void RuleSelection::showRuleSelection()
     {
         pMap->getGameRules()->setDayToDayScreen(static_cast<GameRules::DayToDayScreen>(item));
     });
-
-
     y += 50;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Team Facing :"));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked units of the same team have the same direction rather than based on player order."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getTeamFacingUnits());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setTeamFacingUnits, Qt::QueuedConnection);
+    y += 50;
+
     textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);

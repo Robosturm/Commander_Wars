@@ -20,6 +20,9 @@ class TxTask : public QObject, public oxygine::ref_counter
 public:
     TxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~TxTask();
+    bool getSendAlways() const;
+    void setSendAlways(bool sendAlways);
+
 public slots:
     /**
      * @brief send sends the Object via TCP
@@ -30,6 +33,7 @@ private:
    QTcpSocket* m_pSocket;
    quint64 m_SocketID;
    NetworkInterface* pIF;
+   bool m_sendAlways{false};
 };
 
 #endif // TXTASK_H

@@ -235,7 +235,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
     }
 }
 
-void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
 {
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
@@ -751,8 +751,9 @@ void Multiplayermenu::createChat()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_Chat = new Chat(m_NetworkInterface, QSize(Settings::getWidth() - 20,
-                                                300));
+    m_Chat = new Chat(m_NetworkInterface,
+                      QSize(Settings::getWidth() - 20, 300),
+                      NetworkInterface::NetworkSerives::GameChat);
     m_Chat->setPosition(10, Settings::getHeight() - 360);
     addChild(m_Chat);
     pApp->continueThread();

@@ -34,7 +34,8 @@ public:
         None = -1,
         Game,
         Lobby,
-        Chat,
+        LobbyChat,
+        GameChat,
         Multiplayer,
         Max,
     };
@@ -98,12 +99,17 @@ public:
         return isConnected;
     }
 
+    void setIsServer(bool value)
+    {
+        isServer = value;
+    }
+
 signals:
     /**
      * @brief recieveData emitted when Data is recieved
      * @param data
      */
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 targetSocket = 0);
     void sig_connect(QString adress, quint16 port);
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);

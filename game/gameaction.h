@@ -57,7 +57,7 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief getSyncCounter
@@ -73,6 +73,17 @@ public:
      * @brief setSeed
      */
     void setSeed(quint32 seed);
+    /**
+     * @brief getRoundTimerTime
+     * @return
+     */
+    qint64 getRoundTimerTime() const;
+    /**
+     * @brief setRoundTimerTime
+     * @param roundTimerTime
+     */
+    void setRoundTimerTime(const qint64 &roundTimerTime);
+
 signals:
 
 public slots:
@@ -335,6 +346,8 @@ private:
     bool isLocal{false};
 
     qint64 m_syncCounter{0};
+
+    qint64 m_roundTimerTime{0};
 };
 
 #endif // GAMEACTION_H

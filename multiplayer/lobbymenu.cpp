@@ -94,7 +94,7 @@ LobbyMenu::LobbyMenu()
         pInterface = pApp->getGameServer();
     }
 
-    spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300));
+    spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
     addChild(pChat);
 }

@@ -365,6 +365,11 @@ void BattleAnimation::nextAnimatinStep()
             loadMoveInAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             break;
         }
+        case AnimationProgress::MoveStop:
+        {
+            loadStopAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            break;
+        }
         case AnimationProgress::WaitAfterIn:
         {
             battleTimer.start(500 / Settings::getBattleAnimationSpeed());
@@ -476,6 +481,16 @@ void BattleAnimation::loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit*
     pSprite->loadAnimation(BattleAnimationSprite::moveInAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getMoveInDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    pApp->continueThread();
+}
+
+void BattleAnimation::loadStopAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    pSprite->loadAnimation(BattleAnimationSprite::stopAnimation, pUnit1, pUnit2, weapon);
+    setSpritePosition(pSprite, pUnit1, pUnit2);
+    battleTimer.start(pSprite->getStopDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
     pApp->continueThread();
 }
 

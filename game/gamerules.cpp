@@ -772,6 +772,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getTeamFacingUnits() const
+{
+    return m_teamFacingUnits;
+}
+
+void GameRules::setTeamFacingUnits(bool teamFacingUnits)
+{
+    m_teamFacingUnits = teamFacingUnits;
+}
+
 bool GameRules::getSingleRandomCO() const
 {
     return m_singleRandomCO;
@@ -902,6 +912,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << static_cast<quint8>(m_DayToDayScreen);
     pStream << m_maxPerkCount;
     pStream << m_singleRandomCO;
+    pStream << m_teamFacingUnits;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1095,5 +1106,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 11)
     {
         pStream >> m_singleRandomCO;
+    }
+    if (version > 12)
+    {
+        pStream >> m_teamFacingUnits;
     }
 }

@@ -21,7 +21,7 @@ const QString BattleAnimationSprite::fireAnimation = "loadFireAnimation";
 const QString BattleAnimationSprite::moveInAnimation = "loadMoveInAnimation";
 const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFiredAnimation";
 const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
-const QString BattleAnimationSprite::loadStopAnimation = "loadStopAnimation";
+const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),
@@ -199,6 +199,21 @@ qint32 BattleAnimationSprite::getMoveInDurationMS()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMoveInDurationMS";
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 500;
+    }
+}
+
+qint32 BattleAnimationSprite::getStopDurationMS()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getStopDurationMS";
     QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
     if (erg.isNumber())
     {

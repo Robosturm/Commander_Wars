@@ -602,6 +602,10 @@ public slots:
      */
     void nextTurn();
     /**
+     * @brief nextTurnPlayerTimeout
+     */
+    void nextTurnPlayerTimeout();
+    /**
      * @brief enableUnits makes all units of the given player movable again
      * @param pPlayer
      */

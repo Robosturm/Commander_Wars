@@ -98,6 +98,11 @@ signals:
 
 public slots:
     /**
+     * @brief getFlipUnitSprites
+     * @return
+     */
+    bool getFlipUnitSprites() const;
+    /**
      * @brief getUnitBuildValue
      * @param unitID
      * @return

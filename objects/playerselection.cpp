@@ -1025,7 +1025,7 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
     pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
 }
 
-void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
 {
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)

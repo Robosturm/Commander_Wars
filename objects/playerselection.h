@@ -103,7 +103,7 @@ public slots:
      */
     void showSelectCOPerks(qint32 player);
     // network stuff
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
     void disconnected(quint64 socketID);
     /**
      * @brief updatePlayerData updates the visual player data when data has been changed via network

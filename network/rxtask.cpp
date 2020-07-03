@@ -24,6 +24,8 @@ void RxTask::recieveData()
         m_pStream.startTransaction();
         qint32 service;
         m_pStream >> service;
+        quint64 socketID;
+        m_pStream >> socketID;
         NetworkInterface::NetworkSerives eService = static_cast<NetworkInterface::NetworkSerives>(service);
         bool forwardData = false;
         m_pStream >> forwardData;
@@ -37,6 +39,7 @@ void RxTask::recieveData()
         if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
         {
             // don't send an event :)
+            Q_ASSERT(false);
         }
         else
         {
@@ -44,10 +47,7 @@ void RxTask::recieveData()
             {
                 pIF->forwardData(m_SocketID, data, eService);
             }
-            // note only one Service can recieve a message!!!
-            // since the service needs to delete the object.
-            // otherwise you get some nice null-pointer exeptions
-            emit pIF->recieveData(m_SocketID, data, eService);
+            emit pIF->recieveData(m_SocketID, data, eService, socketID);
         }
     }
 }

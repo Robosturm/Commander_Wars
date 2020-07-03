@@ -23,7 +23,7 @@ public:
     static const QString moveInAnimation;
     static const QString standingFiredAnimation;
     static const QString dyingAnimation;
-    static const QString loadStopAnimation;
+    static const QString stopAnimation;
 
     explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
     /**
@@ -232,6 +232,11 @@ public slots:
      * @return
      */
     qint32 getMoveInDurationMS();
+    /**
+     * @brief getStopDurationMS
+     * @return
+     */
+    qint32 getStopDurationMS();
     /**
      * @brief getMoveInDurationMS
      * @return

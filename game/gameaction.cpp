@@ -133,6 +133,16 @@ void GameAction::printAction()
     Console::print("Data " + data, Console::eINFO);
 }
 
+qint64 GameAction::getRoundTimerTime() const
+{
+    return m_roundTimerTime;
+}
+
+void GameAction::setRoundTimerTime(const qint64 &roundTimerTime)
+{
+    m_roundTimerTime = roundTimerTime;
+}
+
 void GameAction::setActionID(QString actionID)
 {
     m_actionID = actionID;
@@ -431,6 +441,7 @@ void GameAction::serializeObject(QDataStream& stream)
         stream << m_MultiTurnPath[i];
     }
     stream << m_syncCounter;
+    stream << m_roundTimerTime;
 }
 
 void GameAction::deserializeObject(QDataStream& stream)
@@ -472,4 +483,8 @@ void GameAction::deserializeObject(QDataStream& stream)
         }
     }
     stream >> m_syncCounter;
+    if (version > 2)
+    {
+        stream >> m_roundTimerTime;
+    }
 }

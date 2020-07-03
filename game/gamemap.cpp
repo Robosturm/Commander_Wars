@@ -1516,6 +1516,14 @@ void GameMap::setMapName(const QString &value)
     mapName = value;
 }
 
+void GameMap::nextTurnPlayerTimeout()
+{
+    if (m_CurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+    {
+        nextTurn();
+    }
+}
+
 void GameMap::nextTurn()
 {
     m_Rules->checkVictory();

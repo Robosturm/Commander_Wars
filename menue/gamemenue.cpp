@@ -87,7 +87,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
 
-        m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100));
+        m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
         m_pChat->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
@@ -115,7 +115,7 @@ GameMenue::GameMenue()
 {
 }
 
-void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
@@ -165,7 +165,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             }
         }
     }
-    else if (service == NetworkInterface::NetworkSerives::Chat)
+    else if (service == NetworkInterface::NetworkSerives::GameChat)
     {
         if (m_pChat->getVisible() == false)
         {
@@ -306,7 +306,7 @@ void GameMenue::connectMap()
 {
     GameMap* pMap = GameMap::getInstance();
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
-    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
+    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
@@ -619,11 +619,16 @@ void GameMenue::performAction(GameAction* pGameAction)
             {
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
+                pGameAction->setRoundTimerTime(pMap->getGameRules()->getRoundTimer()->remainingTime());
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
                 stream << pMap->getCurrentPlayer()->getPlayerID();
                 pGameAction->serializeObject(stream);
                 emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
+            }
+            else if (multiplayer)
+            {
+                pMap->getGameRules()->getRoundTimer()->setInterval(pGameAction->getRoundTimerTime());
             }
             // record action if required
             m_ReplayRecorder.recordAction(pGameAction);
@@ -833,7 +838,10 @@ void GameMenue::actionPerformed()
         {
             Mainapp::setUseSeed(false);
             GameMap* pMap = GameMap::getInstance();
-            pMap->getGameRules()->resumeRoundTime();
+            if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+            {
+                pMap->getGameRules()->resumeRoundTime();
+            }
             emit sigActionPerformed();
         }
     }
@@ -854,12 +862,18 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
         {
             flip = true;
             m_pPlayerinfo->setX(screenWidth);
-            m_XYButtonBox->setX(0);
+            if (m_XYButtonBox.get() != nullptr)
+            {
+                m_XYButtonBox->setX(0);
+            }
         }
         else
         {
             m_pPlayerinfo->setX(0);
-            m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
+            if (m_XYButtonBox.get() != nullptr)
+            {
+                m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
+            }
         }
         if (flip != m_pPlayerinfo->getFlippedX())
         {

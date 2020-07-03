@@ -381,9 +381,31 @@ qint32 Player::getPlayerID() const
                 return i;
             }
         }
-        return 0;
     }
     return 0;
+}
+
+bool Player::getFlipUnitSprites() const
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap != nullptr)
+    {
+        if (pMap->getGameRules()->getTeamFacingUnits())
+        {
+            return !Mainapp::isEven(team);
+        }
+        else
+        {
+            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+            {
+                if (pMap->getPlayer(i) == this)
+                {
+                    return !Mainapp::isEven(i);
+                }
+            }
+        }
+    }
+    return false;
 }
 
 QString Player::getArmy()

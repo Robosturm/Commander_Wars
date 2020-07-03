@@ -17,18 +17,18 @@ class Chat : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit Chat(spNetworkInterface pInterface, QSize size);
+    explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
 
     virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setVisible
      * @param vis
      */
-    virtual void setVisible(bool vis);
+    virtual void setVisible(bool vis) override;
 signals:
     void sigSendText(QString message);
 public slots:
-    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service);
+    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
     void sendData(QString message);
 private:
     QVector<QString> messages;
@@ -39,6 +39,8 @@ private:
     oxygine::spButton m_Send;
 
     void addMessage(QString message, bool local = false);
+
+    NetworkInterface::NetworkSerives m_serviceMode{NetworkInterface::NetworkSerives::GameChat};
 
     static const qint32 bufferSize = 500;
 };

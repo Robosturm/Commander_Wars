@@ -218,35 +218,37 @@ void InGameMenue::autoScroll()
     {
         QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
         GameMap* pMap = GameMap::getInstance();
+        if (pMap != nullptr)
+        {
+            qint32 moveX = 0;
+            qint32 moveY = 0;
+            if ((curPos.x() < autoScrollBorder.x()) &&
+                (pMap->getX() < autoScrollBorder.x()))
+            {
+                moveX = GameMap::Imagesize * pMap->getZoom();
+            }
+            else if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width()) &&
+                     (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - 50) &&
+                     (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
+            {
+                moveX = -GameMap::Imagesize * pMap->getZoom();
+            }
 
-        qint32 moveX = 0;
-        qint32 moveY = 0;
-        if ((curPos.x() < autoScrollBorder.x()) &&
-            (pMap->getX() < autoScrollBorder.x()))
-        {
-            moveX = GameMap::Imagesize * pMap->getZoom();
-        }
-        else if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width()) &&
-                 (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - 50) &&
-                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
-        {
-            moveX = -GameMap::Imagesize * pMap->getZoom();
-        }
+            if ((curPos.y() < autoScrollBorder.y()) &&
+                (pMap->getY() < autoScrollBorder.y()))
+            {
+                moveY = GameMap::Imagesize * pMap->getZoom();
+            }
+            else if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height()) &&
+                     (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
+            {
+                moveY = -GameMap::Imagesize * pMap->getZoom();
+            }
 
-        if ((curPos.y() < autoScrollBorder.y()) &&
-            (pMap->getY() < autoScrollBorder.y()))
-        {
-            moveY = GameMap::Imagesize * pMap->getZoom();
-        }
-        else if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height()) &&
-                 (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
-        {
-            moveY = -GameMap::Imagesize * pMap->getZoom();
-        }
-
-        if (moveX != 0 || moveY != 0)
-        {
-            MoveMap(moveX , moveY);
+            if (moveX != 0 || moveY != 0)
+            {
+                MoveMap(moveX , moveY);
+            }
         }
     }
 }

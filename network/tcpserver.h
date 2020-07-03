@@ -49,13 +49,13 @@ public slots:
     void continueListening();
     QVector<quint64> getConnectedSockets();
 private:
-    QMutex TaskMutex;
     QVector<spRxTask> pRXTasks;
     QVector<spTxTask> pTXTasks;
     QVector<QTcpSocket*> pTCPSockets;
     QVector<quint64> m_SocketIDs;
     quint64 m_idCounter = 0;
     QTcpServer* pTCPServer;
+    bool m_gameServer{false};
 };
 
 #endif // TCPSERVER_H
