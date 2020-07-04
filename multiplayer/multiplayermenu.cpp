@@ -627,7 +627,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     }
     Mainapp::seed(seed);
     Mainapp::setUseSeed(true);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (!saveGame)
     {
         pMap->initPlayers();
@@ -876,7 +876,7 @@ void Multiplayermenu::countdown()
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
             defeatClosedPlayers();
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::INITGAME;

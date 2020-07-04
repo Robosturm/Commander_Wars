@@ -29,7 +29,7 @@ void PlayerInfo::updateData()
     // clean up
     this->removeChildren();
     // recreate the ui
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 playerIdx = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {

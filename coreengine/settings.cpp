@@ -55,6 +55,7 @@ quint16 Settings::m_ServerPort        = 9002;
 QString Settings::m_ServerAdress      = "";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
+bool Settings::m_showIngameCoordinates  = true;
 // auto saving
 std::chrono::seconds Settings::autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::autoSavingCycle = 0;
@@ -97,6 +98,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getShowIngameCoordinates()
+{
+    return m_showIngameCoordinates;
+}
+
+void Settings::setShowIngameCoordinates(bool showIngameCoordinates)
+{
+    m_showIngameCoordinates = showIngameCoordinates;
 }
 
 quint32 Settings::getWalkAnimationSpeedValue()

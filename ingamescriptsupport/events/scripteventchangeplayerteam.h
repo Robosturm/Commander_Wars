@@ -5,6 +5,7 @@
 
 class ScriptEventChangePlayerTeam : public ScriptEventGeneric
 {
+    Q_OBJECT
 public:
     ScriptEventChangePlayerTeam();
 };

@@ -190,7 +190,7 @@ void VictoryRule::deserializeObject(QDataStream& pStream)
 
 void VictoryRule::checkDefeat()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {

@@ -436,8 +436,8 @@ QString Unit::getUnitRangName(qint32 rang)
 
 void Unit::setUnitRank(const qint32 &UnitRank)
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         if (pMap->getGameRules()->getRankingSystem() ||
             (UnitRank == GameEnums::UnitRank_CO0) ||
@@ -471,7 +471,7 @@ qint32 Unit::getVision(QPoint position)
     {
         rangeModifier += pCO->getVisionrangeModifier(this, position);
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
     {
         rangeModifier += pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
@@ -533,7 +533,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
         rangeModifier += pCO->getFirerangeModifier(this, position);
     }
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
     {
         rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
@@ -604,7 +604,7 @@ qint32 Unit::getBonusMinRange(QPoint position)
     {
         rangeModifier += pCO->getMinFirerangeModifier(this, position);
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (!m_pOwner->getWeatherImmune())
     {
         rangeModifier += pMap->getGameRules()->getCurrentWeather()->getMinFirerangeModifier();
@@ -701,7 +701,7 @@ QString Unit::getTerrainAnimationBackground()
 
 bool Unit::canMoveOver(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), pMap->getTerrain(x, y), this) > 0)
     {
         return true;
@@ -716,7 +716,7 @@ qint32 Unit::getUnitValue()
 
 bool Unit::canBeRepaired(QPoint position)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
@@ -884,8 +884,8 @@ void Unit::loadUnit(Unit* pUnit)
     {
         m_TransportUnits.append(pUnit);
         pUnit->removeUnit(false);
-        GameMap* pMap = GameMap::getInstance();
-        if (pMap != nullptr)
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap.get() != nullptr)
         {
             updateIcons(pMap->getCurrentViewPlayer());
         }
@@ -898,8 +898,8 @@ void Unit::loadUnit(Unit* pUnit)
 
 Unit* Unit::spawnUnit(QString unitID)
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         qint32 unitLimit = pMap->getGameRules()->getUnitLimit();
         qint32 unitCount = m_pOwner->getUnitCount();
@@ -926,8 +926,8 @@ Unit* Unit::getLoadedUnit(qint32 index)
 
 void Unit::unloadUnit(Unit* pUnit, QPoint position)
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr && pMap->onMap(position.x(), position.y()))
     {
         for (qint32 i = 0; i < m_TransportUnits.size(); i++)
         {
@@ -948,10 +948,10 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
 
 void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (index >= 0 && index < m_TransportUnits.size())
     {
-        if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
+        if (pMap.get() != nullptr && pMap->onMap(position.x(), position.y()))
         {
             pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[index]);
             m_TransportUnits[index]->updateIcons(pMap->getCurrentViewPlayer());
@@ -959,7 +959,7 @@ void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
         }
         m_TransportUnits.removeAt(index);
     }
-    if (pMap != nullptr)
+    if (pMap.get() != nullptr)
     {
         updateIcons(pMap->getCurrentViewPlayer());
     }
@@ -1026,7 +1026,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     qint32 bonus = 0;
     bonus += getBonus(m_OffensiveBonus);
     bonus += getUnitBonusOffensive(position, pDefender, defPosition, isDefender);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     CO* pCO0 = m_pOwner->getCO(0);
     if (pCO0 != nullptr)
     {
@@ -1136,7 +1136,7 @@ qint32 Unit::getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defP
 
 qint32 Unit::getTerrainDefense()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (useTerrainDefense() && m_pTerrain != nullptr)
     {
         return pMap->getTerrain(getX(), getY())->getDefense(this);
@@ -1210,7 +1210,7 @@ qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkP
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_DefensiveBonus);
     bonus += getUnitBonusDefensive(position, pAttacker, atkPosition, isDefender);
@@ -1466,7 +1466,7 @@ void Unit::setBaseMovementPoints(const qint32 &value)
 
 qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Terrain* pCurTerrain = nullptr;
     if (curX >= 0 && curY >= 0)
     {
@@ -1487,7 +1487,7 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
         return baseCosts;
     }
     qint32 costs = baseCosts;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
@@ -1733,8 +1733,8 @@ void Unit::setHp(const float &value)
     {
         hp = 10.0f;
     }
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         updateIcons(pMap->getCurrentViewPlayer());
     }
@@ -1808,7 +1808,7 @@ void Unit::updateIcons(Player* pPlayer)
 
 bool Unit::getTransportHidden(Player* pPlayer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pPlayer != nullptr)
     {
         if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
@@ -2061,7 +2061,7 @@ bool Unit::hasAction(QString action)
 
 qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 ret = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -2116,7 +2116,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         movePath.append(QPoint(getX(), getY()));
     }
     // update vision based on the movepath of the unit
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     bool visionBlock = pMap->getGameRules()->getVisionBlock();
     for (qint32 i = 0; i < movePath.size(); i++)
     {
@@ -2180,7 +2180,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     // reset capture points when moving  a unit
     setCapturePoints(0);
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spUnit pUnit = m_pTerrain->getSpUnit();
     // teleport unit to target position
     pMap->getTerrain(x, y)->setUnit(pUnit);
@@ -2596,7 +2596,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
     if (pPlayer != nullptr &&
         pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         qint32 x = getX();
         qint32 y = getY();
         if (pMap->onMap(testX, testY))
@@ -2902,7 +2902,7 @@ void Unit::createCORange(qint32 coRange)
 {
 
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("co+range+marker");
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (m_CORange.get() == nullptr)
     {
         m_CORange = new oxygine::Actor();

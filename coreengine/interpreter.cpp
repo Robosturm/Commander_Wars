@@ -49,6 +49,7 @@ void Interpreter::init()
     globalObject().setProperty("audio", audio);
     QJSValue console = newQObject(Console::getInstance());
     globalObject().setProperty("GameConsole", console);
+    globalObject().setProperty("console", console);
     QJSValue fontManager = newQObject(FontManager::getInstance());
     globalObject().setProperty("FontManager", fontManager);
     QJSValue settings = newQObject(Settings::getInstance());

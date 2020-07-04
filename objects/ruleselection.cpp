@@ -26,7 +26,7 @@ RuleSelection::RuleSelection(qint32 width)
 RuleSelection::~RuleSelection()
 {
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
@@ -89,7 +89,7 @@ void RuleSelection::showRuleSelection()
 
     QVector<QString> weatherStrings;
     QVector<qint32> weatherChances;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
     {
         Weather* pWeather = pMap->getGameRules()->getWeather(i);
@@ -454,7 +454,7 @@ void RuleSelection::showCOBannlist()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spCOBannListDialog pBannlist = new COBannListDialog(pMap->getGameRules()->getCOBannlist());
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);

@@ -285,7 +285,7 @@ QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)
 
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 winnerTeam = pMap->getWinnerTeam();
     qint32 score = 0;
     qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();

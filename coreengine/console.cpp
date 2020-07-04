@@ -94,11 +94,7 @@ void Console::init()
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
-    Interpreter* pInterpreter = Interpreter::getInstance();
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
-    //Setup Lua
-    QString consoleName = "console";
-    pInterpreter->pushObject(consoleName, m_pConsole);
     // Print some Info
 
     Console::print(tr("Enter \"help()\" for console info."), Console::eLogLevels::eINFO);
@@ -143,9 +139,9 @@ void Console::dotask(QString message)
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
-    GameMenue* pGameMenue = GameMenue::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
     if (message.startsWith("game:") &&
-        pGameMenue != nullptr &&
+        pGameMenue.get() != nullptr &&
         !pGameMenue->isNetworkGame())
     {
         order = order.replace("GameConsole.game:", "");

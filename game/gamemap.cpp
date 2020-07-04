@@ -1336,8 +1336,8 @@ void GameMap::refillTransportedUnits(Unit* pUnit)
 
 Player* GameMap::getCurrentViewPlayer()
 {
-    GameMenue* pMenue = GameMenue::getInstance();
-    if (pMenue != nullptr)
+    spGameMenue pMenue = GameMenue::getInstance();
+    if (pMenue.get() != nullptr)
     {
         return pMenue->getCurrentViewPlayer();
     }

@@ -12,6 +12,7 @@ typedef oxygine::intrusive_ptr<GameplayAndKeys> spGameplayAndKeys;
 
 class GameplayAndKeys : public QObject, public oxygine::Actor
 {
+    Q_OBJECT
 public:
     GameplayAndKeys(qint32 heigth);
 

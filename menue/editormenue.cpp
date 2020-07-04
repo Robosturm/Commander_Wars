@@ -218,7 +218,7 @@ void EditorMenue::createTempFile(bool cleanUp)
     QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
     file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     QDataStream stream(&file);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->serializeObject(stream);
     file.close();
 
@@ -267,7 +267,7 @@ void EditorMenue::editorUndo()
             QDataStream stream(&file);
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             pMap->updateSprites();
             m_EditorSelection->createPlayerSelection();
         }
@@ -288,7 +288,7 @@ void EditorMenue::editorRedo()
         QDataStream stream(&file);
         GameMap::getInstance()->deserializeObject(stream);
         file.close();
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->updateSprites();
         m_EditorSelection->createPlayerSelection();
     }
@@ -519,7 +519,7 @@ void EditorMenue::showResizeMap()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spGenericBox pBox = new GenericBox(true);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -628,7 +628,7 @@ void EditorMenue::playersChanged()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_EditorSelection->createPlayerSelection();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->updateSprites();
     setFocused(true);
     pApp->continueThread();
@@ -644,7 +644,7 @@ void EditorMenue::optimizePlayers()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     createTempFile();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QVector<bool> foundPlayers(pMap->getPlayerCount(), false);
     qint32 mapWidth = pMap->getMapWidth();
     qint32 mapHeigth = pMap->getMapHeight();
@@ -754,7 +754,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
             {
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
-                GameMap* pMap = GameMap::getInstance();
+                spGameMap pMap = GameMap::getInstance();
                 if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
                     Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
@@ -791,7 +791,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     m_Topbar->hide();
     xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     copyRectActor->detach();
     if (pMap->onMap(x, y))
     {
@@ -912,7 +912,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     // resolve click
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
 
     switch (m_EditorMode)
     {
@@ -1123,7 +1123,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
         if (pMap->canBePlaced(terrainID, x, y))
@@ -1141,7 +1141,7 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
@@ -1153,7 +1153,7 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 {
     bool ret = false;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
@@ -1169,7 +1169,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     QVector<QPoint> points;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::Small:
@@ -1231,7 +1231,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1341,7 +1341,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
             pApp->continueThread();
         }
@@ -1359,7 +1359,7 @@ void EditorMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
     }
@@ -1383,7 +1383,7 @@ void EditorMenue::loadMap(QString filename)
             QDataStream stream(&file);
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             pMap->updateSprites(-1, -1, true);
             pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
             m_EditorSelection->createPlayerSelection();
@@ -1489,7 +1489,7 @@ void EditorMenue::newMap(QString mapName, QString author, QString description, Q
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     cleanTemp(-1);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->setMapAuthor(author);
     pMap->setMapDescription(description);
@@ -1510,7 +1510,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     createTempFile();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->setMapAuthor(author);
     pMap->setMapDescription(description);
@@ -1696,7 +1696,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
 
 void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection::EditorMode selection)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
         if (copyRect.x() < 0)
@@ -1841,7 +1841,7 @@ void EditorMenue::autosave()
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
     }

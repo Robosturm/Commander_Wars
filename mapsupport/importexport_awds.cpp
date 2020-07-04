@@ -1616,7 +1616,7 @@ void GameMap::importAWDSMap(QString file)
 
 void GameMap::exportAWDSMap(QString file)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->getPlayerCount() <= 5)
     {
         QFile data(file);

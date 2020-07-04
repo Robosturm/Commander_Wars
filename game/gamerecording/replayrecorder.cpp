@@ -40,7 +40,7 @@ void ReplayRecorder::startRecording()
 {
     if (Settings::getRecord())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         // compress script enviroment
         QByteArray data = Interpreter::getRuntimeData().toUtf8();
         data = qCompress(data);
@@ -71,7 +71,7 @@ void ReplayRecorder::recordAction(GameAction* pAction)
 {
     if (m_recording && !pAction->getIsLocal())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         qint32 curDay = pMap->getCurrentDay();
         if (_currentDay != curDay && curDay > 1)
         {
@@ -82,7 +82,7 @@ void ReplayRecorder::recordAction(GameAction* pAction)
             _dailyStream << pMap->getCurrentDay();
             _dailyStream << _count;
             _dailyStream << m_recordFile.pos();
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             pMap->serializeObject(_dailyStream);
             qint64 seekPos = _dailyBuffer.pos();
             _dailyBuffer.seek(curPos);
@@ -161,7 +161,7 @@ void ReplayRecorder::seekToDay(qint32 day)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->deleteMap();
 
         m_recordFile.seek(_dailyMapPos);
@@ -205,7 +205,7 @@ void ReplayRecorder::seekToStart()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_recordFile.seek(_mapPos);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->deleteMap();
     new GameMap(m_stream);
     _progress = 0;

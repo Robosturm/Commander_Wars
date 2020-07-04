@@ -262,7 +262,7 @@ void HumanPlayerInputMenu::leftClick(qint32, qint32)
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
 
     if (x + getWidth() + GameMap::Imagesize / 2 > pMap->getMapWidth() * GameMap::Imagesize)
     {

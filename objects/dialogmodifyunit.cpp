@@ -202,7 +202,7 @@ void DialogModifyUnit::updateData()
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     QVector<QString> items;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));

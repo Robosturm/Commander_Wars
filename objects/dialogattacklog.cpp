@@ -18,7 +18,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     : QObject(),
       m_pPlayer(pPlayer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     m_Log = pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
 
     Mainapp* pApp = Mainapp::getInstance();
@@ -269,7 +269,7 @@ void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAt
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(pMap->getCurrentPlayer()->getBaseGameInput());
     if (pInput != nullptr)
     {

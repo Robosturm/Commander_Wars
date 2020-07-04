@@ -128,7 +128,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     qint32 x = 10;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_UnitList.size(); i++)
     {
         QString unitID = m_UnitList[i];

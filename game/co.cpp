@@ -742,7 +742,7 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 
 void CO::addUnitShines()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
     qint32 width = pMap->getMapWidth();
     for (qint32 y = 0; y < heigth; y++)

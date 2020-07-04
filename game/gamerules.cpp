@@ -115,7 +115,7 @@ void GameRules::init()
     {
         m_VictoryRules[i]->init();
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 playerCount = pMap->getPlayerCount();
     m_WeatherDays.append(QVector<qint32>(playerCount, -1));
     m_WeatherDays.append(QVector<qint32>(playerCount, -1));
@@ -131,8 +131,8 @@ void GameRules::checkVictory()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         for (qint32 i = 0; i < m_VictoryRules.size(); i++)
         {
@@ -254,7 +254,7 @@ void GameRules::startOfTurn(bool newDay)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (newDay && m_WeatherDays.size() > 0)
     {
         // delete last day weather
@@ -343,7 +343,7 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
 {
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         qint32 startPlayer = pMap->getCurrentPlayer()->getPlayerID();
         qint32 playerCount = pMap->getPlayerCount();
         qint32 day = startDay;
@@ -429,7 +429,7 @@ void GameRules::createWeatherSprites()
     {
         m_CurrentWeather = 0;
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
     {
         m_WeatherSprites[i]->detach();
@@ -508,7 +508,7 @@ void GameRules::createFogVision()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     if (m_FogSprites.size() == 0)
@@ -561,7 +561,7 @@ void GameRules::createFogVision()
 
 void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
     Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
     if (m_FogSprites[x][y].get() != nullptr)
@@ -581,7 +581,7 @@ void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
 
 void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
     Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
@@ -620,7 +620,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
 
 void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     GameEnums::VisionType visible = pPlayer->getFieldVisibleType(x, y);
     Terrain* pTerrain = pMap->getTerrain(x, y);
     Unit* pUnit = pTerrain->getUnit();
@@ -997,7 +997,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
     }
     if (version <= 4)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         qint32 startPlayer  = pMap->getCurrentPlayer()->getPlayerID();
         qint32 playerCount = pMap->getPlayerCount();
         qint32 day = 0;

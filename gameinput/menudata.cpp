@@ -27,7 +27,7 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
     costList.append(costs);
     enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     // ignore error since we want to test if the icon exists
     oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon, oxygine::ep_ignore_error);
     if (pAnim != nullptr)

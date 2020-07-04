@@ -214,6 +214,7 @@ private:
     static QThread m_Workerthread;
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
+    QThread* pMainThread{nullptr};
     spTCPServer m_pGameServer{nullptr};
     AudioThread* m_Audiothread;
     WorkerThread* m_Worker;

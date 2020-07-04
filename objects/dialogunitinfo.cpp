@@ -15,7 +15,7 @@
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     : QObject()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
 
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

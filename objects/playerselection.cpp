@@ -135,7 +135,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     QString coid = "";
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->getPlayer(player)->getCO(co) != nullptr)
     {
         coid = pMap->getPlayer(player)->getCO(co)->getCoID();
@@ -179,7 +179,7 @@ void PlayerSelection::showPlayerSelection()
     resetPlayerSelection();
     m_pPlayerSelection->setVisible(true);
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     // font style
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -657,7 +657,7 @@ void PlayerSelection::allPlayerIncomeChanged(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->setFundsModifier(value);
@@ -670,7 +670,7 @@ void PlayerSelection::allPlayerStartFundsChanged(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->setFunds(static_cast<qint32>(value));
@@ -681,7 +681,7 @@ void PlayerSelection::allPlayerStartFundsChanged(float value)
 }
 void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     pMap->getPlayer(playerIdx)->setFundsModifier(value);
@@ -694,7 +694,7 @@ void PlayerSelection::slotShowAllBuildList()
     // use player 0 as default for showing all
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = new BuildListDialog(0, pMap->getPlayer(0)->getBuildList());
     oxygine::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
@@ -705,7 +705,7 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spBuildListDialog dialog = new BuildListDialog(player, pMap->getPlayer(player)->getBuildList());
     oxygine::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
@@ -714,7 +714,7 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 
 void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->setBuildList(buildList);
@@ -724,7 +724,7 @@ void PlayerSelection::slotChangeAllBuildList(qint32, QStringList buildList)
 
 void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList buildList)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (player >= 0 && player < pMap->getPlayerCount())
     {
         pMap->getPlayer(player)->setBuildList(buildList);
@@ -736,7 +736,7 @@ void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->getPlayer(playerIdx)->setFunds(static_cast<qint32>(value));
     playerDataChanged();
     pApp->continueThread();
@@ -745,7 +745,7 @@ void PlayerSelection::playerTeamChanged(qint32 value, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->getPlayer(playerIdx)->setTeam(value);
     playerDataChanged();
     pApp->continueThread();
@@ -756,7 +756,7 @@ void PlayerSelection::playerDataChanged()
     if (m_pNetworkInterface.get() != nullptr &&
         m_pNetworkInterface->getIsServer())
     {
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << NetworkCommands::PLAYERDATA;
@@ -781,11 +781,11 @@ void PlayerSelection::playerColorChanged(QColor value, qint32 playerIdx, qint32 
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->getPlayer(playerIdx)->setColor(value, item);
     if (m_pNetworkInterface.get() != nullptr)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -803,7 +803,7 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
     pApp->suspendThread();
     if (!saveGame)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
         if (coid == "" ||
             coid == "CO_RANDOM" ||
@@ -849,7 +849,7 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
     pApp->suspendThread();
     if (!saveGame)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
         if (coid == "" ||
             coid == "CO_RANDOM" ||
@@ -894,7 +894,7 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -936,7 +936,7 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         if ((mode == 0) || mode < 0)
@@ -955,7 +955,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Player* pPlayer = pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
@@ -981,7 +981,7 @@ void PlayerSelection::selectAI(qint32 player)
         if (m_pNetworkInterface->getIsServer())
         {
             m_PlayerSockets[player] = 0;
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
@@ -1143,7 +1143,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
 {
     if (m_pNetworkInterface->getIsServer())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         qint32 player = 0;
         QString username;
         stream >> player;
@@ -1244,7 +1244,7 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
 {
     if (!m_pNetworkInterface->getIsServer())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         QString name;
         qint32 aiType;
         qint32 player;
@@ -1291,7 +1291,7 @@ void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
 {
     if (!m_pNetworkInterface->getIsServer())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -1323,7 +1323,7 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 playerIdx;
     QString coid;
     stream >> playerIdx;
@@ -1352,7 +1352,7 @@ void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 playerIdx = 0;
     QColor color;
     stream >> playerIdx;
@@ -1385,7 +1385,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (player < 0)
     {
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

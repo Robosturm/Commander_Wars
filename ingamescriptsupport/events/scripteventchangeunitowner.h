@@ -5,6 +5,7 @@
 
 class ScriptEventChangeUnitOwner : public ScriptEventGeneric
 {
+    Q_OBJECT
 public:
     ScriptEventChangeUnitOwner();
     /**

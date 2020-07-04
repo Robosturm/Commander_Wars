@@ -55,7 +55,7 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 
 bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> enemyTargets;
     QmlVectorPoint* enemyFields = Mainapp::getCircle(1, 1);
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
@@ -138,7 +138,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporters)
 {
     aiStep = step;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
     QVector<QPoint> unitPos;
     QmlVectorPoint* unitFields = Mainapp::getCircle(1, 1);

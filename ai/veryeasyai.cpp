@@ -608,7 +608,7 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
 
 bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QVector<float> data;
     qint32 productionBuildings = 0;
     for (qint32 i = 0; i < pBuildings->size(); i++)

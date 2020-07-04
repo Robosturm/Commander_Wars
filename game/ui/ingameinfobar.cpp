@@ -87,8 +87,8 @@ void IngameInfoBar::updatePlayerInfo()
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
-    GameMap* pMap = GameMap::getInstance();
-    GameMenue* pGamemenu = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGamemenu = GameMenue::getInstance();
     Player* pPlayer = pMap->getCurrentPlayer();
     oxygine::spSprite pSprite = new oxygine::Sprite();
     CO* pCO = pPlayer->getCO(0);
@@ -286,14 +286,14 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
         m_LastX = x;
         m_LastY = y;
         m_pCursorInfoBox->removeChildren();
-        GameMenue* pGamemenu = GameMenue::getInstance();
-        if (pGamemenu != nullptr)
+        spGameMenue pGamemenu = GameMenue::getInstance();
+        if (pGamemenu.get() != nullptr)
         {
             Player* pPlayer = pGamemenu->getCurrentViewPlayer();
             GameEnums::VisionType visionHide = pPlayer->getFieldVisibleType(x, y);

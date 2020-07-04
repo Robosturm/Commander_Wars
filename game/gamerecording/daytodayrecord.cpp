@@ -83,7 +83,7 @@ SpecialEvent* DayToDayRecord::getSpecialEvent(qint32 index)
 
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Player* pPlayer = pMap->getPlayer(player);
     if (!pPlayer->getIsDefeated())
     {

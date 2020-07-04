@@ -8,6 +8,6 @@ getIndexOf1 = function(table, item)
            return i;
         }
     }
-    console.print("Item not found " + item, 0);
+    GameConsole.print("Item not found " + item, 0);
     return -1;
 }

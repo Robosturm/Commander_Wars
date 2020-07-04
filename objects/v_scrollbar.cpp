@@ -135,8 +135,12 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     {
         if (m_enabled)
         {
+            bool emitSignal = getSliding();
             setSliding(false);
-            emit sigEndEditValue(m_Scrollvalue);
+            if (emitSignal)
+            {
+                emit sigEndEditValue(m_Scrollvalue);
+            }
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
@@ -204,6 +208,8 @@ bool V_Scrollbar::getSliding() const
 
 void V_Scrollbar::setSliding(bool sliding)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_sliding = sliding;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (sliding)
@@ -216,6 +222,7 @@ void V_Scrollbar::setSliding(bool sliding)
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
         m_slider->setResAnim(pAnimState);
     }
+    pApp->continueThread();
 }
 
 float V_Scrollbar::getScrollspeed() const

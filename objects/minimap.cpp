@@ -36,21 +36,21 @@ Minimap::~Minimap()
 {
 }
 
-void Minimap::updateMinimap(GameMap* pMap, bool useVision)
+void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     // clear minimap
     removeChildren();
     // load new minimap
-    if (pMap != nullptr)
+    if (pMap.get() != nullptr)
     {
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
         setSize(ImageSize * width, ImageSize * heigth);
         Player* pPlayer = pMap->getCurrentPlayer();
-        GameMenue* pGamemenu = GameMenue::getInstance();
-        if (pGamemenu != nullptr)
+        spGameMenue pGamemenu = GameMenue::getInstance();
+        if (pGamemenu.get() != nullptr)
         {
             pPlayer = pGamemenu->getCurrentViewPlayer();
         }

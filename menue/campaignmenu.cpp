@@ -110,7 +110,7 @@ void CampaignMenu::slotButtonNext()
     pApp->suspendThread();
     if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->initPlayers();
         pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
         pMap->getGameScript()->gameStart();

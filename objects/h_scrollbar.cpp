@@ -159,6 +159,8 @@ bool H_Scrollbar::getSliding() const
 
 void H_Scrollbar::setSliding(bool sliding)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_sliding = sliding;
     if (sliding)
@@ -171,6 +173,7 @@ void H_Scrollbar::setSliding(bool sliding)
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("h_scrollbar");
         m_slider->setResAnim(pAnimState);
     }
+    pApp->continueThread();
 }
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)

@@ -59,7 +59,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;

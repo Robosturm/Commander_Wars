@@ -33,7 +33,7 @@ ReplayMenu::ReplayMenu(QString filename)
         _storedBatteAnimMode = Settings::getBattleAnimations();
         _storedAnimationSpeed = Settings::getAnimationSpeedValue();
         _storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         oxygine::Actor::addChild(pMap);
         pMap->updateSprites();
         loadHandling();
@@ -150,6 +150,8 @@ Player* ReplayMenu::getCurrentViewPlayer()
 
 void ReplayMenu::loadUIButtons()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -242,10 +244,13 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
+    pApp->continueThread();
 }
 
 void ReplayMenu::loadSeekUi()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -272,6 +277,7 @@ void ReplayMenu::loadSeekUi()
     addChild(pDayBox);
     _seekActor = pDayBox;
     _seekActor->setVisible(false);
+    pApp->continueThread();
 }
 
 void ReplayMenu::startSeeking()
@@ -333,7 +339,7 @@ void ReplayMenu::seekToDay(qint32 day)
     pApp->suspendThread();
     _seekDay = -1;
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     auto pos = pMap->getPosition();
     m_ReplayRecorder.seekToDay(day);
     pMap = GameMap::getInstance();
@@ -417,7 +423,7 @@ void ReplayMenu::showConfig()
     qint32 y = 10;
     QVector<qint32> teams;
     QVector<QString> teamNames;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     teamNames.append(tr("Current Team"));
     teamNames.append(tr("All Teams"));
     teamNames.append(tr("Map"));
@@ -540,7 +546,7 @@ void ReplayMenu::setViewTeam(qint32 item)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
         _Viewplayer.setViewType(item + Viewplayer::ViewType::CurrentTeam);

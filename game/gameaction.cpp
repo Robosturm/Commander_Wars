@@ -195,7 +195,7 @@ bool GameAction::canBePerformed(QString actionID, bool emptyField)
 {
     if (!actionID.isEmpty())
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         Unit* pUnit = getTargetUnit();
         Building* pBuilding = getTargetBuilding();
         if (!emptyField)
@@ -365,7 +365,7 @@ QPoint GameAction::getActionTarget()
 
 Unit* GameAction::getMovementTarget()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QPoint actionTarget = getActionTarget();
     Unit* pUnit = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
     // ignore stealthed units
@@ -381,7 +381,7 @@ Unit* GameAction::getMovementTarget()
 
 Building* GameAction::getMovementBuilding()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QPoint actionTarget = getActionTarget();
     Building* pBuilding = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
     return pBuilding;
@@ -389,7 +389,7 @@ Building* GameAction::getMovementBuilding()
 
 Terrain* GameAction::getMovementTerrain()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QPoint actionTarget = getActionTarget();
     Terrain* pTerrain = pMap->getTerrain(actionTarget.x(), actionTarget.y());
     return pTerrain;

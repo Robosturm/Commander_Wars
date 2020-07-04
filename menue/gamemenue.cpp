@@ -51,6 +51,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
       m_SaveGame(saveGame)
 {
+    addRef();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -58,7 +59,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     loadUIButtons();
     if (m_pNetworkInterface.get() != nullptr)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -104,6 +105,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_SaveGame(saveGame)
 
 {
+    addRef();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     loadGameMenue();
@@ -113,6 +115,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 GameMenue::GameMenue()
     : InGameMenue()
 {
+    addRef();
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
@@ -177,7 +180,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
 
 Player* GameMenue::getCurrentViewPlayer()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spPlayer pCurrentPlayer = pMap->getCurrentPlayer();
     if (pCurrentPlayer.get() != nullptr)
     {
@@ -222,7 +225,7 @@ void GameMenue::disconnected(quint64 socketID)
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         bool showDisconnect = false;
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -271,7 +274,7 @@ void GameMenue::loadGameMenue()
     {
         m_Multiplayer = true;
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->getBaseGameInput()->init();
@@ -304,27 +307,27 @@ void GameMenue::loadGameMenue()
 
 void GameMenue::connectMap()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
-    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
-    connect(pMap, &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
+    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap.get(), &GameMap::nextTurnPlayerTimeout, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowUnitInfo, this, &GameMenue::showUnitInfo, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
 
-    connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
+    connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
 
 void GameMenue::loadUIButtons()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
@@ -463,7 +466,7 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         // check for units that have a multi turn avaible
         qint32 heigth = pMap->getMapHeight();
         qint32 width = pMap->getMapWidth();
@@ -533,7 +536,7 @@ void GameMenue::performAction(GameAction* pGameAction)
     pApp->suspendThread();
     if (pGameAction != nullptr)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
                                                         gameStarted;
@@ -657,7 +660,7 @@ void GameMenue::performAction(GameAction* pGameAction)
 
 void GameMenue::skipAnimations()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         GameAnimationFactory::getInstance()->removeAnimation(nullptr);
@@ -812,7 +815,7 @@ void GameMenue::finishActionPerformed()
         m_CurrentActionUnit->postAction();
         m_CurrentActionUnit = nullptr;
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
@@ -837,7 +840,7 @@ void GameMenue::actionPerformed()
         else
         {
             Mainapp::setUseSeed(false);
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 pMap->getGameRules()->resumeRoundTime();
@@ -892,7 +895,7 @@ void GameMenue::updatePlayerinfo()
     pApp->suspendThread();
     m_pPlayerinfo->updateData();
     m_IngameInfoBar->updatePlayerInfo();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->updateVisualCORange();
@@ -904,7 +907,7 @@ void GameMenue::victory(qint32 team)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     bool multiplayer = false;
 
     if (m_pNetworkInterface.get() != nullptr)
@@ -952,7 +955,6 @@ void GameMenue::victory(qint32 team)
         }
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue(multiplayer));
-        addRef();
         oxygine::Actor::detach();
         deleteLater();
     }
@@ -1013,7 +1015,7 @@ void GameMenue::showGameInfo()
     m_Focused = false;
     QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Killed"), tr("Army Value"), tr("Income"), tr("Funds"), tr("Bases")};
     QVector<QStringList> data;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
     Player* pViewPlayer = pMap->getCurrentViewPlayer();
     if (pViewPlayer != nullptr)
@@ -1063,7 +1065,7 @@ void GameMenue::showCOInfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     spCOInfoDialog pCOInfoDialog = new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
         if (direction > 0)
@@ -1205,7 +1207,7 @@ void GameMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
         Settings::setLastSaveGame(filename);
@@ -1239,7 +1241,7 @@ void GameMenue::startGame()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationFactory::clearAllAnimations();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (!m_SaveGame)
     {
         pMap->startGame();
@@ -1347,7 +1349,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getCurrentViewPlayer();
         GameEnums::VisionType visionType = pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
@@ -1398,7 +1400,7 @@ void GameMenue::showExitGame()
 
 void GameMenue::showSurrenderGame()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human)
     {
         Mainapp* pApp = Mainapp::getInstance();

@@ -5,6 +5,7 @@
 
 class ScriptEventSpawnBuilding : public ScriptEventGeneric
 {
+    Q_OBJECT
 public:
     ScriptEventSpawnBuilding();
 };

@@ -52,6 +52,7 @@ Mainapp::Mainapp()
     : m_Audiothread(new AudioThread()),
       m_Worker(new WorkerThread())
 {
+    pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
@@ -78,7 +79,8 @@ Mainapp::~Mainapp()
 
 bool Mainapp::isWorker()
 {
-    return QThread::currentThread() == &m_Workerthread;
+    return QThread::currentThread() == &m_Workerthread ||
+           QThread::currentThread() == pMainThread;
 }
 
 Mainapp* Mainapp::getInstance()

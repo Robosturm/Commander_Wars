@@ -5,6 +5,7 @@
 
 class ScriptEventChangeUnitAI : public ScriptEventGeneric
 {
+    Q_OBJECT
 public:
     ScriptEventChangeUnitAI();
     /**

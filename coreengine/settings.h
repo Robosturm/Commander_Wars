@@ -39,7 +39,12 @@ public:
     static bool getLogActions();
     static void setLogActions(bool LogActions);
 
+
 public slots:
+
+    static bool getShowIngameCoordinates();
+    static void setShowIngameCoordinates(bool showIngameCoordinates);
+
     static quint32 getWalkAnimationSpeedValue();
     static void setWalkAnimationSpeed(const quint32 &value);
     static float getWalkAnimationSpeed();
@@ -324,6 +329,7 @@ private:
     static bool m_record;
     static qint32 m_showCoCount;
     static quint32 m_spriteFilter;
+    static bool m_showIngameCoordinates;
 
     // internal members
     static Settings* m_pInstance;

@@ -367,7 +367,7 @@ void MapSelectionMapsMenue::startGame()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     defeatClosedPlayers();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     pMap->initPlayers();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
@@ -383,7 +383,7 @@ void MapSelectionMapsMenue::startGame()
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
@@ -480,7 +480,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
     }
@@ -506,7 +506,7 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
     }

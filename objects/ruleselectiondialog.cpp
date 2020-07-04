@@ -119,7 +119,7 @@ void RuleSelectionDialog::saveRules(QString filename)
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
     }

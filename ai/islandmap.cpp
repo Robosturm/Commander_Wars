@@ -16,7 +16,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
 
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();

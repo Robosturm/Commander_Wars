@@ -65,7 +65,7 @@ float Player::getUnitBuildValue(QString unitID)
 
 void Player::loadVisionFields()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     GameEnums::Fog mode = pMap->getGameRules()->getFogMode();
@@ -371,8 +371,8 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 
 qint32 Player::getPlayerID() const
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
@@ -387,8 +387,8 @@ qint32 Player::getPlayerID() const
 
 bool Player::getFlipUnitSprites() const
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         if (pMap->getGameRules()->getTeamFacingUnits())
         {
@@ -491,8 +491,8 @@ qint32 Player::getFunds() const
 qint32 Player::getBuildingCount(QString buildingID)
 {
     qint32 ret = 0;
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
@@ -521,8 +521,8 @@ qint32 Player::getBuildingCount(QString buildingID)
 qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
 {
     qint32 ret = 0;
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
@@ -554,7 +554,7 @@ qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
 qint32 Player::getUnitCount(QString unitID)
 {
     qint32 ret = 0;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
@@ -603,7 +603,7 @@ void Player::setTeam(const qint32 &value)
 
 void Player::defeatPlayer(Player* pPLayer, bool units)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
@@ -676,7 +676,7 @@ qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
 qint32 Player::calcIncome(float modifier)
 {
     qint32 ret = 0;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
@@ -841,7 +841,7 @@ void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView
 
 void Player::updatePlayerVision(bool reduceTimer)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     // only update visual stuff if needed
     if (reduceTimer ||
         pMap->getCurrentPlayer() == this ||
@@ -1001,7 +1001,7 @@ void Player::updatePlayerVision(bool reduceTimer)
 
 bool Player::getFieldVisible(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (pMap->getGameRules()->getFogMode())
     {
         case GameEnums::Fog_Off:
@@ -1019,7 +1019,7 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
 
 GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (pMap->getGameRules()->getFogMode())
     {
         case GameEnums::Fog_Off:
@@ -1086,7 +1086,7 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     }
     if (pUnit->getOwner() == this)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         if (!getWeatherImmune())
         {
             modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
@@ -1123,7 +1123,7 @@ QmlVectorUnit* Player::getUnits()
 
 qint32 Player::getEnemyCount()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 ret = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -1137,7 +1137,7 @@ qint32 Player::getEnemyCount()
 
 QmlVectorUnit* Player::getEnemyUnits()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
     qint32 width = pMap->getMapWidth();
     QmlVectorUnit* ret = new QmlVectorUnit();
@@ -1160,7 +1160,7 @@ QmlVectorUnit* Player::getEnemyUnits()
 
 QVector<spUnit> Player::getSpEnemyUnits()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
     qint32 width = pMap->getMapWidth();
     QVector<spUnit> ret;
@@ -1183,7 +1183,7 @@ QVector<spUnit> Player::getSpEnemyUnits()
 
 QmlVectorBuilding* Player::getEnemyBuildings()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
     qint32 width = pMap->getMapWidth();
     QmlVectorBuilding* ret = new QmlVectorBuilding();
@@ -1278,7 +1278,7 @@ void Player::setCO(QString coId, quint8 idx)
 
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
@@ -1329,7 +1329,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
     }
     averageCosts = averageCosts / pUnitSpriteManager->getCount();
 
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 damageDone = 0;
     for (qint32 i = 0; i < pPoints->size(); i++)
     {
@@ -1412,7 +1412,7 @@ void Player::setFundsModifier(float value)
 qint32 Player::calculatePlayerStrength()
 {
     qint32 ret = 0;
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     for (qint32 x = 0; x < pMap->getMapWidth(); x++)
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)

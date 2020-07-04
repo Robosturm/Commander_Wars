@@ -28,7 +28,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Victory Menue", Console::eDEBUG);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -619,7 +619,7 @@ void VictoryMenue::updateGraph()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (m_CurrentGraphMode < GraphModes::Max)
     {
         // make sure we have some graph data to be added :)
@@ -713,7 +713,7 @@ void VictoryMenue::updateGraph()
 
 void VictoryMenue::finishGraph()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
     while (progress < pMap->getCurrentDay())
     {
@@ -726,7 +726,7 @@ void VictoryMenue::finishGraph()
 void VictoryMenue::drawGraphStep(qint32 progress)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     DayToDayRecord* pStartRecord = nullptr;
     DayToDayRecord* pEndRecord = nullptr;
     if (pMap->getCurrentDay() == 1)
@@ -866,7 +866,7 @@ void VictoryMenue::drawGraphStep(qint32 progress)
 
 qint32 VictoryMenue::getStepTime()
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 stepTime = static_cast<qint32>(15.0 * (20.0 - qExp(pMap->getCurrentDay() / 10.0)));
     if (pMap->getCurrentDay() < 5)
     {

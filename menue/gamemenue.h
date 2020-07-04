@@ -16,6 +16,9 @@
 
 #include "game/gamerecording/replayrecorder.h"
 
+class GameMenue;
+typedef oxygine::intrusive_ptr<GameMenue> spGameMenue;
+
 /**
  * @brief The GameMenue class handles the game :)
  */

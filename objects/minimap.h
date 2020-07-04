@@ -5,6 +5,7 @@
 #include "oxygine-framework.h"
 
 class GameMap;
+typedef oxygine::intrusive_ptr<GameMap> spGameMap;
 
 class Minimap;
 typedef oxygine::intrusive_ptr<Minimap> spMinimap;
@@ -20,7 +21,7 @@ public:
 signals:
     void clicked(qint32 x, qint32 y);
 public slots:
-    void updateMinimap(GameMap* pMap, bool useVision = false);
+    void updateMinimap(spGameMap pMap, bool useVision = false);
 private:
     static const qint32 ImageSize{4};
 };

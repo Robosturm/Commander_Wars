@@ -9,7 +9,7 @@ Viewplayer::Viewplayer()
 
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (_ViewType)
     {
         case ViewType::CurrentTeam:
@@ -47,7 +47,7 @@ bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
 
 GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (_ViewType)
     {
         case ViewType::CurrentTeam:
@@ -87,7 +87,7 @@ GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
 
 bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     switch (_ViewType)
     {
         case ViewType::CurrentTeam:

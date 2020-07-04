@@ -36,14 +36,14 @@ HumanPlayerInput::HumanPlayerInput()
 void HumanPlayerInput::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    GameMenue* pMenue = GameMenue::getInstance();
-    connect(pMenue, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
-    connect(pMenue, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
-    connect(pMenue, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
-    connect(pMenue, &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
+    spGameMenue pMenue = GameMenue::getInstance();
+    connect(pMenue.get(), &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
+    connect(pMenue.get(), &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
+    connect(pMenue.get(), &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
+    connect(pMenue.get(), &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
     connect(pMenue->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
-    connect(this, &HumanPlayerInput::performAction, pMenue, &GameMenue::performAction, Qt::QueuedConnection);
+    connect(this, &HumanPlayerInput::performAction, pMenue.get(), &GameMenue::performAction, Qt::QueuedConnection);
 }
 
 HumanPlayerInput::~HumanPlayerInput()
@@ -141,7 +141,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 void HumanPlayerInput::cancelActionInput()
 {
     Unit* pUnit = m_pGameAction->getTargetUnit();
-    GameMenue* pMenue = GameMenue::getInstance();
+    spGameMenue pMenue = GameMenue::getInstance();
     pMenue->getCursor()->changeCursor("cursor+default");
     if ((pUnit != nullptr) &&
         (!pUnit->isStealthed(m_pPlayer)))
@@ -162,7 +162,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
 {
     clearMarkedFields();
     // try to show fire ranges :)
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
     if ((pUnit != nullptr) &&
         (!pUnit->isStealthed(m_pPlayer)))
@@ -226,8 +226,8 @@ void HumanPlayerInput::cleanUpInput()
     m_pUnitPathFindingSystem = nullptr;
     clearMarkedFields();
     deleteArrow();
-    GameMenue* pMenue = GameMenue::getInstance();
-    if (pMenue != nullptr)
+    spGameMenue pMenue = GameMenue::getInstance();
+    if (pMenue.get() != nullptr)
     {
         Cursor* pCursor = pMenue->getCursor();
         pCursor->changeCursor("cursor+default");
@@ -240,8 +240,8 @@ void HumanPlayerInput::clearMenu()
 {
     if (m_CurrentMenu.get() != nullptr)
     {
-        GameMenue* pMenue = GameMenue::getInstance();
-        if (pMenue != nullptr)
+        spGameMenue pMenue = GameMenue::getInstance();
+        if (pMenue.get() != nullptr)
         {
             pMenue->setFocused(true);
         }
@@ -327,7 +327,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             // prepare action
             m_pGameAction = new GameAction();
             m_pGameAction->setTarget(QPoint(x, y));
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
             if ((pUnit != nullptr) &&
                 (!pUnit->isStealthed(m_pPlayer)))
@@ -512,7 +512,7 @@ void HumanPlayerInput::getNextStepData()
 {
     clearMenu();
     clearMarkedFields();
-    GameMenue* pMenue = GameMenue::getInstance();
+    spGameMenue pMenue = GameMenue::getInstance();
     Cursor* pCursor = pMenue->getCursor();
     pCursor->changeCursor("cursor+default");
     pCursor->resetCursorRangeOutline();
@@ -588,8 +588,8 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 
 
 void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 {
-    GameMenue* pMenue = GameMenue::getInstance();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMenue pMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     float posX = x * GameMap::Imagesize * pMap->getZoom() + pMap->getX();
     if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - pMenue->getGameInfoBar()->getWidth())
     {
@@ -622,7 +622,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pUnit, m_pPlayer);
     if ((pUnit->getOwner() == m_pPlayer) &&
@@ -642,7 +642,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
     if (maxRange > 1)
     {
-        GameMenue* pMenue = GameMenue::getInstance();
+        spGameMenue pMenue = GameMenue::getInstance();
         qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
         Cursor* pCursor = pMenue->getCursor();
         if (minRange > 1)
@@ -658,7 +658,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 
 void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(point.x(), point.y()))
     {
         oxygine::spSprite pSprite = createMarkedFieldActor(point, color, drawPriority);
@@ -676,7 +676,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
 
 oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spSprite pSprite = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
@@ -745,7 +745,7 @@ void HumanPlayerInput::createMarkedMoveFields()
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if ((pMap->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr) &&
         pMap->onMap(x, y))
@@ -950,7 +950,7 @@ QStringList HumanPlayerInput::getEmptyActionList()
 
 void HumanPlayerInput::createArrow(QVector<QPoint>& points)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 i = 0; i < points.size() - 1; i++)
     {
@@ -1108,7 +1108,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
             distance += currentUnit->getMaxRange(position);
 
             QVector<QPoint> usedFields;
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             for (qint32 x = 0; x < pMap->getMapWidth(); x++)
             {
                 for (qint32 y = 0; y < pMap->getMapHeight(); y++)
@@ -1152,7 +1152,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     {
         points.append(position);
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
     QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
@@ -1178,8 +1178,8 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
 
 void HumanPlayerInput::nextMarkedField()
 {
-    GameMap* pMap = GameMap::getInstance();
-    GameMenue* pGameMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     qint32 startX = pGameMenue->getCursor()->getMapPointX();
@@ -1235,8 +1235,8 @@ void HumanPlayerInput::nextMarkedField()
 
 void HumanPlayerInput::previousMarkedField()
 {
-    GameMap* pMap = GameMap::getInstance();
-    GameMenue* pGameMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     qint32 startX = pGameMenue->getCursor()->getMapPointX();
@@ -1292,8 +1292,8 @@ void HumanPlayerInput::previousMarkedField()
 
 void HumanPlayerInput::nextSelectOption()
 {
-    GameMap* pMap = GameMap::getInstance();
-    GameMenue* pGameMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     qint32 startX = pGameMenue->getCursor()->getMapPointX();
@@ -1382,8 +1382,8 @@ void HumanPlayerInput::nextSelectOption()
 
 void HumanPlayerInput::previousSelectOption()
 {
-    GameMap* pMap = GameMap::getInstance();
-    GameMenue* pGameMenue = GameMenue::getInstance();
+    spGameMap pMap = GameMap::getInstance();
+    spGameMenue pGameMenue = GameMenue::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     qint32 startX = pGameMenue->getCursor()->getMapPointX();
@@ -1482,7 +1482,7 @@ void HumanPlayerInput::autoEndTurn()
             (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
             (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
         {
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             qint32 heigth = pMap->getMapHeight();
             qint32 width = pMap->getMapWidth();
             for (qint32 y = 0; y < heigth; y++)

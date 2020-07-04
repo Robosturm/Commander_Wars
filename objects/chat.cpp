@@ -109,7 +109,7 @@ void Chat::addMessage(QString message, bool local)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMenue* pGamemenu = GameMenue::getInstance();
+    spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     bool show = true;
     if (message.startsWith("@") && pMap.get() != nullptr)
@@ -178,10 +178,10 @@ void Chat::sendData(QString message)
     if (!message.isEmpty())
     {
         QString text;
-        GameMenue* pGamemenu = GameMenue::getInstance();
+        spGameMenue pGamemenu = GameMenue::getInstance();
         spGameMap pMap = GameMap::getInstance();
         if (message.startsWith("@") && pMap.get() != nullptr &&
-            pGamemenu != nullptr)
+            pGamemenu.get() != nullptr)
         {
             QStringList list = message.split(" ");
             for (qint32 i = 0; i < list.size(); i++)

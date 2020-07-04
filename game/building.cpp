@@ -355,7 +355,7 @@ qint32 Building::getIncome()
         income = static_cast<qint32>(income) + modifier;
 
         modifier = 0;
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -432,7 +432,7 @@ QStringList Building::getActionList()
             }
 
 
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
                 Player* pPlayer = pMap->getPlayer(i);
@@ -537,7 +537,7 @@ QStringList  Building::getConstructionList()
             }
         }
     }
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QStringList returnList;
     if (m_pOwner != nullptr)
     {

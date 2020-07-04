@@ -646,7 +646,7 @@ qint32 Terrain::getDefense(Unit* pUnit)
             return 0;
         }
         defense += pUnit->getTerrainDefenseModifier(QPoint(x, y));
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -707,7 +707,7 @@ void Terrain::removeBuilding()
             m_Building->detach();
             qint32 width = m_Building->getBuildingWidth();
             qint32 heigth = m_Building->getBuildingHeigth();
-            GameMap* pMap = GameMap::getInstance();
+            spGameMap pMap = GameMap::getInstance();
             // delete pointers
             for (qint32 x1 = 0; x1 < width; x1++)
             {
@@ -945,7 +945,7 @@ bool Terrain::getVisionHide(Player* pPlayer)
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getVisionHide";
     QJSValue ret = pInterpreter->doFunction(terrainID, function1);
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (ret.isBool())
     {
         bool value = ret.toBool();
@@ -1140,7 +1140,7 @@ void Terrain::createBuildingDownStream()
 {
     qint32 width = m_Building->getBuildingWidth();
     qint32 heigth = m_Building->getBuildingHeigth();
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     // recreate pointers
     for (qint32 x1 = 0; x1 < width; x1++)
     {

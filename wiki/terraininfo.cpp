@@ -190,8 +190,8 @@ void TerrainInfo::showLink(QString pageID)
 void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 width)
 {
     qint32 x = 0;
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
     {
         m_pPlayer = pMap->getSpCurrentPlayer();
     }

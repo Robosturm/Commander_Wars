@@ -88,7 +88,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     QString text;
     if (powerMode == GameEnums::PowerMode_Tagpower)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         QJSValueList args;
         QJSValue obj1 = pInterpreter->newQObject(pMap->getCurrentPlayer()->getCO(0));
         args << obj1;

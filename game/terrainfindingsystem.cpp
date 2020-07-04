@@ -30,7 +30,7 @@ qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, 
 {
     if (movecosts[index][0] == infinite)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
         {
             if (pMap->getTerrain(x, y)->getID() == m_terrainID)

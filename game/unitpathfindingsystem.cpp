@@ -30,7 +30,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y) && m_Movepoints > 0)
     {
         return m_Movepoints - currentCost;
@@ -59,7 +59,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     }
     else if (movecosts[index][direction] == infinite)
     {
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
         {
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
@@ -102,7 +102,7 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
 
 QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     QList<QVector4D> usedNodes;
     QList<QVector4D> nextNodes;
     QList<QVector4D> currentNodes;
@@ -191,7 +191,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
         QVector<QPoint> ret;
         QVector<QPoint> buffer;
         qint32 currentCosts = 0;
-        GameMap* pMap = GameMap::getInstance();
+        spGameMap pMap = GameMap::getInstance();
         QPoint lastValidPoint = path[path.size() - 1];
         ret.append(lastValidPoint);
         for (qint32 i = path.size() - 2; i >= 0; i--)

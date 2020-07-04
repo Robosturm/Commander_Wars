@@ -43,7 +43,7 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
-    GameMap* pMap = GameMap::getInstance();
+    spGameMap pMap = GameMap::getInstance();
     qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
     qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
     onMap = pMap->onMap(x, y);
