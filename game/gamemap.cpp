@@ -1603,7 +1603,7 @@ void GameMap::nextTurn()
     }
 }
 
-void GameMap::initPlayers()
+void GameMap::initPlayersAndSelectCOs()
 {
     QStringList usedCOs;
     bool singleCO = m_Rules->getSingleRandomCO();
@@ -1677,5 +1677,10 @@ void GameMap::initPlayers()
         pPlayer->defineArmy();
         pPlayer->loadVisionFields();
     }
+    initPlayers();
+}
+
+void GameMap::initPlayers()
+{
     m_CurrentPlayer = players[players.size() - 1];
 }

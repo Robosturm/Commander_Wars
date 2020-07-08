@@ -17,6 +17,7 @@ class Multiplayermenu : public MapSelectionMapsMenue
     Q_OBJECT
 public:
     explicit Multiplayermenu(QString adress, bool host);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface);
     virtual ~Multiplayermenu() = default;
 
     /**
@@ -47,7 +48,7 @@ public slots:
     // network slots
     void playerJoined(quint64 socketID);
     void disconnected(quint64 socketID);
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 
     virtual void hideMapSelection() override;
     virtual void showMapSelection() override;
@@ -65,6 +66,15 @@ protected:
     GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);
 private:
+    /**
+     * @brief init
+     */
+    void init();
+    /**
+     * @brief startGameOnServer
+     */
+    void startGameOnServer();
+private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;
     oxygine::spButton m_pHostAdresse;
@@ -73,6 +83,7 @@ private:
     qint32 counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
     bool saveGame{false};
+    bool _local{true};
 };
 
 #endif // MULTIPLAYERMENU_H

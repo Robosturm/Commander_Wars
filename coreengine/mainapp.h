@@ -13,7 +13,6 @@
 
 #include "oxygine/core/gamewindow.h"
 #include "coreengine/settings.h"
-#include "network/tcpserver.h"
 
 class AudioThread;
 class WorkerThread;
@@ -60,14 +59,7 @@ public:
     {
         return &m_Workerthread;
     }
-    inline TCPServer* getGameServer()
-    {
-        return m_pGameServer.get();
-    }
-    inline void stopGameServer()
-    {
-        m_pGameServer = nullptr;
-    }
+
     inline static QThread* getNetworkThread()
     {
         return &m_Networkthread;
@@ -105,6 +97,22 @@ public:
     static std::tuple<QString, QStringList> readList(QString file, QString folder);
 
     static qint32 randIntBase(qint32 low, qint32 high);
+    /**
+     * @brief getSlave
+     * @return
+     */
+    bool getSlave() const;
+    /**
+     * @brief setSlave
+     * @param slave
+     */
+    void setSlave(bool slave);
+    /**
+     * @brief getGameServer
+     * @return
+     */
+    static QThread* getGameServerThread();
+
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -177,6 +185,11 @@ public slots:
      * @param log
      */
     static void showCrashReport(QString log);
+    /**
+     * @brief loadArgs
+     * @param args
+     */
+    void loadArgs(const QStringList & args);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -214,10 +227,12 @@ private:
     static QThread m_Workerthread;
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
+    static QThread m_GameServerThread;
     QThread* pMainThread{nullptr};
-    spTCPServer m_pGameServer{nullptr};
     AudioThread* m_Audiothread;
     WorkerThread* m_Worker;
+    bool _slave{false};
+    bool _noUi{false};
     void createTrainingData();
 };
 

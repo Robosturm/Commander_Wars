@@ -6,6 +6,7 @@
 
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/mainapp.h"
 
 Userdata* Userdata::m_pInstance = nullptr;
 
@@ -27,14 +28,18 @@ Userdata::Userdata()
 
 void Userdata::storeUser()
 {
-    if (!Settings::getUsername().isEmpty())
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave())
     {
-        QFile user(Settings::getUsername() + ".dat");
-        user.remove();
-        user.open(QIODevice::WriteOnly);
-        QDataStream pStream(&user);
-        serializeObject(pStream);
-        user.close();
+        if (!Settings::getUsername().isEmpty())
+        {
+            QFile user(Settings::getUsername() + ".dat");
+            user.remove();
+            user.open(QIODevice::WriteOnly);
+            QDataStream pStream(&user);
+            serializeObject(pStream);
+            user.close();
+        }
     }
 }
 

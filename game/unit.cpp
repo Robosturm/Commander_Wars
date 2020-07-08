@@ -2016,42 +2016,44 @@ QStringList Unit::getActionList()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
+    QStringList actionList;
     if (ret.isString())
     {
-        QStringList actionList = ret.toString().split(",");
-        CO* pCO = m_pOwner->getCO(0);
-        QStringList actionModifierList;
-        if (pCO != nullptr)
-        {
-            actionModifierList.append(pCO->getActionModifierList(this));
-        }
-        pCO = m_pOwner->getCO(1);
-        if (pCO != nullptr)
-        {
-            actionModifierList.append(pCO->getActionModifierList(this));
-        }
-        for (qint32 i = 0; i < actionModifierList.size(); i++)
-        {
-            QString action = actionModifierList[i];
-            if (action.startsWith("-"))
-            {
-                qint32 index = actionList.indexOf(action.replace("-", ""));
-                if (index >= 0)
-                {
-                    actionList.removeAt(index);
-                }
-            }
-            else
-            {
-                actionList.append(action);
-            }
-        }
-        return actionList;
+       actionList = ret.toString().split(",");
     }
     else
     {
-        return QStringList();
+        actionList = ret.toVariant().toStringList();
     }
+
+    CO* pCO = m_pOwner->getCO(0);
+    QStringList actionModifierList;
+    if (pCO != nullptr)
+    {
+        actionModifierList.append(pCO->getActionModifierList(this));
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        actionModifierList.append(pCO->getActionModifierList(this));
+    }
+    for (qint32 i = 0; i < actionModifierList.size(); i++)
+    {
+        QString action = actionModifierList[i];
+        if (action.startsWith("-"))
+        {
+            qint32 index = actionList.indexOf(action.replace("-", ""));
+            if (index >= 0)
+            {
+                actionList.removeAt(index);
+            }
+        }
+        else
+        {
+            actionList.append(action);
+        }
+    }
+    return actionList;
 }
 
 bool Unit::hasAction(QString action)

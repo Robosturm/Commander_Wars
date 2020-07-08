@@ -47,7 +47,7 @@ public:
     void disconnectInterface();
 public slots:
     virtual void nextAction() override;
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
 private:
     QList<GameAction*> m_ActionBuffer;
     bool actionRunning{false};

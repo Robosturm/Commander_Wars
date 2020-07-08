@@ -24,8 +24,6 @@ void RxTask::recieveData()
         m_pStream.startTransaction();
         qint32 service;
         m_pStream >> service;
-        quint64 socketID;
-        m_pStream >> socketID;
         NetworkInterface::NetworkSerives eService = static_cast<NetworkInterface::NetworkSerives>(service);
         bool forwardData = false;
         m_pStream >> forwardData;
@@ -47,7 +45,7 @@ void RxTask::recieveData()
             {
                 pIF->forwardData(m_SocketID, data, eService);
             }
-            emit pIF->recieveData(m_SocketID, data, eService, socketID);
+            emit pIF->recieveData(m_SocketID, data, eService);
         }
     }
 }

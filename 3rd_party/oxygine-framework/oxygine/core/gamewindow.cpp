@@ -49,7 +49,6 @@ namespace oxygine
     GameWindow::~GameWindow()
     {
         _dispatcher->removeAllEventListeners();
-        qDebug("core::release");
 
         rsCache().reset();
         rsCache().setDriver(nullptr);

@@ -28,7 +28,7 @@ public:
 signals:
     void sigSendText(QString message);
 public slots:
-    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
+    void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service);
     void sendData(QString message);
 private:
     QVector<QString> messages;

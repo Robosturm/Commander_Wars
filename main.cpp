@@ -59,6 +59,9 @@
 
 #include "coreengine/crashreporter.h"
 
+#include "network/mainserver.h"
+
+
 int main(int argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);
@@ -78,6 +81,8 @@ int main(int argc, char* argv[])
 
     Mainapp window;
     window.setTitle(QObject::tr("Commander Wars"));
+    QStringList args = app.arguments();
+    window.loadArgs(args);
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
@@ -159,16 +164,14 @@ int main(int argc, char* argv[])
     {
         GameMap::getInstance()->deleteMap();
     }
-    Userdata::getInstance()->storeUser();
-
-    // clean up section ahead
     // store current settings when closing
-    if (window.getGameServer() != nullptr)
+    Userdata::getInstance()->storeUser();
+    if (MainServer::getInstance() != nullptr)
     {
-        window.stopGameServer();
-        QThread::msleep(200);
+        MainServer::getInstance()->deleteLater();
+        window.getGameServerThread()->quit();
+        window.getGameServerThread()->wait();
     }
-
     //end
     if (returncode == 1)
     {

@@ -186,7 +186,7 @@ public slots:
      * @param data
      * @param service
      */
-    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
      * @brief disconnected
      * @param socketID

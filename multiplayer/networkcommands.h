@@ -69,6 +69,10 @@ namespace NetworkCommands
      * @brief STARTGAME the host has started the game. the client is allowed to start the game as well.
      */
     static const QString STARTGAME = "STARTGAME";
+    /**
+     * @brief LAUNCHGAMEONSERVER
+     */
+    static const QString LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
 }
 
 #endif // NETWORKCOMMANDS_H

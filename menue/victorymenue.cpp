@@ -432,6 +432,13 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         }
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
+
+    // todo check me
+    if (pApp->getSlave())
+    {
+        // despawn slave process on finish
+        QCoreApplication::exit(0);
+    }
 }
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)

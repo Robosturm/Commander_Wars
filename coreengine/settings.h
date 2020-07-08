@@ -40,7 +40,15 @@ public:
     static void setLogActions(bool LogActions);
 
 
+    static QStringList getActiveMods();
+    static void setActiveMods(const QStringList &activeMods);
+
 public slots:
+    static quint16 getMinGameServerPort();
+    static void setMinGameServerPort(const quint16 &minGameServerPort);
+
+    static quint16 getMaxGameServerPort();
+    static void setMaxGameServerPort(const quint16 &maxGameServerPort);
 
     static bool getShowIngameCoordinates();
     static void setShowIngameCoordinates(bool showIngameCoordinates);
@@ -307,6 +315,8 @@ private:
     static quint16 m_GamePort;
     static quint16 m_ServerPort;
     static QString m_ServerAdress;
+    static quint16 m_minGameServerPort;
+    static quint16 m_maxGameServerPort;
     static QString m_Username;
     static bool m_Server;
     // auto saving

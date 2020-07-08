@@ -31,6 +31,7 @@
 #include "coreengine/tweenaddcolorall.h"
 
 #include "multiplayer/networkcommands.h"
+#include "network/tcpserver.h"
 
 #include "wiki/fieldinfo.h"
 
@@ -118,7 +119,7 @@ GameMenue::GameMenue()
     addRef();
 }
 
-void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
+void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {

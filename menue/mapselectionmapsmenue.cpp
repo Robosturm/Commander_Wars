@@ -368,7 +368,7 @@ void MapSelectionMapsMenue::startGame()
     pApp->suspendThread();
     defeatClosedPlayers();
     spGameMap pMap = GameMap::getInstance();
-    pMap->initPlayers();
+    pMap->initPlayersAndSelectCOs();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites();

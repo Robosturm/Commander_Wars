@@ -111,7 +111,7 @@ void CampaignMenu::slotButtonNext()
     if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
         spGameMap pMap = GameMap::getInstance();
-        pMap->initPlayers();
+        pMap->initPlayersAndSelectCOs();
         pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
         pMap->getGameScript()->gameStart();
         pMap->updateSprites();

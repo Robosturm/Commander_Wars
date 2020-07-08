@@ -21,6 +21,8 @@
 
 #include "coreengine/filesupport.h"
 
+#include "network/tcpserver.h"
+
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
 {
@@ -1025,7 +1027,7 @@ void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
     pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
 }
 
-void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
+void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)

@@ -17,6 +17,7 @@
 #include "objects/dialogtextinput.h"
 
 #include "network/tcpserver.h"
+#include "network/mainserver.h"
 
 LobbyMenu::LobbyMenu()
     : QObject()
@@ -56,14 +57,23 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigExitMenue, this, &LobbyMenu::exitMenue, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Host Game"));
+    oxygine::spButton pButtonHost = ObjectManager::createButton(tr("Host Local"));
     pButtonHost->attachTo(this);
     pButtonHost->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigHost();
+        emit sigHostLocal();
     });
-    connect(this, &LobbyMenu::sigHost, this, &LobbyMenu::host, Qt::QueuedConnection);
+    connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
+
+    oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Host"));
+    pButtonHostOnServer->attachTo(this);
+    pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
+    pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigHostServer();
+    });
+    connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
     pButtonJoin->attachTo(this);
@@ -83,15 +93,15 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    m_pGamesPanel = new Panel(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 380),
-                          QSize(Settings::getWidth() - 20, Settings::getHeight() - 380));
+    m_pGamesPanel = new Panel(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 420),
+                          QSize(Settings::getWidth() - 20, Settings::getHeight() - 420));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
     spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getServer())
     {
-        pInterface = pApp->getGameServer();
+        pInterface = MainServer::getInstance()->getGameServer();
     }
 
     spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
@@ -120,12 +130,24 @@ void LobbyMenu::exitMenue()
     pApp->continueThread();
 }
 
-void LobbyMenu::host()
+void LobbyMenu::hostLocal()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu("", true));
+    addRef();
+    oxygine::Actor::detach();
+    deleteLater();
+    pApp->continueThread();
+}
+
+void LobbyMenu::hostServer()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient));
     addRef();
     oxygine::Actor::detach();
     deleteLater();

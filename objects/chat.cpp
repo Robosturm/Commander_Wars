@@ -96,7 +96,7 @@ void Chat::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
+void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == m_serviceMode)
     {

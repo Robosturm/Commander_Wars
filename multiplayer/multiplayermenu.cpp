@@ -35,21 +35,10 @@
 
 Multiplayermenu::Multiplayermenu(QString adress, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
-      m_Host(host)
+      m_Host(host),
+      _local(true)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Multiplayer Menue", Console::eDEBUG);
-
-    m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
-    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
-    m_pButtonLoadSavegame->attachTo(this);
-    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigLoadSaveGame();
-    });
-    connect(this, &Multiplayermenu::sigLoadSaveGame, this, &Multiplayermenu::showLoadSaveGameDialog, Qt::QueuedConnection);
-
+    init();
     if (!host)
     {
         m_NetworkInterface = new TCPClient();
@@ -84,8 +73,31 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
-    connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
+}
 
+Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface)
+    : MapSelectionMapsMenue(Settings::getHeight() - 380),
+      m_Host(true),
+      m_NetworkInterface(pNetworkInterface),
+      _local(false)
+{
+    init();
+}
+
+void Multiplayermenu::init()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Console::print("Entering Multiplayer Menue", Console::eDEBUG);
+    m_pButtonLoadSavegame = ObjectManager::createButton(tr("Load Savegame"));
+    m_pButtonLoadSavegame->setPosition(Settings::getWidth() - m_pButtonLoadSavegame->getWidth() - m_pButtonNext->getWidth() - 20, Settings::getHeight() - 10 - m_pButtonLoadSavegame->getHeight());
+    m_pButtonLoadSavegame->attachTo(this);
+    m_pButtonLoadSavegame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigLoadSaveGame();
+    });
+    connect(this, &Multiplayermenu::sigLoadSaveGame, this, &Multiplayermenu::showLoadSaveGameDialog, Qt::QueuedConnection);
+    connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::showIPs()
@@ -235,7 +247,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
     }
 }
 
-void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, quint64)
+void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
@@ -617,6 +629,11 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    spGameMap pMap = GameMap::getInstance();
+    if (!saveGame)
+    {
+        pMap->initPlayers();
+    }
     quint32 seed;
     stream >> seed;
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
@@ -627,10 +644,9 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     }
     Mainapp::seed(seed);
     Mainapp::setUseSeed(true);
-    spGameMap pMap = GameMap::getInstance();
+
     if (!saveGame)
     {
-        pMap->initPlayers();
         pMap->getGameScript()->gameStart();
     }
     pMap->updateSprites();
@@ -735,16 +751,38 @@ void Multiplayermenu::slotButtonNext()
 {
     if (m_Host && m_MapSelectionStep == MapSelectionStep::selectRules)
     {
-        m_pHostAdresse->setVisible(true);
-        m_NetworkInterface = new TCPServer();
-        m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
-        createChat();
-        emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
-        connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
-        connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-        connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+        if (_local)
+        {
+            m_pHostAdresse->setVisible(true);
+            m_NetworkInterface = new TCPServer();
+            m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+            createChat();
+            emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
+            connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
+            connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+            connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+            MapSelectionMapsMenue::slotButtonNext();
+        }
+        else
+        {
+            startGameOnServer();
+        }
     }
-    MapSelectionMapsMenue::slotButtonNext();
+    else
+    {
+        MapSelectionMapsMenue::slotButtonNext();
+    }
+}
+
+void Multiplayermenu::startGameOnServer()
+{
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << NetworkCommands::LAUNCHGAMEONSERVER;
+    Filesupport::writeVectorList(sendStream, Settings::getMods());
+    GameMap* pMap = GameMap::getInstance();
+    pMap->serializeObject(sendStream);
+    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 }
 
 void Multiplayermenu::createChat()
@@ -877,6 +915,10 @@ void Multiplayermenu::countdown()
             pApp->suspendThread();
             defeatClosedPlayers();
             spGameMap pMap = GameMap::getInstance();
+            if (!saveGame)
+            {
+                pMap->initPlayersAndSelectCOs();
+            }
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::INITGAME;
@@ -890,7 +932,6 @@ void Multiplayermenu::countdown()
             Mainapp::setUseSeed(true);
             if (!saveGame)
             {
-                pMap->initPlayers();
                 pMap->getGameScript()->gameStart();
             }
             pMap->updateSprites();

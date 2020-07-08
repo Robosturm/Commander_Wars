@@ -292,6 +292,10 @@ public:
      */
     spCampaign getSpCampaign();
     /**
+     * @brief initPlayersAndSelectCOs
+     */
+    void initPlayersAndSelectCOs();
+    /**
      * @brief initPlayers
      */
     void initPlayers();

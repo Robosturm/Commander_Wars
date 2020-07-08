@@ -18,12 +18,14 @@ public:
 
 signals:    
     void sigExitMenue();
-    void sigHost();
+    void sigHostServer();
+    void sigHostLocal();
     void sigJoinGame();
     void sigJoinAdress();
 public slots:
     void exitMenue();    
-    void host();
+    void hostLocal();
+    void hostServer();
     void joinGame();
     void join(QString adress);
     void joinAdress();

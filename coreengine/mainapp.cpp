@@ -25,6 +25,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
 
+#include "network/mainserver.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -44,6 +45,7 @@ QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
+QThread Mainapp::m_GameServerThread;
 bool Mainapp::m_useSeed{false};
 quint32 Mainapp::m_seed = 0;
 QMutex Mainapp::crashMutex;
@@ -331,13 +333,23 @@ void Mainapp::loadRessources()
         QThread::msleep(100);
     }
     // only launch the server if the rest is ready for it ;)
-    if (Settings::getServer())
+    if (Settings::getServer() && !_slave)
     {
-        m_pGameServer = new TCPServer();
-        emit m_pGameServer->sig_connect("", Settings::getServerPort());
+        MainServer::getInstance();
+        m_GameServerThread.start(QThread::Priority::TimeCriticalPriority);
     }
-    m_Timer.start(1, this);
-    emit m_Worker->sigShowMainwindow();
+    if (!_noUi)
+    {
+        m_Timer.start(1, this);
+    }
+    if (!_slave)
+    {
+        emit m_Worker->sigShowMainwindow();
+    }
+    else
+    {
+
+    }
 }
 
 void Mainapp::applyFilter(quint32 filter)
@@ -435,7 +447,6 @@ qint32 Mainapp::getScreenMode()
     }
 }
 
-
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {
     if (Console::getInstance()->getVisible())
@@ -469,6 +480,21 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
             emit sigKeyUp(oxygine::KeyEvent(event));
         }
     }
+}
+
+QThread* Mainapp::getGameServerThread()
+{
+    return &m_GameServerThread;
+}
+
+bool Mainapp::getSlave() const
+{
+    return _slave;
+}
+
+void Mainapp::setSlave(bool slave)
+{
+    _slave = slave;
 }
 
 bool Mainapp::getUseSeed()
@@ -566,4 +592,28 @@ void Mainapp::showCrashReport(QString log)
 QStringList Mainapp::getActiveMods()
 {
     return Settings::getMods();
+}
+
+void Mainapp::loadArgs(const QStringList & args)
+{
+    if (args.contains("-mods"))
+    {
+        Settings::setActiveMods(args[args.indexOf("-mods") + 1].split(","));
+    }
+    if (args.contains("-slave"))
+    {
+        setSlave(true);
+    }
+    if (args.contains("-noui"))
+    {
+        Settings::setAnimationSpeed(100);
+        Settings::setWalkAnimationSpeed(100);
+        Settings::setBattleAnimationSpeed(100);
+        Settings::setTotalVolume(0);
+        m_Timer.stop();
+    }
+    if (args.contains("-slaveport"))
+    {
+        Settings::setGamePort(args[args.indexOf("-slaveport") + 1].toUInt());
+    }
 }

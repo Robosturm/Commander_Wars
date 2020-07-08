@@ -32,11 +32,12 @@ public:
     enum class NetworkSerives
     {
         None = -1,
-        Game,
-        Lobby,
-        LobbyChat,
-        GameChat,
-        Multiplayer,
+        Game,           /**< used for game stream data */
+        Lobby,          /**< used for lobby stream data */
+        LobbyChat,      /**< used for the lobby chat */
+        GameChat,       /**< used for ingame chat */
+        Multiplayer,    /**< used for the multiplayer game selection */
+        ServerHosting,  /**< used for data when starting a new game on the host */
         Max,
     };
 
@@ -109,7 +110,7 @@ signals:
      * @brief recieveData emitted when Data is recieved
      * @param data
      */
-    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, quint64 targetSocket = 0);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
     void sig_connect(QString adress, quint16 port);
     void sigConnected(quint64 socket);
     void sigDisconnected(quint64 socket);

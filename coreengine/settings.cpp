@@ -52,6 +52,8 @@ qint32 Settings::m_SoundVolume       = 100;
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
+quint16 Settings::m_minGameServerPort = 9003;
+quint16 Settings::m_maxGameServerPort = 50000;
 QString Settings::m_ServerAdress      = "";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
@@ -98,6 +100,36 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+quint16 Settings::getMaxGameServerPort()
+{
+    return m_maxGameServerPort;
+}
+
+void Settings::setMaxGameServerPort(const quint16 &maxGameServerPort)
+{
+    m_maxGameServerPort = maxGameServerPort;
+}
+
+quint16 Settings::getMinGameServerPort()
+{
+    return m_minGameServerPort;
+}
+
+void Settings::setMinGameServerPort(const quint16 &minGameServerPort)
+{
+    m_minGameServerPort = minGameServerPort;
+}
+
+QStringList Settings::getActiveMods()
+{
+    return m_activeMods;
+}
+
+void Settings::setActiveMods(const QStringList &activeMods)
+{
+    m_activeMods = activeMods;
 }
 
 bool Settings::getShowIngameCoordinates()
@@ -566,6 +598,17 @@ void Settings::loadSettings()
     {
         m_GamePort = 9002;
     }
+    m_minGameServerPort = settings.value("MinGameServerPort", 9003).toUInt(&ok);
+    if (!ok)
+    {
+        m_minGameServerPort = 9003;
+    }
+    m_maxGameServerPort = settings.value("MaxGameServerPort", 50000).toUInt(&ok);
+    if (!ok)
+    {
+        m_maxGameServerPort = 50000;
+    }
+
     m_Server  = settings.value("Server", false).toBool();
     settings.endGroup();
 
@@ -619,100 +662,107 @@ void Settings::loadSettings()
 
     // logging
     settings.beginGroup("Logging");
-    m_Server  = settings.value("LogActions", false).toBool();
+    m_LogActions  = settings.value("LogActions", false).toBool();
     settings.endGroup();
 }
 
-void Settings::saveSettings(){
-    QSettings settings(m_settingFile, QSettings::IniFormat);
+void Settings::saveSettings()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSlave())
+    {
+        QSettings settings(m_settingFile, QSettings::IniFormat);
 
-    settings.beginGroup("general");
-    settings.setValue("language",                   m_language);
-    settings.setValue("MouseSensitivity",           m_mouseSensitivity);
-    settings.endGroup();
+        settings.beginGroup("general");
+        settings.setValue("language",                   m_language);
+        settings.setValue("MouseSensitivity",           m_mouseSensitivity);
+        settings.endGroup();
 
-    settings.beginGroup("Resolution");
-    settings.setValue("x",                          m_x);
-    settings.setValue("y",                          m_y);
-    settings.setValue("width",                      m_width);
-    settings.setValue("height",                     m_height);
-    settings.setValue("borderless",                 m_borderless);
-    settings.setValue("fullscreen",                 m_fullscreen);
-    settings.setValue("recordgames",                m_record);
-    settings.endGroup();
+        settings.beginGroup("Resolution");
+        settings.setValue("x",                          m_x);
+        settings.setValue("y",                          m_y);
+        settings.setValue("width",                      m_width);
+        settings.setValue("height",                     m_height);
+        settings.setValue("borderless",                 m_borderless);
+        settings.setValue("fullscreen",                 m_fullscreen);
+        settings.setValue("recordgames",                m_record);
+        settings.endGroup();
 
-    settings.beginGroup("Keys");
-    settings.setValue("key_escape",                     m_key_escape);
-    settings.setValue("key_console",                    m_key_console);
-    settings.setValue("key_up",                         m_key_up);
-    settings.setValue("key_down",                       m_key_down);
-    settings.setValue("key_right",                      m_key_right);
-    settings.setValue("key_left",                       m_key_left);
-    settings.setValue("key_confirm",                    m_key_confirm);
-    settings.setValue("key_cancel",                     m_key_cancel);
-    settings.setValue("key_next",                       m_key_next);
-    settings.setValue("key_previous",                   m_key_previous);
-    settings.setValue("key_quicksave1",                 m_key_quicksave1);
-    settings.setValue("key_quicksave2",                 m_key_quicksave2);
-    settings.setValue("key_quickload1",                 m_key_quickload1);
-    settings.setValue("key_quickload2",                 m_key_quickload2);
-    settings.setValue("key_information",                m_key_information);
-    settings.setValue("key_moveMapUp",                  m_key_moveMapUp);
-    settings.setValue("key_moveMapDown",                m_key_moveMapDown);
-    settings.setValue("key_moveMapRight",               m_key_moveMapRight);
-    settings.setValue("key_moveMapLeft",                m_key_moveMapLeft);
-    settings.setValue("key_MapZoomIn",                  m_key_MapZoomIn);
-    settings.setValue("key_MapZoomOut",                 m_key_MapZoomOut);
-    settings.setValue("key_ShowAttackFields",           m_key_ShowAttackFields);
-    settings.setValue("key_ShowIndirectAttackFields",   m_key_ShowIndirectAttackFields);
-    settings.endGroup();
+        settings.beginGroup("Keys");
+        settings.setValue("key_escape",                     m_key_escape);
+        settings.setValue("key_console",                    m_key_console);
+        settings.setValue("key_up",                         m_key_up);
+        settings.setValue("key_down",                       m_key_down);
+        settings.setValue("key_right",                      m_key_right);
+        settings.setValue("key_left",                       m_key_left);
+        settings.setValue("key_confirm",                    m_key_confirm);
+        settings.setValue("key_cancel",                     m_key_cancel);
+        settings.setValue("key_next",                       m_key_next);
+        settings.setValue("key_previous",                   m_key_previous);
+        settings.setValue("key_quicksave1",                 m_key_quicksave1);
+        settings.setValue("key_quicksave2",                 m_key_quicksave2);
+        settings.setValue("key_quickload1",                 m_key_quickload1);
+        settings.setValue("key_quickload2",                 m_key_quickload2);
+        settings.setValue("key_information",                m_key_information);
+        settings.setValue("key_moveMapUp",                  m_key_moveMapUp);
+        settings.setValue("key_moveMapDown",                m_key_moveMapDown);
+        settings.setValue("key_moveMapRight",               m_key_moveMapRight);
+        settings.setValue("key_moveMapLeft",                m_key_moveMapLeft);
+        settings.setValue("key_MapZoomIn",                  m_key_MapZoomIn);
+        settings.setValue("key_MapZoomOut",                 m_key_MapZoomOut);
+        settings.setValue("key_ShowAttackFields",           m_key_ShowAttackFields);
+        settings.setValue("key_ShowIndirectAttackFields",   m_key_ShowIndirectAttackFields);
+        settings.endGroup();
 
-    // Sound
-    settings.beginGroup("Sound");
-    settings.setValue("TotalVolume",               m_TotalVolume);
-    settings.setValue("MusicVolume",               m_MusicVolume);
-    settings.setValue("SoundVolume",               m_SoundVolume);
-    settings.endGroup();
+        // Sound
+        settings.beginGroup("Sound");
+        settings.setValue("TotalVolume",               m_TotalVolume);
+        settings.setValue("MusicVolume",               m_MusicVolume);
+        settings.setValue("SoundVolume",               m_SoundVolume);
+        settings.endGroup();
 
-    settings.beginGroup("Game");
-    settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
-    settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
-    settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
-    settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
-    settings.setValue("AnimationSpeed",                 animationSpeed);
-    settings.setValue("MultiTurnCounter",               multiTurnCounter);
-    settings.setValue("LastSaveGame",                   m_LastSaveGame);
-    settings.setValue("Username",                       m_Username);
-    settings.setValue("ShowCursor",                     m_ShowCursor);
-    settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
-    settings.setValue("MenuItemCount",                  m_MenuItemCount);
-    settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
-    settings.setValue("ShowCoCount",                    m_showCoCount);
-    settings.setValue("SpriteFilter",                   m_spriteFilter);
-    settings.endGroup();
+        settings.beginGroup("Game");
+        settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
+        settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
+        settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
+        settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
+        settings.setValue("AnimationSpeed",                 animationSpeed);
+        settings.setValue("MultiTurnCounter",               multiTurnCounter);
+        settings.setValue("LastSaveGame",                   m_LastSaveGame);
+        settings.setValue("Username",                       m_Username);
+        settings.setValue("ShowCursor",                     m_ShowCursor);
+        settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
+        settings.setValue("MenuItemCount",                  m_MenuItemCount);
+        settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
+        settings.setValue("ShowCoCount",                    m_showCoCount);
+        settings.setValue("SpriteFilter",                   m_spriteFilter);
+        settings.endGroup();
 
-    // network
-    settings.beginGroup("Network");
-    settings.setValue("ServerAdress",              m_ServerAdress);
-    settings.setValue("GamePort",                  m_GamePort);
-    settings.setValue("ServerPort",                m_ServerPort);
-    settings.setValue("Server",                    m_Server);
-    settings.endGroup();
+        // network
+        settings.beginGroup("Network");
+        settings.setValue("ServerAdress",              m_ServerAdress);
+        settings.setValue("GamePort",                  m_GamePort);
+        settings.setValue("ServerPort",                m_ServerPort);
+        settings.setValue("MinGameServerPort",         m_minGameServerPort);
+        settings.setValue("MaxGameServerPort",         m_maxGameServerPort);
+        settings.setValue("Server",                    m_Server);
+        settings.endGroup();
 
-    settings.beginGroup("Autosaving");
-    settings.setValue("AutoSavingTime",           autoSavingCylceTime.count());
-    settings.setValue("AutoSavingCycle",                  autoSavingCycle);
-    settings.endGroup();
+        settings.beginGroup("Autosaving");
+        settings.setValue("AutoSavingTime",           autoSavingCylceTime.count());
+        settings.setValue("AutoSavingCycle",                  autoSavingCycle);
+        settings.endGroup();
 
-    // mods
-    settings.beginGroup("Mods");    
-    settings.setValue("Mods",                    getModConfigString());
-    settings.endGroup();
+        // mods
+        settings.beginGroup("Mods");
+        settings.setValue("Mods",                    getModConfigString());
+        settings.endGroup();
 
-    // logging
-    settings.beginGroup("Logging");
-    settings.setValue("LogActions",               m_LogActions);
-    settings.endGroup();
+        // logging
+        settings.beginGroup("Logging");
+        settings.setValue("LogActions",               m_LogActions);
+        settings.endGroup();
+    }
 }
 
 QString Settings::getModConfigString()
