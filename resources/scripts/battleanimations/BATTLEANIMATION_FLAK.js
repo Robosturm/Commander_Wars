@@ -58,8 +58,6 @@ var Constructor = function()
         {
             if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
-
-
                 sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSpriteV2("flak+" + armyName + "+fire+air+mask", GameEnums.Recoloring_Table,

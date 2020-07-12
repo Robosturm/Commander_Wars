@@ -1,12 +1,11 @@
-#include <QTcpSocket>
-#include <QTcpServer>
+#include <QIODevice>
 #include <QDataStream>
 
 #include "coreengine/console.h"
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
 
-TxTask::TxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF)
+TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
  : m_pSocket(pSocket),
    m_SocketID(socketID),
    pIF(CommIF)

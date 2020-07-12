@@ -258,6 +258,9 @@ set(${PROJECT_NAME}_SRCS
         network/NetworkInterface.h
         network/networkgamedata.cpp
         network/mainserver.cpp
+        network/localserver.cpp
+        network/networkgame.cpp
+        network/localclient.cpp
 
         # game
         game/gamemap.cpp

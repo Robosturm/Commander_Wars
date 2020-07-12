@@ -372,8 +372,16 @@
 		<!-- neotank -->
 		<image file="neotank/neotank.png" />
 		<image file="neotank/neotank+mask.png" />
-		<image file="neotank/neotank+cannon_fire.png" cols = "4" />
-		<image file="neotank/neotank+cannon_fire+mask.png" cols = "4" />
+		<image file="neotank/neotank+stop.png" />
+		<image file="neotank/neotank+stop+mask.png" />
+		<image file="neotank/neotank+cannon_fire.png" cols = "3" />
+		<image file="neotank/neotank+cannon_fire+mask.png" cols = "3" />		
+		<image file="neotank/neotank+move.png" cols = "4" />
+		<image file="neotank/neotank+move+mask.png" cols = "4" />		
+		<image file="neotank/neotank+mg_fire.png" cols = "2" />
+		<image file="neotank/neotank+mg_fire+mask.png" cols = "2" />		
+		<image file="neotank/neotank+mg_fire_air.png" cols = "2" />
+		<image file="neotank/neotank+mg_fire_air+mask.png" cols = "2" />
 		
 		
 		<!-- piperunner -->

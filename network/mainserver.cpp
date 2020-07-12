@@ -23,6 +23,7 @@ MainServer::MainServer()
     Interpreter::setCppOwnerShip(this);
     moveToThread(Mainapp::getGameServerThread());
     m_pGameServer = new TCPServer();
+    connect(m_pGameServer, &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
 }
 
@@ -30,12 +31,18 @@ MainServer::~MainServer()
 {
     m_pGameServer->sig_close();
     // clean up server and client games.
-    for (qint32 i = 0; i < m_Processes.size(); i++)
+    for (qint32 i = 0; i < m_games.size(); i++)
+    {
+        m_games[i]->game.disconnect();
+        m_games[i]->process->kill();
+        m_games[i]->m_runner.terminate();
+        delete m_games[i]->process;
+        delete m_games[i];
+    }
+    for (qint32 i = 0; i < m_Client.size(); i++)
     {
         m_Client[i]->disconnectTCP();
-        m_Processes[i]->kill();
         delete m_Client[i];
-        delete m_Processes[i];
     }
 }
 
@@ -48,55 +55,41 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         stream >> messageType;
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
-            spawnSlaveGame(stream, socketID);
+            spawnSlaveGame(stream, socketID, data);
         }
     }
 }
 
-void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID)
+void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data)
 {
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
     if (validHostRequest(mods))
     {
-        quint16 port = getNextPort();
-        m_Processes.append(new QProcess());
+        m_slaveGameIterator++;
+        QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
+        m_games.append(new stNetworkGame());
         m_networkGames.append(new NetworkGameData());
-        qint32 pos = m_Processes.size() - 1;
+        qint32 pos = m_games.size() - 1;
         QString program = "Commander_Wars.exe";
-        m_networkGames[pos]->setGamePort(port);
+        m_games[pos]->process = new QProcess();
+        m_networkGames[pos]->setSlaveName(slaveName);
         QStringList args;
         args << "-slave";
-        args << "-noui";
-        args << "-slaveport";
-        args << QString::number(port);
-        m_Processes[pos]->start(program, args);
+        //args << "-noui";
+        args << "-slaveServer";
+        args << slaveName;
+        m_games[pos]->process->start(program, args);
+        m_games[pos]->game.setDataBuffer(data);
+        m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
+        m_games[pos]->m_runner.start();
+        emit m_pGameServer->sigChangeThread(socketID, &m_games[pos]->m_runner);
+        emit m_games[pos]->game.startAndWaitForInit(slaveName);
     }
     else
     {
 
     }
-}
-
-quint16 MainServer::getNextPort()
-{
-    for (quint16 i = Settings::getMinGameServerPort(); i < Settings::getMaxGameServerPort(); i++)
-    {
-        bool found = false;
-        for (qint32 i2 = 0; i2 < m_networkGames.size(); i2++)
-        {
-            if (m_networkGames[i2]->getGamePort() == i)
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-        {
-            return i;
-        }
-    }
-    return 0;
 }
 
 bool MainServer::validHostRequest(QStringList mods)

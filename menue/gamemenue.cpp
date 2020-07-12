@@ -80,7 +80,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         }
         else
         {
-            m_PlayerSockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+            m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
         spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"), 1000 * 60 * 5);
@@ -214,7 +214,7 @@ void GameMenue::playerJoined(quint64 socketID)
         if (m_PlayerSockets.contains(socketID))
         {
             // reject connection by disconnecting
-            emit dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->sigDisconnectClient(socketID);
+            emit m_pNetworkInterface.get()->sigDisconnectClient(socketID);
         }
     }
 }
@@ -860,9 +860,10 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
         pApp->suspendThread();
         xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
         QPoint pos = getMousePos(x, y);
-        bool flip = false;
+        bool flip = m_pPlayerinfo->getFlippedX();
         qint32 screenWidth = Settings::getWidth() - m_IngameInfoBar->getScaledWidth();
-        if (pos.x() < (screenWidth) / 2)
+        const qint32 diff = screenWidth / 8;
+        if (pos.x() < (screenWidth) / 2 - diff && !flip)
         {
             flip = true;
             m_pPlayerinfo->setX(screenWidth);
@@ -871,9 +872,10 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
                 m_XYButtonBox->setX(0);
             }
         }
-        else
+        else if (pos.x() > (screenWidth) / 2 + diff && flip)
         {
             m_pPlayerinfo->setX(0);
+            flip = false;
             if (m_XYButtonBox.get() != nullptr)
             {
                 m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());

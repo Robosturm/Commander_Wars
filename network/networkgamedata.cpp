@@ -11,82 +11,82 @@ NetworkGameData::NetworkGameData()
 void NetworkGameData::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << _players;
-    pStream << _maxPlayers;
-    Filesupport::writeVectorList(pStream, _Mods);
-    pStream << description;
-    pStream << _mapName;
-    pStream << _gamePort;
+    pStream << m_players;
+    pStream << m_maxPlayers;
+    Filesupport::writeVectorList(pStream, m_Mods);
+    pStream << m_description;
+    pStream << m_mapName;
+    pStream << m_slaveName;
 }
 
 void NetworkGameData::deserializeObject(QDataStream& pStream)
 {
     qint32 version;
     pStream >> version;
-    pStream >> _players;
-    pStream >> _maxPlayers;
-    _Mods = Filesupport::readVectorList<QString, QVector>(pStream);
-    pStream >> description;
-    pStream >> _mapName;
-    pStream >> _gamePort;
-}
-
-quint16 NetworkGameData::getGamePort() const
-{
-    return _gamePort;
-}
-
-void NetworkGameData::setGamePort(const quint16 &gamePort)
-{
-    _gamePort = gamePort;
+    pStream >> m_players;
+    pStream >> m_maxPlayers;
+    m_Mods = Filesupport::readVectorList<QString, QVector>(pStream);
+    pStream >> m_description;
+    pStream >> m_mapName;
+    pStream >> m_slaveName;
 }
 
 QString NetworkGameData::getMapName() const
 {
-    return _mapName;
+    return m_mapName;
 }
 
 void NetworkGameData::setMapName(const QString &mapName)
 {
-    _mapName = mapName;
+    m_mapName = mapName;
 }
 
 QString NetworkGameData::getDescription() const
 {
-    return description;
+    return m_description;
 }
 
 void NetworkGameData::setDescription(const QString &value)
 {
-    description = value;
+    m_description = value;
 }
 
 QVector<QString> NetworkGameData::getMods() const
 {
-    return _Mods;
+    return m_Mods;
 }
 
 void NetworkGameData::setMods(const QVector<QString> &Mods)
 {
-    _Mods = Mods;
+    m_Mods = Mods;
 }
 
 qint32 NetworkGameData::getMaxPlayers() const
 {
-    return _maxPlayers;
+    return m_maxPlayers;
 }
 
 void NetworkGameData::setMaxPlayers(const qint32 &maxPlayers)
 {
-    _maxPlayers = maxPlayers;
+    m_maxPlayers = maxPlayers;
 }
 
 qint32 NetworkGameData::getPlayers() const
 {
-    return _players;
+    return m_players;
 }
 
 void NetworkGameData::setPlayers(const qint32 &players)
 {
-    _players = players;
+    m_players = players;
+}
+
+QString NetworkGameData::getSlaveName() const
+{
+    return m_slaveName;
+}
+
+void NetworkGameData::setSlaveName(const QString &slaveName)
+{
+    m_slaveName = slaveName;
 }

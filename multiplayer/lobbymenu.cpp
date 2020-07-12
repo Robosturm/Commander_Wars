@@ -15,8 +15,6 @@
 #include "objects/chat.h"
 
 #include "objects/dialogtextinput.h"
-
-#include "network/tcpserver.h"
 #include "network/mainserver.h"
 
 LobbyMenu::LobbyMenu()
@@ -144,14 +142,17 @@ void LobbyMenu::hostLocal()
 
 void LobbyMenu::hostServer()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient));
-    addRef();
-    oxygine::Actor::detach();
-    deleteLater();
-    pApp->continueThread();
+    if (m_pTCPClient.get() != nullptr)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient));
+        addRef();
+        oxygine::Actor::detach();
+        deleteLater();
+        pApp->continueThread();
+    }
 }
 
 void LobbyMenu::joinGame()

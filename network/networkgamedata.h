@@ -32,9 +32,6 @@ public:
     {
         return 0;
     }
-    quint16 getGamePort() const;
-    void setGamePort(const quint16 &gamePort);
-
     QString getMapName() const;
     void setMapName(const QString &mapName);
 
@@ -50,15 +47,17 @@ public:
     qint32 getPlayers() const;
     void setPlayers(const qint32 &players);
 
+    QString getSlaveName() const;
+    void setSlaveName(const QString &slaveName);
 signals:
 
 private:
-    qint32 _players{0};
-    qint32 _maxPlayers{0};
-    QVector<QString> _Mods;
-    QString description;
-    QString _mapName;
-    quint16 _gamePort{0};
+    qint32 m_players{0};
+    qint32 m_maxPlayers{0};
+    QVector<QString> m_Mods;
+    QString m_description;
+    QString m_mapName;
+    QString m_slaveName;
 };
 
 #endif // NETWORKGAMEDATA_H

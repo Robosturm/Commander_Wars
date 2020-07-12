@@ -34,6 +34,10 @@ public:
      * @brief disconnectNetwork
      */
     void disconnectNetwork();
+    /**
+     * @brief connectNetworkSlots
+     */
+    void connectNetworkSlots();
 signals:
     void sigConnected();
     void sigLoadSaveGame();
@@ -74,6 +78,11 @@ private:
      * @brief startGameOnServer
      */
     void startGameOnServer();
+    /**
+     * @brief launchGameOnServer
+     * @param stream
+     */
+    void launchGameOnServer(QDataStream & stream);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

@@ -14,8 +14,6 @@
 
 #include "coreengine/userdata.h"
 
-#include "network/tcpserver.h"
-
 #include "coreengine/console.h"
 
 #include "coreengine/scriptvariable.h"
@@ -152,7 +150,10 @@ int main(int argc, char* argv[])
     /*************************************************************************************************/
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
+    window.setPosition(Settings::getX(), Settings::getY());
     qint32 returncode = app.exec();
+    Settings::setX(window.x());
+    Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
     window.getWorkerthread()->exit(0);
     QDir dir("temp/");

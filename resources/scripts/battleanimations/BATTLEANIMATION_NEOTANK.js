@@ -5,10 +5,26 @@ var Constructor = function()
         return 5;
     };
 
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadMovingSprite("neotank+move", false, sprite.getMaxUnitCount(), Qt.point(-80, 5),
+                                Qt.point(65, 0), 400, false,
+                                1, 1);
+        sprite.loadMovingSpriteV2("neotank+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-80, 5),
+                                Qt.point(65, 0), 400, false,
+                                1, 1);
+    };
+
+    this.loadStopAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "+stop");
+    };
+
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "");
     };
+
 
     this.loadSprite = function(sprite, unit, defender, weapon, ending)
     {
@@ -43,6 +59,23 @@ var Constructor = function()
     {
         // the time will be scaled with animation speed inside the engine
         return 620;
+    };
+
+    this.hasMoveInAnimation = function()
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 410;
+    };
+
+    this.getStopDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 100;
     };
 };
 

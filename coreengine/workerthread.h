@@ -16,9 +16,11 @@ public:
 signals:
     void sigStart();
     void sigShowMainwindow();
+    void sigStartSlaveGame();
 protected slots:
     void start();
     void showMainwindow();
+    void startSlaveGame();
 private:
     bool started{false};
 };

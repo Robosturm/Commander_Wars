@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QAbstractSocket>
 #include <QTcpSocket>
+#include <QLocalSocket>
 #include <QSemaphore>
 
 #include "oxygine-framework.h"
@@ -37,7 +38,7 @@ public:
         LobbyChat,      /**< used for the lobby chat */
         GameChat,       /**< used for ingame chat */
         Multiplayer,    /**< used for the multiplayer game selection */
-        ServerHosting,  /**< used for data when starting a new game on the host */
+        ServerHosting,  /**< used for data when starting a new game on the host or when communicating between slave and master */
         Max,
     };
 
@@ -48,6 +49,7 @@ public:
         oxygine::intrusive_ptr_add_ref(this);
         QObject::connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         QObject::connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
+        QObject::connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
     }
 
     virtual ~NetworkInterface()
@@ -104,7 +106,6 @@ public:
     {
         isServer = value;
     }
-
 signals:
     /**
      * @brief recieveData emitted when Data is recieved
@@ -116,12 +117,39 @@ signals:
     void sigDisconnected(quint64 socket);
     void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
     void sig_close();
+    /**
+     * @brief sigDisconnectClient
+     * @param socketID
+     */
+    void sigDisconnectClient(quint64 socketID);
+    /**
+     * @brief sigPauseListening
+     */
+    void sigPauseListening();
+    /**
+     * @brief sigContinueListening
+     */
+    void sigContinueListening();
+    /**
+     * @brief sigForwardData forwards data to all clients except for the given socket
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief sigChangeThread
+     * @param socketID
+     * @param pThread
+     */
+    void sigChangeThread(quint64 socketID, QThread* pThread);
 public slots:
     virtual void connectTCP(QString adress, quint16 port) = 0;
     virtual void disconnectTCP() = 0;
-
-    virtual QTcpSocket* getSocket(quint64 socketID) = 0;
-    void displayError(QAbstractSocket::SocketError socketError)
+    virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
+    virtual QVector<quint64> getConnectedSockets() = 0;
+    virtual void changeThread(quint64 socketID, QThread* pThread) = 0;
+    void displayTCPError(QAbstractSocket::SocketError socketError)
     {
         switch (socketError)
         {
@@ -135,10 +163,27 @@ public slots:
                 Console::print(tr("The connection was refused by the peer."), Console::eDEBUG);
                 break;
             default:
-                Console::print(tr("Error inside the Socket happened."), Console::eERROR);
+                Console::print(tr("Error inside the Socket happened. Error: ") + QString::number(socketError), Console::eERROR);
         }
     }
-    virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
+
+    void displayLocalError(QLocalSocket::LocalSocketError socketError)
+    {
+        switch (socketError)
+        {
+            case QLocalSocket::ConnectionError:
+                Console::print(tr("The server was closed by the peer."), Console::eDEBUG);
+                break;
+            case QLocalSocket::ServerNotFoundError:
+                Console::print(tr("The host was not found. Please check the host name and port settings."), Console::eERROR);
+                break;
+            case QLocalSocket::ConnectionRefusedError:
+                Console::print(tr("The connection was refused by the peer."), Console::eDEBUG);
+                break;
+            default:
+                Console::print(tr("Error inside the Socket happened. Error: ") + QString::number(socketError), Console::eERROR);
+        }
+    }
 protected slots:
     void closeNetworkInterface()
     {

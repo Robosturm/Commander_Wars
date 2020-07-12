@@ -9,7 +9,7 @@
 
 #include "network/NetworkInterface.h"
 
-class QTcpSocket;
+class QIODevice;
 
 class RxTask;
 typedef oxygine::intrusive_ptr<RxTask> spRxTask;
@@ -18,12 +18,14 @@ class RxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    RxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF);
+    RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~RxTask();
+signals:
+    void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 public slots:
     void recieveData();
 private:
-   QTcpSocket* m_pSocket;
+   QIODevice* m_pSocket;
    NetworkInterface* pIF;
    quint64 m_SocketID;
    QDataStream m_pStream;

@@ -52,9 +52,8 @@ qint32 Settings::m_SoundVolume       = 100;
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
-quint16 Settings::m_minGameServerPort = 9003;
-quint16 Settings::m_maxGameServerPort = 50000;
 QString Settings::m_ServerAdress      = "";
+QString Settings::m_slaveServerName   = "";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
 bool Settings::m_showIngameCoordinates  = true;
@@ -102,24 +101,24 @@ Settings::Settings()
     Interpreter::setCppOwnerShip(this);
 }
 
-quint16 Settings::getMaxGameServerPort()
+void Settings::setY(const qint32 &y)
 {
-    return m_maxGameServerPort;
+    m_y = y;
 }
 
-void Settings::setMaxGameServerPort(const quint16 &maxGameServerPort)
+void Settings::setX(const qint32 &x)
 {
-    m_maxGameServerPort = maxGameServerPort;
+    m_x = x;
 }
 
-quint16 Settings::getMinGameServerPort()
+void Settings::setSlaveServerName(const QString &slaveServerName)
 {
-    return m_minGameServerPort;
+    m_slaveServerName = slaveServerName;
 }
 
-void Settings::setMinGameServerPort(const quint16 &minGameServerPort)
+QString Settings::getSlaveServerName()
 {
-    m_minGameServerPort = minGameServerPort;
+    return m_slaveServerName;
 }
 
 QStringList Settings::getActiveMods()
@@ -598,17 +597,6 @@ void Settings::loadSettings()
     {
         m_GamePort = 9002;
     }
-    m_minGameServerPort = settings.value("MinGameServerPort", 9003).toUInt(&ok);
-    if (!ok)
-    {
-        m_minGameServerPort = 9003;
-    }
-    m_maxGameServerPort = settings.value("MaxGameServerPort", 50000).toUInt(&ok);
-    if (!ok)
-    {
-        m_maxGameServerPort = 50000;
-    }
-
     m_Server  = settings.value("Server", false).toBool();
     settings.endGroup();
 
@@ -669,7 +657,7 @@ void Settings::loadSettings()
 void Settings::saveSettings()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->getSlave())
+    if (!pApp->getSlave())
     {
         QSettings settings(m_settingFile, QSettings::IniFormat);
 
@@ -743,8 +731,6 @@ void Settings::saveSettings()
         settings.setValue("ServerAdress",              m_ServerAdress);
         settings.setValue("GamePort",                  m_GamePort);
         settings.setValue("ServerPort",                m_ServerPort);
-        settings.setValue("MinGameServerPort",         m_minGameServerPort);
-        settings.setValue("MaxGameServerPort",         m_maxGameServerPort);
         settings.setValue("Server",                    m_Server);
         settings.endGroup();
 

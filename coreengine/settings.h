@@ -43,12 +43,10 @@ public:
     static QStringList getActiveMods();
     static void setActiveMods(const QStringList &activeMods);
 
-public slots:
-    static quint16 getMinGameServerPort();
-    static void setMinGameServerPort(const quint16 &minGameServerPort);
+    static QString getSlaveServerName();
+    static void setSlaveServerName(const QString &slaveServerName);
 
-    static quint16 getMaxGameServerPort();
-    static void setMaxGameServerPort(const quint16 &maxGameServerPort);
+public slots:
 
     static bool getShowIngameCoordinates();
     static void setShowIngameCoordinates(bool showIngameCoordinates);
@@ -102,10 +100,12 @@ public slots:
     static void setBattleAnimations(const GameEnums::BattleAnimationMode &value);
 
     static QString getUsername();
+    static void setX(const qint32 &x);
     inline static qint32 getX()
     {
         return m_x;
     }
+    static void setY(const qint32 &y);
     inline static qint32 getY()
     {
         return m_y;
@@ -315,9 +315,8 @@ private:
     static quint16 m_GamePort;
     static quint16 m_ServerPort;
     static QString m_ServerAdress;
-    static quint16 m_minGameServerPort;
-    static quint16 m_maxGameServerPort;
     static QString m_Username;
+    static QString m_slaveServerName;
     static bool m_Server;
     // auto saving
     static std::chrono::seconds autoSavingCylceTime;

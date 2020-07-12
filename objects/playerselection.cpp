@@ -21,8 +21,6 @@
 
 #include "coreengine/filesupport.h"
 
-#include "network/tcpserver.h"
-
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
 {
@@ -1098,7 +1096,7 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, QVector<qint32> player, 
         {
            sendStream << player[i];
         }
-        dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
+        m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
     }
 }
 
@@ -1219,7 +1217,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             pMap->getPlayer(player)->serializeObject(sendStreamOtherClients);
             // send player update
             m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
-            emit dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
+            emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
         }
         else
         {

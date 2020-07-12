@@ -2261,67 +2261,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Player</source>
         <translation>Spieler</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Produced</source>
         <translation>Produziert</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Lost</source>
         <translation>Verluste</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Killed</source>
         <translation>Besiegt</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Income</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Funds</source>
         <translation>Fonds</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Bases</source>
         <translation>Basen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1017"/>
+        <location filename="../menue/gamemenue.cpp" line="1019"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1033"/>
+        <location filename="../menue/gamemenue.cpp" line="1035"/>
         <source>Player </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1043"/>
+        <location filename="../menue/gamemenue.cpp" line="1045"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1392"/>
+        <location filename="../menue/gamemenue.cpp" line="1394"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1410"/>
+        <location filename="../menue/gamemenue.cpp" line="1412"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1439"/>
+        <location filename="../menue/gamemenue.cpp" line="1441"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2861,7 +2861,7 @@ This is immediatly applied.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="51"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="49"/>
         <source>Exit</source>
         <translation>Verkassen</translation>
     </message>
@@ -2870,29 +2870,72 @@ This is immediatly applied.</source>
         <translation type="vanished">Host</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="60"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="58"/>
         <source>Host Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="69"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="67"/>
         <source>Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="78"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="76"/>
         <source>Join Game</source>
         <translation>Spiel Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="87"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="85"/>
         <source>Join Adress</source>
         <translation>Adresse Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="167"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="168"/>
         <source>Enter Host Adress</source>
         <translation>Host Adresse</translation>
+    </message>
+</context>
+<context>
+    <name>LocalClient</name>
+    <message>
+        <location filename="../network/localclient.cpp" line="21"/>
+        <source>Client is closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/localclient.cpp" line="42"/>
+        <source>Local Client is running to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/localclient.cpp" line="77"/>
+        <source>Client is connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LocalServer</name>
+    <message>
+        <location filename="../network/localserver.cpp" line="18"/>
+        <source>Server is closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/localserver.cpp" line="32"/>
+        <source>Server is running. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/localserver.cpp" line="44"/>
+        <location filename="../network/localserver.cpp" line="73"/>
+        <location filename="../network/localserver.cpp" line="96"/>
+        <source>Client disconnected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/localserver.cpp" line="134"/>
+        <source>New Client connection.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2934,18 +2977,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="561"/>
+        <location filename="../coreengine/mainapp.cpp" line="556"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="567"/>
+        <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="569"/>
+        <location filename="../coreengine/mainapp.cpp" line="564"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3187,7 +3230,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="850"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="886"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3217,7 +3260,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="846"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="882"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
@@ -3225,24 +3268,28 @@ This is immediatly applied.</source>
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="129"/>
+        <location filename="../network/NetworkInterface.h" line="157"/>
+        <location filename="../network/NetworkInterface.h" line="175"/>
         <source>The server was closed by the peer.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="132"/>
+        <location filename="../network/NetworkInterface.h" line="160"/>
+        <location filename="../network/NetworkInterface.h" line="178"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="135"/>
+        <location filename="../network/NetworkInterface.h" line="163"/>
+        <location filename="../network/NetworkInterface.h" line="181"/>
         <source>The connection was refused by the peer.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="138"/>
-        <source>Error inside the Socket happened.</source>
-        <translation></translation>
+        <location filename="../network/NetworkInterface.h" line="166"/>
+        <location filename="../network/NetworkInterface.h" line="184"/>
+        <source>Error inside the Socket happened. Error: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3797,144 +3844,144 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>CO&apos;s</source>
         <translation>KO&apos;s</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>AI Strength</source>
         <translation>KI</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Startfunds</source>
         <translation>Startfonds</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
         <source>Income Modifier</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="315"/>
         <source>Team</source>
         <translation>Team</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="192"/>
-        <location filename="../objects/playerselection.cpp" line="298"/>
-        <location filename="../objects/playerselection.cpp" line="626"/>
+        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="296"/>
+        <location filename="../objects/playerselection.cpp" line="624"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="195"/>
+        <location filename="../objects/playerselection.cpp" line="193"/>
         <source>Connected</source>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="227"/>
+        <location filename="../objects/playerselection.cpp" line="225"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="232"/>
+        <location filename="../objects/playerselection.cpp" line="230"/>
         <source>All Random</source>
         <translation>Alle Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="240"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
         <source>CO 1 Random</source>
         <translation>KO 1 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="249"/>
+        <location filename="../objects/playerselection.cpp" line="247"/>
         <source>CO 2 Random</source>
         <translation>KO 2 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="269"/>
+        <location filename="../objects/playerselection.cpp" line="267"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="284"/>
+        <location filename="../objects/playerselection.cpp" line="282"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
-        <location filename="../objects/playerselection.cpp" line="323"/>
-        <location filename="../objects/playerselection.cpp" line="337"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="335"/>
         <source>Human</source>
         <translation>Mensch</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Very Easy</source>
         <translation>Sehr Leicht</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal Off.</source>
         <translation>Normal Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Normal Def.</source>
         <translation>Normal Def.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="326"/>
-        <location filename="../objects/playerselection.cpp" line="333"/>
-        <location filename="../objects/playerselection.cpp" line="337"/>
+        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="331"/>
+        <location filename="../objects/playerselection.cpp" line="335"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="486"/>
+        <location filename="../objects/playerselection.cpp" line="484"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="504"/>
+        <location filename="../objects/playerselection.cpp" line="502"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="571"/>
+        <location filename="../objects/playerselection.cpp" line="569"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="590"/>
+        <location filename="../objects/playerselection.cpp" line="588"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="609"/>
+        <location filename="../objects/playerselection.cpp" line="607"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="645"/>
+        <location filename="../objects/playerselection.cpp" line="643"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3950,8 +3997,8 @@ Version: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="75"/>
-        <location filename="../main.cpp" line="83"/>
+        <location filename="../main.cpp" line="73"/>
+        <location filename="../main.cpp" line="81"/>
         <source>Commander Wars</source>
         <translation></translation>
     </message>
@@ -5828,90 +5875,90 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="287"/>
-        <location filename="../coreengine/settings.cpp" line="297"/>
-        <location filename="../coreengine/settings.cpp" line="303"/>
-        <location filename="../coreengine/settings.cpp" line="309"/>
-        <location filename="../coreengine/settings.cpp" line="315"/>
-        <location filename="../coreengine/settings.cpp" line="328"/>
-        <location filename="../coreengine/settings.cpp" line="334"/>
-        <location filename="../coreengine/settings.cpp" line="341"/>
-        <location filename="../coreengine/settings.cpp" line="348"/>
-        <location filename="../coreengine/settings.cpp" line="355"/>
-        <location filename="../coreengine/settings.cpp" line="362"/>
-        <location filename="../coreengine/settings.cpp" line="369"/>
-        <location filename="../coreengine/settings.cpp" line="376"/>
-        <location filename="../coreengine/settings.cpp" line="383"/>
-        <location filename="../coreengine/settings.cpp" line="390"/>
-        <location filename="../coreengine/settings.cpp" line="397"/>
-        <location filename="../coreengine/settings.cpp" line="404"/>
-        <location filename="../coreengine/settings.cpp" line="411"/>
-        <location filename="../coreengine/settings.cpp" line="418"/>
-        <location filename="../coreengine/settings.cpp" line="425"/>
-        <location filename="../coreengine/settings.cpp" line="432"/>
-        <location filename="../coreengine/settings.cpp" line="439"/>
-        <location filename="../coreengine/settings.cpp" line="446"/>
-        <location filename="../coreengine/settings.cpp" line="453"/>
-        <location filename="../coreengine/settings.cpp" line="460"/>
-        <location filename="../coreengine/settings.cpp" line="467"/>
-        <location filename="../coreengine/settings.cpp" line="475"/>
-        <location filename="../coreengine/settings.cpp" line="483"/>
-        <location filename="../coreengine/settings.cpp" line="494"/>
-        <location filename="../coreengine/settings.cpp" line="501"/>
-        <location filename="../coreengine/settings.cpp" line="508"/>
-        <location filename="../coreengine/settings.cpp" line="519"/>
-        <location filename="../coreengine/settings.cpp" line="526"/>
-        <location filename="../coreengine/settings.cpp" line="533"/>
-        <location filename="../coreengine/settings.cpp" line="540"/>
-        <location filename="../coreengine/settings.cpp" line="547"/>
-        <location filename="../coreengine/settings.cpp" line="555"/>
-        <location filename="../coreengine/settings.cpp" line="562"/>
-        <location filename="../coreengine/settings.cpp" line="570"/>
-        <location filename="../coreengine/settings.cpp" line="577"/>
+        <location filename="../coreengine/settings.cpp" line="286"/>
+        <location filename="../coreengine/settings.cpp" line="296"/>
+        <location filename="../coreengine/settings.cpp" line="302"/>
+        <location filename="../coreengine/settings.cpp" line="308"/>
+        <location filename="../coreengine/settings.cpp" line="314"/>
+        <location filename="../coreengine/settings.cpp" line="327"/>
+        <location filename="../coreengine/settings.cpp" line="333"/>
+        <location filename="../coreengine/settings.cpp" line="340"/>
+        <location filename="../coreengine/settings.cpp" line="347"/>
+        <location filename="../coreengine/settings.cpp" line="354"/>
+        <location filename="../coreengine/settings.cpp" line="361"/>
+        <location filename="../coreengine/settings.cpp" line="368"/>
+        <location filename="../coreengine/settings.cpp" line="375"/>
+        <location filename="../coreengine/settings.cpp" line="382"/>
+        <location filename="../coreengine/settings.cpp" line="389"/>
+        <location filename="../coreengine/settings.cpp" line="396"/>
+        <location filename="../coreengine/settings.cpp" line="403"/>
+        <location filename="../coreengine/settings.cpp" line="410"/>
+        <location filename="../coreengine/settings.cpp" line="417"/>
+        <location filename="../coreengine/settings.cpp" line="424"/>
+        <location filename="../coreengine/settings.cpp" line="431"/>
+        <location filename="../coreengine/settings.cpp" line="438"/>
+        <location filename="../coreengine/settings.cpp" line="445"/>
+        <location filename="../coreengine/settings.cpp" line="452"/>
+        <location filename="../coreengine/settings.cpp" line="459"/>
+        <location filename="../coreengine/settings.cpp" line="466"/>
+        <location filename="../coreengine/settings.cpp" line="474"/>
+        <location filename="../coreengine/settings.cpp" line="482"/>
+        <location filename="../coreengine/settings.cpp" line="493"/>
+        <location filename="../coreengine/settings.cpp" line="500"/>
+        <location filename="../coreengine/settings.cpp" line="507"/>
+        <location filename="../coreengine/settings.cpp" line="518"/>
+        <location filename="../coreengine/settings.cpp" line="525"/>
+        <location filename="../coreengine/settings.cpp" line="532"/>
+        <location filename="../coreengine/settings.cpp" line="539"/>
+        <location filename="../coreengine/settings.cpp" line="546"/>
+        <location filename="../coreengine/settings.cpp" line="554"/>
+        <location filename="../coreengine/settings.cpp" line="561"/>
+        <location filename="../coreengine/settings.cpp" line="569"/>
+        <location filename="../coreengine/settings.cpp" line="576"/>
         <source>Error in the Ini File: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="287"/>
-        <location filename="../coreengine/settings.cpp" line="297"/>
-        <location filename="../coreengine/settings.cpp" line="303"/>
-        <location filename="../coreengine/settings.cpp" line="309"/>
-        <location filename="../coreengine/settings.cpp" line="315"/>
-        <location filename="../coreengine/settings.cpp" line="328"/>
-        <location filename="../coreengine/settings.cpp" line="334"/>
-        <location filename="../coreengine/settings.cpp" line="341"/>
-        <location filename="../coreengine/settings.cpp" line="348"/>
-        <location filename="../coreengine/settings.cpp" line="355"/>
-        <location filename="../coreengine/settings.cpp" line="362"/>
-        <location filename="../coreengine/settings.cpp" line="369"/>
-        <location filename="../coreengine/settings.cpp" line="376"/>
-        <location filename="../coreengine/settings.cpp" line="383"/>
-        <location filename="../coreengine/settings.cpp" line="390"/>
-        <location filename="../coreengine/settings.cpp" line="397"/>
-        <location filename="../coreengine/settings.cpp" line="404"/>
-        <location filename="../coreengine/settings.cpp" line="411"/>
-        <location filename="../coreengine/settings.cpp" line="418"/>
-        <location filename="../coreengine/settings.cpp" line="425"/>
-        <location filename="../coreengine/settings.cpp" line="432"/>
-        <location filename="../coreengine/settings.cpp" line="439"/>
-        <location filename="../coreengine/settings.cpp" line="446"/>
-        <location filename="../coreengine/settings.cpp" line="453"/>
-        <location filename="../coreengine/settings.cpp" line="460"/>
-        <location filename="../coreengine/settings.cpp" line="467"/>
-        <location filename="../coreengine/settings.cpp" line="475"/>
-        <location filename="../coreengine/settings.cpp" line="483"/>
-        <location filename="../coreengine/settings.cpp" line="494"/>
-        <location filename="../coreengine/settings.cpp" line="501"/>
-        <location filename="../coreengine/settings.cpp" line="508"/>
-        <location filename="../coreengine/settings.cpp" line="519"/>
-        <location filename="../coreengine/settings.cpp" line="526"/>
-        <location filename="../coreengine/settings.cpp" line="533"/>
-        <location filename="../coreengine/settings.cpp" line="540"/>
-        <location filename="../coreengine/settings.cpp" line="547"/>
-        <location filename="../coreengine/settings.cpp" line="555"/>
-        <location filename="../coreengine/settings.cpp" line="562"/>
-        <location filename="../coreengine/settings.cpp" line="570"/>
-        <location filename="../coreengine/settings.cpp" line="577"/>
+        <location filename="../coreengine/settings.cpp" line="286"/>
+        <location filename="../coreengine/settings.cpp" line="296"/>
+        <location filename="../coreengine/settings.cpp" line="302"/>
+        <location filename="../coreengine/settings.cpp" line="308"/>
+        <location filename="../coreengine/settings.cpp" line="314"/>
+        <location filename="../coreengine/settings.cpp" line="327"/>
+        <location filename="../coreengine/settings.cpp" line="333"/>
+        <location filename="../coreengine/settings.cpp" line="340"/>
+        <location filename="../coreengine/settings.cpp" line="347"/>
+        <location filename="../coreengine/settings.cpp" line="354"/>
+        <location filename="../coreengine/settings.cpp" line="361"/>
+        <location filename="../coreengine/settings.cpp" line="368"/>
+        <location filename="../coreengine/settings.cpp" line="375"/>
+        <location filename="../coreengine/settings.cpp" line="382"/>
+        <location filename="../coreengine/settings.cpp" line="389"/>
+        <location filename="../coreengine/settings.cpp" line="396"/>
+        <location filename="../coreengine/settings.cpp" line="403"/>
+        <location filename="../coreengine/settings.cpp" line="410"/>
+        <location filename="../coreengine/settings.cpp" line="417"/>
+        <location filename="../coreengine/settings.cpp" line="424"/>
+        <location filename="../coreengine/settings.cpp" line="431"/>
+        <location filename="../coreengine/settings.cpp" line="438"/>
+        <location filename="../coreengine/settings.cpp" line="445"/>
+        <location filename="../coreengine/settings.cpp" line="452"/>
+        <location filename="../coreengine/settings.cpp" line="459"/>
+        <location filename="../coreengine/settings.cpp" line="466"/>
+        <location filename="../coreengine/settings.cpp" line="474"/>
+        <location filename="../coreengine/settings.cpp" line="482"/>
+        <location filename="../coreengine/settings.cpp" line="493"/>
+        <location filename="../coreengine/settings.cpp" line="500"/>
+        <location filename="../coreengine/settings.cpp" line="507"/>
+        <location filename="../coreengine/settings.cpp" line="518"/>
+        <location filename="../coreengine/settings.cpp" line="525"/>
+        <location filename="../coreengine/settings.cpp" line="532"/>
+        <location filename="../coreengine/settings.cpp" line="539"/>
+        <location filename="../coreengine/settings.cpp" line="546"/>
+        <location filename="../coreengine/settings.cpp" line="554"/>
+        <location filename="../coreengine/settings.cpp" line="561"/>
+        <location filename="../coreengine/settings.cpp" line="569"/>
+        <location filename="../coreengine/settings.cpp" line="576"/>
         <source>Setting:</source>
         <translation></translation>
     </message>
@@ -5953,32 +6000,37 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpclient.cpp" line="45"/>
+        <location filename="../network/tcpclient.cpp" line="46"/>
         <source>Client is running</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../network/tcpclient.cpp" line="77"/>
+        <source>Client is connected</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TCPServer</name>
     <message>
-        <location filename="../network/tcpserver.cpp" line="28"/>
+        <location filename="../network/tcpserver.cpp" line="32"/>
         <source>Server is running</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="35"/>
+        <location filename="../network/tcpserver.cpp" line="18"/>
         <source>Server is closed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="51"/>
-        <location filename="../network/tcpserver.cpp" line="80"/>
-        <location filename="../network/tcpserver.cpp" line="103"/>
+        <location filename="../network/tcpserver.cpp" line="48"/>
+        <location filename="../network/tcpserver.cpp" line="77"/>
+        <location filename="../network/tcpserver.cpp" line="100"/>
         <source>Client disconnected.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="141"/>
+        <location filename="../network/tcpserver.cpp" line="139"/>
         <source>New Client connection.</source>
         <translation></translation>
     </message>

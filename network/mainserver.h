@@ -8,6 +8,7 @@
 #include "network/tcpclient.h"
 
 #include "network/networkgamedata.h"
+#include "network/networkgame.h"
 
 /**
  * @brief The MainServer class handling the server and it's data.
@@ -34,17 +35,26 @@ signals:
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 private:
-    void spawnSlaveGame(QDataStream & stream, quint64 socketID);
-    quint16 getNextPort();
+    void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data);
     bool validHostRequest(QStringList mods);
+
 private:
+    struct stNetworkGame
+    {
+        QProcess* process;
+        NetworkGame game;
+        QThread m_runner;
+    };
+
     explicit MainServer();
     static MainServer* m_pInstance;
     TCPServer* m_pGameServer{nullptr};
-
+    quint64 m_slaveGameIterator{0};
     QVector<spNetworkGameData> m_networkGames;
     QVector<TCPClient*> m_Client;
-    QVector<QProcess*> m_Processes;
+
+    // data for games currently run on the server
+    QVector<stNetworkGame*> m_games;
 };
 
 #endif // MAINSERVER_H

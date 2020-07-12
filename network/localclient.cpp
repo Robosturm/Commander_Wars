@@ -1,12 +1,11 @@
-#include <QTcpSocket>
+#include <qlocalsocket.h>
 
+#include "network/localclient.h"
 #include "network/rxtask.h"
 #include "network/txtask.h"
 #include "coreengine/mainapp.h"
-#include "network/tcpclient.h"
 
-
-TCPClient::TCPClient()
+LocalClient::LocalClient()
     : pRXTask(nullptr),
       pTXTask(nullptr),
       pSocket(nullptr)
@@ -15,23 +14,21 @@ TCPClient::TCPClient()
     isServer = false;
 }
 
-TCPClient::~TCPClient()
+LocalClient::~LocalClient()
 {
     disconnect();
     disconnectTCP();
     Console::print(tr("Client is closed"), Console::eLogLevels::eDEBUG);
 }
 
-void TCPClient::connectTCP(QString adress, quint16 port)
+void LocalClient::connectTCP(QString adress, quint16)
 {
     // Launch Socket
-    pSocket = new QTcpSocket(this);
+    pSocket = new QLocalSocket(this);
     pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    QObject::connect(pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    QObject::connect(pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
-
-    pSocket->connectToHost(adress, port);
+    QObject::connect(pSocket, &QLocalSocket::disconnected, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
+    QObject::connect(pSocket, &QLocalSocket::errorOccurred, this, &LocalClient::displayLocalError, Qt::QueuedConnection);
+    QObject::connect(pSocket, &QLocalSocket::connected, this, &LocalClient::connected, Qt::QueuedConnection);
 
     // Start RX-Task
     pRXTask = new RxTask(pSocket, 0, this);
@@ -41,12 +38,15 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     // start TX-Task
     pTXTask = new TxTask(pSocket, 0, this);
     pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-
-    Console::print(tr("Client is running"), Console::eLogLevels::eDEBUG);
+    QObject::connect(this, &LocalClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+    Console::print(tr("Local Client is running to ") + adress, Console::eLogLevels::eDEBUG);
+    do
+    {
+        pSocket->connectToServer(adress);
+    } while (!pSocket->waitForConnected(1000));
 }
 
-void TCPClient::disconnectTCP()
+void LocalClient::disconnectTCP()
 {
     if (pSocket != nullptr)
     {
@@ -59,12 +59,12 @@ void TCPClient::disconnectTCP()
     emit sigDisconnected(0);
 }
 
-QVector<quint64> TCPClient::getConnectedSockets()
+QVector<quint64> LocalClient::getConnectedSockets()
 {
     return QVector<quint64>();
 }
 
-void TCPClient::changeThread(quint64, QThread* pThread)
+void LocalClient::changeThread(quint64, QThread* pThread)
 {
     moveToThread(pThread);
     pSocket->moveToThread(pThread);
@@ -72,7 +72,7 @@ void TCPClient::changeThread(quint64, QThread* pThread)
     pTXTask->moveToThread(pThread);
 }
 
-void TCPClient::connected()
+void LocalClient::connected()
 {
     Console::print(tr("Client is connected"), Console::eLogLevels::eDEBUG);
     isConnected = true;

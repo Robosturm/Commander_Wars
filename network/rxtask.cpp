@@ -1,10 +1,10 @@
-#include <QTcpSocket>
+#include <QIODevice>
 
 #include "network/rxtask.h"
 
 #include "network/NetworkInterface.h"
 
-RxTask::RxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF)
+RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       pIF(CommIF),
       m_SocketID(socketID),
@@ -43,7 +43,7 @@ void RxTask::recieveData()
         {
             if (pIF->getIsServer() && forwardData)
             {
-                pIF->forwardData(m_SocketID, data, eService);
+                emit sigForwardData(m_SocketID, data, eService);
             }
             emit pIF->recieveData(m_SocketID, data, eService);
         }

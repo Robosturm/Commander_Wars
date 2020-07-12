@@ -1,13 +1,8 @@
 #include "mainapp.h"
-
-#include "network/NetworkInterface.h"
-#include "network/tcpclient.h"
-#include "network/tcpserver.h"
 #include <QRandomGenerator>
 
 #include "game/player.h"
 #include "game/co.h"
-#include "network/tcpserver.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -348,7 +343,7 @@ void Mainapp::loadRessources()
     }
     else
     {
-
+        emit m_Worker->sigStartSlaveGame();
     }
 }
 
@@ -603,17 +598,20 @@ void Mainapp::loadArgs(const QStringList & args)
     if (args.contains("-slave"))
     {
         setSlave(true);
+        Settings::setServer(false);
     }
     if (args.contains("-noui"))
     {
+        Settings::setBattleAnimations(GameEnums::BattleAnimationMode_Overworld);
+        Settings::setShowAnimations(GameEnums::AnimationMode_None);
         Settings::setAnimationSpeed(100);
         Settings::setWalkAnimationSpeed(100);
         Settings::setBattleAnimationSpeed(100);
         Settings::setTotalVolume(0);
         m_Timer.stop();
     }
-    if (args.contains("-slaveport"))
+    if (args.contains("-slaveServer"))
     {
-        Settings::setGamePort(args[args.indexOf("-slaveport") + 1].toUInt());
+        Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
     }
 }

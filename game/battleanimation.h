@@ -154,7 +154,7 @@ private:
     qint32 m_DefWeapon{0};
     float m_DefenderDamage{-1};
 
-    AnimationProgress currentState{AnimationProgress::AttackerImpact};
+    AnimationProgress currentState{AnimationProgress::MoveIn};
 
     static const short priorityBack = -1;
     static const short priorityFront = 1;

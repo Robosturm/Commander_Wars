@@ -78,9 +78,9 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(true),
-      m_NetworkInterface(pNetworkInterface),
       _local(false)
 {
+    m_NetworkInterface = pNetworkInterface.get();
     init();
 }
 
@@ -242,7 +242,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
         else
         {
             // reject connection by disconnecting
-            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->sigDisconnectClient(socketID);
+            emit m_NetworkInterface.get()->sigDisconnectClient(socketID);
         }
     }
 }
@@ -554,6 +554,33 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             }
         }
     }
+    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    {
+        Console::print("Recieving data from Master.", Console::eDEBUG);
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        QString messageType;
+        stream >> messageType;
+        if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
+        {
+            launchGameOnServer(stream);
+        }
+    }
+}
+
+void Multiplayermenu::launchGameOnServer(QDataStream & stream)
+{
+    Console::print("Launching Game on Slave", Console::eDEBUG);
+    QStringList mods;
+    mods = Filesupport::readVectorList<QString, QList>(stream);
+    GameMap* pMap = GameMap::getInstance();
+    pMap->serializeObject(stream);
+
+    createChat();
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+    MapSelectionMapsMenue::slotButtonNext();
+    MapSelectionMapsMenue::slotButtonNext();
 }
 
 GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -735,8 +762,11 @@ void Multiplayermenu::slotButtonBack()
     }
     else if (m_Host)
     {
-        disconnectNetwork();
-        m_pHostAdresse->setVisible(false);
+        if (_local)
+        {
+            disconnectNetwork();
+            m_pHostAdresse->setVisible(false);
+        }
         MapSelectionMapsMenue::slotButtonBack();
         if (saveGame)
         {
@@ -758,9 +788,7 @@ void Multiplayermenu::slotButtonNext()
             m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
             createChat();
             emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
-            connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
-            connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-            connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+            connectNetworkSlots();
             MapSelectionMapsMenue::slotButtonNext();
         }
         else
@@ -772,6 +800,14 @@ void Multiplayermenu::slotButtonNext()
     {
         MapSelectionMapsMenue::slotButtonNext();
     }
+}
+
+void Multiplayermenu::connectNetworkSlots()
+{
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+
 }
 
 void Multiplayermenu::startGameOnServer()
@@ -882,11 +918,11 @@ void Multiplayermenu::sendServerReady(bool value)
     {
         if (value)
         {
-            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->pauseListening();
+            emit m_NetworkInterface.get()->sigPauseListening();
         }
         else
         {
-            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->continueListening();
+            emit m_NetworkInterface.get()->sigContinueListening();
         }
         QVector<qint32> player;
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)

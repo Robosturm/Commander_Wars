@@ -8,6 +8,9 @@
 
 #include "menue/mainwindow.h"
 
+#include "multiplayer/multiplayermenu.h"
+#include "network/localserver.h"
+
 #include <QDirIterator>
 
 #include "resource_management/terrainmanager.h"
@@ -22,12 +25,14 @@
 #include "resource_management/coperkmanager.h"
 #include "wiki/wikidatabase.h"
 
+
 WorkerThread::WorkerThread()
 {
     Interpreter::setCppOwnerShip(this);
     moveToThread(Mainapp::getWorkerthread());
     connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
     connect(this, &WorkerThread::sigShowMainwindow, this, &WorkerThread::showMainwindow, Qt::QueuedConnection);
+    connect(this, &WorkerThread::sigStartSlaveGame, this, &WorkerThread::startSlaveGame, Qt::QueuedConnection);
 }
 
 WorkerThread::~WorkerThread()
@@ -99,4 +104,13 @@ void WorkerThread::showMainwindow()
 bool WorkerThread::getStarted() const
 {
     return started;
+}
+
+void WorkerThread::startSlaveGame()
+{
+    LocalServer* pServer = new LocalServer();
+    Multiplayermenu* pMenu = new Multiplayermenu(pServer);
+    pMenu->connectNetworkSlots();
+    oxygine::getStage()->addChild(pMenu);
+    pServer->connectTCP(Settings::getSlaveServerName(), 0);
 }
