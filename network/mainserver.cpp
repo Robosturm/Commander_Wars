@@ -79,12 +79,18 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         //args << "-noui";
         args << "-slaveServer";
         args << slaveName;
-        m_games[pos]->process->start(program, args);
+        QString markername = "temp/" + slaveName + ".marker";
+        if (QFile::exists(markername))
+        {
+            QFile::remove(markername);
+        }
         m_games[pos]->game.setDataBuffer(data);
+        m_games[pos]->game.setServerName(slaveName);
         m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
         m_games[pos]->m_runner.start();
+        connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
         emit m_pGameServer->sigChangeThread(socketID, &m_games[pos]->m_runner);
-        emit m_games[pos]->game.startAndWaitForInit(slaveName);
+        m_games[pos]->process->start(program, args);
     }
     else
     {

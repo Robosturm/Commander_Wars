@@ -30,6 +30,11 @@ void LocalServer::connectTCP(QString adress, quint16)
     QObject::connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
 
     Console::print(tr("Server is running. ") + adress, Console::eLogLevels::eDEBUG);
+    // create marker file
+    QString markername = "temp/" + adress + ".marker";
+    QFile file(markername);
+    file.open(QIODevice::WriteOnly);
+    file.close();
 }
 
 void LocalServer::disconnectTCP()
@@ -123,7 +128,7 @@ void LocalServer::onConnect()
         RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
-        QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
+        QObject::connect(nextSocket, &QLocalSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this);
@@ -166,8 +171,6 @@ void LocalServer::changeThread(quint64 socketID, QThread* pThread)
     {
         if (m_SocketIDs[i] == socketID)
         {
-            moveToThread(pThread);
-            pTCPSockets[i]->moveToThread(pThread);
             pRXTasks[i]->moveToThread(pThread);
             pTXTasks[i]->moveToThread(pThread);
             break;

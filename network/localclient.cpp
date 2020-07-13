@@ -33,7 +33,7 @@ void LocalClient::connectTCP(QString adress, quint16)
     // Start RX-Task
     pRXTask = new RxTask(pSocket, 0, this);
     pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(pSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+    QObject::connect(pSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
     pTXTask = new TxTask(pSocket, 0, this);
@@ -43,7 +43,7 @@ void LocalClient::connectTCP(QString adress, quint16)
     do
     {
         pSocket->connectToServer(adress);
-    } while (!pSocket->waitForConnected(1000));
+    } while (!pSocket->waitForConnected(10000));
 }
 
 void LocalClient::disconnectTCP()
@@ -66,8 +66,6 @@ QVector<quint64> LocalClient::getConnectedSockets()
 
 void LocalClient::changeThread(quint64, QThread* pThread)
 {
-    moveToThread(pThread);
-    pSocket->moveToThread(pThread);
     pRXTask->moveToThread(pThread);
     pTXTask->moveToThread(pThread);
 }

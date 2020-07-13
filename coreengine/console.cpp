@@ -1453,11 +1453,21 @@ void Console::KeyInput(oxygine::KeyEvent event)
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     static QFile file("console.log");
-    static QTextStream stream(&file);
     if (!file.isOpen())
     {
+        QStringList args = QCoreApplication::arguments();
+        if (args.contains("-slave"))
+        {
+            QString slaveName = "slave";
+            if (args.contains("-slaveServer"))
+            {
+                slaveName = args[args.indexOf("-slaveServer") + 1];
+            }
+            file.setFileName(slaveName + ".log");
+        }
         file.open(QIODevice::WriteOnly);
     }
+    static QTextStream stream(&file);
     QByteArray localMsg = msg.toLocal8Bit();
     switch (type)
     {

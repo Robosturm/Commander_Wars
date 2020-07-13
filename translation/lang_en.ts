@@ -2865,7 +2865,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="77"/>
+        <location filename="../network/localclient.cpp" line="75"/>
         <source>Client is connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2883,14 +2883,14 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="44"/>
-        <location filename="../network/localserver.cpp" line="73"/>
-        <location filename="../network/localserver.cpp" line="96"/>
+        <location filename="../network/localserver.cpp" line="49"/>
+        <location filename="../network/localserver.cpp" line="78"/>
+        <location filename="../network/localserver.cpp" line="101"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="134"/>
+        <location filename="../network/localserver.cpp" line="139"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3187,7 +3187,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="886"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="893"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3217,7 +3217,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="882"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="889"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3796,7 +3796,7 @@ Version: </source>
     <name>QObject</name>
     <message>
         <location filename="../main.cpp" line="73"/>
-        <location filename="../main.cpp" line="81"/>
+        <location filename="../main.cpp" line="80"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5791,7 +5791,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpclient.cpp" line="77"/>
+        <location filename="../network/tcpclient.cpp" line="75"/>
         <source>Client is connected</source>
         <translation type="unfinished"></translation>
     </message>

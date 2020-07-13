@@ -188,7 +188,7 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
-    if (m_NetworkInterface->getIsServer())
+    if (m_NetworkInterface->getIsServer() && _local)
     {
         if (m_pPlayerSelection->hasOpenPlayer())
         {
@@ -570,17 +570,14 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
 void Multiplayermenu::launchGameOnServer(QDataStream & stream)
 {
     Console::print("Launching Game on Slave", Console::eDEBUG);
+    hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
-    GameMap* pMap = GameMap::getInstance();
-    pMap->serializeObject(stream);
-
+    GameMap* pMap = new GameMap(stream);
+    m_pMapSelectionView->setCurrentMap(pMap);
+    m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+    loadMultiplayerMap();
     createChat();
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigConnected, this, &Multiplayermenu::playerJoined, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
-    MapSelectionMapsMenue::slotButtonNext();
-    MapSelectionMapsMenue::slotButtonNext();
 }
 
 GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -840,11 +837,21 @@ void Multiplayermenu::disconnectNetwork()
     m_GameStartTimer.stop();
     if (m_NetworkInterface.get() != nullptr)
     {
-        m_Chat->detach();
-        m_Chat = nullptr;
-        emit m_NetworkInterface->sig_close();
-        m_pPlayerSelection->attachNetworkInterface(nullptr);
-        m_NetworkInterface = nullptr;
+        if (m_Chat.get())
+        {
+            m_Chat->detach();
+            m_Chat = nullptr;
+        }
+        if (_local)
+        {
+            emit m_NetworkInterface->sig_close();
+            m_pPlayerSelection->attachNetworkInterface(nullptr);
+            m_NetworkInterface = nullptr;
+        }
+        else
+        {
+            emit m_NetworkInterface->sigChangeThread(0, pApp->getNetworkThread());
+        }
     }
     pApp->continueThread();
 }

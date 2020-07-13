@@ -173,7 +173,6 @@ void TCPServer::changeThread(quint64 socketID, QThread* pThread)
     {
         if (m_SocketIDs[i] == socketID)
         {
-            pTCPSockets[i]->moveToThread(pThread);
             pRXTasks[i]->moveToThread(pThread);
             pTXTasks[i]->moveToThread(pThread);
             break;

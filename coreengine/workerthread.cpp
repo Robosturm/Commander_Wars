@@ -112,5 +112,5 @@ void WorkerThread::startSlaveGame()
     Multiplayermenu* pMenu = new Multiplayermenu(pServer);
     pMenu->connectNetworkSlots();
     oxygine::getStage()->addChild(pMenu);
-    pServer->connectTCP(Settings::getSlaveServerName(), 0);
+    pServer->sig_connect(Settings::getSlaveServerName(), 0);
 }

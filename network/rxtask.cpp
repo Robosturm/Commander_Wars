@@ -33,7 +33,6 @@ void RxTask::recieveData()
         {
             return;
         }
-
         if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
         {
             // don't send an event :)

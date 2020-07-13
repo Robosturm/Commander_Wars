@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QLocalSocket>
+#include <QTimer>
 
 #include "network/NetworkInterface.h"
 #include "network/localclient.h"
@@ -20,8 +21,9 @@ public:
     QByteArray getDataBuffer() const;
     void setDataBuffer(const QByteArray &dataBuffer);
 
-signals:
-    void sigStartAndWaitForInit(QString serverName);
+    QString getServerName() const;
+    void setServerName(const QString &serverName);
+
 public slots:
     void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
@@ -41,16 +43,21 @@ public slots:
     /**
      * @brief startAndWaitForInit
      */
-    void startAndWaitForInit(QString serverName);
+    void startAndWaitForInit();
     /**
      * @brief onConnectToLocalServer
      */
     void onConnectToLocalServer(quint64);
+
+protected slots:
+    void checkServerRunning();
 private:
     QVector<NetworkInterface*> m_Clients;
     QVector<quint64> m_SocketIDs;
     LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
+    QString m_serverName;
+    QTimer m_timer;
 };
 
 #endif // NETWORKGAME_H

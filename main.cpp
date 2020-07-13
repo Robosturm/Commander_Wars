@@ -63,8 +63,8 @@
 int main(int argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);
-    QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     srand(static_cast<unsigned>(time(nullptr)));
+    QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
 #ifdef GAMEDEBUG
     QQmlDebuggingEnabler enabler;
 #endif
@@ -73,14 +73,15 @@ int main(int argc, char* argv[])
     app.setApplicationName(QObject::tr("Commander Wars"));
     app.setApplicationVersion(Mainapp::getGameVersion());
     Settings::loadSettings();
-
-    // start crash report handler
-    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
-
+    QDir dir("temp/");
+    dir.removeRecursively();
+    dir.mkpath(".");
     Mainapp window;
     window.setTitle(QObject::tr("Commander Wars"));
     QStringList args = app.arguments();
     window.loadArgs(args);
+    // start crash report handler
+    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
@@ -114,6 +115,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
     qRegisterMetaType<QList<qint32>>("QList<qint32>");
+    qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);
@@ -156,8 +158,6 @@ int main(int argc, char* argv[])
     Settings::setY(window.y());
     crashReporter::setSignalHandler(nullptr);
     window.getWorkerthread()->exit(0);
-    QDir dir("temp/");
-    dir.removeRecursively();
     /*************************************************************************************************/
     Settings::saveSettings();
 
@@ -173,6 +173,7 @@ int main(int argc, char* argv[])
         window.getGameServerThread()->quit();
         window.getGameServerThread()->wait();
     }
+    dir.removeRecursively();
     //end
     if (returncode == 1)
     {
