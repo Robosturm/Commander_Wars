@@ -218,6 +218,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("CO Info Position: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("Flipping"), tr("Left"), tr("Right")};
+    spDropDownmenu pCoInfOMode = new DropDownmenu(450, items);
+    pCoInfOMode->setCurrentItem(static_cast<qint32>(Settings::getCoInfoPosition()));
+    pCoInfOMode->setPosition(sliderOffset - 130, y);
+    pCoInfOMode->setTooltipText(tr("Select where the CO Info is shown. Where Flipping positions it at the opposite side of the cursor."));
+    m_pOptions->addItem(pCoInfOMode);
+    connect(pCoInfOMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setCoInfoPosition(static_cast<GameEnums::COInfoPosition>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

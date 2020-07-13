@@ -46,6 +46,9 @@ public:
     static QString getSlaveServerName();
     static void setSlaveServerName(const QString &slaveServerName);
 
+    static GameEnums::COInfoPosition getCoInfoPosition();
+    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
+
 public slots:
 
     static bool getShowIngameCoordinates();
@@ -339,6 +342,7 @@ private:
     static qint32 m_showCoCount;
     static quint32 m_spriteFilter;
     static bool m_showIngameCoordinates;
+    static GameEnums::COInfoPosition coInfoPosition;
 
     // internal members
     static Settings* m_pInstance;

@@ -202,6 +202,14 @@ public:
     };
     Q_ENUM(Recoloring)
 
+    enum COInfoPosition
+    {
+        COInfoPosition_Flipping,
+        COInfoPosition_Left,
+        COInfoPosition_Right,
+    };
+    Q_ENUM(COInfoPosition)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

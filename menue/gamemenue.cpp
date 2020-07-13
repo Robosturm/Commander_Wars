@@ -863,16 +863,7 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
         bool flip = m_pPlayerinfo->getFlippedX();
         qint32 screenWidth = Settings::getWidth() - m_IngameInfoBar->getScaledWidth();
         const qint32 diff = screenWidth / 8;
-        if (pos.x() < (screenWidth) / 2 - diff && !flip)
-        {
-            flip = true;
-            m_pPlayerinfo->setX(screenWidth);
-            if (m_XYButtonBox.get() != nullptr)
-            {
-                m_XYButtonBox->setX(0);
-            }
-        }
-        else if (pos.x() > (screenWidth) / 2 + diff && flip)
+        if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Left)
         {
             m_pPlayerinfo->setX(0);
             flip = false;
@@ -881,13 +872,41 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
                 m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
             }
         }
+        else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Right)
+        {
+            flip = true;
+            m_pPlayerinfo->setX(screenWidth);
+            if (m_XYButtonBox.get() != nullptr)
+            {
+                m_XYButtonBox->setX(0);
+            }
+        }
+        else if (Settings::getCoInfoPosition() == GameEnums::COInfoPosition_Flipping)
+        {
+            if ((pos.x() < (screenWidth) / 2 - diff && !flip))
+            {
+                flip = true;
+                m_pPlayerinfo->setX(screenWidth);
+                if (m_XYButtonBox.get() != nullptr)
+                {
+                    m_XYButtonBox->setX(0);
+                }
+            }
+            else if (pos.x() > (screenWidth) / 2 + diff && flip)
+            {
+                m_pPlayerinfo->setX(0);
+                flip = false;
+                if (m_XYButtonBox.get() != nullptr)
+                {
+                    m_XYButtonBox->setX(screenWidth - m_XYButtonBox->getScaledWidth());
+                }
+            }
+        }
         if (flip != m_pPlayerinfo->getFlippedX())
         {
             m_pPlayerinfo->setFlippedX(flip);
             m_pPlayerinfo->updateData();
         }
-
-
         pApp->continueThread();
     }
 }

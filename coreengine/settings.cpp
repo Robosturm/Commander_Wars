@@ -75,7 +75,8 @@ bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
 bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
-quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR ;
+quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
+GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -99,6 +100,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+GameEnums::COInfoPosition Settings::getCoInfoPosition()
+{
+    return coInfoPosition;
+}
+
+void Settings::setCoInfoPosition(const GameEnums::COInfoPosition &value)
+{
+    coInfoPosition = value;
 }
 
 void Settings::setY(const qint32 &y)
@@ -582,6 +593,14 @@ void Settings::loadSettings()
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
+
+    coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
+    if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " COInfoPosition";
+        Console::print(error, Console::eERROR);
+        coInfoPosition = GameEnums::COInfoPosition_Flipping;
+    }
     settings.endGroup();
 
     // network
@@ -724,6 +743,7 @@ void Settings::saveSettings()
         settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
         settings.setValue("ShowCoCount",                    m_showCoCount);
         settings.setValue("SpriteFilter",                   m_spriteFilter);
+        settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
         settings.endGroup();
 
         // network
