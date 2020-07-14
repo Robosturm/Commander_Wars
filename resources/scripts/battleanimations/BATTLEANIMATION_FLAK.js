@@ -56,7 +56,7 @@ var Constructor = function()
 
         if (armyName !== "ma")
         {
-            if (defender.getUnitType() === GameEnums.UnitType_Air)
+            if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);

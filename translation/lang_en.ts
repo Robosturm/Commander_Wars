@@ -2484,7 +2484,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="224"/>
-        <source>Rigth</source>
+        <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

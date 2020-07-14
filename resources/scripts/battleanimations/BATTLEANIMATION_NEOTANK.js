@@ -13,11 +13,16 @@ var Constructor = function()
         sprite.loadMovingSpriteV2("neotank+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-80, 5),
                                 Qt.point(65, 0), 400, false,
                                 1, 1);
+        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-100, 7),
+                                Qt.point(65, 0), 400, false,
+                                1, 1);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "+stop");
+        sprite.loadSprite("vehicle_dust_stop",  false,
+                          BATTLEANIMATION_NEOTANK.getMaxUnitCount(), Qt.point(-35, 7), 1);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -32,7 +37,7 @@ var Constructor = function()
         sprite.loadSprite("neotank" + ending,  false,
                           BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);
         sprite.loadSpriteV2("neotank" + ending + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);
+                          BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 1);        
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -48,10 +53,27 @@ var Constructor = function()
         }
         else
         {
-            sprite.loadAnimation("loadStandingAnimation", unit);
-            // mg
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), Qt.point(35, 47),
-                              1, 1, 0, 0);
+            var offset = Qt.point(-15, 5);
+            if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
+            {
+                sprite.loadSprite("neotank+mg_fire_air",  false,
+                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                sprite.loadSpriteV2("neotank+mg_fire_air+mask", GameEnums.Recoloring_Table,
+                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                // mg
+                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), Qt.point(26, 51),
+                                  2, 1, 0, 0);
+            }
+            else
+            {
+                sprite.loadSprite("neotank+mg_fire",  false,
+                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                sprite.loadSpriteV2("neotank+mg_fire+mask", GameEnums.Recoloring_Table,
+                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                // mg
+                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), Qt.point(26, 46),
+                                  2, 1, 0, 0);
+            }
         }
     };
 
@@ -75,7 +97,7 @@ var Constructor = function()
     this.getStopDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 100;
+        return 300;
     };
 };
 

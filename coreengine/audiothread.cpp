@@ -303,7 +303,21 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
 {
     qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
                    static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
-    QUrl url = QUrl::fromLocalFile(folder + file);
+    QString soundfile = folder + file;
+    QStringList mods = Settings::getMods();
+    for (qint32 i = mods.size() - 1; i >= 0; i--)
+    {
+        if (QFile::exists(mods[i] + "/sounds/" + file))
+        {
+            soundfile = mods[i] + "/sounds/" + file;
+            break;
+        }
+    }
+    if (!QFile::exists(soundfile))
+    {
+        soundfile = folder + file;
+    }
+    QUrl url = QUrl::fromLocalFile(soundfile);
     if (url.isValid())
     {
         qint32 count = 0;

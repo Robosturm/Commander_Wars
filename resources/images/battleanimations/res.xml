@@ -19,7 +19,8 @@
 		<image file="GeneralSprites/torpedo.png" />
 		<image file="GeneralSprites/unit_explosion.png" cols = "10" />
 		<image file="GeneralSprites/mg_hit.png" cols = "10" />
-		<image file="GeneralSprites/vehicle_dust.png" cols = "7" />
+		<image file="GeneralSprites/vehicle_dust.png" cols = "4" />
+		<image file="GeneralSprites/vehicle_dust_stop.png" cols = "4" />
 		
 		<!-- aircraft carrier -->
 		<image file="aircraftcarrier/aircraftcarrier.png" cols = "4" />

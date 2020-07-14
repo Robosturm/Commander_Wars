@@ -2523,8 +2523,8 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="224"/>
-        <source>Rigth</source>
-        <translation type="unfinished"></translation>
+        <source>Right</source>
+        <translation type="unfinished">Rechts</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="228"/>

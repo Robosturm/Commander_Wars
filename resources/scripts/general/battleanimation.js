@@ -98,4 +98,26 @@ var BATTLEANIMATION =
         // the time will be scaled with animation speed inside the engine
         return 0;
     },
+
+    getRelativePosition : function(attacker, defender)
+    {
+        var defHigh = defender.getTerrain().getVisionHigh();
+        var atkHigh = attacker.getTerrain().getVisionHigh();
+        if (defender.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 1;
+        }
+        else if ((defHigh > 1) || (atkHigh > 1))
+        {
+            if (defHigh > atkHigh)
+            {
+                return 1;
+            }
+            else if (defHigh < atkHigh)
+            {
+                return -1;
+            }
+        }
+        return 0;
+    },
 };
