@@ -97,7 +97,11 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
 {
     GameAnimationPower* pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
     pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    GameMenue::getInstance()->addChild(pAnim);
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
+    {
+        pGameMenue->addChild(pAnim);
+    }
     m_Animations.append(pAnim);
     return pAnim;
 }
@@ -109,18 +113,22 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     pAnim->setDialog(text);
     pAnim->setCO(coid, mood);
     pAnim->setColor(color);
-
-    GameMenue::getInstance()->addChild(pAnim);
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
+    {
+        pGameMenue->addChild(pAnim);
+    }
     m_Animations.append(pAnim);
     return pAnim;
 }
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime)
 {
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
     {
         GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false);
-        GameMenue::getInstance()->addChild(pAnim);
+        pGameMenue->addChild(pAnim);
         m_Animations.append(pAnim);
         return pAnim;
     }

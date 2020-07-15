@@ -332,8 +332,12 @@ QColor BattleAnimation::getHealthBarColor(float hp)
 
 void BattleAnimation::restart()
 {
-    GameMenue::getInstance()->addChild(this);
-    battleTimer.start();
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
+    {
+        pGameMenue->addChild(this);
+        battleTimer.start();
+    }
 }
 
 void BattleAnimation::stop()
@@ -531,15 +535,15 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     if (currentState <= AnimationProgress::AttackerImpact)
     {
         setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);
-        setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);
-        setCOMood(m_DefCO1, m_defEndHp, m_atkStartHp);
+        setCOMood(m_AtkCO1, m_atkStartHp, m_defEndHp);
+        setCOMood(m_DefCO0, m_defEndHp, m_atkStartHp);
         setCOMood(m_DefCO1, m_defEndHp, m_atkStartHp);
     }
     else
     {
         setCOMood(m_AtkCO0, m_atkEndHp, m_defEndHp);
-        setCOMood(m_AtkCO0, m_atkEndHp, m_defEndHp);
-        setCOMood(m_DefCO1, m_defEndHp, m_atkEndHp);
+        setCOMood(m_AtkCO1, m_atkEndHp, m_defEndHp);
+        setCOMood(m_DefCO0, m_defEndHp, m_atkEndHp);
         setCOMood(m_DefCO1, m_defEndHp, m_atkEndHp);
     }
 

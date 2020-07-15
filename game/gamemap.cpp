@@ -1542,8 +1542,8 @@ void GameMap::nextTurn()
     checkFuel(m_CurrentPlayer.get());
     m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
     m_Rules->initRoundTime();
-    GameMenue* pMenu = GameMenue::getInstance();
-    if (pMenu != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
     {
         pMenu->updatePlayerinfo();
     }

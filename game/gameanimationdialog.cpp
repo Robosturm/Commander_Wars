@@ -264,8 +264,12 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
-    m_stopped = false;
-    GameMenue::getInstance()->addChild(this);
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
+    {
+        m_stopped = false;
+        pGameMenue->addChild(this);
+    }
 }
 
 void GameAnimationDialog::loadBackground(QString file)

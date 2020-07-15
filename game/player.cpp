@@ -132,9 +132,10 @@ void Player::swapCOs()
         spCO co0 = playerCOs[0];
         playerCOs[0] = playerCOs[1];
         playerCOs[1] = co0;
-        if (GameMenue::getInstance() != nullptr)
+        spGameMenue pGameMenue = GameMenue::getInstance();
+        if (pGameMenue.get() != nullptr)
         {
-            GameMenue::getInstance()->updatePlayerinfo();
+            pGameMenue->updatePlayerinfo();
         }
     }
 }
@@ -472,9 +473,10 @@ bool Player::isAlly(Player* pOwner)
 void Player::setFunds(const qint32 &value)
 {
     funds = value;
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pGameMenue->updatePlayerinfo();
     }
 }
 
@@ -646,9 +648,10 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
         }
     }
     isDefeated = true;
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pGameMenue->updatePlayerinfo();
     }
 }
 
@@ -1067,9 +1070,10 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
     {
         playerCOs[1]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
     }
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pGameMenue->updatePlayerinfo();
     }
 }
 

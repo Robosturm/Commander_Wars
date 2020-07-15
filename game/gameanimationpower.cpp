@@ -229,6 +229,10 @@ void GameAnimationPower::update(const oxygine::UpdateState& us)
 
 void GameAnimationPower::restart()
 {
-    GameMenue::getInstance()->addChild(this);
-    endTimer.start();
+    spGameMenue pGameMenue = GameMenue::getInstance();
+    if (pGameMenue.get() != nullptr)
+    {
+        pGameMenue->addChild(this);
+        endTimer.start();
+    }
 }
