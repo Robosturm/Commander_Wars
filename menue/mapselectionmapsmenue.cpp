@@ -384,12 +384,15 @@ void MapSelectionMapsMenue::startGame()
 void MapSelectionMapsMenue::defeatClosedPlayers()
 {
     spGameMap pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+    if(!pMap->getGameScript()->immediateStart())
     {
-        GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-        if (aiType == GameEnums::AiTypes::AiTypes_Closed)
+        for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
         {
-            pMap->getPlayer(i)->setIsDefeated(true);
+            GameEnums::AiTypes aiType =  m_pPlayerSelection->getPlayerAiType(i);
+            if (aiType == GameEnums::AiTypes::AiTypes_Closed)
+            {
+                pMap->getPlayer(i)->setIsDefeated(true);
+            }
         }
     }
 }
@@ -408,7 +411,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             QVector<std::tuple<QString, float>> buildings,
                                             QVector<float> ownedBaseSize,
                                             float startBaseSize)
-          {
+{
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pGameMap = new GameMap(width, heigth, playerCount);
