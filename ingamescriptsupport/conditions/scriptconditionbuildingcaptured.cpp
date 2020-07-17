@@ -54,9 +54,16 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream)
     QString line = rStream.readLine().simplified();
     QStringList items = line.replace("if (map.getTerrain(", "")
                             .replace(", ", ",")
+                            .replace(").getBuilding().getOwner() === null && map.getTerrain(", ",")
                             .replace(").getBuilding().getOwner().getPlayerID() === ", ",")
                             .replace(" && ", ",").split(",");
-    if (items.size() >= 4)
+    if (items.size() >= 6)
+    {
+        m_x = items[0].toInt();
+        m_y = items[1].toInt();
+        m_player = items[4].toInt();
+    }
+    else if (items.size() >= 4)
     {
         m_x = items[0].toInt();
         m_y = items[1].toInt();
@@ -88,7 +95,7 @@ void ScriptConditionBuildingCaptured::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingCaptured::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner().getPlayerID() === "
+    rStream << "        if (map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner() !== null && map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner().getPlayerID() === "
             << QString::number(m_player) << " && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " "  << ConditionBuildingCaptured << "\n";
     if (subCondition.get() != nullptr)

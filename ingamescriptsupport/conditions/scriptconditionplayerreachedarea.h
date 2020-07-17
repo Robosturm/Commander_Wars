@@ -99,11 +99,11 @@ public:
      */
     QString getPlayerInfo();
 private:
-    QVector<qint32> m_Player;
+    QVector<qint32> m_Player{0};
     qint32 m_x{0};
     qint32 m_y{0};
-    qint32 m_width{0};
-    qint32 m_heigth{0};
+    qint32 m_width{1};
+    qint32 m_heigth{1};
     QString m_executed;
 };
 

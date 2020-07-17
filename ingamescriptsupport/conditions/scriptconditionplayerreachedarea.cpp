@@ -65,6 +65,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream)
     QStringList list = line.split("//");
     if (list.size() >= 2)
     {
+        m_Player.clear();
         if (list[1].startsWith(" 0"))
         {
             QStringList items0 = list[0].replace("if (map.isPlayerUnitInArea(Qt.rect(", "")
@@ -220,7 +221,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = new SpinBox(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area width which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
@@ -237,7 +238,7 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = new SpinBox(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
@@ -284,8 +285,11 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pButton->setPosition(270, y);
     pButton->addClickListener([=](oxygine::Event*)
     {
-        m_Player.removeLast();
-        pTextInfo->setHtmlText(getPlayerInfo());
+        if (m_Player.size() > 1)
+        {
+            m_Player.removeLast();
+            pTextInfo->setHtmlText(getPlayerInfo());
+        }
     });
     pBox->addItem(pButton);
 

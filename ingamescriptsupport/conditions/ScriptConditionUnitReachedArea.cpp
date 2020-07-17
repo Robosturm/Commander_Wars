@@ -251,7 +251,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = new SpinBox(190, 0, 99999);
+    spinBox = new SpinBox(190, 1, 99999);
     spinBox->setTooltipText(tr("Target Area width which the unit needs to reach."));
     spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(m_width);
@@ -267,7 +267,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, 230);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = new SpinBox(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the unit needs to reach."));
     spinBox->setPosition(width, 230);
     spinBox->setCurrentValue(m_heigth);
