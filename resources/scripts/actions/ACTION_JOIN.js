@@ -15,12 +15,15 @@ var Constructor = function()
         if (((actionTargetField.x !== targetField.x) || (actionTargetField.y !== targetField.y)) &&
             (targetUnit !== null))
         {
+
+
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getUnitID() === unit.getUnitID()) &&
                 // join is only allowed with units that don't have anything loaded
                 (unit.getLoadedUnitCount() === 0) && (targetUnit.getLoadedUnitCount() === 0) &&
                 (targetUnit.getHpRounded() < 10) &&
-                ((targetUnit.getUnitRank() >= GameEnums.UnitRank_None)))
+                ((targetUnit.getUnitRank() >= GameEnums.UnitRank_None ||
+                 (targetUnit.getUnitRank() < GameEnums.UnitRank_None && unit.getUnitRank() >= GameEnums.UnitRank_None))))
 			{
 				return true;
 			}
@@ -80,7 +83,8 @@ var Constructor = function()
             hp = 10;
         }
         if (ACTION_JOIN.postAnimationUnit.getUnitRank() > ACTION_JOIN.postAnimationTargetUnit.getUnitRank() &&
-            ACTION_JOIN.postAnimationUnit.getUnitRank() >= GameEnums.UnitRank_None)
+            ACTION_JOIN.postAnimationUnit.getUnitRank() >= GameEnums.UnitRank_None &&
+            ACTION_JOIN.postAnimationTargetUnit.getUnitRank() >= GameEnums.UnitRank_None)
         {
             ACTION_JOIN.postAnimationTargetUnit.setUnitRank(ACTION_JOIN.postAnimationUnit.getUnitRank());
         }

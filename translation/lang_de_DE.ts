@@ -222,7 +222,7 @@
 <context>
     <name>ACTION_JOIN</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="33"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="36"/>
         <source>Join</source>
         <translation>Einen</translation>
     </message>
