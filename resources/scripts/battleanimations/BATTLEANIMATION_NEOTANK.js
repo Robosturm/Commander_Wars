@@ -80,7 +80,7 @@ var Constructor = function()
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 620;
+        return 820;
     };
 
     this.hasMoveInAnimation = function()

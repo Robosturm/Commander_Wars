@@ -450,7 +450,55 @@
 		<image file="recon/recon+yc.png" />
 		<image file="recon/recon+yc+mask.png" />
 		<image file="recon/recon+ma.png" />
-		<image file="recon/recon+ma+mask.png" />
+		<image file="recon/recon+ma+mask.png" />		
+		<image file="recon/recon+bh+stop.png" />
+		<image file="recon/recon+bh+stop+mask.png" />
+		<image file="recon/recon+bm+stop.png" />
+		<image file="recon/recon+bm+stop+mask.png" />
+		<image file="recon/recon+ge+stop.png" />
+		<image file="recon/recon+ge+stop+mask.png" />
+		<image file="recon/recon+os+stop.png" />
+		<image file="recon/recon+os+stop+mask.png" />
+		<image file="recon/recon+yc+stop.png" />
+		<image file="recon/recon+yc+stop+mask.png" />
+		<image file="recon/recon+ma+stop.png" />
+		<image file="recon/recon+ma+stop+mask.png" />
+		<image file="recon/recon+bh+move.png" cols = "4" />
+		<image file="recon/recon+bh+move+mask.png" cols = "4" />
+		<image file="recon/recon+bm+move.png" cols = "4" />
+		<image file="recon/recon+bm+move+mask.png" cols = "4" />
+		<image file="recon/recon+ge+move.png" cols = "4" />
+		<image file="recon/recon+ge+move+mask.png" cols = "4" />
+		<image file="recon/recon+os+move.png" cols = "4" />
+		<image file="recon/recon+os+move+mask.png" cols = "4" />
+		<image file="recon/recon+yc+move.png" cols = "4" />
+		<image file="recon/recon+yc+move+mask.png" cols = "4" />
+		<image file="recon/recon+ma+move.png" />
+		<image file="recon/recon+ma+move+mask.png" />	
+		<image file="recon/recon+bh+fire_air.png" cols = "2" />
+		<image file="recon/recon+bh+fire_air+mask.png" cols = "2" />
+		<image file="recon/recon+bm+fire_air.png" cols = "2" />
+		<image file="recon/recon+bm+fire_air+mask.png" cols = "2" />
+		<image file="recon/recon+ge+fire_air.png" cols = "2" />
+		<image file="recon/recon+ge+fire_air+mask.png" cols = "2" />
+		<image file="recon/recon+os+fire_air.png" cols = "2" />
+		<image file="recon/recon+os+fire_air+mask.png" cols = "2" />
+		<image file="recon/recon+yc+fire_air.png" cols = "2" />
+		<image file="recon/recon+yc+fire_air+mask.png" cols = "2" />
+		<image file="recon/recon+ma+fire_air.png" />
+		<image file="recon/recon+ma+fire_air+mask.png" />
+		<image file="recon/recon+bh+fire.png" cols = "2" />
+		<image file="recon/recon+bh+fire+mask.png" cols = "2" />
+		<image file="recon/recon+bm+fire.png" cols = "2" />
+		<image file="recon/recon+bm+fire+mask.png" cols = "2" />
+		<image file="recon/recon+ge+fire.png" cols = "2" />
+		<image file="recon/recon+ge+fire+mask.png" cols = "2" />
+		<image file="recon/recon+os+fire.png" cols = "2" />
+		<image file="recon/recon+os+fire+mask.png" cols = "2" />
+		<image file="recon/recon+yc+fire.png" cols = "2" />
+		<image file="recon/recon+yc+fire+mask.png" cols = "2" />
+		<image file="recon/recon+ma+fire.png" />
+		<image file="recon/recon+ma+fire+mask.png" />
 		
 		<!-- rocketthrower -->
 		<image file="rocketthrower/rocketthrower+ac.png" />
