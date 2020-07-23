@@ -58,7 +58,7 @@ signals:
 public slots:
     inline Unit* at(qint32 i) const
     {
-        return m_Vector.at(i);
+        return m_Vector.at(i).get();
     }
     inline void append(Unit* t)
     {
@@ -82,7 +82,7 @@ public slots:
      */
     void sortShortestMovementRange(bool infantriesLast);
 private:
-    QVector<Unit*> m_Vector;
+    QVector<spUnit> m_Vector;
 };
 
 class QmlVectorBuilding: public QObject
@@ -96,7 +96,7 @@ signals:
 public slots:
     inline Building* at(qint32 i) const
     {
-        return m_Vector.at(i);
+        return m_Vector.at(i).get();
     }
     inline void append(Building* t)
     {
@@ -112,7 +112,7 @@ public slots:
     }
     void randomize();
 private:
-    QVector<Building*> m_Vector;
+    QVector<spBuilding> m_Vector;
 };
 
 #endif // QMLVECTOR_H

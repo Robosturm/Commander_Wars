@@ -22,7 +22,7 @@ QmlVectorUnit::QmlVectorUnit()
 
 void QmlVectorUnit::randomize()
 {
-    QVector<Unit*> randVector;
+    QVector<spUnit> randVector;
     while (m_Vector.size() > 0)
     {
         qint32 value = Mainapp::randInt(0, m_Vector.size() - 1);
@@ -34,7 +34,7 @@ void QmlVectorUnit::randomize()
 
 void QmlVectorUnit::sortExpensive()
 {
-    QVector<Unit*> sortedVector;
+    QVector<spUnit> sortedVector;
     QVector<qint32> costs;
     for (qint32 i = 0; i < m_Vector.size(); i++)
     {
@@ -61,16 +61,16 @@ void QmlVectorUnit::sortExpensive()
 
 void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
 {
-    QVector<Unit*> sortedVector;
+    QVector<spUnit> sortedVector;
 
 
-    QVector<QVector<Unit*>> units;
+    QVector<QVector<spUnit>> units;
     QVector<QVector<qint32>> costs;
     if (infantriesLast)
     {
-        units.append(QVector<Unit*>());
+        units.append(QVector<spUnit>());
         costs.append(QVector<qint32>());
-        units.append(QVector<Unit*>());
+        units.append(QVector<spUnit>());
         costs.append(QVector<qint32>());
         for (qint32 i = 0; i < m_Vector.size(); i++)
         {
@@ -88,7 +88,7 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
     }
     else
     {
-        units.append(QVector<Unit*>());
+        units.append(QVector<spUnit>());
         costs.append(QVector<qint32>());
         for (qint32 i = 0; i < m_Vector.size(); i++)
         {
@@ -129,7 +129,7 @@ QmlVectorBuilding::QmlVectorBuilding()
 
 void QmlVectorBuilding::randomize()
 {
-    QVector<Building*> randVector;
+    QVector<spBuilding> randVector;
     while (m_Vector.size() > 0)
     {
         qint32 value = Mainapp::randInt(0, m_Vector.size() - 1);

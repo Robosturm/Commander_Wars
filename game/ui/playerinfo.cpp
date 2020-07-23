@@ -47,11 +47,13 @@ void PlayerInfo::updateData()
     qint32 currentPlayer = playerIdx;
 
     qint32 count = pMap->getPlayerCount();
+    qint32 maxCount = count;
     if (Settings::getShowCoCount() > 0 &&
         Settings::getShowCoCount() < pMap->getPlayerCount())
     {
-        count = Settings::getShowCoCount();
+        maxCount = Settings::getShowCoCount();
     }
+    qint32 playerShown = 0;
     for (qint32 i = 0; i < count; i++)
     {
         currentPlayer = playerIdx + i;
@@ -64,6 +66,7 @@ void PlayerInfo::updateData()
         // draw player if he is alive
         if (!pPlayer->getIsDefeated())
         {
+            playerShown++;
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = nullptr;
             if (pPlayer->getCO(1) == nullptr)
@@ -170,6 +173,10 @@ void PlayerInfo::updateData()
             this->addChild(Text);
 
             yPos += itemHeigth;
+        }
+        if (playerShown >= maxCount)
+        {
+            break;
         }
     }
 

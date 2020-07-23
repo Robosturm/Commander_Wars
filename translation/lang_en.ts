@@ -876,13 +876,18 @@
 <context>
     <name>CampaignMenu</name>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="43"/>
+        <location filename="../menue/campaignmenu.cpp" line="45"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="53"/>
+        <location filename="../menue/campaignmenu.cpp" line="55"/>
         <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/campaignmenu.cpp" line="64"/>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
