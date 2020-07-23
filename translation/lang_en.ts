@@ -2984,62 +2984,67 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="58"/>
+        <location filename="../menue/mainwindow.cpp" line="61"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="70"/>
+        <location filename="../menue/mainwindow.cpp" line="73"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="81"/>
+        <location filename="../menue/mainwindow.cpp" line="84"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="92"/>
+        <location filename="../menue/mainwindow.cpp" line="95"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="103"/>
+        <location filename="../menue/mainwindow.cpp" line="106"/>
+        <source>Load Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="117"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="114"/>
+        <location filename="../menue/mainwindow.cpp" line="128"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="125"/>
+        <location filename="../menue/mainwindow.cpp" line="139"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="136"/>
+        <location filename="../menue/mainwindow.cpp" line="150"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="147"/>
+        <location filename="../menue/mainwindow.cpp" line="161"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="158"/>
+        <location filename="../menue/mainwindow.cpp" line="172"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="169"/>
+        <location filename="../menue/mainwindow.cpp" line="183"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="181"/>
+        <location filename="../menue/mainwindow.cpp" line="195"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>

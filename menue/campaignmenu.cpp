@@ -16,6 +16,8 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "objects/filedialog.h"
+
 CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     : QObject(),
       m_Multiplayer(multiplayer)
@@ -59,6 +61,15 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     });
     connect(this, &CampaignMenu::buttonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
 
+    m_pButtonSave = ObjectManager::createButton(tr("Save"));
+    m_pButtonSave->setPosition(Settings::getWidth() / 2 - m_pButtonSave->getWidth() / 2, Settings::getHeight() - 10 - m_pButtonSave->getHeight());
+    m_pButtonSave->attachTo(this);
+    m_pButtonSave->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowSaveCampaign();
+    });
+    connect(this, &CampaignMenu::sigShowSaveCampaign, this, &CampaignMenu::showSaveCampaign, Qt::QueuedConnection);
+
 
     m_pMapSelectionView = new MapSelectionView();
     m_pMapSelectionView->setCurrentCampaign(campaign);
@@ -81,7 +92,6 @@ void CampaignMenu::exitMenue()
     deleteLater();
     pApp->continueThread();
 }
-
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
 {
@@ -133,6 +143,31 @@ void CampaignMenu::slotButtonNext()
         addRef();
         oxygine::Actor::detach();
         deleteLater();
+    }
+    pApp->continueThread();
+}
+
+void CampaignMenu::showSaveCampaign()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.camp");
+    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);
+}
+
+void CampaignMenu::saveCampaign(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (filename.endsWith(".camp"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
+        file.close();
     }
     pApp->continueThread();
 }

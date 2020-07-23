@@ -24,6 +24,7 @@ public:
 signals:
     void sigExitMenue();
     void buttonNext();
+    void sigShowSaveCampaign();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -32,10 +33,13 @@ public slots:
 
     // general slots
     void slotButtonNext();
+    void showSaveCampaign();
+    void saveCampaign(QString file);
 private:
     spMapSelectionView m_pMapSelectionView;
     // buttons
     oxygine::spButton m_pButtonNext;
+    oxygine::spButton m_pButtonSave;
 
     bool m_Multiplayer{false};
 };

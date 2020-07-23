@@ -9,6 +9,9 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "game/campaign.h"
+
+#include "menue/campaignmenu.h"
 #include "menue/gamemenue.h"
 #include "menue/editormenue.h"
 #include "menue/optionmenue.h"
@@ -97,6 +100,17 @@ Mainwindow::Mainwindow()
         emit sigEnterLoadGame();
     });
     connect(this, &Mainwindow::sigEnterLoadGame, this, &Mainwindow::enterLoadGame, Qt::QueuedConnection);
+    btnI++;
+
+    // load button
+    oxygine::spButton pButtonLoadCampaign = ObjectManager::createButton(tr("Load Campaign"), buttonWidth);
+    pButtonLoadCampaign->attachTo(this);
+    setButtonPosition(pButtonLoadCampaign, btnI);
+    pButtonLoadCampaign->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterLoadCampaign();
+    });
+    connect(this, &Mainwindow::sigEnterLoadCampaign, this, &Mainwindow::enterLoadCampaign, Qt::QueuedConnection);
     btnI++;
 
     // replay button
@@ -202,7 +216,7 @@ void Mainwindow::changeUsername(QString name)
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 11;
+    static const qint32 buttonCount = 12;
     float buttonHeigth = pButton->getHeight() + 5;
     pButton->setPosition(Settings::getWidth() / 2.0f - pButton->getWidth() / 2.0f, Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
@@ -276,6 +290,40 @@ void Mainwindow::enterLoadGame()
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void Mainwindow::enterLoadCampaign()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QVector<QString> wildcards;
+    wildcards.append("*.camp");
+    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    spFileDialog saveDialog = new FileDialog(path, wildcards);
+    this->addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void Mainwindow::loadCampaign(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (filename.endsWith(".camp"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            spCampaign pCampaign = new Campaign();
+            QDataStream stream(&file);
+            file.open(QIODevice::ReadOnly);
+            pCampaign->deserializeObject(stream);
+            CampaignMenu* pMenu = new CampaignMenu(pCampaign, false);
+            oxygine::getStage()->addChild(pMenu);
+            leaveMenue();
+        }
+    }
     pApp->continueThread();
 }
 
