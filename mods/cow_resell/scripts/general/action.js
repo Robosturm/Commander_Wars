@@ -1,5 +1,5 @@
-ACTION.getEmptyFieldActions2 = ACTION.getEmptyFieldActions;
+ACTION.getCoWResellEmptyFieldActions = ACTION.getEmptyFieldActions;
 ACTION.getEmptyFieldActions = function()
 {
-	return "ACTION_SELL_UNIT," + ACTION.getEmptyFieldActions2();
+	return "ACTION_SELL_UNIT," + ACTION.getCoWResellEmptyFieldActions();
 };

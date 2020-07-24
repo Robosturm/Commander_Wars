@@ -1,0 +1,3 @@
+name=Transfer Units
+description=This mod allows you to transfer units which didn't move to an allied player.
+version=1.0.0
