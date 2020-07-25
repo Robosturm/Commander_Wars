@@ -74,11 +74,7 @@ EditorSelection::EditorSelection()
     pButtonTop->setFlippedY(true);
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::Imagesize);
-        if (m_PlacementActor->getY() > -GameMap::Imagesize)
-        {
-            m_PlacementActor->setY(-GameMap::Imagesize);
-        }
+        emit sigChangeScrollValue(1);
     });
     pButtonTop->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, 15);
     m_BoxPlacementSelection->addChild(pButtonTop);
@@ -98,14 +94,15 @@ EditorSelection::EditorSelection()
     });
     pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
-        if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
+        emit sigChangeScrollValue(-1);
+    });
+    m_BoxPlacementSelection->addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
         {
-            m_PlacementActor->setY(-GameMap::Imagesize);
-        }
-        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
-        {
-            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight());
+           emit sigChangeScrollValue(pTouchEvent->wheelDirection.y);
+           pTouchEvent->stopPropagation();
         }
     });
     pButtonDown->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, m_BoxPlacementSelection->getHeight() - pButtonDown->getHeight() - 18);
@@ -127,11 +124,12 @@ EditorSelection::EditorSelection()
         m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
     }
 
-    connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer);
-    connect(this, &EditorSelection::sigChangeSelectedPlayer, this, &EditorSelection::changeSelectedPlayer);
-    connect(this, &EditorSelection::sigUpdateUnitView, this, &EditorSelection::updateUnitView);
-    connect(this, &EditorSelection::sigUpdateTerrainView, this, &EditorSelection::updateTerrainView);
-    connect(this, &EditorSelection::sigUpdateBuildingView, this, &EditorSelection::updateBuildingView);
+    connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigChangeSelectedPlayer, this, &EditorSelection::changeSelectedPlayer, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigUpdateUnitView, this, &EditorSelection::updateUnitView, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigUpdateTerrainView, this, &EditorSelection::updateTerrainView, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigUpdateBuildingView, this, &EditorSelection::updateBuildingView, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigChangeScrollValue, this, &EditorSelection::changeScrollValue, Qt::QueuedConnection);
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -202,6 +200,30 @@ EditorSelection::EditorSelection()
     initSelection();
     // select terrains view
     updateTerrainView();
+}
+
+void EditorSelection::changeScrollValue(qint32 dir)
+{
+    if (dir > 0)
+    {
+        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::Imagesize);
+        if (m_PlacementActor->getY() > -GameMap::Imagesize)
+        {
+            m_PlacementActor->setY(-GameMap::Imagesize);
+        }
+    }
+    else
+    {
+        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
+        if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
+        {
+            m_PlacementActor->setY(-GameMap::Imagesize);
+        }
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
+        {
+            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight());
+        }
+    }
 }
 
 void EditorSelection::createBoxPlacementSize()

@@ -159,6 +159,10 @@ void Unit::setOwner(Player* pOwner)
         m_CORange->removeChildren();
     }
     m_pOwner = pOwner;
+    for (auto & loadedUnit : m_TransportUnits)
+    {
+        loadedUnit->setOwner(pOwner);
+    }
     if (m_pOwner != nullptr)
     {
         // update sprites :)
@@ -2347,6 +2351,11 @@ qint32 Unit::getBonus(QVector<QPoint>& data)
         ret += data[i].x();
     }
     return ret;
+}
+
+bool Unit::onMap()
+{
+    return m_pTerrain != nullptr;
 }
 
 QString Unit::getCustomName() const

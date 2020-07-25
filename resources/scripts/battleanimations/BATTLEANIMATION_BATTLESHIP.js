@@ -45,7 +45,7 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         var count = sprite.getUnitCount(5);
-        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count);
+        BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, count, Qt.point(0, 0), 0);
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();

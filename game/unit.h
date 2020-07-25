@@ -128,6 +128,11 @@ signals:
 
 public slots:
     /**
+     * @brief onMap
+     * @return true if the unit is on the map and not loaded by another unit
+     */
+    bool onMap();
+    /**
      * @brief getCustomName
      * @return
      */

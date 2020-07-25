@@ -1173,12 +1173,11 @@ QVector<spUnit> Player::getSpEnemyUnits()
         for (qint32 x = 0; x < width; x++)
         {
             spUnit pUnit = pMap->getTerrain(x, y)->getSpUnit();
-            if (pUnit.get() != nullptr)
+            if (pUnit.get() != nullptr &&
+                !pUnit->getOwner()->getIsDefeated() &&
+                isEnemyUnit(pUnit.get()))
             {
-                if ((isEnemyUnit(pUnit.get())))
-                {
-                    ret.append(pUnit);
-                }
+                ret.append(pUnit);
             }
         }
     }
@@ -1196,12 +1195,12 @@ QmlVectorBuilding* Player::getEnemyBuildings()
         for (qint32 x = 0; x < width; x++)
         {
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pBuilding != nullptr && pBuilding->getTerrain() == pMap->getTerrain(x, y))
+            if (pBuilding != nullptr &&
+                pBuilding->getTerrain() == pMap->getTerrain(x, y) &&
+                (pBuilding->getOwner() == nullptr || !pBuilding->getOwner()->getIsDefeated()) &&
+                isEnemy(pBuilding->getOwner()))
             {
-                if (isEnemy(pBuilding->getOwner()))
-                {
-                    ret->append(pBuilding);
-                }
+                ret->append(pBuilding);
             }
         }
     }

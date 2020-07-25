@@ -79,8 +79,9 @@ void PathFindingSystem::explore()
     {
         // get current node and pop it
         Node pCurrent = m_OpenList.takeFirst();
-        if (pCurrent.index >= 0 && costs[pCurrent.index] != infinite)
+        if (pCurrent.index < 0 || costs[pCurrent.index] != infinite)
         {
+            Q_ASSERT(pCurrent.index >= 0);
             // already searched item
             continue;
         }

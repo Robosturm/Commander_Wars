@@ -12,7 +12,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "destroy";
+        return "next_player";
     };
     this.isFinalStep = function(action)
     {

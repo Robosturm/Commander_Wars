@@ -79,6 +79,7 @@ signals:
    void sigUpdateTerrainView();
    void sigUpdateBuildingView();
    void sigUpdateUnitView();
+   void sigChangeScrollValue(qint32 dir);
 public slots:
     void selectTerrain(QString terrainID);
     void selectBuilding(QString buildingID);
@@ -89,6 +90,8 @@ public slots:
     void updateTerrainView();
     void updateBuildingView();
     void updateUnitView();
+
+    void changeScrollValue(qint32 dir);
 private:
     /**
      * @brief selectBuilding
