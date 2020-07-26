@@ -1062,13 +1062,14 @@ qint32 Player::getCosts(QString id)
 
 void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack)
 {
+    float speed = GameMap::getInstance()->getGameRules()->getPowerGainSpeed();
     if (playerCOs[0].get() != nullptr)
     {
-        playerCOs[0]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
+        playerCOs[0]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
     }
     if (playerCOs[1].get() != nullptr)
     {
-        playerCOs[1]->gainPowerstar(fundsDamage, position, hpDamage, defender, counterAttack);
+        playerCOs[1]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
     }
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)

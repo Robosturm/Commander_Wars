@@ -331,6 +331,21 @@ void RuleSelection::showRuleSelection()
     addChild(pSpinbox);
     pSpinbox->setCurrentValue(pMap->getGameRules()->getUnitLimit());
     connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Powergain Speed: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pSpinbox = new SpinBox(200, 0, 200, SpinBox::Mode::Float);
+    pSpinbox->setTooltipText(tr("The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode."));
+    pSpinbox->setInfinityValue(-1.0);
+    pSpinbox->setSpinSpeed(0.1f);
+    pSpinbox->setPosition(textWidth, textField->getY());
+    addChild(pSpinbox);
+    pSpinbox->setCurrentValue(pMap->getGameRules()->getPowerGainSpeed());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setPowerGainSpeed, Qt::QueuedConnection);
 
     y += 50;
     textField = new Label(textWidth - 40);

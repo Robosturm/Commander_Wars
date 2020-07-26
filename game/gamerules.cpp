@@ -951,6 +951,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_teamFacingUnits;
     Filesupport::writeVectorList(pStream, m_allowedPerks);
     Filesupport::writeVectorList(pStream, m_allowedActions);
+    pStream << m_powerGainSpeed;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1153,6 +1154,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
     {
         m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
         m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+        pStream >> m_powerGainSpeed;
     }
     else
     {
