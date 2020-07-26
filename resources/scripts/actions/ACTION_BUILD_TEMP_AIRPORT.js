@@ -88,8 +88,11 @@ var Constructor = function()
     };
     this.isFinalStep = function(action)
     {
-
         return true;
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.");
     };
 }
 

@@ -18,11 +18,15 @@ public:
     void showRuleSelection();
 signals:
     void sigShowCOBannlist();
+    void sigShowActionBannlist();
+    void sigShowPerkBannlist();
 public slots:
     // slots for changing the rules
     void startWeatherChanged(qint32 value);
     void weatherChancesChanged();
     void showCOBannlist();
+    void showPerkBannlist();
+    void showActionBannlist();
 private:
     spMultislider m_pWeatherSlider;
 };

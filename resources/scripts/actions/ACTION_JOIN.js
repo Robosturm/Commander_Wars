@@ -107,8 +107,11 @@ var Constructor = function()
         ACTION_JOIN.postAnimationTargetUnit = null;
         ACTION_JOIN.postAnimationUnit = null;
     };
-
-
+    this.getDescription = function()
+    {
+        return qsTr("Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. ") +
+                qsTr("Hp exceeding the maximum will be added in form of funds to your war funds.");
+    };
 }
 
 Constructor.prototype = ACTION;

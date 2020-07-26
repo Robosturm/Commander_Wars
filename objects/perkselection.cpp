@@ -6,9 +6,10 @@
 #include "game/gamemap.h"
 #include "objects/label.h"
 
-PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks)
+PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning)
     : m_pCO(pCO),
-      m_maxPerks(maxPerks)
+      m_maxPerks(maxPerks),
+      m_banning(banning)
 {
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
@@ -23,8 +24,15 @@ void PerkSelection::updatePerksView(CO* pCO)
     pApp->suspendThread();
     m_pCO = pCO;
     removeChildren();
+    if (m_banning)
+    {
+        m_perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+    }
+    else
+    {
+        m_perks =  pCO->getPerkList();
+    }
 
-    QStringList perkList = pCO->getPerkList();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -34,12 +42,14 @@ void PerkSelection::updatePerksView(CO* pCO)
     qint32 count = pCOPerkManager->getCount();
     qint32 y = 0;
     qint32 x = 0;
+    spGameMap pMap = GameMap::getInstance();
     const qint32 width = 370;
     for (qint32 i = 0; i < count; i++)
     {
-        if (pCOPerkManager->isSelectable(i))
+        QString id = pCOPerkManager->getID(i);
+        if (pCOPerkManager->isSelectable(i) &&
+            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
-            QString id = pCOPerkManager->getID(i);
             QString name = pCOPerkManager->getName(i);
             QString icon = pCOPerkManager->getIcon(i);
 
@@ -49,18 +59,32 @@ void PerkSelection::updatePerksView(CO* pCO)
             spCheckbox pCheckbox = new Checkbox();
             pCheckbox->setPosition(x, y + 5);
             pCheckbox->setTooltipText(description);
-            pCheckbox->setChecked(perkList.contains(id));
+            pCheckbox->setChecked(m_perks.contains(id));
             connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
             {
-                if (value)
+                if (m_banning)
                 {
-                    m_pCO->addPerk(id);
+                    if (value)
+                    {
+                        m_perks.append(id);
+                    }
+                    else
+                    {
+                        m_perks.removeAll(id);
+                    }
                 }
                 else
                 {
-                    m_pCO->removePerk(id);
+                    if (value)
+                    {
+                        m_pCO->addPerk(id);
+                    }
+                    else
+                    {
+                        m_pCO->removePerk(id);
+                    }
+                    emit sigUpdatePerkCount();
                 }
-                emit sigUpdatePerkCount();
             });
             m_Checkboxes.append(pCheckbox);
             addChild(pCheckbox);
@@ -96,16 +120,64 @@ void PerkSelection::updatePerksView(CO* pCO)
 
 void PerkSelection::updatePerkCount()
 {
-    bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
+    if (!m_banning)
+    {
+        bool enable = (m_pCO->getPerkList().size() < m_maxPerks);
+        for (auto & checkbox : m_Checkboxes)
+        {
+            if (enable || checkbox->getChecked())
+            {
+                checkbox->setEnabled(true);
+            }
+            else
+            {
+                checkbox->setEnabled(false);
+            }
+        }
+    }
+}
+
+void PerkSelection::toggleAll(bool toggle)
+{
     for (auto & checkbox : m_Checkboxes)
     {
-        if (enable || checkbox->getChecked())
+        checkbox->setChecked(toggle);
+    }
+    if (toggle)
+    {
+        m_perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+    }
+    else
+    {
+       m_perks.clear();
+    }
+}
+
+QStringList PerkSelection::getPerks() const
+{
+    return m_perks;
+}
+
+void PerkSelection::setPerks(const QStringList &perks)
+{
+    m_perks = perks;
+    COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+    qint32 count = pCOPerkManager->getCount();
+    spGameMap pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < count; i++)
+    {
+        QString id = pCOPerkManager->getID(i);
+        if (pCOPerkManager->isSelectable(i) &&
+            (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
-            checkbox->setEnabled(true);
-        }
-        else
-        {
-            checkbox->setEnabled(false);
+            if (m_perks.contains(id))
+            {
+                m_Checkboxes[i]->setChecked(true);
+            }
+            else
+            {
+                m_Checkboxes[i]->setChecked(false);
+            }
         }
     }
 }

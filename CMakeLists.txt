@@ -195,6 +195,7 @@ set(${PROJECT_NAME}_SRCS
         objects/perkselectiondialog.cpp
         objects/loadingscreen.cpp
         objects/gameplayandkeys.cpp
+        objects/actionlistdialog.cpp
 
         #modding
         modding/csvtableimporter.cpp

@@ -55,7 +55,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 13;
+        return 14;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -77,10 +77,39 @@ public:
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
 
-
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getPowerGainSpeed
+     * @return
+     */
+    float getPowerGainSpeed() const;
+    /**
+     * @brief setPowerGainSpeed
+     * @param powerGainSpeed
+     */
+    void setPowerGainSpeed(float powerGainSpeed);
+    /**
+     * @brief getAllowedPerks
+     * @return
+     */
+    QStringList getAllowedPerks() const;
+    /**
+     * @brief setAllowedPerks
+     * @param allowedPerks
+     */
+    void setAllowedPerks(const QStringList &allowedPerks);
+    /**
+     * @brief getAllowedActions
+     * @return
+     */
+    QStringList getAllowedActions() const;
+    /**
+     * @brief setAllowedActions
+     * @param allowedActions
+     */
+    void setAllowedActions(const QStringList &allowedActions);
     /**
      * @brief getTeamFacingUnits
      * @return
@@ -400,6 +429,9 @@ private:
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
     qint32 m_maxPerkCount{4};
     bool m_teamFacingUnits{false};
+    QStringList m_allowedPerks;
+    QStringList m_allowedActions;
+    float m_powerGainSpeed{1.0f};
 };
 
 #endif // GAMERULES_H

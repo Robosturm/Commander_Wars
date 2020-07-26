@@ -118,6 +118,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY = -1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Repairs and refills the target unit. The repair costs don't have to be paid.");
+    };
 }
 
 Constructor.prototype = ACTION;

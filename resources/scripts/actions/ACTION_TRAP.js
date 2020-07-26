@@ -32,7 +32,11 @@ var Constructor = function()
         audio.playSound("trap.wav");
         ACTION_TRAP.postAnimationTrapSignX = -1;
         ACTION_TRAP.postAnimationTrapSignY = -1;
-    }
+    };
+    this.getDescription = function()
+    {
+        return qsTr("This action can't be disabled.");
+    };
 }
 
 Constructor.prototype = ACTION;

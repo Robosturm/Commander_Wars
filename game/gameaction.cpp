@@ -197,39 +197,42 @@ bool GameAction::canBePerformed(QString actionID, bool emptyField)
     if (!actionID.isEmpty())
     {
         spGameMap pMap = GameMap::getInstance();
-        Unit* pUnit = getTargetUnit();
-        Building* pBuilding = getTargetBuilding();
-        if (!emptyField)
+        if (pMap->getGameRules()->getAllowedActions().contains(actionID))
         {
-            if (pUnit != nullptr)
+            Unit* pUnit = getTargetUnit();
+            Building* pBuilding = getTargetBuilding();
+            if (!emptyField)
             {
-                if (!pUnit->hasAction(actionID))
+                if (pUnit != nullptr)
                 {
-                    return false;
+                    if (!pUnit->hasAction(actionID))
+                    {
+                        return false;
+                    }
+                    if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
+                        (!pUnit->getHasMoved()))
+                    {
+                        return false;
+                    }
                 }
-                if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
-                    (!pUnit->getHasMoved()))
+                if ((pBuilding != nullptr) && (pUnit == nullptr))
                 {
-                    return false;
+                    if ((pBuilding->getOwner() == nullptr) ||
+                        (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
+                    {
+                        return false;
+                    }
                 }
             }
-            if ((pBuilding != nullptr) && (pUnit == nullptr))
+            Interpreter* pInterpreter = Interpreter::getInstance();
+            QString function1 = "canBePerformed";
+            QJSValueList args1;
+            args1 << pInterpreter->newQObject(this);
+            QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
+            if (ret.isBool())
             {
-                if ((pBuilding->getOwner() == nullptr) ||
-                    (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
-                {
-                    return false;
-                }
+                return ret.toBool();
             }
-        }
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function1 = "canBePerformed";
-        QJSValueList args1;
-        args1 << pInterpreter->newQObject(this);
-        QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
-        if (ret.isBool())
-        {
-            return ret.toBool();
         }
     }
     return false;

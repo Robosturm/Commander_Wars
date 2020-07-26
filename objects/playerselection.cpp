@@ -959,7 +959,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
     Player* pPlayer = pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
-        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount());
+        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false);
         oxygine::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
         {

@@ -63,6 +63,10 @@ var Constructor = function()
         }
         fields.remove();
     };
+    this.getDescription = function()
+    {
+        return qsTr("Fire with Talon Gun");
+    };
 }
 
 Constructor.prototype = ACTION;

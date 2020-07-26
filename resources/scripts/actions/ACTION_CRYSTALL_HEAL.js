@@ -56,6 +56,10 @@ var Constructor = function()
         }
         fields.remove();
     };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.");
+    };
 }
 
 Constructor.prototype = ACTION;

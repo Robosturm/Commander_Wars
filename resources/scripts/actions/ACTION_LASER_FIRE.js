@@ -118,6 +118,10 @@ var Constructor = function()
         ACTION_LASER_FIRE.postAnimationActionX = -1;
         ACTION_LASER_FIRE.postAnimationActionY = -1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.");
+    };
 }
 
 Constructor.prototype = ACTION;

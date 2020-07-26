@@ -13,6 +13,8 @@
 #include "objects/dropdownmenu.h"
 #include "objects/timespinbox.h"
 #include "objects/cobannlistdialog.h"
+#include "objects/perkselectiondialog.h"
+#include "objects/actionlistdialog.h"
 #include "objects/label.h"
 
 
@@ -178,6 +180,36 @@ void RuleSelection::showRuleSelection()
     });
     addChild(coBannlist);
     connect(this, &RuleSelection::sigShowCOBannlist, this, &RuleSelection::showCOBannlist, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Perk Bannlist: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    oxygine::spButton perkBannlist = ObjectManager::createButton(tr("Edit"), 150);
+    perkBannlist->setPosition(textWidth, y - 2);
+    perkBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowPerkBannlist();
+    });
+    addChild(perkBannlist);
+    connect(this, &RuleSelection::sigShowPerkBannlist, this, &RuleSelection::showPerkBannlist, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Action Bannlist: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    oxygine::spButton actionBannlist = ObjectManager::createButton(tr("Edit"), 150);
+    actionBannlist->setPosition(textWidth, y - 2);
+    actionBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowActionBannlist();
+    });
+    addChild(actionBannlist);
+    connect(this, &RuleSelection::sigShowActionBannlist, this, &RuleSelection::showActionBannlist, Qt::QueuedConnection);
     y += 40;
 
     textField = new Label(textWidth - 40);
@@ -458,5 +490,27 @@ void RuleSelection::showCOBannlist()
     spCOBannListDialog pBannlist = new COBannListDialog(pMap->getGameRules()->getCOBannlist());
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void RuleSelection::showPerkBannlist()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGameMap pMap = GameMap::getInstance();
+    spPerkSelectionDialog pBannlist = new PerkSelectionDialog(nullptr, -1, true);
+    oxygine::getStage()->addChild(pBannlist);
+    connect(pBannlist.get(), &PerkSelectionDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void RuleSelection::showActionBannlist()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGameMap pMap = GameMap::getInstance();
+    spActionListDialog pBannlist = new ActionListDialog(pMap->getGameRules()->getAllowedActions());
+    oxygine::getStage()->addChild(pBannlist);
+    connect(pBannlist.get(), &ActionListDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
     pApp->continueThread();
 }

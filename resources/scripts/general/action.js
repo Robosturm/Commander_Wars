@@ -16,6 +16,10 @@ var ACTION =
     {
         return qsTr("Unknown");
     },
+    getName : function(id)
+    {
+        return Global[id].getActionText();
+    },
     getIcon : function()
     {
         return "";
@@ -54,5 +58,10 @@ var ACTION =
     getStepData : function(action, data)
     {
         // type of the data object depends on the StepInputType
+    },
+
+    getDescription : function()
+    {
+        return "";
     },
 };

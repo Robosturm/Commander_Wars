@@ -15,10 +15,14 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/gamerulemanager.h"
 
+#include "resource_management/coperkmanager.h"
+#include "resource_management/gamemanager.h"
+
 #include "game/gameanimationfactory.h"
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 
 GameRules::GameRules()
     : QObject()
@@ -49,6 +53,8 @@ GameRules::GameRules()
     }
     m_StartWeather = 0;
     m_RoundTimer.setSingleShot(true);
+    m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
+    m_allowedActions = GameManager::getInstance()->getLoadedRessources();
 }
 
 void GameRules::addVictoryRule(QString rule)
@@ -772,6 +778,36 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+float GameRules::getPowerGainSpeed() const
+{
+    return m_powerGainSpeed;
+}
+
+void GameRules::setPowerGainSpeed(float powerGainSpeed)
+{
+    m_powerGainSpeed = powerGainSpeed;
+}
+
+QStringList GameRules::getAllowedActions() const
+{
+    return m_allowedActions;
+}
+
+void GameRules::setAllowedActions(const QStringList &allowedActions)
+{
+    m_allowedActions = allowedActions;
+}
+
+QStringList GameRules::getAllowedPerks() const
+{
+    return m_allowedPerks;
+}
+
+void GameRules::setAllowedPerks(const QStringList &allowedPerks)
+{
+    m_allowedPerks = allowedPerks;
+}
+
 bool GameRules::getTeamFacingUnits() const
 {
     return m_teamFacingUnits;
@@ -913,6 +949,8 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_maxPerkCount;
     pStream << m_singleRandomCO;
     pStream << m_teamFacingUnits;
+    Filesupport::writeVectorList(pStream, m_allowedPerks);
+    Filesupport::writeVectorList(pStream, m_allowedActions);
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1110,5 +1148,15 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 12)
     {
         pStream >> m_teamFacingUnits;
+    }
+    if (version > 13)
+    {
+        m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
+        m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+    }
+    else
+    {
+        m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
+        m_allowedActions = GameManager::getInstance()->getLoadedRessources();
     }
 }

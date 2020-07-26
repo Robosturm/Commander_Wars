@@ -112,6 +112,10 @@ var Constructor = function()
         ACTION_EXPLODE.postAnimationTargetX = -1;
         ACTION_EXPLODE.postAnimationTargetY = -1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.");
+    };
 }
 
 Constructor.prototype = ACTION;

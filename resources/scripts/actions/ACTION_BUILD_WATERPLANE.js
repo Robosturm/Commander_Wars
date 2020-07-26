@@ -68,9 +68,11 @@ var Constructor = function()
         unit.setHasMoved(true);
         spawnUnit.setHasMoved(true);
         player.buildedUnit(spawnUnit);
+    };    
+    this.getDescription = function()
+    {
+        return qsTr("Orders an aircraft carrier to produce a waterplane which can be launched next turn.");
     };
-
-
 }
 
 Constructor.prototype = ACTION;

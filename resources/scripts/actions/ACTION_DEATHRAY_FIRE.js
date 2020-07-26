@@ -76,7 +76,11 @@ var Constructor = function()
         ACTION_DEATHRAY_FIRE.postAnimationX = null;
         ACTION_DEATHRAY_FIRE.postAnimationY = null;
         ACTION_DEATHRAY_FIRE.postAnimationBuilding = null;
-    }
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.");
+    };
 }
 
 Constructor.prototype = ACTION;

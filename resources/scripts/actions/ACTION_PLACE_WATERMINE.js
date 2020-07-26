@@ -130,6 +130,10 @@ var Constructor = function()
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = -1;
         ACTION_PLACE_WATERMINE.postAnimationMinePosY = -1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.");
+    };
 }
 
 Constructor.prototype = ACTION;

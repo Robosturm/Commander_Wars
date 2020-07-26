@@ -63,7 +63,13 @@ var Constructor = function()
         ACTION_STEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_STEALTH.postAnimationUnit.setHidden(true);
         ACTION_STEALTH.postAnimationUnit = null;
-    }
+    };
+    this.getDescription = function()
+    {
+        return "<r>" + qsTr("Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type ") + "</r>" +
+                "<div c='#00ff00'>" + qsTr(" Ground, Naval or Air") + "</div>" +
+                "<r>" + qsTr(" can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.") + "</r>";
+    };
 }
 
 Constructor.prototype = ACTION;

@@ -339,6 +339,10 @@ var Constructor = function()
         ACTION_UNLOAD.postAnimationTransportUnitsPosX = [];
         ACTION_UNLOAD.postAnimationTransportUnitsPosY = [];
     };
+    this.getDescription = function()
+    {
+        return qsTr("Unloads loaded units. Units that have been loaded this turn can't move. Units that were loaded in previous turns can immediatly move after beeing unloaded.");
+    };
 }
 
 Constructor.prototype = ACTION;

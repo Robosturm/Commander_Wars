@@ -116,6 +116,10 @@ var Constructor = function()
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX = -1;
         ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetY = -1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.");
+    };
 }
 
 Constructor.prototype = ACTION;

@@ -15,7 +15,14 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("Power of ") + map.getCurrentPlayer().getCO(0).getCOName();
+        var text = qsTr("Power of ");
+        if (map !== null &&
+            map.getCurrentPlayer() !== null &&
+            map.getCurrentPlayer().getCO(0) !== null)
+        {
+            text = text + map.getCurrentPlayer().getCO(0).getCOName();
+        }
+        return text;
     };
     this.getIcon = function()
     {
@@ -30,6 +37,10 @@ var Constructor = function()
     this.isFinalStep = function(action)
     {
         return true;
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Activates the Power of your first CO. Read the CO's power for more information.");
     };
 }
 

@@ -56,7 +56,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         detach();
     });
 
-    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 300);
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

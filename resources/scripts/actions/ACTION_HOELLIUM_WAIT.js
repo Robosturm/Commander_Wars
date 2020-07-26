@@ -49,7 +49,10 @@ var Constructor = function()
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
         unit.setHasMoved(true);
-
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.");
     };
 }
 

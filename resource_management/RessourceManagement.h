@@ -230,8 +230,11 @@ QString RessourceManagement<TClass>::getName(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedRessources.size()))
     {
+        QString name = m_loadedRessources[position];
+        QJSValueList args;
+        args << name;
         Interpreter* pInterpreter = Interpreter::getInstance();
-        QJSValue value = pInterpreter->doFunction(m_loadedRessources[position], "getName");
+        QJSValue value = pInterpreter->doFunction(name, "getName", args);
         if (value.isString())
         {
             return value.toString();

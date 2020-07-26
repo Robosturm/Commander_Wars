@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Ends your turn and gives control to the next player.");
+    };
 }
 
 

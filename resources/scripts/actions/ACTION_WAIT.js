@@ -43,6 +43,10 @@ var Constructor = function()
         // disable unit commandments for this turn
         unit.setHasMoved(true);
     };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a unit to wait at the current position and end all actions for this turn.");
+    };
 }
 
 Constructor.prototype = ACTION;

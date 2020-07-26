@@ -46,6 +46,10 @@ var Constructor = function()
         unit.makeCOUnit(0);
         unit.getOwner().addFunds(-unit.getUnitCosts() / 2);
     };
+    this.getDescription = function()
+    {
+        return qsTr("Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.");
+    };
 }
 
 Constructor.prototype = ACTION;

@@ -99,6 +99,11 @@ var Constructor = function()
         map.getGameRecorder().buildUnit(player.getPlayerID());
         player.buildedUnit(unit);
     };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a Black Hole Factory to produce a unit at the second door. ") +
+               qsTr("The unit is able to move immediatly.");
+    };
 }
 
 Constructor.prototype = ACTION;

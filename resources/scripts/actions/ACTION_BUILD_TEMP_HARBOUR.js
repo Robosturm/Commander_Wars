@@ -91,6 +91,10 @@ var Constructor = function()
 
         return true;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.");
+    };
 }
 
 

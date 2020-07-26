@@ -144,6 +144,10 @@ var Constructor = function()
             }
         }
 	};
+    this.getDescription = function()
+    {
+        return qsTr("Refills fuel and ammo to all units surrounding this unit.");
+    };
 }
 
 Constructor.prototype = ACTION;

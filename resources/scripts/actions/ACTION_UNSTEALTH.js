@@ -64,6 +64,10 @@ var Constructor = function()
         ACTION_UNSTEALTH.postAnimationUnit.setHidden(false);
         ACTION_UNSTEALTH.postAnimationUnit = null;
     }
+    this.getDescription = function()
+    {
+        return qsTr("Unstealths a unit and makes it visible to all enemies.");
+    };
 }
 
 Constructor.prototype = ACTION;

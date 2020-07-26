@@ -8,12 +8,22 @@
         <source>Power of </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="43"/>
+        <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="18"/>
         <source>Power of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="44"/>
+        <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24,6 +34,11 @@
         <source>Superpower of </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="44"/>
+        <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
@@ -32,12 +47,27 @@
         <source>Superpower of </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="43"/>
+        <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_ACTIVATE_TAGPOWER</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
         <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="37"/>
+        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="38"/>
+        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -56,12 +86,32 @@
         <source>Build Door 1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="104"/>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="105"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_BLACKHOLEFACTORY_DOOR2</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="23"/>
         <source>Build Door 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="104"/>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="105"/>
+        <source>The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -72,12 +122,27 @@
         <source>Build Door 3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="104"/>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="105"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_BUILD_TEMP_AIRPORT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="29"/>
         <source>Build Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="95"/>
+        <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -88,12 +153,25 @@
         <source>Build Harbour</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="96"/>
+        <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_BUILD_UNITS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="22"/>
         <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_WATERPLANE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="74"/>
+        <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -109,12 +187,22 @@
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="124"/>
+        <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="49"/>
         <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="139"/>
+        <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -133,12 +221,22 @@
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="51"/>
+        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_CO_UNIT_1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="33"/>
         <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="51"/>
+        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -149,12 +247,22 @@
         <source>Heal</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="61"/>
+        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_DEATHRAY_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="18"/>
         <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="82"/>
+        <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -181,6 +289,11 @@
         <source>Explode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="117"/>
+        <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_FIRE</name>
@@ -194,12 +307,22 @@
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="557"/>
+        <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_FLARE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="25"/>
         <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="116"/>
+        <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -218,12 +341,27 @@
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="55"/>
+        <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_JOIN</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="36"/>
         <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="112"/>
+        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="113"/>
+        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -234,12 +372,22 @@
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="123"/>
+        <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_LOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="57"/>
         <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="88"/>
+        <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -250,12 +398,22 @@
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="131"/>
+        <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_NEXT_PLAYER</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
         <source>Next Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
+        <source>Ends your turn and gives control to the next player.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -282,6 +440,11 @@
         <source>Place Mine</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="135"/>
+        <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SAVEGAME</name>
@@ -296,6 +459,21 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="26"/>
         <source>Stealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="69"/>
+        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. In addition only units of the same Unit Type </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="70"/>
+        <source> Ground, Naval or Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="71"/>
+        <source> can attack it. In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -314,6 +492,11 @@
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="149"/>
+        <source>Refills fuel and ammo to all units surrounding this unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SUPPORTSINGLE_FREEREPAIR</name>
@@ -325,6 +508,11 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="110"/>
         <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="123"/>
+        <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -340,6 +528,11 @@
         <source>DEFENSE</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="121"/>
+        <source>Shields an allied unit. This highly increases the defense of the unit until the start of the next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SUPPORTSINGLE_REPAIR</name>
@@ -351,6 +544,11 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="110"/>
         <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="123"/>
+        <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -377,12 +575,22 @@
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="68"/>
+        <source>Fire with Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_TRAP</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="29"/>
         <source>TRAP!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="38"/>
+        <source>This action can&apos;t be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -406,12 +614,22 @@
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="344"/>
+        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_UNSTEALTH</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="26"/>
         <source>Unstealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="69"/>
+        <source>Unstealths a unit and makes it visible to all enemies.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -428,6 +646,44 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="26"/>
         <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="48"/>
+        <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActionListDialog</name>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="39"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="49"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="58"/>
+        <source>Un/Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="117"/>
+        <source>Action List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="89"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/actionlistdialog.cpp" line="203"/>
+        <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3601,8 +3857,28 @@ Version: </source>
 <context>
     <name>PerkSelectionDialog</name>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="27"/>
+        <location filename="../objects/perkselectiondialog.cpp" line="28"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/perkselectiondialog.cpp" line="93"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/perkselectiondialog.cpp" line="102"/>
+        <source>Un/Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/perkselectiondialog.cpp" line="129"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/perkselectiondialog.cpp" line="169"/>
+        <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4055,217 +4331,229 @@ Version: </source>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="83"/>
+        <location filename="../objects/ruleselection.cpp" line="85"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="100"/>
+        <location filename="../objects/ruleselection.cpp" line="102"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="108"/>
+        <location filename="../objects/ruleselection.cpp" line="110"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="112"/>
+        <location filename="../objects/ruleselection.cpp" line="114"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="121"/>
+        <location filename="../objects/ruleselection.cpp" line="123"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="126"/>
+        <location filename="../objects/ruleselection.cpp" line="128"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="136"/>
+        <location filename="../objects/ruleselection.cpp" line="138"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="140"/>
+        <location filename="../objects/ruleselection.cpp" line="142"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="151"/>
+        <location filename="../objects/ruleselection.cpp" line="153"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="157"/>
+        <location filename="../objects/ruleselection.cpp" line="159"/>
         <source>Unit Ranking: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="161"/>
+        <location filename="../objects/ruleselection.cpp" line="163"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="170"/>
+        <location filename="../objects/ruleselection.cpp" line="172"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="173"/>
+        <location filename="../objects/ruleselection.cpp" line="175"/>
+        <location filename="../objects/ruleselection.cpp" line="190"/>
+        <location filename="../objects/ruleselection.cpp" line="205"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="185"/>
-        <source>No CO Powers: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="189"/>
-        <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="198"/>
-        <source>Unique CO&apos;s: </source>
+        <location filename="../objects/ruleselection.cpp" line="187"/>
+        <source>Perk Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="202"/>
+        <source>Action Bannlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="217"/>
+        <source>No CO Powers: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="221"/>
+        <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="230"/>
+        <source>Unique CO&apos;s: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="234"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="211"/>
+        <location filename="../objects/ruleselection.cpp" line="243"/>
         <source>CO Specific Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="215"/>
+        <location filename="../objects/ruleselection.cpp" line="247"/>
         <source>If unchecked specific CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="223"/>
+        <location filename="../objects/ruleselection.cpp" line="255"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="227"/>
+        <location filename="../objects/ruleselection.cpp" line="259"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="235"/>
+        <location filename="../objects/ruleselection.cpp" line="267"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="238"/>
+        <location filename="../objects/ruleselection.cpp" line="270"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="238"/>
+        <location filename="../objects/ruleselection.cpp" line="270"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="238"/>
+        <location filename="../objects/ruleselection.cpp" line="270"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="240"/>
+        <location filename="../objects/ruleselection.cpp" line="272"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="252"/>
+        <location filename="../objects/ruleselection.cpp" line="284"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="256"/>
+        <location filename="../objects/ruleselection.cpp" line="288"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="265"/>
+        <location filename="../objects/ruleselection.cpp" line="297"/>
         <source>CO Perks: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="269"/>
+        <location filename="../objects/ruleselection.cpp" line="301"/>
         <source>Selects the amount of CO Perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="279"/>
+        <location filename="../objects/ruleselection.cpp" line="311"/>
         <source>Building Hidding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="283"/>
+        <location filename="../objects/ruleselection.cpp" line="315"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="292"/>
+        <location filename="../objects/ruleselection.cpp" line="324"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="296"/>
+        <location filename="../objects/ruleselection.cpp" line="328"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="306"/>
+        <location filename="../objects/ruleselection.cpp" line="338"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="310"/>
+        <location filename="../objects/ruleselection.cpp" line="342"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="319"/>
+        <location filename="../objects/ruleselection.cpp" line="351"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="322"/>
+        <location filename="../objects/ruleselection.cpp" line="354"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="322"/>
+        <location filename="../objects/ruleselection.cpp" line="354"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="324"/>
+        <location filename="../objects/ruleselection.cpp" line="356"/>
         <source>Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="336"/>
+        <location filename="../objects/ruleselection.cpp" line="368"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="340"/>
+        <location filename="../objects/ruleselection.cpp" line="372"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="351"/>
+        <location filename="../objects/ruleselection.cpp" line="383"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

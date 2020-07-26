@@ -60,7 +60,6 @@ var Constructor = function()
             if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
-
                 return true;
             }
         }
@@ -99,6 +98,11 @@ var Constructor = function()
         var unit = map.spawnUnit(x, y, unitID, player);
         map.getGameRecorder().buildUnit(player.getPlayerID());
         player.buildedUnit(unit);
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Orders a Black Hole Factory to produce a unit at the first door. ") +
+               qsTr("The unit is able to move immediatly.");
     };
 }
 

@@ -35,7 +35,6 @@ public:
     {
         return iconList;
     }
-    oxygine::spSprite getIconSprite(QString icon);
 signals:
 
 public slots:

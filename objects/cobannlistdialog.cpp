@@ -55,7 +55,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         detach();
     });
 
-    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 180);
     m_ToggleAll->setPosition(Settings::getWidth() / 2 + 60 , Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -82,7 +82,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         std::tuple<QString, QStringList> data = Mainapp::readList(file);
         items.append(std::get<0>(data));
     }
-    m_PredefinedLists = new DropDownmenu(230, items);
+    m_PredefinedLists = new DropDownmenu(260, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
