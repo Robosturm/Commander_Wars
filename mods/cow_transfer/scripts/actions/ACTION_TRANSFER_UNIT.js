@@ -87,6 +87,10 @@ var Constructor = function()
 			return "FIELD";			
 		}
     };
+	this.getStepInputType = getDescription()
+	{
+		return qsTr("Transfers a unit to another allied player.");
+    };	
 };
 
 Constructor.prototype = ACTION;

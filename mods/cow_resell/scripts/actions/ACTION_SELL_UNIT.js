@@ -2,8 +2,7 @@ var Constructor = function()
 {
     // called for loading the main sprite
     this.canBePerformed = function(action)
-    {
-		
+    {		
         return true;
     };
     
@@ -76,6 +75,10 @@ var Constructor = function()
     this.getStepInputType = function(action)
     {
         return "FIELD";
+    };
+	this.getStepInputType = getDescription()
+	{
+		return qsTr("Sells a unit for 50% of it's current value.");
     };
 };
 

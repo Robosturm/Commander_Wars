@@ -74,9 +74,8 @@
 <context>
     <name>ACTION_ATTACKLOG</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ATTACKLOG.js" line="10"/>
         <source>Attack Log</source>
-        <translation>Angriffslog</translation>
+        <translation type="vanished">Angriffslog</translation>
     </message>
 </context>
 <context>
@@ -209,9 +208,8 @@
 <context>
     <name>ACTION_COINFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_COINFO.js" line="10"/>
         <source>CO Info</source>
-        <translation>KO Info</translation>
+        <translation type="vanished">KO Info</translation>
     </message>
 </context>
 <context>
@@ -329,9 +327,8 @@
 <context>
     <name>ACTION_GAMEINFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_GAMEINFO.js" line="10"/>
         <source>Game Info</source>
-        <translation>Spielinfo</translation>
+        <translation type="vanished">Spielinfo</translation>
     </message>
 </context>
 <context>
@@ -345,6 +342,34 @@
         <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="55"/>
         <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_INFO</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="58"/>
+        <source>CO Info</source>
+        <translation type="unfinished">KO Info</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="57"/>
+        <source>Victory Info</source>
+        <translation type="unfinished">Sieg Info</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="10"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="59"/>
+        <source>Game Info</source>
+        <translation type="unfinished">Spielinfo</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="60"/>
+        <source>Attack Log</source>
+        <translation type="unfinished">Angriffslog</translation>
     </message>
 </context>
 <context>
@@ -591,14 +616,6 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="38"/>
         <source>This action can&apos;t be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ACTION_UNITINFO</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_UNITINFO.js" line="10"/>
-        <source>Unit Info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2526,67 +2543,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Player</source>
         <translation>Spieler</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Produced</source>
         <translation>Produziert</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Lost</source>
         <translation>Verluste</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Killed</source>
         <translation>Besiegt</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Income</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Funds</source>
         <translation>Fonds</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Bases</source>
         <translation>Basen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1038"/>
+        <location filename="../menue/gamemenue.cpp" line="1041"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1054"/>
+        <location filename="../menue/gamemenue.cpp" line="1057"/>
         <source>Player </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1064"/>
+        <location filename="../menue/gamemenue.cpp" line="1067"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1413"/>
+        <location filename="../menue/gamemenue.cpp" line="1416"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1431"/>
+        <location filename="../menue/gamemenue.cpp" line="1434"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1460"/>
+        <location filename="../menue/gamemenue.cpp" line="1463"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>

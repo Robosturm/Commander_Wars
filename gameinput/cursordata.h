@@ -9,8 +9,8 @@ class CursorData : public QObject
 public:
     explicit CursorData();
     virtual ~CursorData() = default;
-    CursorData(CursorData&& move) = default;
-    CursorData(const CursorData& copy) = default;
+    explicit CursorData(CursorData&& move) = default;
+    explicit CursorData(const CursorData& copy) = default;
 signals:
 
 public slots:
