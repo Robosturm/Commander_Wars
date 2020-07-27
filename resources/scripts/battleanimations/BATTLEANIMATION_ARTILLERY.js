@@ -51,17 +51,10 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        if (armyName !== "ma")
-        {
-            sprite.loadSprite("artillery+" + armyName + "+fire",  false,
-                              BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
-            sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
-                                BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
-        }
-        else
-        {
-            BATTLEANIMATION_ARTILLERY.loadStandingAnimation(sprite, unit, defender, weapon);
-        }
+        sprite.loadSprite("artillery+" + armyName + "+fire",  false,
+                          BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
+        sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
         offset = Qt.point(30, 37);
         // gun
         if (armyName === "yc")

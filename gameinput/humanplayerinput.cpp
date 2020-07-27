@@ -78,7 +78,6 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr)
     {
-
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
             Mainapp* pApp = Mainapp::getInstance();

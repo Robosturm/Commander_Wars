@@ -44,7 +44,7 @@ namespace oxygine
         {
             case ep_show_error:
                 qCritical(format, args);
-                Q_ASSERT(!"handleErrorPolicy error.");
+                // Q_ASSERT(!"handleErrorPolicy error.");
                 break;
             case ep_show_warning:
                 qWarning(format, args);

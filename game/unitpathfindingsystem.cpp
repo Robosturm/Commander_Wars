@@ -31,7 +31,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
     spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y) && m_Movepoints > 0)
+    if (pMap.get() != nullptr && pMap->onMap(x, y) && m_Movepoints > 0)
     {
         return m_Movepoints - currentCost;
     }
@@ -60,7 +60,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     else if (movecosts[index][direction] == infinite)
     {
         spGameMap pMap = GameMap::getInstance();
-        if (pMap->onMap(x, y))
+        if (pMap.get() != nullptr && pMap->onMap(x, y))
         {
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
             // check for an enemy on the field
@@ -103,80 +103,83 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
 QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {
     spGameMap pMap = GameMap::getInstance();
-    QList<QVector4D> usedNodes;
-    QList<QVector4D> nextNodes;
-    QList<QVector4D> currentNodes;
-    currentNodes.append(QVector4D(target.x(), target.y(), target.x(), target.y()));
-    while (currentNodes.size() > 0 || nextNodes.size() > 0)
+    if (pMap.get() != nullptr)
     {
-        if (currentNodes.size() == 0)
+        QList<QVector4D> usedNodes;
+        QList<QVector4D> nextNodes;
+        QList<QVector4D> currentNodes;
+        currentNodes.append(QVector4D(target.x(), target.y(), target.x(), target.y()));
+        while (currentNodes.size() > 0 || nextNodes.size() > 0)
         {
-            // swap nodes
-            currentNodes.append(nextNodes);
-            nextNodes.clear();
-        }
-        QVector4D currentNode = currentNodes.first();
-        currentNodes.removeFirst();
-        usedNodes.append(currentNode);
-        qint32 currentCost = getTargetCosts(currentNode.x(), currentNode.y());
-        Unit* pNodeUnit = pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
-        // empty field or unit ignores collision and can move on the field
-        // or we are on this field
-        if (isCrossable(pNodeUnit, currentNode.x(), currentNode.y(), currentNode.z(), currentNode.w(),
-                        getTargetCosts(currentNode.x(), currentNode.y()), movepoints))
-        {
-
-            return getPath(currentNode.x(), currentNode.y());
-        }
-        else
-        {
-            // check surrounding nodes
-            for (qint32 i = 0; i < 4; i++)
+            if (currentNodes.size() == 0)
             {
-                QVector4D test;
-                switch (i)
+                // swap nodes
+                currentNodes.append(nextNodes);
+                nextNodes.clear();
+            }
+            QVector4D currentNode = currentNodes.first();
+            currentNodes.removeFirst();
+            usedNodes.append(currentNode);
+            qint32 currentCost = getTargetCosts(currentNode.x(), currentNode.y());
+            Unit* pNodeUnit = pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
+            // empty field or unit ignores collision and can move on the field
+            // or we are on this field
+            if (isCrossable(pNodeUnit, currentNode.x(), currentNode.y(), currentNode.z(), currentNode.w(),
+                            getTargetCosts(currentNode.x(), currentNode.y()), movepoints))
+            {
+
+                return getPath(currentNode.x(), currentNode.y());
+            }
+            else
+            {
+                // check surrounding nodes
+                for (qint32 i = 0; i < 4; i++)
                 {
-                    case 0:
+                    QVector4D test;
+                    switch (i)
                     {
-                        test = QVector4D(currentNode.x() + 1, currentNode.y(),
-                                         currentNode.x(), currentNode.y());
-                        break;
+                        case 0:
+                        {
+                            test = QVector4D(currentNode.x() + 1, currentNode.y(),
+                                             currentNode.x(), currentNode.y());
+                            break;
+                        }
+                        case 1:
+                        {
+                            test = QVector4D(currentNode.x() - 1, currentNode.y(),
+                                             currentNode.x(), currentNode.y());
+                            break;
+                        }
+                        case 2:
+                        {
+                            test = QVector4D(currentNode.x(), currentNode.y() + 1,
+                                             currentNode.x(), currentNode.y());
+                            break;
+                        }
+                        default:
+                        {
+                            test = QVector4D(currentNode.x(), currentNode.y() - 1,
+                                             currentNode.x(), currentNode.y());
+                            break;
+                        }
                     }
-                    case 1:
+                    qint32 testCost = getTargetCosts(test.x(), test.y());
+                    // add next node if it's more expensive and not added
+                    if (!direct &&
+                        testCost > currentCost &&
+                        !usedNodes.contains(test) &&
+                        !nextNodes.contains(test))
                     {
-                        test = QVector4D(currentNode.x() - 1, currentNode.y(),
-                                         currentNode.x(), currentNode.y());
-                        break;
+                        nextNodes.append(test);
                     }
-                    case 2:
+                    // add previous nodes if it's a previous one and not used yet
+                    else if (testCost >= 0 &&
+                             testCost <= currentCost &&
+                             !usedNodes.contains(test) &&
+                             !nextNodes.contains(test))
                     {
-                        test = QVector4D(currentNode.x(), currentNode.y() + 1,
-                                         currentNode.x(), currentNode.y());
-                        break;
+                        nextNodes.append(test);
                     }
-                    default:
-                    {
-                        test = QVector4D(currentNode.x(), currentNode.y() - 1,
-                                         currentNode.x(), currentNode.y());
-                        break;
-                    }
-                }
-                qint32 testCost = getTargetCosts(test.x(), test.y());
-                // add next node if it's more expensive and not added
-                if (!direct &&
-                    testCost > currentCost &&
-                    !usedNodes.contains(test) &&
-                    !nextNodes.contains(test))
-                {
-                    nextNodes.append(test);
-                }
-                // add previous nodes if it's a previous one and not used yet
-                else if (testCost >= 0 &&
-                         testCost <= currentCost &&
-                         !usedNodes.contains(test) &&
-                         !nextNodes.contains(test))
-                {
-                    nextNodes.append(test);
                 }
             }
         }
@@ -194,28 +197,31 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
         spGameMap pMap = GameMap::getInstance();
         QPoint lastValidPoint = path[path.size() - 1];
         ret.append(lastValidPoint);
-        for (qint32 i = path.size() - 2; i >= 0; i--)
+        if (pMap.get() != nullptr)
         {
-            Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
-            currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
-                                     path[i + 1].x(), path[i + 1].y());
-            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), path[i + 1].x(), path[i + 1].y(), currentCosts, movepoints))
+            for (qint32 i = path.size() - 2; i >= 0; i--)
             {
-                lastValidPoint = path[i];
-                for (qint32 i2 = 0; i2 < buffer.size(); i2++)
+                Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
+                currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
+                                         path[i + 1].x(), path[i + 1].y());
+                if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), path[i + 1].x(), path[i + 1].y(), currentCosts, movepoints))
                 {
-                    ret.push_front(buffer[i2]);
+                    lastValidPoint = path[i];
+                    for (qint32 i2 = 0; i2 < buffer.size(); i2++)
+                    {
+                        ret.push_front(buffer[i2]);
+                    }
+                    ret.push_front(lastValidPoint);
+                    buffer.clear();
                 }
-                ret.push_front(lastValidPoint);
-                buffer.clear();
-            }
-            else if (currentCosts > movepoints)
-            {
-                break;
-            }
-            else
-            {
-                buffer.append(path[i]);
+                else if (currentCosts > movepoints)
+                {
+                    break;
+                }
+                else
+                {
+                    buffer.append(path[i]);
+                }
             }
         }
         return ret;
@@ -233,8 +239,8 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
 bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints)
 {
     if ((pNodeUnit == nullptr || // empty field
-        (pNodeUnit == m_pUnit) || // current field
-        (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) &&  // oozium move
+         (pNodeUnit == m_pUnit) || // current field
+         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) &&  // oozium move
         (movepoints < 0 || movementCosts <= movepoints) && // inside given cost limits
         (getCosts(getIndex(x, y), x, y, curX, curY) > 0))
     {

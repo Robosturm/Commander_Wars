@@ -298,7 +298,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
-    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);    
+    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigNicknameUnit, this, &GameMenue::nicknameUnit, Qt::QueuedConnection);
 
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
@@ -661,6 +661,8 @@ void GameMenue::performAction(GameAction* pGameAction)
 
 void GameMenue::skipAnimations()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
@@ -805,6 +807,7 @@ void GameMenue::skipAnimations()
             }
         }
     }
+    pApp->continueThread();
 }
 
 void GameMenue::finishActionPerformed()
@@ -1288,7 +1291,7 @@ void GameMenue::startGame()
         pApp->getAudioThread()->playRandom();
         updatePlayerinfo();
         if ((m_pNetworkInterface.get() == nullptr ||
-            m_pNetworkInterface->getIsServer()) &&
+             m_pNetworkInterface->getIsServer()) &&
             !gameStarted)
         {
             emit sigActionPerformed();

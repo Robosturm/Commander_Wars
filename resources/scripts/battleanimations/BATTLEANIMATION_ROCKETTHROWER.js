@@ -51,15 +51,18 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        if (armyName === "ma")
+        if ((armyName !== "ac") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "dm") &&
+            (armyName !== "ti") &&
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
-            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon);
+            armyName = "os";
         }
-        else
-        {
-            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
-        }
-
+        BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
         var offset = Qt.point(0, 31);
         // rocket
         if (armyName === "yc")
@@ -109,14 +112,18 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        if (armyName === "ma")
+        if ((armyName !== "ac") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "dm") &&
+            (armyName !== "ti") &&
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
-            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon);
+            armyName = "os";
         }
-        else
-        {
-            BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
-        }
+        BATTLEANIMATION_ROCKETTHROWER.loadSprite(sprite, unit, defender, weapon, "+fired");
     };
 
     this.getFireDurationMS = function()

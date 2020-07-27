@@ -44,23 +44,26 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
-    qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
-    onMap = pMap->onMap(x, y);
-    if (onMap)
+    if (pMap.get() != nullptr)
     {
-        // play tick sound when changing the field
-        if ((x != m_MapPointX) ||
-            (y != m_MapPointY))
+        qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
+        qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
+        onMap = pMap->onMap(x, y);
+        if (onMap)
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
-        }
+            // play tick sound when changing the field
+            if ((x != m_MapPointX) ||
+                (y != m_MapPointY))
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
+            }
 
-        m_MapPointX = x;
-        m_MapPointY = y;
-        this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
-        // provide cursor move signal
-        emit sigCursorMoved(m_MapPointX, m_MapPointY);
+            m_MapPointX = x;
+            m_MapPointY = y;
+            this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+            // provide cursor move signal
+            emit sigCursorMoved(m_MapPointX, m_MapPointY);
+        }
     }
 }
 
@@ -80,7 +83,7 @@ void Cursor::addCursorRangeOutline(qint32 range, QColor color)
         }
         else
         {
-             createOutline(i, range, color);
+            createOutline(i, range, color);
         }
     }
     pApp->continueThread();

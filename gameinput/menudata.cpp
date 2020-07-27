@@ -27,6 +27,5 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
     costList.append(costs);
     enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    spGameMap pMap = GameMap::getInstance();
     iconList.append(pGameManager->getIcon(icon));
 }

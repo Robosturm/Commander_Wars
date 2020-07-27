@@ -48,6 +48,14 @@ var Constructor = function()
         {
             armyName = "bh"
         }
+        if ((armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
+        {
+            armyName = "os";
+        }
         var offset = Qt.point(5, 30);
         // rocket
         if (armyName === "yc")

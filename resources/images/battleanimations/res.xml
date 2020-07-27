@@ -446,8 +446,7 @@
 		<image file="missile/missile+yc.png" />
 		<image file="missile/missile+yc+mask.png" />
 		<image file="missile/missile+ma.png" />
-		<image file="missile/missile+ma+mask.png" />
-		
+		<image file="missile/missile+ma+mask.png" />		
 		<image file="missile/missile+bh+fired.png" />
 		<image file="missile/missile+bh+fired+mask.png" />
 		<image file="missile/missile+bm+fired.png" />
@@ -458,6 +457,8 @@
 		<image file="missile/missile+os+fired+mask.png" />
 		<image file="missile/missile+yc+fired.png" />
 		<image file="missile/missile+yc+fired+mask.png" />
+		<image file="missile/missile+ma+fired.png" />
+		<image file="missile/missile+ma+fired+mask.png" />
 		
 		<!-- motorbike -->
 		<image file="motorbike/motorbike.png" />
@@ -566,18 +567,25 @@
 		<image file="rocketthrower/rocketthrower+yc.png" />
 		<image file="rocketthrower/rocketthrower+yc+mask.png" />
 		<image file="rocketthrower/rocketthrower+ma.png" />
-		<image file="rocketthrower/rocketthrower+ma+mask.png" />
-		
+		<image file="rocketthrower/rocketthrower+ma+mask.png" />		
+		<image file="rocketthrower/rocketthrower+ac+fired.png" />
+		<image file="rocketthrower/rocketthrower+ac+fired+mask.png" />
 		<image file="rocketthrower/rocketthrower+bh+fired.png" />
 		<image file="rocketthrower/rocketthrower+bh+fired+mask.png" />
 		<image file="rocketthrower/rocketthrower+bm+fired.png" />
 		<image file="rocketthrower/rocketthrower+bm+fired+mask.png" />
+		<image file="rocketthrower/rocketthrower+dm+fired.png" />
+		<image file="rocketthrower/rocketthrower+dm+fired+mask.png" />
 		<image file="rocketthrower/rocketthrower+ge+fired.png" />
 		<image file="rocketthrower/rocketthrower+ge+fired+mask.png" />
 		<image file="rocketthrower/rocketthrower+os+fired.png" />
 		<image file="rocketthrower/rocketthrower+os+fired+mask.png" />
+		<image file="rocketthrower/rocketthrower+ti+fired.png" />
+		<image file="rocketthrower/rocketthrower+ti+fired+mask.png" />
 		<image file="rocketthrower/rocketthrower+yc+fired.png" />
 		<image file="rocketthrower/rocketthrower+yc+fired+mask.png" />
+		<image file="rocketthrower/rocketthrower+ma+fired.png" />
+		<image file="rocketthrower/rocketthrower+ma+fired+mask.png" />
 		
 		<!-- submarine -->
 		<image file="submarine/submarine+bh.png" cols = "4" />

@@ -177,7 +177,10 @@ bool GameAnimationNextDay::onFinished()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         spGameMap pMap = GameMap::getInstance();
-        pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+        if (pMap.get() != nullptr)
+        {
+            pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+        }
         ret = GameAnimation::onFinished();
         pApp->continueThread();
     }

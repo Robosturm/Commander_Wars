@@ -51,8 +51,15 @@ bool Building::isValid()
 
 QPoint Building::getOffset(Terrain* pTerrain)
 {
-    return QPoint(m_pTerrain->getX() - pTerrain->getX(),
-                  m_pTerrain->getY() - pTerrain->getY());
+    if (pTerrain != nullptr)
+    {
+        return QPoint(m_pTerrain->getX() - pTerrain->getX(),
+                      m_pTerrain->getY() - pTerrain->getY());
+    }
+    else
+    {
+        return QPoint(0, 0);
+    }
 }
 
 QStringList Building::getBaseTerrain()
@@ -392,12 +399,26 @@ QString Building::getMinimapIcon()
 
 qint32 Building::getX() const
 {
-    return m_pTerrain->getX();
+    if (m_pTerrain != nullptr)
+    {
+        return m_pTerrain->getX();
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 qint32 Building::getY() const
 {
-    return m_pTerrain->getY();
+    if (m_pTerrain != nullptr)
+    {
+        return m_pTerrain->getY();
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 QStringList Building::getActionList()

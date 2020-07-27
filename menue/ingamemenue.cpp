@@ -324,16 +324,20 @@ void InGameMenue::keyUp(oxygine::KeyEvent event)
 QPoint InGameMenue::getMousePos(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 MousePosX = x * (GameMap::Imagesize * pMap->getZoom()) + pMap->getPosition().x + (GameMap::Imagesize * pMap->getZoom()) / 2;
-    qint32 MousePosY = y * (GameMap::Imagesize * pMap->getZoom()) + pMap->getPosition().y + (GameMap::Imagesize * pMap->getZoom()) / 2;
-    return QPoint(MousePosX, MousePosY);
+    if (pMap.get() != nullptr)
+    {
+        qint32 MousePosX = x * (GameMap::Imagesize * pMap->getZoom()) + pMap->getPosition().x + (GameMap::Imagesize * pMap->getZoom()) / 2;
+        qint32 MousePosY = y * (GameMap::Imagesize * pMap->getZoom()) + pMap->getPosition().y + (GameMap::Imagesize * pMap->getZoom()) / 2;
+        return QPoint(MousePosX, MousePosY);
+    }
+    return QPoint(0, 0);
 }
 
 void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    if (pMap.get() != nullptr && pMap->onMap(x, y))
     {
         QPoint mousePos = getMousePos(x, y);
         qint32 MousePosX = mousePos.x();
@@ -372,5 +376,8 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
 void InGameMenue::centerMapOnCursor()
 {
     spGameMap pMap = GameMap::getInstance();
-    pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+    if (pMap.get() != nullptr)
+    {
+        pMap->centerMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+    }
 }

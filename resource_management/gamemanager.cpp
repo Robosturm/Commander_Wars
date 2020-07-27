@@ -37,7 +37,7 @@ oxygine::spSprite GameManager::getIcon(QString icon)
         {
             spGameMap pMap = GameMap::getInstance();
             spPlayer pPlayer;
-            if (pMap.get() != nullptr)
+            if (pMap.get() == nullptr)
             {
                 pPlayer = new Player();
                 pPlayer->init();
