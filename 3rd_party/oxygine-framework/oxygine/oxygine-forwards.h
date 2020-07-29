@@ -31,7 +31,7 @@ namespace oxygine
     };
 
 
-    void handleErrorPolicy(error_policy ep, const char* format, ...);
+    void handleErrorPolicy(error_policy ep, QString message);
 
     typedef std::chrono::milliseconds timeMS;
     typedef unsigned char pointer_index;

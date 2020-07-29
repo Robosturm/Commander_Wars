@@ -35,26 +35,21 @@ namespace oxygine
             qDebug("core::reset() done");
         }
     }
-    void handleErrorPolicy(error_policy ep, const char* format, ...)
+    void handleErrorPolicy(error_policy ep, QString message)
     {
-        va_list args;
-        va_start(args, format);
-
         switch (ep)
         {
             case ep_show_error:
-                qCritical(format, args);
+                qCritical() << message;
                 // Q_ASSERT(!"handleErrorPolicy error.");
                 break;
             case ep_show_warning:
-                qWarning(format, args);
+                qWarning() << message;
                 break;
             case ep_ignore_error:
                 break;
             default:
                 Q_ASSERT(!"not implemented");
         }
-
-        va_end(args);
     }
 }

@@ -539,14 +539,17 @@ void Terrain::loadOverlaySprite(QString spriteID)
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
     oxygine::spSprite pSprite = new oxygine::Sprite();
-    if (pAnim->getTotalFrames() > 1)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-        pSprite->addTween(tween);
-    }
-    else
-    {
-        pSprite->setResAnim(pAnim);
+        if (pAnim->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
     }
     pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
@@ -650,7 +653,7 @@ qint32 Terrain::getDefense(Unit* pUnit)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->isEnemyUnit(pUnit))
+            if (pPlayer->isEnemyUnit(pUnit) && !pPlayer->getIsDefeated())
             {
                 CO* pCO = pPlayer->getCO(0);
                 if (pCO != nullptr)

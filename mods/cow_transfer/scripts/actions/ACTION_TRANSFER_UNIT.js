@@ -47,7 +47,7 @@ var Constructor = function()
 		if (action.getInputStep() === 1)
         {
 			var currentPlayer = map.getCurrentPlayer();
-			for (i = 0; i < map.getPlayerCount(); i++)
+            for (var i = 0; i < map.getPlayerCount(); i++)
             {
 				var player = map.getPlayer(i);
 				if (player !== currentPlayer &&
@@ -87,7 +87,7 @@ var Constructor = function()
 			return "FIELD";			
 		}
     };
-	this.getStepInputType = getDescription()
+	this.getDescription = function()
 	{
 		return qsTr("Transfers a unit to another allied player.");
     };	

@@ -62,7 +62,7 @@ GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y
             return GameEnums::Directions_West;
         }
     }
-    return GameEnums::Directions_None;
+    return GameEnums::Directions_East;
 }
 
 void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float scaling)

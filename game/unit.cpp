@@ -725,7 +725,8 @@ bool Unit::canBeRepaired(QPoint position)
     {
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
-            m_pOwner->isEnemy(pPlayer))
+            m_pOwner->isEnemy(pPlayer) &&
+            !pPlayer->getIsDefeated())
         {
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -1046,7 +1047,8 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     {
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
-            m_pOwner->isEnemy(pPlayer))
+            m_pOwner->isEnemy(pPlayer) &&
+            !pPlayer->getIsDefeated())
         {
             pCO0 = pPlayer->getCO(0);
             if (pCO0 != nullptr)
@@ -1232,7 +1234,8 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     {
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
-            m_pOwner->isEnemy(pPlayer))
+            m_pOwner->isEnemy(pPlayer) &&
+            !pPlayer->getIsDefeated())
         {
             pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -2073,7 +2076,7 @@ qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
     {
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
-            (pPlayer->isEnemy(m_pOwner) ||
+            ((pPlayer->isEnemy(m_pOwner) && !pPlayer->getIsDefeated()) ||
              m_pOwner == pPlayer))
         {
             CO* pCO = pPlayer->getCO(0);

@@ -663,15 +663,18 @@ bool Player::getIsDefeated() const
 qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
 {
     qint32 reduction = 0;
-    CO* pCO = getCO(0);
-    if (pCO != nullptr)
+    if (!isDefeated)
     {
-        reduction += pCO->getIncomeReduction(pBuilding, income);
-    }
-    pCO = getCO(1);
-    if (pCO != nullptr)
-    {
-        reduction += pCO->getIncomeReduction(pBuilding, income);
+        CO* pCO = getCO(0);
+        if (pCO != nullptr)
+        {
+            reduction += pCO->getIncomeReduction(pBuilding, income);
+        }
+        pCO = getCO(1);
+        if (pCO != nullptr)
+        {
+            reduction += pCO->getIncomeReduction(pBuilding, income);
+        }
     }
     return reduction;
 }
@@ -730,13 +733,16 @@ qint32 Player::getCostModifier(QString id, qint32 baseCost)
 
 void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {
-    if (playerCOs[0].get() != nullptr)
+    if (!isDefeated)
     {
-        playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
-    }
-    if (playerCOs[1].get() != nullptr)
-    {
-        playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+        if (playerCOs[0].get() != nullptr)
+        {
+            playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+        }
+        if (playerCOs[1].get() != nullptr)
+        {
+            playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+        }
     }
 }
 
@@ -755,7 +761,7 @@ void Player::buildedUnit(Unit* pUnit)
 bool Player::getWeatherImmune()
 {
     if ((playerCOs[0].get() != nullptr &&
-        playerCOs[0]->getWeatherImmune()) ||
+         playerCOs[0]->getWeatherImmune()) ||
         (playerCOs[1].get() != nullptr &&
          playerCOs[1]->getWeatherImmune()))
     {

@@ -367,7 +367,8 @@ qint32 Building::getIncome()
         {
             Player* pPlayer = pMap->getPlayer(i);
             if (pPlayer != nullptr &&
-                m_pOwner->isEnemy(pPlayer))
+                m_pOwner->isEnemy(pPlayer) &&
+                !pPlayer->getIsDefeated())
             {
                 modifier -= pPlayer->getIncomeReduction(this, income);
             }
@@ -464,7 +465,8 @@ QStringList Building::getActionList()
         {
             Player* pPlayer = pMap->getPlayer(i);
             if (pPlayer != nullptr &&
-                m_pOwner->isEnemy(pPlayer))
+                m_pOwner->isEnemy(pPlayer) &&
+                !pPlayer->getIsDefeated())
             {
                 pCO = pPlayer->getCO(0);
                 if (pCO != nullptr)

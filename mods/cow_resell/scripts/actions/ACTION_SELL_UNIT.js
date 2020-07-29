@@ -76,7 +76,7 @@ var Constructor = function()
     {
         return "FIELD";
     };
-	this.getStepInputType = getDescription()
+    this.getDescription = function()
 	{
 		return qsTr("Sells a unit for 50% of it's current value.");
     };

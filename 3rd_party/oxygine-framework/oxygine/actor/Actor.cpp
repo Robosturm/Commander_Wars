@@ -733,7 +733,7 @@ namespace oxygine
         Actor* actor = _getDescendant(name);
         if (!actor)
         {
-            handleErrorPolicy(ep, "can't find descendant: %s", name.toStdString().c_str());
+            handleErrorPolicy(ep, "can't find descendant: " + name);
         }
         return actor;
     }
@@ -772,7 +772,7 @@ namespace oxygine
             actor = actor->_next;
         }
 
-        handleErrorPolicy(ep, "can't find child: %s", name.toStdString().c_str());
+        handleErrorPolicy(ep, "can't find child: " + name);
 
         return nullptr;
     }
@@ -1140,8 +1140,7 @@ namespace oxygine
                 return tween;
             tween = tween->getNextSibling();
         }
-
-        handleErrorPolicy(ep, "can't find tween: %s", name.toStdString().c_str());
+        handleErrorPolicy(ep, "can't find tween: " + name);
         return nullptr;
     }
 

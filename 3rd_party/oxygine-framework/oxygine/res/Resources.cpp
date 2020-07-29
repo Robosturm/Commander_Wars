@@ -315,7 +315,7 @@ namespace oxygine
             return it.value().get();
         }
 
-        handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.toStdString().c_str(), _name.toStdString().c_str());
+        handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + _name + "'");
         if (ep == ep_show_error)
         {
             return defIfNotFound;

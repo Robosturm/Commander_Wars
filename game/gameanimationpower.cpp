@@ -74,16 +74,16 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     QString resAnim = coid.toLower() + "+nrm";
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
     oxygine::spSprite m_CO = new oxygine::Sprite();
-    m_CO->setResAnim(pAnim);
-    m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
-    m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-    m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
-    m_CO->addTween(tween1);
-    addChild(m_CO);
-
-
-
+    if (pAnim != nullptr)
+    {
+        m_CO->setResAnim(pAnim);
+        m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
+        m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
+        m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
+        oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
+        m_CO->addTween(tween1);
+        addChild(m_CO);
+    }
     // cool text incoming
     QString text;
     if (powerMode == GameEnums::PowerMode_Tagpower)
@@ -111,13 +111,16 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
             resAnim = pCO1->getCoID().toLower() + "+nrm";
             pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
             m_CO = new oxygine::Sprite();
-            m_CO->setResAnim(pAnim);
-            m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
-            m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-            m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() * 2 - 40, Settings::getHeight());
-            tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
-            m_CO->addTween(tween1);
-            addChild(m_CO);
+            if (pAnim != nullptr)
+            {
+                m_CO->setResAnim(pAnim);
+                m_CO->setScale((Settings::getHeight() - 400) / pAnim->getHeight());
+                m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
+                m_CO->setPosition(Settings::getWidth() - m_CO->getScaledWidth() * 2 - 40, Settings::getHeight());
+                oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
+                m_CO->addTween(tween1);
+                addChild(m_CO);
+            }
         }
     }
     else if (powerMode == GameEnums::PowerMode_Superpower)
