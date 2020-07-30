@@ -8,7 +8,6 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -17,6 +16,22 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
+
+        var width = map.getMapWidth();
+        var heigth = map.getMapHeight();
+        var player = co.getOwner();
+        for (var x = 0; x < width; x++)
+        {
+            for (var y = 0; y < heigth; y++)
+            {
+                var unit = map.getTerrain(x, y).getUnit();
+                if (unit !== null &&
+                    player.isEnemyUnit(unit))
+                {
+                    unit.setCapturePoints(0);
+                }
+            }
+        }
     };
 
     this.activateSuperpower = function(co, powerMode)
