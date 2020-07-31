@@ -4,11 +4,12 @@
 
 #include "network/NetworkInterface.h"
 
-RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
+RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId)
     : m_pSocket(pSocket),
       pIF(CommIF),
       m_SocketID(socketID),
-      m_pStream(m_pSocket)
+      m_pStream(m_pSocket),
+      m_useReceivedId(false)
 {
     m_pStream.setVersion(QDataStream::Qt_5_12);
 }
@@ -26,6 +27,12 @@ void RxTask::recieveData()
         m_pStream >> service;
         NetworkInterface::NetworkSerives eService = static_cast<NetworkInterface::NetworkSerives>(service);
         bool forwardData = false;
+        quint64 socketId;
+        m_pStream >> socketId;
+        if (!m_useReceivedId)
+        {
+            socketId = m_SocketID;
+        }
         m_pStream >> forwardData;
         QByteArray data;
         m_pStream >> data;
@@ -42,9 +49,9 @@ void RxTask::recieveData()
         {
             if (pIF->getIsServer() && forwardData)
             {
-                emit sigForwardData(m_SocketID, data, eService);
+                emit sigForwardData(socketId, data, eService);
             }
-            emit pIF->recieveData(m_SocketID, data, eService);
+            emit pIF->recieveData(socketId, data, eService);
         }
     }
 }

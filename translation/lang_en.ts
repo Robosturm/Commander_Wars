@@ -3474,7 +3474,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="893"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3499,12 +3499,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="370"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="494"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="889"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="926"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7670,17 +7670,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/battleship.js" line="90"/>
-        <source>Naval Unit. Has unique ability to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/battleship.js" line="91"/>
-        <source>launch indirect attacks after moving</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/battleship.js" line="92"/>
-        <source>.</source>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;launch indirect attacks after moving&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

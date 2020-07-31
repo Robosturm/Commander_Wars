@@ -69,10 +69,24 @@ namespace NetworkCommands
      * @brief STARTGAME the host has started the game. the client is allowed to start the game as well.
      */
     static const QString STARTGAME = "STARTGAME";
+
+    // dedicated server commands
     /**
      * @brief LAUNCHGAMEONSERVER
      */
     static const QString LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
+    /**
+      * @brief LAUNCHGAMEONSERVER
+      */
+    static const QString GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
+    /**
+     * @brief PLAYERJOINEDGAMEONSERVER
+     */
+    static const QString PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";
+    /**
+     * @brief PLAYERJOINEDGAMEONSERVER
+     */
+    static const QString PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
 }
 
 #endif // NETWORKCOMMANDS_H

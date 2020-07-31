@@ -18,7 +18,7 @@ class RxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF);
+    RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
     virtual ~RxTask();
 signals:
     void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
@@ -29,6 +29,7 @@ private:
    NetworkInterface* pIF;
    quint64 m_SocketID;
    QDataStream m_pStream;
+   bool m_useReceivedId{false};
 };
 
 #endif // RXTASK_H

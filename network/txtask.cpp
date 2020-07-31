@@ -5,10 +5,11 @@
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
 
-TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF)
+TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll)
  : m_pSocket(pSocket),
    m_SocketID(socketID),
-   pIF(CommIF)
+   pIF(CommIF),
+   m_sendAll(sendAll)
 {
 }
 
@@ -22,13 +23,15 @@ void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSe
     bool open = m_pSocket->isOpen();
     if (open &&
         (m_SocketID == socketID ||
-         socketID == 0))
+         socketID == 0 ||
+         m_sendAll))
     {
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_12);
         // write default-buffersize
         out << static_cast<qint32>(service);
+        out << socketID;
         out << forwardData;
         //write Object
         out << data;

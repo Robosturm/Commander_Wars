@@ -5,7 +5,15 @@ NetworkGame::NetworkGame()
       m_timer(this)
 {
     connect(&m_gameConnection, &LocalClient::sigConnected, this, &NetworkGame::onConnectToLocalServer, Qt::QueuedConnection);
+    connect(&m_gameConnection, &LocalClient::recieveData, this, &NetworkGame::recieveSlaveData, Qt::QueuedConnection);
     connect(&m_timer, &QTimer::timeout, this, &NetworkGame::checkServerRunning, Qt::QueuedConnection);
+}
+
+void NetworkGame::addClient(NetworkInterface* pClient, quint64 socketId)
+{
+    m_Clients.append(pClient);
+   // pClient->disconnect(&NetworkInterface::recieveData);
+    m_SocketIDs.append(socketId);
 }
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -19,15 +27,21 @@ void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterfac
     }
 }
 
+void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    // forward data to other clients
+    for (qint32 i = 0; i < m_SocketIDs.size(); i++)
+    {
+        if (socket == 0 || m_SocketIDs[i] == socket)
+        {
+            emit m_Clients[i]->sig_sendData(0, data, service, false);
+        }
+    }
+}
+
 void NetworkGame::recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
 {
 
-}
-
-void NetworkGame::recieveServerData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
-{
-    // always root data to the actual server
-    emit m_gameConnection.sig_sendData(0, data, service, false);
 }
 
 void NetworkGame::startAndWaitForInit()

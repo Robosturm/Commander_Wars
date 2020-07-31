@@ -501,16 +501,16 @@
 		<image file="recon/recon+yc+mask.png" />
 		<image file="recon/recon+ma.png" />
 		<image file="recon/recon+ma+mask.png" />		
-		<image file="recon/recon+bh+stop.png" />
-		<image file="recon/recon+bh+stop+mask.png" />
-		<image file="recon/recon+bm+stop.png" />
-		<image file="recon/recon+bm+stop+mask.png" />
-		<image file="recon/recon+ge+stop.png" />
-		<image file="recon/recon+ge+stop+mask.png" />
-		<image file="recon/recon+os+stop.png" />
-		<image file="recon/recon+os+stop+mask.png" />
-		<image file="recon/recon+yc+stop.png" />
-		<image file="recon/recon+yc+stop+mask.png" />
+		<image file="recon/recon+bh+stop.png" cols = "2" />
+		<image file="recon/recon+bh+stop+mask.png" cols = "2" />
+		<image file="recon/recon+bm+stop.png" cols = "2" />
+		<image file="recon/recon+bm+stop+mask.png" cols = "2" />
+		<image file="recon/recon+ge+stop.png" cols = "2" />
+		<image file="recon/recon+ge+stop+mask.png" cols = "2" />
+		<image file="recon/recon+os+stop.png" cols = "2" />
+		<image file="recon/recon+os+stop+mask.png" cols = "2" />
+		<image file="recon/recon+yc+stop.png" cols = "2" />
+		<image file="recon/recon+yc+stop+mask.png" cols = "2" />
 		<image file="recon/recon+ma+stop.png" />
 		<image file="recon/recon+ma+stop+mask.png" />
 		<image file="recon/recon+bh+move.png" cols = "4" />

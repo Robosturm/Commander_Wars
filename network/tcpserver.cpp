@@ -124,14 +124,14 @@ void TCPServer::onConnect()
         m_SocketIDs.append(m_idCounter);
 
         // Start RX-Task
-        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this);
+        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, false);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
         QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
         QObject::connect(pRXTask, &RxTask::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
         // start TX-Task
-        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this);
+        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this, false);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);

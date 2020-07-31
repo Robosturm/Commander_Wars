@@ -69,6 +69,11 @@ protected:
     void showIPs();
     GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);
+    void clientMapInfo(QDataStream & stream, quint64 socketID);
+    void requestRule(quint64 socketID);
+    void sendInitUpdate(QDataStream & stream, quint64 socketID);
+    void requestMap(quint64 socketID);
+    void recieveMap(QDataStream & stream, quint64 socketID);
 private:
     /**
      * @brief init

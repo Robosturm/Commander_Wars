@@ -110,6 +110,7 @@ public slots:
      * @param player the player that has changed
      */
     void updatePlayerData(qint32 player);
+    void setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name);
 protected:
     void createAi(qint32 player, GameEnums::AiTypes type);
     /**

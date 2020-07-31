@@ -387,7 +387,7 @@ void PlayerSelection::showPlayerSelection()
     {
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-           pMap->getPlayer(i)->setTeam(i);
+            pMap->getPlayer(i)->setTeam(i);
         }
     }
 
@@ -756,24 +756,24 @@ void PlayerSelection::playerDataChanged()
     if (m_pNetworkInterface.get() != nullptr &&
         m_pNetworkInterface->getIsServer())
     {
-            spGameMap pMap = GameMap::getInstance();
-            QByteArray sendData;
-            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << NetworkCommands::PLAYERDATA;
-            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        spGameMap pMap = GameMap::getInstance();
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << NetworkCommands::PLAYERDATA;
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            sendStream << pPlayer->getFunds();
+            sendStream << pPlayer->getFundsModifier();
+            sendStream << pPlayer->getTeam();
+            QStringList buildList = pPlayer->getBuildList();
+            sendStream << static_cast<qint32>(buildList.size());
+            for (qint32 i2 = 0; i2 < buildList.size(); i2++)
             {
-                Player* pPlayer = pMap->getPlayer(i);
-                sendStream << pPlayer->getFunds();
-                sendStream << pPlayer->getFundsModifier();
-                sendStream << pPlayer->getTeam();
-                QStringList buildList = pPlayer->getBuildList();
-                sendStream << static_cast<qint32>(buildList.size());
-                for (qint32 i2 = 0; i2 < buildList.size(); i2++)
-                {
-                    sendStream << buildList[i2];
-                }
+                sendStream << buildList[i2];
             }
-            m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
+        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -1094,7 +1094,7 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, QVector<qint32> player, 
         sendStream << static_cast<qint32>(player.size());
         for  (qint32 i = 0; i < player.size(); i++)
         {
-           sendStream << player[i];
+            sendStream << player[i];
         }
         m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
     }
@@ -1252,21 +1252,7 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
         stream >> player;
         stream >> aiType;
         GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
-        if (eAiType != GameEnums::AiTypes_Human)
-        {
-            if (eAiType == GameEnums::AiTypes_Open)
-            {
-                m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
-            }
-            else
-            {
-                setPlayerAiName(player, name);
-            }
-        }
-        else
-        {
-            m_playerAIs[player]->setCurrentItem(0);
-        }
+        setPlayerAi(player, eAiType, name);
         pMap->getPlayer(player)->deserializeObject(stream);
         pMap->getPlayer(player)->setBaseGameInput(BaseGameInputIF::createAi(eAiType));
 
@@ -1284,6 +1270,25 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
         {
             emit sigDisconnect();
         }
+    }
+}
+
+void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name)
+{
+    if (eAiType != GameEnums::AiTypes_Human)
+    {
+        if (eAiType == GameEnums::AiTypes_Open)
+        {
+            m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
+        }
+        else
+        {
+            setPlayerAiName(player, name);
+        }
+    }
+    else
+    {
+        m_playerAIs[player]->setCurrentItem(0);
     }
 }
 
@@ -1420,8 +1425,8 @@ void PlayerSelection::updatePlayerData(qint32 player)
         {
             m_playerAIs[player]->setEnabled(true);
             if (((pPlayer->getBaseGameInput() != nullptr &&
-                pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
-                m_pNetworkInterface->getIsServer()) &&
+                  pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
+                 m_pNetworkInterface->getIsServer()) &&
                 !saveGame)
             {
                 m_playerColors[player]->setEnabled(true);
@@ -1448,7 +1453,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
             }
         }
         else
-        {            
+        {
             if (m_pNetworkInterface->getIsServer() && !saveGame)
             {
                 m_playerAIs[player]->setEnabled(true);

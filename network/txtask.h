@@ -18,7 +18,7 @@ class TxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF);
+    TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll);
     virtual ~TxTask();
 public slots:
     /**
@@ -30,6 +30,7 @@ private:
    QIODevice* m_pSocket;
    quint64 m_SocketID;
    NetworkInterface* pIF;
+   bool m_sendAll{false};
 };
 
 #endif // TXTASK_H

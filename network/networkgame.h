@@ -34,12 +34,12 @@ public slots:
      */
     void recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
-     * @brief recieveServerData
+     * @brief recieveSlaveData
      * @param socket
      * @param data
      * @param service
      */
-    void recieveServerData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveSlaveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
      * @brief startAndWaitForInit
      */
@@ -48,7 +48,11 @@ public slots:
      * @brief onConnectToLocalServer
      */
     void onConnectToLocalServer(quint64);
-
+    /**
+     * @brief addClient
+     * @param pClient
+     */
+    void addClient(NetworkInterface* pClient, quint64 socketId);
 protected slots:
     void checkServerRunning();
 private:

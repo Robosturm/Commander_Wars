@@ -31,12 +31,12 @@ void LocalClient::connectTCP(QString adress, quint16)
     QObject::connect(pSocket, &QLocalSocket::connected, this, &LocalClient::connected, Qt::QueuedConnection);
 
     // Start RX-Task
-    pRXTask = new RxTask(pSocket, 0, this);
+    pRXTask = new RxTask(pSocket, 0, this, true);
     pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(pSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    pTXTask = new TxTask(pSocket, 0, this);
+    pTXTask = new TxTask(pSocket, 0, this, true);
     pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(this, &LocalClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
     Console::print(tr("Local Client is running to ") + adress, Console::eLogLevels::eDEBUG);

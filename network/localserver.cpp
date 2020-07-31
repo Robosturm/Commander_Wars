@@ -125,13 +125,13 @@ void LocalServer::onConnect()
         m_SocketIDs.append(m_idCounter);
 
         // Start RX-Task
-        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this);
+        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, true);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
         QObject::connect(nextSocket, &QLocalSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
-        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this);
+        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this, true);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
         QObject::connect(this, &LocalServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
