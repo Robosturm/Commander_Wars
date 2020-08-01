@@ -1335,7 +1335,8 @@ void NormalAi::updateEnemyData(QmlVectorUnit* pUnits)
         qint32 i = 0;
         while (i < m_EnemyUnits.size())
         {
-            if (m_EnemyUnits[i]->getHp() <= 0)
+            if (m_EnemyUnits[i]->getHp() <= 0 ||
+                m_EnemyUnits[i]->getTerrain() == nullptr)
             {
                 m_EnemyUnits.removeAt(i);
                 m_EnemyPfs.removeAt(i);
@@ -1354,7 +1355,7 @@ void NormalAi::updateEnemyData(QmlVectorUnit* pUnits)
         {
             if (!updated.contains(i2))
             {
-                if (m_EnemyUnits[i2]->getHp() > 0)
+                if (m_EnemyUnits[i2]->getHp() > 0 && m_EnemyUnits[i2]->getTerrain() != nullptr)
                 {
                     if (qAbs(updatePoints[i].x() - m_EnemyUnits[i2]->getX()) +
                         qAbs(updatePoints[i].y() - m_EnemyUnits[i2]->getY()) <=
@@ -2083,6 +2084,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
                 }
             }
         }
+        counter++;
     }
     QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, &relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets, true);
     QVector<Unit*> transporterUnits;

@@ -147,8 +147,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Meteor pieces which can be attacked and destroyed ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("to eliminate plasma.") + "</div>";
+        return qsTr("<r>Meteor pieces which can be attacked and destroyed </r><div c='#00ff00'>to eliminate plasma.</div>");
     };
 
     this.getTerrainSprites = function()

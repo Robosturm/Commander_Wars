@@ -53,11 +53,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Harbour made by APC. ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("Resupplying ") + "</div>" +
-               "<r>" + qsTr("of ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("naval ") + "</div>"+
-               "<r>" + qsTr("units is possible.") + "</r>";
+        return qsTr("<r>Harbour made by APC. </r><div c='#00ff00'>Resupplying </div><r>of </r><div c='#00ff00'>naval </div><r>units is possible.</r>");
     };
 
     this.getVisionHide = function(building)

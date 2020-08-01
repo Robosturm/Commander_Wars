@@ -2277,17 +2277,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="61"/>
-        <source>In Fog of War, Radars make a </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="62"/>
-        <source>5 square </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="63"/>
-        <source>area around them visible.</source>
+        <source>&lt;r&gt;In Fog of War, Radars make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2300,12 +2290,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FOG.js" line="58"/>
-        <source>This heavy fog provides ideal hiding places</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="59"/>
-        <source> for naval units in Fog of War.</source>
+        <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2318,12 +2303,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="55"/>
-        <source>In Fog of War conditions, the woods provide ground unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="56"/>
-        <source>hiding places.</source>
+        <source>&lt;r&gt;In Fog of War conditions, the woods provide ground unit&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3186,12 +3166,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="150"/>
-        <source>Meteor pieces which can be attacked and destroyed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="151"/>
-        <source>to eliminate plasma.</source>
+        <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3204,12 +3179,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="57"/>
-        <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="58"/>
-        <source>vision +3.</source>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3836,17 +3806,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/PLASMA.js" line="47"/>
-        <source>Eectric charge us impassable but disappears if </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="48"/>
-        <source> meteor pieces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="49"/>
-        <source> are destroyed.</source>
+        <source>&lt;r&gt;Electric charge us impassable but disappears if &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; meteor pieces&lt;/div&gt;&lt;r&gt; are destroyed.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4117,17 +4077,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/REAF.js" line="72"/>
-        <source>This spiky reaf provides ideal </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="73"/>
-        <source>hiding places</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="74"/>
-        <source> for naval units in Fog of War.</source>
+        <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4166,12 +4116,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="51"/>
-        <source>In Fog of War conditions, the ruins provide ground unit </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="52"/>
-        <source>hiding places.</source>
+        <source>&lt;r&gt;In Fog of War conditions, the ruins provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4630,17 +4575,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="54"/>
-        <source>In Fog of War conditions, the snowy woods provide ground unit </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="55"/>
-        <source>hiding places.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="56"/>
-        <source> It&apos;s hard for ground units to cross this terrain.</source>
+        <source>&lt;r&gt;In Fog of War conditions, the snowy woods provide ground unit &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places.&lt;/div&gt;&lt;r&gt; It&apos;s hard for ground units to cross this terrain.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4653,17 +4588,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="57"/>
-        <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="58"/>
-        <source>vision +3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="59"/>
-        <source> Extremly high movement costs for infantry units.</source>
+        <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7547,27 +7472,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/airport.js" line="51"/>
-        <source>Once captured can be used for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/airport.js" line="52"/>
-        <source>production and resupplying</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/airport.js" line="53"/>
-        <source> of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/airport.js" line="54"/>
-        <source>air</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/airport.js" line="55"/>
-        <source> units.</source>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7580,12 +7485,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/antitankcannon.js" line="55"/>
-        <source>Indirect attack unit. When under direct enemy attack it can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/antitankcannon.js" line="56"/>
-        <source>counter-attack</source>
+        <source>&lt;r&gt;Indirect attack unit. When under direct enemy attack it can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;counter-attack&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7598,32 +7498,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/apc.js" line="74"/>
-        <source>Carries X 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/apc.js" line="75"/>
-        <source> infantry unit, </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/apc.js" line="76"/>
-        <source> supplies </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/apc.js" line="77"/>
-        <source> units and </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/apc.js" line="78"/>
-        <source>builds </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/apc.js" line="79"/>
-        <source> Airports and Ports.</source>
+        <source>&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1&lt;/div&gt;&lt;r&gt; infantry unit, &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; supplies &lt;/div&gt;&lt;r&gt; units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;builds &lt;/div&gt;&lt;r&gt; Airports and Ports.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7683,27 +7558,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="99"/>
-        <source>Naval Unit. Has unique ability to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="100"/>
-        <source>repair other units.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="101"/>
-        <source> Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="102"/>
-        <source>carry X 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="103"/>
-        <source> infantry units and capture buildings.</source>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 1&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7716,17 +7571,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_bomb.js" line="102"/>
-        <source>Air Unit. Has unique ability to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="103"/>
-        <source>explode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="104"/>
-        <source> in a huge explosion damaging all units.</source>
+        <source>&lt;r&gt;Air Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;explode&lt;/div&gt;&lt;r&gt; in a huge explosion damaging all units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7819,17 +7664,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
-        <source>Naval Unit. Attacks naval units. Can place </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="97"/>
-        <source>Watermines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="98"/>
-        <source> on sea tiles.</source>
+        <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16769,17 +16604,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/cruiser.js" line="100"/>
-        <source>Naval Unit. Strong against air units and submarines. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="101"/>
-        <source>Transports X 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="102"/>
-        <source> Helis.</source>
+        <source>&lt;r&gt;Naval Unit. Strong against air units and submarines. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Transports X 2&lt;/div&gt;&lt;r&gt; Helis.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16846,27 +16671,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/factory.js" line="53"/>
-        <source>Once captured can be used for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/factory.js" line="54"/>
-        <source>production and resupplying </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/factory.js" line="55"/>
-        <source>of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/factory.js" line="56"/>
-        <source>ground </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/factory.js" line="57"/>
-        <source>units.</source>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16905,27 +16710,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/flare.js" line="61"/>
-        <source>In Fog of War, can fire </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/flare.js" line="62"/>
-        <source>flare rocket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/flare.js" line="63"/>
-        <source>. Illuminates </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/flare.js" line="64"/>
-        <source>2 square area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/flare.js" line="65"/>
-        <source> where it lands.</source>
+        <source>&lt;r&gt;In Fog of War, can fire &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;flare rocket&lt;/div&gt;&lt;r&gt;. Illuminates &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;2 square area&lt;/div&gt;&lt;r&gt; where it lands.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16956,17 +16741,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/harbour.js" line="50"/>
-        <source>Once captured can be used for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/harbour.js" line="51"/>
-        <source>production and resupplying </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/harbour.js" line="53"/>
-        <source>naval </source>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17044,27 +16819,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/hq.js" line="118"/>
-        <source>Battle ends </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/hq.js" line="119"/>
-        <source>when an army&apos;s last HQ is captured. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/hq.js" line="120"/>
-        <source>Ground </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/hq.js" line="121"/>
-        <source>units can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/hq.js" line="122"/>
-        <source>resupply.</source>
+        <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17077,27 +16832,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/infantry.js" line="85"/>
-        <source>Cheapest unit. Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/infantry.js" line="86"/>
-        <source>capture </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/infantry.js" line="87"/>
-        <source> bases. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/infantry.js" line="88"/>
-        <source>Vision +3 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/infantry.js" line="89"/>
-        <source> when on mountains.</source>
+        <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17123,27 +16858,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/labor.js" line="40"/>
-        <source>Once captured can be used for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/labor.js" line="41"/>
-        <source>production</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/labor.js" line="42"/>
-        <source> of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/labor.js" line="43"/>
-        <source>oozium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/labor.js" line="44"/>
-        <source>units.</source>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;oozium&lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17156,17 +16871,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/lander.js" line="94"/>
-        <source>Naval unit. Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/lander.js" line="95"/>
-        <source>transport X 2 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/lander.js" line="96"/>
-        <source> ground units. No attack capability.</source>
+        <source>&lt;r&gt;Naval unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;transport X 2 &lt;/div&gt;&lt;r&gt; ground units. No attack capability.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17192,27 +16897,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/mech.js" line="86"/>
-        <source>Attack power high. Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/mech.js" line="87"/>
-        <source>capture </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/mech.js" line="88"/>
-        <source> bases. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/mech.js" line="89"/>
-        <source>Vision +3 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/mech.js" line="90"/>
-        <source> when on mountains.</source>
+        <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17292,17 +16977,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/motorbike.js" line="62"/>
-        <source>Infantry unit. High mobility. Able to </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/motorbike.js" line="63"/>
-        <source>capture </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/motorbike.js" line="64"/>
-        <source> bases.</source>
+        <source>&lt;r&gt;Infantry unit. High mobility. Able to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17476,27 +17151,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/pipestation.js" line="38"/>
-        <source>Once captured can be used for </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="39"/>
-        <source>production and resupplying </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="40"/>
-        <source>of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="41"/>
-        <source>pipe </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/pipestation.js" line="42"/>
-        <source>units. Produces also more funds.</source>
+        <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17509,17 +17164,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/radar.js" line="35"/>
-        <source>In Fog of War, Radars make a </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/radar.js" line="36"/>
-        <source>5 square </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/radar.js" line="37"/>
-        <source>area around them visible.</source>
+        <source>&lt;r&gt;In Fog of War, Radars make a &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;5 square &lt;/div&gt;&lt;r&gt;area around them visible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17571,17 +17216,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/silo_rocket.js" line="29"/>
-        <source>Missile can be launched once, by Infantry unit. Damage across </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="30"/>
-        <source>13 square </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/silo_rocket.js" line="31"/>
-        <source>area.</source>
+        <source>&lt;r&gt;Missile can be launched once, by Infantry unit. Damage across &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;13 square &lt;/div&gt;&lt;r&gt;area.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17594,27 +17229,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/sniper.js" line="86"/>
-        <source>Indirect infantry unit exceptionly strong against other infantry units. Can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/sniper.js" line="87"/>
-        <source>capture </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/sniper.js" line="88"/>
-        <source> bases. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/sniper.js" line="89"/>
-        <source>Vision +3 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/sniper.js" line="90"/>
-        <source> when on mountains.</source>
+        <source>&lt;r&gt;Indirect infantry unit exceptionly strong against other infantry units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17627,17 +17242,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/stealthbomber.js" line="105"/>
-        <source>Air unit. After </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="106"/>
-        <source>hiding </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="107"/>
-        <source>, it remains hidden unless enemy units adjacent. Can attack any unit.</source>
+        <source>&lt;r&gt;Air unit. After &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent. Can attack any unit.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17650,17 +17255,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/submarine.js" line="99"/>
-        <source>Naval unit. After </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/submarine.js" line="100"/>
-        <source>diving </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/submarine.js" line="101"/>
-        <source>, it remains hidden unless enemy units adjacent.</source>
+        <source>&lt;r&gt;Naval unit. After &lt;/r&gt;&lt;div c=&apos;00ff00&apos;&gt;diving &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17673,17 +17268,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/t_heli.js" line="100"/>
-        <source>Air unit. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="101"/>
-        <source>Carries X 1 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="102"/>
-        <source>Infantry units. No attack capability.</source>
+        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1 &lt;/div&gt;&lt;r&gt;Infantry units. No attack capability.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17696,27 +17281,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/temporary_airport.js" line="59"/>
-        <source>Airport made by APC. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="60"/>
-        <source>Resupplying </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="61"/>
-        <source>of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="62"/>
-        <source>air </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_airport.js" line="63"/>
-        <source>units is possible.</source>
+        <source>&lt;r&gt;Airport made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17729,27 +17294,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/temporary_harbour.js" line="56"/>
-        <source>Harbour made by APC. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="57"/>
-        <source>Resupplying </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="58"/>
-        <source>of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="59"/>
-        <source>naval </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="60"/>
-        <source>units is possible.</source>
+        <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17790,12 +17335,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/tower.js" line="40"/>
-        <source>Once captured the Tower boosts your </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/tower.js" line="41"/>
-        <source>attack and defence powers</source>
+        <source>&lt;r&gt;Once captured the Tower boosts your &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;attack and defence powers&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17808,27 +17348,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/town.js" line="33"/>
-        <source>Populated city. Once captured </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/town.js" line="34"/>
-        <source>ground </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/town.js" line="35"/>
-        <source>units can </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/town.js" line="36"/>
-        <source>resupply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/building/town.js" line="37"/>
-        <source>.</source>
+        <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17841,17 +17361,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="104"/>
-        <source>Air unit. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="105"/>
-        <source>Carries X 2 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="106"/>
-        <source>ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.</source>
+        <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 2 &lt;/div&gt;&lt;r&gt;ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -36,10 +36,6 @@ public:
     static QStringList getActiveModVersions();
 
 
-    static bool getLogActions();
-    static void setLogActions(bool LogActions);
-
-
     static QStringList getActiveMods();
     static void setActiveMods(const QStringList &activeMods);
 
@@ -49,7 +45,9 @@ public:
     static GameEnums::COInfoPosition getCoInfoPosition();
     static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
 
-public slots:
+public slots:    
+    static bool getLogActions();
+    static void setLogActions(bool LogActions);
 
     static bool getShowIngameCoordinates();
     static void setShowIngameCoordinates(bool showIngameCoordinates);

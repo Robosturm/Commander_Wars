@@ -37,11 +37,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Once captured can be used for ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("production") + "</div>" +
-               "<r>" + qsTr(" of ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("oozium") + " </div>" +
-               "<r>" + qsTr("units.") + "</r>";
+        return qsTr("<r>Once captured can be used for </r><div c='#00ff00'>production</div><r> of </r><div c='#00ff00'>oozium</div><r>units.</r>");
     };
 
     this.getVisionHide = function(building)

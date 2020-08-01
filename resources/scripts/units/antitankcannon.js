@@ -52,9 +52,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>"+ qsTr("Indirect attack unit. When under direct enemy attack it can ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("counter-attack") + "</div>" +
-               "<r>" + "." + "</r>";
+        return qsTr("<r>Indirect attack unit. When under direct enemy attack it can </r><div c='#00ff00'>counter-attack</div><r>.</r>");
     };
     this.getUnitType = function()
     {

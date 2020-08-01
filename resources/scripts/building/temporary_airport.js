@@ -56,11 +56,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Airport made by APC. ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("Resupplying ") + "</div>" +
-               "<r>" + qsTr("of ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("air ") + "</div>" +
-               "<r>" + qsTr("units is possible.") + "</r>";
+        return qsTr("<r>Airport made by APC. </r><div c='#00ff00'>Resupplying </div><r>of </r><div c='#00ff00'>air </div><r>units is possible.</r>");
     };
 
     this.getVisionHide = function(building)

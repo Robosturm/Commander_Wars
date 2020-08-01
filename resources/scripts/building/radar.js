@@ -32,9 +32,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("In Fog of War, Radars make a ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("5 square ") + "</div>" +
-               "<r>" + qsTr("area around them visible.") + "</r>";
+        return qsTr("<r>In Fog of War, Radars make a </r><div c='#00ff00'>5 square </div><r>area around them visible.</r>");
     };
 
     this.getVision = function(building)

@@ -91,9 +91,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Naval unit. Can ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("transport X 2 ") + "</div>" +
-               "<r>" + qsTr(" ground units. No attack capability.") + "</r>";
+        return qsTr("<r>Naval unit. Can </r><div c='#00ff00'>transport X 2 </div><r> ground units. No attack capability.</r>");
     };
 
     this.getUnitType = function()

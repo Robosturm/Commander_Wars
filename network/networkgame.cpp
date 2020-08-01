@@ -12,7 +12,10 @@ NetworkGame::NetworkGame()
 void NetworkGame::addClient(NetworkInterface* pClient, quint64 socketId)
 {
     m_Clients.append(pClient);
-   // pClient->disconnect(&NetworkInterface::recieveData);
+    disconnect(pClient, SIGNAL(recieveData()));
+    disconnect(pClient, SIGNAL(sigForwardData()));
+    connect(pClient, &NetworkInterface::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
+    connect(pClient, &NetworkInterface::recieveData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
     m_SocketIDs.append(socketId);
 }
 
@@ -39,9 +42,9 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
     }
 }
 
-void NetworkGame::recieveClientData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
+void NetworkGame::recieveClientData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-
+    emit m_gameConnection.sig_sendData(0, data, service, false);
 }
 
 void NetworkGame::startAndWaitForInit()

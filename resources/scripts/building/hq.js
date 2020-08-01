@@ -115,11 +115,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<div c='#00ff00'>"+ qsTr("Battle ends ") + "</div>" +
-               "<r>" + qsTr("when an army's last HQ is captured. ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("Ground ") + "</div>" +
-               "<r>" + qsTr("units can ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("resupply.") + "</div>";
+        return qsTr("<div c='#00ff00'>Battle ends </div><r>when an army's last HQ is captured. </r><div c='#00ff00'>Ground </div><r>units can </r><div c='#00ff00'>resupply.</div>");
     };
 
     this.getVisionHide = function(building)

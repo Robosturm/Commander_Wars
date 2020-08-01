@@ -59,9 +59,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Infantry unit. High mobility. Able to ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("capture ") + "</div>" +
-               "<r>" + qsTr(" bases.") + "</r>";
+        return qsTr("<r>Infantry unit. High mobility. Able to </r><div c='#00ff00'>capture </div><r> bases.</r>");
     };
     this.getUnitType = function()
     {

@@ -54,9 +54,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
-               "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
-               "<r>" + qsTr(" Extremly high movement costs for infantry units.") + "</r>";
+        return qsTr("<r>Clear view. In Fog of War, Infantry unit's gain </r><div c='#00ff00'>vision +3.</div><r> Extremly high movement costs for infantry units.</r>");
     };
 
     this.getTerrainSprites = function()
