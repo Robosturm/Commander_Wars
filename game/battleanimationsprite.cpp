@@ -23,7 +23,7 @@ const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFired
 const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
 const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
+BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),
       m_pUnit(pUnit),
       m_pTerrain(pTerrain),
@@ -48,7 +48,7 @@ BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QSt
 
 void BattleAnimationSprite::loadAnimation(QString animationType)
 {
-    loadAnimation(animationType, m_pUnit);
+    loadAnimation(animationType, m_pUnit.get());
 }
 
 void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, bool clearSprite)
@@ -77,7 +77,7 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(m_pUnit);
+    QJSValue obj2 = pInterpreter->newQObject(m_pUnit.get());
     args1 << obj2;
     QJSValue obj3 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj3;
@@ -112,7 +112,7 @@ qint32 BattleAnimationSprite::getAnimationUnitCount()
 
 qint32 BattleAnimationSprite::getImpactDurationMS()
 {
-    return getImpactDurationMS(m_pUnit);
+    return getImpactDurationMS(m_pUnit.get());
 }
 
 qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit)

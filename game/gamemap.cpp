@@ -744,11 +744,18 @@ void GameMap::moveMap(qint32 x, qint32 y)
 
 void GameMap::zoom(float zoom)
 {
-    m_zoom += zoom * 0.125f;
-    // limit zoom
-    if (m_zoom > 10.0f)
+    if (zoom > 0)
     {
-        m_zoom = 10.0f;
+        m_zoom *= 2.0f;
+    }
+    else
+    {
+        m_zoom /= 2.0f;
+    }
+    // limit zoom
+    if (m_zoom > 32.0f)
+    {
+        m_zoom = 32.0f;
     }
     else if (m_zoom < 0.5f)
     {

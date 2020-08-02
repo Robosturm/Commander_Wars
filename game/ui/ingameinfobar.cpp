@@ -303,9 +303,9 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             if (visionHide != GameEnums::VisionType_Shrouded)
             {
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                Building* pBuilding = pTerrain->getBuilding();
-                Unit* pUnit = pTerrain->getUnit();
-                if (pUnit != nullptr && pUnit->isStealthed(pPlayer))
+                spBuilding pBuilding = pTerrain->getBuilding();
+                spUnit pUnit = pTerrain->getUnit();
+                if (pUnit.get() != nullptr && pUnit->isStealthed(pPlayer))
                 {
                     pUnit = nullptr;
                 }
@@ -325,7 +325,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 qint32 width = 145;
                 spLabel pTextfield = new Label(width);
                 qint32 hp = 0;
-                if ((pBuilding != nullptr) && (pBuilding->getHp() > 0))
+                if ((pBuilding.get() != nullptr) && (pBuilding->getHp() > 0))
                 {
                     hp = pBuilding->getHp();
                 }
@@ -333,7 +333,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 {
                     hp = pTerrain->getHp();
                 }
-                if (hp > 0 && pUnit == nullptr)
+                if (hp > 0 && pUnit.get() == nullptr)
                 {
                     pAnim = pObjectManager->getResAnim("barforeground");
                     pTextfield->setStyle(smallStyle);
@@ -376,7 +376,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 pAnim = pObjectManager->getResAnim("barforeground");
                 bool HpHidden = false;
-                if (pUnit != nullptr)
+                if (pUnit.get() != nullptr)
                 {
                     HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
                     float count = pUnit->getHp();
@@ -535,13 +535,13 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 oxygine::ResAnim* pAnimBase = nullptr;
                 oxygine::ResAnim* pAnimFore = nullptr;
                 oxygine::ResAnim* pAnimBack = nullptr;
-                if (pUnit != nullptr)
+                if (pUnit.get() != nullptr)
                 {
                     pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
                     pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
                     pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
                 }
-                else if (pBuilding != nullptr)
+                else if (pBuilding.get() != nullptr)
                 {
                     pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase(), oxygine::ep_ignore_error);
                     pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
@@ -575,7 +575,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pBox->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 17, 116);
                 m_pCursorInfoBox->addChild(pBox);
 
-                if (pUnit != nullptr)
+                if (pUnit.get() != nullptr)
                 {
                     BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
                     pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
@@ -589,7 +589,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 }
 
                 qint32 TerrainDefense = 0;
-                if (pUnit != nullptr)
+                if (pUnit.get() != nullptr)
                 {
                     TerrainDefense = pUnit->getTerrainDefense();
                 }
@@ -628,7 +628,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(smallStyle);
                 QString name = "";
-                if (pBuilding != nullptr)
+                if (pBuilding.get() != nullptr)
                 {
                     name = pBuilding->getName();
                 }
@@ -644,7 +644,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
 
                 // show building information
-                if (pBuilding != nullptr)
+                if (pBuilding.get() != nullptr)
                 {
                     if (pBuilding->getOwner() != nullptr &&
                         visionHide == GameEnums::VisionType_Clear)
@@ -665,7 +665,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         m_pCursorInfoBox->addChild(pTextfield);
                         y2 += pTextfield->getTextRect().getHeight() + yAdvance;
                     }
-                    if (pUnit == nullptr)
+                    if (pUnit.get() == nullptr)
                     {
                         pTextfield = new Label(width);
                         pTextfield->setPosition(10, y2);
@@ -685,7 +685,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     }
                 }
                 // show unit information
-                if (pUnit != nullptr)
+                if (pUnit.get() != nullptr)
                 {
                     pTextfield = new Label(width);
                     pTextfield->setPosition(10, y2);

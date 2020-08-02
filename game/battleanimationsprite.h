@@ -25,7 +25,7 @@ public:
     static const QString dyingAnimation;
     static const QString stopAnimation;
 
-    explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
+    explicit BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
     /**
      * @brief loadAnimation
      * @param animationType
@@ -270,7 +270,7 @@ public slots:
      */
     void stopSound();
 private:
-    Unit* m_pUnit;
+    spUnit m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
     qint32 hpRounded{0};

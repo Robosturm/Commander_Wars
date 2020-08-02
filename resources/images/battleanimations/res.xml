@@ -3,16 +3,16 @@
 	<set path = "resources/images/battleanimations/" />
 	<atlas linearFilter="false">
 		<!-- general stuff -->
-		<image file="GeneralSprites/artillery_shot.png" cols = "4" />
+		<image file="GeneralSprites/artillery_shot.png" cols = "5" />
 		<image file="GeneralSprites/bazooka_ge.png" />
 		<image file="GeneralSprites/bazooka_os.png" />
 		<image file="GeneralSprites/bazooka_bh.png" />
 		<image file="GeneralSprites/bombs_projectile.png" cols = "4" />
 		<image file="GeneralSprites/bomb_falling.png" />		
 		<image file="GeneralSprites/medium_shot.png" cols = "6" />
-		<image file="GeneralSprites/mg_shot.png" cols = "5" />
-		<image file="GeneralSprites/mg_shot_air.png" cols = "5" />
-		<image file="GeneralSprites/rocket_launch.png" cols = "4" />
+		<image file="GeneralSprites/mg_shot.png" cols = "6" />
+		<image file="GeneralSprites/mg_shot_air.png" cols = "6" />
+		<image file="GeneralSprites/rocket_launch.png" cols = "5" />
 		<image file="GeneralSprites/rocket.png" />
 		<image file="GeneralSprites/rocket_up.png" />
 		<image file="GeneralSprites/rocket_down.png" />

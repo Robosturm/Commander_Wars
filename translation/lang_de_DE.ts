@@ -2435,7 +2435,7 @@ This is immediatly applied.</source>
         <translation>Generieren </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="949"/>
+        <location filename="../game/gamemap.cpp" line="956"/>
         <source>Loading Players</source>
         <translation>Lade Spieler</translation>
     </message>
@@ -2456,7 +2456,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="973"/>
+        <location filename="../game/gamemap.cpp" line="980"/>
         <source>Loading Map Row </source>
         <translation>Lade Kartenreihe </translation>
     </message>
@@ -2468,27 +2468,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="973"/>
+        <location filename="../game/gamemap.cpp" line="980"/>
         <source> of </source>
         <translation> von </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="997"/>
+        <location filename="../game/gamemap.cpp" line="1004"/>
         <source>Loading Rules</source>
         <translation>Lade Regeln</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1005"/>
+        <location filename="../game/gamemap.cpp" line="1012"/>
         <source>Loading Record</source>
         <translation>Lade Aufnahme</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1013"/>
+        <location filename="../game/gamemap.cpp" line="1020"/>
         <source>Loading scripts</source>
         <translation>Lade Skripte</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1025"/>
+        <location filename="../game/gamemap.cpp" line="1032"/>
         <source>Loading Campaign</source>
         <translation>Kampanie laden</translation>
     </message>
@@ -6323,7 +6323,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpclient.cpp" line="75"/>
+        <location filename="../network/tcpclient.cpp" line="81"/>
         <source>Client is connected</source>
         <translation type="unfinished"></translation>
     </message>

@@ -340,7 +340,6 @@ set(${PROJECT_NAME}_SRCS
         # multiplayer
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
-        multiplayer/gameserver.cpp
         multiplayer/gamedata.cpp        
 
         #campaign support

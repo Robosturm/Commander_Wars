@@ -45,6 +45,7 @@ public:
     static const qint32 frameTime;
     static const qint32 Imagesize = 24;
     static const oxygine::RectF mapRect;
+    static const oxygine::RectF spriteLayerRect;
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width

@@ -268,7 +268,6 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         pWaitSprite->addTween(tweenWait);
         pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
