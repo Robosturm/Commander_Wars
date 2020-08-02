@@ -1319,7 +1319,7 @@
         <translation>Wüste</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="98"/>
+        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="102"/>
         <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1425,7 +1425,7 @@
         <translation>Wüstenschweißnaht</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="110"/>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="114"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1438,7 +1438,7 @@
         <translation>Ebene</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="93"/>
+        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="97"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2435,60 +2435,64 @@ This is immediatly applied.</source>
         <translation>Generieren </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="956"/>
+        <location filename="../game/gamemap.cpp" line="960"/>
         <source>Loading Players</source>
         <translation>Lade Spieler</translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="33"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="34"/>
         <source>Reading Map File</source>
         <translation>Lese Kartendaten</translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="50"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="51"/>
         <source>Creating Player</source>
         <translation>Spieler erstellen</translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <source>Loading Empty Map Row </source>
         <translation>Lade leere Kartenreihe </translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="980"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <source>Importing Map Row </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="984"/>
         <source>Loading Map Row </source>
         <translation>Lade Kartenreihe </translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1041"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1042"/>
         <source>Loading Sprites</source>
         <translation>Lade Sprites</translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="61"/>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="75"/>
-        <location filename="../game/gamemap.cpp" line="980"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <location filename="../game/gamemap.cpp" line="984"/>
         <source> of </source>
         <translation> von </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1004"/>
+        <location filename="../game/gamemap.cpp" line="1008"/>
         <source>Loading Rules</source>
         <translation>Lade Regeln</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1012"/>
+        <location filename="../game/gamemap.cpp" line="1016"/>
         <source>Loading Record</source>
         <translation>Lade Aufnahme</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1020"/>
+        <location filename="../game/gamemap.cpp" line="1024"/>
         <source>Loading scripts</source>
         <translation>Lade Skripte</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1032"/>
+        <location filename="../game/gamemap.cpp" line="1036"/>
         <source>Loading Campaign</source>
         <translation>Kampanie laden</translation>
     </message>
@@ -4832,7 +4836,7 @@ Version: </translation>
         <translation>Schnee</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="93"/>
+        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="97"/>
         <source>Snowy terrain reduces rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4901,7 +4905,7 @@ Version: </translation>
         <translation>Verschneite Schweißnaht</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="106"/>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="110"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7091,7 +7095,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Schweißnaht</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WELD.js" line="106"/>
+        <location filename="../resources/scripts/terrain/WELD.js" line="110"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
