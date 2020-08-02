@@ -46,7 +46,9 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for the Bolt Guard.");
+        return qsTr("A Blank CO for the Bolt Guard.") +
+               qsTr("Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt.") +
+               qsTr("The CO's of Bolt Guard only wishes to destroy the land to achieve their own goals.");
     };
     this.getHits = function()
     {

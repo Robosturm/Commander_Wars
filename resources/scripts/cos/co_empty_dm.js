@@ -46,7 +46,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Dark Matter.");
+        return qsTr("A Blank CO for Dark Matter.") +
+               qsTr("A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. ") +
+               qsTr("After three wars against the allied nations. The allied nations got some intel about the original creators of the war.") +
+               qsTr("The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. ") +
+               qsTr("Dark Matter is lead by Yukio who lives to make money.");
     };
     this.getHits = function()
     {

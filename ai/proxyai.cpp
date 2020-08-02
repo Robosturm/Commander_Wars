@@ -48,7 +48,8 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
-            if (actionRunning == false)
+            if (actionRunning == false &&
+                m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
             {
                 actionRunning = true;
                 GameAction* pAction = m_ActionBuffer.front();

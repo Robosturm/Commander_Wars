@@ -45,7 +45,11 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Metal Army.");
+        return qsTr("A Blank CO for Metal Army.") +
+               qsTr("The Metall Army is an army of robots. The robots were initially invented by Lash. ") +
+               qsTr("The Robots AI developped its own behaviour instead of following Lash's or Dark Matters orders. ") +
+               qsTr("The Metall Army defends it's own territory at all costs when it looses it's territory. The Army tries to reconquer it.") +
+               qsTr("Besides this the Metall Army is very defensive orientated and doesn't attack anyone.") ;
     };
     this.getHits = function()
     {

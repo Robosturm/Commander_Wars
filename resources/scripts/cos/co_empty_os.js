@@ -45,7 +45,9 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Orange Star.");
+        return qsTr("A Blank CO for Orange Star.") +
+               qsTr("The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. ") +
+               qsTr("With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. ");
     };
     this.getHits = function()
     {

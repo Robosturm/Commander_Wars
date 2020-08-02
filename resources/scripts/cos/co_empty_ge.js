@@ -56,7 +56,9 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Green Earth.");
+        return qsTr("A Blank CO for Green Earth.") +
+               qsTr("Green Earth's forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and ") +
+               qsTr("Drake the seas. ");
     };
     this.getHits = function()
     {

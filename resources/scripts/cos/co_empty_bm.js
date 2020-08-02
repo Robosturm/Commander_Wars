@@ -46,7 +46,9 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Blue Moon.");
+        return qsTr("A Blank CO for Blue Moon.") +
+               qsTr("Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though ") +
+               qsTr("later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. ");
     };
     this.getHits = function()
     {

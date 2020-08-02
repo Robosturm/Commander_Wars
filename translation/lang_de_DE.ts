@@ -9726,33 +9726,43 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="53"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="57"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="61"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="65"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="69"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="73"/>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="50"/>
+        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="51"/>
+        <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="79"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="83"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="87"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="91"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bg.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="95"/>
         <source>Bolt Guard</source>
         <translation type="unfinished">Bolt Guard</translation>
     </message>
@@ -9765,33 +9775,48 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="53"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="57"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="61"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="65"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="69"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="73"/>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="50"/>
+        <source>Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="51"/>
+        <source>not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="52"/>
+        <source> some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="56"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="60"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="64"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="68"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="72"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="80"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="84"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="88"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="92"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bh.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="96"/>
         <source>Black Hole</source>
         <translation type="unfinished">Black Hole</translation>
     </message>
@@ -9804,33 +9829,43 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="53"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="57"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="61"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="65"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="69"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="73"/>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="50"/>
+        <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="51"/>
+        <source>later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="55"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="79"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="83"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="87"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="91"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_bm.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="95"/>
         <source>Blue Moon</source>
         <translation type="unfinished">Blue Moon</translation>
     </message>
@@ -9843,33 +9878,53 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="50"/>
+        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="51"/>
+        <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="52"/>
+        <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="53"/>
+        <source>Dark Matter is lead by Yukio who lives to make money.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="57"/>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="61"/>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="65"/>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="69"/>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="73"/>
         <location filename="../resources/scripts/cos/co_empty_dm.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="81"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="85"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="89"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="93"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_dm.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="97"/>
         <source>Dark Matter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9882,33 +9937,43 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="63"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="67"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="71"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="75"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="79"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="83"/>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="87"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="60"/>
+        <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="61"/>
+        <source>Drake the seas. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="65"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="89"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="91"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="93"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="95"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="97"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="99"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="101"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ge.js" line="103"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="105"/>
         <source>Green Earth</source>
         <translation type="unfinished">Green Earth</translation>
     </message>
@@ -9960,33 +10025,53 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="49"/>
+        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="50"/>
+        <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="52"/>
+        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="56"/>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="60"/>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="64"/>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="68"/>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="72"/>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="80"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="84"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="88"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="92"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_ma.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="96"/>
         <source>Metal Army</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9999,33 +10084,43 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="52"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="56"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="49"/>
+        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="50"/>
+        <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="54"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="78"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="82"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="86"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="90"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_os.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="94"/>
         <source>Orange Star</source>
         <translation type="unfinished">Orange Star</translation>
     </message>
@@ -10116,33 +10211,43 @@ Air units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="52"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="56"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="60"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="64"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="68"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="72"/>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="76"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="49"/>
+        <source>Yellow Comet is on a group of islands on the far east. They&apos;re also the smallest nation of the Allied Nations, but their strong army deters any </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="50"/>
+        <source>outside forces from invading them. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="54"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="78"/>
         <source>N/A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="80"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="82"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="84"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="86"/>
         <source>Victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="88"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="90"/>
         <source>Defeat...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_empty_yc.js" line="92"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="94"/>
         <source>Yellow Comet</source>
         <translation type="unfinished">Yellow Comet</translation>
     </message>
@@ -17325,7 +17430,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="10"/>
-        <source>The Metall Army defends it&apos;s own territory and all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

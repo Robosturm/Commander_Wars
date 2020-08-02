@@ -45,7 +45,9 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Yellow Comet.");
+        return qsTr("A Blank CO for Yellow Comet.") +
+               qsTr("Yellow Comet is on a group of islands on the far east. They're also the smallest nation of the Allied Nations, but their strong army deters any ") +
+               qsTr("outside forces from invading them. ");
     };
     this.getHits = function()
     {

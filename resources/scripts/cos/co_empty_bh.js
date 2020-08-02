@@ -46,7 +46,10 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Blank CO for Black Hole.");
+        return qsTr("A Blank CO for Black Hole.") +
+               qsTr("Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, ") +
+               qsTr("not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies ") +
+               qsTr(" some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. ");
     };
     this.getHits = function()
     {
