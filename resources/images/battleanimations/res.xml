@@ -9,7 +9,7 @@
 		<image file="GeneralSprites/bazooka_bh.png" />
 		<image file="GeneralSprites/bombs_projectile.png" cols = "4" />
 		<image file="GeneralSprites/bomb_falling.png" />		
-		<image file="GeneralSprites/medium_shot.png" cols = "5" />
+		<image file="GeneralSprites/medium_shot.png" cols = "6" />
 		<image file="GeneralSprites/mg_shot.png" cols = "5" />
 		<image file="GeneralSprites/mg_shot_air.png" cols = "5" />
 		<image file="GeneralSprites/rocket_launch.png" cols = "4" />
@@ -273,16 +273,16 @@
 		<image file="heavy_tank/heavy_tank+yc+fire_mg_air+mask.png" cols = "2" />
 		<image file="heavy_tank/heavy_tank+ma+fire_mg_air.png" />
 		<image file="heavy_tank/heavy_tank+ma+fire_mg_air+mask.png" />	
-		<image file="heavy_tank/heavy_tank+bh+stop.png" />
-		<image file="heavy_tank/heavy_tank+bh+stop+mask.png" />
-		<image file="heavy_tank/heavy_tank+bm+stop.png" />
-		<image file="heavy_tank/heavy_tank+bm+stop+mask.png" />
-		<image file="heavy_tank/heavy_tank+ge+stop.png" />
-		<image file="heavy_tank/heavy_tank+ge+stop+mask.png" />
-		<image file="heavy_tank/heavy_tank+os+stop.png" />
-		<image file="heavy_tank/heavy_tank+os+stop+mask.png" />
-		<image file="heavy_tank/heavy_tank+yc+stop.png" />
-		<image file="heavy_tank/heavy_tank+yc+stop+mask.png" />
+		<image file="heavy_tank/heavy_tank+bh+stop.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+bh+stop+mask.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+bm+stop.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+bm+stop+mask.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+ge+stop.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+ge+stop+mask.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+os+stop.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+os+stop+mask.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+yc+stop.png" cols = "2" />
+		<image file="heavy_tank/heavy_tank+yc+stop+mask.png" cols = "2" />
 		<image file="heavy_tank/heavy_tank+ma+stop.png" />
 		<image file="heavy_tank/heavy_tank+ma+stop+mask.png" />	
 		
@@ -353,16 +353,16 @@
 		<image file="light_tank/light_tank+yc+mask.png" />
 		<image file="light_tank/light_tank+ma.png" />
 		<image file="light_tank/light_tank+ma+mask.png" />
-		<image file="light_tank/light_tank+bh+stop.png" />
-		<image file="light_tank/light_tank+bh+stop+mask.png" />
-		<image file="light_tank/light_tank+bm+stop.png" />
-		<image file="light_tank/light_tank+bm+stop+mask.png" />
-		<image file="light_tank/light_tank+ge+stop.png" />
-		<image file="light_tank/light_tank+ge+stop+mask.png" />
-		<image file="light_tank/light_tank+os+stop.png" />
-		<image file="light_tank/light_tank+os+stop+mask.png" />
-		<image file="light_tank/light_tank+yc+stop.png" />
-		<image file="light_tank/light_tank+yc+stop+mask.png" />
+		<image file="light_tank/light_tank+bh+stop.png" cols = "2" />
+		<image file="light_tank/light_tank+bh+stop+mask.png" cols = "2" />
+		<image file="light_tank/light_tank+bm+stop.png" cols = "2" />
+		<image file="light_tank/light_tank+bm+stop+mask.png" cols = "2" />
+		<image file="light_tank/light_tank+ge+stop.png" cols = "2" />
+		<image file="light_tank/light_tank+ge+stop+mask.png" cols = "2" />
+		<image file="light_tank/light_tank+os+stop.png" cols = "2" />
+		<image file="light_tank/light_tank+os+stop+mask.png" cols = "2" />
+		<image file="light_tank/light_tank+yc+stop.png" cols = "2" />
+		<image file="light_tank/light_tank+yc+stop+mask.png" cols = "2" />
 		<image file="light_tank/light_tank+ma+stop.png" />
 		<image file="light_tank/light_tank+ma+stop+mask.png" />		
 		<image file="light_tank/light_tank+bh+move.png" cols = "4" />
@@ -472,8 +472,8 @@
 		<!-- neotank -->
 		<image file="neotank/neotank.png" />
 		<image file="neotank/neotank+mask.png" />
-		<image file="neotank/neotank+stop.png" />
-		<image file="neotank/neotank+stop+mask.png" />
+		<image file="neotank/neotank+stop.png" cols = "2" />
+		<image file="neotank/neotank+stop+mask.png" cols = "2" />
 		<image file="neotank/neotank+cannon_fire.png" cols = "3" />
 		<image file="neotank/neotank+cannon_fire+mask.png" cols = "3" />		
 		<image file="neotank/neotank+move.png" cols = "4" />

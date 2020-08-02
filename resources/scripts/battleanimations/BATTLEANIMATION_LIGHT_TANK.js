@@ -5,7 +5,21 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
+        sprite.loadMovingSprite("light_tank+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+                                Qt.point(65, 0), 400, false,
+                                1, 1);
+        sprite.loadMovingSpriteV2("light_tank+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+                                  Qt.point(65, 0), 400, false,
+                                  1, 1);
+        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
+                                Qt.point(65, 0), 400, false,
+                                1, 1);
+    };
+
+    this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
         // get army name
@@ -15,38 +29,51 @@ var Constructor = function()
             armyName = "bh"
         }
         if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
+                (armyName !== "ge") &&
+                (armyName !== "bm") &&
+                (armyName !== "bh") &&
+                (armyName !== "ma"))
         {
             armyName = "os";
         }
+        return armyName;
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
+    {
+        var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
         var offset = Qt.point(-5, 5);
         if (armyName === "ma")
         {
             offset = Qt.point(-20, 5);
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
-        sprite.loadSpriteV2("light_tank+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
+        sprite.loadSprite("light_tank+" + armyName + ending,  false,
+                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset, count);
+        sprite.loadSpriteV2("light_tank+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
+                            BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset, count);
+    };
+
+    this.loadStopAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+        sprite.loadSprite("vehicle_dust_stop",  false,
+                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-25, 7), 1);
+    };
+
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "", 1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_LIGHT_TANK.loadStandingAnimation(sprite, unit, defender, weapon);
-        var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
+        var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
         var offset = Qt.point(0, 0);
         if (weapon === 0)
         {
             // gun
+            BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
             offset = Qt.point(21, 21);
             if (armyName === "yc")
             {
@@ -74,37 +101,85 @@ var Constructor = function()
         }
         else
         {
-            // mg
-            offset = Qt.point(24, 40);
-            if (armyName === "yc")
+            BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg", 4);
+            if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
-                offset = Qt.point(35, 36);
+                // mg
+                offset = Qt.point(24, 43);
+                if (armyName === "yc")
+                {
+                    offset = Qt.point(35, 40);
+                }
+                else if (armyName === "ge")
+                {
+                    offset = Qt.point(36, 41);
+                }
+                else if (armyName === "bm")
+                {
+                    offset = Qt.point(35, 39);
+                }
+                else if (armyName === "bh")
+                {
+                    offset = Qt.point(32, 40);
+                }
+                else if (armyName === "ma")
+                {
+                    offset = Qt.point(41, 24);
+                }
+                sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0);
             }
-            else if (armyName === "ge")
+            else
             {
-                offset = Qt.point(36, 37);
+                // mg
+                offset = Qt.point(24, 38);
+                if (armyName === "yc")
+                {
+                    offset = Qt.point(35, 36);
+                }
+                else if (armyName === "ge")
+                {
+                    offset = Qt.point(36, 37);
+                }
+                else if (armyName === "bm")
+                {
+                    offset = Qt.point(35, 35);
+                }
+                else if (armyName === "bh")
+                {
+                    offset = Qt.point(32, 36);
+                }
+                else if (armyName === "ma")
+                {
+                    offset = Qt.point(41, 20);
+                }
+                sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                                  1, 1, 0, 0);
             }
-            else if (armyName === "bm")
-            {
-                offset = Qt.point(35, 31);
-            }
-            else if (armyName === "bh")
-            {
-                offset = Qt.point(32, 36);
-            }
-            else if (armyName === "ma")
-            {
-                offset = Qt.point(41, 20);
-            }
-            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                              1, 1, 0, 0);
         }
     };
 
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 500;
+        return 820;
+    };
+
+    this.hasMoveInAnimation = function()
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 410;
+    };
+
+    this.getStopDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 300;
     };
 };
 
