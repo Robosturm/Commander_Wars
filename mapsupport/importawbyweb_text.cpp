@@ -22,6 +22,7 @@
 void GameMap::importAWByWebMap(QString file)
 {
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->show();
     if (QFile::exists(file))
     {
         clearMap();        
@@ -72,7 +73,7 @@ void GameMap::importAWByWebMap(QString file)
 
         for (qint32 y = 0; y < mapIDs.size(); y++)
         {
-            pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 30 + 50 * y / mapHeigth);
+            pLoadingScreen->setProgress(tr("Importing Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 30 + 50 * y / mapHeigth);
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
                 switch (mapIDs[y][x])
@@ -1040,4 +1041,5 @@ void GameMap::importAWByWebMap(QString file)
     // update the whole fucking map
     pLoadingScreen->setProgress(tr("Loading Sprites"), 90);
     updateSprites();
+    pLoadingScreen->hide();
 }
