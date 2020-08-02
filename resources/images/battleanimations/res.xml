@@ -414,8 +414,7 @@
 		<image file="mech/mech+yc.png" />
 		<image file="mech/mech+yc+mask.png" />
 		<image file="mech/mech+ma.png" />
-		<image file="mech/mech+ma+mask.png" />
-		
+		<image file="mech/mech+ma+mask.png" />		
 		<image file="mech/mech+bh+river.png" />
 		<image file="mech/mech+bh+river+mask.png" />
 		<image file="mech/mech+bm+river.png" />
@@ -426,6 +425,90 @@
 		<image file="mech/mech+os+river+mask.png" />
 		<image file="mech/mech+yc+river.png" />
 		<image file="mech/mech+yc+river+mask.png" />
+		<image file="mech/mech+bh+dying.png" cols = "3" />
+		<image file="mech/mech+bh+dying+mask.png" cols = "3" />
+		<image file="mech/mech+bm+dying.png" cols = "3" />
+		<image file="mech/mech+bm+dying+mask.png" cols = "3" />
+		<image file="mech/mech+ge+dying.png" cols = "3" />
+		<image file="mech/mech+ge+dying+mask.png" cols = "3" />
+		<image file="mech/mech+os+dying.png" cols = "3" />
+		<image file="mech/mech+os+dying+mask.png" cols = "3" />
+		<image file="mech/mech+yc+dying.png" cols = "3" />
+		<image file="mech/mech+yc+dying+mask.png" cols = "3" />
+		<image file="mech/mech+ma+dying.png" />
+		<image file="mech/mech+ma+dying+mask.png" />		
+		<image file="mech/mech+bh+fire.png" cols = "3" />
+		<image file="mech/mech+bh+fire+mask.png" cols = "3" />
+		<image file="mech/mech+bm+fire.png" cols = "3" />
+		<image file="mech/mech+bm+fire+mask.png" cols = "3" />
+		<image file="mech/mech+ge+fire.png" cols = "3" />
+		<image file="mech/mech+ge+fire+mask.png" cols = "3" />
+		<image file="mech/mech+os+fire.png" cols = "3" />
+		<image file="mech/mech+os+fire+mask.png" cols = "3" />
+		<image file="mech/mech+yc+fire.png" cols = "3" />
+		<image file="mech/mech+yc+fire+mask.png" cols = "3" />
+		<image file="mech/mech+ma+fire.png" />
+		<image file="mech/mech+ma+fire+mask.png" />		
+		<image file="mech/mech+bh+river+fire.png" cols = "3" />
+		<image file="mech/mech+bh+river+fire+mask.png" cols = "3" />
+		<image file="mech/mech+bm+river+fire.png" cols = "3" />
+		<image file="mech/mech+bm+river+fire+mask.png" cols = "3" />
+		<image file="mech/mech+ge+river+fire.png" cols = "3" />
+		<image file="mech/mech+ge+river+fire+mask.png" cols = "3" />
+		<image file="mech/mech+os+river+fire.png" cols = "3" />
+		<image file="mech/mech+os+river+fire+mask.png" cols = "3" />
+		<image file="mech/mech+yc+river+fire.png" cols = "3" />
+		<image file="mech/mech+yc+river+fire+mask.png" cols = "3" />
+		<image file="mech/mech+ma+river+fire.png" />
+		<image file="mech/mech+ma+river+fire+mask.png" />		
+		<image file="mech/mech+bh+stop.png" cols = "2" />
+		<image file="mech/mech+bh+stop+mask.png" cols = "2" />
+		<image file="mech/mech+bm+stop.png" cols = "2" />
+		<image file="mech/mech+bm+stop+mask.png" cols = "2" />
+		<image file="mech/mech+ge+stop.png" cols = "2" />
+		<image file="mech/mech+ge+stop+mask.png" cols = "2" />
+		<image file="mech/mech+os+stop.png" cols = "2" />
+		<image file="mech/mech+os+stop+mask.png" cols = "2" />
+		<image file="mech/mech+yc+stop.png" cols = "2" />
+		<image file="mech/mech+yc+stop+mask.png" cols = "2" />
+		<image file="mech/mech+ma+stop.png" />
+		<image file="mech/mech+ma+stop+mask.png" />	
+		<image file="mech/mech+bh+river+stop.png" cols = "2" />
+		<image file="mech/mech+bh+river+stop+mask.png" cols = "2" />
+		<image file="mech/mech+bm+river+stop.png" cols = "2" />
+		<image file="mech/mech+bm+river+stop+mask.png" cols = "2" />
+		<image file="mech/mech+ge+river+stop.png" cols = "2" />
+		<image file="mech/mech+ge+river+stop+mask.png" cols = "2" />
+		<image file="mech/mech+os+river+stop.png" cols = "2" />
+		<image file="mech/mech+os+river+stop+mask.png" cols = "2" />
+		<image file="mech/mech+yc+river+stop.png" cols = "2" />
+		<image file="mech/mech+yc+river+stop+mask.png" cols = "2" />
+		<image file="mech/mech+ma+river+stop.png" />
+		<image file="mech/mech+ma+river+stop+mask.png" />
+		<image file="mech/mech+bh+walk.png" cols = "6" />
+		<image file="mech/mech+bh+walk+mask.png" cols = "6" />
+		<image file="mech/mech+bm+walk.png" cols = "6" />
+		<image file="mech/mech+bm+walk+mask.png" cols = "6" />
+		<image file="mech/mech+ge+walk.png" cols = "6" />
+		<image file="mech/mech+ge+walk+mask.png" cols = "6" />
+		<image file="mech/mech+os+walk.png" cols = "6" />
+		<image file="mech/mech+os+walk+mask.png" cols = "6" />
+		<image file="mech/mech+yc+walk.png" cols = "6" />
+		<image file="mech/mech+yc+walk+mask.png" cols = "6" />
+		<image file="mech/mech+ma+walk.png" />
+		<image file="mech/mech+ma+walk+mask.png" />
+		<image file="mech/mech+bh+river+walk.png" cols = "6" />
+		<image file="mech/mech+bh+river+walk+mask.png" cols = "6" />
+		<image file="mech/mech+bm+river+walk.png" cols = "6" />
+		<image file="mech/mech+bm+river+walk+mask.png" cols = "6" />
+		<image file="mech/mech+ge+river+walk.png" cols = "6" />
+		<image file="mech/mech+ge+river+walk+mask.png" cols = "6" />
+		<image file="mech/mech+os+river+walk.png" cols = "6" />
+		<image file="mech/mech+os+river+walk+mask.png" cols = "6" />
+		<image file="mech/mech+yc+river+walk.png" cols = "6" />
+		<image file="mech/mech+yc+river+walk+mask.png" cols = "6" />
+		<image file="mech/mech+ma+river+walk.png" />
+		<image file="mech/mech+ma+river+walk+mask.png" />	
 		
 		<!-- megatank -->
 		<image file="megatank/megatank.png" />
