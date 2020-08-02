@@ -804,6 +804,10 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
                 pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
             }
         }
+        else
+        {
+            pTerrainOld->setBuilding(nullptr);
+        }
         updateTerrain(x, y);
         if (updateSprites)
         {
