@@ -6,7 +6,10 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var building = action.getTargetBuilding();
         var unitLimit = map.getGameRules().getUnitLimit();
-        if ((unit === null) && (building !== null))
+        var units = building.getConstructionList();
+        if ((unit === null) &&
+            (building !== null) &&
+            (units.length))
 		{
             var unitCount = building.getOwner().getUnitCount();
             if ((unitLimit <= 0) ||
