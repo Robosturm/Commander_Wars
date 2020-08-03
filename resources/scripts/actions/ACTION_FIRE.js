@@ -190,21 +190,29 @@ var Constructor = function()
 
             var dmg1 = -1;
             var dmg2 = -1;
+            var baseDamage1 = -1;
+            var baseDamage2 = -1;
             if (defUnit !== null)
             {
                 if (unit.isAttackable(defUnit, ignoreOutOfVisionRange))
                 {
-                    if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
+                    var weaponID = unit.getWeapon1ID();
+                    if (unit.hasAmmo1() && weaponID !== "")
                     {
-                        dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
+
+                        baseDamage1 = Global[weaponID].getBaseDamage(defUnit);
+                        dmg1 = ACTION_FIRE.calcAttackerDamage(unit, weaponID, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
-                    if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
+                    weaponID = unit.getWeapon2ID();
+                    if (unit.hasAmmo2() && weaponID)
                     {
-                        dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
+                        baseDamage2 = Global[weaponID].getBaseDamage(defUnit);
+                        dmg2 = ACTION_FIRE.calcAttackerDamage(unit, weaponID, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
-                    if ((dmg1 >= 0.0) || (dmg2 >= 0.0))
+
+                    if ((baseDamage1 >= 0.0) || (baseDamage2 >= 0.0))
                     {
-                        if (dmg1 >= dmg2)
+                        if (baseDamage1 >= baseDamage2)
                         {
                             result.x = dmg1;
                             result.y = 0;
@@ -219,14 +227,19 @@ var Constructor = function()
                     {
                         var defDamage = -1;
                         var defWeapon = 0;
-                        if (defUnit.hasAmmo1() && defUnit.getWeapon1ID() !== "")
+                        baseDamage1 = -1;
+                        weaponID = defUnit.getWeapon1ID();
+                        if (defUnit.hasAmmo1() && weaponID)
                         {
+                            baseDamage1 = Global[weaponID].getBaseDamage(defUnit);
                             defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x + defenderTakenDamage, luckMode);
                         }
-                        if (defUnit.hasAmmo2() && defUnit.getWeapon2ID() !== "")
+                        weaponID = defUnit.getWeapon2ID();
+                        if (defUnit.hasAmmo2() && weaponID)
                         {
+                            baseDamage2 = Global[weaponID].getBaseDamage(defUnit);
                             var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x + defenderTakenDamage, luckMode);
-                            if (defDamage2 > defDamage)
+                            if (baseDamage2 > baseDamage1)
                             {
                                 defDamage = defDamage2;
                                 defWeapon = 1;

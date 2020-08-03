@@ -201,7 +201,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1000);
             pDmgTextAtk->addTweenWait(1500);
             pAtk->queueAnimation(pDmgTextAtk);
-            if (defenderDamage > 0)
+            if (defenderDamage >= 0)
             {
                 // counter damage
                 pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);

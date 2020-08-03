@@ -412,7 +412,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             m_pDefenderAnimation->setHpRounded(Mainapp::roundUp(m_defEndHp));
             m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
-            if (m_DefenderDamage > 0)
+            if (m_DefenderDamage >= 0)
             {
                 loadFireAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             }

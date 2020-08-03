@@ -17,7 +17,7 @@
 const float NormalAi::notAttackableDamage = 25.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
-const float NormalAi::directIndirectRatio = 1.5f;
+const float NormalAi::directIndirectRatio = 1.85f;
 
 NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage,
                    float spamingFunds)
@@ -2239,7 +2239,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         }
         else if (data[DirectUnitRatio] < directIndirectRatio)
         {
-            score -= 2 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+            score -= 3 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
         }
     }
     else if (data[DirectUnit] == 1.0f)
@@ -2247,7 +2247,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         // direct unit
         if (data[DirectUnitRatio] < directIndirectRatio)
         {
-            score += 3 * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+            score += 3.5f * (directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
         }
         else if (data[DirectUnitRatio] > directIndirectRatio * 2)
         {
