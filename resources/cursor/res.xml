@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/cursor/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<image file="cursor+border+bottom.png" />
 		<image file="cursor+border+left.png" />
 		<image file="cursor+border+right.png" />

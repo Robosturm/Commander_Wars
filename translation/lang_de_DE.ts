@@ -161,7 +161,7 @@
 <context>
     <name>ACTION_BUILD_UNITS</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="22"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="25"/>
         <source>Build</source>
         <translation>Bauen</translation>
     </message>
