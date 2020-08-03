@@ -1500,13 +1500,13 @@
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="111"/>
+        <location filename="../objects/dialogcostyle.cpp" line="113"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="178"/>
-        <location filename="../objects/dialogcostyle.cpp" line="192"/>
+        <location filename="../objects/dialogcostyle.cpp" line="181"/>
+        <location filename="../objects/dialogcostyle.cpp" line="195"/>
         <source>CO Style </source>
         <translation>KO Style </translation>
     </message>

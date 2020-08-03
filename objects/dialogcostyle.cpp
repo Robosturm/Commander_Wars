@@ -89,11 +89,13 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_Styles = pCOSpriteManager->getCOStyles(coid);
     m_Styles.push_front("");
 
+    qint32 currentStyleId = 0;
     for (qint32 i = 0; i < m_Styles.size(); i++)
     {
         if (styleID == m_Styles[i])
         {
             addCOStyle(m_Styles[i], true);
+            currentStyleId = i;
         }
         else
         {
@@ -119,7 +121,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pPixelPanel->setPosition(30, Settings::getHeight() - 175);
     m_pSpriteBox->addChild(m_pPixelPanel);
 
-    changeCOStyle(0);
+    changeCOStyle(currentStyleId);
 
     if (currentStyle != nullptr)
     {
@@ -130,6 +132,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
             m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
         }
     }
+    m_update = true;
 }
 
 void DialogCOStyle::selecetedColorChanged(QColor color)
@@ -151,7 +154,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         for (qint32 i = 0; i < m_Styles.size(); i++)
         {
-            oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[i] + "+nrm"));
+            oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + m_Styles[i] + "+nrm"));
             m_pCOSprites[i]->setResAnim(pAnim);
         }
         m_CurrentIndex = index;
@@ -253,12 +256,12 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
     pBox->setResAnim(pAnim);
-    pAnim = pCOSpriteManager->getResAnim((m_currentCOID + style + "+nrm"));
-    float scale = (m_pCOPanel->getHeight() - 120) / pAnim->getHeight();
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + style + "+nrm"));
+    float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
-    pBox->setPosition(pBox->getWidth() * m_pCOSprites.size() + 20, 20);
+    pBox->setPosition(pBox->getWidth() * m_pCOSprites.size() + 10, 10);
     pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     m_pCOPanel->addItem(pBox);
     // add some event handling :)
