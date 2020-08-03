@@ -189,7 +189,8 @@ Player* GameMenue::getCurrentViewPlayer()
         for (qint32 i = currentPlayerID; i >= 0; i--)
         {
             if (pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
-                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                !pMap->getPlayer(i)->getIsDefeated())
             {
                 return pMap->getPlayer(i);
             }
@@ -197,7 +198,8 @@ Player* GameMenue::getCurrentViewPlayer()
         for (qint32 i = pMap->getPlayerCount() - 1; i > currentPlayerID; i--)
         {
             if (pMap->getPlayer(i)->getBaseGameInput() != nullptr &&
-                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                !pMap->getPlayer(i)->getIsDefeated())
             {
                 return pMap->getPlayer(i);
             }
@@ -837,14 +839,20 @@ void GameMenue::actionPerformed()
     m_IngameInfoBar->updatePlayerInfo();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
-        if (m_pStoredAction != nullptr)
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap->getCurrentPlayer()->getIsDefeated())
+        {
+            GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+            performAction(pAction);
+        }
+        else if (m_pStoredAction != nullptr)
         {
             performAction(m_pStoredAction);
         }
         else
         {
             Mainapp::setUseSeed(false);
-            spGameMap pMap = GameMap::getInstance();
+
             if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 pMap->getGameRules()->resumeRoundTime();
