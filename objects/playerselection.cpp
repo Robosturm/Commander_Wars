@@ -518,7 +518,19 @@ void PlayerSelection::showPlayerSelection()
         {
             if (m_pNetworkInterface->getIsServer())
             {
-                if (i > 0)
+                if (saveGame)
+                {
+                    if (ai == GameEnums::AiTypes_ProxyAi)
+                    {
+                        ai = aiList.size() - 1;
+                        playerAi->setCurrentItem(ai);
+                    }
+                    else
+                    {
+                        playerAi->setCurrentItem(ai);
+                    }
+                }
+                else if (i > 0)
                 {
                     ai = aiList.size() - 1;
                     playerAi->setCurrentItem(ai);
@@ -1021,8 +1033,13 @@ void PlayerSelection::selectAI(qint32 player)
 
 void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
 {
-    Player* pPlayer = GameMap::getInstance()->getPlayer(player);
+    GameMap* pMap = GameMap::getInstance();
+    Player* pPlayer = pMap->getPlayer(player);
     pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
+    if (pPlayer->getBaseGameInput() != nullptr)
+    {
+        pPlayer->getBaseGameInput()->setEnableNeutralTerrainAttack(pMap->getGameRules()->getAiAttackTerrain());
+    }
 }
 
 void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

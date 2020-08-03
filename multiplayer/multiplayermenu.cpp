@@ -68,8 +68,8 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         {
             emit sigShowIPs();
         });
-        m_pHostAdresse->setPosition(Settings::getWidth() / 2 - m_pHostAdresse->getWidth() / 2,
-                                         Settings::getHeight() - m_pHostAdresse->getHeight() - 10);
+        m_pHostAdresse->setPosition(m_pButtonStart->getX() - m_pHostAdresse->getWidth() - 10,
+                                    Settings::getHeight() - m_pHostAdresse->getHeight() - 10);
         m_pHostAdresse->setVisible(false);
         connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
