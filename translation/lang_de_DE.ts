@@ -4207,7 +4207,7 @@ Version: </translation>
     <message>
         <location filename="../objects/playerselection.cpp" line="190"/>
         <location filename="../objects/playerselection.cpp" line="296"/>
-        <location filename="../objects/playerselection.cpp" line="624"/>
+        <location filename="../objects/playerselection.cpp" line="636"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
@@ -4296,22 +4296,22 @@ Version: </translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="569"/>
+        <location filename="../objects/playerselection.cpp" line="581"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="588"/>
+        <location filename="../objects/playerselection.cpp" line="600"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="607"/>
+        <location filename="../objects/playerselection.cpp" line="619"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="643"/>
+        <location filename="../objects/playerselection.cpp" line="655"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
