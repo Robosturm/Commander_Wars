@@ -77,6 +77,7 @@ bool Settings::m_StaticMarkedFields = false;
 qint32 Settings::m_showCoCount = 0;
 quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
 GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
+bool Settings::m_autoScrolling = true;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -100,6 +101,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getAutoScrolling()
+{
+    return m_autoScrolling;
+}
+
+void Settings::setAutoScrolling(bool autoScrolling)
+{
+    m_autoScrolling = autoScrolling;
 }
 
 GameEnums::COInfoPosition Settings::getCoInfoPosition()
@@ -593,6 +604,7 @@ void Settings::loadSettings()
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
+    m_autoScrolling = settings.value("AutoScrolling", true).toBool();
 
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
@@ -744,6 +756,7 @@ void Settings::saveSettings()
         settings.setValue("ShowCoCount",                    m_showCoCount);
         settings.setValue("SpriteFilter",                   m_spriteFilter);
         settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
+        settings.setValue("AutoScrolling",                  m_autoScrolling);
         settings.endGroup();
 
         // network

@@ -45,7 +45,11 @@ public:
     static GameEnums::COInfoPosition getCoInfoPosition();
     static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
 
-public slots:    
+
+public slots:
+    static bool getAutoScrolling();
+    static void setAutoScrolling(bool autoScrolling);
+
     static bool getLogActions();
     static void setLogActions(bool LogActions);
 
@@ -341,6 +345,7 @@ private:
     static quint32 m_spriteFilter;
     static bool m_showIngameCoordinates;
     static GameEnums::COInfoPosition coInfoPosition;
+    static bool m_autoScrolling;
 
     // internal members
     static Settings* m_pInstance;

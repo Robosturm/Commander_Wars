@@ -214,7 +214,8 @@ void InGameMenue::autoScroll()
 {
     Mainapp* pApp = Mainapp::getInstance();
     if (QGuiApplication::focusWindow() == pApp &&
-        m_Focused)
+        m_Focused &&
+        Settings::getAutoScrolling())
     {
         QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
         spGameMap pMap = GameMap::getInstance();
