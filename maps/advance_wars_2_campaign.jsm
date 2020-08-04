@@ -366,7 +366,7 @@ var Constructor = function()
                 }
                 if (greenEarthCount >= 4)
                 {
-                    ret.push("Great Sea Battle.map");
+                    ret.push("great sea battle.map");
                 }
             }
         }
