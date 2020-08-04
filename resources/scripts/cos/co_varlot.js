@@ -220,7 +220,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("This CO joined the military and rose through the ranks. But not quickly enough, and is now a sub-commander.");
+        return qsTr("This CO joined the military and rose through the ranks, not quickly enough. Currently is a sub-commander.");
     };
     this.getHits = function()
     {

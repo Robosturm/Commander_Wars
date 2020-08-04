@@ -26,7 +26,7 @@ var Constructor = function()
             {
                 var unit = map.getTerrain(x, y).getUnit();
                 if (unit !== null &&
-                    player.isEnemyUnit(unit))
+                        player.isEnemyUnit(unit))
                 {
                     unit.setCapturePoints(0);
                 }
@@ -212,7 +212,7 @@ var Constructor = function()
     {
         return [qsTr("Ironically, your shortcomings stemmed from within your own ranks."),
                 qsTr("Ah, I see now! This is why the citizens were on my side all along."),
-                qsTr("Only through unrivaled determination did I acheive success.")];
+                qsTr("Only through unrivaled determination did I achieve success.")];
     };
     this.getDefeatSentences = function()
     {

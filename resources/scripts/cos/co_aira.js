@@ -260,7 +260,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("The wind blew in the wrong direction."),
-                qsTr("Hmm! Oh i have dreamed to much.")];
+                qsTr("Hmm! Oh I have dreamed too much.")];
     };
     this.getName = function()
     {

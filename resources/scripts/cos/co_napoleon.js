@@ -222,7 +222,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("The current second commander of the Metall Army. Believes Metall Army's ingenuity gives it a right to control the world.");
+        return qsTr("The current second commander of the Metal Army. Believes Metal Army's ingenuity gives it a right to control the world.");
     };
     this.getHits = function()
     {
@@ -234,12 +234,12 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Unit's have high defensive capabilities.");
+        return qsTr("Units have high defensive capabilities.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDefense is increased and even more against indirect units.");
+               qsTr("\n\nCO Zone Effect: \nDefense is increased, even more against indirect units.");
     };
     this.getPowerDescription = function()
     {
@@ -268,7 +268,7 @@ var Constructor = function()
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("The survival of the Metall Army is assured."),
+        return [qsTr("The survival of the Metal Army is assured."),
                 qsTr("My casualties are recovering.  Yours are not so lucky."),
                 qsTr("Why were you so confident?  Success is earned, not granted.")];
     };

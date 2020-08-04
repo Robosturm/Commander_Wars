@@ -172,7 +172,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A robot-like commander with the Bolt Guard army. No one knows his true identity!");
+        return qsTr("A robot-like commander in the Bolt Guard army. No one knows his true identity!");
     };
     this.getHits = function()
     {
@@ -184,7 +184,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Units may suddenly deal more damage than expected, but units' firepower is inherently low.");
+        return qsTr("Units may suddenly deal more damage than expected, but their firepower is inherently low.");
     };
     this.getLongCODescription = function()
     {

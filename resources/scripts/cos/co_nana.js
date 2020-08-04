@@ -295,7 +295,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Now i'm mad..."),
+        return [qsTr("Now I'm mad..."),
                 qsTr("This should have been easy!")];
     };
     this.getName = function()

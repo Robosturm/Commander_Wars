@@ -173,7 +173,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("He has faith in the goodness of humanity. Feels strong dutx to help anyone who is in trouble.");
+        return qsTr("He has faith in the goodness of humanity. Feels strong duty to help anyone who is in trouble.");
     };
     this.getHits = function()
     {

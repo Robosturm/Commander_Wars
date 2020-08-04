@@ -236,16 +236,16 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("His troops can move 1 point more, but they have weaker firepower but higher defense capabilities.");
+        return qsTr("His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.");
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain 1 additional movementpoint and have reduced firepower.") +
+        return qsTr("\nGlobal Effect: \nUnits gain 1 additional movement point and have reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain defense and have reduced firepower.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Enemy looses half of their ammo and his troops can move 1 point more and their defense rises.");
+        return qsTr("Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.");
     };
     this.getPowerName = function()
     {
@@ -253,7 +253,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Enemy looses half of their ammo and 2 HP and his troops can move 2 point more and their defense rises extremly.");
+        return qsTr("Enemy loses half of their ammo, take 2 HP damage ,his troops can move 2 points more and their defense rises extremly.");
     };
     this.getSuperPowerName = function()
     {
@@ -261,23 +261,23 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("System Runtime. Error! No more Enemies found!"),
+        return [qsTr("System Runtime. Error! No more enemies found!"),
                 qsTr("...Sturm is coming...you have no chance..."),
-                qsTr("Order analyzied! Destroy Enemies."),
+                qsTr("Order analyzed! Destroy enemies."),
                 qsTr("Nobody can kill a Robot."),
                 qsTr("This is a war of a new time!"),
-                qsTr("Humans befare the power of machines come to your country.")];
+                qsTr("Humans beware the power of machines coming to your country.")];
     };
     this.getVictorySentences = function()
     {
         return [qsTr(".........."),
-                qsTr("...Enemy destroyed Country conquered."),
-                qsTr("Robots are stronger than human beeings.")];
+                qsTr("...Enemy destroyed! Country conquered."),
+                qsTr("Robots are stronger than human beings.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("No Programm found for this Situation."),
-                qsTr("In accurate Attack this situation is impossible.")];
+        return [qsTr("No Program found for this Situation."),
+                qsTr("Inaccurate attack! This situation is impossible.")];
     };
     this.getName = function()
     {

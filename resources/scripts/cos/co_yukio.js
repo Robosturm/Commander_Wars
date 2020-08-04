@@ -226,24 +226,24 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Darc founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
+        return qsTr("Dark founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
     };
     this.getHits = function()
     {
-        return qsTr("Astromomic gains");
+        return qsTr("Astronomic gains");
     };
     this.getMiss = function()
     {
-        return qsTr("Any loses");
+        return qsTr("Any losses");
     };
     this.getCODescription = function()
     {
-        return qsTr("As the leader of darc matter his troops have special armory and armor piercing weapons.");
+        return qsTr("As the leader of dark matter his troops have special armor and armor piercing weapons.");
     };
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: \nNone.") +
-               qsTr("\n\nCO Zone Effect: \nDamage against is troops are reduced. Troops deal true damage if the base damage is at least 10%.");
+               qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced. Troops deal true damage if the base damage is at least 10%.");
     };
     this.getPowerDescription = function()
     {
@@ -272,14 +272,14 @@ var Constructor = function()
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("Investment...Profits...great continue."),
-                qsTr("War is just another tool to make Profit."),
+        return [qsTr("Investment...Profits...great. Continue."),
+                qsTr("War is just another tool to make profit."),
                 qsTr("Give me all your money and your lifes.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Even with this loss i made profit..."),
-                qsTr("I lost but i got your money to build a new army.")];
+        return [qsTr("Even with this loss I made profit..."),
+                qsTr("I lost but I got your money to build a new army.")];
     };
     this.getName = function()
     {

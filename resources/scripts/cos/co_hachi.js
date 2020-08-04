@@ -160,7 +160,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city and even cheaper.");
+        return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city even cheaper.");
     };
     this.getSuperPowerName = function()
     {

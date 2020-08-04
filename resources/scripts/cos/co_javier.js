@@ -219,7 +219,7 @@ var Constructor = function()
     {
         return [qsTr("No sharpness can penetrate my steely hide!"),
                 qsTr("Consider your hindquarters righteously spanked!"),
-                qsTr("You still live, for Javier is masterful but merciful!")];
+                qsTr("You still live for. Javier is masterful but merciful!")];
     };
     this.getDefeatSentences = function()
     {

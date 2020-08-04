@@ -251,7 +251,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Inflicts three HP of damage to enemy units on properties. Also increases firepower of all units on a property.");
+        return qsTr("Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.");
     };
     this.getPowerName = function()
     {
@@ -259,7 +259,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("The more properties she controls, the more firepower she gains. Also greatly increases firepower of all units on a property.");
+        return qsTr("The more properties she controls, the more firepower she gains and greatly increases firepower of all units on a property.");
     };
     this.getSuperPowerName = function()
     {

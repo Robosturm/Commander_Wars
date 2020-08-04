@@ -221,7 +221,7 @@ var Constructor = function()
     {
         return [qsTr("What was that? A waste of my time!"),
                 qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
-                qsTr("Enough pussyfooting around!")];
+                qsTr("Enough weakling's footing around!")];
     };
     this.getDefeatSentences = function()
     {

@@ -143,7 +143,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremly cruel.");
+        return qsTr("Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.");
     };
     this.getHits = function()
     {
@@ -155,7 +155,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Her co unit is strong weak outside of that she gets no bonuses.");
+        return qsTr("Her co unit is strong, weak outside of that she gets no bonuses.");
     };
     this.getLongCODescription = function()
     {

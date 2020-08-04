@@ -148,7 +148,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops' low firepower stems from his lack of confidence.");
+        return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops are low firepower stems from his lack of confidence.");
     };
     this.getLongCODescription = function()
     {

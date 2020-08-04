@@ -232,7 +232,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A genius scientist that harbors a great hatred for humankind. Believes plants to be superior life forms.");
+        return qsTr("A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.");
     };
     this.getHits = function()
     {
@@ -284,7 +284,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("What Humans have defeated the almighty Nature."),
+        return [qsTr("What? Humans have defeated the almighty Nature."),
 				qsTr("Nobody destroys the Nature. Next time...")];
     };
     this.getName = function()

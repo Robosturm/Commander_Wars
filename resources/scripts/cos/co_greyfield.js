@@ -261,7 +261,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("I will brook no opposition. The enemy will be eleminated."),
+        return [qsTr("I will brook no opposition. The enemy will be eliminated."),
                 qsTr("Overwhelming forces need overwhelming supplies."),
                 qsTr("Supplies are here!"),
                 qsTr("Admiral Greyfield here. Attack and eleminate them.")];

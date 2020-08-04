@@ -147,7 +147,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free to live in peace.");
+        return qsTr("Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.");
     };
     this.getHits = function()
     {
@@ -159,7 +159,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("He has a large CO-Zone which boosts both offensive and defensive.");
+        return qsTr("He has a large CO-Zone which boosts both offensive and defensive bonus.");
     };
     this.getLongCODescription = function()
     {
@@ -168,7 +168,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Increases offensive and defensive.");
+        return qsTr("Increases offensive and defensive bonus.");
     };
     this.getPowerName = function()
     {
@@ -176,7 +176,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Increases offensive and defensive even more.");
+        return qsTr("Increases offensive and defensive bonus even more.");
     };
     this.getSuperPowerName = function()
     {
@@ -190,7 +190,7 @@ var Constructor = function()
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("I have beaten you 20 years ago and i beaten you now."),
+        return [qsTr("I have beaten you 20 years ago and I beaten you now."),
                 qsTr("I am a soldier not a killer."),
                 qsTr("Death before dishonour.")];
     };

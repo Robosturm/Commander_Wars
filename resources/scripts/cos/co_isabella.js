@@ -213,7 +213,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Increases her movement range and firerange by 2 and increases her firepower.");
+        return qsTr("Increases her movement range and firerange by 2, increases her firepower.");
     };
     this.getSuperPowerName = function()
     {

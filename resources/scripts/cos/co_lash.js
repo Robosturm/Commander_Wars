@@ -226,7 +226,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Terrain effects are doubled and used to increase firepower. Additionally, all units' movements are unhindered by terrain.");
+        return qsTr("Terrain effects are doubled and used to increase firepower. Additionally, all units movements are unhindered by terrain.");
     };
     this.getSuperPowerName = function()
     {

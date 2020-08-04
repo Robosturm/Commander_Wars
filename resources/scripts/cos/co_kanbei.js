@@ -182,7 +182,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have 20% stronger firepower and defense and are 20% more expensive.") +
+        return qsTr("\nGlobal Effect: \nUnits have 20% stronger firepower and defense, but are 20% more expensive.") +
                qsTr("\n\nCO Zone Effect: \nUnits have 40% stronger firepower and defense.");
     };
     this.getPowerDescription = function()

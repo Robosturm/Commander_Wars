@@ -339,7 +339,7 @@ var Constructor = function()
     this.getVictorySentences = function()
     {
         return [qsTr("Heh, looks like all my effort paid off in the end"),
-                qsTr("Lets go, people. Lets have a drink to celebrate this victory."),
+                qsTr("Let's go, people. Let's have a drink to celebrate this victory."),
                 qsTr("All right troops, now you can rest, your job here is done.")];
     };
     this.getDefeatSentences = function()

@@ -195,7 +195,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A youthful Co that will protect her village at all cost. She is skilled in dealing with sandstorms.");
+        return qsTr("A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.");
     };
     this.getHits = function()
     {
@@ -207,7 +207,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Zandra's units are unaffected by sandstorms. They fight even better during them.");
+        return qsTr("Zandra's units are unaffected by sandstorms and are fighting better during them.");
     };
     this.getLongCODescription = function()
     {
@@ -248,7 +248,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("I only lost because of the Snow around here."),
-                qsTr("What? I can't loose. We have a Global Heating.")];
+                qsTr("What? I can't lose. We have a Global Heating.")];
     };
     this.getName = function()
     {

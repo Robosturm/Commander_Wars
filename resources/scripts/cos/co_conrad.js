@@ -230,7 +230,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Unit's have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range. Weak counters.");
+        return qsTr("Units have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range but they have weak counters.");
     };
     this.getLongCODescription = function()
     {
@@ -270,8 +270,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("What i didn't see that."),
-                qsTr("How could you hide from me.")];
+        return [qsTr("What? I didn't see that."),
+                qsTr("How could you hide from me?")];
     };
     this.getName = function()
     {

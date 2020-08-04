@@ -192,7 +192,7 @@ var Constructor = function()
     };
     this.getMiss = function()
     {
-        return qsTr("The Beast, Greayfield, Caulder");
+        return qsTr("The Beast, Greyfield, Caulder");
     };
     this.getCODescription = function()
     {

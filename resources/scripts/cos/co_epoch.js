@@ -239,7 +239,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents. Firepower is increased.");
+        return qsTr("Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.");
     };
     this.getSuperPowerName = function()
     {
@@ -247,9 +247,9 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Error: Overcharged. initiate saftey mode."),
+        return [qsTr("Error: Overcharged. Initiate safety mode."),
                 qsTr("Power surge detected."),
-                qsTr("Overload! Release Energy!"),
+                qsTr("Overload! Release energy!"),
                 qsTr("System Over. Overload equals very yes."),
                 qsTr("Blackout!"),
                 qsTr("Register your firmware for continued use!")];

@@ -275,7 +275,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("That's not my realitiy."),
+        return [qsTr("That's not my reality."),
                 qsTr("You were supposed to be intellectually inferior to me.")];
     };
     this.getName = function()

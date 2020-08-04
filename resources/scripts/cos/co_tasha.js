@@ -221,7 +221,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Air units have higher firepower and defense and all units can move 1 space farther.");
+        return qsTr("Air units have higher firepower, defense and all units can move 1 space farther.");
     };
     this.getPowerName = function()
     {
@@ -229,7 +229,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Air units have impressive firepower and higher defense and all units can move 2 space farther");
+        return qsTr("Air units have impressive firepower, higher defense and all units can move 2 space farther");
     };
     this.getSuperPowerName = function()
     {

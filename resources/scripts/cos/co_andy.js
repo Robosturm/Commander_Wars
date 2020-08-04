@@ -218,7 +218,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Restores five HP to all units. Firepower rises, and unit movement increases by one space.");
+        return qsTr("Restores five HP to all units. Firepower rises and unit movement increases by one space.");
     };
     this.getSuperPowerName = function()
     {

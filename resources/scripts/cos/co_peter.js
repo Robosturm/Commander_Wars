@@ -209,7 +209,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Firepower is greatly increases against enemy direct-combat units.");
+        return qsTr("Firepower is greatly increased against enemy direct-combat units.");
     };
     this.getPowerName = function()
     {

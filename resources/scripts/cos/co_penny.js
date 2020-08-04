@@ -178,7 +178,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Yougest child of Caulder. She is still too young ro know right from wrong.");
+        return qsTr("Youngest child of Caulder. She is still too young to know right from wrong.");
     };
     this.getHits = function()
     {

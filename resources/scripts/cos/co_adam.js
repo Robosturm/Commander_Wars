@@ -293,7 +293,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A researcher-turned-commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.");
+        return qsTr("A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.");
     };
     this.getHits = function()
     {
@@ -309,7 +309,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have increased firepower but loose additional firepower for lost HP.") +
+        return qsTr("\nGlobal Effect: \nUnits have increased firepower but lose additional firepower for lost HP.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a defense boost for one turn.");
     };
     this.getPowerDescription = function()

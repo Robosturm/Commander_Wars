@@ -203,7 +203,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Copters have incredibly high firepower, but naval units have weak attacks. Foot soldiers have increased firepower.");
+        return qsTr("Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.");
     };
     this.getLongCODescription = function()
     {

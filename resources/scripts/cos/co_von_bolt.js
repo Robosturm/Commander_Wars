@@ -170,7 +170,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Masterminded of the Omega war. Immortal Evil");
+        return qsTr("Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil");
     };
     this.getHits = function()
     {
@@ -222,7 +222,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("What? Why are you Jouth so strong?"),
+        return [qsTr("What? Why are you Youth so strong?"),
                 qsTr("Nooo...I want to live forever.")];
     };
     this.getName = function()

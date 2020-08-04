@@ -215,7 +215,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Air units increase firepower and highly increases defense.");
+        return qsTr("Air units get increased firepower and highly increased defense.");
     };
     this.getPowerName = function()
     {
@@ -223,7 +223,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Air units increase firepower and highly increases defense.");
+        return qsTr("Air units get increased firepower and highly increased defense.");
     };
     this.getSuperPowerName = function()
     {
@@ -244,7 +244,7 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("This is not the freedom i want!"),
+        return [qsTr("This is not the freedom I want!"),
                 qsTr("The eagle has landed.")];
     };
     this.getName = function()

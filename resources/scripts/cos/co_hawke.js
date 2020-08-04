@@ -175,7 +175,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A commander of the Black Hole army who willstop at nothing to achieve his goals.");
+        return qsTr("A commander of the Black Hole army who will stop at nothing to achieve his goals.");
     };
     this.getHits = function()
     {

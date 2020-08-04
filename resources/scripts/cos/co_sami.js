@@ -248,7 +248,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("All foot soldiers's capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. ");
+        return qsTr("All foot soldiers capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. ");
     };
     this.getSuperPowerName = function()
     {

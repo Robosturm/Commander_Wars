@@ -218,7 +218,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Her ground units are very strong. Her other units have normal power.");
+        return qsTr("Her ground units are very strong. Other units have normal power.");
     };
     this.getLongCODescription = function()
     {
@@ -256,7 +256,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("We had not enough intel."),
-                qsTr("Next time i am better prepared.")];
+                qsTr("Next time I am better prepared.")];
     };
     this.getName = function()
     {

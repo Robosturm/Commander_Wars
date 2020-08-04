@@ -173,7 +173,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A former Yellow Comet CO that started a rebellion when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.");
+        return qsTr("A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.");
     };
     this.getHits = function()
     {
@@ -202,7 +202,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Units heal HP equal to the amount of damage they inflict.");
+        return qsTr("Units heal HP equal amount of damage they inflict.");
     };
     this.getSuperPowerName = function()
     {
@@ -226,7 +226,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("The revolution isn't over."),
-				qsTr("Even by healing my troops. I couldn't win.")];
+				qsTr("Even by healing my troops.. I couldn't win.")];
     };
     this.getName = function()
     {

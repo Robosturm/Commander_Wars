@@ -206,7 +206,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("His direct units can do indirect attacks when they don't move. However they loose a fraction of firepower when doing so.");
+        return qsTr("His direct units can do indirect attacks when they don't move. However they lose a fraction of firepower when doing so.");
     };
     this.getLongCODescription = function()
     {
@@ -231,8 +231,8 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Direct Attack!"),
-                qsTr("Function Attacking not found use function defending instead!"),
+        return [qsTr("Direct attack!"),
+                qsTr("Function attacking not found use function defending instead!"),
                 qsTr("My fortress is unbeatable."),
                 qsTr("Make ready to defend yourself!"),
                 qsTr("You are to near to my defence position."),

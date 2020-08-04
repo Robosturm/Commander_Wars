@@ -253,7 +253,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("The Supreme Commander of Golden Sun. A veteran of a lot of battles who relies on experienced troops.");
+        return qsTr("The Supreme Commander of Golden Sun. A veteran of battles who relies on experienced troops.");
     };
     this.getHits = function()
     {

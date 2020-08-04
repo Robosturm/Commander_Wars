@@ -177,7 +177,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Adept at making quick command decisions, he stores up energy for his CO Power more rapidly than other CO's.");
+        return qsTr("Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO's.");
     };
     this.getLongCODescription = function()
     {

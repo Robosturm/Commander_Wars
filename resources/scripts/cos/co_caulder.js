@@ -204,7 +204,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Head of IDS the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.");
+        return qsTr("Head of IDS - the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.");
     };
     this.getHits = function()
     {
@@ -242,20 +242,20 @@ var Constructor = function()
     this.getPowerSentences = function()
     {
         return [qsTr("Ahhh watch this experiment. I wonder what it does..."),
-                qsTr("March my clones march and kill them all."),
+                qsTr("March my clones, march and kill them all."),
                 qsTr("You and your ethnics make you weak. Watch the power of science..."),
                 qsTr("I am simply curious.")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("Interesting. Very Interesting"),
+        return [qsTr("Interesting. Very interesting"),
                 qsTr("Quite satisfactory."),
                 qsTr("I am simply curious.")];
     };
     this.getDefeatSentences = function()
     {
         return [qsTr("Only a failed experiment nothing to worry about!"),
-                qsTr("Argh i'm useless as well? Impossible!")];
+                qsTr("Argh I'm useless as well? Impossible!")];
     };
     this.getName = function()
     {

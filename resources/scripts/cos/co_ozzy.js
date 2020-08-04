@@ -162,7 +162,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A psychoanalyist who specializes in defensive tactics when he's not playing his guitar. A habitual womanizer.");
+        return qsTr("A psychoanalyst who specializes in defensive tactics when he's not playing his guitar. A habitual womanizer.");
     };
     this.getHits = function()
     {

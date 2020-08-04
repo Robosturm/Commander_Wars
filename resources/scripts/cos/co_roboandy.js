@@ -208,7 +208,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits gain irepower and misfortune per star.") +
+        return qsTr("\nGlobal Effect: \nUnits gain firepower and misfortune per star.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower and misfortune per star.");
     };
     this.getPowerDescription = function()

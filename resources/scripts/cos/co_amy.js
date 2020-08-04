@@ -217,7 +217,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Hovercraft units are strengthened, and they gain one extra movement and get cheaper.");
+        return qsTr("Hovercraft units are strengthened, they gain one extra movement and get cheaper.");
     };
     this.getPowerName = function()
     {
@@ -233,7 +233,7 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("EMP? Why, it stands for Electromagnetic Pulse. You'll soon understand."),
+        return [qsTr("EMP? Why, it stands for Electromagnetic Pulse? You'll soon understand."),
                 qsTr("Quantum... you probably don't even know what it means."),
                 qsTr("Do you know how much energy splitting of the atom produces? Let's see."),
                 qsTr("Allow me demonstrate how flimsy hovercrafts are not."),

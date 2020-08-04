@@ -186,7 +186,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A young enigmatic girl who serves Pinc Frontier. Deceptively dangerous.");
+        return qsTr("A young enigmatic girl who serves Pink Frontier. Deceptively dangerous.");
     };
     this.getHits = function()
     {
@@ -239,8 +239,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("I hate loosing like this."),
-                qsTr("This result ist wrong.")];
+        return [qsTr("I hate losing like this."),
+                qsTr("This result is wrong.")];
     };
     this.getName = function()
     {

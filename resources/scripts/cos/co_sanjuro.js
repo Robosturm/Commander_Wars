@@ -346,7 +346,7 @@ var Constructor = function()
 
     this.getPowerDescription = function()
     {
-        return qsTr("When his units take combat damage, he recieves a portion of the value of the damage in funds.");
+        return qsTr("When his units take combat damage, he receives a portion of the value damage in funds.");
     };
     this.getPowerName = function()
     {
@@ -377,8 +377,8 @@ var Constructor = function()
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("For this i get to less money"),
-                qsTr("Now, i know how the Romans felt like.")];
+        return [qsTr("For this I get too less money"),
+                qsTr("Now, I know how the Romans felt like.")];
     };
     this.getName = function()
     {

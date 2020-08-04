@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nHis troops are not affected by terrain only snow can stop him.") +
+        return qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
     };
     this.getPowerDescription = function()
