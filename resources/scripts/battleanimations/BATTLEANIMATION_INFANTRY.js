@@ -4,24 +4,18 @@ var Constructor = function()
     {
         return 5;
     };
-
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_INFANTRY.armyData);
         sprite.loadSpriteV2("infantry+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
         sprite.loadSprite("infantry+" + armyName,  false,

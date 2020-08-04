@@ -61,12 +61,12 @@ public slots:
      * @brief addSprite
      * @param spriteID
      */
-    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f, qint32 delay = 0);
+    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f, qint32 delay = 0, qint32 loops = 1);
     /**
      * @brief addSprite
      * @param spriteID
      */
-    void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
+    void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 loops = 1);
     /**
       * @brief addSprite3
       * @param spriteID
@@ -77,7 +77,7 @@ public slots:
       * @param scaleY
       * @param delay
       */
-    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0);
+    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0, qint32 loops = 1);
     /**
      * @brief addSpriteAnimTable
      * @param spriteID
@@ -277,7 +277,7 @@ private:
      * @param scaleY
      * @param delay
      */
-    void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
+    void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 loops);
     /**
      * @brief loadSpriteAnimTable
      * @param pAnim

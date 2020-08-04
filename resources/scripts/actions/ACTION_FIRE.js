@@ -345,14 +345,6 @@ var Constructor = function()
 
     this.perform = function(action)
     {
-        // we need to move the unit to the target position
-        ACTION_FIRE.postAnimationUnit = action.getTargetUnit();
-        var animation = Global[ACTION_FIRE.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
-        animation.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
-        // move unit to target position
-        ACTION_FIRE.postAnimationUnit.moveUnitAction(action);
-        // disable unit commandments for this turn
-        ACTION_FIRE.postAnimationUnit.setHasMoved(true);
         action.startReading();
         // read action data
         ACTION_FIRE.postAnimationTargetX = action.readDataInt32();
@@ -361,6 +353,31 @@ var Constructor = function()
         ACTION_FIRE.postAnimationAttackerWeapon = action.readDataInt32();
         ACTION_FIRE.postAnimationDefenderDamage = action.readDataInt32();
         ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();
+
+        // we need to move the unit to the target position
+        ACTION_FIRE.postAnimationUnit = action.getTargetUnit();
+        var animation = Global[ACTION_FIRE.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+
+        var currentPlayer = map.getCurrentPlayer();
+        var currentViewPlayer = map.getCurrentViewPlayer();
+        if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
+            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+        {
+            var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
+            animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 1.5, 0, 2);
+            animation2.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
+            animation.queueAnimation(animation2);
+        }
+        else
+        {
+            animation.setEndOfAnimationCall("ACTION_FIRE", "performPostAnimation");
+        }
+
+        // move unit to target position
+        ACTION_FIRE.postAnimationUnit.moveUnitAction(action);
+        // disable unit commandments for this turn
+        ACTION_FIRE.postAnimationUnit.setHasMoved(true);
+
     };
 
     this.performPostAnimation = function(postAnimation)

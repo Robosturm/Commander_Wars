@@ -4,25 +4,19 @@ var Constructor = function()
     {
         return 5;
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
 
     this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-                (armyName !== "ge") &&
-                (armyName !== "bm") &&
-                (armyName !== "bh") &&
-                (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
-        return armyName;
+        return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_RECON.armyData);
     };
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)

@@ -25,6 +25,12 @@ var Constructor = function()
     {
         return qsTr("HQ");
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],];
     this.addCaptureAnimationBuilding = function(animation, building, startPlayer, capturedPlayer)
     {
         var player = building.getOwner();
@@ -32,19 +38,7 @@ var Constructor = function()
         var armyName = "os";
         if (player !== null)
         {
-            armyName = player.getArmy().toLowerCase();
-        }
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "os") &&
-            (armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
-        {
-            armyName = "os";
+            armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
         animation.addBuildingSprite("hq+" + armyName + "+mask", startPlayer , capturedPlayer, GameEnums.Recoloring_Table);
         animation.addBuildingSprite("hq+" + armyName, startPlayer , capturedPlayer, GameEnums.Recoloring_None);
@@ -72,19 +66,7 @@ var Constructor = function()
         var armyName = "os";
         if (player !== null)
         {
-            armyName = player.getArmy().toLowerCase();
-        }
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "os") &&
-            (armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
-        {
-            armyName = "os";
+            armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
         return "fore_hq+" + armyName;
     };
@@ -96,19 +78,7 @@ var Constructor = function()
         var armyName = "os";
         if (player !== null)
         {
-            armyName = player.getArmy().toLowerCase();
-        }
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "os") &&
-            (armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
-        {
-            armyName = "os";
+            armyName = Global.getArmyNameFromPlayerTable(player, HQ.armyData);
         }
         return "back_hq+" + armyName;
     };

@@ -4,6 +4,13 @@ var Constructor = function()
     {
         return 5;
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
@@ -23,25 +30,12 @@ var Constructor = function()
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-                (armyName !== "ge") &&
-                (armyName !== "bm") &&
-                (armyName !== "bh") &&
-                (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
-        return armyName;
+        return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_LIGHT_TANK.armyData);
     };
 
     this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
     {
-        var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
+        var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
         var offset = Qt.point(-5, 5);
         if (armyName === "ma")
         {

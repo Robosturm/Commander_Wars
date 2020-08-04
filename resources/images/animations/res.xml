@@ -39,7 +39,10 @@
 		<image file="soldier+yc.png" cols = "5" />
 		<image file="soldier+yc+mask.png" cols = "5" />
 		
-				<!-- talon gun fire -->
+		<!-- field marker -->
+		<image file="cursor+attack.png" cols = "4" />
+		
+		<!-- talon gun fire -->
 		<image file="talon+gun+hit.png" cols = "10" />
 		<image file="talon+gun+fire.png" cols = "11" />
 		<image file="talon+gun+fire+mask.png" cols = "11" />

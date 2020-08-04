@@ -306,7 +306,7 @@
         <translation>Schaden</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="570"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="587"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17270,7 +17270,7 @@ Units have increased firepower during sandstorm.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="118"/>
+        <location filename="../resources/scripts/building/hq.js" line="88"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17290,12 +17290,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>infantry</name>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="76"/>
+        <location filename="../resources/scripts/units/infantry.js" line="71"/>
         <source>Infantry</source>
         <translation>Infantrie</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="85"/>
+        <location filename="../resources/scripts/units/infantry.js" line="80"/>
         <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17391,12 +17391,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="77"/>
+        <location filename="../resources/scripts/units/mech.js" line="72"/>
         <source>Mech</source>
         <translation>Mech</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="86"/>
+        <location filename="../resources/scripts/units/mech.js" line="81"/>
         <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17756,12 +17756,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>sniper</name>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="81"/>
+        <location filename="../resources/scripts/units/sniper.js" line="72"/>
         <source>Sniper</source>
         <translation>Scharfschütze</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="86"/>
+        <location filename="../resources/scripts/units/sniper.js" line="77"/>
         <source>&lt;r&gt;Indirect infantry unit exceptionly strong against other infantry units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>

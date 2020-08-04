@@ -4,25 +4,18 @@ var Constructor = function()
     {
         return 5;
     };
-
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-                (armyName !== "ge") &&
-                (armyName !== "bm") &&
-                (armyName !== "bh") &&
-                (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
-        var offset = Qt.point(-5, 5);
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
         if (armyName === "ma")
         {
             offset = Qt.point(-35, 5);
@@ -38,19 +31,7 @@ var Constructor = function()
         var offset = Qt.point(-5, 5);
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-                (armyName !== "ge") &&
-                (armyName !== "bm") &&
-                (armyName !== "bh") &&
-                (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
         sprite.loadSprite("artillery+" + armyName + "+fire",  false,
                           BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
         sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,

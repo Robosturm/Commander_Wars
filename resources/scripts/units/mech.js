@@ -46,6 +46,13 @@ var Constructor = function()
         // returns a string id list of the actions this unit can perform
         return "ACTION_MISSILE,ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
     this.doWalkingAnimation = function(action)
     {
         var unit = action.getTargetUnit();
@@ -53,20 +60,8 @@ var Constructor = function()
         // none neutral player
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
+        var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyData);
         var zoom = 1.5;
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
         animation.loadSpriteV2("mech+" + armyName + "+walk+mask", GameEnums.Recoloring_Table, zoom);
         animation.loadSprite("mech+" + armyName + "+walk", false, zoom);
         animation.setSound("moveboots.wav", -2);

@@ -4,24 +4,19 @@ var Constructor = function()
     {
         return 5;
     };
+    this.armyData = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],];
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
 		var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
-        if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
         var offset = Qt.point(-40, 20);
         if (armyName === "ma")
         {
@@ -38,11 +33,7 @@ var Constructor = function()
         BATTLEANIMATION_FIGHTER.loadStandingAnimation(sprite, unit, defender, weapon);
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
         var offset = Qt.point(-5, 37);
         // gun
         if (armyName === "yc")
