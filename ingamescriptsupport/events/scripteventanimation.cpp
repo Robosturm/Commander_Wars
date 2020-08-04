@@ -148,7 +148,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new Label(width - 10);
     pText->setStyle(style);
-    pText->setHtmlText(tr("Offset Y: "));
+    pText->setHtmlText(tr("Color: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
     QVector<QColor> colors = {Qt::white};

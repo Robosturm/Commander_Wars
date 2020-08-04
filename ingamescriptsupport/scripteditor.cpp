@@ -109,7 +109,8 @@ ScriptEditor::ScriptEditor()
         tr(ScriptEvent::EventChangeBuildingOwner.toStdString().c_str()),
         tr(ScriptEvent::EventChangeUnitOwner.toStdString().c_str()),
         tr(ScriptEvent::EventChangePlayerTeam.toStdString().c_str()),
-        tr(ScriptEvent::EventSpawnBuilding.toStdString().c_str())
+        tr(ScriptEvent::EventSpawnBuilding.toStdString().c_str()),
+        tr(ScriptEvent::EventCenterMap.toStdString().c_str())
     };
     m_Events = new DropDownmenu(300, items);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));

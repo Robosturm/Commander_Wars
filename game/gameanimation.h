@@ -60,11 +60,24 @@ public slots:
     /**
      * @brief addSprite
      * @param spriteID
+     * @param offsetX
+     * @param offsetY
+     * @param sleepAfterFinish
+     * @param scale
+     * @param delay
+     * @param loops
      */
     void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f, qint32 delay = 0, qint32 loops = 1);
     /**
-     * @brief addSprite
+     * @brief addSprite2
      * @param spriteID
+     * @param offsetX
+     * @param offsetY
+     * @param sleepAfterFinish
+     * @param scaleX
+     * @param scaleY
+     * @param delay
+     * @param loops
      */
     void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 loops = 1);
     /**

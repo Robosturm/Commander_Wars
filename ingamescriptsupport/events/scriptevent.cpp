@@ -17,6 +17,7 @@
 #include "scripteventchangebuildingowner.h"
 #include "scripteventchangeplayerteam.h"
 #include "scripteventspawnbuilding.h"
+#include "scripteventcentermap.h"
 
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -35,6 +36,7 @@ const QString ScriptEvent::EventChangeBuildingOwner = "Change Building Owner";
 const QString ScriptEvent::EventChangeUnitOwner = "Change Unit Owner";
 const QString ScriptEvent::EventChangePlayerTeam = "Change Player Team";
 const QString ScriptEvent::EventSpawnBuilding = "Spawn Building";
+const QString ScriptEvent::EventCenterMap = "Center Map";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
@@ -115,6 +117,10 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     else if (line.endsWith(EventSpawnBuilding))
     {
         ret = new ScriptEventSpawnBuilding();
+    }
+    else if (line.endsWith(EventCenterMap))
+    {
+        ret = new ScriptEventCenterMap();
     }
     if (ret != nullptr)
     {
@@ -199,6 +205,10 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         case EventType::SpawnBuilding:
         {
             return new ScriptEventSpawnBuilding();
+        }
+        case EventType::EventCenterMap:
+        {
+            return new ScriptEventCenterMap();
         }
     }
     return nullptr;
