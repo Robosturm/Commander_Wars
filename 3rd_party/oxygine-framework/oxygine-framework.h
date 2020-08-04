@@ -10,6 +10,7 @@
 #include "oxygine/actor/Box9Sprite.h"
 #include "oxygine/actor/Button.h"
 #include "oxygine/actor/ClipRectActor.h"
+#include "oxygine/actor/slidingsprite.h"
 #include "oxygine/Clock.h"
 #include "oxygine/actor/ColorRectSprite.h"
 #include "oxygine/Draggable.h"

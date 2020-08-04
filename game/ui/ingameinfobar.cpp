@@ -535,36 +535,47 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 oxygine::ResAnim* pAnimBase = nullptr;
                 oxygine::ResAnim* pAnimFore = nullptr;
                 oxygine::ResAnim* pAnimBack = nullptr;
+                float speed = 0;
                 if (pUnit.get() != nullptr)
                 {
                     pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
                     pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
                     pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
+                    speed = pUnit->getTerrainAnimationMoveSpeed();
                 }
                 else if (pBuilding.get() != nullptr)
                 {
                     pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase(), oxygine::ep_ignore_error);
                     pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
                     pAnimBack = pGameManager->getResAnim(pBuilding->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
+                    speed = pBuilding->getTerrainAnimationMoveSpeed();
                 }
                 else
                 {
                     pAnimBase = pGameManager->getResAnim(pTerrain->getTerrainAnimationBase(), oxygine::ep_ignore_error);
                     pAnimFore = pGameManager->getResAnim(pTerrain->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
                     pAnimBack = pGameManager->getResAnim(pTerrain->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
+                    speed = pTerrain->getTerrainAnimationMoveSpeed();
                 }
-                pSprite = new oxygine::Sprite();
-                pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
-                pSprite->setResAnim(pAnimBase);
-                m_pCursorInfoBox->addChild(pSprite);
-                pSprite = new oxygine::Sprite();
-                pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
-                pSprite->setResAnim(pAnimBack);
-                m_pCursorInfoBox->addChild(pSprite);
-                pSprite = new oxygine::Sprite();
-                pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
-                pSprite->setResAnim(pAnimFore);
-                m_pCursorInfoBox->addChild(pSprite);
+                oxygine::spSlidingSprite pTerrainSprite = new oxygine::SlidingSprite();
+                pTerrainSprite->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 10, 120);
+                pTerrainSprite->setResAnim(pAnimBase);
+                pTerrainSprite->setSize(spriteWidth, spriteHeigth);
+                pTerrainSprite->setSpeed(speed);
+                m_pCursorInfoBox->addChild(pTerrainSprite);
+                pTerrainSprite = new oxygine::SlidingSprite();
+                pTerrainSprite->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 10, 120);
+                pTerrainSprite->setResAnim(pAnimBack);
+                pTerrainSprite->setSize(spriteWidth, spriteHeigth);
+                pTerrainSprite->setSpeed(speed);
+                m_pCursorInfoBox->addChild(pTerrainSprite);
+                pTerrainSprite = new oxygine::SlidingSprite();
+                pTerrainSprite->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 10, 120);
+                pTerrainSprite->setResAnim(pAnimFore);
+                pTerrainSprite->setSize(spriteWidth, spriteHeigth);
+                pTerrainSprite->setSpeed(speed);
+                m_pCursorInfoBox->addChild(pTerrainSprite);
+
 
                 oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
                 pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
@@ -572,13 +583,13 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pAnim = pObjectManager->getResAnim("panel_transparent");
                 pBox->setResAnim(pAnim);
                 pBox->setSize(136, 200);
-                pBox->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 17, 116);
+                pBox->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 17, 116);
                 m_pCursorInfoBox->addChild(pBox);
 
                 if (pUnit.get() != nullptr)
                 {
                     BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
-                    pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
+                    pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 10, 120);
                     if (HpHidden)
                     {
                         pBattleAnimationSprite->setHpRounded(10);

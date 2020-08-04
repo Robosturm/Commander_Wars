@@ -99,6 +99,11 @@ var Constructor = function()
         return "";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("<r>Air unit. </r><div c='#00ff00'>Carries X 2 </div><r>ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.</r>");

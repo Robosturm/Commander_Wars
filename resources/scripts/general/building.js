@@ -187,6 +187,11 @@ var BUILDING =
         return "base_air";
     },
 
+    getTerrainAnimationMoveSpeed : function()
+    {
+        return 0;
+    },
+
     getDamage : function(building, unit)
     {
         return 0;

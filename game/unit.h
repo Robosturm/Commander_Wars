@@ -695,6 +695,11 @@ public slots:
      */
     QString getTerrainAnimationBackground();
     /**
+     * @brief getTerrainAnimationMoveSpeed
+     * @return
+     */
+    float getTerrainAnimationMoveSpeed();
+    /**
      * @brief isAttackable
      * @param pDefender
      * @return

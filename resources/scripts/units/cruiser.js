@@ -94,6 +94,10 @@ var Constructor = function()
         return "back_sea";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
 
     this.getDescription = function()
     {

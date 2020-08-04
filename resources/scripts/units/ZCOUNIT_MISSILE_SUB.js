@@ -92,6 +92,12 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getUnitType = function()
     {
         return GameEnums.UnitType_Naval;

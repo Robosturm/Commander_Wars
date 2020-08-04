@@ -107,6 +107,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/actor/Sprite.cpp
     ${OXYGINE_ROOT}/oxygine/actor/Stage.cpp
     ${OXYGINE_ROOT}/oxygine/actor/TextField.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/slidingsprite.cpp
     # tween
     ${OXYGINE_ROOT}/oxygine/tween/Tween.cpp
     ${OXYGINE_ROOT}/oxygine/tween/TweenAlphaFade.cpp

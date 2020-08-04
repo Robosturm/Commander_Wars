@@ -331,6 +331,11 @@ public slots:
      */
     QString getTerrainAnimationBackground();
     /**
+     * @brief getTerrainAnimationMoveSpeed
+     * @return
+     */
+    float getTerrainAnimationMoveSpeed();
+    /**
      * @brief getTerrainSprites
      * @return
      */

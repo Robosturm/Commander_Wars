@@ -90,6 +90,11 @@ var Constructor = function()
         return "";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("Air unit. Can attack any unit. Can only produced at sea by Carries.");

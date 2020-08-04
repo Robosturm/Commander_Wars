@@ -2337,7 +2337,7 @@ This is immediatly applied.</source>
         <translation>Nebel</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="58"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="62"/>
         <source>&lt;r&gt;This heavy fog provides ideal hiding places&lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3114,54 +3114,54 @@ This is immediatly applied.</source>
         <translation>Treib.: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="655"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="700"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="666"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="711"/>
         <source>Owner: Player </source>
         <translation>Besitzer: Spieler </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="664"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="675"/>
         <source>Owner: Neutral</source>
         <translation>Besitzer: Neutral</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="673"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="682"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="684"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="693"/>
         <source>Resistance: </source>
         <translation>Widerstand: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="709"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="720"/>
         <source>Weapon 1: </source>
         <translation>Waffe 1: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="720"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="731"/>
         <source>Weapon 2: </source>
         <translation>Waffe 2: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="729"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="740"/>
         <source>Move: </source>
         <translation>Bew.art: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="737"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="748"/>
         <source>Movepoints: </source>
         <translation>Bew.punkte: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="745"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="756"/>
         <source>Vision: </source>
         <translation>Sicht: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="757"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="768"/>
         <source>Loaded Units</source>
         <translation>Ladung</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="775"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="786"/>
         <source>Loaded Units: ?</source>
         <translation>Ladung: ?</translation>
     </message>
@@ -3303,67 +3303,67 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="61"/>
+        <location filename="../menue/mainwindow.cpp" line="63"/>
         <source>Continue</source>
         <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="73"/>
+        <location filename="../menue/mainwindow.cpp" line="75"/>
         <source>Singleplayer</source>
         <translation>Einzelspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="84"/>
+        <location filename="../menue/mainwindow.cpp" line="86"/>
         <source>Multiplayer</source>
         <translation>Mehrspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="95"/>
+        <location filename="../menue/mainwindow.cpp" line="97"/>
         <source>Load Game</source>
         <translation>Spiel laden</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="106"/>
+        <location filename="../menue/mainwindow.cpp" line="108"/>
         <source>Load Campaign</source>
         <translation>Kampanie laden</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="117"/>
+        <location filename="../menue/mainwindow.cpp" line="119"/>
         <source>Replay Game</source>
         <translation>Spielaufnahme</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="128"/>
+        <location filename="../menue/mainwindow.cpp" line="130"/>
         <source>Map Editor</source>
         <translation>Karteneditor</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="139"/>
+        <location filename="../menue/mainwindow.cpp" line="141"/>
         <source>Options</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="150"/>
+        <location filename="../menue/mainwindow.cpp" line="152"/>
         <source>CO Style</source>
         <translation>KO Style</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="161"/>
+        <location filename="../menue/mainwindow.cpp" line="163"/>
         <source>Wiki</source>
         <translation>Wiki</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="172"/>
+        <location filename="../menue/mainwindow.cpp" line="174"/>
         <source>Credits</source>
         <translation>Credits</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="183"/>
+        <location filename="../menue/mainwindow.cpp" line="185"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="195"/>
+        <location filename="../menue/mainwindow.cpp" line="197"/>
         <source>Select Username</source>
         <translation>Benutzername auswählen</translation>
     </message>
@@ -4341,7 +4341,7 @@ Version: </translation>
         <translation>Riff</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="72"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="76"/>
         <source>&lt;r&gt;This spiky reaf provides ideal &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding places&lt;/div&gt;&lt;r&gt; for naval units in Fog of War.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4367,7 +4367,7 @@ Version: </translation>
         <translation>Raue See</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="58"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="62"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4820,7 +4820,7 @@ Version: </translation>
         <translation>See</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="125"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="129"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7180,7 +7180,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Kirov</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="85"/>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="90"/>
         <source>Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7733,27 +7733,27 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Flugzeuigträger</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="102"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="106"/>
         <source>Naval Unit. Can </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="103"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="107"/>
         <source>carry X 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="104"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="108"/>
         <source> air units and </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="105"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="109"/>
         <source>produce </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="106"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="110"/>
         <source>Waterplanes</source>
         <translation>Wasserflugzeuge</translation>
     </message>
@@ -7859,7 +7859,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Schlachtschiff</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="90"/>
+        <location filename="../resources/scripts/units/battleship.js" line="95"/>
         <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;launch indirect attacks after moving&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7872,7 +7872,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Schwarzes Boot</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="99"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="104"/>
         <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 1&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7885,7 +7885,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Schwarze Bombe</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="102"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="107"/>
         <source>&lt;r&gt;Air Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;explode&lt;/div&gt;&lt;r&gt; in a huge explosion damaging all units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7957,7 +7957,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Bomber</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/bomber.js" line="96"/>
+        <location filename="../resources/scripts/units/bomber.js" line="101"/>
         <source>Air Unit. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7978,7 +7978,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Kanonenboot</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="101"/>
         <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17027,7 +17027,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Kreuzer</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="100"/>
+        <location filename="../resources/scripts/units/cruiser.js" line="104"/>
         <source>&lt;r&gt;Naval Unit. Strong against air units and submarines. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Transports X 2&lt;/div&gt;&lt;r&gt; Helis.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17068,7 +17068,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Zerstörer</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/destroyer.js" line="93"/>
+        <location filename="../resources/scripts/units/destroyer.js" line="97"/>
         <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17081,7 +17081,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Flieger</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/duster.js" line="93"/>
+        <location filename="../resources/scripts/units/duster.js" line="98"/>
         <source>Air Unit. Can attack ground and air units. Medium power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17127,7 +17127,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Jäger</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/fighter.js" line="93"/>
+        <location filename="../resources/scripts/units/fighter.js" line="98"/>
         <source>Air Unit. Can attack air units. Most mobile aircraft.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17324,7 +17324,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>K-Heli</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/k_heli.js" line="95"/>
+        <location filename="../resources/scripts/units/k_heli.js" line="100"/>
         <source>Air unit. Can attack ground and naval units, and other Helicopters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17370,7 +17370,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Landeboot</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/lander.js" line="94"/>
+        <location filename="../resources/scripts/units/lander.js" line="99"/>
         <source>&lt;r&gt;Naval unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;transport X 2 &lt;/div&gt;&lt;r&gt; ground units. No attack capability.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17794,7 +17794,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Tarnkappenbomber</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="105"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="110"/>
         <source>&lt;r&gt;Air unit. After &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;hiding &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent. Can attack any unit.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17807,7 +17807,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>U-Boot</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/submarine.js" line="99"/>
+        <location filename="../resources/scripts/units/submarine.js" line="104"/>
         <source>&lt;r&gt;Naval unit. After &lt;/r&gt;&lt;div c=&apos;00ff00&apos;&gt;diving &lt;/div&gt;&lt;r&gt;, it remains hidden unless enemy units adjacent.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17820,7 +17820,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>T-Heli</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="100"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="105"/>
         <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1 &lt;/div&gt;&lt;r&gt;Infantry units. No attack capability.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17929,7 +17929,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Transportflugzeug</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="109"/>
         <source>&lt;r&gt;Air unit. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Carries X 2 &lt;/div&gt;&lt;r&gt;ground units. No attack capability. Units can only be loaded and unloaded on roads or airports.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17937,27 +17937,27 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>unit</name>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="226"/>
+        <location filename="../resources/scripts/general/unit.js" line="231"/>
         <source>Air</source>
         <translation>Luft</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="228"/>
+        <location filename="../resources/scripts/general/unit.js" line="233"/>
         <source>Naval</source>
         <translation>See</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="230"/>
+        <location filename="../resources/scripts/general/unit.js" line="235"/>
         <source>Ground</source>
         <translation>Boden</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="232"/>
+        <location filename="../resources/scripts/general/unit.js" line="237"/>
         <source>Infantry</source>
         <translation>Infanterie</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/unit.js" line="234"/>
+        <location filename="../resources/scripts/general/unit.js" line="239"/>
         <source>Hovercraft</source>
         <translation>Hovercraft</translation>
     </message>
@@ -18124,7 +18124,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Wassermine</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/watermine.js" line="143"/>
+        <location filename="../resources/scripts/units/watermine.js" line="148"/>
         <source>Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units in a 2 square area on sea tiles.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18137,7 +18137,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Wasserflugzeug</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/waterplane.js" line="95"/>
+        <location filename="../resources/scripts/units/waterplane.js" line="100"/>
         <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
         <translation type="unfinished"></translation>
     </message>

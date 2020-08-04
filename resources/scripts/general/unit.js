@@ -157,6 +157,11 @@ var UNIT =
         return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain);
     },
 
+    getTerrainAnimationMoveSpeed : function()
+    {
+        return 0;
+    },
+
     getDescription : function()
     {
         return "";

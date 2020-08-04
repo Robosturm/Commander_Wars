@@ -109,6 +109,11 @@ var TERRAIN =
         }
     },
 
+    getTerrainAnimationMoveSpeed : function()
+    {
+        return 0;
+    },
+
     getTerrainAnimationBackground : function(unit, terrain)
     {
 

@@ -80,6 +80,11 @@ var Constructor = function()
         return "";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.");

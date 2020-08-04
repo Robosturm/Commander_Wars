@@ -91,6 +91,10 @@ var Constructor = function()
     {
         return "back_sea";
     };
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform

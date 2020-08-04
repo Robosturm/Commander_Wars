@@ -11,30 +11,81 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+
+    this.getRiverString = function(unit)
     {
-        var player = unit.getOwner();
-        // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
+        var terrainId = unit.getTerrain().getTerrainID();
+        if (terrainId === "RIVER" ||
+            terrainId === "DESERT_TRY_RIVER")
+        {
+            return "+river";
+        }
+        return "";
+    };
+
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
         if (weapon === 1 || defender === null)
         {
             var terrainId = unit.getTerrain().getTerrainID();
-            if (terrainId === "RIVER" ||
-                terrainId === "DESERT_TRY_RIVER")
+            if (terrainId === "MOUNTAIN")
             {
-                sprite.loadSprite("mech+" + armyName + "+river",  false,
-                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
-                sprite.loadSpriteV2("mech+" + armyName + "+river+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+                BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
             }
             else
             {
-                sprite.loadSprite("mech+" + armyName,  false,
-                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
-                sprite.loadSpriteV2("mech+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_MECH.getMaxUnitCount(), Qt.point(-10, 5));
+                var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
+                var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
+                sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                        Qt.point(65, 0), 600, false,
+                                        1, 1);
+                sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                          Qt.point(65, 0), 600, false,
+                                          1, 1);
             }
+        }
+        else
+        {
+            BATTLEANIMATION_INFANTRY.loadMoveInAnimation(sprite, unit, defender, weapon);
+        }
+    };
 
+    this.loadStopAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 1 || defender === null)
+        {
+            var terrainId = unit.getTerrain().getTerrainID();
+            if (terrainId === "MOUNTAIN")
+            {
+                BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
+            }
+            else
+            {
+                BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+stop", 1);
+            }
+        }
+        else
+        {
+            BATTLEANIMATION_INFANTRY.loadStopAnimation(sprite, unit, defender, weapon);
+        }
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
+    {
+        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
+        var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
+        var offset = Qt.point(-10, 5);
+        sprite.loadSprite("mech+" + armyName + riverName + ending,  false,
+                          BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
+        sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
+    };
+
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 1 || defender === null)
+        {
+            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "", 1);
         }
         else
         {
@@ -46,11 +97,12 @@ var Constructor = function()
     {
         if (weapon === 1)
         {
+            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
             var weaponRes = "bazooka_os";
-            var offset = Qt.point(22, 23);
             var player = unit.getOwner();
             // get army name
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
+            var offset = Qt.point(22, 23);
             if (armyName === "yc")
             {
                 offset = Qt.point(21, 17);
@@ -69,7 +121,6 @@ var Constructor = function()
                 weaponRes = "bazooka_bh"
                 offset = Qt.point(20, 14);
             }
-            BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, 0), 400, false,
                                     1, 1, -1);
@@ -78,6 +129,18 @@ var Constructor = function()
         else
         {
             BATTLEANIMATION_INFANTRY.loadFireAnimation(sprite, unit, defender, weapon);
+        }
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 1)
+        {
+            BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fired", 1);
+        }
+        else
+        {
+            BATTLEANIMATION_INFANTRY.loadStandingAnimation(sprite, unit, defender, weapon);
         }
     };
 
@@ -127,6 +190,23 @@ var Constructor = function()
     {
         // the time will be scaled with animation speed inside the engine
         return 500;
+    };
+
+    this.hasMoveInAnimation = function()
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 610;
+    };
+
+    this.getStopDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 300;
     };
 };
 

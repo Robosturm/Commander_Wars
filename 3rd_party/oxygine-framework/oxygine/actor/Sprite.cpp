@@ -5,6 +5,7 @@
 #include "../RenderState.h"
 #include "../core/UberShaderProgram.h"
 #include "../res/ResAnim.h"
+#include "slidingsprite.h"
 #include <sstream>
 
 namespace oxygine
@@ -128,6 +129,21 @@ namespace oxygine
                 else
                 {
                     pSprite1->setFlippedX(flippedX);
+                }
+            }
+            else
+            {
+                oxygine::SlidingSprite* pSprite1 = dynamic_cast<oxygine::SlidingSprite*>(child.get());
+                if (pSprite1 != nullptr)
+                {
+                    if (pSprite1->getFlipped())
+                    {
+                        pSprite1->setFlipped(!flippedX);
+                    }
+                    else
+                    {
+                        pSprite1->setFlipped(flippedX);
+                    }
                 }
             }
             flipActorsX(child, flippedX);

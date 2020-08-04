@@ -85,6 +85,11 @@ var Constructor = function()
         return "back_sea";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("<r>Naval Unit. Has unique ability to </r><div c='#00ff00'>launch indirect attacks after moving</div><r>.</r>");

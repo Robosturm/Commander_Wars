@@ -88,6 +88,11 @@ var Constructor = function()
         return "";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("Air Unit. Can attack ground and air units. Medium power.");

@@ -821,6 +821,22 @@ QString Building::getTerrainAnimationForeground()
     }
 }
 
+float Building::getTerrainAnimationMoveSpeed()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTerrainAnimationMoveSpeed";
+    QJSValueList args;
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return 0.0f;
+    }
+}
+
 bool Building::canRepair(Unit* pUnit)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

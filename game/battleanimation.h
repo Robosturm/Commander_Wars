@@ -15,6 +15,8 @@ class BattleAnimation : public GameAnimation
 {
     Q_OBJECT
 public:
+    static constexpr qint32 spriteWidth = 127;
+    static constexpr qint32 spriteHeigth = 192;
     enum class AnimationProgress
     {
         MoveIn,

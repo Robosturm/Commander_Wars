@@ -14,6 +14,8 @@
 
 #include "game/co.h"
 
+
+
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
@@ -186,7 +188,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
     // create health bar
     m_HealthBar0 = new oxygine::ColorRectSprite();
-    m_HealthBar0->setSize(127 * atkStartHp / 10.0f, 9);
+    m_HealthBar0->setSize(spriteWidth * atkStartHp / 10.0f, 9);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
         m_HealthBar0->setPosition(31, 25);
@@ -198,7 +200,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     addChild(m_HealthBar0);
     m_HealthBar1 = new oxygine::ColorRectSprite();
-    m_HealthBar1->setSize(127 * defStartHp / 10.0f, 9);
+    m_HealthBar1->setSize(spriteWidth * defStartHp / 10.0f, 9);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
         m_HealthBar1->setPosition(31, 25);
@@ -281,16 +283,22 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
     pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
     pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
     pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
-    oxygine::spSprite pSprite = new oxygine::Sprite();
+    float speed = pUnit->getTerrainAnimationMoveSpeed();
+    oxygine::spSlidingSprite pSprite = new oxygine::SlidingSprite();
+    pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBase);
+    pSprite->setSpeed(speed);
     ret->addChild(pSprite);
-    pSprite = new oxygine::Sprite();
+    pSprite = new oxygine::SlidingSprite();
+    pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimBack);
-    pSprite->setScaleY(1.01f);
+    pSprite->setSpeed(speed);
     ret->addChild(pSprite);
-    pSprite = new oxygine::Sprite();
+    pSprite = new oxygine::SlidingSprite();
+    pSprite->setSize(spriteWidth, spriteHeigth);
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
+    pSprite->setSpeed(speed);
     pApp->continueThread();
     return ret;
 }
@@ -521,7 +529,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / 10.0f), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
     // add impact image
     oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));

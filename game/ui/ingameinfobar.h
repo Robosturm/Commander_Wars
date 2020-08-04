@@ -13,6 +13,9 @@ class IngameInfoBar : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
+    static constexpr qint32 spriteWidth = 127;
+    static constexpr qint32 spriteHeigth = 192;
+
     explicit IngameInfoBar();
 
     Minimap* getMinimap()

@@ -509,7 +509,28 @@
 		<image file="mech/mech+yc+river+walk+mask.png" cols = "6" />
 		<image file="mech/mech+ma+river+walk.png" />
 		<image file="mech/mech+ma+river+walk+mask.png" />	
-		
+		<image file="mech/mech+bh+fired.png" />
+		<image file="mech/mech+bh+fired+mask.png" />
+		<image file="mech/mech+bm+fired.png" />
+		<image file="mech/mech+bm+fired+mask.png" />
+		<image file="mech/mech+ge+fired.png" />
+		<image file="mech/mech+ge+fired+mask.png" />
+		<image file="mech/mech+os+fired.png" />
+		<image file="mech/mech+os+fired+mask.png" />
+		<image file="mech/mech+yc+fired.png" />
+		<image file="mech/mech+yc+fired+mask.png" />
+		<image file="mech/mech+ma+fired.png" />
+		<image file="mech/mech+ma+fired+mask.png" />		
+		<image file="mech/mech+bh+river+fired.png" />
+		<image file="mech/mech+bh+river+fired+mask.png" />
+		<image file="mech/mech+bm+river+fired.png" />
+		<image file="mech/mech+bm+river+fired+mask.png" />
+		<image file="mech/mech+ge+river+fired.png" />
+		<image file="mech/mech+ge+river+fired+mask.png" />
+		<image file="mech/mech+os+river+fired.png" />
+		<image file="mech/mech+os+river+fired+mask.png" />
+		<image file="mech/mech+yc+river+fired.png" />
+		<image file="mech/mech+yc+river+fired+mask.png" />
 		<!-- megatank -->
 		<image file="megatank/megatank.png" />
 		<image file="megatank/megatank+mask.png" />

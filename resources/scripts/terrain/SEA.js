@@ -120,6 +120,10 @@ var Constructor = function()
     {
         return "back_sea";
     };
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
     this.getDescription = function()
     {
         return qsTr("Calm sea. Naval and air forces have good mobility.");

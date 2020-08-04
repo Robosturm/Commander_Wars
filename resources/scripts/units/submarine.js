@@ -94,6 +94,11 @@ var Constructor = function()
         return "back_sea";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("<r>Naval unit. After </r><div c='00ff00'>diving </div><r>, it remains hidden unless enemy units adjacent.</r>");

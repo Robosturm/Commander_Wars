@@ -95,6 +95,11 @@ var Constructor = function()
         return "";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("<r>Air unit. </r><div c='#00ff00'>Carries X 1 </div><r>Infantry units. No attack capability.</r>");

@@ -872,6 +872,22 @@ QString Terrain::getTerrainAnimationBackground()
     }
 }
 
+float Terrain::getTerrainAnimationMoveSpeed()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTerrainAnimationMoveSpeed";
+    QJSValueList args;
+    QJSValue erg = pInterpreter->doFunction(terrainID, function1, args);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return 0.0f;
+    }
+}
+
 QStringList Terrain::getTerrainSprites()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

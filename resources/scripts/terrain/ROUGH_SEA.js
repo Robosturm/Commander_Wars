@@ -53,6 +53,10 @@ var Constructor = function()
     {
         return "back_sea";
     };
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
     this.getDescription = function()
     {
         return qsTr("Movement of naval units is impeded but air units are not affected.");

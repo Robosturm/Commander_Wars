@@ -89,6 +89,11 @@ var Constructor = function()
         return "back_sea";
     };
 
+    this.getTerrainAnimationMoveSpeed = function()
+    {
+        return 1;
+    };
+
     this.getDescription = function()
     {
         return qsTr("<r>Naval unit. Can </r><div c='#00ff00'>transport X 2 </div><r> ground units. No attack capability.</r>");

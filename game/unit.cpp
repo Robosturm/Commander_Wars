@@ -702,6 +702,22 @@ QString Unit::getTerrainAnimationBackground()
     }
 }
 
+float Unit::getTerrainAnimationMoveSpeed()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getTerrainAnimationMoveSpeed";
+    QJSValueList args;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return 0.0f;
+    }
+}
+
 bool Unit::canMoveOver(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
