@@ -184,7 +184,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     return 10;
                 case GameEnums.PowerMode_Power:
-                    if (attackerValue < defenderValue)
+                    if (attackerValue > defenderValue)
                     {
                         return 30;
                     }
@@ -205,7 +205,7 @@ var Constructor = function()
             {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    if (attackerValue < defenderValue)
+                    if (attackerValue > defenderValue)
                     {
                         return true;
                     }
