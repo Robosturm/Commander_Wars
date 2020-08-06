@@ -132,7 +132,7 @@ var Constructor = function()
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     baseDamage = 80;
-                    fixedDamage = false;
+                    fixedDamage = true;
                 }
                 break;
         }
