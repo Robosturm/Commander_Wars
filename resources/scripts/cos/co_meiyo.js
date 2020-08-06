@@ -178,6 +178,8 @@ var Constructor = function()
             {
                 switch (attacker.getUnitRank())
                 {
+                case 0:
+                    return -5;
                 case 1:
                     return 2.5;
                 case 2:

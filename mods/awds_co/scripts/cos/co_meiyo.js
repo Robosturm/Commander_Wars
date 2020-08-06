@@ -10,7 +10,7 @@ CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (attacker.getUnitRank())
             {
             case 0:
-                return 10;
+                return 5;
             case 1:
                 return 20;
             case 2:
@@ -22,7 +22,7 @@ CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (attacker.getUnitRank())
             {
             case 0:
-                return 10;
+                return 5;
             case 1:
                 return 20;
             case 2:
@@ -34,13 +34,13 @@ CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (attacker.getUnitRank())
             {
             case 0:
-                return 5;
+                return -5;
             case 1:
-                return 15;
+                return 10;
             case 2:
-                return 20;
+                return 15;
             default:
-                return 30;
+                return 25;
             }
         }
     }
@@ -59,7 +59,7 @@ CO_MEIYO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (defender.getUnitRank())
             {
             case 0:
-                return 10;
+                return 5;
             case 1:
                 return 20;
             case 2:
@@ -71,7 +71,7 @@ CO_MEIYO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (defender.getUnitRank())
             {
             case 0:
-                return 10;
+                return 5;
             case 1:
                 return 20;
             case 2:
@@ -83,13 +83,13 @@ CO_MEIYO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             switch (defender.getUnitRank())
             {
             case 0:
-                return 10;
+                return -5;
             case 1:
-                return 15;
+                return 10;
             case 2:
-                return 20;
+                return 15;
             default:
-                return 30;
+                return 25;
             }
         }
     }
