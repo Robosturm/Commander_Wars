@@ -102,28 +102,36 @@ var Constructor = function()
             var player = unit.getOwner();
             // get army name
             var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MECH.armyData);
-            var offset = Qt.point(22, 23);
+            var offset = Qt.point(11, 19);
             if (armyName === "yc")
             {
-                offset = Qt.point(21, 17);
+                offset = Qt.point(11, 20);
             }
             else if (armyName === "ge")
             {
                 weaponRes = "bazooka_ge";
-                offset = Qt.point(23, 15);
+                offset = Qt.point(5, 18);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(22, 17);
+                offset = Qt.point(6, 20);
             }
             else if (armyName === "bh")
             {
                 weaponRes = "bazooka_bh"
-                offset = Qt.point(20, 14);
+                offset = Qt.point(4, 17);
             }
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, 0), 400, false,
                                     1, 1, -1);
+            offset.x = (offset.x - 20);
+            sprite.loadSprite("bazooka_launch_start",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
+            if (armyName !== "ge")
+            {
+                offset.x = -37;
+                offset.y = (offset.y - 12);
+                sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
+            }
             sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
         }
         else
