@@ -73,7 +73,7 @@ var Constructor = function()
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
-        turnLimit.setRuleValue(7);
+        turnLimit.setRuleValue(7, 0);
     };
     this.actionDone = function()
     {

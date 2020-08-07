@@ -395,7 +395,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
-        turnLimit.setRuleValue(15);
+        turnLimit.setRuleValue(31, 0);
 
         // set army stuff
         campaignScript.setArmyData(0, campaignScript.getArmy(map.getPlayer(0).getCO(0)));

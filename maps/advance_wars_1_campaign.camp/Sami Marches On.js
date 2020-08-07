@@ -70,7 +70,7 @@ var Constructor = function()
         // set building limit to 16
         map.getGameRules().addVictoryRule("VICTORYRULE_BUILDINGLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        turnLimit.setRuleValue(16);
+        turnLimit.setRuleValue(16, 0);
 
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);

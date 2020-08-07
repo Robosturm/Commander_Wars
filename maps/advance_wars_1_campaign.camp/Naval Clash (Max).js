@@ -31,7 +31,7 @@ var Constructor = function()
 
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
-        turnLimit.setRuleValue(15);
+        turnLimit.setRuleValue(15, 0);
 
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);

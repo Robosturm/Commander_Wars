@@ -61,7 +61,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
-        turnLimit.setRuleValue(7);
+        turnLimit.setRuleValue(7, 0);
         var osList = campaignScript.getOSBuildList();
         map.getPlayer(0).setBuildList(osList);
         var bhList = campaignScript.getBHBuildList();
