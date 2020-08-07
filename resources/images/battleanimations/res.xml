@@ -22,6 +22,8 @@
 		<image file="GeneralSprites/vehicle_dust.png" cols = "4" />
 		<image file="GeneralSprites/vehicle_dust_stop.png" cols = "4" />
 		<image file="GeneralSprites/bazooka_launch.png" cols = "6" />
+		<image file="GeneralSprites/bazooka_launch_start.png" cols = "4" />
+		
 		
 		
 		<!-- aircraft carrier -->
