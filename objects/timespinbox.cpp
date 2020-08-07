@@ -142,12 +142,15 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 
 void TimeSpinBox::setEnabled(bool value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
     m_pSpinBox->setEnabled(value);
     m_focused = false;
+    pApp->continueThread();
 }
 
 void TimeSpinBox::setCurrentValue(qint32 value)
@@ -238,8 +241,11 @@ qint32 TimeSpinBox::checkInput()
 
 void TimeSpinBox::setValue(qint32 value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_Text = QTime::fromMSecsSinceStartOfDay(value).toString("hh:mm:ss");
     m_Textfield->setHtmlText(m_Text);
+    pApp->continueThread();
 }
 
 qint32 TimeSpinBox::getSpinSpeed() const

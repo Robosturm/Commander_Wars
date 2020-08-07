@@ -275,7 +275,8 @@ set(${PROJECT_NAME}_SRCS
         game/gameaction.cpp
         game/unitpathfindingsystem.cpp
         game/GameEnums.cpp
-        game/gamerules.cpp
+        game/gamerules.cpp        
+        game/gamerule.cpp
         game/victoryrule.cpp
         game/weather.cpp
         # cool ingame recording

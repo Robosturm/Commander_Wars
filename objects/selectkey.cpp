@@ -132,6 +132,8 @@ QString SelectKey::getKeycodeText(Qt::Key code)
 
 void SelectKey::setKeycode(Qt::Key code)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QString codeText = getKeycodeText(code);
     if (codeText != tr("Unknown"))
     {
@@ -150,4 +152,5 @@ void SelectKey::setKeycode(Qt::Key code)
     {
         setKeycode(currentCode);
     }
+    pApp->continueThread();
 }

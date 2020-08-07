@@ -6,7 +6,7 @@
 #include "coreengine/fileserializable.h"
 
 #include "game/victoryrule.h"
-
+#include "game/gamerule.h"
 #include "game/weather.h"
 
 #include "game/GameEnums.h"
@@ -55,9 +55,11 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 14;
+        return 15;
     }
     void addVictoryRule(spVictoryRule rule);
+
+    void addGameRule(spGameRule rule);
     /**
      * @brief createWeatherSprites
      */
@@ -75,8 +77,6 @@ public:
 
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
-
-
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -208,6 +208,9 @@ public slots:
     void addVictoryRule(QString rule);
     void removeVictoryRule(QString rule);
     VictoryRule* getVictoryRule(QString rule);
+
+    void addGameRule(QString rule);
+    GameRule* getGameRule(QString rule);
     /**
      * @brief addWeather
      * @param weatherId
@@ -354,6 +357,15 @@ public slots:
     {
         return m_VictoryRules[index].get();
     }
+
+    inline qint32 getGameRuleSize()
+    {
+        return m_GameRules.size();
+    }
+    inline GameRule* getGameRule(qint32 index)
+    {
+        return m_GameRules[index].get();
+    }
     /**
      * @brief setRoundTimeMs
      * @param timeMs
@@ -396,6 +408,7 @@ public slots:
      */
     void setCoUnits(bool coUnits);
 private:
+    QVector<spGameRule> m_GameRules;
     // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
     // weather chances

@@ -28,6 +28,8 @@ public slots:
     void showPerkBannlist();
     void showActionBannlist();
 private:
+    void addCustomGamerules(qint32 & y);
+private:
     spMultislider m_pWeatherSlider;
 };
 

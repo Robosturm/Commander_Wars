@@ -66,6 +66,8 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
 
 void Chat::setVisible(bool vis)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::Actor::setVisible(vis);
     if (vis)
     {
@@ -83,6 +85,7 @@ void Chat::setVisible(bool vis)
             m_ChatInput->setTooltipText(tr("Message to send via chat."));
         }
     }
+    pApp->continueThread();
 }
 
 void Chat::update(const oxygine::UpdateState& us)
@@ -177,6 +180,8 @@ void Chat::sendData(QString message)
 {
     if (!message.isEmpty())
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         QString text;
         spGameMenue pGamemenu = GameMenue::getInstance();
         spGameMap pMap = GameMap::getInstance();
@@ -219,5 +224,6 @@ void Chat::sendData(QString message)
             m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");
+        pApp->continueThread();
     }
 }

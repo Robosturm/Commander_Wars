@@ -1176,44 +1176,44 @@
         <translation>Senden</translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="74"/>
+        <location filename="../objects/chat.cpp" line="76"/>
         <source>Message to send via chat. Start a message with one of the folling items to send </source>
         <translation type="unfinished">Nachricht per Chat versenden. Startet eine Nachricht mit </translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="75"/>
+        <location filename="../objects/chat.cpp" line="77"/>
         <source>a message to specific targets. 
 </source>
         <translation>eine Nachricht zu bestimme Ziele. 
 </translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="76"/>
+        <location filename="../objects/chat.cpp" line="78"/>
         <source> send message to all your allies.
 </source>
         <translation> sende die Nachricht zu allen Verbündeten.
 </translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="77"/>
+        <location filename="../objects/chat.cpp" line="79"/>
         <source> send message to all your enemies.
 </source>
         <translation> sende die Nachricht zu allen Gegenspielern.
 </translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="78"/>
+        <location filename="../objects/chat.cpp" line="80"/>
         <source> send message to the given team X.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="79"/>
+        <location filename="../objects/chat.cpp" line="81"/>
         <source> send message to the given player X.</source>
         <translation> sende die Nachricht zu einem spezifischen Spieler.</translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="83"/>
+        <location filename="../objects/chat.cpp" line="85"/>
         <source>Message to send via chat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4327,8 +4327,8 @@ Version: </translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="73"/>
-        <location filename="../main.cpp" line="80"/>
+        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="81"/>
         <source>Commander Wars</source>
         <translation></translation>
     </message>
@@ -4553,184 +4553,184 @@ Version: </translation>
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="85"/>
+        <location filename="../objects/ruleselection.cpp" line="84"/>
         <source>Enviroment</source>
         <translation>Wetterbedingungen</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="102"/>
+        <location filename="../objects/ruleselection.cpp" line="101"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="110"/>
+        <location filename="../objects/ruleselection.cpp" line="109"/>
         <source>Random Weather: </source>
         <translation>Zufallswetter: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="114"/>
+        <location filename="../objects/ruleselection.cpp" line="113"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="123"/>
+        <location filename="../objects/ruleselection.cpp" line="122"/>
         <source>Start Weather: </source>
         <translation>Startwetter: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="128"/>
+        <location filename="../objects/ruleselection.cpp" line="127"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="138"/>
+        <location filename="../objects/ruleselection.cpp" line="137"/>
         <source>Weather Forecast: </source>
         <translation>Wettervorhersage: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="142"/>
+        <location filename="../objects/ruleselection.cpp" line="141"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="153"/>
+        <location filename="../objects/ruleselection.cpp" line="152"/>
         <source>Gameplay</source>
         <translation>Spielweise</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="159"/>
+        <location filename="../objects/ruleselection.cpp" line="158"/>
         <source>Unit Ranking: </source>
         <translation>Einheitenränge: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="163"/>
+        <location filename="../objects/ruleselection.cpp" line="162"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="172"/>
+        <location filename="../objects/ruleselection.cpp" line="171"/>
         <source>CO Bannlist: </source>
         <translation>KO Bannliste: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="175"/>
-        <location filename="../objects/ruleselection.cpp" line="190"/>
-        <location filename="../objects/ruleselection.cpp" line="205"/>
+        <location filename="../objects/ruleselection.cpp" line="174"/>
+        <location filename="../objects/ruleselection.cpp" line="189"/>
+        <location filename="../objects/ruleselection.cpp" line="204"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="187"/>
+        <location filename="../objects/ruleselection.cpp" line="186"/>
         <source>Perk Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="202"/>
+        <location filename="../objects/ruleselection.cpp" line="201"/>
         <source>Action Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="217"/>
+        <location filename="../objects/ruleselection.cpp" line="216"/>
         <source>No CO Powers: </source>
         <translation>Keine Gabe: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="221"/>
+        <location filename="../objects/ruleselection.cpp" line="220"/>
         <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="230"/>
+        <location filename="../objects/ruleselection.cpp" line="229"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="234"/>
+        <location filename="../objects/ruleselection.cpp" line="233"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="243"/>
+        <location filename="../objects/ruleselection.cpp" line="242"/>
         <source>CO Specific Units: </source>
         <translation>KO Spezialeinheiten: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="247"/>
+        <location filename="../objects/ruleselection.cpp" line="246"/>
         <source>If unchecked specific CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="255"/>
+        <location filename="../objects/ruleselection.cpp" line="254"/>
         <source>AI Attack Terrain: </source>
         <translation>KI Terrainangriff: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="259"/>
+        <location filename="../objects/ruleselection.cpp" line="258"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="267"/>
+        <location filename="../objects/ruleselection.cpp" line="266"/>
         <source>Fog Of War: </source>
         <translation>Kriegsnebel: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="270"/>
+        <location filename="../objects/ruleselection.cpp" line="269"/>
         <source>Off</source>
         <translation>Aus</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="270"/>
+        <location filename="../objects/ruleselection.cpp" line="269"/>
         <source>Fog of War</source>
         <translation>Kriegsnebel</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="270"/>
+        <location filename="../objects/ruleselection.cpp" line="269"/>
         <source>Shroud of War</source>
         <translation>Kriegsschatten</translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="272"/>
+        <location filename="../objects/ruleselection.cpp" line="271"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="284"/>
+        <location filename="../objects/ruleselection.cpp" line="283"/>
         <source>Vision Block: </source>
         <translation>Sichtblock: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="288"/>
+        <location filename="../objects/ruleselection.cpp" line="287"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="297"/>
+        <location filename="../objects/ruleselection.cpp" line="296"/>
         <source>CO Perks: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="301"/>
+        <location filename="../objects/ruleselection.cpp" line="300"/>
         <source>Selects the amount of CO Perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="311"/>
+        <location filename="../objects/ruleselection.cpp" line="310"/>
         <source>Building Hidding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="338"/>
+        <location filename="../objects/ruleselection.cpp" line="337"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="342"/>
+        <location filename="../objects/ruleselection.cpp" line="341"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="387"/>
+        <location filename="../objects/ruleselection.cpp" line="386"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4739,57 +4739,57 @@ Version: </translation>
         <translation type="vanished">Gebäudeschatten: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="315"/>
+        <location filename="../objects/ruleselection.cpp" line="314"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="324"/>
+        <location filename="../objects/ruleselection.cpp" line="323"/>
         <source>Unit Limit: </source>
         <translation>Einheitenlimit: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="328"/>
+        <location filename="../objects/ruleselection.cpp" line="327"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="353"/>
+        <location filename="../objects/ruleselection.cpp" line="352"/>
         <source>Round Time: </source>
         <translation>Rundenlimit: </translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="357"/>
+        <location filename="../objects/ruleselection.cpp" line="356"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="366"/>
+        <location filename="../objects/ruleselection.cpp" line="365"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="369"/>
+        <location filename="../objects/ruleselection.cpp" line="368"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="369"/>
+        <location filename="../objects/ruleselection.cpp" line="368"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="371"/>
+        <location filename="../objects/ruleselection.cpp" line="370"/>
         <source>Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="383"/>
+        <location filename="../objects/ruleselection.cpp" line="382"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="398"/>
+        <location filename="../objects/ruleselection.cpp" line="399"/>
         <source>Victory Rules</source>
         <translation>Siegesbedingungen</translation>
     </message>
@@ -6129,7 +6129,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
     </message>
     <message>
         <location filename="../objects/selectkey.cpp" line="48"/>
-        <location filename="../objects/selectkey.cpp" line="136"/>
+        <location filename="../objects/selectkey.cpp" line="138"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -6224,7 +6224,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Tab</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="140"/>
+        <location filename="../objects/selectkey.cpp" line="142"/>
         <source>Key </source>
         <translation>Taste </translation>
     </message>
@@ -13174,34 +13174,34 @@ Direct Units gain additional firepower.</source>
 <context>
     <name>co_meiyo</name>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="258"/>
         <source>The Supreme Commander of Golden Sun. A veteran of battles who relies on experienced troops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="262"/>
         <source>Veterans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="266"/>
         <source>Recruits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="270"/>
         <source>Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="274"/>
         <source>
 Global Effect: 
 Unit Ranks are more effective. Units without a Rank loose firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="275"/>
         <source>
 
 CO Zone Effect: 
@@ -13209,72 +13209,72 @@ Unit Ranks are way more effective.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="279"/>
         <source>Units with a higher rank have even higher defence and offense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="283"/>
         <source>Training Camp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="287"/>
         <source>Units with a higher rank have even higher defence and offense. All units gain two ranks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="291"/>
         <source>War Training</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="295"/>
         <source>Get those recruits out of my way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="294"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="296"/>
         <source>An army of veterans awaits you...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="297"/>
         <source>I know how to train soldiers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="298"/>
         <source>An old soldier without wounds is the most dangerous.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="302"/>
         <source>A knight needs to be strong and experienced!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="303"/>
         <source>The better prepared knight wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="304"/>
         <source>Experience always wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="308"/>
         <source>You getting better recuit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="309"/>
         <source>Tsss! Some recruits have one! A catastroph.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="313"/>
         <source>Meiyo</source>
         <translation type="unfinished"></translation>
     </message>

@@ -57,6 +57,52 @@ GameRules::GameRules()
     m_allowedActions = GameManager::getInstance()->getLoadedRessources();
 }
 
+void GameRules::addGameRule(QString rule)
+{
+    bool found = false;
+    for (qint32 i = 0; i < m_GameRules.size(); i++)
+    {
+        if (m_GameRules[i]->getRuleID() == rule)
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        m_GameRules.append(new GameRule(rule));
+    }
+}
+
+GameRule* GameRules::getGameRule(QString rule)
+{
+    for (qint32 i = 0; i < m_GameRules.size(); i++)
+    {
+        if (m_GameRules[i]->getRuleID() == rule)
+        {
+            return m_GameRules[i].get();
+        }
+    }
+    return nullptr;
+}
+
+void GameRules::addGameRule(spGameRule rule)
+{
+    bool found = false;
+    for (qint32 i = 0; i < m_GameRules.size(); i++)
+    {
+        if (m_GameRules[i]->getRuleID() == rule->getRuleID())
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        m_GameRules.append(rule);
+    }
+}
+
 void GameRules::addVictoryRule(QString rule)
 {
     bool found = false;
@@ -952,6 +998,12 @@ void GameRules::serializeObject(QDataStream& pStream)
     Filesupport::writeVectorList(pStream, m_allowedPerks);
     Filesupport::writeVectorList(pStream, m_allowedActions);
     pStream << m_powerGainSpeed;
+
+    pStream << static_cast<qint32>(m_GameRules.size());
+    for (qint32 i = 0; i < m_GameRules.size(); i++)
+    {
+        m_GameRules[i]->serializeObject(pStream);
+    }
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1160,5 +1212,14 @@ void GameRules::deserializeObject(QDataStream& pStream)
     {
         m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
         m_allowedActions = GameManager::getInstance()->getLoadedRessources();
+    }
+    if (version > 14)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            m_GameRules.append(new GameRule());
+            m_GameRules[i]->deserializeObject(pStream);
+        }
     }
 }

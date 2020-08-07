@@ -89,19 +89,23 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     style.multiline = false;
     textField->setStyle(style);
     textField->setHtmlText(text);
     textField->setY(5);
     clipRect->addChild(textField);
-    clipRect->setSize(m_Textfield->getWidth() + 20, m_Textfield->getHeight());
+    clipRect->setSize(m_Textfield->getWidth() + 10, m_Textfield->getHeight());
+    clipRect->setX(10);
     auto size = addDropDownItem(clipRect.get(), id);
     textField->setSize(size);
 }
 
 void DropDownmenu::itemChanged(qint32 item)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_Textfield->setHtmlText(m_ItemTexts[item]);
     emit sigItemChanged(m_currentItem);
+    pApp->continueThread();
 }

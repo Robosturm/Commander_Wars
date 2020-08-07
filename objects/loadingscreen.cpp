@@ -23,6 +23,8 @@ LoadingScreen::LoadingScreen()
 
 void LoadingScreen::show()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::getStage()->addChild(this);
     if (!loaded)
     {
@@ -74,6 +76,7 @@ void LoadingScreen::show()
     m_LoadingBar->setWidth(1);
     setVisible(true);
     triggerUpdate();
+    pApp->continueThread();
 }
 
 void LoadingScreen::triggerUpdate()

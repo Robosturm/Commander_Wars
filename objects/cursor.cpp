@@ -51,6 +51,8 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
         onMap = pMap->onMap(x, y);
         if (onMap)
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             // play tick sound when changing the field
             if ((x != m_MapPointX) ||
                 (y != m_MapPointY))
@@ -63,6 +65,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
             this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
             // provide cursor move signal
             emit sigCursorMoved(m_MapPointX, m_MapPointY);
+            pApp->continueThread();
         }
     }
 }
@@ -298,9 +301,12 @@ void Cursor::createOutline(qint32 i, qint32 range, QColor color)
 
 void Cursor::resetCursorRangeOutline()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (auto & outline : m_cursorRangeOutline)
     {
         outline->detach();
     }
     m_cursorRangeOutline.clear();
+    pApp->continueThread();
 }

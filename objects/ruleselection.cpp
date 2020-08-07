@@ -17,6 +17,7 @@
 #include "objects/actionlistdialog.h"
 #include "objects/label.h"
 
+constexpr qint32 textWidth = 300;
 
 RuleSelection::RuleSelection(qint32 width)
     : QObject()
@@ -76,8 +77,6 @@ void RuleSelection::showRuleSelection()
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     QColor headerColor(0, 255, 0, 255);
-
-    qint32 textWidth = 300;
     spLabel textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
@@ -391,6 +390,8 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setTeamFacingUnits, Qt::QueuedConnection);
     y += 50;
 
+    addCustomGamerules(y);
+
     textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
@@ -401,7 +402,6 @@ void RuleSelection::showRuleSelection()
     y += 60;
 
     qint32 initCount = pMap->getGameRules()->getVictoryRuleSize();
-
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         qint32 xPos = 0;
@@ -482,6 +482,95 @@ void RuleSelection::showRuleSelection()
     }
     setHeight(y + pGameRuleManager->getVictoryRuleCount() * 50 + 50);
     pApp->continueThread();
+}
+
+void RuleSelection::addCustomGamerules(qint32 & y)
+{
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    spGameMap pMap = GameMap::getInstance();
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    qint32 initCount = pMap->getGameRules()->getGameRuleSize();
+    for (qint32 i = 0; i < pGameRuleManager->getGameRuleCount(); i++)
+    {
+        qint32 xPos = 0;
+        QString ruleID = pGameRuleManager->getGameRuleID(i);
+        spGameRule pRule = pMap->getGameRules()->getGameRule(ruleID);
+        if (pRule.get() == nullptr)
+        {
+            pRule = new GameRule(ruleID);
+            QStringList types = pRule->getRuleType();
+            for (qint32 i2 = 0; i2 < types.size(); i2++)
+            {
+                if (types[0] == VictoryRule::checkbox && i2 == 0)
+                {
+                    if (initCount == 0)
+                    {
+                        pRule->setRuleValue(pRule->getDefaultValue(0), 0);
+                    }
+                    else
+                    {
+                        pRule->setRuleValue(0, 0);
+                    }
+                }
+                else
+                {
+                    pRule->setRuleValue(pRule->getDefaultValue(i2), i2);
+                }
+            }
+        }
+        QStringList inputTypes = pRule->getRuleType();
+        pMap->getGameRules()->addGameRule(pRule);
+        for (qint32 i2 = 0; i2 < inputTypes.size(); i2++)
+        {
+            QString inputType = inputTypes[i2];
+            QString descriptiopn = pRule->getRuleDescription(i2);
+            // add a cool check box and a cool text
+            QString labelName = pRule->getRuleName(i2);
+            spLabel textField = new Label(textWidth - 40);
+            textField->setStyle(style);
+            textField->setHtmlText(labelName);
+            textField->setPosition(xPos + 30, i * 50 + y);
+            addChild(textField);
+            if (inputType == GameRule::checkbox)
+            {
+                bool defaultValue = pRule->getRuleValue(i2);
+                spCheckbox pCheckbox = new Checkbox();
+                pCheckbox->setTooltipText(descriptiopn);
+                pCheckbox->setPosition(xPos + textWidth, textField->getY());
+                addChild(pCheckbox);
+                pCheckbox->setChecked(defaultValue);
+                connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+                {
+                    pRule->setRuleValue(value, i2);
+                });
+            }
+            else if (inputType == GameRule::spinbox)
+            {
+                qint32 defaultValue = pRule->getRuleValue(i2);
+                qint32 startValue = pRule->getInfiniteValue(i2);
+                spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
+                pSpinbox->setTooltipText(descriptiopn);
+                pSpinbox->setPosition(xPos + textWidth, textField->getY());
+                pSpinbox->setInfinityValue(startValue);
+                addChild(pSpinbox);
+                pSpinbox->setCurrentValue(defaultValue);
+                connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                {
+                    qint32 newValue = static_cast<qint32>(value);
+                    pRule->setRuleValue(newValue, i2);
+                });
+            }
+            xPos += textWidth * 2 * 0.85;
+            if (xPos + textWidth * 2 * 0.85 + 80 > getWidth())
+            {
+                setWidth(xPos + textWidth * 2 * 0.85 + 80);
+            }
+        }
+    }
+    y += pGameRuleManager->getGameRuleCount() * 50;
 }
 
 void RuleSelection::startWeatherChanged(qint32 value)

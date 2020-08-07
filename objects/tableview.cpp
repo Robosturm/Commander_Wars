@@ -113,6 +113,8 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
 
 void TableView::setCurrentItem(qint32 i)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QColor color(255, 127, 39);
     QColor color2(0, 255, 0);
     for (qint32 i3 = 0; i3 < m_HLines.size(); i3++)
@@ -133,6 +135,7 @@ void TableView::setCurrentItem(qint32 i)
     m_VLines[i]->setPriority(1);
     m_VLines[i + 1]->setColor(color2);
     m_VLines[i + 1]->setPriority(1);
+    pApp->continueThread();
 }
 
 qint32 TableView::getCurrentItem() const

@@ -36,6 +36,7 @@
 #include "game/gameanimationnextday.h"
 #include "game/victoryrule.h"
 #include "game/gamerules.h"
+#include "game/gamerule.h"
 #include "game/weather.h"
 #include "game/terrainfindingsystem.h"
 #include "game/campaign.h"
@@ -138,6 +139,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<CursorData>("CursorData", 1);
     qmlRegisterInterface<VictoryRule>("VictoryRule", 1);
     qmlRegisterInterface<GameRules>("GameRules", 1);
+    qmlRegisterInterface<GameRule>("GameRule", 1);
     qmlRegisterInterface<ScriptVariable>("ScriptVariable", 1);
     qmlRegisterInterface<ScriptVariables>("ScriptVariables", 1);
     qmlRegisterInterface<Weather>("Weather", 1);

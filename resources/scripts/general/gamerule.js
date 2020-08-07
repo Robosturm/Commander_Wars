@@ -1,13 +1,8 @@
-var VICTORYRULE =
+var GAMERULE =
 {
     getRuleDescription : function(itemNumber)
     {
         return "";
-    },
-
-    getRuleProgress : function(rule, player)
-    {
-        return 0;
     },
 
     // shown name in the game
@@ -31,12 +26,12 @@ var VICTORYRULE =
         // disable value of the rule for spinboxes. :)
         return 0;
     },
-    // create and initialize the variables for this rule
+	// create and initialize the variables for this rule
     init : function(rule)
     {
     },
-    // sets the rule value of the spinbox
-    setRuleValue : function(rule, value, item = 0)
+	// called from the engine when the player changes the value in the selection screen
+	setRuleValue : function(rule, value, item = 0)
     {
 
         var variableName = "SpinboxValue" + item.toString();
@@ -44,18 +39,12 @@ var VICTORYRULE =
         var variable = variables.createVariable(variableName);
         variable.writeDataInt32(value);
     },
-    // called from the engine when the player changes the value in the selection screen
+	// called from the engine to determine the current start value in the selection screen
     getRuleValue : function(rule, item = 0)
     {
         var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
         var variable = variables.createVariable(variableName);
         return variable.readDataInt32();
-    },
-
-    // checks if the selected player is declared defeated by this rule
-    checkDefeat : function(rule, player)
-    {
-        return GameEnums.DefeatType_Alive;
     },
 }

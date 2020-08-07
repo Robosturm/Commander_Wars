@@ -142,12 +142,15 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 
 void SpinBox::setEnabled(bool value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
     m_pSpinBox->setEnabled(value);
     m_focused = false;
+    pApp->continueThread();
 }
 
 void SpinBox::setCurrentValue(qreal value)
@@ -268,6 +271,8 @@ qreal SpinBox::checkInput()
 
 void SpinBox::setValue(qreal value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (value == m_InfinityValue)
     {
         m_Text = "∞";
@@ -290,6 +295,7 @@ void SpinBox::setValue(qreal value)
         }
     }
     m_Textfield->setHtmlText(m_Text);
+    pApp->continueThread();
 }
 
 qreal SpinBox::getInfinityValue() const

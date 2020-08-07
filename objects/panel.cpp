@@ -78,6 +78,8 @@ void Panel::scrolledY(float value)
 
 void Panel::hideItems()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::spActor child =  m_ContentRect->getFirstChild();
     while (child)
     {
@@ -94,10 +96,13 @@ void Panel::hideItems()
         hideItems(child);
         child = child->getNextSibling();
     }
+    pApp->continueThread();
 }
 
 void Panel::hideItems(oxygine::spActor parent)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::spActor child =  parent->getFirstChild();
     while (child)
     {
@@ -114,6 +119,7 @@ void Panel::hideItems(oxygine::spActor parent)
         hideItems(child);
         child = child->getNextSibling();
     }
+    pApp->continueThread();
 }
 
 void Panel::scrolledX(float value)
@@ -130,6 +136,8 @@ void Panel::scrolledX(float value)
 
 void Panel::setContentHeigth(qint32 heigth)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // content can't be smaller than our own size
     // avoid complicate handling of smaller content
     if (heigth <= this->getHeight())
@@ -161,6 +169,7 @@ void Panel::setContentHeigth(qint32 heigth)
     m_HScrollbar->setContentHeigth(heigth);
     m_ContentRect->setY(0);
     m_HScrollbar->setScrollvalue(0);
+    pApp->continueThread();
 }
 
 void Panel::setContentWidth(qint32 width)
@@ -225,7 +234,7 @@ void Panel::clearContent()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_ContentRect->removeChildren();
-    pApp->continueThread();
     m_ContentRect->setX(0.0f);
     m_ContentRect->setY(0.0f);
+    pApp->continueThread();
 }

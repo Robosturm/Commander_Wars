@@ -125,10 +125,13 @@ void DropDownmenuBase::hideDropDown()
 
 void DropDownmenuBase::setEnabled(bool value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_Box->setEnabled(value);
     m_Panel->setVisible(false);
+    pApp->continueThread();
 }
 
 qint32 DropDownmenuBase::getCurrentItem() const

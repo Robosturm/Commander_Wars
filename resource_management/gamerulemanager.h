@@ -75,6 +75,37 @@ public:
     {
         return m_loadedVictoryRules.contains(ruleID);
     }
+
+    /**
+     * @brief getGameRuleID
+     * @param position
+     * @return
+     */
+    inline QString getGameRuleID(qint32 position)
+    {
+        if ((position >= 0) && (position < m_loadedGameRules.size()))
+        {
+            return m_loadedGameRules.at(position);
+        }
+        return "";
+    }
+    /**
+     * @brief getGameRuleCount
+     * @return
+     */
+    inline qint32 getGameRuleCount()
+    {
+        return m_loadedGameRules.size();
+    }
+    /**
+     * @brief existsGameRule
+     * @param ruleID
+     * @return
+     */
+    inline bool existsGameRule(QString ruleID)
+    {
+        return m_loadedGameRules.contains(ruleID);
+    }
 protected:
     friend RessourceManagement<GameRuleManager>;
     GameRuleManager();
@@ -83,6 +114,7 @@ private:
     virtual ~GameRuleManager() = default;
     QStringList m_loadedWeather;
     QStringList m_loadedVictoryRules;
+    QStringList m_loadedGameRules;
 };
 
 #endif // TERRAINMANAGER_H
