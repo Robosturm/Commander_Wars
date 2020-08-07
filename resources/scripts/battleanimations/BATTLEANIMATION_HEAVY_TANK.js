@@ -96,7 +96,7 @@ var Constructor = function()
         {
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
-                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg_air", 4);
+                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg_air", 3);
                 offset = Qt.point(13, 52);
                 if (armyName === "yc")
                 {
@@ -119,11 +119,11 @@ var Constructor = function()
                     offset = Qt.point(41, 25);
                 }
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
             else
             {
-                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg", 4);
+                BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg", 3);
                 // mg
                 offset = Qt.point(13, 46);
                 if (armyName === "yc")
@@ -147,7 +147,7 @@ var Constructor = function()
                     offset = Qt.point(41, 20);
                 }
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
         }
     };

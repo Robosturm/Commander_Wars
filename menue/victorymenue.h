@@ -10,6 +10,7 @@
 
 #include "objects/panel.h"
 #include "objects/checkbox.h"
+#include "network/NetworkInterface.h"
 
 class VictoryMenue : public QObject, public oxygine::Actor
 {
@@ -26,7 +27,7 @@ public:
         VictoryRanking
     };
 
-    explicit VictoryMenue(bool multiplayer);
+    explicit VictoryMenue(spNetworkInterface pNetworkInterface);
     virtual ~VictoryMenue() = default;
 
     /**
@@ -106,7 +107,7 @@ private:
     spPanel m_VictoryPanel;
     qint32 progress = 0;
 
-    bool m_Multiplayer{false};
+    spNetworkInterface m_pNetworkInterface;
 
 };
 

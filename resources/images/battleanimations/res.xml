@@ -12,6 +12,7 @@
 		<image file="GeneralSprites/medium_shot.png" cols = "6" />
 		<image file="GeneralSprites/mg_shot.png" cols = "6" />
 		<image file="GeneralSprites/mg_shot_air.png" cols = "6" />
+		<image file="GeneralSprites/mg_shot_down.png" cols = "6" />
 		<image file="GeneralSprites/rocket_launch.png" cols = "5" />
 		<image file="GeneralSprites/rocket.png" />
 		<image file="GeneralSprites/rocket_up.png" />

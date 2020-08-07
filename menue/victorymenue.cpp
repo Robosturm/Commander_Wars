@@ -21,9 +21,9 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
-VictoryMenue::VictoryMenue(bool multiplayer)
+VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     : QObject(),
-      m_Multiplayer(multiplayer)
+      m_pNetworkInterface(pNetworkInterface)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -554,7 +554,8 @@ void VictoryMenue::exitMenue()
     {
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new CampaignMenu(campaign, m_Multiplayer));
+        bool multiplayer = m_pNetworkInterface.get() != nullptr;
+        oxygine::getStage()->addChild(new CampaignMenu(campaign, multiplayer));
         addRef();
         oxygine::Actor::detach();
         deleteLater();
@@ -567,6 +568,12 @@ void VictoryMenue::exitMenue()
         addRef();
         oxygine::Actor::detach();
         deleteLater();
+    }
+
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        emit m_pNetworkInterface->sig_close();
+        m_pNetworkInterface = nullptr;
     }
     pApp->continueThread();
 }

@@ -23,12 +23,23 @@ var Constructor = function()
         return "";
     };
 
+    this.isMountain = function(terrainId)
+    {
+        if (terrainId === "MOUNTAIN" ||
+            terrainId === "SNOW_MOUNTAIN" ||
+            terrainId === "DESERT_ROCK")
+        {
+            return true
+        }
+        return false;
+    };
+
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 1 || defender === null)
         {
             var terrainId = unit.getTerrain().getTerrainID();
-            if (terrainId === "MOUNTAIN")
+            if (BATTLEANIMATION_MECH.isMountain(terrainId))
             {
                 BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
             }
@@ -55,7 +66,7 @@ var Constructor = function()
         if (weapon === 1 || defender === null)
         {
             var terrainId = unit.getTerrain().getTerrainID();
-            if (terrainId === "MOUNTAIN")
+            if (BATTLEANIMATION_MECH.isMountain(terrainId))
             {
                 BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
             }
@@ -183,7 +194,7 @@ var Constructor = function()
     {
         if (terrain !== null)
         {
-            if (terrain.getID() === "MOUNTAIN")
+            if (BATTLEANIMATION_MECH.isMountain(terrain.getID()))
             {
                 if (unitIdx >= 4)
                 {

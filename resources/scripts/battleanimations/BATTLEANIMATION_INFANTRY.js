@@ -11,15 +11,76 @@ var Constructor = function()
                      ["bh", "bh"],
                      ["bg", "bh"],
                      ["ma", "ma"],];
-    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+
+    this.getArmyName = function(unit)
     {
         var player = unit.getOwner();
         // get army name
-        var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_INFANTRY.armyData);
-        sprite.loadSpriteV2("infantry+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("infantry+" + armyName,  false,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), Qt.point(-5, 5));
+        return Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_LIGHT_TANK.armyData);
+    };
+
+    this.getRiverString = function(unit)
+    {
+        var terrainId = unit.getTerrain().getTerrainID();
+        if (terrainId === "RIVER" ||
+                terrainId === "DESERT_TRY_RIVER")
+        {
+            return "+river";
+        }
+        return "";
+    };
+
+    this.isMountain = function(terrainId)
+    {
+        if (terrainId === "MOUNTAIN" ||
+                terrainId === "SNOW_MOUNTAIN" ||
+                terrainId === "DESERT_ROCK")
+        {
+            return true
+        }
+        return false;
+    };
+
+    this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
+    {
+        var terrainId = unit.getTerrain().getTerrainID();
+        if (BATTLEANIMATION_INFANTRY.isMountain(terrainId))
+        {
+            BATTLEANIMATION_INFANTRY.loadStandingAnimation(sprite, unit, defender, weapon);
+        }
+        else
+        {
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
+            var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
+            sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                    Qt.point(65, 0), 600, false,
+                                    1, 1);
+            sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                      Qt.point(65, 0), 600, false,
+                                      1, 1);
+        }
+    };
+
+    this.loadSprite = function(sprite, unit, defender, weapon, ending, count)
+    {
+        var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
+        var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
+        var offset = Qt.point(-10, 5);
+        sprite.loadSprite("infantry+" + armyName + riverName + ending,  false,
+                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+        sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Table,
+                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+    };
+
+
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "", 1);
+    };
+
+    this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "", 1);
     };
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
@@ -39,40 +100,99 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_INFANTRY.loadStandingAnimation(sprite, unit, defender, weapon);
-        // mg
-        var player = unit.getOwner();
-        // get army name
-        var armyName = player.getArmy().toLowerCase();
-        if (armyName === "bg")
+        var armyName = BATTLEANIMATION_INFANTRY.getArmyName(unit);
+        var offset = Qt.point(0, 0);
+        var position = BATTLEANIMATION.getRelativePosition(unit, defender);
+        if (position > 0)
         {
-            armyName = "bh"
+            BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+up", 3);
+            offset = Qt.point(14, 20);
+            if (armyName === "yc")
+            {
+                offset = Qt.point(21, 24);
+            }
+            else if (armyName === "ge")
+            {
+                offset = Qt.point(14, 22);
+            }
+            else if (armyName === "bm")
+            {
+                offset = Qt.point(15, 25);
+            }
+            else if (armyName === "bh")
+            {
+                offset = Qt.point(18, 22);
+            }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(16, 19);
+            }
+            sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
+                              1, 1, 0, 0);
         }
-        var offset = Qt.point(19, 13);
-        if (armyName === "yc")
+        else if (position < 0)
         {
-            offset = Qt.point(27, 22);
+            BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire+down", 3);
+            offset = Qt.point(14, 15);
+            if (armyName === "yc")
+            {
+                offset = Qt.point(21, 20);
+            }
+            else if (armyName === "ge")
+            {
+                offset = Qt.point(14, 17);
+            }
+            else if (armyName === "bm")
+            {
+                offset = Qt.point(15, 20);
+            }
+            else if (armyName === "bh")
+            {
+                offset = Qt.point(18, 17);
+            }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(16, 19);
+            }
+            offset.y = offset.y - 9;
+            offset.x = offset.x - 1;
+            sprite.loadSprite("mg_shot_down",  false, sprite.getMaxUnitCount(), offset,
+                              1, 1, 0, 0);
         }
-        else if (armyName === "ge")
+        else
         {
-            offset = Qt.point(20, 15);
+            BATTLEANIMATION_INFANTRY.loadSprite(sprite, unit, defender, weapon, "+fire", 3);
+            offset = Qt.point(14, 17);
+            if (armyName === "yc")
+            {
+                offset = Qt.point(21, 22);
+            }
+            else if (armyName === "ge")
+            {
+                offset = Qt.point(14, 19);
+            }
+            else if (armyName === "bm")
+            {
+                offset = Qt.point(15, 23);
+            }
+            else if (armyName === "bh")
+            {
+                offset = Qt.point(18, 20);
+            }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(16, 19);
+            }
+            offset.y = offset.y - 5;
+            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                              1, 1, 0, 0);
         }
-        else if (armyName === "bm")
-        {
-            offset = Qt.point(20, 19);
-        }
-        else if (armyName === "bh")
-        {
-            offset = Qt.point(23, 16);
-        }
-        sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                          1, 1, 0, 0);
     };
 
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 500;
+        return 610;
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
@@ -80,6 +200,23 @@ var Constructor = function()
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
         sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+    };
+
+    this.hasMoveInAnimation = function()
+    {
+        // return true if the unit has an implementation for loadMoveInAnimation
+        return true;
+    };
+    this.getMoveInDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 610;
+    };
+
+    this.getStopDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 300;
     };
 };
 

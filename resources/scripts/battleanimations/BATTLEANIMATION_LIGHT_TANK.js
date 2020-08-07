@@ -95,7 +95,7 @@ var Constructor = function()
         }
         else
         {
-            BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg", 4);
+            BATTLEANIMATION_LIGHT_TANK.loadSprite(sprite, unit, defender, weapon, "+fire_mg", 3);
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 // mg

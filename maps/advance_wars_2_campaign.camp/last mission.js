@@ -422,6 +422,8 @@ var Constructor = function()
         if (turn === 1 && player === 0)
         {
             gameScript.initDialog();
+			var deathRay = map.getTerrain(16, 5).getBuilding();
+			deathRay.setFireCount(deathRay.getFireCount() - 7);
         }
     };
 

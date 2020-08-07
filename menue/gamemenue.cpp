@@ -941,17 +941,6 @@ void GameMenue::victory(qint32 team)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
-    bool multiplayer = false;
-
-    if (m_pNetworkInterface.get() != nullptr)
-    {
-        m_pChat->detach();
-        m_pChat = nullptr;
-        multiplayer = true;
-        emit m_pNetworkInterface->sig_close();
-        m_pNetworkInterface = nullptr;
-    }
-
     bool exit = true;
     bool humanWin = false;
     // create victory
@@ -982,12 +971,17 @@ void GameMenue::victory(qint32 team)
     }
     if (exit)
     {
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            m_pChat->detach();
+            m_pChat = nullptr;
+        }
         if (pMap->getCampaign() != nullptr)
         {
             pMap->getCampaign()->mapFinished(humanWin);
         }
         Console::print("Leaving Game Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new VictoryMenue(multiplayer));
+        oxygine::getStage()->addChild(new VictoryMenue(m_pNetworkInterface));
         oxygine::Actor::detach();
         deleteLater();
     }

@@ -57,22 +57,22 @@ var Constructor = function()
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 sprite.loadSprite("neotank+mg_fire_air",  false,
-                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
                 sprite.loadSpriteV2("neotank+mg_fire_air+mask", GameEnums.Recoloring_Table,
-                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
                 // mg
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), Qt.point(26, 51),
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
             else
             {
                 sprite.loadSprite("neotank+mg_fire",  false,
-                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                                  BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
                 sprite.loadSpriteV2("neotank+mg_fire+mask", GameEnums.Recoloring_Table,
-                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 4);
+                                    BATTLEANIMATION_NEOTANK.getMaxUnitCount(), offset, 3);
                 // mg
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), Qt.point(26, 46),
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
         }
     };
