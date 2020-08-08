@@ -117,7 +117,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return co.getPowerFilled() * 10 + 10;
+                    return co.getPowerFilled() * 5 + 10;
                 }
                 break;
         }
@@ -145,9 +145,8 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return co.getPowerFilled() * 2;
+                    return co.getPowerFilled() * 3;
                 }
-                break;
         }
         return co.getPowerFilled();
     };

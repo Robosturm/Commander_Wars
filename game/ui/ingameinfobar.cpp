@@ -608,8 +608,8 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 {
                     TerrainDefense = pTerrain->getBaseDefense();
                 }
-                float defenseY = pSprite->getY() + 5;
-                float startDefenseX = pSprite->getX() + 5;
+                float defenseY = pTerrainSprite->getY() + 5;
+                float startDefenseX = pTerrainSprite->getX() + 5;
                 float defenseX = startDefenseX;
                 pAnim = pGameManager->getResAnim("defenseStar");
                 for (qint32 i = 1; i <= TerrainDefense; i++)
@@ -649,11 +649,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 }
                 pTextfield->setHtmlText(name);
                 m_pCursorInfoBox->addChild(pTextfield);
-
-
-
                 y2 += pTextfield->getTextRect().getHeight() + yAdvance;
-
                 // show building information
                 if (pBuilding.get() != nullptr)
                 {

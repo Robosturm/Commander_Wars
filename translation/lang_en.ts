@@ -287,12 +287,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="297"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="299"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="587"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="589"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3043,54 +3043,54 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="666"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="711"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="662"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="707"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="675"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="684"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="693"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="680"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="689"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="720"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="731"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="727"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="740"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="736"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="748"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="744"/>
         <source>Movepoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="756"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="752"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="768"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="764"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="786"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="782"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3200,18 +3200,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="556"/>
+        <location filename="../coreengine/mainapp.cpp" line="558"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="562"/>
+        <location filename="../coreengine/mainapp.cpp" line="564"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="564"/>
+        <location filename="../coreengine/mainapp.cpp" line="566"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -14436,34 +14436,34 @@ Units have increased firepower against large regiments of units.</source>
 <context>
     <name>co_roboandy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="194"/>
         <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="198"/>
         <source>Puppet Shows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="202"/>
         <source>Housework</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="206"/>
         <source>He gets firepower for his powermeter, but his firepower may also drop drastically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="210"/>
         <source>
 Global Effect: 
 Units gain firepower and misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="211"/>
         <source>
 
 CO Zone Effect: 
@@ -14471,82 +14471,82 @@ Units gain even more firepower and misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="215"/>
         <source>His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="219"/>
         <source>Cooldown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="223"/>
         <source>His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="227"/>
         <source>Critical Mass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="231"/>
         <source>DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="232"/>
         <source>ERROR DETECTED. PREPARE TO BE ELIMINATED!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="233"/>
         <source>YOU&apos;RE A RUDE ONE! EAT HEAVY METAL!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="234"/>
         <source>KYAAA! SUCH A JERK! TIME TO DIE!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="235"/>
         <source>WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="236"/>
         <source>YOU&apos;RE SO DISAPPOINTING. WITNESS MY POWER!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="240"/>
         <source>USELESS CREATURE!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="241"/>
         <source>THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="242"/>
         <source>FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="246"/>
         <source>HOW MAY I SERVE YOU, INFERIOR BEING?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="247"/>
         <source>ALT+TAB! ALT+TAB! ALT+TAB!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="251"/>
         <source>Robo-Andy</source>
         <translation type="unfinished"></translation>
     </message>

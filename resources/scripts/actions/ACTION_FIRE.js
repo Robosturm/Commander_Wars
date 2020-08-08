@@ -136,11 +136,13 @@ var Constructor = function()
             {
                 var luck = 10 + attacker.getBonusLuck(attackerPosition);
                 var misfortune = attacker.getBonusMisfortune(attackerPosition);
-                if (luck > misfortune)
+                if (luck > -misfortune)
                 {
                     if (luckMode === GameEnums.LuckDamageMode_On)
                     {
-                        damage += globals.randInt(-misfortune, luck) * attackerHp  * offensive / 10.0 / defensive;
+                        var luckValue = globals.randInt(0, luck);
+                        var misfortuneValue = globals.randInt(-misfortune, 0);
+                        damage += (luckValue + misfortuneValue) * attackerHp  * offensive / 10.0 / defensive;
                     }
                     else if (luckMode === GameEnums.LuckDamageMode_Average)
                     {
