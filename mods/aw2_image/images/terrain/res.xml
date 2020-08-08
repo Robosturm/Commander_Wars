@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "mods/aw2_image/images/terrain/" />
+	<set path = "mods/aw2_image_plus/images/terrain/" />
 	<atlas>
 		<image file="plains+0.png" />
 		<image file="plains+1.png" />
@@ -23,7 +23,11 @@
 		<image file="plains+18.png" />
 		<image file="plains+19.png" />
 		<image file="plains+20.png" />
-		<image file="plains+destroyed.png" />		
+		<image file="plains+destroyed.png" />	
+		<image file="plains+N.png" />
+		<image file="plains+E.png" />
+		<image file="plains+W.png" />	
+		<image file="plains+S.png" />	
 				
 		<image file="sea.png" cols = "4" />
 		<image file="sea+NE.png" cols = "4" />
@@ -56,6 +60,16 @@
 		<image file="mountain+E+W.png" />
 		<image file="mountain+W.png" />
 		
+		<image file="desert_rock.png" />
+		<image file="desert_rock+E.png" />
+		<image file="desert_rock+E+W.png" />
+		<image file="desert_rock+W.png" />
+		
+		<image file="snow_mountain.png" />
+		<image file="snow_mountain+E.png" />
+		<image file="snow_mountain+E+W.png" />
+		<image file="snow_mountain+W.png" />
+				
 		<image file="beach+E+land+N.png" />
 		<image file="beach+E+land+N+S.png" />
 		<image file="beach+E+land+N+S+W.png" />		
@@ -106,6 +120,10 @@
 		<image file="beach+W+land+N+S.png" />
 		<image file="beach+W+land+S.png" />
 		<image file="beach.png" />
+		<image file="beach+NW.png" />
+		<image file="beach+NE.png" />
+		<image file="beach+SW.png" />
+		<image file="beach+SE.png" />
 		<image file="sea+beach+E.png" />
 		<image file="sea+beach+W.png" />
 		<image file="sea+beach+S.png" />
@@ -115,6 +133,16 @@
 		<image file="forest+E.png" />
 		<image file="forest+W.png" />
 		<image file="forest+E+W.png" />
+		
+		<image file="desert_forest.png" />
+		<image file="desert_forest+E.png" />
+		<image file="desert_forest+W.png" />
+		<image file="desert_forest+E+W.png" />
+		
+		<image file="snow_forest.png" />
+		<image file="snow_forest+E.png" />
+		<image file="snow_forest+W.png" />
+		<image file="snow_forest+E+W.png" />
 				
 		<image file="street.png" />
 		<image file="street+E.png" />
@@ -133,6 +161,23 @@
 		<image file="street+S+W.png" />
 		<image file="street+W.png" />
 		
+		<image file="desert_path.png" />
+		<image file="desert_path+E.png" />
+		<image file="desert_path+E+S.png" />
+		<image file="desert_path+E+S+W.png" />
+		<image file="desert_path+E+W.png" />
+		<image file="desert_path+N.png" />
+		<image file="desert_path+N+E.png" />
+		<image file="desert_path+N+E+S.png" />
+		<image file="desert_path+N+E+S+W.png" />
+		<image file="desert_path+N+E+W.png" />
+		<image file="desert_path+N+S.png" />
+		<image file="desert_path+N+S+W.png" />
+		<image file="desert_path+N+W.png" />
+		<image file="desert_path+S.png" />
+		<image file="desert_path+S+W.png" />
+		<image file="desert_path+W.png" />
+		
 		<image file="river.png" cols = "4" />
 		<image file="river+E.png" cols = "4" />
 		<image file="river+E+S.png" cols = "4" />
@@ -149,6 +194,23 @@
 		<image file="river+S.png" cols = "4" />
 		<image file="river+S+W.png" cols = "4" />
 		<image file="river+W.png" cols = "4" />
+		
+		<image file="desert_try_river.png" />
+		<image file="desert_try_river+E.png" />
+		<image file="desert_try_river+E+S.png" />
+		<image file="desert_try_river+E+S+W.png" />
+		<image file="desert_try_river+E+W.png" />
+		<image file="desert_try_river+N.png" />
+		<image file="desert_try_river+N+E.png" />
+		<image file="desert_try_river+N+E+S.png" />
+		<image file="desert_try_river+N+E+S+W.png" />
+		<image file="desert_try_river+N+E+W.png" />
+		<image file="desert_try_river+N+S.png" />
+		<image file="desert_try_river+N+S+W.png" />
+		<image file="desert_try_river+N+W.png" />
+		<image file="desert_try_river+S.png" />
+		<image file="desert_try_river+S+W.png" />
+		<image file="desert_try_river+W.png" />
 		
 		<image file="riverending+E.png" cols = "4" />
 		<image file="riverending+S.png" cols = "4" />
