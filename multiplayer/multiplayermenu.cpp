@@ -519,14 +519,16 @@ void Multiplayermenu::requestMap(quint64 socketID)
         else
         {
             mapFile.open(QIODevice::ReadOnly);
-            sendStream << mapFile.readAll();
+            QByteArray data = mapFile.readAll();
             mapFile.close();
+            Filesupport::writeByteArray(sendStream, data);
         }
         if (!scriptFile.isEmpty())
         {
             QFile script(scriptFile);
             script.open(QIODevice::ReadOnly);
-            sendStream << script.readAll();
+            QByteArray data = script.readAll();
+            Filesupport::writeByteArray(sendStream, data);
             script.close();
         }
         m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
@@ -555,31 +557,25 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                  !script.exists()))
             {
                 QByteArray mapData;
-                stream >> mapData;
+                mapData = Filesupport::readByteArray(stream);
                 QFileInfo mapInfo(mapFile);
                 QDir dir;
                 QString fileDir = mapInfo.filePath().replace(mapInfo.fileName(), "");
                 dir.mkdir(fileDir);
                 map.open(QIODevice::WriteOnly);
                 QDataStream mapFilestream(&map);
-                for (qint32 i = 0; i < mapData.size(); i++)
-                {
-                    mapFilestream << static_cast<quint8>(mapData[i]);
-                }
+                Filesupport::writeBytes(mapFilestream, mapData);
                 map.close();
                 if (!scriptFile.isEmpty())
                 {
                     QByteArray scriptData;
-                    stream >> scriptData;
+                    scriptData = Filesupport::readByteArray(stream);
                     QFileInfo scriptInfo(scriptFile);
                     fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
                     dir.mkdir(fileDir);
                     script.open(QIODevice::WriteOnly);
-                    QDataStream scriptFilestream(&map);
-                    for (qint32 i = 0; i < scriptData.size(); i++)
-                    {
-                        scriptFilestream << static_cast<quint8>(scriptData[i]);
-                    }
+                    QDataStream scriptFilestream(&script);
+                    Filesupport::writeBytes(scriptFilestream, scriptData);
                     script.close();
                 }
                 pNewMap = new GameMap(mapFile, true);
@@ -630,11 +626,8 @@ GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFil
     map.open(QIODevice::WriteOnly);
     QDataStream mapFilestream(&map);
     QByteArray mapData;
-    stream >> mapData;
-    for (qint32 i = 0; i < mapData.size(); i++)
-    {
-        mapFilestream << static_cast<quint8>(mapData[i]);
-    }
+    mapData = Filesupport::readByteArray(stream);
+    Filesupport::writeBytes(mapFilestream, mapData);
     map.close();
     pNewMap = new GameMap(mapFile, true);
     if (!scriptFile.isEmpty())
@@ -642,16 +635,13 @@ GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFil
         QFile script(scriptFile);
         scriptFile = getNewFileName(scriptFile);
         QByteArray scriptData;
-        stream >> scriptData;
+        scriptData = Filesupport::readByteArray(stream);
         QFileInfo scriptInfo(scriptFile);
         fileDir = scriptInfo.filePath().replace(scriptInfo.fileName(), "");
         dir.mkdir(fileDir);
         script.open(QIODevice::WriteOnly);
-        QDataStream scriptFilestream(&map);
-        for (qint32 i = 0; i < scriptData.size(); i++)
-        {
-            scriptFilestream << static_cast<quint8>(scriptData[i]);
-        }
+        QDataStream scriptFilestream(&script);
+        Filesupport::writeBytes(scriptFilestream, scriptData);
         script.close();
         scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath() + "/", "");
         scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath(), "");

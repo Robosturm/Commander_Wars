@@ -3541,7 +3541,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3571,7 +3571,7 @@ This is immediatly applied.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="926"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="916"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>

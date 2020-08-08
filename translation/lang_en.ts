@@ -3458,7 +3458,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3488,7 +3488,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="926"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="916"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

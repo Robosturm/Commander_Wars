@@ -27,6 +27,12 @@ public:
      */
     static void writeByteArray(QDataStream& stream, const QByteArray& array);
     /**
+     * @brief writeBytes
+     * @param stream
+     * @param array
+     */
+    static void writeBytes(QDataStream& stream, const QByteArray& array);
+    /**
      * @brief readByteArray
      * @param stream
      * @param array

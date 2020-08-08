@@ -47,6 +47,14 @@ void Filesupport::writeByteArray(QDataStream& stream, const QByteArray& array)
     }
 }
 
+void Filesupport::writeBytes(QDataStream& stream, const QByteArray& array)
+{
+    for (qint32 i = 0; i < array.size(); i++)
+    {
+        stream << static_cast<qint8>(array[i]);
+    }
+}
+
 QByteArray Filesupport::readByteArray(QDataStream& stream)
 {
     QByteArray array;
