@@ -66,7 +66,7 @@ GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All
 GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
 quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
-quint32 Settings::walkAnimationSpeed = 1;
+quint32 Settings::walkAnimationSpeed = 20;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
@@ -562,12 +562,12 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
-    walkAnimationSpeed = settings.value("WalkAnimationSpeed", 1u).toUInt(&ok);
+    walkAnimationSpeed = settings.value("WalkAnimationSpeed", 20u).toUInt(&ok);
     if(!ok || walkAnimationSpeed <= 0 ||  walkAnimationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " WalkAnimationSpeed";
         Console::print(error, Console::eERROR);
-        walkAnimationSpeed = 1u;
+        walkAnimationSpeed = 20u;
     }
 
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
