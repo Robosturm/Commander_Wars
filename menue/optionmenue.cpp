@@ -680,10 +680,9 @@ void OptionMenue::showMods()
     qint32 mods = 0;
     QStringList currentMods = Settings::getMods();
     style.multiline = false;
-
-    for (qint32 i = 0; i < infoList.size(); i++)
+    for (const auto & info : infoList)
     {
-        QString folder = infoList[i].filePath();
+        QString folder = info.filePath();
         if (!folder.endsWith("."))
         {
             QString name = folder;
@@ -743,7 +742,6 @@ void OptionMenue::showMods()
                 }
                 restartNeeded = true;
             });
-            mods++;
             if (curWidth > width)
             {
                 width = curWidth;
@@ -764,6 +762,7 @@ void OptionMenue::showMods()
             });
             m_ModBoxes.append(pBox);
             m_pMods->addItem(pBox);
+            mods++;
         }
     }
     m_pMods->setContentWidth(width);

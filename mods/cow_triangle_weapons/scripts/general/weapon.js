@@ -1,0 +1,1 @@
+WEAPON.effectiveBonus 	= 20;

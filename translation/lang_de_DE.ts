@@ -3283,18 +3283,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="558"/>
+        <location filename="../coreengine/mainapp.cpp" line="556"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="564"/>
+        <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="566"/>
+        <location filename="../coreengine/mainapp.cpp" line="564"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3988,7 +3988,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="762"/>
+        <location filename="../menue/optionmenue.cpp" line="760"/>
         <source>
 Version: </source>
         <translation>

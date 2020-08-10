@@ -1,0 +1,3 @@
+name=Commander Wars Weapon Triangle Mod
+description=This mod changes the damage dealt by certain direct units in a way that they counter another unit. Units in a triangle are (infantry, mech, motorbike), (light tank, hovercraft, anti-air), (medium tank, heavy hovercraft, neotank), (submarine, cruiser, destroyer) and (fighter, duster, stealthbomber). Also medium tanks etc get that damage bonus/reduction against the cheaper version.
+version=1.0.0
