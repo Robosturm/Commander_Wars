@@ -29,7 +29,7 @@ public:
     {
         m_pGameServer->deleteLater();
         m_pGameServer = nullptr;
-    }
+    }    
 signals:
 
 public slots:
@@ -51,7 +51,6 @@ private:
     TCPServer* m_pGameServer{nullptr};
     quint64 m_slaveGameIterator{0};
     QVector<spNetworkGameData> m_networkGames;
-    QVector<TCPClient*> m_Client;
 
     // data for games currently run on the server
     QVector<stNetworkGame*> m_games;

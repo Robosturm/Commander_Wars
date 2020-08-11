@@ -9,21 +9,21 @@ NetworkGame::NetworkGame()
     connect(&m_timer, &QTimer::timeout, this, &NetworkGame::checkServerRunning, Qt::QueuedConnection);
 }
 
-void NetworkGame::addClient(NetworkInterface* pClient, quint64 socketId)
+void NetworkGame::addClient(spTCPClient pClient)
 {
     m_Clients.append(pClient);
-    disconnect(pClient, SIGNAL(recieveData()));
-    disconnect(pClient, SIGNAL(sigForwardData()));
-    connect(pClient, &NetworkInterface::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
-    connect(pClient, &NetworkInterface::recieveData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
-    m_SocketIDs.append(socketId);
+    disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
+    disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
+    connect(pClient.get(), &NetworkInterface::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
+    connect(pClient.get(), &NetworkInterface::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
+    connect(pClient.get(), &NetworkInterface::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
 }
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    for (qint32 i = 0; i < m_SocketIDs.size(); i++)
+    for (qint32 i = 0; i < m_Clients.size(); i++)
     {
-        if (m_SocketIDs[i] != socketID)
+        if (m_Clients[i]->getSocketId() != socketID)
         {
             emit m_Clients[i]->sig_sendData(0, data, service, false);
         }
@@ -33,9 +33,9 @@ void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterfac
 void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     // forward data to other clients
-    for (qint32 i = 0; i < m_SocketIDs.size(); i++)
+    for (qint32 i = 0; i < m_Clients.size(); i++)
     {
-        if (socket == 0 || m_SocketIDs[i] == socket)
+        if (socket == 0 || m_Clients[i]->getSocketId() == socket)
         {
             emit m_Clients[i]->sig_sendData(0, data, service, false);
         }
@@ -44,6 +44,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
 
 void NetworkGame::recieveClientData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
+    // forward data to hosted game
     emit m_gameConnection.sig_sendData(0, data, service, false);
 }
 
@@ -89,4 +90,9 @@ QByteArray NetworkGame::getDataBuffer() const
 void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 {
     m_dataBuffer = dataBuffer;
+}
+
+void NetworkGame::clientDisconnect(quint64 socketId)
+{
+
 }

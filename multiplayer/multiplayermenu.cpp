@@ -188,6 +188,7 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
+
     if (m_NetworkInterface->getIsServer() && _local)
     {
         if (m_pPlayerSelection->hasOpenPlayer())
@@ -255,6 +256,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
+        Console::print("Local Network Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::MAPINFO)
         {
             clientMapInfo(stream, socketID);
@@ -293,6 +295,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
+        Console::print("Network Server Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             launchGameOnServer(stream);
@@ -302,6 +305,11 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             quint64 socketId;
             stream >> socketId;
             playerJoined(socketId);
+        }
+
+        else if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
+        {
+            emit sigHostGameLaunched();
         }
     }
 }
@@ -611,7 +619,17 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::GAMERUNNINGONSERVER;
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, true);
+}
 
+void Multiplayermenu::slotCancelHostConnection()
+{
+
+}
+
+void Multiplayermenu::slotHostGameLaunched()
+{
+    // we're hosting a game so we get the same rights as a local host
+    m_NetworkInterface->setIsServer(true);
 }
 
 GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -843,6 +861,11 @@ void Multiplayermenu::startGameOnServer()
     GameMap* pMap = GameMap::getInstance();
     pMap->serializeObject(sendStream);
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+
+    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Launching game on server"), 1000 * 60 * 10);
+    addChild(pDialogConnecting);
+    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
+    connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::createChat()

@@ -40,6 +40,7 @@ public:
     void connectNetworkSlots();
 signals:
     void sigConnected();
+    void sigHostGameLaunched();
     void sigLoadSaveGame();
     void sigShowIPs();
 public slots:
@@ -59,6 +60,9 @@ public slots:
 
     void showLoadSaveGameDialog();
     void loadSaveGame(QString filename);
+
+    void slotCancelHostConnection();
+    void slotHostGameLaunched();
 protected slots:
     void countdown();
 protected:

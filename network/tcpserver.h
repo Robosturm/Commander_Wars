@@ -3,12 +3,12 @@
 
 #include <QVector>
 #include "network/NetworkInterface.h"
+#include "network/tcpclient.h"
+#include "network/rxtask.h"
+#include "network/txtask.h"
 
 class QTcpServer;
 class QTcpSocket;
-
-#include "network/rxtask.h"
-#include "network/txtask.h"
 
 class TCPServer;
 typedef oxygine::intrusive_ptr<TCPServer> spTCPServer;
@@ -19,6 +19,8 @@ class TCPServer : public NetworkInterface
 public:
     TCPServer();
     virtual ~TCPServer();
+
+    spTCPClient getClient(quint64 socketID);
 public slots:
     virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
@@ -32,10 +34,7 @@ public slots:
     void continueListening();
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
 private:
-    QVector<spRxTask> pRXTasks;
-    QVector<spTxTask> pTXTasks;
-    QVector<QTcpSocket*> pTCPSockets;
-    QVector<quint64> m_SocketIDs;
+    QVector<spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
     QTcpServer* pTCPServer{nullptr};
     bool m_gameServer{false};

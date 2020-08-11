@@ -5,7 +5,7 @@
 #include <QLocalSocket>
 #include <QTimer>
 
-#include "network/NetworkInterface.h"
+#include "network/tcpclient.h"
 #include "network/localclient.h"
 
 /**
@@ -52,12 +52,16 @@ public slots:
      * @brief addClient
      * @param pClient
      */
-    void addClient(NetworkInterface* pClient, quint64 socketId);
+    void addClient(spTCPClient pClient);
+    /**
+     * @brief clientDisconnect
+     * @param socketId
+     */
+    void clientDisconnect(quint64 socketId);
 protected slots:
     void checkServerRunning();
 private:
-    QVector<NetworkInterface*> m_Clients;
-    QVector<quint64> m_SocketIDs;
+    QVector<spTCPClient> m_Clients;
     LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
     QString m_serverName;

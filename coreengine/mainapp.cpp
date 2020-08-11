@@ -55,8 +55,6 @@ Mainapp::Mainapp()
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
     randGenerator.seed(seedValue);
 
-    m_Workerthread.setPriority(QThread::Priority::HighestPriority);
-
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
@@ -320,7 +318,6 @@ void Mainapp::loadRessources()
     m_AudioWorker.start(QThread::Priority::LowPriority);
     m_Networkthread.start(QThread::Priority::NormalPriority);
     m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
-
     emit m_Audiothread->sigInitAudio();
     emit m_Worker->sigStart();
     while (!m_Worker->getStarted())

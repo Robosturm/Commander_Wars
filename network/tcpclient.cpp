@@ -7,12 +7,21 @@
 
 
 TCPClient::TCPClient()
-    : pRXTask(nullptr),
-      pTXTask(nullptr),
-      pSocket(nullptr)
+    : m_pRXTask(nullptr),
+      m_pTXTask(nullptr),
+      m_pSocket(nullptr)
 {
     this->moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
+}
+
+TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId)
+    : m_pRXTask(pRXTask),
+      m_pTXTask(pTXTask),
+      m_pSocket(pSocket),
+      m_socketId(socketId)
+{
+    QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }
 
 TCPClient::~TCPClient()
@@ -25,36 +34,36 @@ TCPClient::~TCPClient()
 void TCPClient::connectTCP(QString adress, quint16 port)
 {
     // Launch Socket
-    pSocket = new QTcpSocket(this);
-    pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    QObject::connect(pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    QObject::connect(pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
+    m_pSocket = new QTcpSocket(this);
+    m_pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    QObject::connect(m_pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    QObject::connect(m_pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
+    QObject::connect(m_pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
 
-    pSocket->connectToHost(adress, port);
+    m_pSocket->connectToHost(adress, port);
 
     // Start RX-Task
-    pRXTask = new RxTask(pSocket, 0, this, false);
-    pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(pSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+    m_pRXTask = new RxTask(m_pSocket, 0, this, false);
+    m_pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    QObject::connect(m_pSocket, &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    pTXTask = new TxTask(pSocket, 0, this, false);
-    pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+    m_pTXTask = new TxTask(m_pSocket, 0, this, false);
+    m_pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
+    QObject::connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
     Console::print(tr("Client is running"), Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
 {
-    if (pSocket != nullptr)
+    if (m_pSocket != nullptr)
     {
-        pRXTask = nullptr;
-        pTXTask = nullptr;
-        pSocket->disconnect();
-        pSocket->close();
-        pSocket = nullptr;
+        m_pRXTask = nullptr;
+        m_pTXTask = nullptr;
+        m_pSocket->disconnect();
+        m_pSocket->close();
+        m_pSocket = nullptr;
     }
     emit sigDisconnected(0);
 }
@@ -66,13 +75,14 @@ QVector<quint64> TCPClient::getConnectedSockets()
 
 void TCPClient::changeThread(quint64, QThread* pThread)
 {
-    if (pRXTask.get() != nullptr)
+    moveToThread(pThread);
+    if (m_pRXTask.get() != nullptr)
     {
-        pRXTask->moveToThread(pThread);
+        m_pRXTask->moveToThread(pThread);
     }
-    if (pRXTask.get() != nullptr)
+    if (m_pTXTask.get() != nullptr)
     {
-        pRXTask->moveToThread(pThread);
+        m_pTXTask->moveToThread(pThread);
     }
 }
 

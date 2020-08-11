@@ -66,6 +66,7 @@ QVector<quint64> LocalClient::getConnectedSockets()
 
 void LocalClient::changeThread(quint64, QThread* pThread)
 {
+    moveToThread(pThread);
     pRXTask->moveToThread(pThread);
     pTXTask->moveToThread(pThread);
 }

@@ -39,11 +39,6 @@ MainServer::~MainServer()
         delete m_games[i]->process;
         delete m_games[i];
     }
-    for (qint32 i = 0; i < m_Client.size(); i++)
-    {
-        m_Client[i]->disconnectTCP();
-        delete m_Client[i];
-    }
 }
 
 void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -53,6 +48,7 @@ void MainServer::recieveData(quint64 socketID, QByteArray data, NetworkInterface
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
+        Console::print("Network Server Command received: " + messageType, Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             spawnSlaveGame(stream, socketID, data);
@@ -89,12 +85,13 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
         m_games[pos]->m_runner.start();
         connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
-        emit m_pGameServer->sigChangeThread(socketID, &m_games[pos]->m_runner);
+        m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
         m_games[pos]->process->start(program, args);
     }
     else
     {
-
+        Console::print("Requested invalid mod configuration.", Console::eDEBUG);
+        // todo send request denial
     }
 }
 

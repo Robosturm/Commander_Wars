@@ -3216,7 +3216,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="75"/>
+        <location filename="../network/localclient.cpp" line="76"/>
         <source>Client is connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3283,18 +3283,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="556"/>
+        <location filename="../coreengine/mainapp.cpp" line="553"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="562"/>
+        <location filename="../coreengine/mainapp.cpp" line="559"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="564"/>
+        <location filename="../coreengine/mainapp.cpp" line="561"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3541,7 +3541,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="943"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3566,12 +3566,17 @@ This is immediatly applied.</source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="494"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="502"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="916"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="865"/>
+        <source>Launching game on server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="939"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
@@ -6354,17 +6359,17 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
 <context>
     <name>TCPClient</name>
     <message>
-        <location filename="../network/tcpclient.cpp" line="22"/>
+        <location filename="../network/tcpclient.cpp" line="31"/>
         <source>Client is closed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpclient.cpp" line="46"/>
+        <location filename="../network/tcpclient.cpp" line="55"/>
         <source>Client is running</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpclient.cpp" line="81"/>
+        <location filename="../network/tcpclient.cpp" line="91"/>
         <source>Client is connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6382,14 +6387,12 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="48"/>
-        <location filename="../network/tcpserver.cpp" line="77"/>
-        <location filename="../network/tcpserver.cpp" line="100"/>
+        <location filename="../network/tcpserver.cpp" line="61"/>
         <source>Client disconnected.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="139"/>
+        <location filename="../network/tcpserver.cpp" line="103"/>
         <source>New Client connection.</source>
         <translation></translation>
     </message>

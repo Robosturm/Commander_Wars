@@ -17,6 +17,7 @@ public:
 
 signals:
     void sigCancel();
+    void sigConnected();
 public slots:
     void cancel();
     void connected();
