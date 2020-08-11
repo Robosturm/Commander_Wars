@@ -77,7 +77,7 @@ var Constructor = function()
         var unitID = unit.getUnitID().toLowerCase();
         animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1.5);
         animation.loadSprite(unitID + "+walk", false, 1.5);
-        animation.setSound("movecopter.wav", -2);
+        animation.setSound("movetransportcopter.wav", -2);
         return animation;
     };
     this.getTerrainAnimationBase = function(unit, terrain)

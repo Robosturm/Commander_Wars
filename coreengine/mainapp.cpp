@@ -41,6 +41,7 @@ QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
+bool Mainapp::m_slave{false};
 bool Mainapp::m_useSeed{false};
 quint32 Mainapp::m_seed = 0;
 QMutex Mainapp::crashMutex;
@@ -325,16 +326,16 @@ void Mainapp::loadRessources()
         QThread::msleep(100);
     }
     // only launch the server if the rest is ready for it ;)
-    if (Settings::getServer() && !_slave)
+    if (Settings::getServer() && !m_slave)
     {
         MainServer::getInstance();
         m_GameServerThread.start(QThread::Priority::TimeCriticalPriority);
     }
-    if (!_noUi)
+    if (!m_noUi)
     {
         m_Timer.start(1, this);
     }
-    if (!_slave)
+    if (!m_slave)
     {
         emit m_Worker->sigShowMainwindow();
     }
@@ -479,14 +480,14 @@ QThread* Mainapp::getGameServerThread()
     return &m_GameServerThread;
 }
 
-bool Mainapp::getSlave() const
+bool Mainapp::getSlave()
 {
-    return _slave;
+    return m_slave;
 }
 
 void Mainapp::setSlave(bool slave)
 {
-    _slave = slave;
+    m_slave = slave;
 }
 
 bool Mainapp::getUseSeed()

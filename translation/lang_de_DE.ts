@@ -3283,18 +3283,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="553"/>
+        <location filename="../coreengine/mainapp.cpp" line="554"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="559"/>
+        <location filename="../coreengine/mainapp.cpp" line="560"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="561"/>
+        <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation></translation>
@@ -3541,7 +3541,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="943"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="955"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3566,17 +3566,17 @@ This is immediatly applied.</source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="502"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="508"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="865"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="877"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="939"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="951"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>

@@ -101,12 +101,12 @@ public:
      * @brief getSlave
      * @return
      */
-    bool getSlave() const;
+    static bool getSlave();
     /**
      * @brief setSlave
      * @param slave
      */
-    void setSlave(bool slave);
+    static void setSlave(bool slave);
     /**
      * @brief getGameServer
      * @return
@@ -231,8 +231,8 @@ private:
     QThread* pMainThread{nullptr};
     AudioThread* m_Audiothread;
     WorkerThread* m_Worker;
-    bool _slave{false};
-    bool _noUi{false};
+    static bool m_slave;
+    bool m_noUi{false};
     void createTrainingData();
 };
 

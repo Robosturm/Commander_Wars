@@ -36,7 +36,7 @@
 Multiplayermenu::Multiplayermenu(QString adress, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(host),
-      _local(true)
+      m_local(true)
 {
     init();
     if (!host)
@@ -78,7 +78,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
 Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(true),
-      _local(false)
+      m_local(false)
 {
     m_NetworkInterface = pNetworkInterface.get();
     init();
@@ -188,8 +188,14 @@ void Multiplayermenu::showMapSelection()
 
 void Multiplayermenu::playerJoined(quint64 socketID)
 {
-
-    if (m_NetworkInterface->getIsServer() && _local)
+    if (m_NetworkInterface->getIsServer() && Mainapp::getSlave())
+    {
+        if (m_slaveGameReady)
+        {
+            sendSlaveReady();
+        }
+    }
+    else if (m_NetworkInterface->getIsServer() && m_local)
     {
         if (m_pPlayerSelection->hasOpenPlayer())
         {
@@ -614,7 +620,12 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     loadMultiplayerMap();
     createChat();
     m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
+    sendSlaveReady();
+    m_slaveGameReady = true;
+}
 
+void Multiplayermenu::sendSlaveReady()
+{
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::GAMERUNNINGONSERVER;
@@ -805,7 +816,7 @@ void Multiplayermenu::slotButtonBack()
     }
     else if (m_Host)
     {
-        if (_local)
+        if (m_local)
         {
             disconnectNetwork();
             m_pHostAdresse->setVisible(false);
@@ -824,7 +835,7 @@ void Multiplayermenu::slotButtonNext()
 {
     if (m_Host && m_MapSelectionStep == MapSelectionStep::selectRules)
     {
-        if (_local)
+        if (m_local)
         {
             m_pHostAdresse->setVisible(true);
             m_NetworkInterface = new TCPServer();
@@ -836,6 +847,7 @@ void Multiplayermenu::slotButtonNext()
         }
         else
         {
+            connectNetworkSlots();
             startGameOnServer();
         }
     }
@@ -892,7 +904,7 @@ void Multiplayermenu::disconnectNetwork()
             m_Chat->detach();
             m_Chat = nullptr;
         }
-        if (_local)
+        if (m_local)
         {
             emit m_NetworkInterface->sig_close();
             m_pPlayerSelection->attachNetworkInterface(nullptr);

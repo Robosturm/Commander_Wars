@@ -92,6 +92,10 @@ private:
      * @param stream
      */
     void launchGameOnServer(QDataStream & stream);
+    /**
+     * @brief sendSlaveReady
+     */
+    void sendSlaveReady();
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;
@@ -101,7 +105,8 @@ private:
     qint32 counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
     bool saveGame{false};
-    bool _local{true};
+    bool m_local{true};
+    bool m_slaveGameReady{false};
 };
 
 #endif // MULTIPLAYERMENU_H
