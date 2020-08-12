@@ -96,6 +96,11 @@ private:
      * @brief sendSlaveReady
      */
     void sendSlaveReady();
+    /**
+     * @brief acceptNewConnection
+     * @param socketID
+     */
+    void acceptNewConnection(quint64 socketID);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

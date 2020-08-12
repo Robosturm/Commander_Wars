@@ -9,6 +9,8 @@
 
 #include <QVector>
 
+class Unit;
+
 class MenuData : public QObject
 {
     Q_OBJECT
@@ -39,6 +41,7 @@ signals:
 
 public slots:
     void addData(QString text, QString actionID, QString icon, qint32 costs = 0, bool enabled = true);
+    void addUnitData(QString text, QString actionID, Unit* pIcon, qint32 costs = 0, bool enabled = true);
 private:
     QStringList texts;
     QStringList actionIDs;

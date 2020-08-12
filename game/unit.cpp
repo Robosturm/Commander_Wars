@@ -1789,33 +1789,33 @@ bool Unit::getHpHidden(Player* pPlayer)
 
 void Unit::updateIcons(Player* pPlayer)
 {
+    qint32 hpValue = Mainapp::roundUp(hp);
+    // unload the icons
+    unloadIcon("1");
+    unloadIcon("2");
+    unloadIcon("3");
+    unloadIcon("4");
+    unloadIcon("5");
+    unloadIcon("6");
+    unloadIcon("7");
+    unloadIcon("8");
+    unloadIcon("9");
+    unloadIcon("hp+hidden");
+    unloadIcon("transport");
+    unloadIcon("transport+hidden");
+    if (!getHpHidden(pPlayer))
+    {
+        if ((hpValue < 10) && (hpValue > 0))
+        {
+            loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+        }
+    }
+    else
+    {
+        loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
+    }
     if (m_pTerrain != nullptr)
     {
-        qint32 hpValue = Mainapp::roundUp(hp);
-        // unload the icons
-        unloadIcon("1");
-        unloadIcon("2");
-        unloadIcon("3");
-        unloadIcon("4");
-        unloadIcon("5");
-        unloadIcon("6");
-        unloadIcon("7");
-        unloadIcon("8");
-        unloadIcon("9");
-        unloadIcon("hp+hidden");
-        unloadIcon("transport");
-        unloadIcon("transport+hidden");
-        if (!getHpHidden(pPlayer))
-        {
-            if ((hpValue < 10) && (hpValue > 0))
-            {
-                loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
-            }
-        }
-        else
-        {
-            loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
-        }
         if (getTransportHidden(pPlayer))
         {
             loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
@@ -2041,7 +2041,7 @@ QStringList Unit::getActionList()
     QStringList actionList;
     if (ret.isString())
     {
-       actionList = ret.toString().split(",");
+        actionList = ret.toString().split(",");
     }
     else
     {

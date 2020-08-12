@@ -255,7 +255,7 @@ var Constructor = function()
                         if (found === false)
                         {
                             var transportUnit = unit.getLoadedUnit(i);
-                            data.addData(Global[transportUnit.getUnitID()].getName(), i.toString(), transportUnit.getUnitID());
+                            data.addUnitData(Global[transportUnit.getUnitID()].getName(), i.toString(), transportUnit);
                             break;
                         }
                     }

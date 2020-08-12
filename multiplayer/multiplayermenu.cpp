@@ -199,52 +199,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
     {
         if (m_pPlayerSelection->hasOpenPlayer())
         {
-            QCryptographicHash myHash(QCryptographicHash::Sha3_512);
-            QString file = m_pMapSelectionView->getCurrentFile().filePath();
-            QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
-            QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
-            QFile mapFile(file);
-            mapFile.open(QIODevice::ReadOnly);
-            myHash.addData(&mapFile);
-            mapFile.close();
-            QByteArray hash = myHash.result();
-            QByteArray data;
-            QDataStream stream(&data, QIODevice::WriteOnly);
-            stream << NetworkCommands::MAPINFO;
-            stream << Mainapp::getGameVersion();
-            QStringList mods = Settings::getMods();
-            QStringList versions = Settings::getActiveModVersions();
-            stream << static_cast<qint32>(mods.size());
-            for (qint32 i = 0; i < mods.size(); i++)
-            {
-                stream << mods[i];
-                stream << versions[i];
-            }
-            Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash());
-            stream << saveGame;
-            if (saveGame)
-            {
-                m_pMapSelectionView->getCurrentMap()->serializeObject(stream);
-            }
-            else
-            {
-                stream << fileName;
-                stream << hash;
-                stream << scriptFile;
-                if (QFile::exists(scriptFile))
-                {
-                    // create hash for script file
-                    QFile scriptData(scriptFile);
-                    QCryptographicHash myScriptHash(QCryptographicHash::Sha3_512);
-                    scriptData.open(QIODevice::ReadOnly);
-                    myScriptHash.addData(&scriptData);
-                    scriptData.close();
-                    QByteArray scriptHash = myScriptHash.result();
-                    stream << scriptHash;
-                }
-            }
-            // send map data to client
-            m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            acceptNewConnection(socketID);
         }
         else
         {
@@ -252,6 +207,56 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             emit m_NetworkInterface.get()->sigDisconnectClient(socketID);
         }
     }
+}
+
+void Multiplayermenu::acceptNewConnection(quint64 socketID)
+{
+    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+    QString file = m_pMapSelectionView->getCurrentFile().filePath();
+    QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
+    QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
+    QFile mapFile(file);
+    mapFile.open(QIODevice::ReadOnly);
+    myHash.addData(&mapFile);
+    mapFile.close();
+    QByteArray hash = myHash.result();
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << NetworkCommands::MAPINFO;
+    stream << Mainapp::getGameVersion();
+    QStringList mods = Settings::getMods();
+    QStringList versions = Settings::getActiveModVersions();
+    stream << static_cast<qint32>(mods.size());
+    for (qint32 i = 0; i < mods.size(); i++)
+    {
+        stream << mods[i];
+        stream << versions[i];
+    }
+    Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash());
+    stream << saveGame;
+    if (saveGame)
+    {
+        m_pMapSelectionView->getCurrentMap()->serializeObject(stream);
+    }
+    else
+    {
+        stream << fileName;
+        stream << hash;
+        stream << scriptFile;
+        if (QFile::exists(scriptFile))
+        {
+            // create hash for script file
+            QFile scriptData(scriptFile);
+            QCryptographicHash myScriptHash(QCryptographicHash::Sha3_512);
+            scriptData.open(QIODevice::ReadOnly);
+            myScriptHash.addData(&scriptData);
+            scriptData.close();
+            QByteArray scriptHash = myScriptHash.result();
+            stream << scriptHash;
+        }
+    }
+    // send map data to client
+    m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -641,6 +646,7 @@ void Multiplayermenu::slotHostGameLaunched()
 {
     // we're hosting a game so we get the same rights as a local host
     m_NetworkInterface->setIsServer(true);
+    MapSelectionMapsMenue::slotButtonNext();
 }
 
 GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
@@ -878,6 +884,7 @@ void Multiplayermenu::startGameOnServer()
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+    connect(pDialogConnecting.get(), &DialogConnecting::sigConnected, this, &Multiplayermenu::slotHostGameLaunched, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::createChat()

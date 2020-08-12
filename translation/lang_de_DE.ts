@@ -3541,7 +3541,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="955"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="962"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3566,17 +3566,17 @@ This is immediatly applied.</source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="508"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="513"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="877"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="883"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="951"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="958"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
