@@ -191,32 +191,41 @@ void CampaignEditor::exitEditor()
 
 void CampaignEditor::showAddCampaign()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/" + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void CampaignEditor::showSaveCampaign()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards, m_Name->getCurrentText());
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void CampaignEditor::showLoadCampaign()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void CampaignEditor::addCampaign(QString filename)
@@ -246,10 +255,13 @@ QString CampaignEditor::getMapName(QString filename)
 
 void CampaignEditor::showSelectFolder()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFolderDialog folderDialog = new FolderDialog(path);
     this->addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void CampaignEditor::selectFolder(QString folder)

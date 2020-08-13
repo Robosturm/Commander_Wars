@@ -66,22 +66,28 @@ RuleSelectionDialog::RuleSelectionDialog()
 
 void RuleSelectionDialog::showLoadRules()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::loadRules, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void RuleSelectionDialog::showSaveRules()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::saveRules, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void RuleSelectionDialog::loadRules(QString filename)

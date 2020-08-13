@@ -1787,6 +1787,31 @@ bool Unit::getHpHidden(Player* pPlayer)
     return false;
 }
 
+bool Unit::getPerfectHpView(Player* pPlayer)
+{
+    if (pPlayer != nullptr)
+    {
+        CO* pCO = pPlayer->getCO(0);
+        if (pCO != nullptr)
+        {
+            if (pCO->getPerfectHpView(this, QPoint(getX(), getY())))
+            {
+                return true;
+            }
+        }
+        pCO = pPlayer->getCO(1);
+        if (pCO != nullptr)
+        {
+            if (pCO->getPerfectHpView(this, QPoint(getX(), getY())))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
 void Unit::updateIcons(Player* pPlayer)
 {
     qint32 hpValue = Mainapp::roundUp(hp);

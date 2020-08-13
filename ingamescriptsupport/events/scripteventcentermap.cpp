@@ -1,7 +1,7 @@
 #include "scripteventcentermap.h"
 
 ScriptEventCenterMap::ScriptEventCenterMap()
-    : ScriptEventGeneric(EventType::EventCenterMap, ScriptEvent::EventCenterMap)
+    : ScriptEventGeneric(EventType::CenterMap, ScriptEvent::EventCenterMap)
 {
     m_Items.append(ScriptEventGeneric::Data());
     m_Items.append(ScriptEventGeneric::Data());

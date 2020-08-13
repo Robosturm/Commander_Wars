@@ -18,6 +18,7 @@
 #include "scripteventchangeplayerteam.h"
 #include "scripteventspawnbuilding.h"
 #include "scripteventcentermap.h"
+#include "scripteventplaysound.h"
 
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -37,6 +38,8 @@ const QString ScriptEvent::EventChangeUnitOwner = "Change Unit Owner";
 const QString ScriptEvent::EventChangePlayerTeam = "Change Player Team";
 const QString ScriptEvent::EventSpawnBuilding = "Spawn Building";
 const QString ScriptEvent::EventCenterMap = "Center Map";
+const QString ScriptEvent::EventPlaySound = "Play Sound";
+
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
@@ -122,6 +125,10 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     {
         ret = new ScriptEventCenterMap();
     }
+    else if (line.endsWith(EventPlaySound))
+    {
+        ret = new ScriptEventPlaySound();
+    }
     if (ret != nullptr)
     {
         ret->readEvent(rStream);
@@ -206,9 +213,13 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         {
             return new ScriptEventSpawnBuilding();
         }
-        case EventType::EventCenterMap:
+        case EventType::CenterMap:
         {
             return new ScriptEventCenterMap();
+        }
+        case EventType::PlayGameSound:
+        {
+            return new ScriptEventPlaySound();
         }
     }
     return nullptr;

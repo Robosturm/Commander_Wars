@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "mods/aw_styled_icons/images/game/" />
+	<atlas>
+		<image file="arrow+unit.png" cols = "10" />
+	</atlas>
+</resources>
+

@@ -97,6 +97,12 @@ var CO =
         return false;
     },
 
+    getPerfectHpView : function(co, unit, posX, posY)
+    {
+        // are the hp hidden of this unit?
+        return false;
+    },
+
     getRepairBonus : function(co, unit, posX, posY)
     {
         return 0;

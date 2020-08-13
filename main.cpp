@@ -43,6 +43,8 @@
 #include "game/gamescript.h"
 #include "wiki/wikidatabase.h"
 
+#include "objects/textbox.h"
+
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
 
@@ -118,6 +120,8 @@ int main(int argc, char* argv[])
     qRegisterMetaType<QVector<float>>("QVector<float>");
     qRegisterMetaType<QList<qint32>>("QList<qint32>");
     qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
+    qRegisterMetaType<spTextbox>("spTextbox");
+
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);

@@ -388,6 +388,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/events/scripteventchangeplayerteam.cpp
         ingamescriptsupport/events/scripteventspawnbuilding.cpp
         ingamescriptsupport/events/scripteventcentermap.cpp
+        ingamescriptsupport/events/scripteventplaysound.cpp
 
 
         # wiki stuff

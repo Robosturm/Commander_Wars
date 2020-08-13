@@ -35,6 +35,7 @@ public:
     static const QString EventChangePlayerTeam;
     static const QString EventSpawnBuilding;
     static const QString EventCenterMap;
+    static const QString EventPlaySound;
 
 
     enum class EventType
@@ -56,7 +57,8 @@ public:
         ChangeUnitOwner,
         ChangePlayerTeam,
         SpawnBuilding,
-        EventCenterMap,
+        CenterMap,
+        PlayGameSound,
     };
 
     static spScriptEvent createEvent(EventType type);

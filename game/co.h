@@ -116,6 +116,13 @@ public slots:
      */
     bool getHpHidden(Unit* pUnit, QPoint position);
     /**
+     * @brief getPerfectHpView
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool getPerfectHpView(Unit* pUnit, QPoint position);
+    /**
      * @brief getMovementcostModifier
      * @param pUnit
      * @param position

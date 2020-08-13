@@ -11,6 +11,6 @@ INFANTRY.doWalkingAnimation = function(action)
     var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
     animation.loadSpriteV2("infantry+os+walk+mask", GameEnums.Recoloring_Table, 1);
     animation.loadSprite("infantry+os+walk", false, 1);
-    animation.setSound("movefeet.wav", -2);
+    animation.setSound("movewalk.wav", -2);
     return animation;
 };

@@ -4,6 +4,7 @@
 #include <qvector.h>
 
 #include "scriptevent.h"
+#include "objects/textbox.h"
 
 class ScriptEventGeneric : public ScriptEvent
 {
@@ -15,7 +16,8 @@ public:
         Float,
         String,
         Bool,
-        Selection
+        Selection,
+        File
     };
 
     struct Data
@@ -34,6 +36,9 @@ public:
         // dropdown
         QVector<QString> items;
         QStringList data;
+        // file selection
+        QString filter;
+        QString startFolder;
     };
 
     ScriptEventGeneric(EventType type, QString eventIdentifier);
@@ -72,6 +77,11 @@ public:
     {
         return tr(m_eventIdentifier.toStdString().c_str());
     }
+
+signals:
+    void sigShowSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox);
+protected slots:
+    void showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox);
 protected:
     QVector<Data> m_Items;
     QString m_eventIdentifier;

@@ -1003,124 +1003,124 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="294"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="306"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="302"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="314"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="310"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="322"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="318"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="330"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="329"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="341"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="335"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="347"/>
         <source>All maps marked as last map need to be won in order to finish the campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="709"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="721"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="713"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="725"/>
         <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="735"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="747"/>
         <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="781"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="793"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="785"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="797"/>
         <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="805"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="817"/>
         <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="858"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="870"/>
         <source>Enable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="867"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="944"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="879"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="956"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="871"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="948"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="883"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="960"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="884"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="961"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="896"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="973"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="890"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="965"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="902"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="977"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="903"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="978"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="915"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="990"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="907"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="982"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="919"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="994"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="920"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="995"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="932"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="1007"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="924"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="936"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="937"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="949"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="999"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="1011"/>
         <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1820,17 +1820,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="329"/>
+        <location filename="../objects/dialograndommap.cpp" line="332"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="334"/>
+        <location filename="../objects/dialograndommap.cpp" line="337"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="338"/>
+        <location filename="../objects/dialograndommap.cpp" line="341"/>
         <source>The percent distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1838,12 +1838,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="293"/>
+        <location filename="../objects/dialograndommap.cpp" line="296"/>
         <source>The percent distribution between the different terrains when a terrain is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="310"/>
+        <location filename="../objects/dialograndommap.cpp" line="313"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3007,90 +3007,91 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="340"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="389"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="393"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="391"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="397"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="401"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="433"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="442"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="449"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="458"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="465"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="474"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="481"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="490"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="498"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="507"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="515"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="524"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="662"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="707"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="680"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="680"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="689"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="725"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="727"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="736"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="736"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="745"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="744"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="753"/>
         <source>Movepoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="752"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="761"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="764"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="773"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="782"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="791"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4081,8 +4082,8 @@ Version: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
-        <location filename="../main.cpp" line="81"/>
+        <location filename="../main.cpp" line="76"/>
+        <location filename="../main.cpp" line="83"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5141,7 +5142,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="415"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="416"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5151,59 +5152,59 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="131"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="132"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="136"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="143"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="151"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="157"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="158"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="178"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="179"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="319"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="400"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="320"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="401"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="326"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="407"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="327"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="408"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="334"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="335"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5234,117 +5235,117 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventAnimation</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="85"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="87"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="91"/>
         <source>Field X on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="103"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="107"/>
         <source>Field Y on which the animation will be shown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="119"/>
         <source>Offset X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="124"/>
         <source>X-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="136"/>
         <source>Offset Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="141"/>
         <source>Y-Offset of the animation. Moving it away from the center.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="153"/>
         <source>Color: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="156"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="158"/>
         <source>Recoloring color for the animation sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="168"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="170"/>
         <source>Sleep after finish: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="173"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="175"/>
         <source>Time in ms the animation remains visible after all frames were played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="185"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="187"/>
         <source>Scale X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="190"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="192"/>
         <source>X-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="202"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="204"/>
         <source>Scale Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="209"/>
         <source>Y-Scaling of the actual sprite.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="219"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="221"/>
         <source>Delay: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="224"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="226"/>
         <source>Time in ms before the animation gets played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="236"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="238"/>
         <source>Sprite: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="240"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="242"/>
         <source>Current select animation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="248"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="250"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="259"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="261"/>
         <source>Frames: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="264"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="266"/>
         <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5617,6 +5618,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>ScriptEventGeneric</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="170"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptEventModifyTerrain</name>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="59"/>
@@ -5752,6 +5761,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="146"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventPlaySound</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="8"/>
+        <source>Sound which should be played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="11"/>
+        <source>Sound File: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16184,29 +16206,147 @@ Units have increased firepower and increased defense.</source>
     </message>
 </context>
 <context>
+    <name>co_walter</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="285"/>
+        <source>Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="289"/>
+        <source>Tongue Twisters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="293"/>
+        <source>Colloquialisms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="297"/>
+        <source>Using Teal Isles intelligence division, Walter can view units&apos; HP more accurately than other COs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="301"/>
+        <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="302"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional firepower and defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="306"/>
+        <source>Enemies take additional damage when they attack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="310"/>
+        <source>Memento</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="314"/>
+        <source>Drains ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="318"/>
+        <source>Magnum Opus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="322"/>
+        <source>Greater opponents have burnt out against me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="323"/>
+        <source>For the Isles sake, I will endure you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="324"/>
+        <source>I am the most stalwart foe that you will ever face!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="325"/>
+        <source>Morale is the key to victory, but you seem rather....ill equipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="326"/>
+        <source>A battle does not determine who is right. It determines who is left. Me, of course.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="327"/>
+        <source>The spirit of Teal Isles will carry us for eternity!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="331"/>
+        <source>Another battle has been won. Teal Isles is safe for now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="332"/>
+        <source>You have been outwitted, outmatched and outmaneuvered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="333"/>
+        <source>Hah, yet again I have stood the test of time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="337"/>
+        <source>That wasn&apos;t the best idea to take fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="338"/>
+        <source>I got detected too early..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_walter.js" line="342"/>
+        <source>Walter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_waylon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="194"/>
         <source>A Teal Isle Commander. Destructive, egotistical and extremely vain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="198"/>
         <source>Living the good life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="202"/>
         <source>Responsibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="206"/>
         <source>Air units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="210"/>
         <source>
 Special Unit:
 Kirov
@@ -16216,7 +16356,7 @@ No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="211"/>
         <source>
 
 CO Zone Effect: 
@@ -16224,64 +16364,64 @@ Air Units have 30% increased firepower and 40% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="218"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="223"/>
         <source>Air units get increased firepower and highly increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="219"/>
         <source>Bad Company</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="227"/>
         <source>Wingman</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="231"/>
         <source>I&apos;m over here! C&apos;mon give me your best shot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="232"/>
         <source>You think you can get the better of me? You&apos;ve got a lot to learn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="236"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="239"/>
         <source>Woo-hoo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="234"/>
         <source>All i want is total air supremacy! Then i&apos;ll pick off your forces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="238"/>
         <source>The end of the world? Fine by me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="240"/>
         <source>How&apos;d you like that?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="244"/>
         <source>This is not the freedom I want!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="245"/>
         <source>The eagle has landed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="249"/>
         <source>Waylon</source>
         <translation type="unfinished"></translation>
     </message>

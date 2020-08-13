@@ -5,6 +5,6 @@ MOTORBIKE.doWalkingAnimation = function(action)
     var unitID = unit.getUnitID().toLowerCase();
     animation.loadSpriteV2(unitID + "+walk+mask", GameEnums.Recoloring_Table, 1);
     animation.loadSprite(unitID + "+walk", false, 1);
-    animation.setSound("movetire.wav", -2);
+    animation.setSound("movebike.wav", -2);
     return animation;
 };

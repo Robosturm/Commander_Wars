@@ -433,22 +433,28 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
 
 void MapSelectionMapsMenue::showLoadRules()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::showSaveRules()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::loadRules(QString filename)
@@ -492,12 +498,15 @@ void MapSelectionMapsMenue::saveRules(QString filename)
 
 void MapSelectionMapsMenue::showSaveMap()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)

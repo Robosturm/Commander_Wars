@@ -168,12 +168,15 @@ void DialogModifyTerrain::terrainClicked(QString id)
 
 void DialogModifyTerrain::showLoadDialog()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.png");
     QString path = QCoreApplication::applicationDirPath() + "/customTerrainImages";
     spFileDialog fileDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName(), true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogModifyTerrain::loadCustomSprite, Qt::QueuedConnection);
     this->addChild(fileDialog);
+    pApp->continueThread();
 }
 
 void DialogModifyTerrain::loadCustomSprite(QString id)

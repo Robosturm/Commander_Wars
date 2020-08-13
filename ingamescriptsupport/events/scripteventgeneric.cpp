@@ -4,6 +4,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 #include "coreengine/mainapp.h"
 
 #include "objects/spinbox.h"
@@ -11,12 +12,13 @@
 #include "objects/dropdownmenu.h"
 #include "objects/textbox.h"
 #include "objects/label.h"
+#include "objects/filedialog.h"
 
 ScriptEventGeneric::ScriptEventGeneric(EventType type, QString eventIdentifier)
     : ScriptEvent (type),
       m_eventIdentifier(eventIdentifier)
 {
-
+    connect(this, &ScriptEventGeneric::sigShowSelectFile, this, &ScriptEventGeneric::showSelectFile, Qt::QueuedConnection);
 }
 
 void ScriptEventGeneric::readEvent(QTextStream& rStream)
@@ -153,9 +155,48 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
                 pBox->addItem(dropDown);
                 break;
             }
+            case EditTypes::File:
+            {
+                spTextbox pTextbox = new Textbox(Settings::getWidth() - 220 - width);
+                pTextbox->setTooltipText(m_Items[i].tooltip);
+                pTextbox->setCurrentText(m_Items[i].item);
+                pTextbox->setPosition(width, y);
+                connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString item)
+                {
+                    m_Items[i].item = item;
+                });
+                pBox->addItem(pTextbox);
+                ObjectManager* pObjectManager = ObjectManager::getInstance();
+                oxygine::spButton pButtonSelect = pObjectManager->createButton(tr("Select"), 150);
+                pButtonSelect->setPosition(10 + pTextbox->getX() + pTextbox->getWidth(), y);
+                pBox->addChild(pButtonSelect);
+                pButtonSelect->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+                {
+                     emit sigShowSelectFile (m_Items[i].filter, m_Items[i].startFolder, m_Items[i].item, pTextbox);
+                });
+                break;
+            }
         }
         y += 40;
     }
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
+}
+
+void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QVector<QString> wildcards;
+    wildcards.append(filter);
+    QString path = QCoreApplication::applicationDirPath() + startFolder;
+    spFileDialog fileDialog = new FileDialog(path, wildcards, currentFile);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
+    {
+        QString file = id.replace(QCoreApplication::applicationDirPath() + "/", "");
+        pTextbox->setCurrentText(file);
+        emit pTextbox->sigTextChanged(file);
+    });
+    oxygine::getStage()->addChild(fileDialog);
+    pApp->continueThread();
 }

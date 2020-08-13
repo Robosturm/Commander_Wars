@@ -11,6 +11,6 @@ MECH.doWalkingAnimation = function(action)
     var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
     animation.loadSpriteV2("mech+os+walk+mask", GameEnums.Recoloring_Table, 1);
     animation.loadSprite("mech+os+walk", false, 1);
-    animation.setSound("movefeet.wav", -2);
+    animation.setSound("moveboots.wav", -2);
     return animation;
 };

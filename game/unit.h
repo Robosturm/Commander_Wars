@@ -208,6 +208,12 @@ public slots:
      */
     bool getHpHidden(Player* pPlayer);
     /**
+     * @brief getPerfectHpView
+     * @param pPlayer
+     * @return
+     */
+    bool getPerfectHpView(Player* pPlayer);
+    /**
      * @brief getIgnoreUnitCollision
      * @return
      */

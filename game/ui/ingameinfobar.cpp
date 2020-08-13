@@ -349,7 +349,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     float divider = static_cast<float>(hp) / static_cast<float>(hpMax);
                     if (divider > 2.0f / 3.0f)
                     {
-                        pColorBar->setColor(0, 255, 0, 255);
+                        pColorBar->setColor(0, 128, 0, 255);
                     }
                     else if (divider > 1.0f / 3.0f)
                     {
@@ -376,9 +376,11 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
                 pAnim = pObjectManager->getResAnim("barforeground");
                 bool HpHidden = false;
+                bool perfectHpVision = false;
                 if (pUnit.get() != nullptr)
                 {
                     HpHidden = pUnit->getHpHidden(pGamemenu->getCurrentViewPlayer());
+                    perfectHpVision = pUnit->getPerfectHpView(pGamemenu->getCurrentViewPlayer());
                     float count = pUnit->getHp();
                     qint32 hpRounded = pUnit->getHpRounded();
                     float countMax = 10.0f;
@@ -390,7 +392,14 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     }
                     else
                     {
-                        pTextfield->setHtmlText((tr("HP: ") + QString::number(hpRounded) + "/" + QString::number(countMax, 'f', 0)));
+                        if (perfectHpVision)
+                        {
+                            pTextfield->setHtmlText((tr("HP: ") + QString::number(count * 10, 'f', 0) + "/100"));
+                        }
+                        else
+                        {
+                            pTextfield->setHtmlText((tr("HP: ") + QString::number(hpRounded) + "/" + QString::number(countMax, 'f', 0)));
+                        }
                     }
                     pTextfield->setPosition(10, 10);
                     m_pCursorInfoBox->addChild(pTextfield);
@@ -402,7 +411,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         divider = count / countMax;
                         if (divider > 2.0f / 3.0f)
                         {
-                            pColorBar->setColor(0, 255, 0, 255);
+                            pColorBar->setColor(0, 128, 0, 255);
                         }
                         else if (divider > 1.0f / 3.0f)
                         {
@@ -433,7 +442,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         pTextfield->setHtmlText((tr("Ammo1: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
                         pColorBar = new oxygine::ColorRectSprite();
                         divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
-                        pColorBar->setColor(139, 69, 19, 255);
+                        pColorBar->setColor(Qt::yellow);
                         pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
                         pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 37);
                         m_pCursorInfoBox->addChild(pColorBar);
@@ -465,7 +474,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         pTextfield->setHtmlText((tr("Ammo2: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
                         pColorBar = new oxygine::ColorRectSprite();
                         divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
-                        pColorBar->setColor(255, 255, 0, 255);
+                        pColorBar->setColor(0, 255, 0, 255);
                         pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
                         pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 62);
                         m_pCursorInfoBox->addChild(pColorBar);

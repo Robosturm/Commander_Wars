@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "mods/aw_styled_icons/images/units/" />
+	<atlas linearFilter="false">
+		<!-- icon -->
+		<image file="icons/1.png"  />
+		<image file="icons/2.png"  />
+		<image file="icons/3.png"  />
+		<image file="icons/4.png"  />
+		<image file="icons/5.png"  />
+		<image file="icons/6.png"  />
+		<image file="icons/7.png"  />
+		<image file="icons/8.png"  />
+		<image file="icons/9.png"  />
+		<image file="icons/ammo.png"  />
+		<image file="icons/ammo1.png"  />
+		<image file="icons/capture.png"  />
+		<image file="icons/dive.png"  />
+		<image file="icons/fuel.png"  />
+		<image file="icons/transport.png"  />
+		<image file="icons/transport+hidden.png"  />
+		<image file="icons/co0.png"  />
+		<image file="icons/co1.png"  />
+		<image file="icons/lieutenant.png"  />
+		<image file="icons/general.png"  />		
+		<image file="icons/veteran.png"  />
+		<image file="icons/hp+hidden.png"  />
+		<image file="icons/defensive.png"  />
+		<image file="icons/hold.png"  />
+		<image file="icons/normal.png"  />
+		<image file="icons/offensive.png"  />
+		<image file="icons/material.png"  />		
+		<image file="icons/material1.png"  />
+	</atlas>
+</resources>
