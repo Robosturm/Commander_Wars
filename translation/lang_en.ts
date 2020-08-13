@@ -5767,13 +5767,33 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventPlaySound</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="8"/>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="11"/>
         <source>Sound which should be played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="11"/>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="14"/>
         <source>Sound File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="22"/>
+        <source>How often the sound is getting played</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="25"/>
+        <source>Loops: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="31"/>
+        <source>Time in ms before the sound is getting played</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="34"/>
+        <source>Delay: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -16208,34 +16228,34 @@ Units have increased firepower and increased defense.</source>
 <context>
     <name>co_walter</name>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="277"/>
         <source>Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="281"/>
         <source>Tongue Twisters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="285"/>
         <source>Colloquialisms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="289"/>
         <source>Using Teal Isles intelligence division, Walter can view units&apos; HP more accurately than other COs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="301"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="293"/>
         <source>
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="294"/>
         <source>
 
 CO Zone Effect: 
@@ -16243,82 +16263,82 @@ Units gain additional firepower and defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="298"/>
         <source>Enemies take additional damage when they attack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="302"/>
         <source>Memento</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="314"/>
-        <source>Drains ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
+        <location filename="../resources/scripts/cos/co_walter.js" line="306"/>
+        <source>Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="310"/>
         <source>Magnum Opus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="314"/>
         <source>Greater opponents have burnt out against me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="315"/>
         <source>For the Isles sake, I will endure you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="316"/>
         <source>I am the most stalwart foe that you will ever face!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="317"/>
         <source>Morale is the key to victory, but you seem rather....ill equipped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="326"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="318"/>
         <source>A battle does not determine who is right. It determines who is left. Me, of course.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="319"/>
         <source>The spirit of Teal Isles will carry us for eternity!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="331"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="323"/>
         <source>Another battle has been won. Teal Isles is safe for now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="324"/>
         <source>You have been outwitted, outmatched and outmaneuvered.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="325"/>
         <source>Hah, yet again I have stood the test of time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="329"/>
         <source>That wasn&apos;t the best idea to take fight.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="330"/>
         <source>I got detected too early..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_walter.js" line="342"/>
+        <location filename="../resources/scripts/cos/co_walter.js" line="334"/>
         <source>Walter</source>
         <translation type="unfinished"></translation>
     </message>
