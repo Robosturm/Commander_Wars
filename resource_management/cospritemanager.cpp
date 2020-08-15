@@ -95,7 +95,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable
             oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
             {
-                m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+infoinfo", pCOAnim));
+                m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
             }
         }
     }
