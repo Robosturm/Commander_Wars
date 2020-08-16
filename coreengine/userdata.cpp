@@ -29,7 +29,7 @@ Userdata::Userdata()
 void Userdata::storeUser()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->getSlave())
+    if (!pApp->getSlave())
     {
         if (!Settings::getUsername().isEmpty())
         {
@@ -68,10 +68,12 @@ void Userdata::addCOStyle(QString coid, QString file, QImage colorTable, QImage 
             std::get<2>(m_customCOStyles[i]) = colorTable;
             std::get<3>(m_customCOStyles[i]) = maskTable;
             std::get<4>(m_customCOStyles[i]) = useColorBox;
+            storeUser();
             return;
         }
     }
     m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
+    storeUser();
 }
 
 void Userdata::removeCOStyle(QString coid)
