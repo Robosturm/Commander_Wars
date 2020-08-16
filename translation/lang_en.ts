@@ -3549,217 +3549,217 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="330"/>
+        <location filename="../menue/optionmenue.cpp" line="331"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="338"/>
+        <location filename="../menue/optionmenue.cpp" line="339"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="344"/>
+        <location filename="../menue/optionmenue.cpp" line="345"/>
         <source>Selects the screen resolution for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="355"/>
+        <location filename="../menue/optionmenue.cpp" line="356"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="358"/>
+        <location filename="../menue/optionmenue.cpp" line="359"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="358"/>
+        <location filename="../menue/optionmenue.cpp" line="359"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="358"/>
+        <location filename="../menue/optionmenue.cpp" line="359"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="360"/>
+        <location filename="../menue/optionmenue.cpp" line="361"/>
         <source>Selects the screen mode for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="369"/>
+        <location filename="../menue/optionmenue.cpp" line="370"/>
         <source>Sprite Aliasing: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="373"/>
+        <location filename="../menue/optionmenue.cpp" line="374"/>
         <source>If checked ingame sprites will be aliased smoother.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="394"/>
+        <location filename="../menue/optionmenue.cpp" line="395"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="400"/>
+        <location filename="../menue/optionmenue.cpp" line="401"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="404"/>
+        <location filename="../menue/optionmenue.cpp" line="405"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="417"/>
+        <location filename="../menue/optionmenue.cpp" line="418"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="421"/>
+        <location filename="../menue/optionmenue.cpp" line="422"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="434"/>
+        <location filename="../menue/optionmenue.cpp" line="435"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="438"/>
+        <location filename="../menue/optionmenue.cpp" line="439"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="450"/>
+        <location filename="../menue/optionmenue.cpp" line="451"/>
         <source>Language: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="478"/>
+        <location filename="../menue/optionmenue.cpp" line="479"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="493"/>
+        <location filename="../menue/optionmenue.cpp" line="494"/>
         <source>Auto Saving Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="497"/>
+        <location filename="../menue/optionmenue.cpp" line="498"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="509"/>
+        <location filename="../menue/optionmenue.cpp" line="510"/>
         <source>Auto Saving Cycle: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="513"/>
+        <location filename="../menue/optionmenue.cpp" line="514"/>
         <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="523"/>
+        <location filename="../menue/optionmenue.cpp" line="524"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="527"/>
+        <location filename="../menue/optionmenue.cpp" line="528"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="536"/>
+        <location filename="../menue/optionmenue.cpp" line="537"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="543"/>
+        <location filename="../menue/optionmenue.cpp" line="544"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="547"/>
+        <location filename="../menue/optionmenue.cpp" line="548"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="570"/>
+        <location filename="../menue/optionmenue.cpp" line="571"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="574"/>
+        <location filename="../menue/optionmenue.cpp" line="575"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="586"/>
+        <location filename="../menue/optionmenue.cpp" line="587"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="590"/>
+        <location filename="../menue/optionmenue.cpp" line="591"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="602"/>
+        <location filename="../menue/optionmenue.cpp" line="603"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="606"/>
+        <location filename="../menue/optionmenue.cpp" line="607"/>
         <source>Enables this game as global server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="619"/>
+        <location filename="../menue/optionmenue.cpp" line="620"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="623"/>
+        <location filename="../menue/optionmenue.cpp" line="624"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="667"/>
+        <location filename="../menue/optionmenue.cpp" line="668"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="669"/>
+        <location filename="../menue/optionmenue.cpp" line="670"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="670"/>
+        <location filename="../menue/optionmenue.cpp" line="671"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="671"/>
+        <location filename="../menue/optionmenue.cpp" line="672"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="672"/>
+        <location filename="../menue/optionmenue.cpp" line="673"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="674"/>
+        <location filename="../menue/optionmenue.cpp" line="675"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="760"/>
+        <location filename="../menue/optionmenue.cpp" line="761"/>
         <source>
 Version: </source>
         <translation type="unfinished"></translation>

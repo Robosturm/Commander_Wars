@@ -180,6 +180,7 @@ void OptionMenue::showSettings()
     m_pModDescription->setVisible(false);
     m_ModSelector->setVisible(false);
     m_pGameplayAndKeys->setVisible(false);
+    m_pOptions->clearContent();
 
     AudioThread* pAudio = pApp->getAudioThread();
     oxygine::TextStyle style = FontManager::getMainFont24();
