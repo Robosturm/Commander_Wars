@@ -16,6 +16,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_ARTILLERY.armyData);
+        var offset = Qt.point(-5, 5);
         if (armyName === "ma")
         {
             offset = Qt.point(-35, 5);

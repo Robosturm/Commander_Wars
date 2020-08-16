@@ -65,6 +65,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostLocal, this, &LobbyMenu::hostLocal, Qt::QueuedConnection);
 
     oxygine::spButton pButtonHostOnServer = ObjectManager::createButton(tr("Host"));
+    pButtonHostOnServer->setVisible(false);
     pButtonHostOnServer->attachTo(this);
     pButtonHostOnServer->setPosition(Settings::getWidth() - pButtonHost->getWidth() - 10, Settings::getHeight() - pButtonExit->getHeight() * 2 - 10);
     pButtonHostOnServer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -74,6 +75,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
+    pButtonJoin->setVisible(false);
     pButtonJoin->attachTo(this);
     pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
