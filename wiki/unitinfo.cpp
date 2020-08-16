@@ -229,6 +229,18 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         QStringList loadingUnits = pUnit->getTransportUnits();
         createLoadingTable(pUnit, loadingUnits, y, width);
         y += 40;
+
+        if (pUnit->getLoadedUnitCount() > 0)
+        {
+            pLabel = new oxygine::TextField();
+            pLabel->setStyle(headerStyle);
+            pLabel->setHtmlText(tr("Loaded Units"));
+            pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
+            addChild(pLabel);
+            y += 80;
+            createLoadedUnits(pUnit, y, width);
+            y += 40;
+        }
     }
 
     pLabel = new oxygine::TextField();
@@ -426,6 +438,35 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
         pDummy->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(unitID);
+        });
+        addChild(pDummy);
+        x += GameMap::Imagesize * 1.5f;
+        if (x + GameMap::Imagesize * 1.5f > width)
+        {
+            x = 0;
+            y += 40;
+        }
+    }
+}
+
+
+void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
+{
+    qint32 x = 0;
+    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    {
+        spUnit loadedUnit = pUnit->getLoadedUnit(i);
+        spUnit pDummy = new Unit(loadedUnit->getUnitID(), pUnit->getOwner(), false);
+        pDummy->setPosition(x, y);
+        pDummy->setHasMoved(loadedUnit->getHasMoved());
+        pDummy->setHp(loadedUnit->getHp());
+        pDummy->setAmmo1(loadedUnit->getAmmo1());
+        pDummy->setAmmo2(loadedUnit->getAmmo2());
+        pDummy->setFuel(loadedUnit->getFuel());
+        pDummy->setUnitRank(loadedUnit->getUnitRank());
+        pDummy->addClickListener([=](oxygine::Event*)
+        {
+            emit sigShowLink(loadedUnit->getUnitID());
         });
         addChild(pDummy);
         x += GameMap::Imagesize * 1.5f;

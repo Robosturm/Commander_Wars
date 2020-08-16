@@ -3189,17 +3189,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="76"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="77"/>
         <source>Join Game</source>
         <translation>Spiel Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="85"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="87"/>
         <source>Join Adress</source>
         <translation>Adresse Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="168"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="170"/>
         <source>Enter Host Adress</source>
         <translation>Host Adresse</translation>
     </message>
@@ -7028,27 +7028,32 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Geladen</translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="236"/>
+        <location filename="../wiki/unitinfo.cpp" line="237"/>
+        <source>Loaded Units</source>
+        <translation type="unfinished">Ladung</translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="248"/>
         <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="245"/>
+        <location filename="../wiki/unitinfo.cpp" line="257"/>
         <source>Transporters</source>
         <translation>Transporter</translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="261"/>
+        <location filename="../wiki/unitinfo.cpp" line="273"/>
         <source>Movement </source>
         <translation>Bewegungsart </translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="354"/>
+        <location filename="../wiki/unitinfo.cpp" line="366"/>
         <source>Weapon 1 </source>
         <translation>Waffe 1 </translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="365"/>
+        <location filename="../wiki/unitinfo.cpp" line="377"/>
         <source>Weapon 2 </source>
         <translation>Waffe 2 </translation>
     </message>
