@@ -301,12 +301,12 @@
         <translation>Feuer</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="299"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="300"/>
         <source>Damage</source>
         <translation>Schaden</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="589"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="590"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>

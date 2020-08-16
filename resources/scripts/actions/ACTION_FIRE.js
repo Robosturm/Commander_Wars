@@ -201,7 +201,6 @@ var Constructor = function()
                     var weaponID = unit.getWeapon1ID();
                     if (unit.hasAmmo1() && weaponID !== "")
                     {
-
                         baseDamage1 = Global[weaponID].getBaseDamage(defUnit);
                         dmg1 = ACTION_FIRE.calcAttackerDamage(unit, weaponID, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
@@ -228,18 +227,20 @@ var Constructor = function()
                     if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1)
                     {
                         var defDamage = -1;
-                        var defWeapon = 0;
+                        var defWeapon = -1;
                         baseDamage1 = -1;
+                        baseDamage2 = -1;
                         weaponID = defUnit.getWeapon1ID();
-                        if (defUnit.hasAmmo1() && weaponID)
+                        if (defUnit.hasAmmo1() && weaponID !== "")
                         {
-                            baseDamage1 = Global[weaponID].getBaseDamage(defUnit);
+                            baseDamage1 = Global[weaponID].getBaseDamage(unit);
                             defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x + defenderTakenDamage, luckMode);
+                            defWeapon = 0;
                         }
                         weaponID = defUnit.getWeapon2ID();
-                        if (defUnit.hasAmmo2() && weaponID)
+                        if (defUnit.hasAmmo2() && weaponID !== "")
                         {
-                            baseDamage2 = Global[weaponID].getBaseDamage(defUnit);
+                            baseDamage2 = Global[weaponID].getBaseDamage(unit);
                             var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x + defenderTakenDamage, luckMode);
                             if (baseDamage2 > baseDamage1)
                             {
