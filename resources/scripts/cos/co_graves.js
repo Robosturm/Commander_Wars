@@ -11,6 +11,13 @@ var Constructor = function()
         return CO.getAiUsePowerAlways(co, powerSurplus);
     };
 
+    this.getCOStyles = function()
+    {
+        // string array containing the endings of the alternate co style
+        // e.g. co_adder has ["+alt"]
+        return ["+alt"];
+    };
+
     this.loadCOMusic = function(co)
     {
         // put the co music in here.

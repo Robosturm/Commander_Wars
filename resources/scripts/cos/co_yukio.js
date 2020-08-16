@@ -6,6 +6,13 @@ var Constructor = function()
         co.setSuperpowerStars(7);
     };
 
+    this.getCOStyles = function()
+    {
+        // string array containing the endings of the alternate co style
+        // e.g. co_adder has ["+alt"]
+        return ["+alt"];
+    };
+
     this.activatePower = function(co)
     {
         var invasion = ["ARTILLERY", "FLAK", "LIGHT_TANK", "FLAK", "LIGHT_TANK"];
