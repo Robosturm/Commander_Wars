@@ -86,7 +86,7 @@ CO_SONJA.getPerfectVision = function(co)
     return false;
 };
 
-CO_SONJA.getFirstStrike = function(co, unit, posX, posY)
+CO_SONJA.getFirstStrike = function(co, unit, posX, posY, attacker)
 {
     if (co.getIsCO0() === true)
     {

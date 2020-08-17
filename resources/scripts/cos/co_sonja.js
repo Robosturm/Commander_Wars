@@ -132,7 +132,7 @@ var Constructor = function()
         }
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, defender)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker)
     {
         // sonja's troops get first strike during counter attacks
         // meaning her troops attack before they loose their hp

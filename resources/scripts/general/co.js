@@ -57,7 +57,7 @@ var CO =
         return 0;
     },
 
-    getFirstStrike : function(co, unit, posX, posY, defender)
+    getFirstStrike : function(co, unit, posX, posY, attacker)
     {
         return false;
     },

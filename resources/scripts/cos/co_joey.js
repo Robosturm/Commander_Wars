@@ -202,12 +202,12 @@ var Constructor = function()
         return 0;
     };
 
-    this.getFirstStrike = function(co, unit, posX, posY, defender)
+    this.getFirstStrike = function(co, unit, posX, posY, attacker)
     {
         if(defender !== null)
         {
-            var attackerValue = unit.getUnitValue();
-            var defenderValue = defender.getUnitValue();
+            var defenderValue = unit.getUnitValue();
+            var attackerValue = attacker.getUnitValue();
             switch (co.getPowerMode())
             {
                 case GameEnums.PowerMode_Tagpower:

@@ -82,14 +82,14 @@ CO_JOEY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
-CO_JOEY.getFirstStrike = function(co, unit, posX, posY, defender)
+CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker)
 {
     if (co.getIsCO0() === true)
     {
         if(defender !== null)
         {
-            var attackerValue = unit.getUnitValue();
-            var defenderValue = defender.getUnitValue();
+            var defenderValue = unit.getUnitValue();
+            var attackerValue = attacker.getUnitValue();
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
