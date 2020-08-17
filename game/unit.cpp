@@ -239,6 +239,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pWaitSprite->setResAnim(pAnim);
         }
 
+        pSprite->setPriority(static_cast<short>(Priorities::Colored));
         pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
         // repaint the unit?
         if (mode == GameEnums::Recoloring_Mask)

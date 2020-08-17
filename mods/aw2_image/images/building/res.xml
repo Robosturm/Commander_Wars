@@ -32,6 +32,11 @@
 		<image file="labor+mask.png" cols = "2" />
 		<image file="labor+neutral.png" />
 		
+		<!-- mine -->
+		<image file="mine.png" cols = "2" />
+		<image file="mine+mask.png" cols = "2" />
+		<image file="mine+neutral.png" />
+		
 		<!-- labor -->
 		<image file="silo.png" />
 		<image file="silo+rocket.png" />
