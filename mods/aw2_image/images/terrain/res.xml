@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "mods/aw2_images/images/terrain/" />
+	<set path = "mods/aw2_image/images/terrain/" />
 	<atlas>
 		<image file="plains+0.png" />
 		<image file="plains+1.png" />
