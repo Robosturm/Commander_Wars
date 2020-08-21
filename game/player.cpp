@@ -1108,6 +1108,13 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
 
 void Player::startOfTurn()
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "startOfTurn";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    pInterpreter->doFunction("PLAYER", function1, args1);
+
     if (playerCOs[0].get() != nullptr)
     {
         playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);

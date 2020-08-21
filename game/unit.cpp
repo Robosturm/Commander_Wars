@@ -2659,6 +2659,10 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
             x = testX;
             y = testY;
         }
+        if (!pMap->onMap(x, y))
+        {
+            return false;
+        }
         // can we see the unit?
         bool visibleField = pPlayer->getFieldVisible(x, y);
         bool directView = pPlayer->getFieldDirectVisible(x, y);

@@ -375,4 +375,10 @@ var PLAYER =
                 "CO_MELANTHE", "CO_JULIA", "CO_GRAVES", "CO_VARLOT",
                 "CO_YUKIO", "CO_RANDOM"];
     },
+
+    startOfTurn : function(player)
+    {
+        // do custom start of turn action for a player here.
+        // Note this function gets called after earning money but before refulling units
+    },
 }
