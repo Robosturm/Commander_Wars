@@ -224,7 +224,8 @@ var Constructor = function()
                             result.y = 1;
                         }
                     }
-                    if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1)
+                    if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1 &&
+                            defUnit.isAttackable(unit, true))
                     {
                         var defDamage = -1;
                         var defWeapon = -1;
@@ -364,7 +365,7 @@ var Constructor = function()
         var currentPlayer = map.getCurrentPlayer();
         var currentViewPlayer = map.getCurrentViewPlayer();
         if (currentViewPlayer.getFieldVisible(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY) &&
-            currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
+                currentPlayer.getBaseGameInput().getAiType() !== GameEnums.AiTypes_Human)
         {
             var animation2 = GameAnimationFactory.createAnimation(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY, 70);
             animation2.addSprite("cursor+attack", -map.getImageSize() / 3, -map.getImageSize() / 3, 0, 1.5, 0, 2);
@@ -561,7 +562,7 @@ var Constructor = function()
             defUnit.killUnit();
             // we destroyed a unit nice
             map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
-            defUnit = null;            
+            defUnit = null;
             UNITRANKINGSYSTEM.increaseRang(attacker);
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;

@@ -215,7 +215,7 @@ var Constructor = function()
                         {
                             if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                             {
-                                return 50;
+                                return 40;
                             }
                             return 10;
                         }
