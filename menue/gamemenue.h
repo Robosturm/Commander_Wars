@@ -74,6 +74,11 @@ signals:
     void sigNicknameUnit(qint32 x, qint32 y, QString name);
 public slots:
     /**
+     * @brief centerMapOnAction
+     * @param pGameAction
+     */
+    void centerMapOnAction(GameAction* pGameAction);
+    /**
      * @brief actionPerformed
      */
     void actionPerformed();

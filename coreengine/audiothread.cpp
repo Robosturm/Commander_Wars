@@ -22,6 +22,7 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalLoadFolder,       this, &AudioThread::SlotLoadFolder, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalPlaySound,        this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalStopAllSounds,    this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
     connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::QueuedConnection);
 }
 
@@ -106,6 +107,11 @@ void AudioThread::playSound(QString file, qint32 loops, QString folder, qint32 d
 void AudioThread::stopSound(QString file, QString folder)
 {
     emit SignalStopSound(file, folder);
+}
+
+void AudioThread::stopAllSounds()
+{
+    emit SignalStopAllSounds();
 }
 
 void AudioThread::loadFolder(QString folder)
@@ -407,4 +413,17 @@ void AudioThread::SlotStopSound(QString file, QString folder)
             break;
         }
     }
+}
+
+void AudioThread::SlotStopAllSounds()
+{
+    for (qint32 i = 0; i < m_Sounds.size(); i++)
+    {
+        m_SoundTimers[i]->stop();
+        m_Sounds[i]->stop();
+        delete m_Sounds[i];
+        delete m_SoundTimers[i];
+    }
+    m_Sounds.clear();
+    m_SoundTimers.clear();
 }

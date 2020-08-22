@@ -39,6 +39,12 @@ public:
      */
     virtual void deserializeObject(QDataStream& pStream) override;
     /**
+     * @brief deserializeObject
+     * @param pStream
+     * @param fast
+     */
+    void deserializer(QDataStream& pStream, bool fast);
+    /**
      * @brief getVersion version of the file
      * @return
      */

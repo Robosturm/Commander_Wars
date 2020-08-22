@@ -1311,6 +1311,11 @@ void CO::serializeObject(QDataStream& pStream)
 
 void CO::deserializeObject(QDataStream& pStream)
 {
+    deserializer(pStream, false);
+}
+
+void CO::deserializer(QDataStream& pStream, bool fast)
+{
     qint32 version = 0;
     pStream >> version;
     pStream >> coID;
@@ -1355,5 +1360,8 @@ void CO::deserializeObject(QDataStream& pStream)
     {
         m_perkList.append(coID);
     }
-    init();
+    if (!fast)
+    {
+        init();
+    }
 }

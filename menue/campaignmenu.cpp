@@ -118,6 +118,7 @@ void CampaignMenu::slotButtonNext()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_pMapSelectionView->loadCurrentMap();
     if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
         spGameMap pMap = GameMap::getInstance();

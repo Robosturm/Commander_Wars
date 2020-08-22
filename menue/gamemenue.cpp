@@ -554,15 +554,16 @@ void GameMenue::performAction(GameAction* pGameAction)
         }
         else
         {
+            Player* pCurrentPlayer = pMap->getCurrentPlayer();
             if (multiplayer &&
-                pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
+                pCurrentPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
                 m_syncCounter = pGameAction->getSyncCounter();
             }
             m_pStoredAction = nullptr;
             pMap->getGameRules()->pauseRoundTime();
             if (!pGameAction->getIsLocal() &&
-                (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
+                (pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
@@ -621,7 +622,7 @@ void GameMenue::performAction(GameAction* pGameAction)
             }
             // send action to other players if needed
             if (multiplayer &&
-                pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
@@ -645,6 +646,10 @@ void GameMenue::performAction(GameAction* pGameAction)
             {
                 pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
             }
+            if (Settings::getAutoCamera() && pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
+            {
+                centerMapOnAction(pGameAction);
+            }
             m_CurrentActionUnit = pMoveUnit;
             pGameAction->perform();
             // clean up the action
@@ -659,6 +664,32 @@ void GameMenue::performAction(GameAction* pGameAction)
         }
     }
     pApp->continueThread();
+}
+
+void GameMenue::centerMapOnAction(GameAction* pGameAction)
+{
+    Unit* pUnit = pGameAction->getTargetUnit();
+    Player* pPlayer = getCurrentViewPlayer();
+    spGameMap pMap = GameMap::getInstance();
+    QPoint target = pGameAction->getTarget();
+    if (pUnit != nullptr)
+    {
+        const auto & path = pGameAction->getMovePath();
+        for (const auto & point : path)
+        {
+            if (pPlayer->getFieldVisible(point.x(), point.y()))
+            {
+                target = point;
+                break;
+            }
+        }
+    }
+
+    if (pMap->onMap(target.x(), target.y()) &&
+        pPlayer->getFieldVisible(target.x(), target.y()))
+    {
+        pMap->centerMap(target.x(), target.y());
+    }
 }
 
 void GameMenue::skipAnimations()

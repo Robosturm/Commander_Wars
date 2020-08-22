@@ -228,6 +228,7 @@ void MapSelectionMapsMenue::slotButtonNext()
     {
         case MapSelectionStep::selectMap:
         {
+            m_pMapSelectionView->loadCurrentMap();
             QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
             QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
             if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||

@@ -178,7 +178,12 @@ MapSelectionView::MapSelectionView()
     addChild(pButtonTop);
 }
 
-void MapSelectionView::loadMap(QFileInfo info)
+void MapSelectionView::loadCurrentMap()
+{
+    loadMap(m_currentMapFile, false);
+}
+
+void MapSelectionView::loadMap(QFileInfo info, bool fast)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -192,7 +197,7 @@ void MapSelectionView::loadMap(QFileInfo info)
             m_pCurrentMap->deleteMap();
             m_pCurrentMap = nullptr;
         }
-        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);
+        m_pCurrentMap = new GameMap(info.absoluteFilePath(), fast);
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapPanel->addItem(m_pMinimap);

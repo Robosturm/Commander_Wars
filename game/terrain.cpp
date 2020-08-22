@@ -26,13 +26,13 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
     {
         pTerrain->createBaseTerrain(currentTerrainID);
     }
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValue obj = pInterpreter->getGlobal(terrainID);
     // check if the js-script was loaded already
     // otherwise do load it
     bool terrainExists = true;
     if (terrainID != "")
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValue obj = pInterpreter->getGlobal(terrainID);
         if (!obj.isObject())
         {
             terrainExists = false;
@@ -1071,6 +1071,11 @@ void Terrain::serializeObject(QDataStream& pStream)
 
 void Terrain::deserializeObject(QDataStream& pStream)
 {
+    deserializer(pStream, false);
+}
+
+void Terrain::deserializer(QDataStream& pStream, bool fast)
+    {
     qint32 version = 0;
     pStream >> version;
     if (version > 3)
@@ -1088,22 +1093,28 @@ void Terrain::deserializeObject(QDataStream& pStream)
         pStream >> id;
         terrainID = id;
     }
-    init();
+    if (!fast)
+    {
+        init();
+    }
     bool hasBaseTerrain = false;
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
     {
         m_pBaseTerrain = createTerrain("", x, y, "");
-        m_pBaseTerrain->deserializeObject(pStream);
-        m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
-        m_pBaseTerrain->setPosition(0, 0);
-        if (m_pBaseTerrain->isValid())
+        m_pBaseTerrain->deserializer(pStream, fast);
+        if (!fast)
         {
-            this->addChild(m_pBaseTerrain);
-        }
-        else
-        {
-            m_pBaseTerrain = nullptr;
+            m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
+            m_pBaseTerrain->setPosition(0, 0);
+            if (m_pBaseTerrain->isValid())
+            {
+                this->addChild(m_pBaseTerrain);
+            }
+            else
+            {
+                m_pBaseTerrain = nullptr;
+            }
         }
     }
     bool hasBuilding = false;
@@ -1111,12 +1122,16 @@ void Terrain::deserializeObject(QDataStream& pStream)
     if (hasBuilding)
     {
         m_Building = new Building("");
-        m_Building->deserializeObject(pStream);
+        m_Building->deserializer(pStream, fast);
+
         if (m_Building->isValid())
         {
-            m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+            if (!fast)
+            {
+                m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+                this->addChild(m_Building);
+            }
             m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
-            this->addChild(m_Building);
             createBuildingDownStream();
         }
         else
@@ -1129,10 +1144,13 @@ void Terrain::deserializeObject(QDataStream& pStream)
     if (hasUnit)
     {
         m_Unit = new Unit("", nullptr, false);
-        m_Unit->deserializeObject(pStream);
+        m_Unit->deserializer(pStream, fast);
         if (m_Unit->isValid())
         {
-            setUnit(m_Unit);
+            if (!fast)
+            {
+                setUnit(m_Unit);
+            }
         }
         else
         {

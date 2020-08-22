@@ -1008,6 +1008,10 @@ void GameRules::serializeObject(QDataStream& pStream)
 
 void GameRules::deserializeObject(QDataStream& pStream)
 {
+    deserializer(pStream, false);
+}
+void GameRules::deserializer(QDataStream& pStream, bool)
+{
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     m_VictoryRules.clear();
     qint32 version = 0;

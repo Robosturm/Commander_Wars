@@ -80,7 +80,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
-    deserializeObject(pStream);
+    deserializer(pStream, onlyLoad);
     setMapNameFromFilename(map);
     loaded = true;
     if (!onlyLoad)
@@ -921,7 +921,7 @@ void GameMap::serializeObject(QDataStream& pStream)
     }
 }
 
-void GameMap::deserializeObject(QDataStream& pStream)
+void GameMap::deserializer(QDataStream& pStream, bool fast)
 {
     clearMap();
     static const qint32 loadingScreenSize = 900;
@@ -943,7 +943,8 @@ void GameMap::deserializeObject(QDataStream& pStream)
     pStream >> width;
     pStream >> heigth;
     qint32 mapSize = width * heigth;
-    if (mapSize >= loadingScreenSize)
+    bool showLoadingScreen = mapSize >= loadingScreenSize && !fast;
+    if (showLoadingScreen)
     {
         pLoadingScreen->show();
     }
@@ -955,7 +956,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
     {
         m_UniqueIdCounter = 0;
     }
-    if (mapSize >= loadingScreenSize)
+    if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
@@ -966,7 +967,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
         // create new player
         players.append(new Player());
         // get player data from stream
-        players[i]->deserializeObject(pStream);
+        players[i]->deserializer(pStream, fast);
     }
 
     qint32 currentPlayerIdx = 0;
@@ -979,7 +980,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
     // restore map
     for (qint32 y = 0; y < heigth; y++)
     {
-        if (mapSize >= loadingScreenSize)
+        if (showLoadingScreen)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
         }
@@ -988,12 +989,15 @@ void GameMap::deserializeObject(QDataStream& pStream)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
             fields[y]->append(pTerrain);
-            pTerrain->deserializeObject(pStream);
+            pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {
-                this->addChild(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
-                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+                if (!fast)
+                {
+                    this->addChild(pTerrain);
+                    pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                    pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+                }
             }
             else
             {
@@ -1003,52 +1007,60 @@ void GameMap::deserializeObject(QDataStream& pStream)
     }
     setCurrentPlayer(currentPlayerIdx);
     m_Rules = new  GameRules();
-    if (mapSize >= loadingScreenSize)
+    if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
     }
     if (version > 2)
     {
-        m_Rules->deserializeObject(pStream);
+        m_Rules->deserializer(pStream, fast);
     }
-    if (mapSize >= loadingScreenSize)
+    if (!fast)
     {
-        pLoadingScreen->setProgress(tr("Loading Record"), 85);
-    }
-    if (version > 3)
-    {
-        m_Recorder->deserializeObject(pStream);
-    }
-    if (mapSize >= loadingScreenSize)
-    {
-        pLoadingScreen->setProgress(tr("Loading scripts"), 90);
-    }
-    if (version > 5)
-    {
-        m_GameScript->deserializeObject(pStream);
-    }
-    else
-    {
-        m_GameScript = new GameScript();
-    }
-    if (mapSize >= loadingScreenSize)
-    {
-        pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
-    }
-    if (version > 7)
-    {
-        bool exists = false;
-        pStream >> exists;
-        if (exists)
+        if (showLoadingScreen)
         {
-            m_Campaign = new Campaign();
-            m_Campaign->deserializeObject(pStream);
+            pLoadingScreen->setProgress(tr("Loading Record"), 85);
+        }
+        if (version > 3)
+        {
+            m_Recorder->deserializeObject(pStream);
+        }
+        if (showLoadingScreen)
+        {
+            pLoadingScreen->setProgress(tr("Loading scripts"), 90);
+        }
+        if (version > 5)
+        {
+            m_GameScript->deserializeObject(pStream);
+        }
+        else
+        {
+            m_GameScript = new GameScript();
+        }
+        if (showLoadingScreen)
+        {
+            pLoadingScreen->setProgress(tr("Loading Campaign"), 95);
+        }
+        if (version > 7)
+        {
+            bool exists = false;
+            pStream >> exists;
+            if (exists)
+            {
+                m_Campaign = new Campaign();
+                m_Campaign->deserializeObject(pStream);
+            }
         }
     }
-    if (mapSize >= loadingScreenSize)
+    if (showLoadingScreen)
     {
         pLoadingScreen->hide();
     }
+}
+
+void GameMap::deserializeObject(QDataStream& pStream)
+{
+    deserializer(pStream, false);
 }
 
 void GameMap::exitGame()
@@ -1565,8 +1577,8 @@ void GameMap::nextTurn()
     bool permanent = false;
     bool found = false;
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
-              m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
-             m_CurrentPlayer->getBaseGameInput() != nullptr)
+         m_Rules->getFogMode() != GameEnums::Fog::Fog_Off) &&
+        m_CurrentPlayer->getBaseGameInput() != nullptr)
     {
         if (m_CurrentPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {

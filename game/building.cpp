@@ -934,6 +934,11 @@ void Building::serializeObject(QDataStream& pStream)
 
 void Building::deserializeObject(QDataStream& pStream)
 {
+    deserializer(pStream, false);
+}
+
+void Building::deserializer(QDataStream& pStream, bool fast)
+{
     qint32 version = 0;
     pStream >> version;
     if (version > 3)
@@ -946,7 +951,10 @@ void Building::deserializeObject(QDataStream& pStream)
         pStream >> id;
         m_BuildingID = id;
     }
-    init();
+    if (!fast)
+    {
+        init();
+    }
     qint32 playerID = -1;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);

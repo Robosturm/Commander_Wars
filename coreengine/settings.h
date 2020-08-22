@@ -47,6 +47,9 @@ public:
 
 
 public slots:
+    static bool getAutoCamera();
+    static void setAutoCamera(bool autoCamera);
+
     static bool getAutoScrolling();
     static void setAutoScrolling(bool autoScrolling);
 
@@ -346,6 +349,7 @@ private:
     static bool m_showIngameCoordinates;
     static GameEnums::COInfoPosition coInfoPosition;
     static bool m_autoScrolling;
+    static bool m_autoCamera;
 
     // internal members
     static Settings* m_pInstance;

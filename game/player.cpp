@@ -1504,7 +1504,13 @@ void Player::serializeObject(QDataStream& pStream)
         pStream << m_colorTable.pixel(x, 0);
     }
 }
+
 void Player::deserializeObject(QDataStream& pStream)
+{
+    deserializer(pStream, false);
+}
+
+void Player::deserializer(QDataStream& pStream, bool fast)
 {
     qint32 version = 0;
     pStream >> version;
@@ -1526,7 +1532,7 @@ void Player::deserializeObject(QDataStream& pStream)
         if (hasC0)
         {
             playerCOs[0] = new CO("", this);
-            playerCOs[0]->deserializeObject(pStream);
+            playerCOs[0]->deserializer(pStream, fast);
             if (!playerCOs[0]->isValid())
             {
                 playerCOs[0] = nullptr;
@@ -1537,7 +1543,7 @@ void Player::deserializeObject(QDataStream& pStream)
         if (hasC1)
         {
             playerCOs[1] = new CO("", this);
-            playerCOs[1]->deserializeObject(pStream);
+            playerCOs[1]->deserializer(pStream, fast);
             if (!playerCOs[1]->isValid())
             {
                 playerCOs[1] = nullptr;
@@ -1655,7 +1661,10 @@ void Player::deserializeObject(QDataStream& pStream)
             pStream >> rgb;
             m_colorTable.setPixel(x, 0, rgb);
         }
-        Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+        if (!fast)
+        {
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+        }
     }
     else
     {
@@ -1665,6 +1674,9 @@ void Player::deserializeObject(QDataStream& pStream)
             createTable(m_Color.darker(160));
         }
         m_Color = m_colorTable.pixel(8, 0);
-        Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+        if (!fast)
+        {
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+        }
     }
 }

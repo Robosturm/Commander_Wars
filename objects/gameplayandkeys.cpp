@@ -251,6 +251,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Auto Camera: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If active the map is centered on the unit action during other player turns. If the field is visible to the player."));
+    pCheckbox->setChecked(Settings::getAutoCamera());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setAutoCamera(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

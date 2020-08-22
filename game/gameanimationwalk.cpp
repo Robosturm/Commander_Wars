@@ -5,6 +5,7 @@
 #include "resource_management/unitspritemanager.h"
 
 #include "coreengine/console.h"
+#include "coreengine/audiothread.h"
 
 #include "game/player.h"
 
@@ -29,6 +30,7 @@ bool GameAnimationWalk::onFinished()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
+    pApp->getAudioThread()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
         m_pUnit->setUnitVisible(true);

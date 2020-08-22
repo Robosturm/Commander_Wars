@@ -59,8 +59,8 @@ public:
 signals:
 
 public slots:
-    void loadMap(QFileInfo info);
-
+    void loadMap(QFileInfo info, bool fast = true);
+    void loadCurrentMap();
     void updateMapData();
 private:
     spCampaign m_CurrentCampaign;

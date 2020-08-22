@@ -78,6 +78,7 @@ qint32 Settings::m_showCoCount = 0;
 quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
 GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
 bool Settings::m_autoScrolling = true;
+bool Settings::m_autoCamera = true;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -101,6 +102,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getAutoCamera()
+{
+    return m_autoCamera;
+}
+
+void Settings::setAutoCamera(bool autoCamera)
+{
+    m_autoCamera = autoCamera;
 }
 
 bool Settings::getAutoScrolling()
@@ -605,6 +616,7 @@ void Settings::loadSettings()
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
     m_autoScrolling = settings.value("AutoScrolling", true).toBool();
+    m_autoCamera = settings.value("AutoCamera", true).toBool();
 
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
@@ -757,6 +769,7 @@ void Settings::saveSettings()
         settings.setValue("SpriteFilter",                   m_spriteFilter);
         settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
         settings.setValue("AutoScrolling",                  m_autoScrolling);
+        settings.setValue("AutoCamera",                     m_autoCamera);
         settings.endGroup();
 
         // network

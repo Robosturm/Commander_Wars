@@ -251,6 +251,12 @@ public:
      */
     virtual void deserializeObject(QDataStream& pStream) override;
     /**
+     * @brief deserializer
+     * @param pStream
+     * @param fast
+     */
+    void deserializer(QDataStream& pStream, bool fast);
+    /**
      * @brief readMapName
      * @param pStream
      * @return

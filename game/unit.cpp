@@ -2771,6 +2771,11 @@ void Unit::serializeObject(QDataStream& pStream)
 
 void Unit::deserializeObject(QDataStream& pStream)
 {
+    deserializer(pStream, false);
+}
+
+void Unit::deserializer(QDataStream& pStream, bool fast)
+{
     qint32 version = 0;
     pStream >> version;
     if (version > 10)
@@ -2783,38 +2788,41 @@ void Unit::deserializeObject(QDataStream& pStream)
         pStream >> id;
         m_UnitID = id;
     }
-    initUnit();
     pStream >> hp;
-    setHp(hp);
     pStream >> ammo1;
-    setAmmo1(ammo1);
     pStream >> ammo2;
-    setAmmo2(ammo2);
     pStream >> fuel;
-    setFuel(fuel);
     qint32 value = 0;
     pStream >> value;
-    if (version > 13)
+
+    if (!fast)
     {
-        setUnitRank(value);
-    }
-    else
-    {
-        // mapping for older versions
-        if (value == 4)
-        {
-            setUnitRank(GameEnums::UnitRank_CO0);
-        }
-        else if (value == 5)
-        {
-            setUnitRank(GameEnums::UnitRank_CO1);
-        }
-        else
+        initUnit();
+        setHp(hp);
+        setAmmo1(ammo1);
+        setAmmo2(ammo2);
+        setFuel(fuel);
+        if (version > 13)
         {
             setUnitRank(value);
         }
+        else
+        {
+            // mapping for older versions
+            if (value == 4)
+            {
+                setUnitRank(GameEnums::UnitRank_CO0);
+            }
+            else if (value == 5)
+            {
+                setUnitRank(GameEnums::UnitRank_CO1);
+            }
+            else
+            {
+                setUnitRank(value);
+            }
+        }
     }
-
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
@@ -2827,7 +2835,7 @@ void Unit::deserializeObject(QDataStream& pStream)
         for (qint32 i = 0; i < units; i++)
         {
             m_TransportUnits.append(new Unit());
-            m_TransportUnits[m_TransportUnits.size() - 1]->deserializeObject(pStream);
+            m_TransportUnits[m_TransportUnits.size() - 1]->deserializer(pStream, fast);
             if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
             {
                 m_TransportUnits.removeLast();
@@ -2837,12 +2845,18 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 2)
     {
         pStream >> capturePoints;
-        setCapturePoints(capturePoints);
+        if (!fast)
+        {
+            setCapturePoints(capturePoints);
+        }
     }
     if (version > 3)
     {
         pStream >> m_Hidden;
-        setHidden(m_Hidden);
+        if (!fast)
+        {
+            setHidden(m_Hidden);
+        }
     }
     if (version > 4)
     {
@@ -2855,9 +2869,12 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 6)
     {
         pStream >> value;
-        setAiMode(static_cast<GameEnums::GameAi>(value));
+        if (!fast)
+        {
+            setAiMode(static_cast<GameEnums::GameAi>(value));
+        }
     }
-    else
+    else if (!fast)
     {
         setAiMode(GameEnums::GameAi_Normal);
     }
