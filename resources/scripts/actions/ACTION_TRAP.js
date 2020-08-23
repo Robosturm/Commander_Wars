@@ -3,7 +3,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-		return false;
+        return false;
     };
     // this action can't be performed by the player it's performed when moving over a stealthed unit by the game itself
     // it replaces the actual action that should have been performed
@@ -37,6 +37,29 @@ var Constructor = function()
     {
         return qsTr("This action can't be disabled.");
     };
+    this.isTrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost)
+    {
+        // used to determine if a trap is in the move path.
+        // the engine takes care of checking the path in the correct order and cutting the path.
+        if (targetFieldUnit !== null &&
+            targetFieldUnit.isStealthed(map.getCurrentPlayer()))
+        {
+            return true;
+        }
+        return false;
+    };
+
+    this.isStillATrap = function(action, moveUnit, targetFieldUnit, targetX, targetY, previousX, previousY, moveCost)
+    {
+        // this function gets called to find a field at which the unit can actually stop it's movement
+        // E.g. don't get trapped on a teleport tile or getting trapped on an allied unit etc.
+        if (targetFieldUnit !== null || moveCost === 0)
+        {
+            return true;
+        }
+        return false;
+    };
+
 }
 
 Constructor.prototype = ACTION;

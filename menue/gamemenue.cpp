@@ -577,18 +577,22 @@ void GameMenue::performAction(GameAction* pGameAction)
                 {
                     // check the movepath for a trap
                     QPoint point = path[i];
-                    Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
-                    if ((pUnit != nullptr) &&
-                        (pUnit->isStealthed(pMap->getCurrentPlayer())))
+                    QPoint prevPoint = path[i];
+                    if (i > 0)
+                    {
+                        prevPoint = path[i - 1];
+                    }
+                    qint32 moveCost = pMoveUnit->getMovementCosts(point.x(), point.y(),
+                                                                  prevPoint.x(), prevPoint.y());
+                    if (isTrap("isTrap", pGameAction, pMoveUnit, point, prevPoint, moveCost))
                     {
                         while (trapPath.size() > 1)
                         {
                             QPoint currentPoint = trapPath[0];
                             QPoint previousPoint = trapPath[1];
-                            Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
-                            qint32 moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
+                            moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
                                                                           previousPoint.x(), previousPoint.y());
-                            if (pUnit != nullptr || moveCost == 0)
+                            if (isTrap("isStillATrap", pGameAction, pMoveUnit, currentPoint, previousPoint, moveCost))
                             {
                                 trapPathCost -= moveCost;
                                 trapPath.pop_front();
@@ -664,6 +668,32 @@ void GameMenue::performAction(GameAction* pGameAction)
         }
     }
     pApp->continueThread();
+}
+
+bool GameMenue::isTrap(QString function, GameAction* pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
+{
+    spGameMap pMap = GameMap::getInstance();
+    Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj1 = pInterpreter->newQObject(pAction);
+    args << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pMoveUnit);
+    args << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pUnit);
+    args << obj3;
+    args << currentPoint.x();
+    args << currentPoint.y();
+    args << previousPoint.x();
+    args << previousPoint.y();
+    args << moveCost;
+    QJSValue erg = pInterpreter->doFunction("ACTION_TRAP", function, args);
+    if (erg.isBool())
+    {
+        return erg.toBool();
+    }
+    return false;
 }
 
 void GameMenue::centerMapOnAction(GameAction* pGameAction)

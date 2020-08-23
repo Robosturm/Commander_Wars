@@ -88,6 +88,15 @@ public slots:
      */
     void performAction(GameAction* pGameAction);
     /**
+     * @brief isTrap
+     * @param pAction
+     * @param pMoveUnit
+     * @param currentPoint
+     * @param previousPoint
+     * @return
+     */
+    bool isTrap(QString function, GameAction* pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    /**
      * @brief finsihActionPerformed
      */
     void finishActionPerformed();
