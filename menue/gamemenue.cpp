@@ -1111,20 +1111,26 @@ void GameMenue::showGameInfo()
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             QString funds = QString::number(pMap->getPlayer(i)->getFunds());
+            QString armyValue = QString::number(pMap->getPlayer(i)->calcArmyValue());
+            QString income = QString::number(pMap->getPlayer(i)->calcIncome());
+            qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
+            QString buildings = QString::number(buildingCount);
             if (pViewPlayer->getTeam() != pMap->getPlayer(i)->getTeam() &&
                 pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
             {
                 funds = "?";
+                armyValue = "?";
+                income = "?";
+                buildings = "?";
             }
-            qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
             data.append({tr("Player ") + QString::number(i + 1),
                          QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
                          QString::number(pMap->getGameRecorder()->getLostUnits(i)),
                          QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
-                         QString::number(pMap->getPlayer(i)->calcArmyValue()),
-                         QString::number(pMap->getPlayer(i)->calcIncome()),
+                         armyValue,
+                         income,
                          funds,
-                         QString::number(buildingCount)});
+                         buildings});
             totalBuildings -= buildingCount;
         }
         data.append({tr("Neutral"), "", "", "", "", "", "", QString::number(totalBuildings)});

@@ -223,9 +223,18 @@ void IngameInfoBar::updatePlayerInfo()
         m_pGameInfoBox->addChild(pTextfield);
         y += 25;
 
+        Player* pViewPlayer = pGamemenu->getCurrentViewPlayer();
         pTextfield = new Label(width);
         pTextfield->setStyle(style);
-        pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
+        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+        {
+            pTextfield->setHtmlText((tr("Buildings: ") + "?"));
+        }
+        else
+        {
+            pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
+        }
         pTextfield->setPosition(10, y);
         m_pGameInfoBox->addChild(pTextfield);
         y += 25;
@@ -233,7 +242,15 @@ void IngameInfoBar::updatePlayerInfo()
         count = pPlayer->getUnitCount();
         pTextfield = new Label(width);
         pTextfield->setStyle(style);
-        pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
+        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+        {
+            pTextfield->setHtmlText((tr("Units: ") + "?"));
+        }
+        else
+        {
+            pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
+        }
         pTextfield->setPosition(10, y);
         m_pGameInfoBox->addChild(pTextfield);
         y += 25;
@@ -241,7 +258,7 @@ void IngameInfoBar::updatePlayerInfo()
         count = pPlayer->getFunds();
         pTextfield = new Label(width);
         pTextfield->setStyle(style);
-        Player* pViewPlayer = pGamemenu->getCurrentViewPlayer();
+
         if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
         {
