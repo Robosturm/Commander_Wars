@@ -24,9 +24,9 @@ var Constructor = function()
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_SUBMARINE.armyData);
         if (armyName === "ma")
         {
-            sprite.loadSprite("submarine+" + armyName,  false,
+            sprite.loadMovingSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
-            sprite.loadSpriteV2("submarine+" + armyName + "+mask", GameEnums.Recoloring_Table,
+            sprite.loadMovingSprite("submarine+" + armyName,  false,
                               BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         }
         else
