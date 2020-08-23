@@ -1330,6 +1330,7 @@ void GameMenue::startGame()
             emit sigActionPerformed();
         }
     }
+    pMap->setVisible(true);
     gameStarted = true;
     pApp->continueThread();
 }

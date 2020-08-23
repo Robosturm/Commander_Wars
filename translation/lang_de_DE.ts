@@ -301,12 +301,12 @@
         <translation>Feuer</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="301"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="300"/>
         <source>Damage</source>
         <translation>Schaden</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="591"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="590"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2580,17 +2580,17 @@ This is immediatly applied.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1449"/>
+        <location filename="../menue/gamemenue.cpp" line="1450"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1467"/>
+        <location filename="../menue/gamemenue.cpp" line="1468"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1496"/>
+        <location filename="../menue/gamemenue.cpp" line="1497"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -3552,7 +3552,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="962"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="963"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3582,12 +3582,12 @@ This is immediatly applied.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="883"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="884"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="958"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="959"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
@@ -8081,34 +8081,34 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
 <context>
     <name>co_adam</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="307"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="308"/>
         <source>Vectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="312"/>
         <source>Percent Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="315"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="316"/>
         <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="303"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="304"/>
         <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="320"/>
         <source>
 Global Effect: 
 Units have increased firepower but lose additional firepower for lost HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="321"/>
         <source>
 
 CO Zone Effect: 
@@ -8116,82 +8116,82 @@ Units gain additional firepower and finish off units when they are within basic 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="324"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="325"/>
         <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="329"/>
         <source>Decimation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="333"/>
         <source>Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit gets an powerup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="336"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="337"/>
         <source>Cartesian Cleanup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="340"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
         <source>Get a hobby? This is my hobby!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="342"/>
         <source>Woo! Watch out for shrapnel!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="342"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="343"/>
         <source>Precision pays off!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="343"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="344"/>
         <source>As my troops approach their limit...you become insignificant!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
         <source>Prepare to have your strategy debunked!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="346"/>
         <source>I&apos;ll blind you with science!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
         <source>Call it bad luck, if you must.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="351"/>
         <source>Who said math had no applications in real life?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="351"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="352"/>
         <source>Ha! The revenge of the nerds!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="355"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="356"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="357"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="360"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="361"/>
         <source>Adam</source>
         <translation type="unfinished"></translation>
     </message>

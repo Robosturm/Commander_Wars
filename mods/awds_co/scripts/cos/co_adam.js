@@ -152,7 +152,7 @@ CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attacke
             // check for finishing blow return absurd amount of true damage if luck is enough
             if (isDefender)
             {
-                if (attacker.getHp() - damage / 10.0 - defender.getHpRounded() / 20.0 <= 0)
+                if (defender.getHp() - damage / 10.0 - attackerBaseHp / 20.0 <= 0)
                 {
                     return 100;
                 }
@@ -166,6 +166,5 @@ CO_ADAM.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attacke
             }
         }
     }
-    // 0
     return 0;
 };

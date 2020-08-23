@@ -70,7 +70,7 @@ GameMap::GameMap(QDataStream& stream)
     loaded = true;
 }
 
-GameMap::GameMap(QString map, bool onlyLoad)
+GameMap::GameMap(QString map, bool onlyLoad, bool fast)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
@@ -80,7 +80,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
-    deserializer(pStream, onlyLoad);
+    deserializer(pStream, fast);
     setMapNameFromFilename(map);
     loaded = true;
     if (!onlyLoad)

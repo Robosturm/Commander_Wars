@@ -61,7 +61,7 @@ public:
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
-    explicit GameMap(QString map, bool onlyLoad);
+    explicit GameMap(QString map, bool onlyLoad, bool fast);
     virtual ~GameMap();
     /**
      * @brief deleteMap

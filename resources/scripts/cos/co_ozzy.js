@@ -150,11 +150,11 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (isDefender)
                 {
-                    return 100;
+                    return 60;
                 }
                 else
                 {
-                    return 60;
+                    return 100;
                 }
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))

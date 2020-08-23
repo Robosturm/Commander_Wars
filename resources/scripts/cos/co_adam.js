@@ -274,13 +274,14 @@ var Constructor = function()
     {
         // check for luck finish if  the attacker is in co range or a power mode is active
         if (defender !== null && attacker !== null &&
-           (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+           ((co.inCORange(Qt.point(atkPosX, atkPosY), attacker) && !isDefender) ||
+            (co.inCORange(Qt.point(defPosX, defPosY), defender) && isDefender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off))
         {
             // check for finishing blow return absurd amount of true damage if luck is enough
             if (isDefender)
             {
-                if (attacker.getHp() - damage / 10.0 - defender.getHpRounded() / 20.0 <= 0)
+                if (defender.getHp() - damage / 10.0 - attackerBaseHp / 20.0 <= 0)
                 {
                     return 100;
                 }

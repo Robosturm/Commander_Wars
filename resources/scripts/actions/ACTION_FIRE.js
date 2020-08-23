@@ -132,6 +132,8 @@ var Constructor = function()
             var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition, isDefender);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
+            damage += attacker.getTrueDamage(damage, attackerPosition, attackerBaseHp,
+                                             defender, defenderPosition, isDefender);
             if (luckMode !== GameEnums.LuckDamageMode_Off)
             {
                 var luck = 10 + attacker.getBonusLuck(attackerPosition);
@@ -150,9 +152,6 @@ var Constructor = function()
                     }
                 }
             }
-            damage += attacker.getTrueDamage(damage, attackerPosition, attackerBaseHp,
-                                             defender, defenderPosition, isDefender);
-
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender, luckMode);
             // avoid healing through negativ damage caused by misfortune or other stuff
