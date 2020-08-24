@@ -91,7 +91,7 @@ var Constructor = function()
     };
     this.calcAttackerDamage = function(attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
-        return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHp() - takenDamage / 10.0,
+        return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, globals.roundUp(attacker.getHp() - takenDamage / 10.0),
                                       defender, defender.getPosition(), false,
                                       luckMode)
     };
