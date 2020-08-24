@@ -91,7 +91,11 @@ void PlayerSelection::setPlayerAiName(qint32 player, QString name)
 
 GameEnums::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 {
-    if (m_pNetworkInterface.get() == nullptr)
+    if (m_playerAIs[player]->getCurrentItemText() == tr("Closed"))
+    {
+        return GameEnums::AiTypes_Closed;
+    }
+    else if (m_pNetworkInterface.get() == nullptr)
     {
         return static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
     }

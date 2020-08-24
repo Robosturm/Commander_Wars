@@ -2570,27 +2570,27 @@ This is immediatly applied.</source>
         <translation>Armeegröße</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1120"/>
+        <location filename="../menue/gamemenue.cpp" line="1126"/>
         <source>Player </source>
         <translation>Spieler </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1130"/>
+        <location filename="../menue/gamemenue.cpp" line="1136"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1480"/>
+        <location filename="../menue/gamemenue.cpp" line="1486"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1498"/>
+        <location filename="../menue/gamemenue.cpp" line="1504"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1527"/>
+        <location filename="../menue/gamemenue.cpp" line="1533"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -3061,118 +3061,120 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="228"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="232"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="236"/>
         <source>Buildings: </source>
         <translation>Gebäude: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="236"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="248"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="252"/>
         <source>Units: </source>
         <translation>Einheiten: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="248"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="252"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="265"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="269"/>
         <source>Funds: </source>
         <translation>Fonds: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="262"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="279"/>
         <source>Player: </source>
         <translation>Spieler: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="270"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="287"/>
         <source>Team: </source>
         <translation>Team: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="340"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="391"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="397"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="401"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="357"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="408"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="414"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="418"/>
         <source>HP: </source>
         <translation>KP: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="442"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="459"/>
         <source>Ammo1: </source>
         <translation>Muni 1: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="458"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="475"/>
         <source>Ammo1: -/-</source>
         <translation>Muni 1: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="474"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="491"/>
         <source>Ammo2: </source>
         <translation>Muni 2: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="490"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="507"/>
         <source>Ammo2: -/-</source>
         <translation>Muni 2: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="507"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="524"/>
         <source>Fuel: </source>
         <translation>Treib.: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="524"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="541"/>
         <source>Fuel: -/-</source>
         <translation>Treib.: -/-</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="671"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="688"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="733"/>
         <source>Owner: Player </source>
         <translation>Besitzer: Spieler </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="680"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="697"/>
         <source>Owner: Neutral</source>
         <translation>Besitzer: Neutral</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="689"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="706"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="715"/>
         <source>Resistance: </source>
         <translation>Widerstand: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="725"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="742"/>
         <source>Weapon 1: </source>
         <translation>Waffe 1: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="736"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="753"/>
         <source>Weapon 2: </source>
         <translation>Waffe 2: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="745"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="762"/>
         <source>Move: </source>
         <translation>Bew.art: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="753"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="770"/>
         <source>Movepoints: </source>
         <translation>Bew.punkte: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="761"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="778"/>
         <source>Vision: </source>
         <translation>Sicht: </translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="773"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="790"/>
         <source>Loaded Units</source>
         <translation>Ladung</translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="791"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="808"/>
         <source>Loaded Units: ?</source>
         <translation>Ladung: ?</translation>
     </message>
@@ -4190,144 +4192,145 @@ Version: </translation>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
         <source>CO&apos;s</source>
         <translation>KO&apos;s</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
         <source>AI Strength</source>
         <translation>KI</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
         <source>Startfunds</source>
         <translation>Startfonds</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
         <source>Income Modifier</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
-        <location filename="../objects/playerselection.cpp" line="315"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="319"/>
         <source>Team</source>
         <translation>Team</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
-        <location filename="../objects/playerselection.cpp" line="296"/>
-        <location filename="../objects/playerselection.cpp" line="636"/>
+        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="300"/>
+        <location filename="../objects/playerselection.cpp" line="640"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="193"/>
+        <location filename="../objects/playerselection.cpp" line="197"/>
         <source>Connected</source>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="225"/>
+        <location filename="../objects/playerselection.cpp" line="229"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="230"/>
+        <location filename="../objects/playerselection.cpp" line="234"/>
         <source>All Random</source>
         <translation>Alle Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="238"/>
+        <location filename="../objects/playerselection.cpp" line="242"/>
         <source>CO 1 Random</source>
         <translation>KO 1 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="247"/>
+        <location filename="../objects/playerselection.cpp" line="251"/>
         <source>CO 2 Random</source>
         <translation>KO 2 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="267"/>
+        <location filename="../objects/playerselection.cpp" line="271"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="282"/>
+        <location filename="../objects/playerselection.cpp" line="286"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
         <location filename="../objects/playerselection.cpp" line="321"/>
-        <location filename="../objects/playerselection.cpp" line="335"/>
+        <location filename="../objects/playerselection.cpp" line="325"/>
+        <location filename="../objects/playerselection.cpp" line="339"/>
         <source>Human</source>
         <translation>Mensch</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
         <source>Very Easy</source>
         <translation>Sehr Leicht</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
         <source>Normal Off.</source>
         <translation>Normal Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
         <source>Normal Def.</source>
         <translation>Normal Def.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="94"/>
+        <location filename="../objects/playerselection.cpp" line="321"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
-        <location filename="../objects/playerselection.cpp" line="331"/>
+        <location filename="../objects/playerselection.cpp" line="328"/>
         <location filename="../objects/playerselection.cpp" line="335"/>
+        <location filename="../objects/playerselection.cpp" line="339"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="484"/>
+        <location filename="../objects/playerselection.cpp" line="488"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="502"/>
+        <location filename="../objects/playerselection.cpp" line="506"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="581"/>
+        <location filename="../objects/playerselection.cpp" line="585"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="600"/>
+        <location filename="../objects/playerselection.cpp" line="604"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="619"/>
+        <location filename="../objects/playerselection.cpp" line="623"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="655"/>
+        <location filename="../objects/playerselection.cpp" line="659"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
