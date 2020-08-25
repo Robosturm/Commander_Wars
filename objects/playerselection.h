@@ -32,6 +32,10 @@ public:
     void showPlayerSelection();
     void resetPlayerSelection();
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);
+    bool hasNetworkInterface()
+    {
+        return m_pNetworkInterface.get() != nullptr;
+    }
     void attachCampaign(spCampaign campaign);
     bool isOpenPlayer(qint32 player);
     bool hasOpenPlayer();
@@ -66,6 +70,17 @@ public:
      * @param value
      */
     void setSaveGame(bool value);
+    /**
+     * @brief getIsSlave
+     * @return
+     */
+    bool getIsSlave() const;
+    /**
+     * @brief setIsSlave
+     * @param isSlave
+     */
+    void setIsSlave(bool isSlave);
+
 signals:
     void sigCOsRandom(qint32 mode);
     void sigShowSelectCO(qint32 player, quint8 co);
@@ -179,6 +194,7 @@ private:
 
     bool saveGame{false};
     bool m_PlayerReady{false};
+    bool m_isSlave{false};
 };
 
 #endif // PLAYERSELECTION_H

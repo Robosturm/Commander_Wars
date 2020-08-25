@@ -3126,17 +3126,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="77"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="76"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="87"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="86"/>
         <source>Join Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="170"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="169"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3471,7 +3471,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="963"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="983"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3496,17 +3496,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="513"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="528"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="884"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="904"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="959"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="979"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3941,65 +3941,65 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
-        <location filename="../objects/playerselection.cpp" line="319"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="318"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="194"/>
+        <location filename="../objects/playerselection.cpp" line="196"/>
         <location filename="../objects/playerselection.cpp" line="300"/>
-        <location filename="../objects/playerselection.cpp" line="640"/>
+        <location filename="../objects/playerselection.cpp" line="639"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="197"/>
+        <location filename="../objects/playerselection.cpp" line="199"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="229"/>
+        <location filename="../objects/playerselection.cpp" line="231"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="234"/>
+        <location filename="../objects/playerselection.cpp" line="236"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="242"/>
+        <location filename="../objects/playerselection.cpp" line="244"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="251"/>
+        <location filename="../objects/playerselection.cpp" line="253"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4014,72 +4014,72 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="321"/>
-        <location filename="../objects/playerselection.cpp" line="325"/>
-        <location filename="../objects/playerselection.cpp" line="339"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="338"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="94"/>
-        <location filename="../objects/playerselection.cpp" line="321"/>
+        <location filename="../objects/playerselection.cpp" line="96"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="328"/>
-        <location filename="../objects/playerselection.cpp" line="335"/>
-        <location filename="../objects/playerselection.cpp" line="339"/>
+        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="334"/>
+        <location filename="../objects/playerselection.cpp" line="338"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="488"/>
+        <location filename="../objects/playerselection.cpp" line="487"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="506"/>
+        <location filename="../objects/playerselection.cpp" line="505"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="585"/>
+        <location filename="../objects/playerselection.cpp" line="584"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="604"/>
+        <location filename="../objects/playerselection.cpp" line="603"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="623"/>
+        <location filename="../objects/playerselection.cpp" line="622"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="659"/>
+        <location filename="../objects/playerselection.cpp" line="658"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4293,11 +4293,21 @@ Version: </source>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="527"/>
-        <source>Battle Anim. Speed: </source>
+        <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="531"/>
+        <source>Selects the speed at which units walk across the map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="543"/>
+        <source>Battle Anim. Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="547"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6171,7 +6181,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="103"/>
+        <location filename="../network/tcpserver.cpp" line="105"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>

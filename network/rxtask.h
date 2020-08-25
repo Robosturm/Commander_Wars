@@ -20,6 +20,10 @@ class RxTask : public QObject, public oxygine::ref_counter
 public:
     RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId);
     virtual ~RxTask();
+    void swapNetworkInterface(NetworkInterface* pCommIF)
+    {
+        pIF = pCommIF;
+    }
 signals:
     void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 public slots:

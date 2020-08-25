@@ -36,6 +36,8 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     connect(this, &PlayerSelection::sigShowSelectCOPerks, this, &PlayerSelection::showSelectCOPerks, Qt::QueuedConnection);
     connect(this, &PlayerSelection::buttonShowPlayerBuildList, this, &PlayerSelection::slotShowPlayerBuildList, Qt::QueuedConnection);
     connect(this, &PlayerSelection::sigAiChanged, this, &PlayerSelection::selectAI, Qt::QueuedConnection);
+    connect(this, &PlayerSelection::sigCOsRandom, this, &PlayerSelection::slotCOsRandom, Qt::QueuedConnection);
+    connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
 
     this->addChild(m_pPlayerSelection);
 }
@@ -256,8 +258,6 @@ void PlayerSelection::showPlayerSelection()
         emit sigCOsRandom(1);
     });
 
-
-    connect(this, &PlayerSelection::sigCOsRandom, this, &PlayerSelection::slotCOsRandom, Qt::QueuedConnection);
     if (m_pNetworkInterface.get() != nullptr ||
         m_pCampaign.get() != nullptr)
     {
@@ -287,8 +287,8 @@ void PlayerSelection::showPlayerSelection()
     allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
     allIncomeSpinBox->setCurrentValue(1.0f);
     allIncomeSpinBox->setSpinSpeed(0.1f);
-    m_pPlayerSelection->addItem(allIncomeSpinBox);
     connect(allIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerIncomeChanged, Qt::QueuedConnection);
+    m_pPlayerSelection->addItem(allIncomeSpinBox);
     if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         saveGame ||
         m_pCampaign.get() != nullptr)
@@ -304,7 +304,6 @@ void PlayerSelection::showPlayerSelection()
     {
         emit buttonShowAllBuildList();
     });
-    connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
     if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         saveGame ||
         m_pCampaign.get() != nullptr)
@@ -1138,6 +1137,16 @@ void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
     }
 }
 
+bool PlayerSelection::getIsSlave() const
+{
+    return m_isSlave;
+}
+
+void PlayerSelection::setIsSlave(bool isSlave)
+{
+    m_isSlave = isSlave;
+}
+
 bool PlayerSelection::getSaveGame() const
 {
     return saveGame;
@@ -1263,7 +1272,8 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
 
 void PlayerSelection::changePlayer(quint64, QDataStream& stream)
 {
-    if (!m_pNetworkInterface->getIsServer())
+    if (!m_pNetworkInterface->getIsServer() ||
+        m_isSlave)
     {
         spGameMap pMap = GameMap::getInstance();
         QString name;
@@ -1315,7 +1325,8 @@ void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QSt
 
 void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
 {
-    if (!m_pNetworkInterface->getIsServer())
+    if (!m_pNetworkInterface->getIsServer() ||
+        m_isSlave)
     {
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

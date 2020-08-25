@@ -60,12 +60,14 @@ public slots:
     void clientDisconnect(quint64 socketId);
 protected slots:
     void checkServerRunning();
+    void sendPlayerJoined(qint32 player);
 private:
     QVector<spTCPClient> m_Clients;
     LocalClient m_gameConnection;
     QByteArray m_dataBuffer;
     QString m_serverName;
     QTimer m_timer;
+    bool m_slaveRunning{false};
 };
 
 #endif // NETWORKGAME_H

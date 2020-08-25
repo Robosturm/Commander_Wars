@@ -99,7 +99,9 @@ void TCPServer::onConnect()
         TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this, false);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
-        m_pClients.append(new TCPClient(pRXTask, pTXTask, nextSocket, m_idCounter));
+        spTCPClient pClient = new TCPClient(pRXTask, pTXTask, nextSocket, m_idCounter);
+        pClient->setIsServer(true);
+        m_pClients.append(pClient);
         Console::print(tr("New Client connection."), Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }

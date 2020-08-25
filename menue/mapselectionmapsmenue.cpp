@@ -232,7 +232,8 @@ void MapSelectionMapsMenue::slotButtonNext()
             QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
             QString mapFile = m_pMapSelectionView->getCurrentFile().filePath();
             if ((m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map")) ||
-                (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER))
+                (mapFile == NetworkCommands::RANDOMMAPIDENTIFIER) ||
+                (mapFile == NetworkCommands::SERVERMAPIDENTIFIER))
             {
                 m_pMapSelectionView->setCurrentCampaign(nullptr);
                 if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())

@@ -524,6 +524,22 @@ void ReplayMenu::showConfig()
 
     pTextfield = new Label(width - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Walk Speed: "));
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    spSlider pWalkSpeed = new Slider(Settings::getWidth() - 20 - width, 1, 100, "");
+    pWalkSpeed->setTooltipText(tr("Selects the speed at which units walk across the map."));
+    pWalkSpeed->setPosition(width - 130, y);
+    pWalkSpeed->setCurrentValue(static_cast<qint32>(Settings::getWalkAnimationSpeedValue()));
+    pPanel->addItem(pWalkSpeed);
+    connect(pWalkSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setWalkAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);

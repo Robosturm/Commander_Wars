@@ -92,3 +92,14 @@ void TCPClient::connected()
     isConnected = true;
     emit sigConnected(0);
 }
+
+spTxTask TCPClient::getTXTask() const
+{
+    return m_pTXTask;
+}
+
+
+spRxTask TCPClient::getRXTask() const
+{
+    return m_pRXTask;
+}

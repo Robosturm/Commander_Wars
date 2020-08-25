@@ -55,7 +55,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
         connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
         // wait 10 minutes till timeout
-        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"), 1000 * 60 * 10);
+        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
         connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -264,6 +264,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
     // data for us?
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
+        if (!m_pPlayerSelection->hasNetworkInterface())
+        {
+            m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+        }
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
@@ -313,14 +317,22 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else if (messageType == NetworkCommands::PLAYERJOINEDGAMEONSERVER)
         {
+            if (m_pPlayerSelection->hasOpenPlayer())
+            {
+                quint64 socketId;
+                stream >> socketId;
+                acceptNewConnection(socketID);
+            }
+            else
+            {
+                // todo deny access
+            }
+        }
+        else if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
+        {
             quint64 socketId;
             stream >> socketId;
-            playerJoined(socketId);
-        }
-
-        else if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
-        {
-            emit sigHostGameLaunched();
+            m_pPlayerSelection->disconnected(socketID);
         }
     }
 }
@@ -372,7 +384,7 @@ void Multiplayermenu::requestRule(quint64 socketID)
 void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
 {
     // the client recieved the initial map data read it and make it visible
-    if (!m_NetworkInterface->getIsServer())
+    if (!m_NetworkInterface->getIsServer() || !m_local)
     {
         m_pMapSelectionView->getCurrentMap()->getGameRules()->deserializeObject(stream);
         bool campaign = false;
@@ -395,13 +407,14 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         }
         m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
         emit sigConnected();
+        emit sigHostGameLaunched();
     }
 }
 
 void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
 {
     // we recieved map info from a server check if we have this map already
-    if (!m_NetworkInterface->getIsServer())
+    if (!m_NetworkInterface->getIsServer() || !m_local)
     {
         QString version;
         stream >> version;
@@ -489,7 +502,9 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 {
                     stream >> scriptHash;
                 }
-                if (!fileName.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) && existsMap(fileName, hash, scriptFile, scriptHash))
+                if (!fileName.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) &&
+                    !fileName.startsWith(NetworkCommands::SERVERMAPIDENTIFIER) &&
+                    existsMap(fileName, hash, scriptFile, scriptHash))
                 {
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -531,7 +546,8 @@ void Multiplayermenu::requestMap(quint64 socketID)
         sendStream << file;
         sendStream << scriptFile;
         QFile mapFile(m_pMapSelectionView->getCurrentFile().filePath());
-        if (file.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
+        if (file.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
+            file.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
             GameMap::getInstance()->serializeObject(sendStream);
         }
@@ -563,7 +579,8 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         QString scriptFile;
         stream >> scriptFile;
         GameMap* pNewMap = nullptr;
-        if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER))
+        if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
+            mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
             pNewMap = new GameMap(stream);
         }
@@ -621,7 +638,9 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     mods = Filesupport::readVectorList<QString, QList>(stream);
     GameMap* pMap = new GameMap(stream);
     m_pMapSelectionView->setCurrentMap(pMap);
+    m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
+    m_pPlayerSelection->setIsSlave(true);
     loadMultiplayerMap();
     createChat();
     m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
@@ -639,13 +658,14 @@ void Multiplayermenu::sendSlaveReady()
 
 void Multiplayermenu::slotCancelHostConnection()
 {
-
+    // todo cancel game hosting
 }
 
 void Multiplayermenu::slotHostGameLaunched()
 {
     // we're hosting a game so we get the same rights as a local host
     m_NetworkInterface->setIsServer(true);
+    createChat();
     MapSelectionMapsMenue::slotButtonNext();
 }
 
@@ -881,7 +901,7 @@ void Multiplayermenu::startGameOnServer()
     pMap->serializeObject(sendStream);
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
-    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Launching game on server"), 1000 * 60 * 10);
+    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);

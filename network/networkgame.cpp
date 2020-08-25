@@ -1,4 +1,5 @@
 #include "networkgame.h"
+#include "multiplayer/networkcommands.h"
 
 NetworkGame::NetworkGame()
     : QObject(),
@@ -12,11 +13,16 @@ NetworkGame::NetworkGame()
 void NetworkGame::addClient(spTCPClient pClient)
 {
     m_Clients.append(pClient);
+    pClient->getRXTask()->swapNetworkInterface(pClient.get());
     disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
-    disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
+    disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);    
     connect(pClient.get(), &NetworkInterface::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
     connect(pClient.get(), &NetworkInterface::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
     connect(pClient.get(), &NetworkInterface::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
+    if (m_slaveRunning)
+    {
+        sendPlayerJoined(m_Clients.size() - 1);
+    }
 }
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -32,19 +38,48 @@ void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterfac
 
 void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    // forward data to other clients
-    for (qint32 i = 0; i < m_Clients.size(); i++)
+    QDataStream stream(&data, QIODevice::ReadOnly);
+    QString messageType;
+    stream >> messageType;
+    Console::print("Routing message:" + messageType, Console::eDEBUG);
+    if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
     {
-        if (socket == 0 || m_Clients[i]->getSocketId() == socket)
+        m_slaveRunning = true;
+        if (m_Clients.size() == 1)
         {
-            emit m_Clients[i]->sig_sendData(0, data, service, false);
+            sendPlayerJoined(0);
+        }
+        else
+        {
+            // todo despawn slave
         }
     }
+    else if (m_slaveRunning)
+    {
+        // forward data to other clients
+        for (qint32 i = 0; i < m_Clients.size(); i++)
+        {
+            if (socket == 0 || m_Clients[i]->getSocketId() == socket)
+            {
+                emit m_Clients[i]->sig_sendData(0, data, service, false);
+            }
+        }
+    }
+}
+
+void NetworkGame::sendPlayerJoined(qint32 player)
+{
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << NetworkCommands::PLAYERJOINEDGAMEONSERVER;
+    sendStream << m_Clients[player]->getSocketId();
+    emit m_gameConnection.sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 }
 
 void NetworkGame::recieveClientData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     // forward data to hosted game
+    Console::print("Recieved Client data sending data to slave", Console::eDEBUG);
     emit m_gameConnection.sig_sendData(0, data, service, false);
 }
 

@@ -16,7 +16,11 @@ namespace NetworkCommands
     /**
      * @brief RANDOMMAPIDENTIFIER
      */
-    static const QString RANDOMMAPIDENTIFIER = "????";
+    static const QString RANDOMMAPIDENTIFIER = "??;";
+    /**
+     * @brief HOSTMAPIDENTIFIER
+     */
+    static const QString SERVERMAPIDENTIFIER = ";||;";
     /**
      * @brief SENDINITUPDATE initial update from the host containing the game rules and all player data
      */
@@ -87,6 +91,10 @@ namespace NetworkCommands
      * @brief PLAYERJOINEDGAMEONSERVER
      */
     static const QString PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
+    /**
+     * @brief PLAYERREJECTEDONSERVER
+     */
+    static const QString PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
 }
 
 #endif // NETWORKCOMMANDS_H

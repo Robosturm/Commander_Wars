@@ -28,6 +28,10 @@ public:
      * @param pThread
      */
     void moveClientToThread(QThread* pThread);
+    spRxTask getRXTask() const;
+
+    spTxTask getTXTask() const;
+
 public slots:
     virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
