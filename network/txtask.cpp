@@ -28,7 +28,6 @@ void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSe
     {
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_5_12);
         // write default-buffersize
         out << static_cast<qint32>(service);
         out << socketID;
@@ -41,4 +40,14 @@ void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSe
             Console::print("Error during writing data via TCP.", Console::eERROR);
         }
     }
+}
+
+quint64 TxTask::getSocketID() const
+{
+    return m_SocketID;
+}
+
+void TxTask::setSocketID(const quint64 &SocketID)
+{
+    m_SocketID = SocketID;
 }

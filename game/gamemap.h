@@ -244,7 +244,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) const override;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -256,6 +256,10 @@ public:
      * @param fast
      */
     void deserializer(QDataStream& pStream, bool fast);
+
+    static void readMapHeader(QDataStream& pStream,
+                              qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
+                              qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter);
     /**
      * @brief readMapName
      * @param pStream
@@ -266,7 +270,7 @@ public:
      * @brief getVersion stream version for serialization
      * @return
      */
-    inline virtual qint32 getVersion() override
+    inline virtual qint32 getVersion() const override
     {
         return 8;
     }
@@ -578,7 +582,7 @@ public slots:
      * @brief getPlayerCount
      * @return number of players on the map
      */
-    qint32 getPlayerCount()
+    qint32 getPlayerCount() const
     {
         return players.size();
     }
@@ -706,9 +710,9 @@ public slots:
     void nicknameUnit(qint32 x, qint32 y);
 private:
     static spGameMap m_pInstance;
-    QString mapName;
-    QString mapAuthor;
-    QString mapDescription;
+    QString m_mapName;
+    QString m_mapAuthor;
+    QString m_mapDescription;
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;

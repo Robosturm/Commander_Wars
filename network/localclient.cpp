@@ -18,7 +18,7 @@ LocalClient::~LocalClient()
 {
     disconnect();
     disconnectTCP();
-    Console::print(tr("Client is closed"), Console::eLogLevels::eDEBUG);
+    Console::print("Client is closed", Console::eLogLevels::eDEBUG);
 }
 
 void LocalClient::connectTCP(QString adress, quint16)
@@ -39,7 +39,7 @@ void LocalClient::connectTCP(QString adress, quint16)
     pTXTask = new TxTask(pSocket, 0, this, true);
     pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(this, &LocalClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
-    Console::print(tr("Local Client is running to ") + adress, Console::eLogLevels::eDEBUG);
+    Console::print("Local Client is running to " + adress, Console::eLogLevels::eDEBUG);
     do
     {
         pSocket->connectToServer(adress);
@@ -73,7 +73,7 @@ void LocalClient::changeThread(quint64, QThread* pThread)
 
 void LocalClient::connected()
 {
-    Console::print(tr("Client is connected"), Console::eLogLevels::eDEBUG);
+    Console::print("Client is connected", Console::eLogLevels::eDEBUG);
     isConnected = true;
     emit sigConnected(0);
 }

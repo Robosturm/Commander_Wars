@@ -33,7 +33,7 @@ GameEnums::GameRecord_SpecialEvents SpecialEvent::getEvent() const
     return m_Event;
 }
 
-void SpecialEvent::serializeObject(QDataStream& pStream)
+void SpecialEvent::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_Player;

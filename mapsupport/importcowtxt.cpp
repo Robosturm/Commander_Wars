@@ -131,7 +131,7 @@ void GameMap::importTxtMap(QString file)
             QString line = out.readLine().toUpper();
             if (line.startsWith("KARTENNAME="))
             {
-                mapName = line.split("=")[1];
+                m_mapName = line.split("=")[1];
             }
             else if (line.startsWith("SPIELER|"))
             {

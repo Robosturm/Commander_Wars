@@ -39,7 +39,7 @@ public:
      * @brief setWidth
      * @param width
      */
-    void setWidth(qint32 width);
+    virtual void setWidth(float width) override;
 protected:
     oxygine::spTextField _textField;
     oxygine::spClipRectActor _clipRect;

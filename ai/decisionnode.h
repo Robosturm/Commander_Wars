@@ -20,9 +20,9 @@ public:
         DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode> pNodes);
         virtual ~DecisionNode();
 
-        virtual void serializeObject(QDataStream& pStream)  override;
+        virtual void serializeObject(QDataStream& pStream) const override;
         virtual void deserializeObject(QDataStream& pStream)  override;
-        virtual qint32 getVersion() override
+        virtual qint32 getVersion() const override
         {
             return 1;
         }

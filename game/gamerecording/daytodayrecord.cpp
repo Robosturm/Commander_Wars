@@ -23,7 +23,7 @@ DayToDayRecord::DayToDayRecord(qint32 playerCount)
     }
 }
 
-void DayToDayRecord::serializeObject(QDataStream& pStream)
+void DayToDayRecord::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_SpecialEvents.size());

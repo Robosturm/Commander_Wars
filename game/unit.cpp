@@ -2703,7 +2703,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
     return false;
 }
 
-void Unit::serializeObject(QDataStream& pStream)
+void Unit::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_UnitID;
@@ -2794,14 +2794,8 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     pStream >> fuel;
     qint32 value = 0;
     pStream >> value;
-
     if (!fast)
     {
-        initUnit();
-        setHp(hp);
-        setAmmo1(ammo1);
-        setAmmo2(ammo2);
-        setFuel(fuel);
         if (version > 13)
         {
             setUnitRank(value);
@@ -2826,6 +2820,11 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
+    initUnit();
+    setHp(hp);
+    setAmmo1(ammo1);
+    setAmmo2(ammo2);
+    setFuel(fuel);
     if (version > 1)
     {
         pStream >> m_Moved;

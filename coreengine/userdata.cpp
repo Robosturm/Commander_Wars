@@ -134,7 +134,7 @@ QVector<Userdata::Achievement>* Userdata::getAchievements()
     return &m_achievements;
 }
 
-void Userdata::serializeObject(QDataStream& pStream)
+void Userdata::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_customCOStyles.size());

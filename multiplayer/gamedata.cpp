@@ -5,7 +5,7 @@ GameData::GameData()
 {
 
 }
-void GameData::serializeObject(QDataStream& pStream)
+void GameData::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_Host;

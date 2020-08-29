@@ -23,6 +23,7 @@ public:
     {
         return m_socketId;
     }
+    void setSocketId(const quint64 &socketId);
     /**
      * @brief moveClientToThread
      * @param pThread
@@ -32,6 +33,7 @@ public:
 
     spTxTask getTXTask() const;
 
+    virtual void setSocketID(const quint64 &socketID) override;
 public slots:
     virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;

@@ -23,7 +23,7 @@ PlayerRecord::PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 incom
     Interpreter::setCppOwnerShip(this);
 }
 
-void PlayerRecord::serializeObject(QDataStream& pStream)
+void PlayerRecord::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_Day;

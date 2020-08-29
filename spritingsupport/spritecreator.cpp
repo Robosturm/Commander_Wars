@@ -82,12 +82,12 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
 {
     if (!QFile::exists(inTable) && inTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + inTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + inTable, Console::eLogLevels::eERROR);
         return;
     }
     if (!QFile::exists(outTable) && outTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + outTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + outTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage inTableImg(inTable);
@@ -110,7 +110,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
     }
     else
     {
-        Console::print(tr("Input directory or file doesn't exists. ") + input, Console::eERROR);
+        Console::print("Input directory or file doesn't exists. " + input, Console::eERROR);
     }
 }
 
@@ -173,13 +173,13 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(maskTable) && maskTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + maskTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + maskTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage maskTableImg(maskTable);
@@ -189,7 +189,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     if (maskTableImg.width() < colorTableImg.width())
     {
-        Console::print(tr("The mask table is to small. ") + maskTable, Console::eERROR);
+        Console::print("The mask table is to small. " + maskTable, Console::eERROR);
         return;
     }
     QFileInfo inputInfo(input);
@@ -210,7 +210,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     else
     {
-        Console::print(tr("Input directory or file doesn't exists. ") + input, Console::eERROR);
+        Console::print("Input directory or file doesn't exists. " + input, Console::eERROR);
     }
 }
 
@@ -257,19 +257,19 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, Q
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(newTable) && newTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + newTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + newTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage maskTableImg(newTable);
     if (maskTableImg.width() < colorTableImg.width())
     {
-        Console::print(tr("The mask table is to small. ") + newTable, Console::eERROR);
+        Console::print("The mask table is to small. " + newTable, Console::eERROR);
         return nullptr;
     }
     return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor);

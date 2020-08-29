@@ -70,16 +70,9 @@ public:
      * @param value
      */
     void setSaveGame(bool value);
-    /**
-     * @brief getIsSlave
-     * @return
-     */
-    bool getIsSlave() const;
-    /**
-     * @brief setIsSlave
-     * @param isSlave
-     */
-    void setIsSlave(bool isSlave);
+
+    bool getIsServerGame() const;
+    void setIsServerGame(bool isServerGame);
 
 signals:
     void sigCOsRandom(qint32 mode);
@@ -168,6 +161,10 @@ protected:
      * @param stream
      */
     void recievePlayerServerReady(quint64 socketID, QDataStream& stream);
+    /**
+     * @brief sendOpenPlayerCount
+     */
+    void sendOpenPlayerCount();
 private:
     // player selection
     spPanel m_pPlayerSelection;
@@ -194,7 +191,7 @@ private:
 
     bool saveGame{false};
     bool m_PlayerReady{false};
-    bool m_isSlave{false};
+    bool m_isServerGame{false};
 };
 
 #endif // PLAYERSELECTION_H

@@ -20,7 +20,7 @@ GameScript::~GameScript()
     pInterpreter->deleteObject(scriptName);
 }
 
-void GameScript::serializeObject(QDataStream& pStream)
+void GameScript::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << script;

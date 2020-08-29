@@ -17,6 +17,8 @@
 #include "objects/dialogtextinput.h"
 #include "network/mainserver.h"
 
+#include "multiplayer/networkcommands.h"
+
 LobbyMenu::LobbyMenu()
     : QObject()
 {
@@ -27,6 +29,7 @@ LobbyMenu::LobbyMenu()
     if (!Settings::getServer())
     {
         m_pTCPClient = new TCPClient();
+        connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
     }
 
@@ -74,7 +77,6 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigHostServer, this, &LobbyMenu::hostServer, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
-    pButtonJoin->setVisible(false);
     pButtonJoin->attachTo(this);
     pButtonJoin->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -93,7 +95,7 @@ LobbyMenu::LobbyMenu()
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
     m_pGamesPanel = new Panel(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 420),
-                          QSize(Settings::getWidth() - 20, Settings::getHeight() - 420));
+                              QSize(Settings::getWidth() - 20, Settings::getHeight() - 420));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
@@ -106,6 +108,8 @@ LobbyMenu::LobbyMenu()
     spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
     addChild(pChat);
+
+    connect(this, &LobbyMenu::sigUpdateGamesView, this, &LobbyMenu::updateGamesView, Qt::QueuedConnection);
 }
 
 LobbyMenu::~LobbyMenu()
@@ -148,7 +152,7 @@ void LobbyMenu::hostServer()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient));
+        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, true));
         addRef();
         oxygine::Actor::detach();
         deleteLater();
@@ -158,7 +162,34 @@ void LobbyMenu::hostServer()
 
 void LobbyMenu::joinGame()
 {
-
+    bool exists = false;
+    if (m_currentGame.get() != nullptr)
+    {
+        for (const auto & game : m_games)
+        {
+            if (m_currentGame.get() == game.get())
+            {
+                exists = true;
+                break;
+            }
+        }
+    }
+    if (exists)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, false));
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << NetworkCommands::SERVERJOINGAME;
+        stream << m_currentGame->getSlaveName();
+        emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+        addRef();
+        oxygine::Actor::detach();
+        deleteLater();
+        pApp->continueThread();
+    }
 }
 
 void LobbyMenu::joinAdress()
@@ -183,4 +214,71 @@ void LobbyMenu::join(QString adress)
     oxygine::Actor::detach();
     deleteLater();
     pApp->continueThread();
+}
+
+void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        QString messageType;
+        stream >> messageType;
+        if (messageType == NetworkCommands::SERVERGAMEDATA)
+        {
+            m_games.clear();
+            qint32 size = 0;
+            stream >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                m_games.append(new NetworkGameData());
+                m_games[i]->deserializeObject(stream);
+            }
+            emit sigUpdateGamesView();
+        }
+    }
+}
+
+void LobbyMenu::updateGamesView()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (m_Gamesview.get() != nullptr)
+    {
+        m_Gamesview->detach();
+        m_Gamesview = nullptr;
+    }
+    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods")};
+    qint32 itemWidth = (m_pGamesPanel->getWidth() - 80 - 100) / 3;
+    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth};
+    QVector<QStringList> items;
+    for (const auto & game : m_games)
+    {
+        QStringList data;
+        data.append(game->getMapName());
+        data.append(QString::number(game->getPlayers()) + "/" +
+                    QString::number(game->getMaxPlayers()));
+        data.append(game->getDescription());
+        QStringList mods = game->getMods();
+        QString modString;
+        for (const auto & mod : mods)
+        {
+            modString.append(mod + "; ");
+        }
+        data.append(modString);
+        items.append(data);
+    }
+    m_Gamesview = new TableView(widths, items, header, true);
+    connect(m_Gamesview.get(), &TableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
+    m_pGamesPanel->addItem(m_Gamesview);
+    m_pGamesPanel->setContentHeigth(m_Gamesview->getHeight() + 40);
+    pApp->continueThread();
+}
+
+void LobbyMenu::selectGame()
+{
+    qint32 game = m_Gamesview->getCurrentItem();
+    if (game >= 0 && game < m_games.size())
+    {
+        m_currentGame = m_games[game];
+    }
 }

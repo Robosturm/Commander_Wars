@@ -18,7 +18,7 @@ Weather::Weather()
     Interpreter::setCppOwnerShip(this);
 }
 
-void Weather::serializeObject(QDataStream& pStream)
+void Weather::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_WeatherId;

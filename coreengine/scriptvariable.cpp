@@ -23,7 +23,7 @@ ScriptVariable::ScriptVariable()
     buffer.open(QIODevice::ReadWrite);
 }
 
-void ScriptVariable::serializeObject(QDataStream& pStream)
+void ScriptVariable::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_Id;

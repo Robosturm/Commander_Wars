@@ -60,7 +60,7 @@ QString Leaf::print()
     return ret;
 }
 
-void Leaf::serializeObject(QDataStream& pStream)
+void Leaf::serializeObject(QDataStream& pStream) const
 {
     pStream << false; // --> 0 for node and 1 for leaf
     pStream << getVersion();

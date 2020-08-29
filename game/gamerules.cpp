@@ -945,7 +945,7 @@ void GameRules::setAiAttackTerrain(bool AiAttackTerrain)
     m_AiAttackTerrain = AiAttackTerrain;
 }
 
-void GameRules::serializeObject(QDataStream& pStream)
+void GameRules::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());

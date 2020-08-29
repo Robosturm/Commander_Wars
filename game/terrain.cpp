@@ -43,7 +43,7 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
         }
         else
         {
-            Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
+            Console::print("Unable to load Terrain " + terrainID, Console::eFATAL);
         }
     }
     return pTerrain;
@@ -1021,7 +1021,7 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     }
 }
 
-void Terrain::serializeObject(QDataStream& pStream)
+void Terrain::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
 

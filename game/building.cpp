@@ -915,7 +915,7 @@ void Building::setHp(const qint32 &Hp)
     m_Hp = Hp;
 }
 
-void Building::serializeObject(QDataStream& pStream)
+void Building::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_BuildingID;

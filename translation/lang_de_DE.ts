@@ -1270,24 +1270,8 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="100"/>
-        <source>Enter &quot;help()&quot; for console info.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="101"/>
         <source>Starting Game...</source>
-        <translation>Spiel starten...</translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="102"/>
-        <source>Prepare to Fight...</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="103"/>
-        <source>Read this message while waiting...</source>
-        <translation></translation>
+        <translation type="vanished">Spiel starten...</translation>
     </message>
 </context>
 <context>
@@ -2435,7 +2419,7 @@ This is immediatly applied.</source>
         <translation>Generieren </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="961"/>
+        <location filename="../game/gamemap.cpp" line="972"/>
         <source>Loading Players</source>
         <translation>Lade Spieler</translation>
     </message>
@@ -2460,7 +2444,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="985"/>
+        <location filename="../game/gamemap.cpp" line="994"/>
         <source>Loading Map Row </source>
         <translation>Lade Kartenreihe </translation>
     </message>
@@ -2472,27 +2456,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="985"/>
+        <location filename="../game/gamemap.cpp" line="994"/>
         <source> of </source>
         <translation> von </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1012"/>
+        <location filename="../game/gamemap.cpp" line="1021"/>
         <source>Loading Rules</source>
         <translation>Lade Regeln</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1022"/>
+        <location filename="../game/gamemap.cpp" line="1031"/>
         <source>Loading Record</source>
         <translation>Lade Aufnahme</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1030"/>
+        <location filename="../game/gamemap.cpp" line="1039"/>
         <source>Loading scripts</source>
         <translation>Lade Skripte</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1042"/>
+        <location filename="../game/gamemap.cpp" line="1051"/>
         <source>Loading Campaign</source>
         <translation>Kampanie laden</translation>
     </message>
@@ -2580,17 +2564,17 @@ This is immediatly applied.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1486"/>
+        <location filename="../menue/gamemenue.cpp" line="1496"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1504"/>
+        <location filename="../menue/gamemenue.cpp" line="1514"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1533"/>
+        <location filename="../menue/gamemenue.cpp" line="1543"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -3182,7 +3166,7 @@ This is immediatly applied.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="49"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="52"/>
         <source>Exit</source>
         <translation>Verlassen</translation>
     </message>
@@ -3191,72 +3175,68 @@ This is immediatly applied.</source>
         <translation type="vanished">Host</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="58"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="61"/>
         <source>Host Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="67"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="70"/>
         <source>Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="76"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="79"/>
         <source>Join Game</source>
         <translation>Spiel Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="86"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="88"/>
         <source>Join Adress</source>
         <translation>Adresse Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="169"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="200"/>
         <source>Enter Host Adress</source>
         <translation>Host Adresse</translation>
     </message>
-</context>
-<context>
-    <name>LocalClient</name>
     <message>
-        <location filename="../network/localclient.cpp" line="21"/>
-        <source>Client is closed</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Map</source>
+        <translation type="unfinished">Karte</translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="42"/>
-        <source>Local Client is running to </source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="76"/>
-        <source>Client is connected</source>
-        <translation type="unfinished"></translation>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Mods</source>
+        <translation type="unfinished">Modifikationen</translation>
     </message>
 </context>
 <context>
     <name>LocalServer</name>
     <message>
-        <location filename="../network/localserver.cpp" line="18"/>
         <source>Server is closed</source>
-        <translation>Server ist geschlossen</translation>
+        <translation type="vanished">Server ist geschlossen</translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="32"/>
         <source>Server is running. </source>
-        <translation>Server läuft. </translation>
+        <translation type="vanished">Server läuft. </translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="49"/>
-        <location filename="../network/localserver.cpp" line="78"/>
-        <location filename="../network/localserver.cpp" line="101"/>
         <source>Client disconnected.</source>
-        <translation>Client unterbrochen.</translation>
+        <translation type="vanished">Client unterbrochen.</translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="139"/>
         <source>New Client connection.</source>
-        <translation>Neue Client-Verbindung.</translation>
+        <translation type="vanished">Neue Client-Verbindung.</translation>
     </message>
 </context>
 <context>
@@ -3298,19 +3278,19 @@ This is immediatly applied.</source>
     <message>
         <location filename="../coreengine/mainapp.cpp" line="554"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/mainapp.cpp" line="560"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/mainapp.cpp" line="562"/>
         <source>
  The game will be terminated sadly. :(</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3548,77 +3528,50 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="105"/>
         <source>Load Savegame</source>
         <translation>Lade Spielstand</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="983"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="88"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="998"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="58"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="94"/>
         <source>Connecting</source>
         <translation>Verbinde</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="117"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="130"/>
         <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="118"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="131"/>
         <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="127"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="140"/>
         <source>Host Adress: </source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="528"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="544"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="904"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="920"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="979"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="994"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
-    </message>
-</context>
-<context>
-    <name>NetworkInterface</name>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="157"/>
-        <location filename="../network/NetworkInterface.h" line="175"/>
-        <source>The server was closed by the peer.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="160"/>
-        <location filename="../network/NetworkInterface.h" line="178"/>
-        <source>The host was not found. Please check the host name and port settings.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="163"/>
-        <location filename="../network/NetworkInterface.h" line="181"/>
-        <source>The connection was refused by the peer.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="166"/>
-        <location filename="../network/NetworkInterface.h" line="184"/>
-        <source>Error inside the Socket happened. Error: </source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4192,145 +4145,145 @@ Version: </translation>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>CO&apos;s</source>
         <translation>KO&apos;s</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Color</source>
         <translation>Farbe</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>AI Strength</source>
         <translation>KI</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Startfunds</source>
         <translation>Startfonds</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Income Modifier</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
-        <location filename="../objects/playerselection.cpp" line="318"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Team</source>
         <translation>Team</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
-        <location filename="../objects/playerselection.cpp" line="300"/>
-        <location filename="../objects/playerselection.cpp" line="639"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
+        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="641"/>
         <source>Build List</source>
         <translation>Bauliste</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="199"/>
+        <location filename="../objects/playerselection.cpp" line="201"/>
         <source>Connected</source>
         <translation>Verbunden</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="231"/>
+        <location filename="../objects/playerselection.cpp" line="233"/>
         <source>All</source>
         <translation>Alle</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="236"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
         <source>All Random</source>
         <translation>Alle Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="244"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
         <source>CO 1 Random</source>
         <translation>KO 1 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="253"/>
+        <location filename="../objects/playerselection.cpp" line="255"/>
         <source>CO 2 Random</source>
         <translation>KO 2 Zufällig</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="271"/>
+        <location filename="../objects/playerselection.cpp" line="273"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="286"/>
+        <location filename="../objects/playerselection.cpp" line="288"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
-        <location filename="../objects/playerselection.cpp" line="324"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
+        <location filename="../objects/playerselection.cpp" line="326"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Human</source>
         <translation>Mensch</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Very Easy</source>
         <translation>Sehr Leicht</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal Off.</source>
         <translation>Normal Off.</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal Def.</source>
         <translation>Normal Def.</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="96"/>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <location filename="../objects/playerselection.cpp" line="334"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
+        <location filename="../objects/playerselection.cpp" line="329"/>
+        <location filename="../objects/playerselection.cpp" line="336"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="487"/>
+        <location filename="../objects/playerselection.cpp" line="489"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="505"/>
+        <location filename="../objects/playerselection.cpp" line="507"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="584"/>
+        <location filename="../objects/playerselection.cpp" line="586"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="603"/>
+        <location filename="../objects/playerselection.cpp" line="605"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="622"/>
+        <location filename="../objects/playerselection.cpp" line="624"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="658"/>
+        <location filename="../objects/playerselection.cpp" line="660"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6397,76 +6350,6 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
     </message>
 </context>
 <context>
-    <name>SpriteCreator</name>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="85"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="176"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="260"/>
-        <source>The color table is not an existing file. </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="90"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="182"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="266"/>
-        <source>The mask table is not an existing file. </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="192"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="272"/>
-        <source>The mask table is to small. </source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="113"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="213"/>
-        <source>Input directory or file doesn&apos;t exists. </source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>TCPClient</name>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="31"/>
-        <source>Client is closed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="55"/>
-        <source>Client is running</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="91"/>
-        <source>Client is connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TCPServer</name>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="32"/>
-        <source>Server is running</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="18"/>
-        <source>Server is closed</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="61"/>
-        <source>Client disconnected.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="105"/>
-        <source>New Client connection.</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>TELEPORTTILE</name>
     <message>
         <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
@@ -6951,14 +6834,6 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <location filename="../resources/scripts/general/Tagpower.js" line="183"/>
         <source>Unwavering Debt</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Terrain</name>
-    <message>
-        <location filename="../game/terrain.cpp" line="46"/>
-        <source>Unable to load Terrain </source>
-        <translation></translation>
     </message>
 </context>
 <context>

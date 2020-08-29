@@ -1679,7 +1679,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
     return false;
 }
 
-void CoreAI::serializeObject(QDataStream& stream)
+void CoreAI::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
     stream << enableNeutralTerrainAttack;

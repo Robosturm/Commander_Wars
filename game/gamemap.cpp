@@ -37,6 +37,7 @@ const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
 const oxygine::RectF GameMap::mapRect = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
+static constexpr qint32 loadingScreenSize = 900;
 
 spGameMap GameMap::m_pInstance = nullptr;
 
@@ -53,7 +54,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    mapAuthor = Settings::getUsername();
+    m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
     loaded = true;
@@ -94,7 +95,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast)
 
 void GameMap::setMapNameFromFilename(QString filename)
 {
-    if (mapName.isEmpty())
+    if (m_mapName.isEmpty())
     {
         QStringList items = filename.split("/");
         if (items.size() > 0)
@@ -102,7 +103,7 @@ void GameMap::setMapNameFromFilename(QString filename)
             items = items[items.size() - 1].split(".");
             if (items.size() > 0)
             {
-                mapName = items[0];
+                m_mapName = items[0];
             }
         }
     }
@@ -487,7 +488,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             else if (i == players.size() - 1)
             {
                 // cancel since we have no owner for the unit
-                qDebug(("Didn't spawn unit " + unitID).toStdString().c_str());
+                Console::print("Invalid player selected. Didn't spawn unit " + unitID, Console::eERROR);
                 return nullptr;
             }
         }
@@ -496,7 +497,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
-            qDebug(("Didn't spawn unit " + unitID).toStdString().c_str());
+            Console::print("Didn't spawn unit " + unitID, Console::eDEBUG);
             return nullptr;
         }
         spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
@@ -505,7 +506,8 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         if (onMap(x, y))
         {
             spTerrain pTerrain = getTerrain(x, y);
-            if ((pTerrain->getUnit() == nullptr) &&
+            if (pTerrain.get() != nullptr &&
+                (pTerrain->getUnit() == nullptr) &&
                 (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
             {
                 pTerrain->setUnit(pUnit);
@@ -529,7 +531,8 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 if (onMap(x + x2, y + y2))
                 {
                     spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
-                    if ((pTerrain->getUnit() == nullptr) &&
+                    if (pTerrain.get() != nullptr &&
+                        (pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
@@ -544,7 +547,8 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 if (onMap(x + x2, y + y2))
                 {
                     spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                    if ((pTerrain->getUnit() == nullptr) &&
+                    if ((pTerrain.get() != nullptr &&
+                         pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
@@ -559,7 +563,8 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 if (onMap(x + x2, y + y2))
                 {
                     spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                    if ((pTerrain->getUnit() == nullptr) &&
+                    if ((pTerrain.get() != nullptr &&
+                         pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
@@ -574,7 +579,8 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 if (onMap(x + x2, y + y2))
                 {
                     spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                    if ((pTerrain->getUnit() == nullptr) &&
+                    if ((pTerrain.get() != nullptr &&
+                         pTerrain->getUnit() == nullptr) &&
                         (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pTerrain.get(), pUnit.get()) > 0))
                     {
                         pTerrain->setUnit(pUnit);
@@ -582,14 +588,13 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                     }
                 }
             }
-
             if (currentRadius > getMapWidth() && currentRadius > getMapHeight())
             {
                 break;
             }
         }
     }
-    qDebug(("Didn't spawn unit " + unitID).toStdString().c_str());
+    Console::print("Didn't spawn unit " + unitID, Console::eDEBUG);
     return nullptr;
 }
 
@@ -872,15 +877,15 @@ bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
     }
 }
 
-void GameMap::serializeObject(QDataStream& pStream)
+void GameMap::serializeObject(QDataStream& pStream) const
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
-    pStream << mapName;
-    pStream << mapAuthor;
-    pStream << mapDescription;
+    pStream << m_mapName;
+    pStream << m_mapAuthor;
+    pStream << m_mapDescription;
     pStream << width;
     pStream << heigth;
     pStream << m_UniqueIdCounter;
@@ -921,13 +926,11 @@ void GameMap::serializeObject(QDataStream& pStream)
     }
 }
 
-void GameMap::deserializer(QDataStream& pStream, bool fast)
+void GameMap::readMapHeader(QDataStream& pStream,
+                            qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
+                            qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter)
 {
-    clearMap();
-    static const qint32 loadingScreenSize = 900;
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
-    // restore map header
-    qint32 version = 0;
     pStream >> version;
     if (version > 1)
     {
@@ -938,30 +941,40 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         pStream >> mapAuthor;
         pStream >> mapDescription;
     }
-    qint32 heigth = 0;
-    qint32 width = 0;
     pStream >> width;
     pStream >> heigth;
+    if (version > 6)
+    {
+        pStream >> uniqueIdCounter;
+    }
+    else
+    {
+        uniqueIdCounter = 0;
+    }
+    pStream >> playerCount;
+}
+
+void GameMap::deserializer(QDataStream& pStream, bool fast)
+{
+    clearMap();    
+    spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
+    // restore map header
+    qint32 version = 0;
+    qint32 heigth = 0;
+    qint32 width = 0;
+    qint32 playerCount = 0;
     qint32 mapSize = width * heigth;
+    readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
+                  width, heigth, playerCount, m_UniqueIdCounter);
     bool showLoadingScreen = mapSize >= loadingScreenSize && !fast;
     if (showLoadingScreen)
     {
         pLoadingScreen->show();
     }
-    if (version > 6)
-    {
-        pStream >> m_UniqueIdCounter;
-    }
-    else
-    {
-        m_UniqueIdCounter = 0;
-    }
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Players"), 5);
     }
-    qint32 playerCount = 0;
-    pStream >> playerCount;
     for (qint32 i = 0; i < playerCount; i++)
     {
         // create new player
@@ -1304,22 +1317,22 @@ Campaign* GameMap::getCampaign()
 
 QString GameMap::getMapDescription() const
 {
-    return mapDescription;
+    return m_mapDescription;
 }
 
 void GameMap::setMapDescription(const QString &value)
 {
-    mapDescription = value;
+    m_mapDescription = value;
 }
 
 QString GameMap::getMapAuthor() const
 {
-    return mapAuthor;
+    return m_mapAuthor;
 }
 
 void GameMap::setMapAuthor(const QString &value)
 {
-    mapAuthor = value;
+    m_mapAuthor = value;
 }
 
 qint32 GameMap::getCurrentDay() const
@@ -1531,12 +1544,12 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
 
 QString GameMap::getMapName() const
 {
-    return mapName;
+    return m_mapName;
 }
 
 void GameMap::setMapName(const QString &value)
 {
-    mapName = value;
+    m_mapName = value;
 }
 
 void GameMap::nextTurnPlayerTimeout()

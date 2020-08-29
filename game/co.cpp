@@ -1292,7 +1292,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     }
 }
 
-void CO::serializeObject(QDataStream& pStream)
+void CO::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << coID;

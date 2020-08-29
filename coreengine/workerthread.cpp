@@ -109,7 +109,7 @@ bool WorkerThread::getStarted() const
 void WorkerThread::startSlaveGame()
 {
     LocalServer* pServer = new LocalServer();
-    Multiplayermenu* pMenu = new Multiplayermenu(pServer);
+    Multiplayermenu* pMenu = new Multiplayermenu(pServer, true);
     pMenu->connectNetworkSlots();
     oxygine::getStage()->addChild(pMenu);
     pServer->sig_connect(Settings::getSlaveServerName(), 0);

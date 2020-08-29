@@ -30,17 +30,17 @@ public slots:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream);
+    virtual void serializeObject(QDataStream& pStream) const override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserializeObject(QDataStream& pStream);
+    virtual void deserializeObject(QDataStream& pStream) override;
     /**
      * @brief getVersion version of the file
      * @return
      */
-    virtual qint32 getVersion()
+    virtual qint32 getVersion() const override
     {
         return 4;
     }

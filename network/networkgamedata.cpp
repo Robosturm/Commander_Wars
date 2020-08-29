@@ -8,7 +8,7 @@ NetworkGameData::NetworkGameData()
 
 }
 
-void NetworkGameData::serializeObject(QDataStream& pStream)
+void NetworkGameData::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_players;
@@ -25,7 +25,7 @@ void NetworkGameData::deserializeObject(QDataStream& pStream)
     pStream >> version;
     pStream >> m_players;
     pStream >> m_maxPlayers;
-    m_Mods = Filesupport::readVectorList<QString, QVector>(pStream);
+    m_Mods = Filesupport::readVectorList<QString, QList>(pStream);
     pStream >> m_description;
     pStream >> m_mapName;
     pStream >> m_slaveName;
@@ -51,12 +51,12 @@ void NetworkGameData::setDescription(const QString &value)
     m_description = value;
 }
 
-QVector<QString> NetworkGameData::getMods() const
+QStringList NetworkGameData::getMods() const
 {
     return m_Mods;
 }
 
-void NetworkGameData::setMods(const QVector<QString> &Mods)
+void NetworkGameData::setMods(const QStringList &Mods)
 {
     m_Mods = Mods;
 }
@@ -89,4 +89,14 @@ QString NetworkGameData::getSlaveName() const
 void NetworkGameData::setSlaveName(const QString &slaveName)
 {
     m_slaveName = slaveName;
+}
+
+bool NetworkGameData::getLaunched() const
+{
+    return m_launched;
+}
+
+void NetworkGameData::setLaunched(bool launched)
+{
+    m_launched = launched;
 }

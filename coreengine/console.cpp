@@ -97,10 +97,10 @@ void Console::init()
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
     // Print some Info
 
-    Console::print(tr("Enter \"help()\" for console info."), Console::eLogLevels::eINFO);
-    Console::print(tr("Starting Game..."), Console::eLogLevels::eINFO);
-    Console::print(tr("Prepare to Fight..."), Console::eLogLevels::eINFO);
-    Console::print(tr("Read this message while waiting..."), Console::eLogLevels::eINFO);
+    Console::print("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
+    Console::print("Starting Game...", Console::eLogLevels::eINFO);
+    Console::print("Prepare to Fight...", Console::eLogLevels::eINFO);
+    Console::print("Read this message while waiting...", Console::eLogLevels::eINFO);
     Console::print("", Console::eLogLevels::eINFO);
     Console::createfunnymessage();
     Console::print("", Console::eLogLevels::eINFO);

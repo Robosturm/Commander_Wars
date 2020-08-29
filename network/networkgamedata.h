@@ -18,7 +18,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) const override;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -28,7 +28,7 @@ public:
      * @brief getVersion stream version for serialization
      * @return
      */
-    inline virtual qint32 getVersion() override
+    inline virtual qint32 getVersion() const override
     {
         return 0;
     }
@@ -38,8 +38,8 @@ public:
     QString getDescription() const;
     void setDescription(const QString &value);
 
-    QVector<QString> getMods() const;
-    void setMods(const QVector<QString> &Mods);
+    QStringList getMods() const;
+    void setMods(const QStringList &Mods);
 
     qint32 getMaxPlayers() const;
     void setMaxPlayers(const qint32 &maxPlayers);
@@ -49,15 +49,19 @@ public:
 
     QString getSlaveName() const;
     void setSlaveName(const QString &slaveName);
+
+    bool getLaunched() const;
+    void setLaunched(bool launched);
 signals:
 
 private:
     qint32 m_players{0};
     qint32 m_maxPlayers{0};
-    QVector<QString> m_Mods;
+    QStringList m_Mods;
     QString m_description;
     QString m_mapName;
     QString m_slaveName;
+    bool m_launched{false};
 };
 
 #endif // NETWORKGAMEDATA_H

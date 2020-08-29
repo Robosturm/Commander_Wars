@@ -28,7 +28,7 @@ TCPClient::~TCPClient()
 {
     disconnect();
     disconnectTCP();
-    Console::print(tr("Client is closed"), Console::eLogLevels::eDEBUG);
+    Console::print("Client is closed", Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::connectTCP(QString adress, quint16 port)
@@ -52,7 +52,7 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
-    Console::print(tr("Client is running"), Console::eLogLevels::eDEBUG);
+    Console::print("Client is running", Console::eLogLevels::eDEBUG);
 }
 
 void TCPClient::disconnectTCP()
@@ -88,9 +88,14 @@ void TCPClient::changeThread(quint64, QThread* pThread)
 
 void TCPClient::connected()
 {
-    Console::print(tr("Client is connected"), Console::eLogLevels::eDEBUG);
+    Console::print("Client is connected", Console::eLogLevels::eDEBUG);
     isConnected = true;
     emit sigConnected(0);
+}
+
+void TCPClient::setSocketId(const quint64 &socketId)
+{
+    m_socketId = socketId;
 }
 
 spTxTask TCPClient::getTXTask() const
@@ -102,4 +107,11 @@ spTxTask TCPClient::getTXTask() const
 spRxTask TCPClient::getRXTask() const
 {
     return m_pRXTask;
+}
+
+void TCPClient::setSocketID(const quint64 &socketID)
+{
+    NetworkInterface::setSocketID(socketID);
+    m_pRXTask->setSocketID(socketID);
+    m_pTXTask->setSocketID(socketID);
 }

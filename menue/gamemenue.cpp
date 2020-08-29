@@ -1137,10 +1137,20 @@ void GameMenue::showGameInfo()
 
         spGenericBox pGenericBox = new GenericBox();
         QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
-        spPanel pPanel = new Panel(true, size, size);
+        qint32 width = (Settings::getWidth() - 20) / header.size();
+        if (width < 150)
+        {
+            width = 150;
+        }
+        QSize contentSize(header.size() * width + 40, size.height());
+        spPanel pPanel = new Panel(true, size, contentSize);
         pPanel->setPosition(20, 20);
-        qint32 width = (Settings::getWidth() - 120 - 5 * (header.size() + 1)) / header.size();
-        spTableView pTableView = new TableView(width * header.size() + 5 * (header.size() + 1), data, header, false);
+        QVector<qint32> widths;
+        for (auto value : header)
+        {
+            widths.append(width);
+        }
+        spTableView pTableView = new TableView(widths, data, header, false);
         pTableView->setPosition(20, 20);
         pPanel->addItem(pTableView);
         pPanel->setContentHeigth(pTableView->getHeight() + 40);

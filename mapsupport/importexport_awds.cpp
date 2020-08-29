@@ -1563,11 +1563,11 @@ void GameMap::importAWDSMap(QString file)
                 stringLength += sign;
             }
         }
-        mapName = "";
+        m_mapName = "";
         for (qint32 i = 0; i < stringLength; i++)
         {
             stream >> sign;
-            mapName += static_cast<char>(sign);
+            m_mapName += static_cast<char>(sign);
         }
         stringLength = 0;
         for (qint32 i = 0; i < 4; i++)
@@ -1582,11 +1582,11 @@ void GameMap::importAWDSMap(QString file)
                 stringLength += sign;
             }
         }
-        mapAuthor = "";
+        m_mapAuthor = "";
         for (qint32 i = 0; i < stringLength; i++)
         {
             stream >> sign;
-            mapAuthor += static_cast<char>(sign);
+            m_mapAuthor += static_cast<char>(sign);
         }
         stringLength = 0;
         for (qint32 i = 0; i < 4; i++)
@@ -1601,13 +1601,13 @@ void GameMap::importAWDSMap(QString file)
                 stringLength += sign;
             }
         }
-        mapDescription = "";
+        m_mapDescription = "";
         for (qint32 i = 0; i < stringLength; i++)
         {
             stream >> sign;
-            mapDescription += static_cast<char>(sign);
+            m_mapDescription += static_cast<char>(sign);
         }
-        mapDescription = mapDescription.replace("\n", " ");
+        m_mapDescription = m_mapDescription.replace("\n", " ");
         EditorMenue::getInstance()->optimizePlayers();
         // update the whole fucking map
         updateSprites();

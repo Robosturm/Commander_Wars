@@ -1515,7 +1515,7 @@ void HumanPlayerInput::autoEndTurn()
     }
 }
 
-void HumanPlayerInput::serializeObject(QDataStream& stream)
+void HumanPlayerInput::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
 }
