@@ -40,7 +40,12 @@ var Constructor = function()
     this.getActionText = function()
     {
         var unitID = "WATERPLANE";
-        var costs = map.getCurrentPlayer().getCosts(unitID);
+        var costs = Global[unitID].getBaseCost();
+        if (map !== null &&
+                map.getCurrentPlayer() !== null)
+        {
+            costs = map.getCurrentPlayer().getCosts(unitID);
+        }
         var name = Global[unitID].getName();
         return qsTr(name + " " + costs.toString());
     };

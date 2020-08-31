@@ -74,6 +74,7 @@ Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, bool host
     }
     else
     {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
         m_pPlayerSelection->setIsServerGame(true);
     }
 }
@@ -308,7 +309,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::INITGAME)
         {
             // initializes the game on the client
-            if (!m_NetworkInterface->getIsServer())
+            if (!m_NetworkInterface->getIsServer() ||
+                !m_local)
             {
                 initClientGame(socketID, stream);
                 addRef();
@@ -1006,6 +1008,15 @@ void Multiplayermenu::startGame()
     }
     else
     {
+        if (m_pPlayerSelection->getPlayerReady())
+        {
+            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+        }
+        else
+        {
+            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+        }
+        markGameReady();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << NetworkCommands::STARTSERVERGAME;

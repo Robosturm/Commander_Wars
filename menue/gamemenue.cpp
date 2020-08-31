@@ -32,6 +32,7 @@
 
 #include "multiplayer/networkcommands.h"
 #include "network/tcpserver.h"
+#include "network/localserver.h"
 
 #include "wiki/fieldinfo.h"
 
@@ -76,6 +77,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << NetworkCommands::CLIENTINITGAME;
+            sendStream << m_pNetworkInterface->getSocketID();
             m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
         else
@@ -119,7 +121,7 @@ GameMenue::GameMenue()
     addRef();
 }
 
-void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+void GameMenue::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
@@ -132,8 +134,19 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             if (m_pNetworkInterface->getIsServer())
             {
                 // the given client is ready
-                m_ReadySockets.append(socketID);
-                QVector<quint64> sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                quint64 socket = 0;
+                stream >> socket;
+                m_ReadySockets.append(socket);
+                QVector<quint64> sockets;
+
+                if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
+                {
+                    sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                }
+                else
+                {
+                    sockets = dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                }
                 bool ready = true;
                 for (qint32 i = 0; i < sockets.size(); i++)
                 {

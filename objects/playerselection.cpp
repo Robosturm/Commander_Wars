@@ -997,12 +997,14 @@ void PlayerSelection::selectAI(qint32 player)
         }
         if (m_pNetworkInterface->getIsServer())
         {
-            m_PlayerSockets[player] = 0;
+            quint64 socket = m_pNetworkInterface->getSocketID();
+            m_PlayerSockets[player] = socket;
             spGameMap pMap = GameMap::getInstance();
             createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
             QByteArray data;
-            QDataStream stream(&data, QIODevice::WriteOnly);
+            QDataStream stream(&data, QIODevice::WriteOnly);            
             stream << NetworkCommands::PLAYERCHANGED;
+            stream << socket;
             if (type == GameEnums::AiTypes_Human)
             {
                 stream << Settings::getUsername();
@@ -1015,6 +1017,12 @@ void PlayerSelection::selectAI(qint32 player)
             if (type == GameEnums::AiTypes_Open)
             {
                 stream << static_cast<qint32>(GameEnums::AiTypes_Open);
+            }
+            else if (m_isServerGame &&
+                     !Mainapp::getSlave() &&
+                     type != GameEnums::AiTypes_Human)
+            {
+                stream << type;
             }
             else
             {
@@ -1063,6 +1071,7 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::PLAYERCHANGED)
         {
             changePlayer(socketID, stream);
+            sendOpenPlayerCount();
         }
         else if (messageType == NetworkCommands::PLAYERDATA)
         {
@@ -1320,10 +1329,10 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
         stream >> name;
         stream >> player;
         stream >> aiType;
+        Console::print("Remote change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socketId) + " and ai " + QString::number(aiType), Console::eDEBUG);
         if (socketId != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
-            Console::print("Remote change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socketId) + " and ai " + QString::number(aiType), Console::eDEBUG);
             m_PlayerSockets[player] = socketId;
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
@@ -1344,6 +1353,10 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
             {
                 emit sigDisconnect();
             }
+        }
+        else
+        {
+            Console::print("Update Ignored", Console::eDEBUG);
         }
     }
 }
@@ -1497,15 +1510,19 @@ void PlayerSelection::updatePlayerData(qint32 player)
         m_playerIncomes[player]->setCurrentValue(pPlayer->getFundsModifier());
         m_playerTeams[player]->setCurrentItem(pPlayer->getTeam());
         // check for open player
-        bool notSserverChangeAblePlayer = (m_pNetworkInterface->getIsServer() && pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi);
+        bool notServerChangeAblePlayer = false;
+        if (pPlayer->getBaseGameInput() != nullptr)
+        {
+            notServerChangeAblePlayer = (m_pNetworkInterface->getIsServer() && pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi);
+        }
         if (pPlayer->getBaseGameInput() == nullptr ||
             pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
-            notSserverChangeAblePlayer)
+            notServerChangeAblePlayer)
         {
             m_playerAIs[player]->setEnabled(true);
             if (((pPlayer->getBaseGameInput() != nullptr &&
                   pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
-                 notSserverChangeAblePlayer) &&
+                 notServerChangeAblePlayer) &&
                 !saveGame)
             {
                 m_playerColors[player]->setEnabled(true);
