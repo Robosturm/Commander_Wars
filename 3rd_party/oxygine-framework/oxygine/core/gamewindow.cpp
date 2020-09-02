@@ -1,5 +1,7 @@
 #include "gamewindow.h"
 
+#include <cmath>
+
 #include "../KeyEvent.h"
 
 #include <QMouseEvent>
@@ -29,6 +31,7 @@
 #include "../Clock.h"
 
 #include "QMutexLocker"
+
 
 namespace oxygine
 {
@@ -343,5 +346,17 @@ namespace oxygine
     GameWindow* GameWindow::getWindow()
     {
         return _window;
+    }
+
+    bool GameWindow::isEvenScale(qint32 width1, qint32 width2)
+    {
+        float scale1 = static_cast<float>(width1) / static_cast<float>(width2);
+        float scale2 = static_cast<float>(width2) / static_cast<float>(width1);
+        if ((fmodf(scale1, 2.0f) == 0.0f) ||
+            (fmodf(scale2, 2.0f) == 0.0f))
+        {
+            return true;
+        }
+        return false;
     }
 }

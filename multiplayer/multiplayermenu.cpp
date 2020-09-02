@@ -765,6 +765,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         GameEnums::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
+        Console::print("Creating AI for player " + QString::number(i) + " of type " + QString::number(aiType), Console::eDEBUG);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
@@ -777,8 +778,15 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     }
     pMap->updateSprites();
     // start game
+    m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
+    // send game started
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << NetworkCommands::CLIENTINITGAME;
+    sendStream << m_NetworkInterface->getSocketID();
+    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     pApp->continueThread();
 }
 
@@ -991,15 +999,8 @@ void Multiplayermenu::startGame()
 {
     if (!m_Host)
     {
-        if (m_pPlayerSelection->getPlayerReady())
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
-        }
-        else
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
-        }
         markGameReady();
+        changeButtonText();
     }
     else if (m_local)
     {
@@ -1008,15 +1009,8 @@ void Multiplayermenu::startGame()
     }
     else
     {
-        if (m_pPlayerSelection->getPlayerReady())
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
-        }
-        else
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
-        }
         markGameReady();
+        changeButtonText();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << NetworkCommands::STARTSERVERGAME;
@@ -1032,6 +1026,18 @@ void Multiplayermenu::markGameReady()
     sendStream << NetworkCommands::CLIENTREADY;
     sendStream << m_pPlayerSelection->getPlayerReady();
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+}
+
+void Multiplayermenu::changeButtonText()
+{
+    if (m_pPlayerSelection->getPlayerReady())
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+    }
+    else
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+    }
 }
 
 void Multiplayermenu::startCountdown()
@@ -1089,6 +1095,7 @@ void Multiplayermenu::countdown()
         emit m_Chat->sigSendText(QString::number(counter) + "...");
         if (counter == 0)
         {
+            Console::print("Starting game on server", Console::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
             defeatClosedPlayers();
@@ -1105,7 +1112,8 @@ void Multiplayermenu::countdown()
             stream << seed;
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
-                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
+                Console::print("AI on server for player " + QString::number(i) + " is " + QString::number(pMap->getPlayer(i)->getBaseGameInput()->getAiType()), Console::eDEBUG);
+                pMap->getPlayer(i)->serializeObject(stream);
             }
             Mainapp::seed(seed);
             Mainapp::setUseSeed(true);

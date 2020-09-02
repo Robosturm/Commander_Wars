@@ -153,7 +153,7 @@ private:
     static const qint32 startHSelectionType = startHPlacementSize + selectionHeight;
     static const qint32 startHSelectedPlayer = startHSelectionType + startHPlacementSize + selectionHeight;
     static const qint32 startHTerrain = startHSelectedPlayer + selectionHeight;
-    static const qint32 startH = GameMap::Imagesize * 2;
+    const qint32 startH = GameMap::getImageSize() * 2;
     static const float xFactor;
     static const float yFactor;
     EditorMode m_Mode{EditorMode::Terrain};

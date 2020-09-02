@@ -159,7 +159,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setHtmlText(tr("Menu Heigth: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spSlider pMenuItemHeigth = new Slider(Settings::getWidth() - 20 - sliderOffset, 10, (Settings::getHeight() - GameMap::Imagesize * 2) / GameMap::Imagesize, "");
+    spSlider pMenuItemHeigth = new Slider(Settings::getWidth() - 20 - sliderOffset, 10, (Settings::getHeight() - GameMap::getImageSize() * 2) / GameMap::getImageSize(), "");
     pMenuItemHeigth->setTooltipText(tr("Amount of items per row for ingame menus before a new row is added."));
     pMenuItemHeigth->setPosition(sliderOffset - 130, y);
     pMenuItemHeigth->setCurrentValue(static_cast<qint32>(Settings::getMenuItemCount()));

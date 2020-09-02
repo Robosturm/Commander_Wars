@@ -41,13 +41,13 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
 
         testText->setStyle(style);
         testText->setHtmlText(texts[i]);
-        qint32 newWidth = testText->getTextRect().getWidth();
+        qint32 newWidth = testText->getTextRect().getWidth() * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize);
         if (newWidth > width )
         {
             width = newWidth;
         }
     }
-    width += GameMap::Imagesize + GameMap::Imagesize * 3 / 4 ;
+    width += GameMap::getImageSize() + GameMap::getImageSize() * 3 / 4 ;
     itemWidth = width;
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
@@ -66,8 +66,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     {
         m_Cursor->setResAnim(pAnim);
     }
-    m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
-    m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
+    m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
+    m_Cursor->setScale(GameMap::getImageSize() / pAnim->getWidth());
     qint32 x = 0;
 
     qint32 xCount = 0;
@@ -103,7 +103,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pItemBox->addChild(icons[i]);
         icons[i]->setPosition(3, 0);
-        pItemBox->setHeight(GameMap::Imagesize);
+        pItemBox->setHeight(GameMap::getImageSize());
 
         pItemBox->setY(y);
         pItemBox->setX(x);
@@ -122,17 +122,18 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             style.color = FontManager::getFontColor();
         }
         textField->setStyle(style);
+        textField->setScale(static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
         textField->setHtmlText(texts[i]);
         textField->attachTo(pItemBox);
-        textField->setPosition(3 + GameMap::Imagesize, 0);
-        textField->setSize(width - textField->getX(), GameMap::Imagesize - 4);
+        textField->setPosition(3 + GameMap::getImageSize(), 0);
+        textField->setSize(width - textField->getX(), GameMap::getImageSize() - 4);
 
         this->addChild(pItemBox);
         pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
-            m_Cursor->setY(y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+            m_Cursor->setY(y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
             m_Cursor->setX(x + width);
             currentAction = i;
         });
@@ -151,8 +152,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                         emit sigItemSelected(action, costs);
                     }
                     else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-                    {
-                        emit sigCanceled(0, 0);
+                    {                        emit sigCanceled(0, 0);
                     }
                 }
 
@@ -193,7 +193,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                 pItemBox->setSize(pAnim->getSize());
                 pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
                 pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-                pItemBox->setHeight(GameMap::Imagesize);
+                pItemBox->setHeight(GameMap::getImageSize());
                 pItemBox->setY(y);
                 pItemBox->setX(x);
                 pItemBox->setWidth(width);
@@ -264,17 +264,17 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
 
-    if (x + getWidth() + GameMap::Imagesize / 2 > pMap->getMapWidth() * GameMap::Imagesize)
+    if (x + getWidth() + GameMap::getImageSize() / 2 > pMap->getMapWidth() * GameMap::getImageSize())
     {
-        x = pMap->getMapWidth() * GameMap::Imagesize - getWidth() - GameMap::Imagesize / 2;
+        x = pMap->getMapWidth() * GameMap::getImageSize() - getWidth() - GameMap::getImageSize() / 2;
         if (x < 0)
         {
             x = 0;
         }
     }
-    if (y + getHeight() + GameMap::Imagesize / 2 > pMap->getMapHeight() * GameMap::Imagesize)
+    if (y + getHeight() + GameMap::getImageSize() / 2 > pMap->getMapHeight() * GameMap::getImageSize())
     {
-        y = pMap->getMapHeight() * GameMap::Imagesize - getHeight() - GameMap::Imagesize / 2;
+        y = pMap->getMapHeight() * GameMap::getImageSize() - getHeight() - GameMap::getImageSize() / 2;
         if (y < 0)
         {
             y = 0;
@@ -408,7 +408,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 y -= Settings::getMenuItemCount();
                 x++;
             }
-            m_Cursor->setY(startY + y * itemHeigth + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+            m_Cursor->setY(startY + y * itemHeigth + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
             m_Cursor->setX(itemWidth * (x + 1));
         }
     }

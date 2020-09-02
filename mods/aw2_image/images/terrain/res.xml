@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "mods/aw2_image/images/terrain/" />
-	<atlas>
+	<atlas linearFilter = "false">
 		<image file="plains+0.png" />
 		<image file="plains+1.png" />
 		<image file="plains+2.png" />

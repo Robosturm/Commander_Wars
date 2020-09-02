@@ -25,11 +25,11 @@ public:
 
     enum class Priorities
     {
-        Colored = 1,
-        Outline = 1,
-        Waiting = 10,
+        Colored = 0,
+        Outline,
+        Waiting,
         OutlineWaiting,
-        Icons = 20
+        Icons
     };
 
     enum ModdingFlags

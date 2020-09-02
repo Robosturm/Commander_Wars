@@ -475,13 +475,13 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     }
 
     createStrengthBar(m_UnitDataActors[i], offBonus, 0);
-    createStrengthBar(m_UnitDataActors[i], defBonus, GameMap::Imagesize / 2);
+    createStrengthBar(m_UnitDataActors[i], defBonus, GameMap::getImageSize() / 2);
 
     if (firerangeBonus != 0)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("atkRange"));
-        pSprite->setY(5 +  GameMap::Imagesize);
+        pSprite->setY(5 +  GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
         oxygine::spTextField pText = new oxygine::TextField();
@@ -502,7 +502,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pCOSpriteManager->getResAnim("moveRange"));
-        pSprite->setPosition(25 +  GameMap::Imagesize, 5 +  GameMap::Imagesize);
+        pSprite->setPosition(25 +  GameMap::getImageSize(), 5 +  GameMap::getImageSize());
         pSprite->setScale(2.0f);
         m_UnitDataActors[i]->addChild(pSprite);
         oxygine::spTextField pText = new oxygine::TextField();
@@ -565,14 +565,14 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
-                pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
+                pSprite->setScale((GameMap::getImageSize() * 2) / pAnim->getWidth());
             }
             pSprite->setPosition(0, 0);
             perkActor->addChild(pSprite);
             spLabel pLabel = new Label(250);
             pLabel->setStyle(style);
             pLabel->setText(name);
-            pLabel->setPosition(GameMap::Imagesize * 2 + 10, 10);
+            pLabel->setPosition(GameMap::getImageSize() * 2 + 10, 10);
             perkActor->addChild(pLabel);
             perkActor->setPosition(x, y);
             addChild(perkActor);
@@ -585,7 +585,7 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
             if (x + width > m_pCurrentCO->getX() - 50)
             {
                 x = 10;
-                y += GameMap::Imagesize * 2 + 10;
+                y += GameMap::getImageSize() * 2 + 10;
             }
         }
     }
@@ -631,7 +631,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     pStartBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pStartBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pStartBox->setSize(width * divider + 1, 8);
-    pStartBox->setPosition(5 +  GameMap::Imagesize, y);
+    pStartBox->setPosition(5 +  GameMap::getImageSize(), y);
     pActor->addChild(pStartBox);
 
     oxygine::spBox9Sprite pEndBox = new oxygine::Box9Sprite();
@@ -639,7 +639,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
     pEndBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pEndBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     pEndBox->setSize(width * (1 - divider) + 2, 8);
-    pEndBox->setPosition(5 +  GameMap::Imagesize + pStartBox->getWidth(), y);
+    pEndBox->setPosition(5 +  GameMap::getImageSize() + pStartBox->getWidth(), y);
     pActor->addChild(pEndBox);
 }
 

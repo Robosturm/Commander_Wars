@@ -113,6 +113,10 @@ private:
      * @brief markGameReady
      */
     void markGameReady();
+    /**
+     * @brief changeButtonText
+     */
+    void changeButtonText();
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

@@ -73,8 +73,8 @@ oxygine::spSprite GameManager::getIconSprite(QString icon)
             pSprite->setResAnim(pAnim);
         }
     }
-    pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+    pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     return pSprite;
 }
 

@@ -304,7 +304,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
             spPlayer pPlayer = new Player();
             pPlayer->init();
             spUnit pUnit = new Unit(file, pPlayer.get(), false);
-            pUnit->setScale(size / GameMap::Imagesize);
+            pUnit->setScale(size / GameMap::getImageSize());
             pUnit->setOwner(nullptr);
             pSprite = pUnit.get();
         }

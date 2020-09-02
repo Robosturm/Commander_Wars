@@ -16,7 +16,7 @@
 		<image file="superStrongPowerEnd.png" trim="false" extend="false" border="0" guideX1="1" guideX2="2" guideY1="1" guideY2="7" />
 	</atlas>
 	
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- unusable co's for co selection -->
 		<image file="no_co+info.png" />
 		<image file="no_co+face.png" cols = "3" />

@@ -589,7 +589,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 {
     spGameMenue pMenue = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
-    float posX = x * GameMap::Imagesize * pMap->getZoom() + pMap->getX();
+    float posX = x * GameMap::getImageSize() * pMap->getZoom() + pMap->getX();
     if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - pMenue->getGameInfoBar()->getWidth())
     {
         posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - pMenue->getGameInfoBar()->getWidth();
@@ -598,7 +598,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
     {
         posX = 10;
     }
-    float posY = y * GameMap::Imagesize * pMap->getZoom() + pMap->getY();
+    float posY = y * GameMap::getImageSize() * pMap->getZoom() + pMap->getY();
     if (posY < 10)
     {
         posY = 10;
@@ -705,19 +705,18 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {
-        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-        pSprite->setPosition(point.x() * GameMap::Imagesize, point.y() * GameMap::Imagesize);
+        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
         pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
         pMap->addChild(pSprite);
     }
     else
     {
-        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
+        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
         pSprite->setPriority(static_cast<qint16>(drawPriority));
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
     }
-    pSprite->setDestRecModifier(GameMap::mapRect);
     return pSprite;
 }
 
@@ -826,8 +825,8 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     }
                     textField2->setHtmlText(labelText);
                     textField2->attachTo(m_ZInformationLabel);
-                    m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize + 4,
-                                                     y * GameMap::Imagesize - GameMap::Imagesize * 2.0f);
+                    m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,
+                                                     y * GameMap::getImageSize() - GameMap::getImageSize() * 2.0f);
                     m_ZInformationLabel->setPriority(static_cast<qint16>(Mainapp::ZOrder::Animation));
                     pMap->addChild(m_ZInformationLabel);
                 }
@@ -957,8 +956,8 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
-        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-        pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        pSprite->setPosition(points[i].x() * GameMap::getImageSize() -(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2,  points[i].y() * GameMap::getImageSize() -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         pMap->addChild(pSprite);
         m_Arrows.append(pSprite);
 
@@ -1016,7 +1015,6 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
                 pSprite->setColumn(static_cast<qint32>(Arrows::Up));
             }
         }
-        pSprite->setDestRecModifier(GameMap::mapRect);
     }
 }
 

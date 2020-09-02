@@ -93,14 +93,14 @@ void PerkSelection::updatePerksView(CO* pCO)
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
-                pSprite->setScale((GameMap::Imagesize * 2) / pAnim->getWidth());
+                pSprite->setScale((GameMap::getImageSize() * 2) / pAnim->getWidth());
             }
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
             spLabel pLabel = new Label(250);
             pLabel->setStyle(style);
             pLabel->setText(name);
-            pLabel->setPosition(x + GameMap::Imagesize * 2 + 50, y + 10);
+            pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y + 10);
             addChild(pLabel);
 
 
@@ -108,11 +108,11 @@ void PerkSelection::updatePerksView(CO* pCO)
             if (x + width > getWidth())
             {
                 x = 0;
-                y += GameMap::Imagesize * 2 + 10;
+                y += GameMap::getImageSize() * 2 + 10;
             }
         }
     }
-    y += GameMap::Imagesize * 2 + 10;
+    y += GameMap::getImageSize() * 2 + 10;
     setHeight(y);
     updatePerkCount();
     pApp->continueThread();

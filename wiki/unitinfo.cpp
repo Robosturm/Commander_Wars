@@ -323,11 +323,11 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pBuilding->setScaleY(1.0f / static_cast<float>(buildingHeigth));
         if (buildingWidth > 1)
         {
-            pBuilding->setX(GameMap::Imagesize * (buildingWidth - 1) / (buildingWidth));
+            pBuilding->setX(GameMap::getImageSize() * (buildingWidth - 1) / (buildingWidth));
         }
         if (buildingHeigth > 1)
         {
-            pBuilding->setY(GameMap::Imagesize * (buildingHeigth - 1) / (buildingHeigth));
+            pBuilding->setY(GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
         }
         pTerrain->setBuilding(pBuilding);
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
@@ -440,8 +440,8 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
             emit sigShowLink(unitID);
         });
         addChild(pDummy);
-        x += GameMap::Imagesize * 1.5f;
-        if (x + GameMap::Imagesize * 1.5f > width)
+        x += GameMap::getImageSize() * 1.5f;
+        if (x + GameMap::getImageSize() * 1.5f > width)
         {
             x = 0;
             y += 40;
@@ -469,8 +469,8 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
             emit sigShowLink(loadedUnit->getUnitID());
         });
         addChild(pDummy);
-        x += GameMap::Imagesize * 1.5f;
-        if (x + GameMap::Imagesize * 1.5f > width)
+        x += GameMap::getImageSize() * 1.5f;
+        if (x + GameMap::getImageSize() * 1.5f > width)
         {
             x = 0;
             y += 40;
@@ -494,8 +494,8 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
                 emit sigShowLink(unitID);
             });
             addChild(pDummy);
-            x += GameMap::Imagesize * 1.5f;
-            if (x + GameMap::Imagesize * 1.5f > width)
+            x += GameMap::getImageSize() * 1.5f;
+            if (x + GameMap::getImageSize() * 1.5f > width)
             {
                 x = 0;
                 y += 40;
@@ -513,15 +513,15 @@ void UnitInfo::createActionTable(Unit* pUnit, qint32& y, qint32 width)
         // QString text = GameAction::getActionText(action);
         QString icon = GameAction::getActionIcon(action);
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon, GameMap::Imagesize);
+        oxygine::spSprite pSprite = pWikiDatabase->getIcon(icon, GameMap::getImageSize());
         pSprite->setPosition(x, y);
         pSprite->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(action);
         });
         addChild(pSprite);
-        x += GameMap::Imagesize * 1.5f;
-        if (x + GameMap::Imagesize * 1.5f > width)
+        x += GameMap::getImageSize() * 1.5f;
+        if (x + GameMap::getImageSize() * 1.5f > width)
         {
             x = 0;
             y += 40;

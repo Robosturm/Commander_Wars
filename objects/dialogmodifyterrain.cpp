@@ -102,15 +102,15 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
             });
             m_pPanel->addItem(pSprite);
 
-            x += GameMap::Imagesize * 3 ;
+            x += GameMap::getImageSize() * 3 ;
             if (x > m_pPanel->getContentWidth() - 100 - pSprite->getWidth() && i < pTerrainStyles.size() - 1)
             {
                 x = 20;
-                y += GameMap::Imagesize * 3;
+                y += GameMap::getImageSize() * 3;
             }
         }
     }
-    y += GameMap::Imagesize * 3;
+    y += GameMap::getImageSize() * 3;
 
 
 

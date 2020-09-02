@@ -533,3 +533,70 @@ void SpriteCreator::inversImageFrames(QString& file, qint32 frames)
     QFile::remove(file);
     newPicture.save(file);
 }
+
+void SpriteCreator::extendMaskImages(QString& folder, QString& filter)
+{
+    QStringList filters;
+    filters << filter;
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        extendMaskImage(file);
+    }
+}
+
+void SpriteCreator::extendMaskImage(QString& file)
+{
+    constexpr qint32 alpha = 0;
+    QImage picture(file);
+    QImage newPicture(picture.size(), picture.format());
+    for (qint32 x = 0; x < picture.width(); x++)
+    {
+        for (qint32 y = 0; y < picture.height(); y++)
+        {
+            // color pixel or another one?
+            QColor org = picture.pixelColor(x, y);
+            if (org.alpha() == alpha)
+            {
+                if (y + 1 < picture.height() &&
+                    picture.pixelColor(x, y + 1).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x, y + 1);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (y - 1 >= 0 &&
+                         picture.pixelColor(x, y - 1).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x, y - 1);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (x + 1 < picture.width() &&
+                    picture.pixelColor(x + 1, y).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x + 1, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (x - 1 >= 0 &&
+                         picture.pixelColor(x - 1, y).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x - 1, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else
+                {
+                    QColor color = picture.pixelColor(x, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+            }
+            else
+            {
+                QColor color = picture.pixelColor(x, y);
+                newPicture.setPixelColor(x, y, color);
+            }
+        }
+    }
+    QFile::remove(file);
+    newPicture.save(file);
+}

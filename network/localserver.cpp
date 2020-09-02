@@ -118,12 +118,6 @@ void LocalServer::onConnect()
         QObject::connect(nextSocket, &QLocalSocket::disconnected, this, &LocalServer::disconnectSocket, Qt::QueuedConnection);
         QObject::connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
-        if (m_idCounter == 0)
-        {
-            m_idCounter++;
-        }
-        m_SocketIDs.append(m_idCounter);
-
         // Start RX-Task
         RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, true);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
@@ -176,4 +170,14 @@ void LocalServer::changeThread(quint64 socketID, QThread* pThread)
             break;
         }
     }
+}
+
+void LocalServer::addSocket(quint64 socket)
+{
+    m_SocketIDs.append(socket);
+}
+
+void LocalServer::removeSocket(quint64 socket)
+{
+    m_SocketIDs.removeAll(socket);
 }

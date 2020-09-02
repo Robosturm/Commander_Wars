@@ -36,8 +36,8 @@
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
-const oxygine::RectF GameMap::mapRect = oxygine::RectF(-0.3f, -0.3f, 0.5f, 0.5f);
 static constexpr qint32 loadingScreenSize = 900;
+qint32 GameMap::m_imagesize = 24;
 
 spGameMap GameMap::m_pInstance = nullptr;
 
@@ -462,6 +462,32 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
 
 }
 
+void GameMap::killDeadUnits()
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            if (pUnit != nullptr &&
+                pUnit->getHp() <= 0)
+            {
+                fields.at(y)->at(x)->setUnit(nullptr);
+            }
+        }
+    }
+    pApp->continueThread();
+}
+
+void GameMap::setImagesize(const qint32 &imagesize)
+{
+    m_imagesize = imagesize;
+}
+
 void GameMap::removePlayer(qint32 index)
 {
     players.removeAt(index);
@@ -714,8 +740,8 @@ void GameMap::centerMap(qint32 x, qint32 y)
     if (onMap(x, y))
     {
         // draw point
-        this->setPosition(Settings::getWidth() / 2.0f - x * this->getZoom() * Imagesize - Imagesize / 2.0f,
-                          Settings::getHeight() / 2.0f - y * this->getZoom() * Imagesize - Imagesize / 2.0f);
+        this->setPosition(Settings::getWidth() / 2.0f - x * this->getZoom() * m_imagesize - m_imagesize / 2.0f,
+                          Settings::getHeight() / 2.0f - y * this->getZoom() * m_imagesize - m_imagesize / 2.0f);
     }
 }
 
@@ -727,21 +753,21 @@ void GameMap::moveMap(qint32 x, qint32 y)
     float resX = this->getPosition().x + x;
     float resY = this->getPosition().y + y;
     float minVisible = 16.0f / m_zoom;
-    if (resX > Settings::getWidth()  - minVisible * m_zoom * Imagesize)
+    if (resX > Settings::getWidth()  - minVisible * m_zoom * m_imagesize)
     {
-        resX = Settings::getWidth() - minVisible * m_zoom * Imagesize;
+        resX = Settings::getWidth() - minVisible * m_zoom * m_imagesize;
     }
-    if (resX < -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize)
+    if (resX < -m_zoom * m_imagesize * width + minVisible * m_zoom * m_imagesize)
     {
-        resX = -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize;
+        resX = -m_zoom * m_imagesize * width + minVisible * m_zoom * m_imagesize;
     }
-    if (resY > Settings::getHeight() - minVisible * m_zoom * Imagesize)
+    if (resY > Settings::getHeight() - minVisible * m_zoom * m_imagesize)
     {
-        resY = Settings::getHeight() - minVisible * m_zoom * Imagesize;
+        resY = Settings::getHeight() - minVisible * m_zoom * m_imagesize;
     }
-    if (resY < -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize)
+    if (resY < -m_zoom * m_imagesize * heigth + minVisible * m_zoom * m_imagesize)
     {
-        resY = -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize;
+        resY = -m_zoom * m_imagesize * heigth + minVisible * m_zoom * m_imagesize;
     }
 
     this->setPosition(resX, resY);
@@ -758,9 +784,9 @@ void GameMap::zoom(float zoom)
         m_zoom /= 2.0f;
     }
     // limit zoom
-    if (m_zoom > 32.0f)
+    if (m_zoom > 16.0f)
     {
-        m_zoom = 32.0f;
+        m_zoom = 16.0f;
     }
     else if (m_zoom < 0.5f)
     {
@@ -797,7 +823,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
                 pTerrain->setBaseTerrain(pTerrainOld);
                 fields.at(y)->replace(x, pTerrain);
                 this->addChild(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
             }
             else
@@ -805,7 +831,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
                 pTerrainOld->detach();
                 fields.at(y)->replace(x, pTerrain);
                 this->addChild(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
             }
         }
@@ -1008,7 +1034,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 if (!fast)
                 {
                     this->addChild(pTerrain);
-                    pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                    pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                     pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
                 }
             }
@@ -1198,7 +1224,7 @@ QString GameMap::readMapName(QDataStream& pStream)
 
 qint32 GameMap::getImageSize()
 {
-    return Imagesize;
+    return m_imagesize;
 }
 
 void GameMap::enableUnits(Player* pPlayer)
@@ -1649,6 +1675,7 @@ void GameMap::initPlayersAndSelectCOs()
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
         if (pPlayer->getBaseGameInput() == nullptr)
         {
+            Console::print("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
             pPlayer->setBaseGameInput(new HumanPlayerInput());
         }
         // resolve CO 1 beeing set and CO 0 not
@@ -1670,6 +1697,7 @@ void GameMap::initPlayersAndSelectCOs()
                 count++;
                 if (count > 2000 * bannList.size())
                 {
+                    Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
                     pPlayer->setCO("", 0);
                     break;
                 }
@@ -1696,6 +1724,7 @@ void GameMap::initPlayersAndSelectCOs()
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 1);
                 if (count > 2000 * bannList.size())
                 {
+                    Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);
                     pPlayer->setCO("", 1);
                     break;
                 }

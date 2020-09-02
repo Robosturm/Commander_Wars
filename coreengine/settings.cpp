@@ -589,7 +589,7 @@ void Settings::loadSettings()
         battleAnimationSpeed = 4u;
     }
     m_MenuItemCount = settings.value("MenuItemCount", 11).toInt(&ok);
-    if(!ok || m_MenuItemCount <= 10 || m_MenuItemCount >= (m_height - GameMap::Imagesize * 2) / GameMap::Imagesize)
+    if(!ok || m_MenuItemCount <= 10 || m_MenuItemCount >= (m_height - GameMap::getImageSize() * 2) / GameMap::getImageSize())
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MenuItemCount";
         Console::print(error, Console::eERROR);

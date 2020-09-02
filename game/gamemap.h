@@ -43,9 +43,7 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
     Q_PROPERTY(qint32 width READ getWidth WRITE setWidth)
 public:
     static const qint32 frameTime;
-    static const qint32 Imagesize = 24;
-    static const oxygine::RectF mapRect;
-    static const oxygine::RectF spriteLayerRect;
+    static constexpr qint32 defaultImageSize = 24;
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width
@@ -318,6 +316,7 @@ public:
      * @return
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
+
 
 signals:
     void signalExitGame();
@@ -613,6 +612,11 @@ public slots:
      */
     static qint32 getImageSize();
     /**
+     * @brief setImagesize
+     * @param imagesize
+     */
+    static void setImagesize(const qint32 &imagesize);
+    /**
      * @brief nextTurn next players turn.
      */
     void nextTurn();
@@ -708,6 +712,10 @@ public slots:
      * @param y
      */
     void nicknameUnit(qint32 x, qint32 y);
+    /**
+     * qbrief killDeadUnits
+     */
+    void killDeadUnits();
 private:
     static spGameMap m_pInstance;
     QString m_mapName;
@@ -726,7 +734,7 @@ private:
     float m_zoom{1.0f};
     bool loaded{false};
     qint32 m_UniqueIdCounter{0};
-
+    static qint32 m_imagesize;
     void loadMapData();
 };
 

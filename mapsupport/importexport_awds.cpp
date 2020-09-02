@@ -49,7 +49,7 @@ void GameMap::importAWDSMap(QString file)
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
                 fields[y]->append(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }

@@ -90,8 +90,8 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
 
         oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
         oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
-        pSprite->setPosition(m_pUnit->getX() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f),
-                             m_pUnit->getY() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f));
+        pSprite->setPosition(m_pUnit->getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
+                             m_pUnit->getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
         if (m_pUnit->isStealthed(pPlayer))
         {
             setVisible(false);
@@ -112,8 +112,8 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                 {
                     direction = getMovementDirection(m_movePath[i + 1].x(), m_movePath[i + 1].y(), m_movePath[i].x(), m_movePath[i].y());
                 }
-                x = m_movePath[i].x() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f);
-                y = m_movePath[i].y() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f);
+                x = m_movePath[i].x() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f);
+                y = m_movePath[i].y() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f);
 
                 oxygine::Tween* tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), oxygine::timeMS(m_frameTime * pAnim->getRows()), 1);
                 // toggle visibility of the unit

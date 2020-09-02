@@ -209,8 +209,8 @@ void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 wid
            emit sigShowLink(productionList[i]);
         });
         addChild(pDummy);
-        x += GameMap::Imagesize * 2;
-        if (x + GameMap::Imagesize * 2 > width && i < productionList.size() - 1)
+        x += GameMap::getImageSize() * 2;
+        if (x + GameMap::getImageSize() * 2 > width && i < productionList.size() - 1)
         {
             x = 0;
             y += 40;

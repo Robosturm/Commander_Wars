@@ -796,7 +796,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     if (pMap->onMap(x, y))
     {
         pMap->addChild(cursorActor);
-        cursorActor->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+        cursorActor->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
 
     switch (m_EditorMode)
@@ -1592,8 +1592,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
-                pSprite->setPosition(GameMap::Imagesize * i,
-                                     GameMap::Imagesize * y);
+                pSprite->setPosition(GameMap::getImageSize() * i,
+                                     GameMap::getImageSize() * y);
                 pActor->addChild(pSprite);
                 y = p2.y();
                 if (p2.y() < p1.y())
@@ -1604,8 +1604,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
-                pSprite->setPosition(GameMap::Imagesize * i,
-                                     GameMap::Imagesize * y);
+                pSprite->setPosition(GameMap::getImageSize() * i,
+                                     GameMap::getImageSize() * y);
                 pActor->addChild(pSprite);
             }
             for (qint32 i = p1.y(); i != p2.y() + yDir; i += yDir)
@@ -1619,8 +1619,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
-                pSprite->setPosition(GameMap::Imagesize * x,
-                                     GameMap::Imagesize * i);
+                pSprite->setPosition(GameMap::getImageSize() * x,
+                                     GameMap::getImageSize() * i);
                 pActor->addChild(pSprite);
                 x = p2.x();
                 if (p2.x() < p1.x())
@@ -1631,8 +1631,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 pAnim = pObjectManager->getResAnim("cursor+border+right");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
-                pSprite->setPosition(GameMap::Imagesize * x,
-                                     GameMap::Imagesize * i);
+                pSprite->setPosition(GameMap::getImageSize() * x,
+                                     GameMap::getImageSize() * i);
                 pActor->addChild(pSprite);
             }
             break;
@@ -1652,8 +1652,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+right");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
-                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
-                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pSprite->setPosition(GameMap::getImageSize() * (p1.x() + point.x()),
+                                             GameMap::getImageSize() * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
                     }
                     if (point.x() <= 0)
@@ -1662,8 +1662,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
-                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
-                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pSprite->setPosition(GameMap::getImageSize() * (p1.x() + point.x()),
+                                             GameMap::getImageSize() * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
                     }
                     if (point.y() >= 0)
@@ -1672,8 +1672,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
-                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
-                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pSprite->setPosition(GameMap::getImageSize() * (p1.x() + point.x()),
+                                             GameMap::getImageSize() * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
                     }
                     if (point.y() <= 0)
@@ -1682,8 +1682,8 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
-                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
-                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pSprite->setPosition(GameMap::getImageSize() * (p1.x() + point.x()),
+                                             GameMap::getImageSize() * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
                     }
                 }

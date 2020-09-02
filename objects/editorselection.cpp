@@ -35,11 +35,11 @@ EditorSelection::EditorSelection()
                                         m_BoxPlacementSelection->getHeight() - 100);
     m_BoxPlacementSelection->addChild(m_PlacementSelectionClip);
     m_PlacementActor = new oxygine::Actor();
-    m_PlacementActor->setY(-GameMap::Imagesize);
+    m_PlacementActor->setY(-GameMap::getImageSize());
     m_PlacementSelectionClip->addChild(m_PlacementActor);
 
-    m_labelWidth = m_PlacementSelectionClip->getWidth() - GameMap::Imagesize - frameSize - frameSize;
-    m_xCount = m_labelWidth / (GameMap::Imagesize * xFactor) + 1;
+    m_labelWidth = m_PlacementSelectionClip->getWidth() - GameMap::getImageSize() - frameSize - frameSize;
+    m_xCount = m_labelWidth / (GameMap::getImageSize() * xFactor) + 1;
     createBoxPlacementSize();
     createBoxSelectionMode();
     createPlayerSelection();
@@ -47,7 +47,7 @@ EditorSelection::EditorSelection()
     m_CurrentSelector = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
     m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    m_CurrentSelector->setDestRecModifier(GameMap::mapRect);
+    m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -145,15 +145,15 @@ EditorSelection::EditorSelection()
         spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "");
         pSprite->loadSprites();
         pSprite->setPriority(-100);
-        pSprite->setScaleX(1 / building->getScaleX() * GameMap::Imagesize / pAnim->getWidth());
-        pSprite->setScaleY(1 / building->getScaleY() * GameMap::Imagesize / pAnim->getHeight());
+        pSprite->setScaleX(1 / building->getScaleX() * GameMap::getImageSize() / pAnim->getWidth());
+        pSprite->setScaleY(1 / building->getScaleY() * GameMap::getImageSize() / pAnim->getHeight());
         if (width > 1)
         {
-            pSprite->oxygine::Actor::setX(-GameMap::Imagesize * (width - 1));
+            pSprite->oxygine::Actor::setX(-GameMap::getImageSize() * (width - 1));
         }
         if (heigth > 1)
         {
-            pSprite->oxygine::Actor::setY(-GameMap::Imagesize * (heigth - 1));
+            pSprite->oxygine::Actor::setY(-GameMap::getImageSize() * (heigth - 1));
         }
         m_Buildings[i]->addChild(pSprite);
         m_Buildings[i]->setVisible(false);
@@ -191,7 +191,7 @@ EditorSelection::EditorSelection()
             pSprite->setResAnim(pAnim);
         }
         pSprite->setPriority(-100);
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
         unit->addChild(pSprite);
         unit->setVisible(false);
         m_PlacementActor->addChild(unit);
@@ -206,18 +206,18 @@ void EditorSelection::changeScrollValue(qint32 dir)
 {
     if (dir > 0)
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::Imagesize);
-        if (m_PlacementActor->getY() > -GameMap::Imagesize)
+        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::getImageSize());
+        if (m_PlacementActor->getY() > -GameMap::getImageSize())
         {
-            m_PlacementActor->setY(-GameMap::Imagesize);
+            m_PlacementActor->setY(-GameMap::getImageSize());
         }
     }
     else
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
+        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::getImageSize());
         if (m_PlacementActor->getHeight() < m_PlacementSelectionClip->getHeight())
         {
-            m_PlacementActor->setY(-GameMap::Imagesize);
+            m_PlacementActor->setY(-GameMap::getImageSize());
         }
         else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionClip->getHeight())
         {
@@ -540,8 +540,8 @@ void EditorSelection::updateTerrainView()
     {
         item->setVisible(true);
     }
-    m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementActor->setY(-GameMap::Imagesize);
+    m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
+    m_PlacementActor->setY(-GameMap::getImageSize());
     selectTerrain(0);
     pApp->continueThread();
 }
@@ -555,8 +555,8 @@ void EditorSelection::updateBuildingView()
     {
         m_Buildings[i]->setVisible(true);
     }
-    m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementActor->setY(-GameMap::Imagesize);
+    m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
+    m_PlacementActor->setY(-GameMap::getImageSize());
     selectBuilding(0);
     pApp->continueThread();
 }
@@ -574,8 +574,8 @@ void EditorSelection::updateUnitView()
     {
         item->setVisible(true);
     }
-    m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
-    m_PlacementActor->setY(-GameMap::Imagesize);
+    m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::getImageSize() + 5);
+    m_PlacementActor->setY(-GameMap::getImageSize());
     selectUnit(0);
     pApp->continueThread();
 }
@@ -620,14 +620,14 @@ void EditorSelection::initBuildingSection()
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
-            posY += GameMap::Imagesize * yFactor;
+            posY += GameMap::getImageSize() * yFactor;
             xCounter = 0;
             posX = frameSize;
         }
         qint32 width = m_Buildings[i]->getBuildingWidth();
         qint32 heigth = m_Buildings[i]->getBuildingHeigth();
-        m_Buildings[i]->setX(posX + GameMap::Imagesize * (width - 1) / (width));
-        m_Buildings[i]->setY(posY + GameMap::Imagesize * (heigth - 1) / (heigth));
+        m_Buildings[i]->setX(posX + GameMap::getImageSize() * (width - 1) / (width));
+        m_Buildings[i]->setY(posY + GameMap::getImageSize() * (heigth - 1) / (heigth));
         m_Buildings[i]->setVisible(false);
         m_Buildings[i]->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
@@ -639,7 +639,7 @@ void EditorSelection::initBuildingSection()
 
 void EditorSelection::initTerrainSection()
 {
-    qint32 posY = startH - GameMap::Imagesize;
+    qint32 posY = startH - GameMap::getImageSize();
     qint32 xCounter = 0;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
@@ -648,7 +648,7 @@ void EditorSelection::initTerrainSection()
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
-            posY += GameMap::Imagesize * yFactor;
+            posY += GameMap::getImageSize() * yFactor;
             xCounter = 0;
             posX = frameSize;
         }
@@ -668,7 +668,7 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
     qint32 newIdentifier = m_Terrains[item]->getTerrainGroup();
     if (newIdentifier != currentIdentifier)
     {
-        posY += GameMap::Imagesize;
+        posY += GameMap::getImageSize();
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = FontManager::getMainFont24();
@@ -684,13 +684,13 @@ void EditorSelection::createTerrainSectionLabel(qint32 item, qint32 & currentIde
         pTextfield->setVisible(false);
         m_PlacementActor->addChild(pTextfield);
         m_terrainActors.append(pTextfield);
-        posY += GameMap::Imagesize * yFactor;
+        posY += GameMap::getImageSize() * yFactor;
     }
 }
 
 void EditorSelection::initUnitSelection()
 {
-    qint32 posY = startH - GameMap::Imagesize;
+    qint32 posY = startH - GameMap::getImageSize();
     qint32 xCounter = 0;
     qint32 currentIdentifier = std::numeric_limits<qint32>::min();
     for (qint32 i = 0; i < m_Units.size(); i++)
@@ -699,7 +699,7 @@ void EditorSelection::initUnitSelection()
         qint32 posX = getPosX(xCounter);
         if (xCounter >= m_xCount)
         {
-            posY += GameMap::Imagesize * 1.5f;
+            posY += GameMap::getImageSize() * 1.5f;
             xCounter = 0;
             posX = frameSize;
         }
@@ -718,7 +718,7 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
     qint32 newIdentifier = m_Units[item]->getUnitType();
     if (newIdentifier != currentIdentifier)
     {
-        posY += GameMap::Imagesize;
+        posY += GameMap::getImageSize();
         currentIdentifier = newIdentifier;
         xCounter = 0;
         oxygine::TextStyle style = FontManager::getMainFont24();
@@ -734,13 +734,13 @@ void EditorSelection::createUnitSectionLabel(qint32 item, qint32 & currentIdenti
         pTextfield->setVisible(false);
         m_PlacementActor->addChild(pTextfield);
         m_unitActors.append(pTextfield);
-        posY += GameMap::Imagesize * 1.5f;
+        posY += GameMap::getImageSize() * 1.5f;
     }
 }
 
 qint32 EditorSelection::getPosX(qint32 xCounter)
 {
-    return frameSize + xCounter * GameMap::Imagesize * xFactor;
+    return frameSize + xCounter * GameMap::getImageSize() * xFactor;
 }
 
 void EditorSelection::selectBuilding(qint32 building)
@@ -748,8 +748,8 @@ void EditorSelection::selectBuilding(qint32 building)
     m_selectedItem = building;
     qint32 width = m_Buildings[building]->getBuildingWidth();
     qint32 heigth = m_Buildings[building]->getBuildingHeigth();
-    qint32 x = GameMap::Imagesize * (width - 1) / (width);
-    qint32 y = GameMap::Imagesize * (heigth - 1) / (heigth);
+    qint32 x = GameMap::getImageSize() * (width - 1) / (width);
+    qint32 y = GameMap::getImageSize() * (heigth - 1) / (heigth);
     m_CurrentSelector->setPosition(m_Buildings[building]->oxygine::Actor::getPosition() - oxygine::Vector2(x, y));
     emit sigSelectionChanged();
 }

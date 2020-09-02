@@ -112,7 +112,6 @@ public:
      * @return
      */
     static QThread* getGameServerThread();
-
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -190,6 +189,11 @@ public slots:
      * @param args
      */
     void loadArgs(const QStringList & args);
+    /**
+     * @brief setImageSize
+     * @return
+     */
+    static void setImageSize(qint32 value);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);

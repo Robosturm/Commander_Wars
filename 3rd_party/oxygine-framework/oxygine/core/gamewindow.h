@@ -57,6 +57,13 @@ namespace oxygine
         qint32 getLockCounter() const;
 
         virtual bool isWorker() = 0;
+        /**
+         * @brief isEvenScale
+         * @param width1
+         * @param width2
+         * @return
+         */
+        static bool isEvenScale(qint32 width1, qint32 width2);
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
     protected slots:

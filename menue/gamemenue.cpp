@@ -72,15 +72,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
-        if (!m_pNetworkInterface->getIsServer())
-        {
-            QByteArray sendData;
-            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << NetworkCommands::CLIENTINITGAME;
-            sendStream << m_pNetworkInterface->getSocketID();
-            m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
-        }
-        else
+        if (m_pNetworkInterface->getIsServer())
         {
             m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
@@ -121,7 +113,7 @@ GameMenue::GameMenue()
     addRef();
 }
 
-void GameMenue::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
+void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
@@ -129,6 +121,7 @@ void GameMenue::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
+        Console::print("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::CLIENTINITGAME)
         {
             if (m_pNetworkInterface->getIsServer())
@@ -136,9 +129,9 @@ void GameMenue::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
                 // the given client is ready
                 quint64 socket = 0;
                 stream >> socket;
+                Console::print("socket game ready " + QString::number(socket), Console::eDEBUG);
                 m_ReadySockets.append(socket);
                 QVector<quint64> sockets;
-
                 if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
                 {
                     sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
@@ -153,6 +146,11 @@ void GameMenue::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
                     if (!m_ReadySockets.contains(sockets[i]))
                     {
                         ready = false;
+                        Console::print("Still waiting for socket game " + QString::number(sockets[i]), Console::eDEBUG);
+                    }
+                    else
+                    {
+                        Console::print("Socket ready: " + QString::number(sockets[i]), Console::eDEBUG);
                     }
                 }
                 if (ready)
@@ -896,6 +894,7 @@ void GameMenue::finishActionPerformed()
         m_CurrentActionUnit = nullptr;
     }
     spGameMap pMap = GameMap::getInstance();
+    pMap->killDeadUnits();
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();

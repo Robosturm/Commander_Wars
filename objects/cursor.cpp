@@ -35,7 +35,7 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
     {
         m_CurrentCursor->setResAnim(pAnim);
     }
-    m_CurrentCursor->setScale(scale);
+    m_CurrentCursor->setScale(scale * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
     m_CurrentCursor->setPosition(xOffset, yOffset);
     this->addChild(m_CurrentCursor);
     pApp->continueThread();
@@ -46,8 +46,8 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
-        qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
+        qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::getImageSize() * pMap->getZoom());
+        qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::getImageSize() * pMap->getZoom());
         onMap = pMap->onMap(x, y);
         if (onMap)
         {
@@ -62,7 +62,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 
             m_MapPointX = x;
             m_MapPointY = y;
-            this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+            this->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             // provide cursor move signal
             emit sigCursorMoved(m_MapPointX, m_MapPointY);
             pApp->continueThread();
@@ -102,52 +102,46 @@ void Cursor::createOuterLeftRightOutline(qint32 range, QColor color)
 
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimLeft);
-    pSprite->setX(-range * GameMap::Imagesize - 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(-range * GameMap::getImageSize() - 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimTop);
-    pSprite->setX(-range * GameMap::Imagesize);
+    pSprite->setX(-range * GameMap::getImageSize());
     pSprite->setY(-2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBottom);
-    pSprite->setX(-range * GameMap::Imagesize);
+    pSprite->setX(-range * GameMap::getImageSize());
     pSprite->setY(2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimRight);
-    pSprite->setX(range * GameMap::Imagesize + 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(range * GameMap::getImageSize() + 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimTop);
-    pSprite->setX(range * GameMap::Imagesize);
+    pSprite->setX(range * GameMap::getImageSize());
     pSprite->setY(-2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBottom);
-    pSprite->setX(range * GameMap::Imagesize);
+    pSprite->setX(range * GameMap::getImageSize());
     pSprite->setY(2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -163,8 +157,7 @@ void Cursor::createOuterTopBottomOutline(qint32 range, QColor color)
 
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimTop);
-    pSprite->setY(-range * GameMap::Imagesize - 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setY(-range * GameMap::getImageSize() - 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -172,25 +165,22 @@ void Cursor::createOuterTopBottomOutline(qint32 range, QColor color)
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimLeft);
     pSprite->setX(-2);
-    pSprite->setY(-range * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setY(-range * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimRight);
-    pSprite->setY(-range * GameMap::Imagesize);
+    pSprite->setY(-range * GameMap::getImageSize());
     pSprite->setX(2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBottom);
-    pSprite->setY(range * GameMap::Imagesize + 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setY(range * GameMap::getImageSize() + 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -198,17 +188,15 @@ void Cursor::createOuterTopBottomOutline(qint32 range, QColor color)
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimLeft);
     pSprite->setX(-2);
-    pSprite->setY(range * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setY(range * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimRight);
-    pSprite->setY(range * GameMap::Imagesize);
+    pSprite->setY(range * GameMap::getImageSize());
     pSprite->setX(2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -225,18 +213,16 @@ void Cursor::createOutline(qint32 i, qint32 range, QColor color)
     // left top
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimLeft);
-    pSprite->setX(-(range - i) * GameMap::Imagesize - 2);
-    pSprite->setY(-i * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(-(range - i) * GameMap::getImageSize() - 2);
+    pSprite->setY(-i * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimTop);
-    pSprite->setX(-(range - i) * GameMap::Imagesize);
-    pSprite->setY(-i * GameMap::Imagesize - 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(-(range - i) * GameMap::getImageSize());
+    pSprite->setY(-i * GameMap::getImageSize() - 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -244,18 +230,16 @@ void Cursor::createOutline(qint32 i, qint32 range, QColor color)
     // left bottom
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimLeft);
-    pSprite->setX(-(range - i) * GameMap::Imagesize - 2);
-    pSprite->setY(i * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(-(range - i) * GameMap::getImageSize() - 2);
+    pSprite->setY(i * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBottom);
-    pSprite->setX(-(range - i) * GameMap::Imagesize);
-    pSprite->setY((i) * GameMap::Imagesize + 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX(-(range - i) * GameMap::getImageSize());
+    pSprite->setY((i) * GameMap::getImageSize() + 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -263,18 +247,16 @@ void Cursor::createOutline(qint32 i, qint32 range, QColor color)
     // right top
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimRight);
-    pSprite->setX((range - i) * GameMap::Imagesize + 2);
-    pSprite->setY(-i * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX((range - i) * GameMap::getImageSize() + 2);
+    pSprite->setY(-i * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimTop);
-    pSprite->setX((range - i) * GameMap::Imagesize);
-    pSprite->setY(-i * GameMap::Imagesize - 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX((range - i) * GameMap::getImageSize());
+    pSprite->setY(-i * GameMap::getImageSize() - 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
@@ -282,18 +264,16 @@ void Cursor::createOutline(qint32 i, qint32 range, QColor color)
     // right bottom
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimRight);
-    pSprite->setX((range - i) * GameMap::Imagesize + 2);
-    pSprite->setY(i * GameMap::Imagesize);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX((range - i) * GameMap::getImageSize() + 2);
+    pSprite->setY(i * GameMap::getImageSize());
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
 
     pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBottom);
-    pSprite->setX((range - i) * GameMap::Imagesize);
-    pSprite->setY((i) * GameMap::Imagesize + 2);
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setX((range - i) * GameMap::getImageSize());
+    pSprite->setY((i) * GameMap::getImageSize() + 2);
     pSprite->setColor(color);
     addChild(pSprite);
     m_cursorRangeOutline.append(pSprite);
