@@ -12,6 +12,13 @@ var TERRAIN =
         // everthing else is open to use
         return 0;
     },
+    getTerrainGroupSort : function()
+    {
+        return [1,
+                0,
+                2,
+                3,];
+    },
     terrainGroupNameMapping = [qsTr("Sea"),
                                qsTr("Normal"),
                                qsTr("Desert"),

@@ -159,7 +159,8 @@ var Constructor = function()
                 }
                 break;
         }
-        if (attacker.getUnitType() === GameEnums.UnitType_Ground)
+        if (attacker.getBaseMaxRange() === 1 &&
+            attacker.getUnitType() !== GameEnums.UnitType_Infantry)
         {
             return -20;
         }

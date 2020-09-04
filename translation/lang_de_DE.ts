@@ -6960,7 +6960,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
 <context>
     <name>UnitSpriteManager</name>
     <message>
-        <location filename="../resource_management/unitspritemanager.cpp" line="73"/>
+        <location filename="../resource_management/unitspritemanager.cpp" line="85"/>
         <source>Ground</source>
         <translation type="unfinished">Boden</translation>
     </message>
@@ -11025,34 +11025,34 @@ Units have high offensive bonus and a defensive malus.</source>
 <context>
     <name>co_grit</name>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="213"/>
         <source>A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="217"/>
         <source>Cats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="221"/>
         <source>Rats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="225"/>
         <source>Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="229"/>
         <source>
 Global Effect: 
 Indirect units have 1 increased firerange and non-infantry direct units have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="230"/>
         <source>
 
 CO Zone Effect: 
@@ -11060,82 +11060,82 @@ Indirect units  have an offensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="234"/>
         <source>Increases range of indirect units by one space. Firepower of these units also rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="238"/>
         <source>Snipe Attack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="242"/>
         <source>Increases range of indirect units by two spaces. Firepower of these units greatly rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="246"/>
         <source>Super Snipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="250"/>
         <source>Once you&apos;re in my sights, there&apos;s no gettin&apos; away!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="251"/>
         <source>Reckon it&apos;s time to take you down!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="252"/>
         <source>Where&apos;s the fool who wants to help me with target practice?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="253"/>
         <source>Y&apos;all can run, but you can&apos;t hide!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="254"/>
         <source>Y&apos;all gimme no choice... Time to bring in the big guns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="255"/>
         <source>Aw, shucks. I was hopin&apos; it wouldn&apos;t come to this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="259"/>
         <source>This ain&apos;t for show.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="260"/>
         <source>Maybe now I can get some shut-eye.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="261"/>
         <source>I hope this gets easier. That was harder&apos;n college!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="265"/>
         <source>Aw, possum spit!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="266"/>
         <source>Just as I reckoned... This ain&apos;t gonna be no Sunday stroll.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="270"/>
         <source>Grit</source>
         <translation>Kid</translation>
     </message>
@@ -17960,27 +17960,27 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>terrain</name>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="15"/>
+        <location filename="../resources/scripts/general/terrain.js" line="22"/>
         <source>Sea</source>
         <translation>See</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="16"/>
+        <location filename="../resources/scripts/general/terrain.js" line="23"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="17"/>
+        <location filename="../resources/scripts/general/terrain.js" line="24"/>
         <source>Desert</source>
         <translation>Wüste</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="18"/>
+        <location filename="../resources/scripts/general/terrain.js" line="25"/>
         <source>Snow</source>
         <translation>Schnee</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <location filename="../resources/scripts/general/terrain.js" line="33"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
