@@ -104,6 +104,8 @@ protected slots:
      */
     void stopSecondPlayer();
     void bufferAudio();
+
+    void reportReplayError(QMediaPlayer::Error error);
 protected:
     void loadMusicFolder(QString folder, QStringList& loadedSounds);
 private:
