@@ -246,10 +246,11 @@ void AudioThread::SlotSetVolume(qint32 value)
 
 void AudioThread::SlotAddMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 {
+    QString currentPath = QFileInfo(File).absoluteFilePath();
     m_Player->stop();
-    m_playList->addMedia(QUrl::fromLocalFile(File));
+    m_playList->addMedia(QUrl::fromLocalFile(currentPath));
     m_Player2->stop();
-    m_playList2->addMedia(QUrl::fromLocalFile(File));
+    m_playList2->addMedia(QUrl::fromLocalFile(currentPath));
     m_PlayListdata.append(std::tuple<qint64, qint64>(startPointMs, endPointMs));
 }
 
@@ -281,6 +282,7 @@ void AudioThread::SlotLoadFolder(QString folder)
 
 void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
 {
+    QString currentPath = QFileInfo(folder).absoluteFilePath();
     QDir directory(folder);
     QStringList filter("*.mp3");
     QStringList files = directory.entryList(filter);
@@ -288,8 +290,8 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
     {
         if (!loadedSounds.contains(file))
         {
-            m_playList->addMedia(QUrl::fromLocalFile(folder + QString("/") + file));
-            m_playList2->addMedia(QUrl::fromLocalFile(folder + QString("/") + file));
+            m_playList->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
+            m_playList2->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
             m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
             loadedSounds.append(file);
         }

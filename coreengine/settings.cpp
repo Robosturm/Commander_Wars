@@ -781,7 +781,7 @@ void Settings::saveSettings()
         settings.endGroup();
 
         settings.beginGroup("Autosaving");
-        settings.setValue("AutoSavingTime",           autoSavingCylceTime.count());
+        settings.setValue("AutoSavingTime",           (long long) autoSavingCylceTime.count());
         settings.setValue("AutoSavingCycle",                  autoSavingCycle);
         settings.endGroup();
 
