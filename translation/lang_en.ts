@@ -3719,19 +3719,6 @@ Version: </source>
     </message>
 </context>
 <context>
-    <name>PLAINS</name>
-    <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="14"/>
-        <source>Plains</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="76"/>
-        <source>Ground units move easily on this terrain.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PLAINS_DESTROYED</name>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="14"/>
@@ -17339,6 +17326,19 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/pipestation.js" line="38"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plains</name>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="14"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="76"/>
+        <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

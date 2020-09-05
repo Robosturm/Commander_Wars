@@ -50,8 +50,10 @@ add_definitions(
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
+message ("CXX System: ${CMAKE_SYSTEM_NAME}")
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
+    #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 endif()
 
 ###################################################################################
@@ -465,12 +467,22 @@ qt5_use_modules(${PROJECT_NAME}
 )
 
 # link libraries
-target_link_libraries(
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    target_link_libraries(
         ${PROJECT_NAME}
         ${QT_LIBRARIES}
         ${OPENGL_LIBRARIES}
-        #Dbghelp
-)
+        Dbghelp
+    )
+else()
+    target_link_libraries(
+        ${PROJECT_NAME}
+        ${QT_LIBRARIES}
+        ${OPENGL_LIBRARIES}
+        # currently no crash reporting supported on other os systems
+    )
+endif()
+
 
 # install section
 set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
@@ -507,26 +519,39 @@ set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
      ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
 )
 
-set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
-     ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
-)
-
 set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
      ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
-)
-
-set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-     ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
 )
 
 set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
      ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
 )
 
-set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-     ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
-)
-
+# those libs are not the same for each platform and need to be selected based on the os
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
+         ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+         ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+         ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
+    )
+else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
+    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
+         ${QT_BIN_DIR}/../plugins/audio/libqtmedia_pulse.so
+         ${QT_BIN_DIR}/../plugins/audio/libqtaudio_alsa.so
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+        # todo install the proper platforms library for linux here
+        # ${QT_BIN_DIR}/../plugins/platforms/
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+        # todo install the proper  linux style lib to be used
+        # ${QT_BIN_DIR}/../plugins/styles/
+    )
+endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
         ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll

@@ -3983,14 +3983,8 @@ Version: </translation>
 <context>
     <name>PLAINS</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="14"/>
         <source>Plains</source>
-        <translation>Ebene</translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="76"/>
-        <source>Ground units move easily on this terrain.</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Ebene</translation>
     </message>
 </context>
 <context>
@@ -17784,6 +17778,19 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <source>of </source>
         <translation type="obsolete">von </translation>
+    </message>
+</context>
+<context>
+    <name>plains</name>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="14"/>
+        <source>Plains</source>
+        <translation type="unfinished">Ebene</translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/plains.js" line="76"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
