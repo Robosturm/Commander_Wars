@@ -1266,7 +1266,7 @@ namespace oxygine
     {
         if (!root)
             root = getStage().get();
-        dur = timeMS(std::max(dur.count(), 1ll));
+        dur = timeMS(std::max((long long) dur.count(), 1ll));
         spTween t = root->addTween(TweenDummy(), dur);
         t->setDoneCallback(cb);
         return t;

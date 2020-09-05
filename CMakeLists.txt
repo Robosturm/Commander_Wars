@@ -27,7 +27,7 @@ find_package(Qt5Xml REQUIRED)
 find_package(OpenGL REQUIRED)
 
 # build dependend defines
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     message("Compiling as Debug")
     add_definitions(
         -DQT_DECLARATIVE_DEBUG
@@ -50,8 +50,9 @@ add_definitions(
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
+endif()
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
@@ -143,7 +144,7 @@ set(${PROJECT_NAME}_SRCS
 
         # objects
         objects/cursor.cpp
-        objects/EditorSelection.cpp
+        objects/editorselection.cpp
         objects/topbar.cpp
         objects/textbox.cpp
         objects/h_scrollbar.cpp
@@ -282,7 +283,7 @@ set(${PROJECT_NAME}_SRCS
         # cool ingame recording
         game/gamerecording/daytodayrecord.cpp
         game/gamerecording/playerrecord.cpp
-        game/gamerecording/SpecialEvent.cpp
+        game/gamerecording/specialevent.cpp
         game/gamerecording/gamerecorder.cpp
         game/gamerecording/replayrecorder.cpp
         # cool ingame script support
@@ -364,7 +365,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp
         ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp
         ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp
-        ingamescriptsupport/conditions/ScriptConditionPlayerReachedArea.cpp
+        ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp
         ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp
         ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp
         # event stuff
@@ -468,7 +469,7 @@ target_link_libraries(
         ${PROJECT_NAME}
         ${QT_LIBRARIES}
         ${OPENGL_LIBRARIES}
-        Dbghelp
+        #Dbghelp
 )
 
 # install section
@@ -526,7 +527,7 @@ set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
      ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
 )
 
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
         ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
         ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
