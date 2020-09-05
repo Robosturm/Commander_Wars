@@ -394,6 +394,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
             GameEnums::AiTypes aiType =  m_pPlayerSelection->getPlayerAiType(i);
             if (aiType == GameEnums::AiTypes::AiTypes_Closed)
             {
+                Console::print("Defeating player " + QString::number(i) + " cause he's selected as closed player.", Console::eDEBUG);
                 pMap->getPlayer(i)->setIsDefeated(true);
             }
         }

@@ -59,7 +59,7 @@ public:
      * @param player
      * @param value
      */
-    void sendPlayerReady(quint64 socketID, QVector<qint32> player, bool value);
+    void sendPlayerReady(quint64 socketID, const QVector<qint32> & player, bool value);
     /**
      * @brief getSaveGame
      * @return
@@ -165,6 +165,8 @@ protected:
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();
+
+    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player);
 private:
     // player selection
     spPanel m_pPlayerSelection;

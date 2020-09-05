@@ -137,11 +137,15 @@ void LocalServer::onConnect()
 
 void LocalServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
+    Console::print("Forwarding data from local server to all clients except " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_SocketIDs.size(); i++)
     {
         if (m_SocketIDs[i] != socketID)
         {
-            pTXTasks[i]->send(0, data, service, false);
+            for (qint32 i2 = 0; i2 < pTXTasks.size(); i2++)
+            {
+                emit pTXTasks[i2]->send(m_SocketIDs[i], data, service, false);
+            }
         }
     }
 }
@@ -159,21 +163,14 @@ QVector<quint64> LocalServer::getConnectedSockets()
     return m_SocketIDs;
 }
 
-void LocalServer::changeThread(quint64 socketID, QThread* pThread)
+void LocalServer::changeThread(quint64 socketID, QThread*)
 {
-    for (qint32 i = 0; i < m_SocketIDs.size(); i++)
-    {
-        if (m_SocketIDs[i] == socketID)
-        {
-            pRXTasks[i]->moveToThread(pThread);
-            pTXTasks[i]->moveToThread(pThread);
-            break;
-        }
-    }
+    Console::print("Unsupported call to change thread on local server for socekt " + QString::number(socketID), Console::eFATAL);
 }
 
 void LocalServer::addSocket(quint64 socket)
 {
+    Console::print("Local Server added new socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
     m_SocketIDs.append(socket);
 }
 

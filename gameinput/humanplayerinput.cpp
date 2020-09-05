@@ -1507,6 +1507,7 @@ void HumanPlayerInput::autoEndTurn()
                     }
                 }
             }
+            Console::print("Auto triggering next player cause current player can't input any actions.", Console::eDEBUG);
             GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
             emit performAction(pAction);
         }

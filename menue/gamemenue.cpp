@@ -155,10 +155,10 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 }
                 if (ready)
                 {
+                    Console::print("All players are ready starting game", Console::eDEBUG);
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::STARTGAME;
-
                     quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
                     pApp->seed(seed);
                     pApp->setUseSeed(true);
@@ -672,6 +672,7 @@ void GameMenue::performAction(GameAction* pGameAction)
             skipAnimations();
             if (pMap->getCurrentPlayer()->getIsDefeated())
             {
+                Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
                 GameAction* pAction = new GameAction();
                 pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
@@ -913,8 +914,13 @@ void GameMenue::actionPerformed()
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         spGameMap pMap = GameMap::getInstance();
-        if (pMap->getCurrentPlayer()->getIsDefeated())
+        if (!pMap->anyPlayerAlive())
         {
+            emit sigExitGame();
+        }
+        else if (pMap->getCurrentPlayer()->getIsDefeated())
+        {
+            Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
             GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
             performAction(pAction);
         }
@@ -1024,6 +1030,7 @@ void GameMenue::victory(qint32 team)
             Player* pPlayer = pMap->getPlayer(i);
             if (pPlayer->getTeam() != team)
             {
+                Console::print("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
                 pPlayer->defeatPlayer(nullptr);
             }
             if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
@@ -1051,6 +1058,7 @@ void GameMenue::victory(qint32 team)
         }
         if (pMap->getCampaign() != nullptr)
         {
+            Console::print("Informaing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
             pMap->getCampaign()->mapFinished(humanWin);
         }
         Console::print("Leaving Game Menue", Console::eDEBUG);
@@ -1366,6 +1374,7 @@ void GameMenue::startGame()
         pRules->init();
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
+        Console::print("Triggering action next player in order to start the game.", Console::eDEBUG);
         GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
         if (m_pNetworkInterface.get() != nullptr)
         {

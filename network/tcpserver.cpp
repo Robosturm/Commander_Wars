@@ -93,13 +93,14 @@ void TCPServer::onConnect()
         RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, false);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
-        QObject::connect(pRXTask, &RxTask::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
         // start TX-Task
         TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this, false);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
         spTCPClient pClient = new TCPClient(pRXTask, pTXTask, nextSocket, m_idCounter);
+        QObject::connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+
         QByteArray data;
         pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);
         pClient->setIsServer(true);

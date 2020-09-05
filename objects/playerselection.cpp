@@ -1001,35 +1001,33 @@ void PlayerSelection::selectAI(qint32 player)
             m_PlayerSockets[player] = socket;
             spGameMap pMap = GameMap::getInstance();
             createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
-            QByteArray data;
-            QDataStream stream(&data, QIODevice::WriteOnly);            
-            stream << NetworkCommands::PLAYERCHANGED;
-            stream << socket;
+            QString name;
             if (type == GameEnums::AiTypes_Human)
             {
-                stream << Settings::getUsername();
+                name = Settings::getUsername();
             }
             else
             {
-                stream << m_playerAIs[player]->getCurrentItemText();
+                name = m_playerAIs[player]->getCurrentItemText();
             }
-            stream << player;
+            qint32 ai;
             if (type == GameEnums::AiTypes_Open)
             {
-                stream << static_cast<qint32>(GameEnums::AiTypes_Open);
+                ai = static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else if (m_isServerGame &&
                      !Mainapp::getSlave() &&
                      type != GameEnums::AiTypes_Human)
             {
-                stream << type;
+                ai = type;
                 createAi(player, GameEnums::AiTypes_ProxyAi);
             }
             else
             {
-                stream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+                ai = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
-            pMap->getPlayer(player)->serializeObject(stream);
+            QByteArray data;
+            createPlayerChangedData(data, socket, name, ai, player);
             // update data for all clients
             m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             updatePlayerData(player);
@@ -1154,7 +1152,7 @@ void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
     }
 }
 
-void PlayerSelection::sendPlayerReady(quint64 socketID, QVector<qint32> player, bool value)
+void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & player, bool value)
 {
     if (m_pNetworkInterface->getIsServer())
     {
@@ -1258,83 +1256,59 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             updatePlayerData(player);
 
+            qint32 aiType = 0;
+            if (eAiType == GameEnums::AiTypes_Open)
+            {
+                aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
+            }
+            else
+            {
+                aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
+            }
             QByteArray sendDataRequester;
-            QDataStream sendStreamRequester(&sendDataRequester, QIODevice::WriteOnly);
-            QByteArray sendDataOtherClients;
-            QDataStream sendStreamOtherClients(&sendDataOtherClients, QIODevice::WriteOnly);
-            // create data block for requester
-            sendStreamRequester << NetworkCommands::PLAYERCHANGED;
-            sendStreamRequester << socketID;
-            sendStreamRequester << username;
-            sendStreamRequester << player;
-            if (eAiType == GameEnums::AiTypes_Open)
-            {
-                sendStreamRequester << static_cast<qint32>(GameEnums::AiTypes_Open);
-            }
-            else
-            {
-                sendStreamRequester << static_cast<qint32>(GameEnums::AiTypes_Human);
-            }
-            pMap->getPlayer(player)->serializeObject(sendStreamRequester);
+            createPlayerChangedData(sendDataRequester, socketID, username, aiType, player);
             // create data block for other clients
-            sendStreamOtherClients << NetworkCommands::PLAYERCHANGED;
-            sendStreamOtherClients << socketID;
-            sendStreamOtherClients << username;
-            sendStreamOtherClients << player;
             if (eAiType == GameEnums::AiTypes_Open)
             {
-                sendStreamOtherClients << static_cast<qint32>(GameEnums::AiTypes_Open);
+                aiType = static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else
             {
-                sendStreamOtherClients << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
-            }
-            pMap->getPlayer(player)->serializeObject(sendStreamOtherClients);
+                aiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
+            }            
+            QByteArray sendDataOtherClients;
+            createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player);
             // send player update
             m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
             emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
         }
         else
         {
-            Player* pPlayer = pMap->getPlayer(player);
-            QByteArray sendData;
-            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << NetworkCommands::PLAYERCHANGED;
-            sendStream << socketID;
-            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
-            {
-                sendStream << Settings::getUsername();
-            }
-            else
-            {
-                sendStream << m_playerAIs[player]->getCurrentItemText();
-            }
-            sendStream << player;
-            sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
-            pPlayer->serializeObject(sendStream);
+            Console::print("Player change rejected. Cause player isn't open anymore", Console::eDEBUG);
         }
+
     }
 }
 
-void PlayerSelection::changePlayer(quint64, QDataStream& stream)
+void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
 {
     if (!m_pNetworkInterface->getIsServer() ||
         m_isServerGame)
     {
         spGameMap pMap = GameMap::getInstance();
-        quint64 socketId;
+        quint64 socket;
         QString name;
         qint32 aiType;
         qint32 player;
-        stream >> socketId;
+        stream >> socket;
         stream >> name;
         stream >> player;
         stream >> aiType;
-        Console::print("Remote change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socketId) + " and ai " + QString::number(aiType), Console::eDEBUG);
-        if (socketId != m_pNetworkInterface->getSocketID() ||
+        Console::print("Remote change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType), Console::eDEBUG);
+        if (socket != m_pNetworkInterface->getSocketID() ||
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
-            m_PlayerSockets[player] = socketId;
+            m_PlayerSockets[player] = socket;
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
             pMap->getPlayer(player)->deserializeObject(stream);
@@ -1354,12 +1328,34 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
             {
                 emit sigDisconnect();
             }
+            if (m_isServerGame)
+            {
+                if (aiType != GameEnums::AiTypes::AiTypes_Open)
+                {
+                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                }
+                QByteArray data;
+                createPlayerChangedData(data, socket, name, aiType, player);
+                m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
+            }
         }
         else
         {
             Console::print("Update Ignored", Console::eDEBUG);
         }
     }
+}
+
+void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player)
+{
+    QDataStream sendStream(&data, QIODevice::WriteOnly);
+    spGameMap pMap = GameMap::getInstance();
+    sendStream << NetworkCommands::PLAYERCHANGED;
+    sendStream << socketId;
+    sendStream << name;
+    sendStream << player;
+    sendStream << aiType;
+    pMap->getPlayer(player)->serializeObject(sendStream);
 }
 
 void PlayerSelection::setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name)

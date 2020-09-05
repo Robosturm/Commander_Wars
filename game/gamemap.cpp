@@ -153,6 +153,18 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
     return false;
 }
 
+bool GameMap::anyPlayerAlive()
+{
+    for (const auto & player : players)
+    {
+        if (!player->getIsDefeated())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
 {
 

@@ -15,6 +15,7 @@
 
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
+#include "network/localserver.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -339,6 +340,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             {
                 quint64 socketId;
                 stream >> socketId;
+                dynamic_cast<LocalServer*>(m_NetworkInterface.get())->addSocket(socketID);
                 acceptNewConnection(socketID);
             }
             else
@@ -1045,6 +1047,7 @@ void Multiplayermenu::startCountdown()
     // can we start the game?
     if (getGameReady())
     {
+        Console::print("Starting countdown", Console::eDEBUG);
         sendServerReady(true);
         counter = 5;
         m_GameStartTimer.setInterval(std::chrono::seconds(1));
@@ -1054,6 +1057,7 @@ void Multiplayermenu::startCountdown()
     }
     else if (m_pPlayerSelection->getPlayerReady())
     {
+        Console::print("Stoping countdown", Console::eDEBUG);
         counter = 5;
         m_GameStartTimer.stop();
         sendServerReady(false);
@@ -1082,7 +1086,9 @@ void Multiplayermenu::sendServerReady(bool value)
                 player.append(i);
             }
         }
+        Console::print("Setting player ready information to local players with value "  + QString::number(value), Console::eDEBUG);
         m_pPlayerSelection->setPlayerReady(value);
+        Console::print("Sending ready information to all players with value " + QString::number(value), Console::eDEBUG);
         m_pPlayerSelection->sendPlayerReady(0, player, value);
     }
 }

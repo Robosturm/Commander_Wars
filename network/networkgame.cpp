@@ -18,10 +18,9 @@ void NetworkGame::addClient(spTCPClient pClient)
     pClient->getRXTask()->swapNetworkInterface(pClient.get());
     disconnect(pClient.get(), &TCPClient::recieveData, nullptr, nullptr);
     disconnect(pClient.get(), &TCPClient::sigForwardData, nullptr, nullptr);
-    disconnect(pClient->getRXTask().get(), &RxTask::sigForwardData, nullptr, nullptr);
-    connect(pClient.get(), &NetworkInterface::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
-    connect(pClient->getRXTask().get(), &RxTask::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
-    connect(pClient.get(), &NetworkInterface::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
+    connect(pClient.get(), &TCPClient::recieveData, this, &NetworkGame::recieveClientData, Qt::QueuedConnection);
+    connect(pClient.get(), &TCPClient::sigForwardData, this, &NetworkGame::forwardData, Qt::QueuedConnection);
+    connect(pClient.get(), &TCPClient::sigDisconnected, this, &NetworkGame::clientDisconnect, Qt::QueuedConnection);
     if (m_slaveRunning)
     {
         sendPlayerJoined(m_Clients.size() - 1);
@@ -30,6 +29,7 @@ void NetworkGame::addClient(spTCPClient pClient)
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
+    Console::print("Forwaring message from socket " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         if (m_Clients[i]->getSocketId() != socketID)

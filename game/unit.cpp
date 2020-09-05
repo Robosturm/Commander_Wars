@@ -2819,7 +2819,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
-    initUnit();
+    if (!fast)
+    {
+        initUnit();
+    }
     setHp(hp);
     setAmmo1(ammo1);
     setAmmo2(ammo2);

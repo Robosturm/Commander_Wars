@@ -54,7 +54,7 @@ void RxTask::recieveData()
         {
             if (pIF->getIsServer() && forwardData)
             {
-                emit sigForwardData(socketId, data, eService);
+                emit pIF->sigForwardData(socketId, data, eService);
             }
             emit pIF->recieveData(socketId, data, eService);
         }

@@ -316,8 +316,11 @@ public:
      * @return
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
-
-
+    /**
+     * @brief anyPlayerAlive
+     * @return
+     */
+    bool anyPlayerAlive();
 signals:
     void signalExitGame();
     void signalSaveGame();

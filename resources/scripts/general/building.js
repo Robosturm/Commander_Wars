@@ -140,7 +140,7 @@ var BUILDING =
         return[];
     },
 
-    replenishUnit: function(building)
+    replenishUnit : function(building)
     {
         // default impl replenishes our units
         // gets called at the start of a turn

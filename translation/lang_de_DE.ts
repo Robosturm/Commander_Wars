@@ -2419,7 +2419,7 @@ This is immediatly applied.</source>
         <translation>Generieren </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1002"/>
+        <location filename="../game/gamemap.cpp" line="1014"/>
         <source>Loading Players</source>
         <translation>Lade Spieler</translation>
     </message>
@@ -2444,7 +2444,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1024"/>
+        <location filename="../game/gamemap.cpp" line="1036"/>
         <source>Loading Map Row </source>
         <translation>Lade Kartenreihe </translation>
     </message>
@@ -2456,27 +2456,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="1024"/>
+        <location filename="../game/gamemap.cpp" line="1036"/>
         <source> of </source>
         <translation> von </translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1051"/>
+        <location filename="../game/gamemap.cpp" line="1063"/>
         <source>Loading Rules</source>
         <translation>Lade Regeln</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1061"/>
+        <location filename="../game/gamemap.cpp" line="1073"/>
         <source>Loading Record</source>
         <translation>Lade Aufnahme</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1069"/>
+        <location filename="../game/gamemap.cpp" line="1081"/>
         <source>Loading scripts</source>
         <translation>Lade Skripte</translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1081"/>
+        <location filename="../game/gamemap.cpp" line="1093"/>
         <source>Loading Campaign</source>
         <translation>Kampanie laden</translation>
     </message>
@@ -2514,67 +2514,67 @@ This is immediatly applied.</source>
         <translation>Das Spiel ist asynchron und kann nicht fortgesetzt werden. Das Spiel wurde unterbrochen. Du kannst das Spiel speichern und neu starten.</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Player</source>
         <translation>Spieler</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Produced</source>
         <translation>Produziert</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Lost</source>
         <translation>Verluste</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Killed</source>
         <translation>Vernichtet</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Income</source>
         <translation>Einkommen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Funds</source>
         <translation>Fonds</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Bases</source>
         <translation>Basen</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1116"/>
+        <location filename="../menue/gamemenue.cpp" line="1122"/>
         <source>Army Value</source>
         <translation>Armeegröße</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1138"/>
+        <location filename="../menue/gamemenue.cpp" line="1144"/>
         <source>Player </source>
         <translation>Spieler </translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1154"/>
         <source>Neutral</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1508"/>
+        <location filename="../menue/gamemenue.cpp" line="1515"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1526"/>
+        <location filename="../menue/gamemenue.cpp" line="1533"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1555"/>
+        <location filename="../menue/gamemenue.cpp" line="1562"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -3528,49 +3528,49 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="106"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="107"/>
         <source>Load Savegame</source>
         <translation>Lade Spielstand</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="77"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="89"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1039"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1041"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="95"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="96"/>
         <source>Connecting</source>
         <translation>Verbinde</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="131"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="132"/>
         <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="132"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="133"/>
         <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="141"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="142"/>
         <source>Host Adress: </source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="546"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="548"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="932"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1035"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1037"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>
