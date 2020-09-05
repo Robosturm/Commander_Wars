@@ -22,7 +22,7 @@ float DecisionNode::getDecision(QVector<float>& input)
     return -1.0f;
 }
 
-void DecisionNode::serializeObject(QDataStream& pStream)
+void DecisionNode::serializeObject(QDataStream& pStream) const
 {
     pStream << true; // --> 0 for node and 1 for leaf
     pStream << getVersion();

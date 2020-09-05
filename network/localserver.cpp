@@ -15,7 +15,7 @@ LocalServer::~LocalServer()
 {
     disconnect();
     disconnectTCP();
-    Console::print(tr("Server is closed"), Console::eLogLevels::eDEBUG);
+    Console::print("Server is closed", Console::eLogLevels::eDEBUG);
 }
 
 void LocalServer::connectTCP(QString adress, quint16)
@@ -29,7 +29,7 @@ void LocalServer::connectTCP(QString adress, quint16)
     QObject::connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
     QObject::connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
 
-    Console::print(tr("Server is running. ") + adress, Console::eLogLevels::eDEBUG);
+    Console::print("Server is running. " + adress, Console::eLogLevels::eDEBUG);
     // create marker file
     QString markername = "temp/" + adress + ".marker";
     QFile file(markername);
@@ -46,7 +46,7 @@ void LocalServer::disconnectTCP()
             // realize correct deletion
             pTCPSockets[0]->disconnect();
             pTCPSockets[0]->close();
-            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
+            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
         }
         pRXTasks.removeAt(0);
         pTXTasks.removeAt(0);
@@ -75,7 +75,7 @@ void LocalServer::disconnectClient(quint64 socketID)
             pRXTasks.removeAt(i);
             pTXTasks.removeAt(i);
             pTCPSockets.removeAt(i);
-            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
+            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
             emit sigDisconnected(socketID);
             break;
         }
@@ -98,7 +98,7 @@ void LocalServer::disconnectSocket()
             pTCPSockets.removeAt(i);
             quint64 id = m_SocketIDs[i];
             m_SocketIDs.removeAt(i);
-            Console::print(tr("Client disconnected."), Console::eLogLevels::eDEBUG);
+            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
             emit sigDisconnected(id);
         }
         else
@@ -118,12 +118,6 @@ void LocalServer::onConnect()
         QObject::connect(nextSocket, &QLocalSocket::disconnected, this, &LocalServer::disconnectSocket, Qt::QueuedConnection);
         QObject::connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
-        if (m_idCounter == 0)
-        {
-            m_idCounter++;
-        }
-        m_SocketIDs.append(m_idCounter);
-
         // Start RX-Task
         RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, true);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
@@ -136,7 +130,7 @@ void LocalServer::onConnect()
         pTXTasks.append(pTXTask);
         QObject::connect(this, &LocalServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
 
-        Console::print(tr("New Client connection."), Console::eLogLevels::eDEBUG);
+        Console::print("New Client connection.", Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }
 }
@@ -176,4 +170,14 @@ void LocalServer::changeThread(quint64 socketID, QThread* pThread)
             break;
         }
     }
+}
+
+void LocalServer::addSocket(quint64 socket)
+{
+    m_SocketIDs.append(socket);
+}
+
+void LocalServer::removeSocket(quint64 socket)
+{
+    m_SocketIDs.removeAll(socket);
 }

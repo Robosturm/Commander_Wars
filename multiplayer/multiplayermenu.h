@@ -17,7 +17,7 @@ class Multiplayermenu : public MapSelectionMapsMenue
     Q_OBJECT
 public:
     explicit Multiplayermenu(QString adress, bool host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, bool host);
     virtual ~Multiplayermenu() = default;
 
     /**
@@ -101,6 +101,22 @@ private:
      * @param socketID
      */
     void acceptNewConnection(quint64 socketID);
+    /**
+     * @brief initClientAndWaitForConnection
+     */
+    void initClientAndWaitForConnection();
+    /**
+     * @brief startCountdown
+     */
+    void startCountdown();
+    /**
+     * @brief markGameReady
+     */
+    void markGameReady();
+    /**
+     * @brief changeButtonText
+     */
+    void changeButtonText();
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

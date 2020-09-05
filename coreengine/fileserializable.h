@@ -12,7 +12,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) = 0;
+    virtual void serializeObject(QDataStream& pStream) const = 0;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -22,7 +22,7 @@ public:
      * @brief getVersion version of the file
      * @return
      */
-    virtual qint32 getVersion() = 0;
+    virtual qint32 getVersion() const = 0;
 };
 
 #endif // FILESERIALIZABLE_H

@@ -45,7 +45,7 @@ void GameMap::importAWDCMap(QString file)
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
                 fields[y]->append(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
@@ -452,8 +452,8 @@ void GameMap::importAWDCMap(QString file)
             }
         }
         QStringList list = file.split("/");
-        mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
-        mapDescription = "";
+        m_mapName = list[list.size() - 1].remove(list[list.size() - 1].lastIndexOf("."), list[list.size() - 1].size());
+        m_mapDescription = "";
     }
     EditorMenue::getInstance()->optimizePlayers();
     // update the whole fucking map

@@ -419,7 +419,7 @@ void GameAction::setInputStep(const qint32 &value)
     inputStep = value;
 }
 
-void GameAction::serializeObject(QDataStream& stream)
+void GameAction::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
     stream << m_actionID;

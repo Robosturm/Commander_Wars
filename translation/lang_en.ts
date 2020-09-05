@@ -162,7 +162,7 @@
 <context>
     <name>ACTION_BUILD_WATERPLANE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="74"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="79"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,7 +292,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="590"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="585"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,29 +1236,6 @@
     <message>
         <location filename="../objects/colorselector.cpp" line="69"/>
         <source>Blue: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Console</name>
-    <message>
-        <location filename="../coreengine/console.cpp" line="100"/>
-        <source>Enter &quot;help()&quot; for console info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="101"/>
-        <source>Starting Game...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="102"/>
-        <source>Prepare to Fight...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="103"/>
-        <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2368,7 +2345,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="961"/>
+        <location filename="../game/gamemap.cpp" line="1002"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2393,7 +2370,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="985"/>
+        <location filename="../game/gamemap.cpp" line="1024"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2405,27 +2382,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="985"/>
+        <location filename="../game/gamemap.cpp" line="1024"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1012"/>
+        <location filename="../game/gamemap.cpp" line="1051"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1022"/>
+        <location filename="../game/gamemap.cpp" line="1061"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1030"/>
+        <location filename="../game/gamemap.cpp" line="1069"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1042"/>
+        <location filename="../game/gamemap.cpp" line="1081"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2433,97 +2410,97 @@ This is immediatly applied.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="86"/>
+        <location filename="../menue/gamemenue.cpp" line="80"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="252"/>
+        <location filename="../menue/gamemenue.cpp" line="263"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="362"/>
+        <location filename="../menue/gamemenue.cpp" line="373"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="370"/>
+        <location filename="../menue/gamemenue.cpp" line="381"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="420"/>
+        <location filename="../menue/gamemenue.cpp" line="431"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="552"/>
+        <location filename="../menue/gamemenue.cpp" line="563"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1104"/>
+        <location filename="../menue/gamemenue.cpp" line="1116"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1126"/>
+        <location filename="../menue/gamemenue.cpp" line="1138"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1136"/>
+        <location filename="../menue/gamemenue.cpp" line="1148"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1486"/>
+        <location filename="../menue/gamemenue.cpp" line="1508"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1504"/>
+        <location filename="../menue/gamemenue.cpp" line="1526"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1533"/>
+        <location filename="../menue/gamemenue.cpp" line="1555"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3111,76 +3088,53 @@ This is immediatly applied.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="49"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="52"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="58"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="61"/>
         <source>Host Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="67"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="70"/>
         <source>Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="76"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="79"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="86"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="88"/>
         <source>Join Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="169"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="200"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>LocalClient</name>
     <message>
-        <location filename="../network/localclient.cpp" line="21"/>
-        <source>Client is closed</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="42"/>
-        <source>Local Client is running to </source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localclient.cpp" line="76"/>
-        <source>Client is connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LocalServer</name>
-    <message>
-        <location filename="../network/localserver.cpp" line="18"/>
-        <source>Server is closed</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/localserver.cpp" line="32"/>
-        <source>Server is running. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/localserver.cpp" line="49"/>
-        <location filename="../network/localserver.cpp" line="78"/>
-        <location filename="../network/localserver.cpp" line="101"/>
-        <source>Client disconnected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/localserver.cpp" line="139"/>
-        <source>New Client connection.</source>
+        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3213,18 +3167,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="554"/>
+        <location filename="../coreengine/mainapp.cpp" line="561"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="560"/>
+        <location filename="../coreengine/mainapp.cpp" line="567"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="562"/>
+        <location filename="../coreengine/mainapp.cpp" line="569"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -3465,76 +3419,50 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="106"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="983"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="77"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="89"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1039"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="58"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="95"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="117"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="131"/>
         <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="118"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="132"/>
         <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="127"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="141"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="528"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="546"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="904"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="930"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="979"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1035"/>
         <source>Not Ready</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NetworkInterface</name>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="157"/>
-        <location filename="../network/NetworkInterface.h" line="175"/>
-        <source>The server was closed by the peer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="160"/>
-        <location filename="../network/NetworkInterface.h" line="178"/>
-        <source>The host was not found. Please check the host name and port settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="163"/>
-        <location filename="../network/NetworkInterface.h" line="181"/>
-        <source>The connection was refused by the peer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/NetworkInterface.h" line="166"/>
-        <location filename="../network/NetworkInterface.h" line="184"/>
-        <source>Error inside the Socket happened. Error: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3941,145 +3869,145 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
-        <location filename="../objects/playerselection.cpp" line="318"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="196"/>
-        <location filename="../objects/playerselection.cpp" line="300"/>
-        <location filename="../objects/playerselection.cpp" line="639"/>
+        <location filename="../objects/playerselection.cpp" line="198"/>
+        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="641"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="199"/>
+        <location filename="../objects/playerselection.cpp" line="201"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="231"/>
+        <location filename="../objects/playerselection.cpp" line="233"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="236"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="244"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="253"/>
+        <location filename="../objects/playerselection.cpp" line="255"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="271"/>
+        <location filename="../objects/playerselection.cpp" line="273"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="286"/>
+        <location filename="../objects/playerselection.cpp" line="288"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
-        <location filename="../objects/playerselection.cpp" line="324"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
+        <location filename="../objects/playerselection.cpp" line="326"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="96"/>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="322"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <location filename="../objects/playerselection.cpp" line="334"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
+        <location filename="../objects/playerselection.cpp" line="329"/>
+        <location filename="../objects/playerselection.cpp" line="336"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="487"/>
+        <location filename="../objects/playerselection.cpp" line="489"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="505"/>
+        <location filename="../objects/playerselection.cpp" line="507"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="584"/>
+        <location filename="../objects/playerselection.cpp" line="586"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="603"/>
+        <location filename="../objects/playerselection.cpp" line="605"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="622"/>
+        <location filename="../objects/playerselection.cpp" line="624"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="658"/>
+        <location filename="../objects/playerselection.cpp" line="660"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6117,76 +6045,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
-    <name>SpriteCreator</name>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="85"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="176"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="260"/>
-        <source>The color table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="90"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="182"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="266"/>
-        <source>The mask table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="192"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="272"/>
-        <source>The mask table is to small. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="113"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="213"/>
-        <source>Input directory or file doesn&apos;t exists. </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TCPClient</name>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="31"/>
-        <source>Client is closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="55"/>
-        <source>Client is running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpclient.cpp" line="91"/>
-        <source>Client is connected</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TCPServer</name>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="32"/>
-        <source>Server is running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="18"/>
-        <source>Server is closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="61"/>
-        <source>Client disconnected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="105"/>
-        <source>New Client connection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TELEPORTTILE</name>
     <message>
         <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
@@ -6673,14 +6531,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
-    <name>Terrain</name>
-    <message>
-        <location filename="../game/terrain.cpp" line="46"/>
-        <source>Unable to load Terrain </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TerrainInfo</name>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="52"/>
@@ -6799,7 +6649,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitSpriteManager</name>
     <message>
-        <location filename="../resource_management/unitspritemanager.cpp" line="73"/>
+        <location filename="../resource_management/unitspritemanager.cpp" line="85"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10840,34 +10690,34 @@ Units have high offensive bonus and a defensive malus.</source>
 <context>
     <name>co_grit</name>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="213"/>
         <source>A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="217"/>
         <source>Cats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="221"/>
         <source>Rats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="225"/>
         <source>Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="229"/>
         <source>
 Global Effect: 
 Indirect units have 1 increased firerange and non-infantry direct units have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="230"/>
         <source>
 
 CO Zone Effect: 
@@ -10875,82 +10725,82 @@ Indirect units  have an offensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="234"/>
         <source>Increases range of indirect units by one space. Firepower of these units also rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="238"/>
         <source>Snipe Attack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="242"/>
         <source>Increases range of indirect units by two spaces. Firepower of these units greatly rise.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="246"/>
         <source>Super Snipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="250"/>
         <source>Once you&apos;re in my sights, there&apos;s no gettin&apos; away!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="251"/>
         <source>Reckon it&apos;s time to take you down!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="252"/>
         <source>Where&apos;s the fool who wants to help me with target practice?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="253"/>
         <source>Y&apos;all can run, but you can&apos;t hide!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="254"/>
         <source>Y&apos;all gimme no choice... Time to bring in the big guns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="255"/>
         <source>Aw, shucks. I was hopin&apos; it wouldn&apos;t come to this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="259"/>
         <source>This ain&apos;t for show.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="260"/>
         <source>Maybe now I can get some shut-eye.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="261"/>
         <source>I hope this gets easier. That was harder&apos;n college!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="265"/>
         <source>Aw, possum spit!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="266"/>
         <source>Just as I reckoned... This ain&apos;t gonna be no Sunday stroll.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_grit.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_grit.js" line="270"/>
         <source>Grit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17638,27 +17488,27 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>terrain</name>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="15"/>
+        <location filename="../resources/scripts/general/terrain.js" line="22"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="16"/>
+        <location filename="../resources/scripts/general/terrain.js" line="23"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="17"/>
+        <location filename="../resources/scripts/general/terrain.js" line="24"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="18"/>
+        <location filename="../resources/scripts/general/terrain.js" line="25"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/general/terrain.js" line="26"/>
+        <location filename="../resources/scripts/general/terrain.js" line="33"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

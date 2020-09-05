@@ -38,6 +38,18 @@ QStringList UnitSpriteManager::getUnitsSorted()
 {
     QStringList sortedUnits;
     QVector<qint32> unitTypes;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getUnitTypeSort";
+    QJSValue ret = pInterpreter->doFunction("UNIT", function1);
+    auto list = ret.toVariant().toList();
+    for (auto unitType : list)
+    {
+        qint32 value = unitType.toInt();
+        if (!unitTypes.contains(value))
+        {
+            unitTypes.append(value);
+        }
+    }
     for (qint32 i = 0; i < m_loadedRessources.size(); i++)
     {
         qint32 unitType = getUnitType(i);

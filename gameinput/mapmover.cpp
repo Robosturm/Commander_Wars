@@ -56,22 +56,22 @@ void MapMover::keyInput(oxygine::KeyEvent event)
         }
         else if (cur == Settings::getKey_moveMapUp())
         {
-            GameMap::getInstance()->moveMap(0, -GameMap::Imagesize);
+            GameMap::getInstance()->moveMap(0, -GameMap::getImageSize());
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
         }
         else if (cur == Settings::getKey_moveMapDown())
         {
-            GameMap::getInstance()->moveMap(0, GameMap::Imagesize);
+            GameMap::getInstance()->moveMap(0, GameMap::getImageSize());
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
         }
         else if (cur == Settings::getKey_moveMapRight())
         {
-            GameMap::getInstance()->moveMap(GameMap::Imagesize, 0);
+            GameMap::getInstance()->moveMap(GameMap::getImageSize(), 0);
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
         }
         else if (cur == Settings::getKey_moveMapLeft())
         {
-            GameMap::getInstance()->moveMap(-GameMap::Imagesize, 0);
+            GameMap::getInstance()->moveMap(-GameMap::getImageSize(), 0);
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
         }
         else if (cur == Settings::getKey_MapZoomIn())

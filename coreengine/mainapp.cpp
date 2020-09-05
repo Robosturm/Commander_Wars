@@ -35,6 +35,8 @@
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
 
+#include "game/gamemap.h"
+
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
@@ -230,6 +232,11 @@ QmlVectorPoint* Mainapp::getShotFields(qint32 min, qint32 max, qint32 xDirection
         }
     }
     return ret;
+}
+
+void Mainapp::setImageSize(qint32 value)
+{
+    GameMap::setImagesize(value);
 }
 
 qint32 Mainapp::getDistance(QPoint p1, QPoint p2)

@@ -79,8 +79,8 @@ void Building::scaleAndShowOnSingleTile()
     qint32 heigth = getBuildingHeigth();
     setScaleX(1.0f / static_cast<float>(width));
     setScaleY(1.0f / static_cast<float>(heigth));
-    setX(GameMap::Imagesize * (width - 1) / (width));
-    setY(GameMap::Imagesize * (heigth - 1) / (heigth));
+    setX(GameMap::getImageSize() * (width - 1) / (width));
+    setY(GameMap::getImageSize() * (heigth - 1) / (heigth));
 }
 QString Building::getDescription()
 {
@@ -199,15 +199,14 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         }
         else
         {
-            pSprite->setScale(((GameMap::Imagesize ) * width) / pAnim->getWidth());
-            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::Imagesize, -pSprite->getScaledHeight() + GameMap::Imagesize);
+            pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
+            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
-        pSprite->setDestRecModifier(GameMap::mapRect);
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
         m_addPlayerColor.append(mode);
@@ -915,7 +914,7 @@ void Building::setHp(const qint32 &Hp)
     m_Hp = Hp;
 }
 
-void Building::serializeObject(QDataStream& pStream)
+void Building::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_BuildingID;

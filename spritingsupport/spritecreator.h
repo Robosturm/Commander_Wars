@@ -133,6 +133,17 @@ public:
      * @param frames
      */
     static void inversImageFrames(QString& file, qint32 frames);
+    /**
+     * @brief extendMaskImages
+     * @param folder
+     * @param filter
+     */
+    static void extendMaskImages(QString& folder, QString& filter);
+    /**
+     * @brief extendMaskImage
+     * @param file
+     */
+    static void extendMaskImage(QString& file);
 };
 
 #endif // SPRITECREATOR_H

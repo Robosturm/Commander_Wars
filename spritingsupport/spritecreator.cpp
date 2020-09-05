@@ -82,12 +82,12 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
 {
     if (!QFile::exists(inTable) && inTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + inTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + inTable, Console::eLogLevels::eERROR);
         return;
     }
     if (!QFile::exists(outTable) && outTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + outTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + outTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage inTableImg(inTable);
@@ -110,7 +110,7 @@ void SpriteCreator::applyImagesTable(QString input, QString inTable, QString out
     }
     else
     {
-        Console::print(tr("Input directory or file doesn't exists. ") + input, Console::eERROR);
+        Console::print("Input directory or file doesn't exists. " + input, Console::eERROR);
     }
 }
 
@@ -173,13 +173,13 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(maskTable) && maskTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + maskTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + maskTable, Console::eLogLevels::eERROR);
         return;
     }
     QImage maskTableImg(maskTable);
@@ -189,7 +189,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     if (maskTableImg.width() < colorTableImg.width())
     {
-        Console::print(tr("The mask table is to small. ") + maskTable, Console::eERROR);
+        Console::print("The mask table is to small. " + maskTable, Console::eERROR);
         return;
     }
     QFileInfo inputInfo(input);
@@ -210,7 +210,7 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
     }
     else
     {
-        Console::print(tr("Input directory or file doesn't exists. ") + input, Console::eERROR);
+        Console::print("Input directory or file doesn't exists. " + input, Console::eERROR);
     }
 }
 
@@ -257,19 +257,19 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, Q
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
-        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eLogLevels::eERROR);
+        Console::print("The color table is not an existing file. " + colorTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage colorTableImg(colorTable);
     if (!QFile::exists(newTable) && newTable.endsWith(".png"))
     {
-        Console::print(tr("The mask table is not an existing file. ") + newTable, Console::eLogLevels::eERROR);
+        Console::print("The mask table is not an existing file. " + newTable, Console::eLogLevels::eERROR);
         return nullptr;
     }
     QImage maskTableImg(newTable);
     if (maskTableImg.width() < colorTableImg.width())
     {
-        Console::print(tr("The mask table is to small. ") + newTable, Console::eERROR);
+        Console::print("The mask table is to small. " + newTable, Console::eERROR);
         return nullptr;
     }
     return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor);
@@ -527,6 +527,73 @@ void SpriteCreator::inversImageFrames(QString& file, qint32 frames)
                 // color pixel or another one?
                 QColor org = picture.pixelColor(picture.width() - (i + 1) * frameWidth + x, y);
                 newPicture.setPixelColor(x + i * frameWidth, y, org);
+            }
+        }
+    }
+    QFile::remove(file);
+    newPicture.save(file);
+}
+
+void SpriteCreator::extendMaskImages(QString& folder, QString& filter)
+{
+    QStringList filters;
+    filters << filter;
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        extendMaskImage(file);
+    }
+}
+
+void SpriteCreator::extendMaskImage(QString& file)
+{
+    constexpr qint32 alpha = 0;
+    QImage picture(file);
+    QImage newPicture(picture.size(), picture.format());
+    for (qint32 x = 0; x < picture.width(); x++)
+    {
+        for (qint32 y = 0; y < picture.height(); y++)
+        {
+            // color pixel or another one?
+            QColor org = picture.pixelColor(x, y);
+            if (org.alpha() == alpha)
+            {
+                if (y + 1 < picture.height() &&
+                    picture.pixelColor(x, y + 1).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x, y + 1);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (y - 1 >= 0 &&
+                         picture.pixelColor(x, y - 1).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x, y - 1);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (x + 1 < picture.width() &&
+                    picture.pixelColor(x + 1, y).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x + 1, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else if (x - 1 >= 0 &&
+                         picture.pixelColor(x - 1, y).alpha() != alpha)
+                {
+                    QColor color = picture.pixelColor(x - 1, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+                else
+                {
+                    QColor color = picture.pixelColor(x, y);
+                    newPicture.setPixelColor(x, y, color);
+                }
+            }
+            else
+            {
+                QColor color = picture.pixelColor(x, y);
+                newPicture.setPixelColor(x, y, color);
             }
         }
     }

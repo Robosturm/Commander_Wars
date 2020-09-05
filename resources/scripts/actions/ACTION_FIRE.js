@@ -549,11 +549,7 @@ var Constructor = function()
             attacker.killUnit();
             // we destroyed a unit
             map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID());
-            attacker = null;
-            if (defUnit !== null)
-            {
-                UNITRANKINGSYSTEM.increaseRang(defUnit);
-            }
+            UNITRANKINGSYSTEM.increaseRang(defUnit);
         }
         // level up and attacker destruction
         if (defUnit.getHp() <= 0)
@@ -561,7 +557,6 @@ var Constructor = function()
             defUnit.killUnit();
             // we destroyed a unit nice
             map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
-            defUnit = null;
             UNITRANKINGSYSTEM.increaseRang(attacker);
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;

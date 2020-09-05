@@ -34,10 +34,24 @@ signals:
 
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief updateGameData
+     */
+    void updateGameData();
+    /**
+     * @brief sendGameDataUpdate
+     */
+    void sendGameDataUpdate();
+    /**
+     * @brief playerJoined
+     * @param socketId
+     */
+    void playerJoined(qint64 socketId);
 private:
     void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data);
     bool validHostRequest(QStringList mods);
-
+    void sendGameDataToClient(qint64 socketId);
+    void joinSlaveGame(quint64 socketID, QDataStream & stream);
 private:
     struct stNetworkGame
     {
@@ -50,10 +64,10 @@ private:
     static MainServer* m_pInstance;
     TCPServer* m_pGameServer{nullptr};
     quint64 m_slaveGameIterator{0};
-    QVector<spNetworkGameData> m_networkGames;
-
     // data for games currently run on the server
     QVector<stNetworkGame*> m_games;
+    QTimer m_updateTimer;
+    bool m_updateGameData{false};
 };
 
 #endif // MAINSERVER_H

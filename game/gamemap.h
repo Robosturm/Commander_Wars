@@ -43,9 +43,7 @@ class GameMap : public QObject, public FileSerializable, public oxygine::Actor
     Q_PROPERTY(qint32 width READ getWidth WRITE setWidth)
 public:
     static const qint32 frameTime;
-    static const qint32 Imagesize = 24;
-    static const oxygine::RectF mapRect;
-    static const oxygine::RectF spriteLayerRect;
+    static constexpr qint32 defaultImageSize = 24;
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width
@@ -244,7 +242,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) const override;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -256,6 +254,10 @@ public:
      * @param fast
      */
     void deserializer(QDataStream& pStream, bool fast);
+
+    static void readMapHeader(QDataStream& pStream,
+                              qint32 & version, QString & mapName,  QString & mapAuthor, QString & mapDescription,
+                              qint32 & width, qint32 & heigth, qint32 & playerCount, qint32 & uniqueIdCounter);
     /**
      * @brief readMapName
      * @param pStream
@@ -266,7 +268,7 @@ public:
      * @brief getVersion stream version for serialization
      * @return
      */
-    inline virtual qint32 getVersion() override
+    inline virtual qint32 getVersion() const override
     {
         return 8;
     }
@@ -314,6 +316,7 @@ public:
      * @return
      */
     bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
+
 
 signals:
     void signalExitGame();
@@ -578,7 +581,7 @@ public slots:
      * @brief getPlayerCount
      * @return number of players on the map
      */
-    qint32 getPlayerCount()
+    qint32 getPlayerCount() const
     {
         return players.size();
     }
@@ -608,6 +611,11 @@ public slots:
      * @return the size of an field in pixel
      */
     static qint32 getImageSize();
+    /**
+     * @brief setImagesize
+     * @param imagesize
+     */
+    static void setImagesize(const qint32 &imagesize);
     /**
      * @brief nextTurn next players turn.
      */
@@ -704,11 +712,15 @@ public slots:
      * @param y
      */
     void nicknameUnit(qint32 x, qint32 y);
+    /**
+     * qbrief killDeadUnits
+     */
+    void killDeadUnits();
 private:
     static spGameMap m_pInstance;
-    QString mapName;
-    QString mapAuthor;
-    QString mapDescription;
+    QString m_mapName;
+    QString m_mapAuthor;
+    QString m_mapDescription;
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
@@ -722,7 +734,7 @@ private:
     float m_zoom{1.0f};
     bool loaded{false};
     qint32 m_UniqueIdCounter{0};
-
+    static qint32 m_imagesize;
     void loadMapData();
 };
 

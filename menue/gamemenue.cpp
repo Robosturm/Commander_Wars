@@ -32,6 +32,7 @@
 
 #include "multiplayer/networkcommands.h"
 #include "network/tcpserver.h"
+#include "network/localserver.h"
 
 #include "wiki/fieldinfo.h"
 
@@ -71,14 +72,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         }
         connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
         connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
-        if (!m_pNetworkInterface->getIsServer())
-        {
-            QByteArray sendData;
-            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << NetworkCommands::CLIENTINITGAME;
-            m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
-        }
-        else
+        if (m_pNetworkInterface->getIsServer())
         {
             m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
@@ -127,19 +121,36 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
+        Console::print("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::CLIENTINITGAME)
         {
             if (m_pNetworkInterface->getIsServer())
             {
                 // the given client is ready
-                m_ReadySockets.append(socketID);
-                QVector<quint64> sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                quint64 socket = 0;
+                stream >> socket;
+                Console::print("socket game ready " + QString::number(socket), Console::eDEBUG);
+                m_ReadySockets.append(socket);
+                QVector<quint64> sockets;
+                if (dynamic_cast<TCPServer*>(m_pNetworkInterface.get()))
+                {
+                    sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                }
+                else
+                {
+                    sockets = dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                }
                 bool ready = true;
                 for (qint32 i = 0; i < sockets.size(); i++)
                 {
                     if (!m_ReadySockets.contains(sockets[i]))
                     {
                         ready = false;
+                        Console::print("Still waiting for socket game " + QString::number(sockets[i]), Console::eDEBUG);
+                    }
+                    else
+                    {
+                        Console::print("Socket ready: " + QString::number(sockets[i]), Console::eDEBUG);
                     }
                 }
                 if (ready)
@@ -883,6 +894,7 @@ void GameMenue::finishActionPerformed()
         m_CurrentActionUnit = nullptr;
     }
     spGameMap pMap = GameMap::getInstance();
+    pMap->killDeadUnits();
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
@@ -1137,10 +1149,20 @@ void GameMenue::showGameInfo()
 
         spGenericBox pGenericBox = new GenericBox();
         QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
-        spPanel pPanel = new Panel(true, size, size);
+        qint32 width = (Settings::getWidth() - 20) / header.size();
+        if (width < 150)
+        {
+            width = 150;
+        }
+        QSize contentSize(header.size() * width + 40, size.height());
+        spPanel pPanel = new Panel(true, size, contentSize);
         pPanel->setPosition(20, 20);
-        qint32 width = (Settings::getWidth() - 120 - 5 * (header.size() + 1)) / header.size();
-        spTableView pTableView = new TableView(width * header.size() + 5 * (header.size() + 1), data, header, false);
+        QVector<qint32> widths;
+        for (auto value : header)
+        {
+            widths.append(width);
+        }
+        spTableView pTableView = new TableView(widths, data, header, false);
         pTableView->setPosition(20, 20);
         pPanel->addItem(pTableView);
         pPanel->setContentHeigth(pTableView->getHeight() + 40);

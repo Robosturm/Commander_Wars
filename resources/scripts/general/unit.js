@@ -213,7 +213,7 @@ var UNIT =
         if (unitType === GameEnums.UnitType_Hovercraft ||
                 unitType === GameEnums.UnitType_Ground)
         {
-            return GameEnums.UnitType_Hovercraft;
+            return GameEnums.UnitType_Ground;
         }
         return unitType;
     },
@@ -239,5 +239,14 @@ var UNIT =
             return qsTr("Hovercraft");
         }
         return tr("Ground");
+    },
+
+    getUnitTypeSort : function()
+    {
+        return [GameEnums.UnitType_Infantry,
+                GameEnums.UnitType_Ground,
+                GameEnums.UnitType_Hovercraft,
+                GameEnums.UnitType_Air,
+                GameEnums.UnitType_Naval];
     },
 };

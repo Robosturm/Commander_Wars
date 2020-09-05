@@ -15,7 +15,7 @@ GameRecorder::GameRecorder()
     Interpreter::setCppOwnerShip(this);
 }
 
-void GameRecorder::serializeObject(QDataStream& pStream)
+void GameRecorder::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_Record.size());

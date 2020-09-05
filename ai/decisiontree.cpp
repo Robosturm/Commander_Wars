@@ -212,7 +212,7 @@ spDecisionQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& training
 	return bestQuestion;
 }
 
-void DecisionTree::serializeObject(QDataStream& pStream)
+void DecisionTree::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     m_pRootNode->serializeObject(pStream);

@@ -12,7 +12,7 @@ ScriptVariables::ScriptVariables()
     Interpreter::setCppOwnerShip(this);
 }
 
-void ScriptVariables::serializeObject(QDataStream& pStream)
+void ScriptVariables::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_Variables.size());

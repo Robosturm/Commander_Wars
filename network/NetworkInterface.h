@@ -33,12 +33,13 @@ public:
     enum class NetworkSerives
     {
         None = -1,
-        Game,           /**< used for game stream data */
-        Lobby,          /**< used for lobby stream data */
-        LobbyChat,      /**< used for the lobby chat */
-        GameChat,       /**< used for ingame chat */
-        Multiplayer,    /**< used for the multiplayer game selection */
-        ServerHosting,  /**< used for data when starting a new game on the host or when communicating between slave and master */
+        Game,                   /**< used for game stream data */
+        Lobby,                  /**< used for lobby stream data */
+        LobbyChat,              /**< used for the lobby chat */
+        GameChat,               /**< used for ingame chat */
+        Multiplayer,            /**< used for the multiplayer game selection */
+        ServerHosting,          /**< used for data when starting a new game on the host or when communicating between slave and master */
+        ServerSocketInfo,       /**< used inside the rx-task data is not emitted when recieving this data */
         Max,
     };
 
@@ -106,6 +107,14 @@ public:
     {
         isServer = value;
     }
+    quint64 getSocketID() const
+    {
+        return m_socketID;
+    }
+    virtual void setSocketID(const quint64 &socketID)
+    {
+        m_socketID = socketID;
+    }
 signals:
     /**
      * @brief recieveData emitted when Data is recieved
@@ -154,16 +163,16 @@ public slots:
         switch (socketError)
         {
             case QAbstractSocket::RemoteHostClosedError:
-                Console::print(tr("The server was closed by the peer."), Console::eDEBUG);
+                Console::print("The server was closed by the peer.", Console::eDEBUG);
                 break;
             case QAbstractSocket::HostNotFoundError:
-                Console::print(tr("The host was not found. Please check the host name and port settings."), Console::eERROR);
+                Console::print("The host was not found. Please check the host name and port settings.", Console::eERROR);
                 break;
             case QAbstractSocket::ConnectionRefusedError:
-                Console::print(tr("The connection was refused by the peer."), Console::eDEBUG);
+                Console::print("The connection was refused by the peer.", Console::eDEBUG);
                 break;
             default:
-                Console::print(tr("Error inside the Socket happened. Error: ") + QString::number(socketError), Console::eERROR);
+                Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
 
@@ -172,16 +181,16 @@ public slots:
         switch (socketError)
         {
             case QLocalSocket::ConnectionError:
-                Console::print(tr("The server was closed by the peer."), Console::eDEBUG);
+                Console::print("The server was closed by the peer.", Console::eDEBUG);
                 break;
             case QLocalSocket::ServerNotFoundError:
-                Console::print(tr("The host was not found. Please check the host name and port settings."), Console::eERROR);
+                Console::print("The host was not found. Please check the host name and port settings.", Console::eERROR);
                 break;
             case QLocalSocket::ConnectionRefusedError:
-                Console::print(tr("The connection was refused by the peer."), Console::eDEBUG);
+                Console::print("The connection was refused by the peer.", Console::eDEBUG);
                 break;
             default:
-                Console::print(tr("Error inside the Socket happened. Error: ") + QString::number(socketError), Console::eERROR);
+                Console::print("Error inside the Socket happened. Error: " + QString::number(socketError), Console::eERROR);
         }
     }
 protected slots:
@@ -192,6 +201,7 @@ protected slots:
 protected:
     bool isServer;
     bool isConnected;
+    quint64 m_socketID{0};
 };
 
 #endif // NETWORKINTERFACE_H

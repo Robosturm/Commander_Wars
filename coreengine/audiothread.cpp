@@ -1,6 +1,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 #include <QSound>
 #include <QMediaPlaylist>
@@ -24,6 +25,8 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopAllSounds,    this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
     connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::QueuedConnection);
+
+
 }
 
 AudioThread::~AudioThread()
@@ -63,6 +66,8 @@ void AudioThread::initAudio()
     connect(m_Player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
     connect(m_Player2, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged, Qt::QueuedConnection);
     connect(m_Player2, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
+    connect(m_Player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &AudioThread::reportReplayError, Qt::QueuedConnection);
+    connect(m_Player2, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &AudioThread::reportReplayError, Qt::QueuedConnection);
 
     doubleBufferTimer->setSingleShot(false);
     doubleBufferTimer->setInterval(50);
@@ -428,4 +433,45 @@ void AudioThread::SlotStopAllSounds()
     }
     m_Sounds.clear();
     m_SoundTimers.clear();
+}
+
+void AudioThread::reportReplayError(QMediaPlayer::Error error)
+{
+    switch (error)
+    {
+        case QMediaPlayer::Error::FormatError:
+        {
+            Console::print("Audio playback error: Wrong audio format provided.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::NetworkError:
+        {
+            Console::print("Audio playback error: Network access error to audio file.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::ResourceError:
+        {
+            Console::print("Audio playback error: Media ressouce file couldn'tbe resolved.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::MediaIsPlaylist:
+        {
+            Console::print("Audio playback error: Audi file is a playlist instead of a single file.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::AccessDeniedError:
+        {
+            Console::print("Audio playback error: Access denied.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::ServiceMissingError:
+        {
+            Console::print("Audio playback error: Service for replaying the requested audio format is missing.", Console::eERROR);
+            break;
+        }
+        case QMediaPlayer::Error::NoError:
+        {
+            break;
+        }
+    }
 }

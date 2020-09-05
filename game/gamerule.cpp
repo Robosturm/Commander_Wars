@@ -147,7 +147,7 @@ QString GameRule::getRuleDescription(qint32 itemNumber)
     }
 }
 
-void GameRule::serializeObject(QDataStream& pStream)
+void GameRule::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_RuleID;

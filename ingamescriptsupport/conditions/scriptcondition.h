@@ -152,7 +152,7 @@ public:
      * @brief getVersion
      * @return
      */
-    virtual qint32 getVersion() = 0;
+    virtual qint32 getVersion() const = 0;
     /**
      * @brief readSubCondition
      * @param rStream

@@ -21,7 +21,7 @@
 spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
-    pTerrain->setSize(GameMap::Imagesize, GameMap::Imagesize);
+    pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {
         pTerrain->createBaseTerrain(currentTerrainID);
@@ -43,7 +43,7 @@ spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString 
         }
         else
         {
-            Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
+            Console::print("Unable to load Terrain " + terrainID, Console::eFATAL);
         }
     }
     return pTerrain;
@@ -337,22 +337,20 @@ void Terrain::loadBaseSprite(QString spriteID)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth() );
+        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
 
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
-        m_pTerrainSprite->setDestRecModifier(GameMap::mapRect);
     }
     else if (QFile::exists(m_terrainSpriteName))
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
-        m_pTerrainSprite->setDestRecModifier(GameMap::mapRect);
         loadSprite = true;
     }
     else
@@ -370,8 +368,8 @@ void Terrain::update(const oxygine::UpdateState& us)
         pAnim->init(m_terrainSpriteName, 1, 1, 1.0f);
         m_SpriteAnim = pAnim;
         m_pTerrainSprite->setResAnim(pAnim);
-        m_pTerrainSprite->setScale((GameMap::Imagesize) / pAnim->getWidth() );
-        m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::Imagesize));
+        m_pTerrainSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+        m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::getImageSize()));
         loadSprite = false;
     }
     oxygine::Actor::update(us);
@@ -551,9 +549,8 @@ void Terrain::loadOverlaySprite(QString spriteID)
             pSprite->setResAnim(pAnim);
         }
     }
-    pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
-    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-    pSprite->setDestRecModifier(GameMap::mapRect);
+    pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }
@@ -790,7 +787,7 @@ void Terrain::setUnit(spUnit pUnit)
         // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(Terrain::y) + 2);
         pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
-        pUnit->setPosition(Terrain::x * GameMap::Imagesize, Terrain::y * GameMap::Imagesize);
+        pUnit->setPosition(Terrain::x * GameMap::getImageSize(), Terrain::y * GameMap::getImageSize());
         GameMap::getInstance()->addChild(pUnit);
     }
 }
@@ -1021,7 +1018,7 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     }
 }
 
-void Terrain::serializeObject(QDataStream& pStream)
+void Terrain::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
 

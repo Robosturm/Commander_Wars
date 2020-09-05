@@ -1446,7 +1446,7 @@ qint32 Player::calculatePlayerStrength()
     return ret + calcIncome();
 }
 
-void Player::serializeObject(QDataStream& pStream)
+void Player::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     quint32 color = m_Color.rgb();

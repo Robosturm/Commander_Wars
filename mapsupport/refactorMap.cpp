@@ -20,7 +20,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString ba
             spTerrain pTerrain = Terrain::createTerrain(baseTerrain, x, y, "");
             this->addChild(pTerrain);
             fields[y]->append(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
     }
@@ -50,7 +50,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
                 fields[y]->append(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
@@ -77,7 +77,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
                 fields[y]->append(pTerrain);
-                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }
         }
@@ -232,7 +232,7 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
         for (qint32 x = 0; x < currentWidth; x++)
         {
             spTerrain pTerrain = fields[y]->at(x);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             pTerrain->setX(x);
             pTerrain->setY(y);
@@ -272,7 +272,7 @@ void GameMap::flipX()
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
             fields[y]->replace(x, pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
             Building* pCurrentBuilding = flipTerrain->getBuilding();
@@ -309,7 +309,7 @@ void GameMap::rotateX()
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
             fields[y]->replace(x, pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
             Building* pCurrentBuilding = flipTerrain->getBuilding();
@@ -346,7 +346,7 @@ void GameMap::flipY()
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
             fields[y]->replace(x, pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
             Building* pCurrentBuilding = flipTerrain->getBuilding();
@@ -383,7 +383,7 @@ void GameMap::rotateY()
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
             fields[y]->replace(x, pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
             Building* pCurrentBuilding = flipTerrain->getBuilding();

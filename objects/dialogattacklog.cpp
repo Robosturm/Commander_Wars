@@ -140,8 +140,8 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth() * 0.75f);
-            pSprite->setPosition(0, GameMap::Imagesize * 1.0f / 4.0f);
+            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
+            pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
             pActor->addChild(pSprite);
         }
         pPanel->addItem(pActor);
@@ -198,8 +198,8 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
             oxygine::spSprite pSprite = new oxygine::Sprite();
             oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
             pSprite->setResAnim(pAnim);
-            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth() * 0.75f);
-            pSprite->setPosition(0, GameMap::Imagesize * 1.0f / 4.0f);
+            pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth() * 0.75f);
+            pSprite->setPosition(0, GameMap::getImageSize() * 1.0f / 4.0f);
             pActor->addChild(pSprite);
         }
         pActor->setPosition(500, y + 8);

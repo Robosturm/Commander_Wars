@@ -45,7 +45,7 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serializeObject(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) const override;
     /**
      * @brief deserialize restores the object
      * @param pStream
@@ -55,7 +55,7 @@ public:
      * @brief getVersion version of the file
      * @return
      */
-    virtual qint32 getVersion() override
+    virtual qint32 getVersion() const override
     {
         return 3;
     }

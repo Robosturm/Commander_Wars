@@ -5,7 +5,7 @@ void DecisionQuestion::appendQuestion(spQuestion pQuestions)
     m_Questions.append(pQuestions);
 }
 
-void DecisionQuestion::serializeObject(QDataStream& pStream)
+void DecisionQuestion::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_Questions.size());

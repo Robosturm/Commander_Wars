@@ -13,7 +13,7 @@ Label::Label(qint32 width)
     addChild(_clipRect);
 }
 
-void Label::setWidth(qint32 width)
+void Label::setWidth(float width)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();

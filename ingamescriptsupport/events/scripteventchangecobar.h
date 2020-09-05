@@ -65,7 +65,7 @@ public:
      * @brief getVersion
      * @return
      */
-    virtual qint32 getVersion() override
+    virtual qint32 getVersion() const override
     {
         return 0;
     }

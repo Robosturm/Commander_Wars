@@ -26,3 +26,8 @@ getArmyNameFromTable = function(army, table)
     }
     return "os";
 }
+
+Math.random = function()
+{
+    console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)
+}

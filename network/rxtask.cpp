@@ -9,9 +9,8 @@ RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, b
       pIF(CommIF),
       m_SocketID(socketID),
       m_pStream(m_pSocket),
-      m_useReceivedId(false)
+      m_useReceivedId(useReceivedId)
 {
-    m_pStream.setVersion(QDataStream::Qt_5_12);
 }
 
 RxTask::~RxTask()
@@ -29,7 +28,8 @@ void RxTask::recieveData()
         bool forwardData = false;
         quint64 socketId;
         m_pStream >> socketId;
-        if (!m_useReceivedId)
+        if (!m_useReceivedId &&
+            eService != NetworkInterface::NetworkSerives::ServerSocketInfo)
         {
             socketId = m_SocketID;
         }
@@ -40,7 +40,12 @@ void RxTask::recieveData()
         {
             return;
         }
-        if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
+        if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
+        {
+            Console::print("Updating Socket ID to: " + QString::number(socketId), Console::eLogLevels::eDEBUG);
+            pIF->setSocketID(socketId);
+        }
+        else if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
         {
             // don't send an event :)
             Q_ASSERT(false);
@@ -54,4 +59,14 @@ void RxTask::recieveData()
             emit pIF->recieveData(socketId, data, eService);
         }
     }
+}
+
+quint64 RxTask::getSocketID() const
+{
+    return m_SocketID;
+}
+
+void RxTask::setSocketID(const quint64 &SocketID)
+{
+    m_SocketID = SocketID;
 }

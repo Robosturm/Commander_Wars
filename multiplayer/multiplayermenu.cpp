@@ -43,22 +43,8 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     {
         m_NetworkInterface = new TCPClient();
         m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
-        createChat();
+        initClientAndWaitForConnection();
         emit m_NetworkInterface->sig_connect(adress, Settings::getGamePort());
-        hideRuleSelection();
-        hideMapSelection();
-        m_MapSelectionStep = MapSelectionStep::selectPlayer;
-        // change the name of the start button
-        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
-        // quit on host connection lost
-        connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
-        connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
-        connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-        // wait 10 minutes till timeout
-        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"), 1000 * 60 * 5);
-        addChild(pDialogConnecting);
-        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
-        connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
     }
     else
     {
@@ -75,13 +61,41 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     }
 }
 
-Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface)
+Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
-      m_Host(true),
+      m_Host(host),
       m_local(false)
 {
     m_NetworkInterface = pNetworkInterface.get();
     init();
+    if (!host)
+    {
+        initClientAndWaitForConnection();
+    }
+    else
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+        m_pPlayerSelection->setIsServerGame(true);
+    }
+}
+
+void Multiplayermenu::initClientAndWaitForConnection()
+{
+    createChat();
+    hideRuleSelection();
+    hideMapSelection();
+    m_MapSelectionStep = MapSelectionStep::selectPlayer;
+    // change the name of the start button
+    dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+    // quit on host connection lost
+    connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
+    connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+    connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+    // wait 10 minutes till timeout
+    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"), 1000 * 60 * 5);
+    addChild(pDialogConnecting);
+    connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+    connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 }
 
 void Multiplayermenu::init()
@@ -271,7 +285,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        Console::print("Local Network Command received: " + messageType, Console::eDEBUG);
+        Console::print("Local Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::MAPINFO)
         {
             clientMapInfo(stream, socketID);
@@ -295,7 +309,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         else if (messageType == NetworkCommands::INITGAME)
         {
             // initializes the game on the client
-            if (!m_NetworkInterface->getIsServer())
+            if (!m_NetworkInterface->getIsServer() ||
+                !m_local)
             {
                 initClientGame(socketID, stream);
                 addRef();
@@ -303,14 +318,17 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 deleteLater();
             }
         }
+        else if (messageType == NetworkCommands::STARTSERVERGAME)
+        {
+            startCountdown();
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {
-        Console::print("Recieving data from Master.", Console::eDEBUG);
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        Console::print("Network Server Command received: " + messageType, Console::eDEBUG);
+        Console::print("Recieving data from Master. Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
         if (messageType == NetworkCommands::LAUNCHGAMEONSERVER)
         {
             launchGameOnServer(stream);
@@ -640,7 +658,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
-    m_pPlayerSelection->setIsSlave(true);
+    m_pPlayerSelection->setIsServerGame(true);
     loadMultiplayerMap();
     createChat();
     m_pPlayerSelection->setPlayerAi(0, GameEnums::AiTypes::AiTypes_Open, "");
@@ -747,6 +765,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         GameEnums::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
+        Console::print("Creating AI for player " + QString::number(i) + " of type " + QString::number(aiType), Console::eDEBUG);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
@@ -759,8 +778,15 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     }
     pMap->updateSprites();
     // start game
+    m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
+    // send game started
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << NetworkCommands::CLIENTINITGAME;
+    sendStream << m_NetworkInterface->getSocketID();
+    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     pApp->continueThread();
 }
 
@@ -973,39 +999,64 @@ void Multiplayermenu::startGame()
 {
     if (!m_Host)
     {
-        m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
-        if (m_pPlayerSelection->getPlayerReady())
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
-        }
-        else
-        {
-            dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
-        }
-        QByteArray sendData;
-        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::CLIENTREADY;
-        sendStream << m_pPlayerSelection->getPlayerReady();
-        m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        markGameReady();
+        changeButtonText();
+    }
+    else if (m_local)
+    {
+        markGameReady();
+        startCountdown();
     }
     else
     {
-        if (m_pPlayerSelection->getPlayerReady())
-        {
-            counter = 5;
-            m_GameStartTimer.stop();
-            sendServerReady(false);
-        }
-        // can we start the game?
-        else if (getGameReady())
-        {
-            sendServerReady(true);
-            counter = 5;
-            m_GameStartTimer.setInterval(std::chrono::seconds(1));
-            m_GameStartTimer.setSingleShot(false);
-            m_GameStartTimer.start();
-            emit m_Chat->sigSendText(QString::number(counter) + "...");
-        }
+        markGameReady();
+        changeButtonText();
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << NetworkCommands::STARTSERVERGAME;
+        m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    }
+}
+
+void Multiplayermenu::markGameReady()
+{
+    m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
+    QByteArray sendData;
+    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+    sendStream << NetworkCommands::CLIENTREADY;
+    sendStream << m_pPlayerSelection->getPlayerReady();
+    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+}
+
+void Multiplayermenu::changeButtonText()
+{
+    if (m_pPlayerSelection->getPlayerReady())
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Not Ready"));
+    }
+    else
+    {
+        dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
+    }
+}
+
+void Multiplayermenu::startCountdown()
+{
+    if (m_pPlayerSelection->getPlayerReady())
+    {
+        counter = 5;
+        m_GameStartTimer.stop();
+        sendServerReady(false);
+    }
+    // can we start the game?
+    else if (getGameReady())
+    {
+        sendServerReady(true);
+        counter = 5;
+        m_GameStartTimer.setInterval(std::chrono::seconds(1));
+        m_GameStartTimer.setSingleShot(false);
+        m_GameStartTimer.start();
+        emit m_Chat->sigSendText(QString::number(counter) + "...");
     }
 }
 
@@ -1044,6 +1095,7 @@ void Multiplayermenu::countdown()
         emit m_Chat->sigSendText(QString::number(counter) + "...");
         if (counter == 0)
         {
+            Console::print("Starting game on server", Console::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
             defeatClosedPlayers();
@@ -1060,7 +1112,8 @@ void Multiplayermenu::countdown()
             stream << seed;
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
-                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
+                Console::print("AI on server for player " + QString::number(i) + " is " + QString::number(pMap->getPlayer(i)->getBaseGameInput()->getAiType()), Console::eDEBUG);
+                pMap->getPlayer(i)->serializeObject(stream);
             }
             Mainapp::seed(seed);
             Mainapp::setUseSeed(true);

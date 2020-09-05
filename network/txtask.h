@@ -20,6 +20,9 @@ class TxTask : public QObject, public oxygine::ref_counter
 public:
     TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll);
     virtual ~TxTask();
+    quint64 getSocketID() const;
+    void setSocketID(const quint64 &SocketID);
+
 public slots:
     /**
      * @brief send sends the Object via TCP

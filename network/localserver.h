@@ -29,7 +29,16 @@ public slots:
     void disconnectClient(quint64 socketID);
     void pauseListening();
     void continueListening();
-
+    /**
+     * @brief addSocket
+     * @param socket
+     */
+    void addSocket(quint64 socket);
+    /**
+     * @brief removeSocket
+     * @param socket
+     */
+    void removeSocket(quint64 socket);
 private:
     QVector<spRxTask> pRXTasks;
     QVector<spTxTask> pTXTasks;

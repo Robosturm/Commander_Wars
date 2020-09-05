@@ -24,6 +24,9 @@ public:
     {
         pIF = pCommIF;
     }
+    quint64 getSocketID() const;
+    void setSocketID(const quint64 &SocketID);
+
 signals:
     void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 public slots:

@@ -9,10 +9,6 @@ namespace oxygine
     {
         m_sprites[0] = new Sprite();
         m_sprites[1] = new Sprite();
-
-        m_sprites[0]->setDestRecModifier(GameMap::mapRect);
-        m_sprites[1]->setDestRecModifier(GameMap::mapRect);
-
         addChild(m_sprites[0]);
         addChild(m_sprites[1]);
     }

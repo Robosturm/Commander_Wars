@@ -35,8 +35,8 @@ Unit::Unit()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    setHeight(GameMap::Imagesize);
-    setWidth(GameMap::Imagesize);
+    setHeight(GameMap::getImageSize());
+    setWidth(GameMap::getImageSize());
 }
 
 Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
@@ -44,8 +44,8 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
       m_UnitID(unitID),
       m_pOwner(pOwner)
 {
-    setHeight(GameMap::Imagesize);
-    setWidth(GameMap::Imagesize);
+    setHeight(GameMap::getImageSize());
+    setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -259,16 +259,15 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setPriority(static_cast<short>(Priorities::Outline));
             pWaitSprite->setPriority(static_cast<short>(Priorities::OutlineWaiting));
         }
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_pUnitSprites.append(pSprite);
-
         oxygine::Sprite::TweenColor tweenColor(QColor(100, 100, 100, 170));
         oxygine::spTween tweenWait = oxygine::createTween(tweenColor, oxygine::timeMS(1));
         pWaitSprite->addTween(tweenWait);
-        pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-        pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pWaitSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
+        pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
@@ -457,7 +456,7 @@ void Unit::setUnitRank(const qint32 &UnitRank)
         QJSValue obj1 = pInterpreter->newQObject(this);
         args << obj1;
         QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
-        loadIcon(getUnitRangIcon(), GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
     }
 }
 
@@ -1469,7 +1468,7 @@ void Unit::setCapturePoints(const qint32 &value)
     }
     if (capturePoints > 0)
     {
-        loadIcon("capture", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        loadIcon("capture", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
     }
     else
     {
@@ -1581,7 +1580,7 @@ void Unit::setFuel(const qint32 &value)
     }
     if (maxFuel > 0 && static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
     {
-        loadIcon("fuel", GameMap::Imagesize / 2, 0);
+        loadIcon("fuel", GameMap::getImageSize() / 2, 0);
     }
     else
     {
@@ -1642,11 +1641,11 @@ void Unit::setAmmo2(const qint32 &value)
     {
         if (weapon2ID.isEmpty())
         {
-            loadIcon("material1", GameMap::Imagesize / 2, 0);
+            loadIcon("material1", GameMap::getImageSize() / 2, 0);
         }
         else
         {
-            loadIcon("ammo1", GameMap::Imagesize / 2, 0);
+            loadIcon("ammo1", GameMap::getImageSize() / 2, 0);
         }
     }
     else
@@ -1705,11 +1704,11 @@ void Unit::setAmmo1(const qint32 &value)
     {
         if (weapon1ID.isEmpty())
         {
-            loadIcon("material", GameMap::Imagesize / 2, 0);
+            loadIcon("material", GameMap::getImageSize() / 2, 0);
         }
         else
         {
-            loadIcon("ammo", GameMap::Imagesize / 2, 0);
+            loadIcon("ammo", GameMap::getImageSize() / 2, 0);
         }
     }
     else
@@ -1833,22 +1832,22 @@ void Unit::updateIcons(Player* pPlayer)
     {
         if ((hpValue < 10) && (hpValue > 0))
         {
-            loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+            loadIcon(QString::number(hpValue), 0, GameMap::getImageSize() / 2);
         }
     }
     else
     {
-        loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
+        loadIcon("hp+hidden", 0, GameMap::getImageSize() / 2);
     }
     if (m_pTerrain != nullptr)
     {
         if (getTransportHidden(pPlayer))
         {
-            loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            loadIcon("transport+hidden", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
         }
         else if (getLoadedUnitCount() > 0)
         {
-            loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            loadIcon("transport", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
         }
         updateStealthIcon();
     }
@@ -2340,7 +2339,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::Imagesize / 2) / pAnim->getWidth() );
+        pSprite->setScale((GameMap::getImageSize() / 2) / pAnim->getWidth() );
         pSprite->setPosition(x, y);
         pSprite->setPriority(static_cast<short>(Priorities::Icons));
 
@@ -2468,20 +2467,20 @@ void Unit::updateIconTweens()
             }
             case 1:
             {
-                x = GameMap::Imagesize / 2;
+                x = GameMap::getImageSize() / 2;
                 y = 0;
                 break;
             }
             case 2:
             {
                 x = 0;
-                y = GameMap::Imagesize / 2;
+                y = GameMap::getImageSize() / 2;
                 break;
             }
             case 3:
             {
-                x = GameMap::Imagesize / 2;
-                y = GameMap::Imagesize / 2;
+                x = GameMap::getImageSize() / 2;
+                y = GameMap::getImageSize() / 2;
                 break;
             }
         }
@@ -2638,7 +2637,7 @@ void Unit::updateStealthIcon()
 {
     if (isStatusStealthed())
     {
-        loadIcon("dive", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        loadIcon("dive", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
     }
     else
     {
@@ -2703,7 +2702,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
     return false;
 }
 
-void Unit::serializeObject(QDataStream& pStream)
+void Unit::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_UnitID;
@@ -2794,14 +2793,8 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     pStream >> fuel;
     qint32 value = 0;
     pStream >> value;
-
     if (!fast)
     {
-        initUnit();
-        setHp(hp);
-        setAmmo1(ammo1);
-        setAmmo2(ammo2);
-        setFuel(fuel);
         if (version > 13)
         {
             setUnitRank(value);
@@ -2826,6 +2819,11 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
+    initUnit();
+    setHp(hp);
+    setAmmo1(ammo1);
+    setAmmo2(ammo2);
+    setFuel(fuel);
     if (version > 1)
     {
         pStream >> m_Moved;
@@ -3017,7 +3015,7 @@ void Unit::createCORange(qint32 coRange)
                 oxygine::Sprite::TweenColor tweenColor(inversColor);
                 oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
-                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                 m_CORange->addChild(pSprite);
 
                 pSprite = new oxygine::Sprite();
@@ -3035,7 +3033,7 @@ void Unit::createCORange(qint32 coRange)
                 tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(90);
-                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                 m_CORange->addChild(pSprite);
                 if (i == coRange - 1)
                 {
@@ -3054,7 +3052,7 @@ void Unit::createCORange(qint32 coRange)
                     tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                     pSprite->addTween(tween);
                     pSprite->setRotationDegrees(180);
-                    pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                    pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                     m_CORange->addChild(pSprite);
                 }
             }
@@ -3081,7 +3079,7 @@ void Unit::createCORange(qint32 coRange)
                 oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(90);
-                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                 m_CORange->addChild(pSprite);
 
                 pSprite = new oxygine::Sprite();
@@ -3099,7 +3097,7 @@ void Unit::createCORange(qint32 coRange)
                 tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(180);
-                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                 m_CORange->addChild(pSprite);
                 if (i == coRange - 1)
                 {
@@ -3118,7 +3116,7 @@ void Unit::createCORange(qint32 coRange)
                     tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                     pSprite->addTween(tween);
                     pSprite->setRotationDegrees(270);
-                    pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                    pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                     m_CORange->addChild(pSprite);
                 }
             }
@@ -3145,7 +3143,7 @@ void Unit::createCORange(qint32 coRange)
                 oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(270);
-                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                 m_CORange->addChild(pSprite);
 
                 pSprite = new oxygine::Sprite();
@@ -3163,7 +3161,7 @@ void Unit::createCORange(qint32 coRange)
                 tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(180);
-                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                 m_CORange->addChild(pSprite);
                 if (i == coRange - 1)
                 {
@@ -3181,7 +3179,7 @@ void Unit::createCORange(qint32 coRange)
                     }
                     tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                     pSprite->addTween(tween);
-                    pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                    pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                     m_CORange->addChild(pSprite);
                 }
             }
@@ -3209,7 +3207,7 @@ void Unit::createCORange(qint32 coRange)
                 oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
                 pSprite->setRotationDegrees(270);
-                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                 m_CORange->addChild(pSprite);
 
                 pSprite = new oxygine::Sprite();
@@ -3226,7 +3224,7 @@ void Unit::createCORange(qint32 coRange)
                 }
                 tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                 pSprite->addTween(tween);
-                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                pSprite->setPosition(GameMap::getImageSize() * x2, GameMap::getImageSize() * y2);
                 m_CORange->addChild(pSprite);
 
                 if (i == coRange - 1)
@@ -3246,12 +3244,12 @@ void Unit::createCORange(qint32 coRange)
                     tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
                     pSprite->addTween(tween);
                     pSprite->setRotationDegrees(90);
-                    pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                    pSprite->setPosition(GameMap::getImageSize() * (x2 + 1), GameMap::getImageSize() * (y2 + 1));
                     m_CORange->addChild(pSprite);
                 }
             }
         }
-        m_CORange->setPosition(GameMap::Imagesize * getX(), GameMap::Imagesize * getY());
+        m_CORange->setPosition(GameMap::getImageSize() * getX(), GameMap::getImageSize() * getY());
         pMap->addChild(m_CORange);
     }
 }

@@ -173,7 +173,7 @@ qint32 VictoryRule::getRuleProgress(Player* pPlayer)
     }
 }
 
-void VictoryRule::serializeObject(QDataStream& pStream)
+void VictoryRule::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_RuleID;

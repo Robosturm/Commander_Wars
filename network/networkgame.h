@@ -7,6 +7,7 @@
 
 #include "network/tcpclient.h"
 #include "network/localclient.h"
+#include "network/networkgamedata.h"
 
 /**
  * @brief The NetworkGame class needs to be run in it's own thread.
@@ -24,6 +25,14 @@ public:
     QString getServerName() const;
     void setServerName(const QString &serverName);
 
+    const NetworkGameData & getData() const;
+    /**
+     * @brief getSlaveRunning
+     * @return
+     */
+    bool getSlaveRunning() const;
+signals:
+    void sigDataChanged();
 public slots:
     void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
@@ -68,6 +77,7 @@ private:
     QString m_serverName;
     QTimer m_timer;
     bool m_slaveRunning{false};
+    NetworkGameData m_data;
 };
 
 #endif // NETWORKGAME_H

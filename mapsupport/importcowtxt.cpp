@@ -131,7 +131,7 @@ void GameMap::importTxtMap(QString file)
             QString line = out.readLine().toUpper();
             if (line.startsWith("KARTENNAME="))
             {
-                mapName = line.split("=")[1];
+                m_mapName = line.split("=")[1];
             }
             else if (line.startsWith("SPIELER|"))
             {
@@ -155,7 +155,7 @@ void GameMap::importTxtMap(QString file)
                         spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                         this->addChild(pTerrain);
                         fields[y]->append(pTerrain);
-                        pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                        pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                         pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     }
                 }

@@ -95,6 +95,26 @@ namespace NetworkCommands
      * @brief PLAYERREJECTEDONSERVER
      */
     static const QString PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
+    /**
+     * @brief SERVERREQUESTOPENPLAYERCOUNT
+     */
+    static const QString SERVERREQUESTOPENPLAYERCOUNT = "SERVERREQUESTOPENPLAYERCOUNT";
+    /**
+     * @brief SERVEROPENPLAYERCOUNT
+     */
+    static const QString SERVEROPENPLAYERCOUNT = "SERVEROPENPLAYERCOUNT";
+    /**
+     * @brief SERVERGAMEDATA
+     */
+    static const QString SERVERGAMEDATA = "SERVERGAMEDATA";
+    /**
+     * @brief SERVERJOINGAME
+     */
+    static const QString SERVERJOINGAME = "SERVERJOINGAME";
+    /**
+     * @brief STARTSERVERGAME
+     */
+    static const QString STARTSERVERGAME = "STARTSERVERGAME";
 }
 
 #endif // NETWORKCOMMANDS_H

@@ -149,7 +149,7 @@ QString Campaign::getDescription()
     }
     return "";
 }
-void Campaign::serializeObject(QDataStream& pStream)
+void Campaign::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << script;

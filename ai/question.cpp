@@ -92,7 +92,7 @@ QString Question::print()
     return "";
 }
 
-void Question::serializeObject(QDataStream& pStream)
+void Question::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_MinValue;
