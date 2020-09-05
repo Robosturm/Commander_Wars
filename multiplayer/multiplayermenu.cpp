@@ -1042,14 +1042,8 @@ void Multiplayermenu::changeButtonText()
 
 void Multiplayermenu::startCountdown()
 {
-    if (m_pPlayerSelection->getPlayerReady())
-    {
-        counter = 5;
-        m_GameStartTimer.stop();
-        sendServerReady(false);
-    }
     // can we start the game?
-    else if (getGameReady())
+    if (getGameReady())
     {
         sendServerReady(true);
         counter = 5;
@@ -1057,6 +1051,12 @@ void Multiplayermenu::startCountdown()
         m_GameStartTimer.setSingleShot(false);
         m_GameStartTimer.start();
         emit m_Chat->sigSendText(QString::number(counter) + "...");
+    }
+    else if (m_pPlayerSelection->getPlayerReady())
+    {
+        counter = 5;
+        m_GameStartTimer.stop();
+        sendServerReady(false);
     }
 }
 

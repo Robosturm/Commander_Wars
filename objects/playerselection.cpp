@@ -1023,6 +1023,7 @@ void PlayerSelection::selectAI(qint32 player)
                      type != GameEnums::AiTypes_Human)
             {
                 stream << type;
+                createAi(player, GameEnums::AiTypes_ProxyAi);
             }
             else
             {

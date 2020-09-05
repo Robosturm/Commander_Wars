@@ -75,6 +75,7 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream, qin
 
 BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
 {
+    Console::print("Creating AI " + QString::number(type), Console::eDEBUG);
     BaseGameInputIF* ret = nullptr;
     switch (type)
     {
