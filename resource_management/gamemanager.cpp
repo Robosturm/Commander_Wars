@@ -1,6 +1,7 @@
 #include "gamemanager.h"
 
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/buildingspritemanager.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
 
@@ -33,6 +34,7 @@ oxygine::spSprite GameManager::getIcon(QString icon)
     else
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         if (pUnitSpriteManager->exists(icon))
         {
             spGameMap pMap = GameMap::getInstance();
@@ -48,9 +50,19 @@ oxygine::spSprite GameManager::getIcon(QString icon)
             }
             return new Unit(icon, pPlayer.get(), false);
         }
-        else
+        else if (pBuildingSpriteManager->exists(icon))
         {
             // check buildings?
+            spGameMap pMap = GameMap::getInstance();
+            spPlayer pPlayer = nullptr;
+            if (pMap.get() != nullptr)
+            {
+                pPlayer = pMap->getCurrentPlayer();
+            }
+            Building* pBuilding = new Building(icon);
+            pBuilding->setOwner(pPlayer.get());
+            pBuilding->scaleAndShowOnSingleTile();
+            return pBuilding;
         }
     }
     return nullptr;

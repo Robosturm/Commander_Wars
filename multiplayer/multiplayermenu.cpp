@@ -902,6 +902,7 @@ void Multiplayermenu::slotButtonNext()
         }
         else
         {
+            MapSelectionMapsMenue::hideRuleSelection();
             connectNetworkSlots();
             startGameOnServer();
         }
@@ -921,6 +922,7 @@ void Multiplayermenu::connectNetworkSlots()
 
 void Multiplayermenu::startGameOnServer()
 {
+
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::LAUNCHGAMEONSERVER;

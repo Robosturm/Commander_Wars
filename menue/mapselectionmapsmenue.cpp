@@ -28,7 +28,6 @@
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
 
-#include "objects/ruleselection.h"
 
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : QObject()
@@ -328,6 +327,11 @@ void MapSelectionMapsMenue::hideRuleSelection()
     m_pRuleSelection->setVisible(false);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
+    if (m_pRuleSelectionView.get() != nullptr)
+    {
+        m_pRuleSelectionView->confirmRuleSelectionSetup();
+        m_pRuleSelectionView = nullptr;
+    }
     m_pRuleSelection->clearContent();
     pApp->continueThread();
 }
@@ -340,10 +344,10 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    spRuleSelection pRuleSelection = new RuleSelection(Settings::getWidth() - 80);
-    m_pRuleSelection->addItem(pRuleSelection);
-    m_pRuleSelection->setContentHeigth(pRuleSelection->getHeight() + 40);
-    m_pRuleSelection->setContentWidth(pRuleSelection->getWidth());
+    m_pRuleSelectionView = new RuleSelection(Settings::getWidth() - 80);
+    m_pRuleSelection->addItem(m_pRuleSelectionView);
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
     pApp->continueThread();
 }
 

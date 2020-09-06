@@ -8,20 +8,14 @@
 #include "oxygine-framework.h"
 
 #include "objects/mapselectionview.h"
-
 #include "objects/minimap.h"
-
 #include "objects/coselection.h"
-
 #include "objects/panel.h"
-
 #include "objects/spinbox.h"
-
 #include "objects/dropdownmenu.h"
-
 #include "objects/multislider.h"
-
 #include "objects/playerselection.h"
+#include "objects/ruleselection.h"
 
 #include "game/campaign.h"
 
@@ -105,6 +99,7 @@ protected:
     spMapSelectionView m_pMapSelectionView;
     // rule selection
     spPanel m_pRuleSelection;
+    spRuleSelection m_pRuleSelectionView;
 
     spPlayerSelection m_pPlayerSelection;
 

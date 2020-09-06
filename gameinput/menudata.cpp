@@ -1,5 +1,6 @@
 #include "menudata.h"
 
+#include "coreengine/console.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/buildingspritemanager.h"
@@ -53,4 +54,16 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
         iconList.append(new oxygine::Sprite());
     }
 
+}
+
+bool MenuData::validData()
+{
+    if (texts.size() == actionIDs.size() &&
+        actionIDs.size() == costList.size() &&
+        costList.size() == enabledList.size())
+    {
+        return true;
+    }
+    Console::print("Menu data is inconsistent and considered broken. Game gets stucked now. This may stop the ai from working.", Console::eERROR);
+    return false;
 }

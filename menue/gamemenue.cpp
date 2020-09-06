@@ -670,7 +670,12 @@ void GameMenue::performAction(GameAction* pGameAction)
             // clean up the action
             delete pGameAction;
             skipAnimations();
-            if (pMap->getCurrentPlayer()->getIsDefeated())
+            if (!pMap->anyPlayerAlive())
+            {
+                Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                emit sigExitGame();
+            }
+            else if (pMap->getCurrentPlayer()->getIsDefeated())
             {
                 Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
                 GameAction* pAction = new GameAction();
@@ -916,6 +921,7 @@ void GameMenue::actionPerformed()
         spGameMap pMap = GameMap::getInstance();
         if (!pMap->anyPlayerAlive())
         {
+            Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
             emit sigExitGame();
         }
         else if (pMap->getCurrentPlayer()->getIsDefeated())

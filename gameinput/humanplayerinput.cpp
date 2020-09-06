@@ -520,8 +520,11 @@ void HumanPlayerInput::getNextStepData()
     if (stepType.toUpper() == "MENU")
     {
         MenuData* pData = m_pGameAction->getMenuStepData();
-        m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
-        attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
+        if (pData->validData())
+        {
+            m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
+            attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
+        }
         delete pData;
     }
     else if (stepType.toUpper() == "FIELD")
@@ -540,6 +543,10 @@ void HumanPlayerInput::getNextStepData()
             nextMarkedField();
         }
         delete pCursordata;
+    }
+    else
+    {
+        Console::print("Unknown step type detected. This will lead to an undefined behaviour. Action " + m_pGameAction->getActionID() + " at step " + QString::number(m_pGameAction->getInputStep()), Console::eERROR);
     }
 }
 

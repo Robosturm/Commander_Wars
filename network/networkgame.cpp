@@ -185,5 +185,18 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 
 void NetworkGame::clientDisconnect(quint64 socketId)
 {
-
+    Console::print("Client " + QString::number(socketId) + " disconnected.", Console::eDEBUG);
+    for (qint32 i = 0; i < m_Clients.size(); i++)
+    {
+        if (m_Clients[i]->getSocketID() == socketId)
+        {
+            m_Clients.removeAt(i);
+            break;
+        }
+    }
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
+    stream << socketId;
+    emit m_gameConnection.sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
 }

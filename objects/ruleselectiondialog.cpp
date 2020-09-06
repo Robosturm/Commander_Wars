@@ -31,9 +31,9 @@ RuleSelectionDialog::RuleSelectionDialog()
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit sigRulesChanged();
-        detach();
+        emit sigOk();
     });
+    connect(this, &RuleSelectionDialog::sigOk, this, &RuleSelectionDialog::pressedOk, Qt::QueuedConnection);
 
     m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
     m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
@@ -132,3 +132,12 @@ void RuleSelectionDialog::saveRules(QString filename)
     pApp->continueThread();
 }
 
+void RuleSelectionDialog::pressedOk()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_pRuleSelection->confirmRuleSelectionSetup();
+    emit sigRulesChanged();
+    detach();
+    pApp->continueThread();
+}

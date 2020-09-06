@@ -515,21 +515,29 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
                 while (true)
                 {
                     MenuData* pDataMenu = pAction->getMenuStepData();
-                    QStringList actions = pDataMenu->getActionIDs();
-                    qint32 costs = pDataMenu->getCostList()[0];
-                    delete pDataMenu;
-                    if (actions.size() == 1)
+                    if (pDataMenu->validData())
                     {
-                        break;
+                        QStringList actions = pDataMenu->getActionIDs();
+                        qint32 costs = pDataMenu->getCostList()[0];
+                        if (actions.size() == 1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            addMenuItemData(pAction, actions[0], costs);
+                        }
+                        MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                        qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
+                        addSelectedFieldData(pAction, pFields->getPoints()->at(field));
+                        delete pFields;
                     }
                     else
                     {
-                        addMenuItemData(pAction, actions[0], costs);
+                        delete pDataMenu;
+                        return false;
                     }
-                    MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                    qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
-                    addSelectedFieldData(pAction, pFields->getPoints()->at(field));
-                    delete pFields;
+                    delete pDataMenu;
                 }
                 addMenuItemData(pAction, ACTION_WAIT, 0);
                 emit performAction(pAction);
@@ -677,32 +685,35 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
                     {
                         // we're allowed to build units here
                         MenuData* pData = pAction->getMenuStepData();
-                        qint32 selectedUnit = -1;
-                        if (pBuilding->getBuildingID() == "AIRPORT")
+                        if (pData->validData())
                         {
-                            selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
-                        }
-                        else if (pBuilding->getBuildingID() == "HARBOUR")
-                        {
-                            selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
-                        }
-                        else
-                        {
-                            selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
-                        }
-                        if (selectedUnit >= 0)
-                        {
-                            QString unitID = pUnitSpriteManager->getID(selectedUnit);
-                            qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
-                            if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
+                            qint32 selectedUnit = -1;
+                            if (pBuilding->getBuildingID() == "AIRPORT")
                             {
-                                CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
-                                delete pData;
-                                // produce the unit
-                                if (pAction->isFinalStep())
+                                selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
+                            }
+                            else if (pBuilding->getBuildingID() == "HARBOUR")
+                            {
+                                selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
+                            }
+                            else
+                            {
+                                selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
+                            }
+                            if (selectedUnit >= 0)
+                            {
+                                QString unitID = pUnitSpriteManager->getID(selectedUnit);
+                                qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
+                                if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
                                 {
-                                    emit performAction(pAction);
-                                    return true;
+                                    CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
+                                    delete pData;
+                                    // produce the unit
+                                    if (pAction->isFinalStep())
+                                    {
+                                        emit performAction(pAction);
+                                        return true;
+                                    }
                                 }
                             }
                         }

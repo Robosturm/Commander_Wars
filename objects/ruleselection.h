@@ -16,6 +16,7 @@ public:
     explicit RuleSelection(qint32 width);
     virtual ~RuleSelection();
     void showRuleSelection();
+    void confirmRuleSelectionSetup();
 signals:
     void sigShowCOBannlist();
     void sigShowActionBannlist();

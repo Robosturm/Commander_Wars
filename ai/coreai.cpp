@@ -1654,9 +1654,12 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                                 else if (pAction->getStepInputType() == "MENU")
                                 {
                                     MenuData* pData = pAction->getMenuStepData();
-                                    QStringList items = pData->getActionIDs();
-                                    qint32 selection = Mainapp::randIntBase(0, items.size() - 1);
-                                    addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
+                                    if (pData->validData())
+                                    {
+                                        QStringList items = pData->getActionIDs();
+                                        qint32 selection = Mainapp::randIntBase(0, items.size() - 1);
+                                        addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
+                                    }
                                     delete pData;
                                 }
                                 else

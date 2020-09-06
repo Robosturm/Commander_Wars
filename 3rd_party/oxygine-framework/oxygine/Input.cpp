@@ -35,8 +35,6 @@ namespace oxygine
 
         ps->_position = p;
 
-        qDebug("sendPointerButtonEvent %d - (%.2f, %.2f), %d", me.index, p.x, p.y, type);
-
         stage->handleEvent(&me);
 
         if (type == TouchEvent::TOUCH_UP)
@@ -53,8 +51,6 @@ namespace oxygine
         me.index = ps->getIndex();
         me.pressure = pressure;
         ps->_position = Vector2(x, y);
-
-        qDebug("sendPointerMotionEvent %d - (%.2f, %.2f)", me.index, x, y);
         stage->handleEvent(&me);
     }
 

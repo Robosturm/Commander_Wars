@@ -18,7 +18,7 @@ class Terrain;
 class Building;
 typedef oxygine::intrusive_ptr<Building> spBuilding;
 
-class Building : public QObject, public oxygine::Actor, public FileSerializable
+class Building : public QObject, public oxygine::Sprite, public FileSerializable
 {
     Q_OBJECT
 public:

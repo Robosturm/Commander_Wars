@@ -123,7 +123,7 @@ void GameAction::printAction()
     if (m_Movepath.size() > 0)
     {
         Console::print("Moving to X " + QString::number(m_Movepath[0].x()) +
-                       "Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
+                "Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
     QString data;
     QByteArray bytes = buffer->data();
@@ -315,6 +315,7 @@ CursorData* GameAction::getStepCursor()
 
 MenuData* GameAction::getMenuStepData()
 {
+    Console::print("Reading menu step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -330,14 +331,15 @@ MenuData* GameAction::getMenuStepData()
 
 MarkedFieldData* GameAction::getMarkedFieldStepData()
 {
-   MarkedFieldData* data = new MarkedFieldData;
-   Interpreter* pInterpreter = Interpreter::getInstance();
-   QString function1 = "getStepData";
-   QJSValueList args1;
-   args1 << pInterpreter->newQObject(this);
-   args1 << pInterpreter->newQObject(data);
-   QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
-   return data;
+    Console::print("Reading field step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
+    MarkedFieldData* data = new MarkedFieldData;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getStepData";
+    QJSValueList args1;
+    args1 << pInterpreter->newQObject(this);
+    args1 << pInterpreter->newQObject(data);
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
+    return data;
 }
 
 quint32 GameAction::getSeed() const

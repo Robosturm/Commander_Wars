@@ -21,11 +21,14 @@ signals:
     void sigRulesChanged();
     void sigShowLoadRules();
     void sigShowSaveRules();
+    void sigOk();
 public slots:
     void showLoadRules();
     void showSaveRules();
     void loadRules(QString filename);
     void saveRules(QString filename);
+protected slots:
+    void pressedOk();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_pButtonLoadRules;

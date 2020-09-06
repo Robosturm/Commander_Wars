@@ -621,70 +621,78 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                 {
                     unloaded = false;
                     MenuData* pDataMenu = pAction->getMenuStepData();
-                    QStringList actions = pDataMenu->getActionIDs();
-                    QVector<qint32> unitIDx = pDataMenu->getCostList();
-                    QVector<QList<QVariant>> unloadFields;
-                    for (qint32 i = 0; i < unitIDx.size() - 1; i++)
+                    if (pDataMenu->validData())
                     {
-                        QString function1 = "getUnloadFields";
-                        QJSValueList args1;
-                        QJSValue obj1 = pInterpreter->newQObject(pAction);
-                        args1 << obj1;
-                        args1 << unitIDx[i];
-                        QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
-                        unloadFields.append(ret.toVariant().toList());
-                    }
-                    if (actions.size() > 1)
-                    {
-                        for (qint32 i = 0; i < unloadFields.size(); i++)
+                        QStringList actions = pDataMenu->getActionIDs();
+                        QVector<qint32> unitIDx = pDataMenu->getCostList();
+                        QVector<QList<QVariant>> unloadFields;
+                        for (qint32 i = 0; i < unitIDx.size() - 1; i++)
                         {
-                            if (!needsRefuel(pUnit->getLoadedUnit(i)))
+                            QString function1 = "getUnloadFields";
+                            QJSValueList args1;
+                            QJSValue obj1 = pInterpreter->newQObject(pAction);
+                            args1 << obj1;
+                            args1 << unitIDx[i];
+                            QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
+                            unloadFields.append(ret.toVariant().toList());
+                        }
+                        if (actions.size() > 1)
+                        {
+                            for (qint32 i = 0; i < unloadFields.size(); i++)
                             {
-                                if (!unloadedUnits.contains(unitIDx[i]))
+                                if (!needsRefuel(pUnit->getLoadedUnit(i)))
                                 {
-                                    if (unloadFields[i].size() == 1)
+                                    if (!unloadedUnits.contains(unitIDx[i]))
                                     {
-                                        addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                        MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                                        addSelectedFieldData(pAction, pFields->getPoints()->at(0));
-                                        delete pFields;
-                                        unloaded = true;
-                                        unloadedUnits.append(unitIDx[i]);
-                                        break;
-                                    }
-                                    else if (unloadFields[i].size() > 0 &&
-                                             pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
-                                    {
-                                        for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                        if (unloadFields[i].size() == 1)
                                         {
-                                            QPoint unloadField = unloadFields[i][i2].toPoint();
-                                            Building* pBuilding = pMap->getTerrain(unloadField.x(),
-                                                                                   unloadField.y())->getBuilding();
-                                            if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
-                                            {
-                                                addMenuItemData(pAction, actions[i], unitIDx[i]);
-                                                addSelectedFieldData(pAction, unloadField);
-                                                unloaded = true;
-                                                unloadedUnits.append(unitIDx[i]);
-                                                break;
-                                            }
+                                            addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                            MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                                            addSelectedFieldData(pAction, pFields->getPoints()->at(0));
+                                            delete pFields;
+                                            unloaded = true;
+                                            unloadedUnits.append(unitIDx[i]);
+                                            break;
                                         }
-                                        break;
+                                        else if (unloadFields[i].size() > 0 &&
+                                                 pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
+                                        {
+                                            for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                            {
+                                                QPoint unloadField = unloadFields[i][i2].toPoint();
+                                                Building* pBuilding = pMap->getTerrain(unloadField.x(),
+                                                                                       unloadField.y())->getBuilding();
+                                                if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
+                                                {
+                                                    addMenuItemData(pAction, actions[i], unitIDx[i]);
+                                                    addSelectedFieldData(pAction, unloadField);
+                                                    unloaded = true;
+                                                    unloadedUnits.append(unitIDx[i]);
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        }
                                     }
                                 }
                             }
+                            if (unloaded == false &&
+                                !needsRefuel(pUnit->getLoadedUnit(0)))
+                            {
+                                qint32 costs = pDataMenu->getCostList()[0];
+                                addMenuItemData(pAction, actions[0], costs);
+                                unloaded = true;
+                                MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                                qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
+                                addSelectedFieldData(pAction, pFields->getPoints()->at(field));
+                                delete pFields;
+                            }
                         }
-                        if (unloaded == false &&
-                            !needsRefuel(pUnit->getLoadedUnit(0)))
-                        {
-                            qint32 costs = pDataMenu->getCostList()[0];
-                            addMenuItemData(pAction, actions[0], costs);
-                            unloaded = true;
-                            MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                            qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
-                            addSelectedFieldData(pAction, pFields->getPoints()->at(field));
-                            delete pFields;
-                        }
+                    }
+                    else
+                    {
+                        delete pDataMenu;
+                        return false;
                     }
                     delete pDataMenu;
                 }
@@ -1588,143 +1596,146 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             {
                 // we're allowed to build units here
                 MenuData* pData = pAction->getMenuStepData();
-                auto enableList = pData->getEnabledList();
-                auto actionIds = pData->getActionIDs();
-                QVector<qint32> actions;
-                for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
+                if (pData->validData())
                 {
-                    if (enableList[i2])
+                    auto enableList = pData->getEnabledList();
+                    auto actionIds = pData->getActionIDs();
+                    QVector<qint32> actions;
+                    for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
-                        Unit dummy(actionIds[i2], m_pPlayer, false);
-                        qint32 buildingX = pBuilding->getX();
-                        qint32 buildingY = pBuilding->getY();
-                        dummy.setVirtuellX(buildingX);
-                        dummy.setVirtuellY(buildingY);
-                        data[UnitCost] = dummy.getUnitCosts();
-                        createIslandMap(dummy.getMovementType(), dummy.getUnitID());
-                        bool canMove = false;
-
-                        for (qint32 i3 = 0; i3 < pFields->size(); i3++)
+                        if (enableList[i2])
                         {
-                            qint32 x = buildingX + pFields->at(i3).x();
-                            qint32 y = buildingY + pFields->at(i3).y();
-                            if (pMap->onMap(x, y) &&
-                                dummy.getBaseMovementCosts(x, y, x, y) > 0)
-                            {
-                                canMove = true;
-                                break;
-                            }
-                        }
+                            Unit dummy(actionIds[i2], m_pPlayer, false);
+                            qint32 buildingX = pBuilding->getX();
+                            qint32 buildingY = pBuilding->getY();
+                            dummy.setVirtuellX(buildingX);
+                            dummy.setVirtuellY(buildingY);
+                            data[UnitCost] = dummy.getUnitCosts();
+                            createIslandMap(dummy.getMovementType(), dummy.getUnitID());
+                            bool canMove = false;
 
-                        if (canMove)
-                        {
-                            float score = 0.0f;
-                            bool isTransporter = false;
-                            if (!dummy.getWeapon1ID().isEmpty() ||
-                                !dummy.getWeapon2ID().isEmpty())
+                            for (qint32 i3 = 0; i3 < pFields->size(); i3++)
                             {
-                                if (dummy.getBaseMaxRange() > 1)
+                                qint32 x = buildingX + pFields->at(i3).x();
+                                qint32 y = buildingY + pFields->at(i3).y();
+                                if (pMap->onMap(x, y) &&
+                                    dummy.getBaseMovementCosts(x, y, x, y) > 0)
                                 {
-                                    data[IndirectUnit] = 1.0;
-                                    data[DirectUnit] = 0.0;
+                                    canMove = true;
+                                    break;
                                 }
-                                else
-                                {
-                                    data[IndirectUnit] = 0.0;
-                                    data[DirectUnit] = 1.0;
-                                }
-                                if (dummy.getActionList().contains(ACTION_CAPTURE) &&
-                                    dummy.getLoadingPlace() == 0)
-                                {
-                                    data[InfantryUnit] = 1.0;
-                                }
-                                else
-                                {
-                                    data[InfantryUnit] = 0.0;
-                                }
-                                data[FundsFactoryRatio] = dummy.getUnitCosts() / fundsPerFactory;
-                                if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
-                                {
-                                    data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
-                                }
-                                else
-                                {
-                                    data[BuildingEnemyRatio] = 0.0;
-                                }
-                                float bonusFactor = 1.0f;
-                                if ((data[DirectUnitRatio] > directIndirectRatio && dummy.getBaseMaxRange() > 1) ||
-                                    (data[DirectUnitRatio] < directIndirectRatio && dummy.getBaseMaxRange() == 1))
-                                {
-                                    bonusFactor = 1.2f;
-                                }
-                                auto damageData = calcExpectedFundsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
-                                data[NotAttackableCount] = std::get<1>(damageData);
-                                data[DamageData] =  std::get<0>(damageData);
+                            }
 
-                                if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                                    dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
-                                {
-                                    data[COBonus] = 1;
-                                }
-                                else
-                                {
-                                    data[COBonus] = 0;
-                                }
-                                data[Movementpoints] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
-                                data[ReachDistance] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
-                                score = calcBuildScore(data);
-                            }
-                            else
+                            if (canMove)
                             {
-                                bool found = false;
-                                for (auto & data : m_TransporterScores)
+                                float score = 0.0f;
+                                bool isTransporter = false;
+                                if (!dummy.getWeapon1ID().isEmpty() ||
+                                    !dummy.getWeapon2ID().isEmpty())
                                 {
-                                    if (std::get<2>(data) == buildingX &&
-                                        std::get<3>(data) == buildingY &&
-                                        std::get<1>(data) == actionIds[i2])
+                                    if (dummy.getBaseMaxRange() > 1)
                                     {
-                                        score = std::get<0>(data);
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                                if (!found)
-                                {
-                                    score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
-                                    m_TransporterScores.append(std::tuple<float, QString, qint32, qint32>(score, actionIds[i2], buildingX, buildingY));
-                                }
-                                isTransporter = true;
-                            }
-                            score *= BaseGameInputIF::getUnitBuildValue(dummy.getUnitID());
-                            if (score > bestScore)
-                            {
-                                bestScore = score;
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
-                                transporters.append(isTransporter);
-                                qint32 index = 0;
-                                while (index < scores.size())
-                                {
-                                    if (scores[index] < bestScore - variance)
-                                    {
-                                        buildingIdx.removeAt(index);
-                                        unitIDx.removeAt(index);
-                                        scores.removeAt(index);
-                                        transporters.removeAt(index);
+                                        data[IndirectUnit] = 1.0;
+                                        data[DirectUnit] = 0.0;
                                     }
                                     else
                                     {
-                                        index++;
+                                        data[IndirectUnit] = 0.0;
+                                        data[DirectUnit] = 1.0;
+                                    }
+                                    if (dummy.getActionList().contains(ACTION_CAPTURE) &&
+                                        dummy.getLoadingPlace() == 0)
+                                    {
+                                        data[InfantryUnit] = 1.0;
+                                    }
+                                    else
+                                    {
+                                        data[InfantryUnit] = 0.0;
+                                    }
+                                    data[FundsFactoryRatio] = dummy.getUnitCosts() / fundsPerFactory;
+                                    if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
+                                    {
+                                        data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
+                                    }
+                                    else
+                                    {
+                                        data[BuildingEnemyRatio] = 0.0;
+                                    }
+                                    float bonusFactor = 1.0f;
+                                    if ((data[DirectUnitRatio] > directIndirectRatio && dummy.getBaseMaxRange() > 1) ||
+                                        (data[DirectUnitRatio] < directIndirectRatio && dummy.getBaseMaxRange() == 1))
+                                    {
+                                        bonusFactor = 1.2f;
+                                    }
+                                    auto damageData = calcExpectedFundsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
+                                    data[NotAttackableCount] = std::get<1>(damageData);
+                                    data[DamageData] =  std::get<0>(damageData);
+
+                                    if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                                        dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
+                                    {
+                                        data[COBonus] = 1;
+                                    }
+                                    else
+                                    {
+                                        data[COBonus] = 0;
+                                    }
+                                    data[Movementpoints] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
+                                    data[ReachDistance] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
+                                    score = calcBuildScore(data);
+                                }
+                                else
+                                {
+                                    bool found = false;
+                                    for (auto & data : m_TransporterScores)
+                                    {
+                                        if (std::get<2>(data) == buildingX &&
+                                            std::get<3>(data) == buildingY &&
+                                            std::get<1>(data) == actionIds[i2])
+                                        {
+                                            score = std::get<0>(data);
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!found)
+                                    {
+                                        score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
+                                        m_TransporterScores.append(std::tuple<float, QString, qint32, qint32>(score, actionIds[i2], buildingX, buildingY));
+                                    }
+                                    isTransporter = true;
+                                }
+                                score *= BaseGameInputIF::getUnitBuildValue(dummy.getUnitID());
+                                if (score > bestScore)
+                                {
+                                    bestScore = score;
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                    transporters.append(isTransporter);
+                                    qint32 index = 0;
+                                    while (index < scores.size())
+                                    {
+                                        if (scores[index] < bestScore - variance)
+                                        {
+                                            buildingIdx.removeAt(index);
+                                            unitIDx.removeAt(index);
+                                            scores.removeAt(index);
+                                            transporters.removeAt(index);
+                                        }
+                                        else
+                                        {
+                                            index++;
+                                        }
                                     }
                                 }
-                            }
-                            else if (score >= bestScore - variance)
-                            {
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
-                                transporters.append(isTransporter);
+                                else if (score >= bestScore - variance)
+                                {
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                    transporters.append(isTransporter);
+                                }
                             }
                         }
                     }
@@ -1746,7 +1757,10 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             m_TransporterScores.clear();
         }
         MenuData* pData = pAction->getMenuStepData();
-        CoreAI::addMenuItemData(pAction, pData->getActionIDs()[unitIDx[item]], pData->getCostList()[unitIDx[item]]);
+        if (pData->validData())
+        {
+            CoreAI::addMenuItemData(pAction, pData->getActionIDs()[unitIDx[item]], pData->getCostList()[unitIDx[item]]);
+        }
         delete pData;
         // produce the unit
         if (pAction->isFinalStep())
