@@ -176,5 +176,6 @@ void LocalServer::addSocket(quint64 socket)
 
 void LocalServer::removeSocket(quint64 socket)
 {
+    Console::print("Local Server removed socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
     m_SocketIDs.removeAll(socket);
 }

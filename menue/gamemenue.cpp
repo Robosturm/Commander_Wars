@@ -188,6 +188,16 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             m_ChatButton->addTween(tween);
         }
     }
+    else if (service == NetworkInterface::NetworkSerives::ServerHosting)
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        QString messageType;
+        stream >> messageType;
+        Console::print("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
+        quint64 socketId;
+        stream >> socketId;
+        disconnected(socketID);
+    }
 }
 
 Player* GameMenue::getCurrentViewPlayer()
@@ -251,7 +261,6 @@ void GameMenue::disconnected(quint64 socketID)
                 break;
             }
         }
-
         if (m_pNetworkInterface.get() != nullptr)
         {
             emit m_pNetworkInterface->sig_close();
@@ -262,6 +271,11 @@ void GameMenue::disconnected(quint64 socketID)
             gameStarted = false;
             spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
             addChild(pDialogMessageBox);
+        }
+        if (Mainapp::getSlave())
+        {
+            Console::print("Closing slave cause a player has disconnected.", Console::eDEBUG);
+            QCoreApplication::exit(0);
         }
         pApp->continueThread();
 

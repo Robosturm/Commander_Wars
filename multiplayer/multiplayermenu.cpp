@@ -350,9 +350,9 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
         {
-            quint64 socketId;
-            stream >> socketId;
-            m_pPlayerSelection->disconnected(socketID);
+            quint64 socket;
+            stream >> socket;
+            m_pPlayerSelection->disconnected(socket);
         }
     }
 }

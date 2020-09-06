@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QLocalSocket>
 #include <QTimer>
+#include <QProcess>
 
 #include "network/tcpclient.h"
 #include "network/localclient.h"
@@ -67,6 +68,12 @@ public slots:
      * @param socketId
      */
     void clientDisconnect(quint64 socketId);
+    /**
+     * @brief finished
+     * @param exitCode
+     * @param exitStatus
+     */
+    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 protected slots:
     void checkServerRunning();
     void sendPlayerJoined(qint32 player);

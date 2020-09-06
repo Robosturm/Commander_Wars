@@ -433,10 +433,10 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
 
-    // todo check me
-    if (pApp->getSlave())
+    if (Mainapp::getSlave())
     {
         // despawn slave process on finish
+        Console::print("Closing slave cause the game is finished.", Console::eDEBUG);
         QCoreApplication::exit(0);
     }
 }

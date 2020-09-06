@@ -21,6 +21,8 @@
 
 #include "coreengine/filesupport.h"
 
+#include "network/localserver.h"
+
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
 {
@@ -1458,6 +1460,7 @@ void PlayerSelection::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
     {
+        Console::print("Reopening players for socket " + QString::number(socketID) + " after disconnecting", Console::eLogLevels::eDEBUG);
         // handle disconnect of clients here
         for (qint32 i = 0; i < m_PlayerSockets.size(); i++)
         {
@@ -1469,6 +1472,10 @@ void PlayerSelection::disconnected(quint64 socketID)
                 m_playerAIs[i]->setCurrentItem(m_playerAIs[i]->getItemCount() - 1);
                 selectAI(i);
             }
+        }
+        if (Mainapp::getSlave())
+        {
+            dynamic_cast<LocalServer*>(m_pNetworkInterface.get())->removeSocket(socketID);
         }
     }
 }

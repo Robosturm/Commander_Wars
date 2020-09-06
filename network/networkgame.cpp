@@ -200,3 +200,8 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     stream << socketId;
     emit m_gameConnection.sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
 }
+
+void NetworkGame::processFinished(int, QProcess::ExitStatus)
+{
+    // todo find we need to unregister it now...
+}

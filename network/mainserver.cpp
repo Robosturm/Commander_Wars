@@ -106,6 +106,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         m_games[pos]->game.moveToThread(&m_games[pos]->m_runner);
         m_games[pos]->m_runner.start();
         connect(m_games[pos]->process, &QProcess::started, &m_games[pos]->game, &NetworkGame::startAndWaitForInit, Qt::QueuedConnection);
+        connect(m_games[pos]->process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), &m_games[pos]->game, &NetworkGame::processFinished, Qt::QueuedConnection);
         connect(&m_games[pos]->game, &NetworkGame::sigDataChanged, this, &MainServer::updateGameData, Qt::QueuedConnection);
         m_games[pos]->game.addClient(m_pGameServer->getClient(socketID));
         m_games[pos]->process->start(program, args);
