@@ -32,7 +32,7 @@ void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterfac
     Console::print("Forwaring message from socket " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
-        if (m_Clients[i]->getSocketId() != socketID)
+        if (m_Clients[i]->getSocketID() != socketID)
         {
             emit m_Clients[i]->sig_sendData(0, data, service, false);
         }
@@ -81,7 +81,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
         // forward data to other clients
         for (qint32 i = 0; i < m_Clients.size(); i++)
         {
-            if (socket == 0 || m_Clients[i]->getSocketId() == socket)
+            if (socket == 0 || m_Clients[i]->getSocketID() == socket)
             {
                 emit m_Clients[i]->sig_sendData(socket, data, service, false);
             }
@@ -91,7 +91,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
 
 void NetworkGame::sendPlayerJoined(qint32 player)
 {
-    quint64 socket = m_Clients[player]->getSocketId();;
+    quint64 socket = m_Clients[player]->getSocketID();;
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::PLAYERJOINEDGAMEONSERVER;

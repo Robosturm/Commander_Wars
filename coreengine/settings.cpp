@@ -162,6 +162,32 @@ QStringList Settings::getActiveMods()
 void Settings::setActiveMods(const QStringList &activeMods)
 {
     m_activeMods = activeMods;
+    m_activeMods.sort();
+    for (const auto& mod : m_activeMods)
+    {
+        qDebug() << "Loaded mod: " + mod;
+        bool found = false;
+        QFile file(mod + "/mod.txt");
+        if (file.exists())
+        {
+            file.open(QFile::ReadOnly);
+            QTextStream stream(&file);
+            while (!stream.atEnd())
+            {
+                QString line = stream.readLine();
+                if (line.startsWith("version="))
+                {
+                    m_activeModVersions.append(line.split("=")[1]);
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found)
+        {
+            m_activeModVersions.append("1.0.0");
+        }
+    }
 }
 
 bool Settings::getShowIngameCoordinates()
@@ -664,31 +690,7 @@ void Settings::loadSettings()
     {
         m_activeMods = modList.split(",");
     }
-    m_activeMods.sort();
-    for (const auto& mod : m_activeMods)
-    {
-        bool found = false;
-        QFile file(mod + "/mod.txt");
-        if (file.exists())
-        {
-            file.open(QFile::ReadOnly);
-            QTextStream stream(&file);
-            while (!stream.atEnd())
-            {
-                QString line = stream.readLine();
-                if (line.startsWith("version="))
-                {
-                    m_activeModVersions.append(line.split("=")[1]);
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if (!found)
-        {
-            m_activeModVersions.append("1.0.0");
-        }
-    }
+    setActiveMods(m_activeMods);
     settings.endGroup();
 
     // logging
@@ -799,11 +801,16 @@ void Settings::saveSettings()
 
 QString Settings::getModConfigString()
 {
+    return getModConfigString(m_activeMods);
+}
+
+QString Settings::getModConfigString(QStringList mods)
+{
     QString modString = "";
-    for (qint32 i = 0; i < m_activeMods.size(); i++)
+    for (qint32 i = 0; i < mods.size(); i++)
     {
-        modString += m_activeMods[i] ;
-        if (i < m_activeMods.size() - 1)
+        modString += mods[i] ;
+        if (i < mods.size() - 1)
         {
             modString += ",";
         }

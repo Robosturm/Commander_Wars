@@ -65,6 +65,7 @@ void LocalServer::disconnectClient(quint64 socketID)
     {
         if (m_SocketIDs[i] == socketID)
         {
+            Console::print("Local Server Client disconnected.", Console::eLogLevels::eDEBUG);
             if (pTCPSockets[i]->isOpen())
             {
                 // realize correct deletion
@@ -74,8 +75,7 @@ void LocalServer::disconnectClient(quint64 socketID)
             }
             pRXTasks.removeAt(i);
             pTXTasks.removeAt(i);
-            pTCPSockets.removeAt(i);
-            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
+            pTCPSockets.removeAt(i);            
             emit sigDisconnected(socketID);
             break;
         }

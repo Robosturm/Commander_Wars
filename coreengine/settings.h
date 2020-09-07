@@ -94,6 +94,7 @@ public slots:
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
     static QString getModConfigString();
+    static QString getModConfigString(QStringList mods);
 
     static quint32 getMultiTurnCounter();
     static void setMultiTurnCounter(const quint32 &value);

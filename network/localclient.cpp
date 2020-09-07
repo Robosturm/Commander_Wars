@@ -56,6 +56,7 @@ void LocalClient::disconnectTCP()
         pSocket->close();
         pSocket = nullptr;
     }
+    Console::print("Local Client disconnected.", Console::eDEBUG);
     emit sigDisconnected(0);
 }
 

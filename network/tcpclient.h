@@ -18,12 +18,6 @@ public:
     TCPClient();
     TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, quint64 socketId);
     virtual ~TCPClient();
-
-    quint64 getSocketId() const
-    {
-        return m_socketId;
-    }
-    void setSocketId(const quint64 &socketId);
     /**
      * @brief moveClientToThread
      * @param pThread
@@ -45,7 +39,7 @@ private:
     spRxTask m_pRXTask;
     spTxTask m_pTXTask;
     QTcpSocket* m_pSocket;
-    quint64 m_socketId{0};
+    bool m_onServer{false};
 };
 
 #endif // TCPCLIENT_H

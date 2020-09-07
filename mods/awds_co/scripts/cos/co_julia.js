@@ -3,7 +3,7 @@ CO_JULIA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var baseDamage = 60;
+        var baseDamage = 70;
         if (co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             baseDamage += 10;

@@ -1657,6 +1657,20 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                                     if (pData->validData())
                                     {
                                         QStringList items = pData->getActionIDs();
+                                        auto enable = pData->getEnabledList();
+                                        qint32 i = 0;
+                                        while (i < enable.size())
+                                        {
+                                            if (enable[i])
+                                            {
+                                                i++;
+                                            }
+                                            else
+                                            {
+                                                items.removeAt(i);
+                                                enable.removeAt(i);
+                                            }
+                                        }
                                         qint32 selection = Mainapp::randIntBase(0, items.size() - 1);
                                         addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
                                     }

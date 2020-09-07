@@ -54,11 +54,12 @@ void TCPServer::disconnectClient(quint64 socketID)
 {
     for (qint32 i = 0; i < m_pClients.size(); i++)
     {
-        if (m_pClients[i]->getSocketId() == socketID)
+        if (m_pClients[i]->getSocketID() == socketID)
         {
+            Console::print("Client " + QString::number(socketID) + " disconnected.", Console::eLogLevels::eDEBUG);
+            emit m_pClients[i]->sigDisconnected(m_pClients[i]->getSocketID());
             m_pClients[i]->disconnectTCP();
-            m_pClients.removeAt(i);
-            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
+            m_pClients.removeAt(i);            
             emit sigDisconnected(socketID);
             break;
         }
@@ -69,8 +70,9 @@ void TCPServer::disconnectSocket()
 {
     while (m_pClients.size() > 0)
     {
+        emit m_pClients[0]->sigDisconnected(m_pClients[0]->getSocketID());
         m_pClients[0]->disconnectTCP();
-         quint64 id = m_pClients[0]->getSocketId();
+        quint64 id = m_pClients[0]->getSocketID();
         m_pClients.removeAt(0);
         emit sigDisconnected(id);
     }
@@ -114,7 +116,7 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
 {
     for (qint32 i = 0; i < m_pClients.size(); i++)
     {
-        if (m_pClients[i]->getSocketId() != socketID)
+        if (m_pClients[i]->getSocketID() != socketID)
         {
             emit m_pClients[i]->sig_sendData(0, data, service, false);
         }
@@ -138,7 +140,7 @@ QVector<quint64> TCPServer::getConnectedSockets()
     socketIds.reserve(size);
     for (qint32 i = 0; i < size; i++)
     {
-        socketIds.append(m_pClients[i]->getSocketId());
+        socketIds.append(m_pClients[i]->getSocketID());
     }
     return socketIds;
 }
@@ -147,7 +149,7 @@ void TCPServer::changeThread(quint64 socketID, QThread* pThread)
 {
     for (qint32 i = 0; i < m_pClients.size(); i++)
     {
-        if (m_pClients[i]->getSocketId() == socketID)
+        if (m_pClients[i]->getSocketID() == socketID)
         {
             m_pClients[i]->changeThread(0, pThread);
             break;
@@ -159,7 +161,7 @@ spTCPClient TCPServer::getClient(quint64 socketID)
 {
     for (qint32 i = 0; i < m_pClients.size(); i++)
     {
-        if (m_pClients[i]->getSocketId() == socketID)
+        if (m_pClients[i]->getSocketID() == socketID)
         {
             return m_pClients[i];
         }

@@ -19,15 +19,19 @@ TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, qu
     : m_pRXTask(pRXTask),
       m_pTXTask(pTXTask),
       m_pSocket(pSocket),
-      m_socketId(socketId)
+      m_onServer(true)
 {
+    setSocketID(socketId);
     QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }
 
 TCPClient::~TCPClient()
 {
     disconnect();
-    disconnectTCP();
+    if (!m_onServer)
+    {
+        disconnectTCP();
+    }
     Console::print("Client is closed", Console::eLogLevels::eDEBUG);
 }
 
@@ -57,6 +61,7 @@ void TCPClient::connectTCP(QString adress, quint16 port)
 
 void TCPClient::disconnectTCP()
 {
+    Console::print("TCP Client disconnected.", Console::eLogLevels::eDEBUG);
     if (m_pSocket != nullptr)
     {
         m_pRXTask = nullptr;
@@ -91,11 +96,6 @@ void TCPClient::connected()
     Console::print("Client is connected", Console::eLogLevels::eDEBUG);
     isConnected = true;
     emit sigConnected(0);
-}
-
-void TCPClient::setSocketId(const quint64 &socketId)
-{
-    m_socketId = socketId;
 }
 
 spTxTask TCPClient::getTXTask() const
