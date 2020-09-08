@@ -82,32 +82,6 @@ void LocalServer::disconnectClient(quint64 socketID)
     }
 }
 
-void LocalServer::disconnectSocket()
-{
-    qint32 i = 0;
-    while (i < pTCPSockets.size())
-    {
-        if (pTCPSockets[i]->state() == QLocalSocket::LocalSocketState::ClosingState ||
-            pTCPSockets[i]->state() == QLocalSocket::LocalSocketState::UnconnectedState)
-        {
-            // realize correct deletion
-            pTCPSockets[i]->disconnect();
-            pTCPSockets[i]->close();
-            pRXTasks.removeAt(i);
-            pTXTasks.removeAt(i);
-            pTCPSockets.removeAt(i);
-            quint64 id = m_SocketIDs[i];
-            m_SocketIDs.removeAt(i);
-            Console::print("Client disconnected.", Console::eLogLevels::eDEBUG);
-            emit sigDisconnected(id);
-        }
-        else
-        {
-            i++;
-        }
-    }
-}
-
 void LocalServer::onConnect()
 {
     if (pTCPServer != nullptr)
@@ -115,7 +89,6 @@ void LocalServer::onConnect()
         QLocalSocket* nextSocket = pTCPServer->nextPendingConnection();
         pTCPSockets.append(nextSocket);
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(nextSocket, &QLocalSocket::disconnected, this, &LocalServer::disconnectSocket, Qt::QueuedConnection);
         QObject::connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
@@ -129,7 +102,11 @@ void LocalServer::onConnect()
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
         QObject::connect(this, &LocalServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
-
+        quint64 socket = m_idCounter;
+        QObject::connect(nextSocket, &QLocalSocket::disconnected, [=]()
+        {
+            emit sigDisconnectClient(socket);
+        });
         Console::print("New Client connection.", Console::eLogLevels::eDEBUG);
         emit sigConnected(m_idCounter);
     }

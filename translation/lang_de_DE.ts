@@ -347,12 +347,12 @@
 <context>
     <name>ACTION_INFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
         <source>CO Info</source>
         <translation>KO Info</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="57"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="61"/>
         <source>Victory Info</source>
         <translation>Siegbedingungen</translation>
     </message>
@@ -362,12 +362,17 @@
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="63"/>
+        <source>Unit Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="64"/>
         <source>Game Info</source>
         <translation>Spielinfo</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="60"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="65"/>
         <source>Attack Log</source>
         <translation>Angriffslog</translation>
     </message>
@@ -653,9 +658,8 @@
 <context>
     <name>ACTION_VICTORYINFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_VICTORYINFO.js" line="10"/>
         <source>Victory Info</source>
-        <translation>Sieg Info</translation>
+        <translation type="vanished">Sieg Info</translation>
     </message>
 </context>
 <context>

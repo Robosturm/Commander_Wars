@@ -23,8 +23,6 @@ public slots:
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QVector<quint64> getConnectedSockets() override;
     virtual void changeThread(quint64 socketID, QThread* pThread) override;
-
-    void disconnectSocket();
     void onConnect();
     void disconnectClient(quint64 socketID);
     void pauseListening();

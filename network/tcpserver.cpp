@@ -66,25 +66,12 @@ void TCPServer::disconnectClient(quint64 socketID)
     }
 }
 
-void TCPServer::disconnectSocket()
-{
-    while (m_pClients.size() > 0)
-    {
-        emit m_pClients[0]->sigDisconnected(m_pClients[0]->getSocketID());
-        m_pClients[0]->disconnectTCP();
-        quint64 id = m_pClients[0]->getSocketID();
-        m_pClients.removeAt(0);
-        emit sigDisconnected(id);
-    }
-}
-
 void TCPServer::onConnect()
 {
     if (pTCPServer != nullptr)
     {
         QTcpSocket* nextSocket = pTCPServer->nextPendingConnection();
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(nextSocket, &QTcpSocket::disconnected, this, &TCPServer::disconnectSocket, Qt::QueuedConnection);
         QObject::connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
         m_idCounter++;
         if (m_idCounter == 0)
@@ -102,6 +89,12 @@ void TCPServer::onConnect()
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
         spTCPClient pClient = new TCPClient(pRXTask, pTXTask, nextSocket, m_idCounter);
         QObject::connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+
+        quint64 socket = pClient->getSocketID();
+        QObject::connect(nextSocket, &QTcpSocket::disconnected, [=]()
+        {
+            emit sigDisconnectClient(socket);
+        });
 
         QByteArray data;
         pTXTask->send(m_idCounter, data, NetworkSerives::ServerSocketInfo, false);

@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Settings>("Settings", 1);
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
-
+    qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
     /*************************************************************************************************/
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());

@@ -160,10 +160,11 @@ public slots:
     virtual void changeThread(quint64 socketID, QThread* pThread) = 0;
     void displayTCPError(QAbstractSocket::SocketError socketError)
     {
+        Console::print("Error catched for " + QString::number(m_socketID), Console::eDEBUG);
         switch (socketError)
         {
             case QAbstractSocket::RemoteHostClosedError:
-                Console::print("The server was closed by the peer.", Console::eDEBUG);
+                Console::print("The connection was closed by the peer.", Console::eDEBUG);
                 break;
             case QAbstractSocket::HostNotFoundError:
                 Console::print("The host was not found. Please check the host name and port settings.", Console::eERROR);

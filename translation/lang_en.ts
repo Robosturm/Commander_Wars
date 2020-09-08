@@ -326,12 +326,12 @@
 <context>
     <name>ACTION_INFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
         <source>CO Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="57"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="61"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,12 +341,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="63"/>
+        <source>Unit Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="64"/>
         <source>Game Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="60"/>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="65"/>
         <source>Attack Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -626,14 +631,6 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="69"/>
         <source>Unstealths a unit and makes it visible to all enemies.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ACTION_VICTORYINFO</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_VICTORYINFO.js" line="10"/>
-        <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

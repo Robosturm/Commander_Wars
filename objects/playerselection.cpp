@@ -999,6 +999,7 @@ void PlayerSelection::selectAI(qint32 player)
         }
         if (m_pNetworkInterface->getIsServer())
         {
+            Console::print("AI " + QString::number(type) + " selected for player " + QString::number(player) + " sending data.", Console::eDEBUG);
             quint64 socket = m_pNetworkInterface->getSocketID();
             m_PlayerSockets[player] = socket;
             spGameMap pMap = GameMap::getInstance();
@@ -1471,6 +1472,7 @@ void PlayerSelection::disconnected(quint64 socketID)
                 // reopen all players
                 m_playerAIs[i]->setCurrentItem(m_playerAIs[i]->getItemCount() - 1);
                 selectAI(i);
+
             }
         }
         if (Mainapp::getSlave())

@@ -52,6 +52,7 @@ private:
     bool validHostRequest(QStringList mods);
     void sendGameDataToClient(qint64 socketId);
     void joinSlaveGame(quint64 socketID, QDataStream & stream);
+    void closeGame(NetworkGame* pGame);
 private:
     struct stNetworkGame
     {

@@ -51,14 +51,14 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
     Console::print("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
     if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
     {
-        m_slaveRunning = true;
         if (m_Clients.size() == 1)
         {
             sendPlayerJoined(0);
+            m_slaveRunning = true;
         }
         else
         {
-            // todo despawn slave
+            emit sigClose(this);
         }
     }
     else if (messageType == NetworkCommands::SERVEROPENPLAYERCOUNT)
@@ -97,6 +97,11 @@ void NetworkGame::sendPlayerJoined(qint32 player)
     sendStream << NetworkCommands::PLAYERJOINEDGAMEONSERVER;
     sendStream << socket;
     emit m_gameConnection.sig_sendData(socket, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+}
+
+void NetworkGame::setSlaveRunning(bool slaveRunning)
+{
+    m_slaveRunning = slaveRunning;
 }
 
 bool NetworkGame::getSlaveRunning() const
@@ -186,10 +191,12 @@ void NetworkGame::setDataBuffer(const QByteArray &dataBuffer)
 void NetworkGame::clientDisconnect(quint64 socketId)
 {
     Console::print("Client " + QString::number(socketId) + " disconnected.", Console::eDEBUG);
+    bool isHost = false;
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         if (m_Clients[i]->getSocketID() == socketId)
         {
+            isHost = (i == 0);
             m_Clients.removeAt(i);
             break;
         }
@@ -199,9 +206,15 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
     stream << socketId;
     emit m_gameConnection.sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+    if (isHost)
+    {
+        Console::print("Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);
+        emit sigClose(this);
+    }
 }
 
 void NetworkGame::processFinished(int, QProcess::ExitStatus)
 {
-    // todo find we need to unregister it now...
+    Console::print("Closing game cause slave game has been terminated.", Console::eDEBUG);
+    emit sigClose(this);
 }

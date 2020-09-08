@@ -33,6 +33,10 @@ var Constructor = function()
         {
             map.showAttackLog();
         }
+        else if (id === "UNIT")
+        {
+            map.showUnitInfo();
+        }
     };
     this.isFinalStep = function(action)
     {
@@ -56,6 +60,7 @@ var Constructor = function()
         var step = action.getInputStep();
         data.addData(qsTr("Victory Info"), "VICTORY", "help");
         data.addData(qsTr("CO Info"), "CO", "co_info");
+        data.addData(qsTr("Unit Info"), "UNIT", "intel");
         data.addData(qsTr("Game Info"), "GAME", "intel");
         data.addData(qsTr("Attack Log"), "ATTACK", "fire");
     };

@@ -32,8 +32,15 @@ public:
      * @return
      */
     bool getSlaveRunning() const;
+    /**
+     * @brief setSlaveRunning
+     * @param slaveRunning
+     */
+    void setSlaveRunning(bool slaveRunning);
+
 signals:
     void sigDataChanged();
+    void sigClose(NetworkGame* pGame);
 public slots:
     void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
