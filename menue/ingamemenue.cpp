@@ -55,7 +55,7 @@ void InGameMenue::loadBackground()
     oxygine::Actor::addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+0");
     sprite->setResAnim(pBackground);
-    sprite->setPosition(0, 0);
+    sprite->setPosition(-1, -1);
     // background should be last to draw
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
     sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());

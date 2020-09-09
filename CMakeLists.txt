@@ -145,7 +145,6 @@ set(${PROJECT_NAME}_SRCS
         main.cpp
 
         # objects
-        objects/cursor.cpp
         objects/editorselection.cpp
         objects/topbar.cpp
         objects/textbox.cpp
@@ -282,6 +281,8 @@ set(${PROJECT_NAME}_SRCS
         game/gamerule.cpp
         game/victoryrule.cpp
         game/weather.cpp
+        game/cursor.cpp
+        game/createoutline.cpp
         # cool ingame recording
         game/gamerecording/daytodayrecord.cpp
         game/gamerecording/playerrecord.cpp

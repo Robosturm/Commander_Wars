@@ -56,7 +56,7 @@ private:
     void createOutline(qint32 i, qint32 range, QColor color);
 private:
     oxygine::spSprite m_CurrentCursor;
-    QVector<oxygine::spSprite> m_cursorRangeOutline;
+    oxygine::spActor m_cursorRangeOutline;
     bool onMap{false};
 
     qint32 m_MapPointX{-1};

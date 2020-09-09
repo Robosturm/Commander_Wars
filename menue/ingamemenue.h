@@ -9,7 +9,7 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/cursor.h"
+#include "game/cursor.h"
 
 #include "oxygine/KeyEvent.h"
 

@@ -14,7 +14,7 @@
 
 #include "game/terrain.h"
 
-#include "objects/cursor.h"
+#include "game/cursor.h"
 
 #include "coreengine/fileserializable.h"
 

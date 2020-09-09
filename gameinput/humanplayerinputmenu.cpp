@@ -6,7 +6,7 @@
 #include "wiki/fieldinfo.h"
 
 #include "menue/gamemenue.h"
-#include "objects/cursor.h"
+#include "game/cursor.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"

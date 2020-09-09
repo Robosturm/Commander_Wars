@@ -14,5 +14,9 @@
 		<image file="cursor+missile.png" cols = "3" ScaleFactor = "1.5" />
 		<image file="cursor+radius_3.png" cols = "3" ScaleFactor = "1.5" />
 		<image file="cursor+edit.png" cols = "3" ScaleFactor = "1.5" />
+		<image file="co+range+marker+bottom.png" cols = "4" />
+		<image file="co+range+marker+top.png" cols = "4" />
+		<image file="co+range+marker+right.png" cols = "4" />
+		<image file="co+range+marker+left.png" cols = "4" />
 	</atlas>
 </resources>

@@ -678,7 +678,7 @@ void Multiplayermenu::sendSlaveReady()
 
 void Multiplayermenu::slotCancelHostConnection()
 {
-    // todo cancel game hosting
+    slotButtonBack();
 }
 
 void Multiplayermenu::slotHostGameLaunched()
@@ -860,7 +860,9 @@ void Multiplayermenu::disconnected(quint64)
 
 void Multiplayermenu::slotButtonBack()
 {
-    if (!m_Host || m_MapSelectionStep == MapSelectionStep::selectMap)
+    if (!m_Host ||
+        m_MapSelectionStep == MapSelectionStep::selectMap ||
+        !m_local)
     {
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
@@ -871,11 +873,6 @@ void Multiplayermenu::slotButtonBack()
     }
     else if (m_Host)
     {
-        if (m_local)
-        {
-            disconnectNetwork();
-            m_pHostAdresse->setVisible(false);
-        }
         MapSelectionMapsMenue::slotButtonBack();
         if (saveGame)
         {

@@ -99,7 +99,6 @@
 		
 		<!-- on map stuff -->
 		<image file="marked+field.png" cols = "4" />
-		<image file="co+range+marker.png" cols = "4" />
 		<image file="defenseStar.png" />
 		
 		<image file="arrow+unit.png" cols = "10" />

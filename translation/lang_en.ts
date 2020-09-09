@@ -3423,7 +3423,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1043"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1040"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3453,12 +3453,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="934"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="931"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1039"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1036"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
