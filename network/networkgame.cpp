@@ -68,6 +68,12 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
         m_data.setPlayers(m_data.getMaxPlayers() - openPlayerCount);
         emit sigDataChanged();
     }
+    else if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
+    {
+        quint64 socket;
+        stream >> socket;
+        clientDisconnect(socket);
+    }
     else if (m_slaveRunning)
     {
         if (messageType == NetworkCommands::PLAYERCHANGED)
@@ -77,7 +83,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
             sendStream << NetworkCommands::SERVERREQUESTOPENPLAYERCOUNT;
             emit m_gameConnection.sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
         }
-
+        Console::print("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
         // forward data to other clients
         for (qint32 i = 0; i < m_Clients.size(); i++)
         {

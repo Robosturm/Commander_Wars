@@ -194,9 +194,12 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QString messageType;
         stream >> messageType;
         Console::print("Server Network Command received: " + messageType + " for socket " + QString::number(socketID), Console::eDEBUG);
-        quint64 socketId;
-        stream >> socketId;
-        disconnected(socketID);
+        if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
+        {
+            quint64 socketId;
+            stream >> socketId;
+            disconnected(socketID);
+        }
     }
 }
 

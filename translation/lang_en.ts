@@ -2412,92 +2412,92 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="272"/>
+        <location filename="../menue/gamemenue.cpp" line="275"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="387"/>
+        <location filename="../menue/gamemenue.cpp" line="390"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="395"/>
+        <location filename="../menue/gamemenue.cpp" line="398"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="445"/>
+        <location filename="../menue/gamemenue.cpp" line="448"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="577"/>
+        <location filename="../menue/gamemenue.cpp" line="580"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1144"/>
+        <location filename="../menue/gamemenue.cpp" line="1147"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1166"/>
+        <location filename="../menue/gamemenue.cpp" line="1169"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1176"/>
+        <location filename="../menue/gamemenue.cpp" line="1179"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1537"/>
+        <location filename="../menue/gamemenue.cpp" line="1540"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1555"/>
+        <location filename="../menue/gamemenue.cpp" line="1558"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1584"/>
+        <location filename="../menue/gamemenue.cpp" line="1587"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3423,7 +3423,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1040"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1049"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3448,17 +3448,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="548"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="557"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="931"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="940"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1036"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1045"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

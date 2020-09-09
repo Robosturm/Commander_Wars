@@ -336,17 +336,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         }
         else if (messageType == NetworkCommands::PLAYERJOINEDGAMEONSERVER)
         {
-            if (m_pPlayerSelection->hasOpenPlayer())
-            {
-                quint64 socketId;
-                stream >> socketId;
-                dynamic_cast<LocalServer*>(m_NetworkInterface.get())->addSocket(socketID);
-                acceptNewConnection(socketID);
-            }
-            else
-            {
-                // todo deny access
-            }
+            playerJoinedServer(stream, socketID);
         }
         else if (messageType == NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER)
         {
@@ -354,6 +344,25 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             stream >> socket;
             m_pPlayerSelection->disconnected(socket);
         }
+    }
+}
+
+void Multiplayermenu::playerJoinedServer(QDataStream & stream, quint64 socketID)
+{
+    if (m_pPlayerSelection->hasOpenPlayer())
+    {
+        quint64 socketId;
+        stream >> socketId;
+        dynamic_cast<LocalServer*>(m_NetworkInterface.get())->addSocket(socketID);
+        acceptNewConnection(socketID);
+    }
+    else
+    {
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
+        stream << socketID;
+        emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
     }
 }
 

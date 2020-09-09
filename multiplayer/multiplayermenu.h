@@ -78,6 +78,7 @@ protected:
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
     void requestMap(quint64 socketID);
     void recieveMap(QDataStream & stream, quint64 socketID);
+    void playerJoinedServer(QDataStream & stream, quint64 socketID);
 private:
     /**
      * @brief init
