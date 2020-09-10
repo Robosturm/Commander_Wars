@@ -3199,27 +3199,27 @@ This is immediatly applied.</source>
         <translation>Adresse Beitreten</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="200"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="202"/>
         <source>Enter Host Adress</source>
         <translation>Host Adresse</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Map</source>
         <translation type="unfinished">Karte</translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="250"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Mods</source>
         <translation type="unfinished">Modifikationen</translation>
     </message>
@@ -3539,7 +3539,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="78"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="90"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1049"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1063"/>
         <source>Ready</source>
         <translation>Bereit</translation>
     </message>
@@ -3564,17 +3564,17 @@ This is immediatly applied.</source>
         <translation>Host Adresse: </translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="557"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="566"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="940"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="949"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1045"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1059"/>
         <source>Not Ready</source>
         <translation>Nicht Bereit</translation>
     </message>

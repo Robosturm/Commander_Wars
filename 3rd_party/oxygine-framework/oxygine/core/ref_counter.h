@@ -12,7 +12,7 @@ namespace oxygine
     class ref_counter
     {
     public:
-        std::atomic<int> _ref_counter{0};
+        std::atomic<qint32> _ref_counter{0};
 
         ref_counter()
             : _ref_counter(0)

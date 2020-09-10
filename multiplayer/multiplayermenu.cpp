@@ -319,9 +319,18 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 deleteLater();
             }
         }
-        else if (messageType == NetworkCommands::STARTSERVERGAME)
+        else if (messageType == NetworkCommands::STARTSERVERGAME ||
+                 messageType == NetworkCommands::CLIENTREADY)
         {
-            startCountdown();
+            if (messageType == NetworkCommands::CLIENTREADY)
+            {
+                m_pPlayerSelection->recievePlayerReady(socketID, stream);
+            }
+            if (!m_local)
+            {
+                Console::print("Checking if server game should start", Console::eDEBUG);
+                startCountdown();
+            }
         }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
@@ -990,6 +999,7 @@ bool Multiplayermenu::getGameReady()
         GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
         if (aiType == GameEnums::AiTypes_Open)
         {
+            Console::print("Game not ready cause player " + QString::number(i) + " is open", Console::eDEBUG);
             gameReady = false;
             break;
         }
@@ -997,6 +1007,7 @@ bool Multiplayermenu::getGameReady()
         {
             if (m_pPlayerSelection->getReady(i) == false)
             {
+                Console::print("Game not ready cause proxy player " + QString::number(i) + " is not ready", Console::eDEBUG);
                 gameReady = false;
                 break;
             }
@@ -1014,8 +1025,11 @@ void Multiplayermenu::startGame()
     }
     else if (m_local)
     {
-        markGameReady();
-        startCountdown();
+        if (getGameReady())
+        {
+            markGameReady();
+            startCountdown();
+        }
     }
     else
     {

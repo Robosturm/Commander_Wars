@@ -119,6 +119,12 @@ public slots:
      */
     void updatePlayerData(qint32 player);
     void setPlayerAi(qint32 player, GameEnums::AiTypes eAiType, QString name);
+    /**
+     * @brief recievePlayerReady
+     * @param socketID
+     * @param stream
+     */
+    void recievePlayerReady(quint64 socketID, QDataStream& stream);
 protected:
     void createAi(qint32 player, GameEnums::AiTypes type);
     /**
@@ -149,12 +155,7 @@ protected:
      * @param stream
      */
     void recievedColorData(quint64, QDataStream& stream);
-    /**
-     * @brief recievePlayerReady
-     * @param socketID
-     * @param stream
-     */
-    void recievePlayerReady(quint64 socketID, QDataStream& stream);
+
     /**
      * @brief recievePlayerServerReady
      * @param socketID

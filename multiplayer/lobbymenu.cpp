@@ -114,7 +114,7 @@ LobbyMenu::LobbyMenu()
 
 LobbyMenu::~LobbyMenu()
 {
-    if (!Settings::getServer())
+    if (!Settings::getServer() && !m_usedForHosting)
     {
         emit m_pTCPClient->sig_close();
         m_pTCPClient = nullptr;
@@ -151,6 +151,7 @@ void LobbyMenu::hostServer()
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+        m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, true));
         addRef();
@@ -179,6 +180,7 @@ void LobbyMenu::joinGame()
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        m_usedForHosting = true;
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, false));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
