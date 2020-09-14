@@ -38,7 +38,7 @@ public:
     virtual void hideMapSelection();
     virtual void showMapSelection();
     void hideRuleSelection();
-    void showRuleSelection();
+    virtual void showRuleSelection();
     void hidePlayerSelection();
     void showPlayerSelection();
 signals:

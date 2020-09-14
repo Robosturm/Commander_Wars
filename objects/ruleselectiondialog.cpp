@@ -8,7 +8,7 @@
 
 #include "objects/filedialog.h"
 
-RuleSelectionDialog::RuleSelectionDialog()
+RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -53,7 +53,7 @@ RuleSelectionDialog::RuleSelectionDialog()
     pSpriteBox->addChild(m_pButtonSaveRules);
     connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
 
-    m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80);
+    m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80, mode);
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
     m_pPanel = new  Panel(true,  size, size);
     m_pPanel->setPosition(10, 20);
@@ -105,8 +105,9 @@ void RuleSelectionDialog::loadRules(QString filename)
             QDataStream stream(&file);
             GameMap::getInstance()->getGameRules()->deserializeObject(stream);
             file.close();
+            auto mode = m_pRuleSelection->getMode();
             m_pRuleSelection->detach();
-            m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80);
+            m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80, mode);
             m_pPanel->addItem(m_pRuleSelection);
             m_pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
             m_pPanel->setContentWidth(m_pRuleSelection->getWidth());

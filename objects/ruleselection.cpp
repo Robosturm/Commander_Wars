@@ -17,11 +17,13 @@
 #include "objects/perkselectiondialog.h"
 #include "objects/actionlistdialog.h"
 #include "objects/label.h"
+#include "objects/filedialog.h"
 
 constexpr qint32 textWidth = 300;
 
-RuleSelection::RuleSelection(qint32 width)
-    : QObject()
+RuleSelection::RuleSelection(qint32 width, Mode mode)
+    : QObject(),
+      m_mode(mode)
 {
     setWidth(width);
     showRuleSelection();
@@ -85,6 +87,7 @@ void RuleSelection::showRuleSelection()
     pApp->suspendThread();
     removeChildren();
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
     qint32 y = 20;
     // font style
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -103,7 +106,7 @@ void RuleSelection::showRuleSelection()
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
     textField->setHtmlText(tr("Enviroment"));
-    textField->setPosition(30, y);    
+    textField->setPosition(30, y);
     addChild(textField);
     y += 60;
 
@@ -413,6 +416,30 @@ void RuleSelection::showRuleSelection()
 
     addCustomGamerules(y);
 
+    // Label
+    if (m_mode != RuleSelection::Mode::Editor)
+    {
+        textField = new Label(textWidth - 10);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Script:"));
+        textField->setPosition(30, y);
+        addChild(textField);
+        oxygine::spButton pScriptButton = pObjectManager->createButton(tr("Select File"), 160);
+        pScriptButton->setPosition(Settings::getWidth() - pScriptButton->getWidth() - 100, y);
+        addChild(pScriptButton);
+        m_MapScriptFile = new Textbox(pScriptButton->getX() - textField->getX() - textWidth);
+        m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));
+        m_MapScriptFile->setPosition(textWidth, textField->getY());
+        m_MapScriptFile->setCurrentText(pMap->getGameScript()->getScriptFile());
+        addChild(m_MapScriptFile);
+        pScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigShowSelectScript();
+        });
+        connect(this, &RuleSelection::sigShowSelectScript, this, &RuleSelection::showSelectScript, Qt::QueuedConnection);
+        y += 40;
+    }
+
     textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
@@ -594,6 +621,11 @@ void RuleSelection::addCustomGamerules(qint32 & y)
     y += pGameRuleManager->getGameRuleCount() * 50;
 }
 
+RuleSelection::Mode RuleSelection::getMode() const
+{
+    return m_mode;
+}
+
 void RuleSelection::startWeatherChanged(qint32 value)
 {
     GameMap::getInstance()->getGameRules()->setStartWeather(value);
@@ -637,5 +669,31 @@ void RuleSelection::showActionBannlist()
     spActionListDialog pBannlist = new ActionListDialog(pMap->getGameRules()->getAllowedActions());
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void RuleSelection::showSelectScript()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QVector<QString> wildcards;
+    wildcards.append("*.js");
+    QString path = QCoreApplication::applicationDirPath() + "/maps";
+    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    oxygine::getStage()->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void RuleSelection::scriptFileChanged(QString file)
+{
+    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    m_MapScriptFile->setCurrentText(file);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGameMap pMap = GameMap::getInstance();
+    pMap->getGameScript()->setScriptFile(file);
+    pMap->getGameScript()->init();
     pApp->continueThread();
 }

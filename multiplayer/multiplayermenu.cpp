@@ -859,6 +859,21 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
 
 }
 
+void Multiplayermenu::showRuleSelection()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_pRuleSelection->setVisible(true);
+    m_pButtonSaveRules->setVisible(true);
+    m_pButtonLoadRules->setVisible(true);
+    m_pRuleSelection->clearContent();
+    m_pRuleSelectionView = new RuleSelection(Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelection->addItem(m_pRuleSelectionView);
+    m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
+    m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
+    pApp->continueThread();
+}
+
 void Multiplayermenu::disconnected(quint64)
 {
     if (m_Host)

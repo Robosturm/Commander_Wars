@@ -489,7 +489,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "EDITRULES")
     {
-        spRuleSelectionDialog pDialog = new RuleSelectionDialog();
+        spRuleSelectionDialog pDialog = new RuleSelectionDialog(RuleSelection::Mode::Editor);
         addChild(pDialog);
         connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
         setFocused(false);

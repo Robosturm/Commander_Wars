@@ -199,6 +199,7 @@ set(${PROJECT_NAME}_SRCS
         objects/loadingscreen.cpp
         objects/gameplayandkeys.cpp
         objects/actionlistdialog.cpp
+        objects/passwordbox.cpp
 
         #modding
         modding/csvtableimporter.cpp
@@ -346,7 +347,8 @@ set(${PROJECT_NAME}_SRCS
         # multiplayer
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
-        multiplayer/gamedata.cpp        
+        multiplayer/gamedata.cpp
+        multiplayer/password.cpp
 
         #campaign support
         ingamescriptsupport/campaigneditor.cpp

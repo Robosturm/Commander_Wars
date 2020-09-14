@@ -42,7 +42,7 @@ signals:
     void sigEnterPressed(QString text);
 public slots:
     void KeyInput(oxygine::KeyEvent event);
-private:
+protected:
     bool m_focused{false};
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;

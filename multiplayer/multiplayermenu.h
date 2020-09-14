@@ -38,6 +38,8 @@ public:
      * @brief connectNetworkSlots
      */
     void connectNetworkSlots();
+
+    virtual void showRuleSelection() override;
 signals:
     void sigConnected();
     void sigHostGameLaunched();
