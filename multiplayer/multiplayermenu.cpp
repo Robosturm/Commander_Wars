@@ -172,10 +172,10 @@ void Multiplayermenu::loadSaveGame(QString filename)
         QFileInfo info(filename);
         if (file.exists())
         {
-            m_pMapSelectionView->loadMap(info);
+            m_pMapSelectionView->loadMap(info, false);
             hideMapSelection();
-            saveGame = true;
-            m_pPlayerSelection->setSaveGame(saveGame);
+            m_saveGame = true;
+            m_pPlayerSelection->setSaveGame(m_saveGame);
             m_MapSelectionStep = MapSelectionStep::selectRules;
             slotButtonNext();
         }
@@ -248,8 +248,8 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         stream << versions[i];
     }
     Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash());
-    stream << saveGame;
-    if (saveGame)
+    stream << m_saveGame;
+    if (m_saveGame)
     {
         m_pMapSelectionView->getCurrentMap()->serializeObject(stream);
     }
@@ -517,8 +517,9 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         }
         if (version == Mainapp::getGameVersion() && sameMods)
         {
-            stream >> saveGame;
-            if (saveGame)
+            stream >> m_saveGame;
+            m_pPlayerSelection->setSaveGame(m_saveGame);
+            if (m_saveGame)
             {
                 m_pMapSelectionView->setCurrentMap(new GameMap(stream));
                 loadMultiplayerMap();
@@ -776,7 +777,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
     pMap->setVisible(false);
-    if (!saveGame)
+    if (!m_saveGame)
     {
         pMap->initPlayers();
     }
@@ -792,7 +793,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     Mainapp::seed(seed);
     Mainapp::setUseSeed(true);
 
-    if (!saveGame)
+    if (!m_saveGame)
     {
         pMap->getGameScript()->gameStart();
     }
@@ -800,7 +801,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
+    oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));
     // send game started
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -813,7 +814,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
 {
     QString path = QCoreApplication::applicationDirPath() + "/maps";
-    if (saveGame)
+    if (m_saveGame)
     {
         path = QCoreApplication::applicationDirPath() + "/savegames";
     }
@@ -838,7 +839,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
             found = true;
         }
     }
-    if (found  && !saveGame)
+    if (found  && !m_saveGame)
     {
         if (!scriptFileName.isEmpty())
         {
@@ -907,11 +908,11 @@ void Multiplayermenu::slotButtonBack()
     else if (m_Host)
     {
         MapSelectionMapsMenue::slotButtonBack();
-        if (saveGame)
+        if (m_saveGame)
         {
             MapSelectionMapsMenue::slotButtonBack();
-            saveGame = false;
-            m_pPlayerSelection->setSaveGame(saveGame);
+            m_saveGame = false;
+            m_pPlayerSelection->setSaveGame(m_saveGame);
         }
     }
 }
@@ -1144,7 +1145,7 @@ void Multiplayermenu::countdown()
             defeatClosedPlayers();
             spGameMap pMap = GameMap::getInstance();
             pMap->setVisible(false);
-            if (!saveGame)
+            if (!m_saveGame)
             {
                 pMap->initPlayersAndSelectCOs();
             }
@@ -1160,14 +1161,14 @@ void Multiplayermenu::countdown()
             }
             Mainapp::seed(seed);
             Mainapp::setUseSeed(true);
-            if (!saveGame)
+            if (!m_saveGame)
             {
                 pMap->getGameScript()->gameStart();
             }
             pMap->updateSprites();
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(new GameMenue(saveGame, m_NetworkInterface));
+            oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));
             QThread::msleep(200);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             addRef();

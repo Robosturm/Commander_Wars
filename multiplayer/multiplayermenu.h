@@ -128,7 +128,7 @@ private:
     QTimer m_GameStartTimer;
     qint32 counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
-    bool saveGame{false};
+    bool m_saveGame{false};
     bool m_local{true};
     bool m_slaveGameReady{false};
 };

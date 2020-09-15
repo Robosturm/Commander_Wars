@@ -251,7 +251,7 @@ void GameMenue::disconnected(quint64 socketID)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        bool showDisconnect = false;
+        bool showDisconnect = !m_pNetworkInterface->getIsServer();
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {

@@ -93,10 +93,13 @@ void DropDownmenuColor::itemChanged(qint32 item)
 
 void DropDownmenuColor::showColorDialog()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    spColorSelectionDialog pDialog = new ColorSelectionDialog(m_currentColor);
-    oxygine::getStage()->addChild(pDialog);
-    connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
-    pApp->continueThread();
+    if (getEnabled())
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        spColorSelectionDialog pDialog = new ColorSelectionDialog(m_currentColor);
+        oxygine::getStage()->addChild(pDialog);
+        connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
+        pApp->continueThread();
+    }
 }
