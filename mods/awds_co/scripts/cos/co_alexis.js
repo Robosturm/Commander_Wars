@@ -43,9 +43,7 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 return 10;
             }
         }
-    };
-
-
+    }
 };
 
 CO_ALEXIS.startOfTurn = function(co)

@@ -148,10 +148,14 @@ var Constructor = function()
                         // apply sandstorm buff :)
                         return 70;
                     }
-                    return 20;
+                    return 10;
                 }
                 break;
             }
+        }
+        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return 10;
         }
         return 0;
     };
@@ -161,7 +165,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 20;
+            return 10;
         }
         return 0;
     };

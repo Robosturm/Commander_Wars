@@ -219,10 +219,13 @@ var Constructor = function()
                             }
                             return 10;
                         }
-                        break;
                 }
                 return 0;
             }
+        }
+        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return 10;
         }
         return 0;
     };

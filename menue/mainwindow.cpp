@@ -30,8 +30,6 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/unitspritemanager.h"
 
-#include "objects/passwordbox.h"
-
 Mainwindow::Mainwindow()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -53,9 +51,6 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
-
-    spPasswordbox pPasswordbox = new Passwordbox(200);
-    addChild(pPasswordbox);
 
     qint32 buttonWidth = 200;
     qint32 btnI = 0;

@@ -158,6 +158,10 @@ var Constructor = function()
                 break;
             }
         }
+        else if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return 10;
+        }
         return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,

@@ -22,17 +22,25 @@ var Constructor = function()
         return 2500;
     };
     // called for loading the main sprite
+    this.armyDataStanding = [["os", "os"],
+                     ["bm", "bm"],
+                     ["ge", "ge"],
+                     ["yc", "yc"],
+                     ["bh", "bh"],
+                     ["bg", "bh"],
+                     ["ma", "ma"],
+                     ["ac", "ac"],
+                     ["bd", "bd"],
+                     ["dm", "dm"],
+                     ["gs", "gs"],
+                     ["pf", "pf"],
+                     ["ti", "ti"],];
     this.loadSprites = function(unit)
     {
         // none neutral player
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
-        // bh and bg have the same sprites
-        if (armyName === "bg")
-        {
-            armyName = "bh"
-        }
+        var armyName = Global.getArmyNameFromPlayerTable(player, MECH.armyDataStanding);
         // load sprites
         unit.loadSprite("mech+" + armyName, false, 1.5);
         unit.loadSpriteV2("mech+" + armyName +"+mask", GameEnums.Recoloring_Table, 1.5);
