@@ -21,7 +21,12 @@ var Constructor = function()
 
     this.getRiverString = function(unit)
     {
-        var terrainId = unit.getTerrain().getTerrainID();
+        var terrainId = "PLAINS";
+        var terrain = unit.getTerrain();
+        if (terrain !== null)
+        {
+            unit.getTerrain().getTerrainID();
+        }
         if (terrainId === "RIVER" ||
                 terrainId === "DESERT_TRY_RIVER")
         {
