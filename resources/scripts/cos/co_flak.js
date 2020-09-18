@@ -171,19 +171,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The strongman of the Black Hole army. Promoted form private by Hawke, who was impressed by his natural ability.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Meat");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Vegetables");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("High firepower, but he relies solely on strength. His shoddy technique sometimes reduces the damage his units deal.");
     };
@@ -192,23 +192,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have more luck and misfortune") +
                qsTr("\n\nCO Zone Effect: \nUnits have even more luck and misfortune");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Firepower rises, but so does his chances of reduced firepower.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Brute Force");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Firepower rises dramatically, but so does his chances of reduced power.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Barbaric Blow");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Stay outta my way!"),
                 qsTr("Grrrrrraaaaaaa! I'm outta control!"),
@@ -217,13 +217,13 @@ var Constructor = function()
                 qsTr("Grr! Now you've really made me angry!"),
                 qsTr("You're gonna get pummeled!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("What was that? A waste of my time!"),
                 qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
                 qsTr("Enough weakling's footing around!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I-I don't believe it... They were... stronger than me?"),
                 qsTr("Grrr... I wanna smash your face in!!!")];

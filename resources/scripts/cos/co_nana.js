@@ -247,19 +247,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The lovable, cute, and amazingly talented granddaughter of Hachi. Known to be incredibly scary when angry.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Artemis");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Ozzy");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
     };
@@ -268,23 +268,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nIndirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Direct attacks deal one HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Chain Reaction");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Indirect attacks deal two HP of damage to all units within a large blast radius. Nana's units are no longer affected by collateral damage.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Explosive Tantrum");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Let's go, boys!"),
                 qsTr("You made me mad!"),
@@ -294,13 +294,13 @@ var Constructor = function()
                 qsTr("I want to end this fast!"),
                 qsTr("Don't be such a meanie!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Aww, you put up a good fight though!"),
                 qsTr("Hehe! You're funny!"),
                 qsTr("You look so cute when you lose!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Now I'm mad..."),
                 qsTr("This should have been easy!")];

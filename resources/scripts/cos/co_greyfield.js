@@ -222,19 +222,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Wants to rule as the supreme global leader. Ambitious and power-hungry.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Power");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Insubordinates");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Copter, seaplanes and sea units have higher firepower and defense.");
     };
@@ -243,36 +243,36 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \n Sea Units have 20% offensive and 50% defensive bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Supply Chain");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense and increase movement range by 1.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Naval War");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I will brook no opposition. The enemy will be eliminated."),
                 qsTr("Overwhelming forces need overwhelming supplies."),
                 qsTr("Supplies are here!"),
                 qsTr("Admiral Greyfield here. Attack and eleminate them.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Disloyalty will be punished with death."),
                 qsTr("Anyone who opposes me will be crushed!"),
                 qsTr("The Teal Isles Army will prevail.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Nooo... this is not the end of Teal Isles!"),
                 qsTr("What? My army has been crushed.")];

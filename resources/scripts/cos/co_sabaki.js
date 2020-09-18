@@ -178,19 +178,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Spare parts");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Poverty");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Highly skilled at salvaging parts, Sabaki's units can drain HP from enemies.");
     };
@@ -199,23 +199,23 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have lifesteal.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units can drain even more HP.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Speed Salvage");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Units heal HP equal amount of damage they inflict.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Rejuvination Raid");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Grab those parts! There's a tank that needs fixing!"),
 				qsTr("Get those machines up and running! We need to push forward!"),
@@ -224,13 +224,13 @@ var Constructor = function()
 				qsTr("Time to throw a wrench in their plans."),
 				qsTr("Let's see how you react when the hammer falls...")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("My army acts like a well-oiled machine."),
 				qsTr("Nothing's more satisfying than killing an enemy with their own gun."),
 				qsTr("Your army just fell apart out there.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("The revolution isn't over."),
 				qsTr("Even by healing my troops.. I couldn't win.")];

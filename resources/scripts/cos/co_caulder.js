@@ -202,19 +202,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Head of IDS - the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Unrestricted experiments");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Ethics");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 HP each turn inside his CO-Zone.");
     };
@@ -223,36 +223,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits loose firepower by 20% and defense by 10%.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain 60% firepower and 60% defense. They also heal 5HP each turn..");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("All his units gain five Hp and get a offense and defense buff.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Mass Regeneration");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All his units heal to full and gain a massive offense and defense buff.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Perfect Healing");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Ahhh watch this experiment. I wonder what it does..."),
                 qsTr("March my clones, march and kill them all."),
                 qsTr("You and your ethnics make you weak. Watch the power of science..."),
                 qsTr("I am simply curious.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Interesting. Very interesting"),
                 qsTr("Quite satisfactory."),
                 qsTr("I am simply curious.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Only a failed experiment nothing to worry about!"),
                 qsTr("Argh I'm useless as well? Impossible!")];

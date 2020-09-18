@@ -230,19 +230,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A skilled veteran that demands perfection from her soldiers. She is small but feisty.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Mail Call");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Mess Hall");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Enemy counterattacks deal less damage to Sophie's units.");
     };
@@ -251,23 +251,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects") +
                qsTr("\n\nCO Zone Effect: \nEnemy counterattacks deal less damage. Units gain firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Enemy counterattacks deal no damage to Sophie's units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Sudden Strike");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Sophie's units strike twice when ordered to attack. However, firepower is reduced");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Total War");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Get your butts in gear troops! The bad guys are not going to wait all day for us!"),
                 qsTr("Give'em lead men!"),
@@ -276,13 +276,13 @@ var Constructor = function()
                 qsTr("All right, move out and try not to get yourselves killed!"),
                 qsTr("I expect nothing but the best!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Hoorah! The day is done and the battle is won!"),
                 qsTr("That showed them!"),
                 qsTr("We are the finest fighting force in the world!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I thought my troops would be tougher."),
                 qsTr("My Soldiers lost. I can't be proud of them.")];

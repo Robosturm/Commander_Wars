@@ -161,19 +161,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Colin's older sister. Normally ladylike, but becomes daring when she gets angry. Dominatrix");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Truffles");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Pork rinds");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.");
     };
@@ -182,23 +182,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nShe gets additional funds from allied properties.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("The more funds she has, the more she can decrease the enemy's CO power gauge.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Market Crash");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Earns funds when she inflicts damage on a foe. The greater the damage, the more she earns.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("War Bonds");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Wealth is power."),
                 qsTr("I won't go easy on you."),
@@ -207,13 +207,13 @@ var Constructor = function()
                 qsTr("I'll show you my true strength."),
                 qsTr("You've made me very, very...upset.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Even kittens have claws."),
                 qsTr("Money is power."),
                 qsTr("Bravo!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This is like some horrible dream."),
                 qsTr("This is such a nightmare.")];

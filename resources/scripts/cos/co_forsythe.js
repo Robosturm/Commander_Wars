@@ -145,19 +145,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Honor");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Killers");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("He has a large CO-Zone which boosts both offensive and defensive bonus.");
     };
@@ -166,35 +166,35 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have 20% offensive and defensive bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases offensive and defensive bonus.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Power of Honor");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases offensive and defensive bonus even more.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Knights of the Desert");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I am a soldier not a killer."),
                 qsTr("We fight here to free our people."),
                 qsTr("Even in war there are rules, which should not be broken...")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I have beaten you 20 years ago and I beaten you now."),
                 qsTr("I am a soldier not a killer."),
                 qsTr("Death before dishonour.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("We'll fought young man."),
                 qsTr("Great fight. Take your victory with honor.")];

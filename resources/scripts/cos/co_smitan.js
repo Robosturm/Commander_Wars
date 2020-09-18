@@ -266,19 +266,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A violent old commander of the Green Earth army who hates limitations.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Dominance, yelling");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("(Victory by) Surrender");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Direct units gain additional firepower against enemy units which may come under fire from indirect units.");
     };
@@ -287,23 +287,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effect.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units gain additional firepower for each indirect unit that can attack the defending unit.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases the range of indirect units by one space. Indirect units can move after firing.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Scramble Tactics");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Flare Drive");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Whites of their eyes? Pahaha!"),
                 qsTr("It's over! Get used to it!!"),
@@ -312,12 +312,12 @@ var Constructor = function()
                 qsTr("'Calm before the storm'? ... Nonsense."),
                 qsTr("No more games! All units, full power!!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Wasn't even any dust to settle."),
                 qsTr("Grah hah hah. Ooh, that was FUN.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Grah! Ha! Ha. Ooh! What i lost"),
                 qsTr("This and that! And what...i've lost?")];

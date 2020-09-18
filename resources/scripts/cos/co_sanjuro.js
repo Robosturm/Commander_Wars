@@ -329,19 +329,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Honest work");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Shady business");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("A keen mind for his finances, he spends more for better equipment when there's a surplus and focuses on getting the best deal when he's pressed for money.");
     };
@@ -351,23 +351,23 @@ var Constructor = function()
                qsTr("\n\nCO Zone Effect: \nGlobal firepower effects are doubled.");
     };
 
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("When his units take combat damage, he receives a portion of the value damage in funds.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Heart of Gold");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Buying Power");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("My services are expensive, and worth every penny."),
                 qsTr("Consider this a free sample!"),
@@ -376,13 +376,13 @@ var Constructor = function()
                 qsTr("I was born for battle. I have no limits!"),
                 qsTr("If you think this is strictly business, think again. The battlefield calls to me!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I have a reputation to keep, you know."),
                 qsTr("Another job well done...where's the next fight?"),
                 qsTr("Did you expect anything less from a hardened mercenary?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("For this I get too less money"),
                 qsTr("Now, I know how the Romans felt like.")];

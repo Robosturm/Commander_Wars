@@ -260,19 +260,19 @@ var Constructor = function()
         }
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The Supreme Commander of Golden Sun. A veteran of battles who relies on experienced troops.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Veterans");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Recruits");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.");
     };
@@ -281,36 +281,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnit Ranks are more effective. Units without a Rank loose firepower.") +
                 qsTr("\n\nCO Zone Effect: \nUnit Ranks are way more effective.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units with a higher rank have even higher defence and offense.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Training Camp");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("War Training");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Get those recruits out of my way!"),
                 qsTr("An army of veterans awaits you..."),
                 qsTr("I know how to train soldiers!"),
                 qsTr("An old soldier without wounds is the most dangerous.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("A knight needs to be strong and experienced!"),
                 qsTr("The better prepared knight wins."),
                 qsTr("Experience always wins.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("You getting better recuit."),
                 qsTr("Tsss! Some recruits have one! A catastroph.")];

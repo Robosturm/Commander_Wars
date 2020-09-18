@@ -223,19 +223,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A damage analyst from Teal Isles who favors precise tactics. Very intelligent, but inexperienced.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Techno");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Blackouts");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range but they have weak counters.");
     };
@@ -244,23 +244,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits deal no luck damage. Units gain  firepower for own units in vision range. Counter attacks are weaker.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower for own units in vision range.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Unit vision is extended. Firepower increases even more as more units are within vision range.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Calculated Strike");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Conrad's first attack deals +50% luck damage. If Conrad would deal over 100%, the damage is rolled over to the next engagement.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Precision Assault");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("You might be more experienced, but that doesn't mean I can't teach you a thing or two!"),
                 qsTr("I won't go down that easily! This battle isn't even close to finished!"),
@@ -269,13 +269,13 @@ var Constructor = function()
                 qsTr("Your strategy doesn't add up. Mine practically multiplies!"),
                 qsTr("Don't make me angry! ...It makes me screw up my numbers.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Solid tactics get solid results!"),
                 qsTr("That was easier than I expected. Were my numbers off?"),
                 qsTr("Either I'm getting better, or you guys are getting worse!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("What? I didn't see that."),
                 qsTr("How could you hide from me?")];

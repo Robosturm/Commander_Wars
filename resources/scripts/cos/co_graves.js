@@ -195,19 +195,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A former assassin dissatisfied with where Wars World is headed. Secretly aids Hawke's cause and overtly aids Dark Matter. No one knows where his true loyalties lie.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Mystery Novels");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Romance Novels");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Enemy units reduced to two or less HP by Graves' units become paralyzed.");
     };
@@ -216,23 +216,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nEnemy units reduced to two or less HP by Graves' units become paralyzed.") +
                qsTr("\n\nCO Zone Effect: \nUnits have more offensive and defensive bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Enemy units suffer one HP of damage. Enemy units with three or less HP become paralyzed.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Plague");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Enemy units suffer two HP of damage. Enemy units with four or less HP become paralyzed.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Perdition");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Fear is a valuble tool. I suggest you learn how to use it."),
                 qsTr("Do you desire death that greatly?"),
@@ -241,13 +241,13 @@ var Constructor = function()
                 qsTr("A valiant effort. But futile, nonetheless."),
                 qsTr("Prepare yourself.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("That was it? ...I overestimated you."),
                 qsTr("Such a victory was... so rudely forced"),
                 qsTr("Lives could have been spared had you just accepted your fate.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Not planed but still not the end."),
                 qsTr("It seems that i underestimate your strenght.")];

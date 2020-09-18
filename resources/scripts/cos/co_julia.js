@@ -162,19 +162,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A devoted CO who embraces Dark Matter's ideals and wishes to unite the world. She excels at utilizing propaganda to demoralize her enemies.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("The morning paper");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("The comics section");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units have reduced offensive power. However, firepower is unaffected by loss of HP.");
     };
@@ -183,23 +183,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits loose firepower but the firepower is unaffected by loss of HP.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Half of enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Rallying Cry");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Media Mayhem");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Your defeat is tomorrow's headline."),
                 qsTr("Start the presses!"),
@@ -208,13 +208,13 @@ var Constructor = function()
                 qsTr("Let us see how devoted your people are to your cause."),
                 qsTr("You will come to embrace our ideals.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("The proof of our might will forever be etched in your minds."),
                 qsTr("How foolish it was of you to try to defy us."),
                 qsTr("This victory will be pleasing news to our citizens.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("The news will still call this a victory."),
                 qsTr("I will change the news...")];

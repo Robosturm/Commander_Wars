@@ -166,7 +166,7 @@ COInfoActor::COInfoActor(qint32 width)
     m_GlobalBoosts->setStyle(style);
     m_GlobalBoosts->setHtmlText(tr("Global Boosts"));
     m_GlobalBoosts->setX(10);
-    addChild(m_GlobalBoosts);    
+    addChild(m_GlobalBoosts);
 
     m_CoBoost = new oxygine::TextField();
     m_CoBoost->setStyle(style);
@@ -190,7 +190,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     {
         pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
     }
-    m_pCurrentCO->setResAnim(pAnim);    
+    m_pCurrentCO->setResAnim(pAnim);
 
     QString coName = "";
     QString coBio = "";
@@ -221,76 +221,27 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_COName->setPosition((Settings::getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
     if (pCO.get() != nullptr)
     {
-        value = pInterpreter->doFunction(coid, "getBio");
-        if (value.isString())
-        {
-            coBio = value.toString();
-        }
-        value = pInterpreter->doFunction(coid, "getLongBio");
-        if (value.isString())
-        {
-            coBio += " " + value.toString();
-        }
+        coBio = pCO->getBio();
+        coBio += pCO->getLongBio();
+        coHits = pCO->getHits();
+        coMiss = pCO->getMiss();
+        coDesc = pCO->getCODescription();
+        coDesc += "\n" + pCO->getLongCODescription();
+        coPowerDesc = pCO->getPowerDescription();
+        coPower = pCO->getPowerName();
+        coSuperpowerDesc = pCO->getSuperPowerDescription();
+        coSuperpower = pCO->getSuperPowerName();
     }
     m_COBio->setHtmlText(coBio);
-
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getHits");
-        if (value.isString())
-        {
-            coHits = value.toString();
-        }
-    }
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
     m_HitText->setHtmlText(coHits);
     m_HitText->setY(m_HitSprite->getY() + 5);
-
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getMiss");
-        if (value.isString())
-        {
-            coMiss = value.toString();
-        }
-    }
     m_MissSprite->setY(m_HitSprite->getY() + 50);
     m_MissText->setHtmlText(coMiss);
     m_MissText->setY(m_MissSprite->getY() + 5);
-
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getCODescription");
-        if (value.isString())
-        {
-            coDesc = value.toString();
-        }
-        value = pInterpreter->doFunction(coid, "getLongCODescription");
-        if (value.isString())
-        {
-            coDesc += "\n" + value.toString();
-        }
-    }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
     m_InfoText->setHtmlText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)));
     m_InfoText->setY(m_InfoSprite->getY() + 50);
-
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getPowerDescription");
-        if (value.isString())
-        {
-            coPowerDesc = value.toString();
-        }
-    }
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getPowerName");
-        if (value.isString())
-        {
-            coPower = value.toString();
-        }
-    }
 
     m_pCoPowermeter->setCO(pCO.get());
     m_pCoPowermeter->drawPowerMeter();
@@ -302,22 +253,6 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_Powername->setHtmlText(coPower);
     m_PowerDesc->setHtmlText(coPowerDesc);
 
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getSuperPowerDescription");
-        if (value.isString())
-        {
-            coSuperpowerDesc = value.toString();
-        }
-    }
-    if (pCO.get() != nullptr)
-    {
-        value = pInterpreter->doFunction(coid, "getSuperPowerName");
-        if (value.isString())
-        {
-            coSuperpower = value.toString();
-        }
-    }
     m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().getHeight() + 20);
     m_SuperPowername->setY(m_SuperPowerSprite->getY());
     m_SuperPowerDesc->setY(m_SuperPowername->getY() + 40);
@@ -448,7 +383,7 @@ void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
     m_UnitDataActors[i]->setPosition(x, y);
     m_UnitDataActors[i]->addClickListener([=](oxygine::Event*)
     {
-       emit sigShowLink(pUnit->getUnitID());
+        emit sigShowLink(pUnit->getUnitID());
     });
     addChild(m_UnitDataActors[i]);
 
@@ -652,7 +587,7 @@ void COInfoActor::showLink(QString pageID)
     if (!std::get<0>(entry).isEmpty() &&
         !std::get<1>(entry).isEmpty())
     {
-       oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
+        oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
     pApp->continueThread();
 }

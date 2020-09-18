@@ -44,49 +44,49 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A Blank CO for Blue Moon.") +
                qsTr("Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though ") +
                qsTr("later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. ");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("N/A");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("N/A");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Attack!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Victory!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Defeat...")];
     };

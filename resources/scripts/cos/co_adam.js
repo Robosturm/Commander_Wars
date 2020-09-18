@@ -299,19 +299,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Vectors");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Percent Error");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Adam's units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam's units lose firepower as they lose HP.");
     };
@@ -320,23 +320,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have increased firepower but lose additional firepower for lost HP.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a defense boost for one turn.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("All of Adam's units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Decimation");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit gets an powerup.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Cartesian Cleanup");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Get a hobby? This is my hobby!"),
                 qsTr("Woo! Watch out for shrapnel!"),
@@ -345,13 +345,13 @@ var Constructor = function()
                 qsTr("Prepare to have your strategy debunked!"),
                 qsTr("I'll blind you with science!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Call it bad luck, if you must."),
                 qsTr("Who said math had no applications in real life?"),
                 qsTr("Ha! The revenge of the nerds!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
                 qsTr("It's the blasted weather! That was the problem! Hssss!")];

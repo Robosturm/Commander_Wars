@@ -43,7 +43,7 @@ var Constructor = function()
         return "MA";
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A Blank CO for Metal Army.") +
                qsTr("The Metall Army is an army of robots. The robots were initially invented by Lash. ") +
@@ -51,43 +51,43 @@ var Constructor = function()
                qsTr("The Metall Army defends it's own territory at all costs when it looses it's territory. The Army tries to reconquer it.") +
                qsTr("Besides this the Metall Army is very defensive orientated and doesn't attack anyone.") ;
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("N/A");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("N/A");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Attack!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Victory!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Defeat...")];
     };

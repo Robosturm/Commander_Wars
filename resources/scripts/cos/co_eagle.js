@@ -198,19 +198,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Green Earth's daring pilot hero. Joined the air force to honor his father's legacy.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Lucky goggles");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Swimming");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Air units use less fuel and have superior firepower. Naval units have weaker firepower.");
     };
@@ -219,23 +219,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nAir units are stronger and Sea units weaker") +
                qsTr("\n\nCO Zone Effect: \nAir units have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("All non-infantry units that have already carried out orders may move again, but their firepower is cut in half.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Lightning Drive");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All non-infantry units that have already carried out orders may move again.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Lightning Strike");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Checkmate!"),
                 qsTr("All units, ready for attack! Don't even give them time for regret!"),
@@ -244,13 +244,13 @@ var Constructor = function()
                 qsTr("I have no interest in underlings. Begone!"),
                 qsTr("I've caught you with your guard down!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Hmph! As expected!"),
                 qsTr("Where's the challenge in that?"),
                 qsTr("Another victory! Was there ever any doubt?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This is what happens when you lose focus!"),
                 qsTr("Impossible! I'm getting angrier by the moment!")];

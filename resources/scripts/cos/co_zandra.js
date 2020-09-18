@@ -204,19 +204,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Coconuts");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Seafood");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Zandra's units are unaffected by sandstorms and are fighting better during them.");
     };
@@ -225,23 +225,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits are unaffected by sandstorms and have increased firepower during sandstorm.") +
                 qsTr("\n\nCO Zone Effect: \nUnits have increased firepower during sandstorm.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Sand Shift");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Desert Gale");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("It's high time that you felt the wrath of the desert winds."),
                 qsTr("I feel the power coming in, on the far winds."),
@@ -250,13 +250,13 @@ var Constructor = function()
                 qsTr("Your eyes will fill with sand, as you scan this wasted land..."),
                 qsTr("Troops, attack now, before the winds halt their blessing!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Everyone, hurry back to the village. Our job here is done."),
                 qsTr("These sacred lands will be protected for as long as I stand."),
                 qsTr("Thank you, Uncle, for giving me the strength I needed.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I only lost because of the Snow around here."),
                 qsTr("What? I can't lose. We have a Global Heating.")];

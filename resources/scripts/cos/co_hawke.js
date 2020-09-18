@@ -173,19 +173,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A commander of the Black Hole army who will stop at nothing to achieve his goals.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Black Coffee");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Incompetence");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("All units possess superior firepower. However, his CO power gauge is longer than it should be.");
     };
@@ -194,23 +194,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have more firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("All enemy units suffer one HP of damage. In addition, all allied units recover one HP.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Black Wave");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All enemy units suffer two HP of damage. In addition, all allied units recover two HP.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Black Storm");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("This is the end."),
                 qsTr("Farewell."),
@@ -219,13 +219,13 @@ var Constructor = function()
                 qsTr("To be defeated is to lose everything. Are you prepared for that outcome?"),
                 qsTr("You leave me no choice.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Will you sacrifice all? Then perhaps you can win."),
                 qsTr("Sad...you were no match for me."),
                 qsTr("There is no chance.  My victory was assured.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("That's it then. We shall withdraw."),
                 qsTr("... This is one situation I never expected myself to be in.")];

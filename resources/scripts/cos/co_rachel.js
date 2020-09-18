@@ -200,19 +200,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Hard Work");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Excuses");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
     };
@@ -221,23 +221,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have increased repairs by one on properties.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Has a chance to strike with more damage than expected. Lucky!");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Lucky Lass");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Launches three missiles from Orange Star HQ in Omega Land.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Covering Fire");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I will protect this land to the end!"),
                 qsTr("This time, I'm serious!"),
@@ -246,13 +246,13 @@ var Constructor = function()
                 qsTr("Don't pick a fight with me!"),
                 qsTr("Finally, some real competition!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Another one down... Who's next?"),
                 qsTr("I never give up."),
                 qsTr("Don't take me lightly just because I'm cute!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("You beat me! Hmmm... Not bad!"),
                 qsTr("You've got to be kidding me!")];

@@ -150,19 +150,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Rachel's older sister and supreme commander of the Orange Star army, Nell is an able commanding officer with a superb sense of fashion.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Willful students");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Downtime");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Sometimes strikes with slightly more force than expected. She's the first to tell you she was born lucky.");
     };
@@ -171,23 +171,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects") +
                qsTr("\n\nCO Zone Effect: \nUnits have more luck.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Has a chance to strike with more damage than expected. Lucky!");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Lucky Star");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Improves her chance to strike with massive damage. Very lucky!");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Lady Luck");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Luck IS a skill!"),
                 qsTr("Hmm... Time to get serious!"),
@@ -196,13 +196,13 @@ var Constructor = function()
                 qsTr("Everything will work out!"),
                 qsTr("I'm feelin' lucky!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Did I go too far?"),
                 qsTr("Lady luck was with me!"),
                 qsTr("...And that's how it's done.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Seems like I just wasn't lucky enough..."),
                 qsTr("Congratulations! You've beaten me!")];

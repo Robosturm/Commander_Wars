@@ -164,19 +164,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The emperor of Yellow Comet. A skilled commander who has a soft spot for his daughter.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Sonja");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Computers");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("All units have high offensive and defensive capabilities, but are expensive to deploy.");
     };
@@ -185,23 +185,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have 20% stronger firepower and defense, but are 20% more expensive.") +
                qsTr("\n\nCO Zone Effect: \nUnits have 40% stronger firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases firepower and defence of all units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Morale Boost");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Greatly strengthens offensive and defensive abilities of all units. Counterattacks are stronger.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Samurai Spirit");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Who shall taste my wrath?"),
                 qsTr("Observe the heart of a true Samurai."),
@@ -210,13 +210,13 @@ var Constructor = function()
                 qsTr("True Samurai don't know the meaning of retreat."),
                 qsTr("I hope you thoroughly enjoy the taste of my sword!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Kanbei is victorious! We shall meet again!"),
                 qsTr("Raise your voices in victory!"),
                 qsTr("No enemy can stand before Kanbei!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Preposterous! So many of Kanbei's forces defeated in such a short time? Withdraw!"),
                 qsTr("Regardless of the odds, Kanbei should never lose this many units! Withdraw!")];

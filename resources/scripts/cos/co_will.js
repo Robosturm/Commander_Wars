@@ -182,19 +182,19 @@ var Constructor = function()
     };
 	
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Former Brown Desert cadet. Joined Amber Corona after being rescued by Brenner.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Brenner, Isabella");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("The Beast, Greyfield, Caulder");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His direct ground units are slightly stronger.");
     };
@@ -203,36 +203,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nDirect Ground Units have 30% increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Boost movement by 1 and increases the firepower of direct ground units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Begin of an Era");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Boost movement by 2 and firepower of direct ground units.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("New Era");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("This is our chance to win. Prepare to move out."),
                 qsTr("The captain saved my life. I need to take care of it."),
                 qsTr("I'll never give up..."),
                 qsTr("There's no time. Now or never...")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I did it!"),
                 qsTr("I'll never give up..."),
                 qsTr("Is everyone okay?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Never give up hope."),
                 qsTr("I can't remember anything")];

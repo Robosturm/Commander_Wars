@@ -1225,7 +1225,10 @@ void CO::loadCOMusic()
 GameAnimationDialog* CO::createPowerSentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QStringList sentences = pInterpreter->doFunction(coID, "getPowerSentences").toVariant().toStringList();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QStringList sentences = pInterpreter->doFunction(coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
 
     GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, coID, GameEnums::COMood_Normal, m_Owner->getColor());
@@ -1237,7 +1240,10 @@ GameAnimationDialog* CO::createPowerSentence()
 QString CO::getDefeatSentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QStringList sentences = pInterpreter->doFunction(coID, "getDefeatSentences").toVariant().toStringList();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QStringList sentences = pInterpreter->doFunction(coID, "getDefeatSentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1249,7 +1255,10 @@ QString CO::getDefeatSentence()
 QString CO::getVictorySentence()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    QStringList sentences = pInterpreter->doFunction(coID, "getVictorySentences").toVariant().toStringList();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QStringList sentences = pInterpreter->doFunction(coID, "getVictorySentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1271,6 +1280,156 @@ bool CO::getIsCO0()
         return true;
     }
     return false;
+}
+
+QString CO::getBio()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getBio", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getLongBio()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getLongBio", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getHits()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getHits", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getMiss()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getMiss", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getCODescription()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getCODescription", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getLongCODescription()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getLongCODescription", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getPowerDescription()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getPowerDescription", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getPowerName()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getPowerName", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getSuperPowerDescription()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getSuperPowerDescription", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
+}
+
+QString CO::getSuperPowerName()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString ret;
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(coID, "getSuperPowerName", args);
+    if (value.isString())
+    {
+        ret = value.toString();
+    }
+    return ret;
 }
 
 void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)

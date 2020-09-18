@@ -169,19 +169,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf's son and future ruler of Blue Moon.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Peace");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Cruelty");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Alexander captures revolt against capturing each day which increases the resistance 1.");
     };
@@ -190,23 +190,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Alexander's troops capture at a faster rate, while enemy captures are forced to restart.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Peace Riots");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Enemies receive no income, and half of their current funs are diverted to Alexander.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Inevitable Revolution");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Comrades, I beg of you to see from my eyes..."),
                 qsTr("There is more to war than simply bullets and explosions."),
@@ -215,13 +215,13 @@ var Constructor = function()
                 qsTr("Perhaps this will get you to negotiate instead..."),
                 qsTr("You can only win a war if your people support you, and they prefer me!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Ironically, your shortcomings stemmed from within your own ranks."),
                 qsTr("Ah, I see now! This is why the citizens were on my side all along."),
                 qsTr("Only through unrivaled determination did I achieve success.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
                 qsTr("It's the blasted weather! That was the problem! Hssss!")];

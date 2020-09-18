@@ -198,19 +198,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Brown Desert soldier. Burns with desire to avenge her late brother. Aims to make Teal Isles pay for what they did.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Her brother John, Revenge");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Teal Isles");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Air units have higher firepower and defense.");
     };
@@ -219,36 +219,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects") +
                qsTr("\n\nCO Zone Effect: \nAir Units have 50% increased firepower and 30% increased defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Air units have higher firepower, defense and all units can move 1 space farther.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Sonic Boom");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Air units have impressive firepower, higher defense and all units can move 2 space farther");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Fox One");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("All units follow my lead."),
                 qsTr("The time for revenge is at hand!"),
                 qsTr("I will fight on, even if it costs my life!"),
                 qsTr("I will have my revenge!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("It's not about tactics - it's about passion!"),
                 qsTr("Revenge will be mine!"),
                 qsTr("I will have my revenge!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This is not the end. I will fight for John."),
                 qsTr("Next time... Next time i will avenge you John...")];

@@ -212,19 +212,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A reserved commander who is often found daydreaming. Likes to walk in the wind.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Cool Breezes");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Surprises");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Aira never felt a need to specialize, so all units are average.");
     };
@@ -233,23 +233,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Enemies expend 6 times more fuel for the next day.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Gust Storm");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("The cheapest enemy units and air units suffer 3 HP of damage. All enemy units have increased movement costs.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Hurricannon");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Amazing what a little gust can do..."),
                 qsTr("How can one fight against what they can't see or damage?"),
@@ -258,13 +258,13 @@ var Constructor = function()
                 qsTr("A victory depends on whether my enemy can survive this weather."),
                 qsTr("I am certain that my determination is not what one would call sub par.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("...Huh? Oh, right. I won. Woohoo?"),
                 qsTr("I'm glad I expected this. A surprise would have been unbearable."),
                 qsTr("Victory blew in my direction today.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("The wind blew in the wrong direction."),
                 qsTr("Hmm! Oh I have dreamed too much.")];

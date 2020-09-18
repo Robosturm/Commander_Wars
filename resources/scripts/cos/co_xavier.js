@@ -228,19 +228,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Fulfills his duties without second thought or consideration of the after-effects of his actions. Wears a pair of fake claws.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Uncertainty");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Definitives");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("When Xavier's units drop to 5 HP or less, they are able to strike for maximum luck damage.");
     };
@@ -249,23 +249,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits with 5 HP or less deal maximum luck damage.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Attacks inflict more damage than expected.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Phasing Charge");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Units gain firepower for each own unit nearby the attacked unit.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Reality Minus");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("You know, the laws of physics are made to be broken. Observe."),
                 qsTr("You might say I'm a rather.. twisted individual."),
@@ -274,13 +274,13 @@ var Constructor = function()
                 qsTr("I'm sure you'll get quite a scare out of this!"),
                 qsTr("Are you sure of the truth in what you see?")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("... I must return to my work now."),
                 qsTr("See, this is reality. You never stood a chance."),
                 qsTr("You are intellectually inferior to me. Simple as that.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("That's not my reality."),
                 qsTr("You were supposed to be intellectually inferior to me.")];

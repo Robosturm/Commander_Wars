@@ -163,19 +163,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("His own Face");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Dirty Things");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Adept at making quick command decisions. He stores up energy for his CO Power more rapidly than other CO's.");
     };
@@ -184,23 +184,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Movement range for all units is increased by one space.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Sideslip");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Movement range for all units is increased by two spaces.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Sidewinder");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("The look of terror on your face... It's absolutely delicious!"),
                 qsTr("Heh heh heh... I'm going to enjoy breaking you!"),
@@ -215,13 +215,13 @@ var Constructor = function()
                 qsTr("Wriggle worm... wriggle!"),
                 qsTr("My venom courses through your veins!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Heh heh heh... What did you expect?"),
 				qsTr("My apologies. Should I have gone easier on you?"),
 				qsTr("Don't forget me now. That would be a shame.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Hssss! Today was... unlucky. A bad day. Nothing more."),
                 qsTr("It's the blasted weather! That was the problem! Hssss!")];

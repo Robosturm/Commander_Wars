@@ -240,19 +240,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Botany");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Bovines");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.");
     };
@@ -261,23 +261,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain an additional firepower on natural terrain and increased terrain defence stars.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units on natural terrain restore three HP of health. Effects of natural terrain are increased.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Synthetic Seedlings");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Agent Dreadroot");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Biological warfare is overrated; botanical warfare is supreme."),
 				qsTr("The power of nature is on my side!"),
@@ -286,13 +286,13 @@ var Constructor = function()
 				qsTr("Ground up the enemy into fertilizer!"),
 				qsTr("Don't have allergies? You will now.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("The seeds of success have been sown."),
 				qsTr("The enemy was a lawn, and I its mower."),
 				qsTr("Now that... that was fun.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("What? Humans have defeated the almighty Nature."),
 				qsTr("Nobody destroys the Nature. Next time...")];

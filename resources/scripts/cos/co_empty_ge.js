@@ -54,49 +54,49 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A Blank CO for Green Earth.") +
                qsTr("Green Earth's forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and ") +
                qsTr("Drake the seas. ");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("N/A");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("N/A");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("N/A");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("N/A");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Attack!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Victory!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Defeat...")];
     };

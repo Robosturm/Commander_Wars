@@ -203,19 +203,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Brown Desert Army soldier. A man of few words but a consummate professional");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Getting things done");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Talking");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Indirect-combat units and sea units cause more damage and have increased firerange.");
     };
@@ -224,36 +224,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nIndirect and Sea Units have 30% offensive and 20% defensive bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases range of indirect units by two space. Firepower of sea and indirect units also rise.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Longshot");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Snipershot");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Our business is war. We should no emotions let us distract from our task."),
                 qsTr("At this distance it should be with'n firerange..."),
                 qsTr("Prepare to open fire!"),
                 qsTr("It is not my job to think about that.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Now let us prepare for the next battle."),
                 qsTr("I have carried out my duties"),
                 qsTr("It is not my job to think about that.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Missed shot!"),
                 qsTr("What i didn't hit you?")];

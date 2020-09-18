@@ -297,19 +297,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A ruthless commander recruited into the Amber Corona army.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Cocktails");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Excuses");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Attacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.");
     };
@@ -318,23 +318,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nAttacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Highway of Pain");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Terrain stars now reduces the foe's defense and Mary's capture bonus is greatly increased. All units gain substantial firepower.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Bloody Mary");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Keep marching guys, the victory is close!"),
                 qsTr("No pain! NO GLORY!"),
@@ -343,13 +343,13 @@ var Constructor = function()
                 qsTr("We will fight until your last soldier is dead!"),
                 qsTr("I am a soldier, I fight where I am told, and I win where I fight.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Heh, looks like all my effort paid off in the end"),
                 qsTr("Let's go, people. Let's have a drink to celebrate this victory."),
                 qsTr("All right troops, now you can rest, your job here is done.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("You were better.... This time"),
                 qsTr("That is impossible. I need a drink now.")];

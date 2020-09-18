@@ -234,19 +234,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A skilled but arrogant CO and a master swordsman who grew up in the mountains of Golden Sun.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Rice Cakes");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Mackerel");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units near mountains have increased firepower.");
     };
@@ -255,23 +255,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain additional firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Direct units can blow lighter enemies away when attacking.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Wind Blade");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Unit movement is increased by two, and large direct units blow enemies away.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Storm Blades");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Clear a path! We shall not stop for any man!"),
                 qsTr("You fight skillfully... But I fight flawlessly!"),
@@ -280,13 +280,13 @@ var Constructor = function()
                 qsTr("Mountain winds, hone my blade... and scatter my enemies!"),
                 qsTr("Begone! I do not have time to waste on peons such as yourself!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Hm hm hm! Perhaps next time I should use a wooden sword?"),
                 qsTr("The battle has ended. Yield now, or suffer for this insolence."),
                 qsTr("Hm hm hm... I can't fault you for having tried!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("My Emperor... I have failed you..."),
                 qsTr("I underestimated your skill, nothing more!")];

@@ -217,19 +217,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Chocolate");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Cowards");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.");
     };
@@ -238,23 +238,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nTransporter have 1 more movement point and infantries have increased capture rate. Non-infantry direct-combat units have weaker firepower.") +
                qsTr("\n\nCO Zone Effect: \nInfantry Units have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Infantry units receive a movement bonus of one space. Their attack also increases. ");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Double Time");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All foot soldiers capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. ");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Victory March");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("You're not bad!  Now it's my turn!"),
                 qsTr("All right!  Time to end this!"),
@@ -263,13 +263,13 @@ var Constructor = function()
                 qsTr("All right, it's make-or-break time!"),
                 qsTr("Move out, grunts!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Mission accomplished! Awaiting orders!"),
                 qsTr("Commandos always complete their mission."),
                 qsTr("Score one for the grunts!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Things would be easier if we had more infantry units..."),
                 qsTr("Next time's for real. I won't lose focus.")];

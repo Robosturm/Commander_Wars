@@ -185,19 +185,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Warm boots");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Rain clouds");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.");
     };
@@ -206,23 +206,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nWinter poses no problem for Olaf or his troops.") +
                 qsTr("\n\nCO Zone Effect: \nFirepower is increased by during Snow.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Causes snow to fall for two days, causing his firepower to rise.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Blizzard");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for two days.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Winter Fury");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Oho ho ho.  Do you think your pitiful troops can stand the cold?"),
                 qsTr("Neither man nor machine can withstand the fury of nature!"),
@@ -231,13 +231,13 @@ var Constructor = function()
                 qsTr("I'll bury you!"),
                 qsTr("Your weapons are powerless before the might of nature!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Olaf's troops know no match!"),
                 qsTr("I won! ...That is...we won!"),
                 qsTr("In the end, Olaf stands victorious!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Unbelievable! We've been forced to withdraw? What's going on?"),
                 qsTr("Next time, I will give them a display of true might! Mark my words!")];

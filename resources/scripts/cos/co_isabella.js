@@ -182,19 +182,19 @@ var Constructor = function()
     };
 	
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Has no memory of her past. Rescued by Will, she has joined Amber Corona.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Will");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Amnesia");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Her units are slightly stronger.");
     };
@@ -203,35 +203,35 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have 20% firepower and defense bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases her movement range and firerange by 1.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Initial Strike");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases her movement range and firerange by 2, increases her firepower.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Deep Strike");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I must fight alongside the others."),
                 qsTr("Launch Overlord."),
                 qsTr("Doing this will lessen the casualties."),
                 qsTr("I must try to optimize my fighting powers.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I am starting to remember..."),
                 qsTr("The enemy have been taken care of.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Still no peace for me and Will."),
                 qsTr("I can't remember anything")];

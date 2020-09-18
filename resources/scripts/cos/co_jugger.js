@@ -170,19 +170,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A robot-like commander in the Bolt Guard army. No one knows his true identity!");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Energy");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Static electricity");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units may suddenly deal more damage than expected, but their firepower is inherently low.");
     };
@@ -191,23 +191,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have more Luck and Misfortune") +
                qsTr("\n\nCO Zone Effect: \nUnits have even more Luck and Misfortune");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("There is a chance he might get a stronger blow, but base firepower is slightly reduced.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Overclock");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("There is a chance he might get a devestating blow, but firepower is reduced.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("System Crash");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Enemy: Prepare for mega hurtz."),
                 qsTr("Memory: upgraded. Shell: shined. Ready to uh...roll."),
@@ -216,13 +216,13 @@ var Constructor = function()
                 qsTr("Crushware loaded..."),
                 qsTr("Approaching system meltdown.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Victory; downloading party hat."),
                 qsTr("Victory dance initiated."),
                 qsTr("Jugger; superior. Enemy; lame.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Critical Error: Does not compute."),
                 qsTr("Victory impossible! Units overwhelmed. Jugger must... Control-Alt-Delete.")];

@@ -185,19 +185,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A commander of the Black Hole army who is always planning his next destructive act.Endless March");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Proverbs");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Fondue");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("A master of road-based battles. Firepower of all units increased on roads.");
     };
@@ -206,23 +206,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain increased firepower on street.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Movement range for all units is increased by one space. Units have more firepower on roads.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Forced March");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Trail of Woe");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I will crush your units, one by one!"),
                 qsTr("I am a warrior and a scholar. My victory is all but certain."),
@@ -231,13 +231,13 @@ var Constructor = function()
                 qsTr("My speed knows no equal!"),
                 qsTr("Heh heh heh... Fate has smiled on me this day!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I have no equal on the field of war!"),
                 qsTr("Wallow in your shame, swine! Wallow, I say"),
                 qsTr("Victory is no accident.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("He! He! He!...??? What?"),
                 qsTr("One time you win and another time you loose.")];

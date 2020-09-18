@@ -155,19 +155,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Kanbei's cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Computers");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Bugs");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.");
     };
@@ -176,23 +176,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nKeeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased") +
                qsTr("\n\nCO Zone Effect: \nUnits gain firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Enhanced Vision");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Counter Break");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I see right through your plans!"),
                 qsTr("I'll show you there's more to combat than power alone!"),
@@ -201,13 +201,13 @@ var Constructor = function()
                 qsTr("You can't hide from me!"),
                 qsTr("Just like I planned...")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("My strategy was merely better... That is all."),
                 qsTr("I must review my strategy."),
                 qsTr("Perfect planning wins the day!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("... I'm sorry, Father... I've broken my promise..."),
                 qsTr("I have learned much from this...")];

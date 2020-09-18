@@ -134,19 +134,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Blue Moon's rich boy CO and Sasha's little brother. A gifted CO with a sharp, if insecure, mind.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Olaf and Grit");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Black Hole");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops are low firepower stems from his lack of confidence.");
     };
@@ -155,23 +155,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits are 20% cheaper and have 15% less firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits have only 5% weaker firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases current funds by 50 percent.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Gold Rush");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Power of Money");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Let me show you the power of money!"),
                 qsTr("This is not a drill... I won't give up so easily!"),
@@ -180,13 +180,13 @@ var Constructor = function()
                 qsTr("You're not getting away with this!"),
                 qsTr("I'll show you what I can do!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I w-won! Whew!"),
                 qsTr("I'll win if I try my best!"),
                 qsTr("Whew... I won! I really won!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("If only Commander Olaf were here..."),
                 qsTr("Wait till I tell my sis! Then you'll be sorry!")];

@@ -208,19 +208,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Cats");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Rats");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.");
     };
@@ -229,23 +229,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nIndirect units have 1 increased firerange and non-infantry direct units have reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nIndirect units  have an offensive bonus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases range of indirect units by one space. Firepower of these units also rise.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Snipe Attack");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases range of indirect units by two spaces. Firepower of these units greatly rise.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Super Snipe");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Once you're in my sights, there's no gettin' away!"),
                 qsTr("Reckon it's time to take you down!"),
@@ -254,13 +254,13 @@ var Constructor = function()
                 qsTr("Y'all gimme no choice... Time to bring in the big guns!"),
                 qsTr("Aw, shucks. I was hopin' it wouldn't come to this.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("This ain't for show."),
                 qsTr("Maybe now I can get some shut-eye."),
                 qsTr("I hope this gets easier. That was harder'n college!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Aw, possum spit!"),
                 qsTr("Just as I reckoned... This ain't gonna be no Sunday stroll.")];

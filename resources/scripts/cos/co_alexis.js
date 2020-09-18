@@ -312,19 +312,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A crystal-obsessed person. Blindly follows orders.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Crystals");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Experiments");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired one HP less on the building.");
     };
@@ -333,23 +333,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Crystal Brace");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property. Enemies nearby their own property suffer three HP of damage from each property.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Crystal Edge");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("You'll regret angering me!"),
                 qsTr("It's time you learned the real power of the crystals!"),
@@ -358,13 +358,13 @@ var Constructor = function()
                 qsTr("I hope you're ready for what's coming next!"),
                 qsTr("See, now my army really shines, like diamonds!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I'm unbreakable, just like a diamond!"),
                 qsTr("Haha, you were shattered!"),
                 qsTr("I'll leave you to clean this up, 'kay?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("My diamonds didn't help me."),
                 qsTr("My diamonds broke?")];

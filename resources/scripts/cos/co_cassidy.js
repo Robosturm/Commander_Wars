@@ -182,19 +182,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("An extremely belligerent member of Teal Island that is notorious for her ruthlessness. She fights purely for the thrill of battle and is feared by both enemies and allies.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Roses");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Violets");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Cassidy's units show no mercy. Increased firepower when attacking a unit with equal or less health.");
     };
@@ -203,23 +203,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower when attacking units with equal or less health.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Firepower is increased even further when attacking a unit with equal or less health.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Rampage");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All enemies suffer one HP of damage. Firepower is greatly increased when attacking a unit with equal or less health.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Scorched Earth");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Take no prisoners!"),
                 qsTr("Ahahaha… I'll destroy you all!"),
@@ -228,13 +228,13 @@ var Constructor = function()
                 qsTr("Burn everything! I don't want to see anything left untouched!"),
                 qsTr("I have fury!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("You better hope we do not meet again."),
                 qsTr("I love this job!"),
                 qsTr("I wished the battle had lasted a little longer. Oh well.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("You will regret this..."),
                 qsTr("Kill them... kill them all...")];

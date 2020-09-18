@@ -171,19 +171,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("He has faith in the goodness of humanity. Feels strong duty to help anyone who is in trouble.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Helping Others");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Dishonor");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His units have a higher defence than normal units.");
     };
@@ -192,35 +192,35 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional 30% defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Heals 3 hp of his units and increases his defence.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Reinforce");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Heals 5 hp of his units and increases his defence greatly.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("First Aid");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I want everyone to get out here alive."),
                 qsTr("Prepare the troops. It's time to go on the offensive."),
                 qsTr("Don't give up. We will survive that."),
                 qsTr("You battled brave out there. It's time to get out there.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("The world ends - and yet war goes on..."),
                 qsTr("The priority is attending to the casualties...")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Where there's life, there's hope."),
                 qsTr("At least my troops got out...")];

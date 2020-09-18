@@ -232,19 +232,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A bighearted former pirate who hates fighting. Also a great surfer.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("The sea");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("High places");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Naval units have superior firepower, but air units have reduced firepower.");
     };
@@ -253,23 +253,23 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nMissile Submarine\n\nGlobal Effect: \nNaval units have 1 more movement point. Air units are weaker and Sea units stronger") +
                qsTr("\n\nCO Zone Effect: \nNaval units have ncreased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Causes a tidal wave that does one HP of damage to all enemy units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Tsunami");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and weather changes to rain.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Typhoon");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Panic is for landlubbers!"),
                 qsTr("Prepare to be washed away!"),
@@ -278,12 +278,12 @@ var Constructor = function()
                 qsTr("Can't you just feel the riptide washing you out to open sea?"),
                 qsTr("Drake is taking the helm!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("I'm just glad I survived that..."),
                 qsTr("That was some rough sailing!|Blow me down... we finally won.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("A job well done! You've beaten me."),
                 qsTr("Curses! I've been defeated. Time to hoist sail and flee!")];

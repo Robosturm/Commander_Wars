@@ -146,19 +146,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A Yellow Comet commander with a dynamic personality. Could care less about the details. His nickname is Lighting Grimm.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Donuts");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Planning");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Firepower of all units is increased, thanks to his daredevil nature, but their defenses are reduced.");
     };
@@ -167,23 +167,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have reduced defense and increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits have high offensive bonus and a defensive malus.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases the attack of all units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Knuckleduster");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Greatly increases the attack of all units.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Haymaker");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Things are lookin' Grimm for you! Harrrrr!"),
                 qsTr("You're about to enter a world of pain!!"),
@@ -191,13 +191,13 @@ var Constructor = function()
                 qsTr("Oooh, yeah!!|Gwar har har!! Go cry like a little girl!!"),
                 qsTr("What a pencil neck!!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Wanna throw down again? Oooh yeah!"),
                 qsTr("Gwar har har! Hit the road, slick!"),
                 qsTr("Fear the lightning!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I'm tellin' you, this is awful!"),
                 qsTr("I'll get you next time! Oooh yeah!")];

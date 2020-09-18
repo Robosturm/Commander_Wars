@@ -191,19 +191,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A young enigmatic girl who serves Pink Frontier. Deceptively dangerous.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Victory");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Uncertainty");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Mina's troops have no real strength or weakness.");
     };
@@ -212,23 +212,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Unit's defenses may unexpectedly rise.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Potent of Misfortune");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Most expensive enemy units suffer five HP of damage.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Dark Lightning");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Enemy is in range. Activating counter-measures..."),
                 qsTr("Please stop fighting! I don't want to do this!"),
@@ -238,13 +238,13 @@ var Constructor = function()
                 qsTr("Your defeat is now certain."),
                 qsTr("I'm sorry...")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("No... What... ... ... The battle is over."),
                 qsTr("What have I done?"),
                 qsTr("The enemy has been routed. It is done.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I hate losing like this."),
                 qsTr("This result is wrong.")];

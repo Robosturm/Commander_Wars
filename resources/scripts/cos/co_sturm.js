@@ -171,19 +171,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Plotting invasions");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Peace");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His troops are not affected by terrain only snow can stop him.");
     };
@@ -192,23 +192,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nHis troops are not affected by terrain except snow.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("A small Meteor fall from space and deal 4 HP of damage to all affected units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Meteor");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Meteor Strike");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Prepare to embrace darkness!"),
                 qsTr("You will tremble before my power!"),
@@ -217,13 +217,13 @@ var Constructor = function()
                 qsTr("Burning earth!!!"),
                 qsTr("Such power... I regret crushing it.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Who would have thought you could oppose me?"),
                 qsTr("My name is Sturm. Hear it and tremble."),
                 qsTr("This is but a taste of my power!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!"),
                 qsTr("NOOOOOOOOOOOOOOOOOOO!!!")];

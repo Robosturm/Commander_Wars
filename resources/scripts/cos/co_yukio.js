@@ -231,19 +231,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Dark founder of the Dark Matter Cooperation. He's the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn't care if people die.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Astronomic gains");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Any losses");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("As the leader of dark matter his troops have special armor and armor piercing weapons.");
     };
@@ -252,23 +252,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNone.") +
                qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced. Troops deal true damage if the base damage is at least 10%.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("A small army spawns and fights for Yukio.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Invasion");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Ground-Air-Invasion");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I show you, what true power means."),
                 qsTr("I'm the evil that destroys you."),
@@ -277,13 +277,13 @@ var Constructor = function()
                 qsTr("My troops are behind you."),
                 qsTr("I'll become the ruler of the world.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Investment...Profits...great. Continue."),
                 qsTr("War is just another tool to make profit."),
                 qsTr("Give me all your money and your lifes.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Even with this loss I made profit..."),
                 qsTr("I lost but I got your money to build a new army.")];

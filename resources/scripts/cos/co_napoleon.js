@@ -220,19 +220,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The current second commander of the Metal Army. Believes Metal Army's ingenuity gives it a right to control the world.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Sudoku");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Horror Movies");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Units have high defensive capabilities.");
     };
@@ -241,23 +241,23 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nIron Shield Generator\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nDefense is increased, even more against indirect units.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units cannot take damage that is more than half of their starting HP in a single attack.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Blast Shield");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Last Stand");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Me and what army, you ask?  I have many more soldiers than you think."),
                 qsTr("Size does not matter in a battle of wills."),
@@ -266,13 +266,13 @@ var Constructor = function()
                 qsTr("My casualties are not dead, but simply waiting to fight again."),
                 qsTr("I need not worry about attrition.  On the other hand, you do.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("The survival of the Metal Army is assured."),
                 qsTr("My casualties are recovering.  Yours are not so lucky."),
                 qsTr("Why were you so confident?  Success is earned, not granted.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Our losses are unacceptable.  I will fix that."),
                 qsTr("Stand aside; I will deal with them.")];

@@ -222,19 +222,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Black Hole was in need of new strong CO's so Lash invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Robots");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Livings");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His troops can move 1 point more, but they have weaker firepower and higher defense capabilities.");
     };
@@ -243,23 +243,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits gain 1 additional movement point and have reduced firepower.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain defense and have reduced firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Machinzied Storm");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Enemy loses half of their ammo, take 2 HP damage ,his troops can move 2 points more and their defense rises extremly.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Machinzied Destruction");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("System Runtime. Error! No more enemies found!"),
                 qsTr("...Sturm is coming...you have no chance..."),
@@ -268,13 +268,13 @@ var Constructor = function()
                 qsTr("This is a war of a new time!"),
                 qsTr("Humans beware the power of machines coming to your country.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr(".........."),
                 qsTr("...Enemy destroyed! Country conquered."),
                 qsTr("Robots are stronger than human beings.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("No Program found for this Situation."),
                 qsTr("Inaccurate attack! This situation is impossible.")];

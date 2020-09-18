@@ -204,19 +204,19 @@ var Constructor = function()
     };
 	
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("In battle the clearest thinker wins. A calm commander of Amber Corona.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Teasing Will");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Flying");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Her ground units are very strong. Other units have normal power.");
     };
@@ -225,35 +225,35 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nGround Units gain 30% firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Increases vision range by 1 and allows her to view into hidden places. Also increases the power of her ground units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Enhanced Vision");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Increases vision range by 2 and allows her to view into hidden places. Also increases the power of her ground units.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Night Vision");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Begin search and destroy operations. Bring the fight to them."),
                 qsTr("It's not about firepower. The force with the most information wins."),
                 qsTr("I see enemies in the vicinity."),
                 qsTr("All units move out. Discipline must be maintain")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Now we have some breathing space..."),
                 qsTr("I predicted this outcome...")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("We had not enough intel."),
                 qsTr("Next time I am better prepared.")];

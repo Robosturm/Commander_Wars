@@ -221,19 +221,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A gallant tank-driving commander who excels at analyzing information. Often argues with Eagle.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Dandelions");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Unfit COs");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Vehicular units have superior firepower. Air and naval units are comparatively weak.");
     };
@@ -242,23 +242,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nAir and Sea Units are weaker and Ground Units have increased firepower.") +
                qsTr("\n\nCO Zone Effect: \nGround Units have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Movement range of vehicles increases by one space and their firepower increases. All units' fuel and ammunition supplies are replenished.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Turbo Charge");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Movement range of vehicles increases by two spaces and their firepower greatly increases. All units' fuel and ammunition supplies are replenished.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Overdrive");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Battle should never be taken lightly. I always give 100%! Always!!!"),
                 qsTr("I won't let this chance pass me by!"),
@@ -267,13 +267,13 @@ var Constructor = function()
                 qsTr("Time to turn the tables..."),
                 qsTr("I've been waiting for this moment!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("This battle will advance my tactical research..."),
                 qsTr("Looks like I survived another day."),
                 qsTr("We made it... I'm glad that's done.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This is looking grim..."),
                 qsTr("It was inevitable under these conditions.")];

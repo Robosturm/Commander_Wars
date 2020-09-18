@@ -187,19 +187,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Mechanics");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Waking up too early");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
     };
@@ -208,23 +208,23 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Restores two HP to all units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Hyper Repair");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Restores five HP to all units. Firepower rises and unit movement increases by one space.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Hyper Upgrade");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I've got parts to spare!"),
                 qsTr("I'm not giving up!"),
@@ -235,13 +235,13 @@ var Constructor = function()
                 qsTr("Never give up, and never lose! I'm on my way!"),
                 qsTr("I'm not worried! I can fix anything!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("We won! Wooooooohooo!"),
                 qsTr("I can fix anything!"),
                 qsTr("I did it! Did you see that!?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Oh, come on!"),
                 qsTr("Next time I see you, you're in trouble!")];

@@ -189,19 +189,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Puppet Shows");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Housework");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("He gets firepower for his powermeter, but his firepower may also drop drastically.");
     };
@@ -210,23 +210,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits gain firepower and misfortune per star.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain even more firepower and misfortune per star.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Cooldown");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Critical Mass");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!"),
                 qsTr("ERROR DETECTED. PREPARE TO BE ELIMINATED!"),
@@ -235,13 +235,13 @@ var Constructor = function()
                 qsTr("WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE."),
                 qsTr("YOU'RE SO DISAPPOINTING. WITNESS MY POWER!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("USELESS CREATURE!"),
                 qsTr("THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!"),
                 qsTr("FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("HOW MAY I SERVE YOU, INFERIOR BEING?"),
                 qsTr("ALT+TAB! ALT+TAB! ALT+TAB!")];

@@ -232,19 +232,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Jugger and Koal's commanding officer. Has a blunt, queen-like personality.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Anything chic");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Anything passe");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.");
     };
@@ -253,23 +253,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits on buildings have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Urban Blight");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("The more properties she controls, the more firepower she gains and greatly increases firepower of all units on a property.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("High Society");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("So, you want to see me get serious? Very well! You asked for it!"),
                 qsTr("Even the prettiest rose has thorns!"),
@@ -278,13 +278,13 @@ var Constructor = function()
                 qsTr("Aha ha ha! Beg for mercy, rat!"),
                 qsTr("Still putting up a fight? Unbelievable!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Winning is almost as wonderful as I am. Aha ha ha!"),
                 qsTr("I won again? This is getting so boring."),
                 qsTr("Aha ha ha! Pathetic.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Losing to you corn-fed country folk is enough to give me frown lines."),
                 qsTr("That was a bit of a disappointment.")];

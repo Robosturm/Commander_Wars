@@ -241,19 +241,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Loves to live and fight on the edge. He prefers risks and gambles over safety.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Disadvantages");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Cheaters");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Joey likes to live on the edge. Units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.");
     };
@@ -262,23 +262,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits are stronger when engaging stronger units, but firepower is reduced by when engaging a weaker unit.") +
                qsTr("\n\nCO Zone Effect: \nUnits are way stronger when engaging stronger units");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units receive a large firepower boost when engaging a stronger unit.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Eccentricity");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Deployment costs drop and units get first strike when engaging a stronger unit.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Tempestous Technique");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I feel a bit dirty for doing this..."),
                 qsTr("I gave you a chance, but you didn't want it."),
@@ -288,13 +288,13 @@ var Constructor = function()
                 qsTr("C'mon, give the little guys a chance!"),
                 qsTr("What's a little risk taking going to hurt?")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Heh, good game."),
                 qsTr("Power isn't everything y'know..."),
                 qsTr("Big risk, big reward!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This was to risky..."),
                 qsTr("I thought my risk was calculated but man i'm bad at math!")];

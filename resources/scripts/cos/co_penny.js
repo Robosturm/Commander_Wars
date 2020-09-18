@@ -180,19 +180,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Youngest child of Caulder. She is still too young to know right from wrong.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Mr. Bear");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Broken \"Toys\"");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Her troops are immune to all weather effects");
     };
@@ -201,35 +201,35 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nHer troops are immune to all weather effects.") +
                qsTr("\n\nCO Zone Effect: \n10% increased firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Changes the weather to a random one.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Stormfront");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Changes the weather to a random one and her troops get a buff depending on the new weather.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Weatherchaos");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Tee he he!!!"),
                 qsTr("Nice weather we're having"),
                 qsTr("Giggle")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Daddy will be pleased!"),
                 qsTr("Wow! I'm getting the hang of this!"),
                 qsTr("Tee he he!!!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Mr. Bear we lost our toys."),
                 qsTr("You don't get Mr. Bear. He's mine!")];

@@ -167,19 +167,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A psychoanalyst who specializes in defensive tactics when he's not playing his guitar. A habitual womanizer.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Mind Games");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Waiting");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Ozzy's defensive tactics lowers the amount of damage his units take.");
     };
@@ -188,23 +188,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effect.") +
                qsTr("\n\nCO Zone Effect: \nDefense is increased.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Units gain a modest defense boost. Enemy counterattacks are less effective.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Hammer On");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Defense rises dramatically. Counterattack strength is doubled.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Grand Finale");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("IT'S BEEN A LONG TIME SINCE I ROCK 'N ROLLED, MMM-HMM!"),
                 qsTr("So when're you gunna start fighting?"),
@@ -213,13 +213,13 @@ var Constructor = function()
                 qsTr("Let's crank up the gain a little bit, shall we?"),
                 qsTr("You're still there? Guess I'd better start trying.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Finally. Can I get back to my guitar now?"),
                 qsTr("So nobody ever told you how it was gunna be, eh?"),
                 qsTr("I could say something cliche here, but I think I've done enough already.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("That doesn't rock."),
                 qsTr("That wasn't one of my best concerts.")];

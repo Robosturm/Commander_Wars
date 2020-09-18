@@ -192,19 +192,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Fortresses");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Conquering");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("His direct units can do indirect attacks when they don't move. However they lose a fraction of firepower when doing so.");
     };
@@ -213,23 +213,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by doing so. Normal attacks are stronger.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("The defense of his direct units raises and the firerange is increased by 1 when they don't move.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Wall of Defense");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("The defense of his direct units raises extremly and the firerange is increased by 2 when they don't move.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Great Counterstrike");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Direct attack!"),
                 qsTr("Function attacking not found use function defending instead!"),
@@ -238,13 +238,13 @@ var Constructor = function()
                 qsTr("You are to near to my defence position."),
                 qsTr("Go to the shortage other their.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Fools don't attack my fortress."),
                 qsTr("Robots rule the world."),
                 qsTr("Do function 'Be Happy'")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("You have destroyed my fortress?"),
                 qsTr("Tilt! Tilt! Selfdestruction...")];

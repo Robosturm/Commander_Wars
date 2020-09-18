@@ -279,19 +279,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Commander of the Capitol Guard of Teal Islands. He excels in survival and sheer tenacity. The Long Standing Guardian");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Tongue Twisters");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Colloquialisms");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Using Teal Isles intelligence division, Walter can view units' HP more accurately than other COs.");
     };
@@ -300,23 +300,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo bonus.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Enemies take additional damage when they attack.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Memento");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Massively reduces the ammo from enemy units and deals minor damage to them. Hides his units HP from enemies.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Magnum Opus");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Greater opponents have burnt out against me."),
                 qsTr("For the Isles sake, I will endure you!"),
@@ -325,13 +325,13 @@ var Constructor = function()
                 qsTr("A battle does not determine who is right. It determines who is left. Me, of course."),
                 qsTr("The spirit of Teal Isles will carry us for eternity!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Another battle has been won. Teal Isles is safe for now."),
                 qsTr("You have been outwitted, outmatched and outmaneuvered."),
                 qsTr("Hah, yet again I have stood the test of time!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("That wasn't the best idea to take fight."),
                 qsTr("I got detected too early..")];

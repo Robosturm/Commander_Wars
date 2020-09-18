@@ -141,19 +141,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Breakfast in bed");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Stupid weak people");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Her co unit is strong, weak outside of that she gets no bonuses.");
     };
@@ -162,36 +162,36 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo Effects") +
                qsTr("\n\nCO Zone Effect: \nUnits have 60% increased firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Firestorm");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("A giant attack from the great owl that deals 8 HP of damage to all affected units. Firepower and defense is increased.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Apocalypse");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Input enemy's coordinates... And now let's enjoy the show!"),
                 qsTr("Isn't this so much fun?"),
                 qsTr("I hope you don't think i'm picking on you."),
                 qsTr("Can you really be this weak? At least try to put up a fight.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("That was hardly worth the trouble."),
                 qsTr("At least put up a fight!"),
                 qsTr("I pity the weak!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I'm not stronger?"),
                 qsTr("I had no breakfast that's the problem.")];

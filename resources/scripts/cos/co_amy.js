@@ -201,19 +201,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The Commander in Chief of Pink Frontier. A former physicist who was thrust into war emerging as a hardened naval commander.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Quantum Theory");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Hawke");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("She can command hovercraft units at optimal level. Reefs pose no problem for Amy's units.");
     };
@@ -222,23 +222,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
                qsTr("\n\nCO Zone Effect: \nHovercrafts gain a firepower boost.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Hovercraft units are strengthened, they gain one extra movement and get cheaper.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Fluid Dynamics");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Her defence raises extremly. Her troops get nearly invincible when attacking.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Photon Discharge");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("EMP? Why, it stands for Electromagnetic Pulse? You'll soon understand."),
                 qsTr("Quantum... you probably don't even know what it means."),
@@ -247,13 +247,13 @@ var Constructor = function()
                 qsTr("For your sake, I hope your machines are magnetically shielded."),
                 qsTr("Without science we wouldn't be doing what we are now.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("That one was for you Lara."),
                 qsTr("Theoretically speaking, it appears you lost."),
                 qsTr("For lack of a better word, I feel fully ionised!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("My theory didn't work in practice!"),
                 qsTr("Ok, I'll need to put more effort to put my theory into practice.")];

@@ -215,19 +215,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("The first prototype for the Robot Commanding Officer Series invented by Lash.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Tests");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Upgrades");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.");
     };
@@ -236,23 +236,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nNo effects") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and luck.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Firepower is increased and unit HP is hidden from opponents.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Short Circuit");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents and firepower is increased.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Shocker");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Error: Overcharged. Initiate safety mode."),
                 qsTr("Power surge detected."),
@@ -261,13 +261,13 @@ var Constructor = function()
                 qsTr("Blackout!"),
                 qsTr("Register your firmware for continued use!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Epoch Succesful. Upgrade irrelevant"),
                 qsTr("Test Completed. Anaylsing battle log..."),
                 qsTr("Victory recorded in database and filed under category 'insulting'")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Noooo... No upgrade please.")];
     };

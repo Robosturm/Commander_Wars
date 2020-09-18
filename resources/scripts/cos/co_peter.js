@@ -193,19 +193,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A veteran CO with over 30 years of experience, mostly from the plains of Cosmo Land. Cautious but decisive.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Electric razors");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Excuses");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Peter's units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.");
     };
@@ -214,23 +214,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
                qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Firepower is greatly increased against enemy direct-combat units.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("General Offensive");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Enemy units not on a property suffer 2 HP of damage.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Bombing Run");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("We're going in, boys. Wait for the signal, then strike!"),
 				qsTr("You won't even have time to take cover."),
@@ -239,13 +239,13 @@ var Constructor = function()
 				qsTr("I've been down there with the grunts... I know what's feasible and what's not."),
 				qsTr("I may not be unbeatable, but you're obviously not either.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Experience is the key to my success."),
 				qsTr("I hope you learned something from this."),
 				qsTr("What did you think you were doing with those tanks?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Your tanks were better than mine."),
 				qsTr("You're never to old to learn some new moves.")];

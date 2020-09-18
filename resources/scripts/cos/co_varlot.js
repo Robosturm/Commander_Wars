@@ -225,19 +225,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("This CO joined the military and rose through the ranks, not quickly enough. Currently is a sub-commander.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Caviar");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Ethics");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.");
     };
@@ -246,23 +246,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nIncome is reduced for buildings he captures.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("His troops get a capture bonus. Varlot also gains a fraction of the enemy income.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Aquisition");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("All units are healed for 4 HP, gaining firepower for each point over 10HP they'd be healed. The enemy pays for these repairs.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Hostile Takeover");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Move out!"),
                 qsTr("Attack!"),
@@ -271,13 +271,13 @@ var Constructor = function()
                 qsTr("Never surrender!"),
                 qsTr("Push forward!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Mission complete."),
                 qsTr("Another day, another battle won."),
                 qsTr("Maybe I'll be up for promotion soon...")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I won't get demoted for this lost!"),
                 qsTr("Retreat!!!")];

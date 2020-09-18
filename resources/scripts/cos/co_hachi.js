@@ -129,19 +129,19 @@ var Constructor = function()
         return 0;
     };
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Owner of the Battle Maps shop. Rumored to be Orange Star's former commander-in-chief.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Tea");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Medicine");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
     };
@@ -150,23 +150,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits are cheaper") +
                qsTr("\n\nCO Zone Effect: \nUnits have more firepower and defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Speaks with such authority that he obtains even lower deployment costs.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Barter");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city even cheaper.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Merchant Union");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("This brings back memories!"),
                 qsTr("Runnin' away won't prove anything! Stand your ground, soldier!"),
@@ -175,13 +175,13 @@ var Constructor = function()
                 qsTr("I may be old, but I can still rumble!"),
                 qsTr("This is my best seller!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Battles cost too much!"),
                 qsTr("Rematches are free!"),
                 qsTr("Thank you, come again!")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("I'm getting too old for this."),
                 qsTr("Shop's closing for today...")];

@@ -233,19 +233,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A dutiful CO of the Yellow Comet army addled by a childhood phobia. Blames Sensei for Yellow Comet's lack of former glory.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Yellow Comet");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Infestations");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Rattigan's troops are trained to be extremely capable at dealing with large regiments of units, but are taken off guard by lone units.");
     };
@@ -254,23 +254,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nUnits have increased firepower against large regiments of units and reduced firepower against lone units.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower against large regiments of units.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Raid");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("The Sweep");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("All those enemy men... heh, perfect!"),
                 qsTr("G-gah! They're everywhere!"),
@@ -279,13 +279,13 @@ var Constructor = function()
                 qsTr("Who the heck taught you to fight?"),
                 qsTr("Stay on your toes! I'm talking to you!!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("With all of those troops, you'd think they'd last longer..."),
                 qsTr("A-aughk!! Uhm… I mean… congratulations, men."),
                 qsTr("With Yellow Comet on the line, I can't lose.")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("What? You had enough troops..."),
                 qsTr("Sensei that's you're fault!")];

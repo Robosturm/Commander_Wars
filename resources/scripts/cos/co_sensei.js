@@ -189,19 +189,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Lazy, rainy days");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Busy malls");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Copters have incredibly high firepower, but naval units are weaker. Foot soldiers have increased firepower.");
     };
@@ -210,23 +210,23 @@ var Constructor = function()
         return qsTr("\nGlobal Effect: \nCopters have increased firepower and Naval Units are weaker.") +
                qsTr("\n\nCO Zone Effect: \nCopters have way more firepower and infantries higher firepower as well.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Copter Command");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Airborne Assault");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("Nothing good ever comes from war... when this is done, let's go home."),
                 qsTr("I've still got what it takes to defeat you youngsters!"),
@@ -235,13 +235,13 @@ var Constructor = function()
                 qsTr("See what experience can do for you!?"),
                 qsTr("Ha ha! I didn't get old for nothing!")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Hm hm hmmm... I've still got what it takes!"),
                 qsTr("Ah, time for a nap."),
                 qsTr("Now we can take things nice and slow again...")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("Hah ha! We were defeated fair and square. Score one for the young 'uns."),
                 qsTr("Eh? The battle's over? When did that happen?")];

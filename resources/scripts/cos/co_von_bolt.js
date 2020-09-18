@@ -168,19 +168,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Mastermind of the Omega war. Immortal Evil");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Long life");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Young 'uns!");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("All units have superior firepower and defense.");
     };
@@ -189,23 +189,23 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nCrystal Tanks\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower and increased defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Shockwave");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Deus Ex Machina");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("No matter how powerful...hhh...you are, you're...hhh...still a worm on a hook..."),
                 qsTr("Well...hhh...let me have a taste...hhh...of your soul."),
@@ -214,13 +214,13 @@ var Constructor = function()
                 qsTr("The sweet scent of destruction...hhh...it makes me...hhh...feel young!"),
                 qsTr("Hold still...hhh...I'm going to...hhhhh...suck the marrow from your bones.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("Predator...prey...hhh... I hunt them all..."),
                 qsTr("Hehh hhh hhh... Pathetic."),
                 qsTr("Even death...hhh...fears me...")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("What? Why are you Youth so strong?"),
                 qsTr("Nooo...I want to live forever.")];

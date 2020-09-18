@@ -189,19 +189,19 @@ var Constructor = function()
     };
 
     // CO - Intel
-    this.getBio = function()
+    this.getBio = function(co)
     {
         return qsTr("A Teal Isle Commander. Destructive, egotistical and extremely vain.");
     };
-    this.getHits = function()
+    this.getHits = function(co)
     {
         return qsTr("Living the good life");
     };
-    this.getMiss = function()
+    this.getMiss = function(co)
     {
         return qsTr("Responsibility");
     };
-    this.getCODescription = function()
+    this.getCODescription = function(co)
     {
         return qsTr("Air units have higher firepower and defense.");
     };
@@ -210,36 +210,36 @@ var Constructor = function()
         return qsTr("\nSpecial Unit:\nKirov\n\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nAir Units have 30% increased firepower and 40% increased defense.");
     };
-    this.getPowerDescription = function()
+    this.getPowerDescription = function(co)
     {
         return qsTr("Air units get increased firepower and highly increased defense.");
     };
-    this.getPowerName = function()
+    this.getPowerName = function(co)
     {
         return qsTr("Bad Company");
     };
-    this.getSuperPowerDescription = function()
+    this.getSuperPowerDescription = function(co)
     {
         return qsTr("Air units get increased firepower and highly increased defense.");
     };
-    this.getSuperPowerName = function()
+    this.getSuperPowerName = function(co)
     {
         return qsTr("Wingman");
     };
-    this.getPowerSentences = function()
+    this.getPowerSentences = function(co)
     {
         return [qsTr("I'm over here! C'mon give me your best shot."),
                 qsTr("You think you can get the better of me? You've got a lot to learn."),
                 qsTr("Woo-hoo!"),
                 qsTr("All i want is total air supremacy! Then i'll pick off your forces.")];
     };
-    this.getVictorySentences = function()
+    this.getVictorySentences = function(co)
     {
         return [qsTr("The end of the world? Fine by me..."),
                 qsTr("Woo-hoo!"),
                 qsTr("How'd you like that?")];
     };
-    this.getDefeatSentences = function()
+    this.getDefeatSentences = function(co)
     {
         return [qsTr("This is not the freedom I want!"),
                 qsTr("The eagle has landed.")];

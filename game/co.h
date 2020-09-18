@@ -514,6 +514,56 @@ public slots:
      * @param perk
      */
     void removePerk(QString perk);
+    /**
+     * @brief getBio
+     * @return
+     */
+    QString getBio();
+    /**
+     * @brief getLongBio
+     * @return
+     */
+    QString getLongBio();
+    /**
+     * @brief getHits
+     * @return
+     */
+    QString getHits();
+    /**
+     * @brief getMiss
+     * @return
+     */
+    QString getMiss();
+    /**
+     * @brief getCODescription
+     * @return
+     */
+    QString getCODescription();
+    /**
+     * @brief getLongCODescription
+     * @return
+     */
+    QString getLongCODescription();
+    /**
+     * @brief getPowerDescription
+     * @return
+     */
+    QString getPowerDescription();
+    /**
+     * @brief getPowerName
+     * @return
+     */
+    QString getPowerName();
+    /**
+     * @brief getSuperPowerDescription
+     * @return
+     */
+    QString getSuperPowerDescription();
+    /**
+     * @brief getSuperPowerName
+     * @return
+     */
+    QString getSuperPowerName();
 private:
     Player* m_Owner;
     QString coID;
