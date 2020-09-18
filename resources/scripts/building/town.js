@@ -15,12 +15,13 @@ var Constructor = function()
             building.loadSprite("town+neutral", false);
         }
     };
+    this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
+                            "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
+                            "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
+                            "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
-                "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
-                "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
+        return TOWN.constructionList;
     };
 
     this.getName = function()

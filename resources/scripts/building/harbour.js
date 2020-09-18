@@ -30,10 +30,11 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_BUILD_UNITS";
     };
+    this.constructionList = ["HOVERCRAFT", "ARTILLERYCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT",
+                             "CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     this.getConstructionList = function(building)
     {
-        return ["HOVERCRAFT", "ARTILLERYCRAFT", "HOVERFLAK", "HEAVY_HOVERCRAFT",
-                "CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+        return HARBOUR.constructionList;
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

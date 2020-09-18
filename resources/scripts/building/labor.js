@@ -29,10 +29,10 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_BUILD_UNITS";
     };
-
+    this.constructionList = ["HOELLIUM"];
     this.getConstructionList = function(building)
     {
-        return ["HOELLIUM"];
+        return LABOR.constructionList;
     };
 
     this.getDescription = function()

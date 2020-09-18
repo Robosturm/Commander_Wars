@@ -47,12 +47,13 @@ var Constructor = function()
     {
         return 4;
     };
+    this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
+                             "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
+                             "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
+                             "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
-                "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
-                "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
+        return HQ.constructionList;
     };
     this.getMiniMapIcon = function()
     {

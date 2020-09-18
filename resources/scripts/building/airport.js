@@ -31,9 +31,10 @@ var Constructor = function()
         return "ACTION_BUILD_UNITS";
     };
 
+    this.constructionList = ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
     this.getConstructionList = function(building)
     {
-        return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
+        return AIRPORT.constructionList;
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain)

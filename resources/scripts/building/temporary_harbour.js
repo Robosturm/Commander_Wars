@@ -34,9 +34,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.constructionList = ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     this.getConstructionList = function(building)
     {
-        return ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+        return TEMPORARY_HARBOUR.constructionList;
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

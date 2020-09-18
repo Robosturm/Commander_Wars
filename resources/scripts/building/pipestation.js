@@ -20,10 +20,10 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_BUILD_UNITS";
     };
-
+    this.constructionList = ["PIPERUNNER"];
     this.getConstructionList = function(building)
     {
-        return ["PIPERUNNER"];
+        return PIPESTATION.constructionList;
     };
     this.getBaseIncome = function()
     {

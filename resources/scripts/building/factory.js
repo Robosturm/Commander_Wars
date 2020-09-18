@@ -31,12 +31,13 @@ var Constructor = function()
         return "ACTION_BUILD_UNITS";
     };
 
+    this.constructionList = ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
+                             "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
+                             "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
+                             "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     this.getConstructionList = function(building)
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
-                "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "ARTILLERYCRAFT", "HOVERFLAK",
-                "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
+        return FACTORY.constructionList;
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

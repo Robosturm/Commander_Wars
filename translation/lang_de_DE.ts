@@ -905,7 +905,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="275"/>
+        <location filename="../objects/coinfoactor.cpp" line="243"/>
         <source>CO-Zone-Range: </source>
         <translation>KO-Zone: </translation>
     </message>
@@ -7759,7 +7759,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Flughafen</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/airport.js" line="51"/>
+        <location filename="../resources/scripts/building/airport.js" line="52"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17205,7 +17205,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Fabrik</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/factory.js" line="53"/>
+        <location filename="../resources/scripts/building/factory.js" line="54"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17295,7 +17295,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Hafen</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/harbour.js" line="50"/>
+        <location filename="../resources/scripts/building/harbour.js" line="51"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17381,7 +17381,7 @@ Units have increased firepower during sandstorm.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/hq.js" line="88"/>
+        <location filename="../resources/scripts/building/hq.js" line="89"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17974,7 +17974,7 @@ Units have increased firepower during sandstorm.</source>
         <translation>Temporärer Hafen</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/temporary_harbour.js" line="56"/>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="57"/>
         <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18027,12 +18027,12 @@ Units have increased firepower during sandstorm.</source>
 <context>
     <name>town</name>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="28"/>
+        <location filename="../resources/scripts/building/town.js" line="29"/>
         <source>Town</source>
         <translation>Stadt</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="33"/>
+        <location filename="../resources/scripts/building/town.js" line="34"/>
         <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>

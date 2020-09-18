@@ -34,10 +34,10 @@ var Constructor = function()
     {
         return 0;
     };
-
+    this.constructionList = ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
     this.getConstructionList = function(building)
     {
-        return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
+        return TEMPORARY_AIRPORT.constructionList;
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain)
