@@ -127,6 +127,7 @@ var Constructor = function()
     {
         return "AC";
     };
+    this.coZoneBonus = 30;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -189,8 +190,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional 30% defense.");
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain additional %0% defense.");
+        text = replaceTextArgs(text, [CO_BRENNER.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

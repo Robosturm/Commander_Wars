@@ -78,7 +78,7 @@ CO_ALEXIS.startOfTurn = function(co)
         buildings.remove();
     }
 };
-
+CO_ALEXIS.coZoneBonus = 0;
 CO_ALEXIS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender)
 {

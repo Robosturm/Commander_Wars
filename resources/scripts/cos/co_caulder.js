@@ -126,7 +126,9 @@ var Constructor = function()
     {
         return "DM";
     };
-
+    this.coZoneBonus = 60;
+    this.coGlobalBonus = -15;
+    this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -140,11 +142,11 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
-                        return 60;
+                        return CO_CAULDER.coZoneBonus;
                     }
                     else
                     {
-                        return -10;
+                        return CO_CAULDER.coGlobalBonus;
                     }
             }
     };
@@ -162,11 +164,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 60;
+                    return CO_CAULDER.coZoneBonus;
                 }
                 else
                 {
-                    return -20;
+                    return CO_CAULDER.coGlobalBonus;
                 }
         }
     };
@@ -191,7 +193,7 @@ var Constructor = function()
                     if ((unit !== null) &&
                             (unit.getOwner() === counit.getOwner()))
                     {
-                        UNIT.repairUnit(unit, 5);
+                        UNIT.repairUnit(unit, CO_CAULDER.coHealing);
                         animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                         animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
                     }
@@ -220,8 +222,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits loose firepower by 20% and defense by 10%.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain 60% firepower and 60% defense. They also heal 5HP each turn..");
+        var text = qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by 10%.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
+        text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

@@ -27,6 +27,15 @@ getArmyNameFromTable = function(army, table)
     return "os";
 }
 
+replaceTextArgs = function(text, args)
+{
+    for (var i = 0; i < args.length; i++)
+    {
+        text = text.replace("%" + i.toString(), args[i]);
+    }
+    return text;
+}
+
 Math.random = function()
 {
     console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)

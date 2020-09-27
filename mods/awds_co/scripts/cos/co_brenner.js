@@ -1,3 +1,4 @@
+CO_BRENNER.coZoneBonus = 0;
 CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                          defender, defPosX, defPosY, isDefender)
 {

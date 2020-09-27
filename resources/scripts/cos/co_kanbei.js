@@ -118,8 +118,11 @@ var Constructor = function()
     };
     this.getCostModifier = function(co, id, baseCost)
     {
-        return baseCost * 0.2;
+        return baseCost * CO_KANBEI.costIncrease / 100;
     };
+    this.coZoneBonus = 50;
+    this.globalBonus = 20;
+    this.costIncrease = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -137,11 +140,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 50;
+                    return CO_KANBEI.coZoneBonus;
                 }
                 break;
         }
-        return 20;
+        return CO_KANBEI.globalBonus;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -156,11 +159,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 50;
+                    return CO_KANBEI.coZoneBonus;
                 }
                 break;
         }
-        return 20;
+        return CO_KANBEI.globalBonus;
     };
 
     // CO - Intel
@@ -182,8 +185,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits have 20% stronger firepower and defense, but are 20% more expensive.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have 40% stronger firepower and defense.");
+        var text = qsTr("\nGlobal Effect: \nUnits have %0% stronger firepower and defense, but are %1% more expensive.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have %2% stronger firepower and defense.");
+        text = replaceTextArgs(text, [CO_KANBEI.globalBonus, CO_KANBEI.costIncrease , CO_KANBEI.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

@@ -1,3 +1,6 @@
+CO_CAULDER.coZoneBonus = 0;
+CO_CAULDER.coGlobalBonus = 20;
+CO_CAULDER.coHealing = 1;
 CO_CAULDER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                          defender, defPosX, defPosY, isDefender)
 {

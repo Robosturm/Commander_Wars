@@ -112,6 +112,7 @@ var Constructor = function()
     {
         return "PF";
     };
+    this.hoverCraftBoost = 80;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -135,7 +136,7 @@ var Constructor = function()
                 {
                     if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                     {
-                        return 80;
+                        return CO_AMY.hoverCraftBoost;
                     }
                     return 10;
                 }
@@ -219,8 +220,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
-               qsTr("\n\nCO Zone Effect: \nHovercrafts gain a firepower boost.");
+        var text = qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
+               qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower boost.");
+        text = replaceTextArgs(text, [CO_AMY.hoverCraftBoost]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

@@ -1,3 +1,4 @@
+CO_ANDY.coZoneBonus = 0;
 CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                      defender, defPosX, defPosY, isDefender)
 {

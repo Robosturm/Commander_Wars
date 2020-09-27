@@ -7,6 +7,7 @@ CO_AIRA.getMovementFuelCostModifier = function(co, unit, fuelCost)
     }
     return 0;
 };
+CO_AIRA.coZoneBonus = 0;
 CO_AIRA.getMovementcostModifier = function(co, unit, posX, posY)
 {
     if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||

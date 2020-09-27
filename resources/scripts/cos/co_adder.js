@@ -89,18 +89,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/adder.mp3", 2456, 62475);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/adder.mp3", 2456, 62475);
+            break;
         }
     };
 
@@ -112,22 +112,23 @@ var Constructor = function()
     {
         return "BH";
     };
+    this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 10;
-            case GameEnums.PowerMode_Power:
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return 20;
-                }
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 10;
+        case GameEnums.PowerMode_Power:
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_ADDER.coZoneBonus;
+            }
+            break;
         }
         return 0;
     };
@@ -137,27 +138,27 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 20;
+            return CO_ADDER.coZoneBonus;
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 2;
         }
-		else if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        else if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
             return 1;
         }
         return 0;
     };
-	
+
     this.gainPowerstar = function(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
     {
-		// adder gains more power than other co's
+        // adder gains more power than other co's
         var powerGain = CO.getStarGain(co, fundsDamage, x, y, hpDamage, defender, counterAttack)
         co.setPowerFilled(co.getPowerFilled() + powerGain * 1.2);
     };
@@ -181,8 +182,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
+                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {
@@ -218,8 +221,8 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("Heh heh heh... What did you expect?"),
-				qsTr("My apologies. Should I have gone easier on you?"),
-				qsTr("Don't forget me now. That would be a shame.")];
+                qsTr("My apologies. Should I have gone easier on you?"),
+                qsTr("Don't forget me now. That would be a shame.")];
     };
     this.getDefeatSentences = function(co)
     {

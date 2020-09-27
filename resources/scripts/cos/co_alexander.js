@@ -127,6 +127,7 @@ var Constructor = function()
     {
         return "BM";
     };
+    this.coZoneBonus = 15;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -140,7 +141,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_ALEXANDER.coZoneBonus;
                 }
                 break;
         }
@@ -153,7 +154,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_ALEXANDER.coZoneBonus;
         }
         return 0;
     };
@@ -187,8 +188,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

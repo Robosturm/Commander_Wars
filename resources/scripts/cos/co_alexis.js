@@ -105,7 +105,7 @@ var Constructor = function()
                 {
                     unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                     if ((unit !== null) &&
-                        (unit.getOwner() === player))
+                            (unit.getOwner() === player))
                     {
                         animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                         animation.writeDataInt32(unit.getX());
@@ -142,7 +142,7 @@ var Constructor = function()
             buildings = enemyPlayer.getBuildings();
             buildings.randomize();
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
                 for (i2 = 0; i2 < buildings.size(); i2++)
                 {
@@ -157,7 +157,7 @@ var Constructor = function()
                         {
                             unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                             if ((unit !== null) &&
-                                (co.getOwner().isEnemyUnit(unit)))
+                                    (co.getOwner().isEnemyUnit(unit)))
                             {
                                 animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                                 animation.writeDataInt32(unit.getX());
@@ -196,18 +196,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/alexis.mp3", 51, 56938);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/alexis.mp3", 51, 56938);
+            break;
         }
     };
 
@@ -219,9 +219,9 @@ var Constructor = function()
     {
         return "PF";
     };
-
+    this.coZoneBonus = 15;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         var nearBuildings = false;
         var fields = globals.getCircle(0, 2);
@@ -244,34 +244,34 @@ var Constructor = function()
         }
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (nearBuildings)
-                {
-                    return 50;
-                }
-                return 10;
-            case GameEnums.PowerMode_Power:
-                if (nearBuildings)
-                {
-                    return 30;
-                }
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return 15;
-                }
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (nearBuildings)
+            {
+                return 50;
+            }
+            return 10;
+        case GameEnums.PowerMode_Power:
+            if (nearBuildings)
+            {
+                return 30;
+            }
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_ALEXIS.coZoneBonus;
+            }
         }
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+                co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return CO_ALEXIS.coZoneBonus;
         }
         return 0;
     };
@@ -330,8 +330,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nGlobal Effect: \nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
+                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

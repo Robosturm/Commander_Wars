@@ -1,3 +1,4 @@
+CO_CASSIDY.coZoneBonus = 0;
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                         defender, defPosX, defPosY, isDefender)
 {

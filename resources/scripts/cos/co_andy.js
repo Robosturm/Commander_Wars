@@ -135,6 +135,7 @@ var Constructor = function()
     {
         return "OS";
     };
+    this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -148,7 +149,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_ANDY.coZoneBonus;
                 }
                 break;
         }
@@ -160,7 +161,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
             co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 20;
+            return CO_ANDY.coZoneBonus;
         }
         return 0;
     };
@@ -205,8 +206,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nSpecial Unit:\nRepair Tanks\n\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        text = replaceTextArgs(text, [CO_ANDY.coZoneBonus]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

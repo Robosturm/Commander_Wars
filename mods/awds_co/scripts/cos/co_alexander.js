@@ -46,7 +46,7 @@ CO_ALEXANDER.getCaptureBonus = function(co, unit, posX, posY)
     return 0;
 };
 
-
+CO_ALEXANDER.coZoneBonus = 0;
 CO_ALEXANDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender)
 {

@@ -158,7 +158,7 @@ var Constructor = function()
     {
         return "PF";
     };
-
+    this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -166,13 +166,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 10;
+                return CO_AIRA.coZoneBonus;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return CO_AIRA.coZoneBonus;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return CO_AIRA.coZoneBonus;
                 }
                 break;
         }
@@ -195,7 +195,7 @@ var Constructor = function()
             if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
             {
-                return 20;
+                return CO_AIRA.coZoneBonus;
             }
             return 0;
         };
@@ -230,8 +230,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower and defence.");
+        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
+               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+        text = replaceTextArgs(text, [CO_ADDER.coZoneBonus]);
+       return text;
     };
     this.getPowerDescription = function(co)
     {

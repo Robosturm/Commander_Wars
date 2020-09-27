@@ -70,7 +70,7 @@ var Constructor = function()
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
 
                 var units = enemyPlayer.getUnits();
@@ -112,18 +112,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/cassidy.mp3", 76, 75279)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/cassidy.mp3", 76, 75279)
+            break;
         }
     };
 
@@ -135,8 +135,9 @@ var Constructor = function()
     {
         return "TI";
     };
+    this.coZoneBonus = 60;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         if (defender !== null)
         {
@@ -200,8 +201,11 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo bonus.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain additional firepower when attacking units with equal or less health.");
+        var text = qsTr("\nGlobal Effect: \nNo bonus.") +
+                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower when attacking units with equal or less health.");
+        text = replaceTextArgs(text, [CO_CASSIDY.coZoneBonus]);
+        return text;
+
     };
     this.getPowerDescription = function(co)
     {

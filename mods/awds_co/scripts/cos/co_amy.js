@@ -1,3 +1,4 @@
+CO_AMY.hoverCraftBoost = 0;
 CO_AMY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                     defender, defPosX, defPosY, isDefender)
 {

@@ -13,6 +13,6 @@ WEAPON_HOVERVULCAN_CANNON.damageTable[idx][1] = 55 + WEAPON.effectiveBonus;;
 idx = getIndexOf1(WEAPON_HOVERVULCAN_CANNON.damageTable, "HEAVY_HOVERCRAFT");
 WEAPON_HOVERVULCAN_CANNON.damageTable[idx][1] = 10 + WEAPON.effectiveBonus;
 idx = getIndexOf1(WEAPON_HOVERVULCAN_CANNON.damageTable, "HEAVY_TANK");
-WEAPON_HOVERVULCAN_CANNON.damageTable[idx][1] = 0;
+WEAPON_HOVERVULCAN_CANNON.damageTable[idx][1] = 1;
 idx = getIndexOf1(WEAPON_HOVERVULCAN_CANNON.damageTable, "NEOTANK");
 WEAPON_HOVERVULCAN_CANNON.damageTable[idx][1] = 10;
