@@ -97,9 +97,12 @@ var Constructor = function()
     {
         return "BM";
     };
+    this.costModifier = 20;
+    this.coZoneBoost = 5;
+    this.globalBoost = 15;
     this.getCostModifier = function(co, id, baseCost)
     {
-        return -baseCost * 0.2;
+        return -baseCost * CO_COLIN.costModifier / 100;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -117,9 +120,9 @@ var Constructor = function()
         }
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
         {
-            return -5;
+            return -CO_COLIN.coZoneBoost;
         }
-        return -15;
+        return -CO_COLIN.globalBoost;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
@@ -152,8 +155,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits are 20% cheaper and have 15% less firepower.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have only 5% weaker firepower.");
+        var text = qsTr("\nGlobal Effect: \nUnits are %0% cheaper and have %1% less firepower.") +
+               qsTr("\n\nCO Zone Effect: \nUnits have only %2% weaker firepower.");
+        text = replaceTextArgs(text, [CO_COLIN.costModifier, CO_COLIN.globalBoost, CO_COLIN.coZoneBoost]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

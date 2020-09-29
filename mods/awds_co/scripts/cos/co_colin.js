@@ -1,3 +1,4 @@
+CO_COLIN.globalBoost = 10;
 CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender)
 {
@@ -12,7 +13,7 @@ CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return 0;
         default:
-            return -10;
+            return -CO_COLIN.globalBoost;
         }
     }
     return 0;
@@ -27,6 +28,14 @@ CO_COLIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
             return 10;
         }
+    }
+    return 0;
+};
+this.getCostModifier = function(co, id, baseCost)
+{
+    if (co.getIsCO0() === true)
+    {
+        return -baseCost * CO_COLIN.costModifier / 100;
     }
     return 0;
 };

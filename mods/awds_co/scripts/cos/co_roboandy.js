@@ -62,7 +62,7 @@ CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotA
                     attacker.setHp(attacker.getHp() - 3);
                 }
             }
-            else if (attacker.getOwner() === co.getOwner())
+            else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
             {
                 attacker.setHp(attacker.getHp() + 3);
             }
@@ -75,7 +75,7 @@ CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotA
                     attacker.setHp(attacker.getHp() - 1);
                 }
             }
-            else if (attacker.getOwner() === co.getOwner())
+            else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
             {
                 attacker.setHp(attacker.getHp() + 1);
             }

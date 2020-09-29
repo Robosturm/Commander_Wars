@@ -165,7 +165,7 @@ var Constructor = function()
                         attacker.setHp(attacker.getHp() - 3);
                     }
                 }
-                else if (attacker.getOwner() === co.getOwner())
+                else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
                 {
                     attacker.setHp(attacker.getHp() + 3);
                 }
@@ -178,7 +178,7 @@ var Constructor = function()
                         attacker.setHp(attacker.getHp() - 1);
                     }
                 }
-                else if (attacker.getOwner() === co.getOwner())
+                else if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
                 {
                     attacker.setHp(attacker.getHp() + 1);
                 }
