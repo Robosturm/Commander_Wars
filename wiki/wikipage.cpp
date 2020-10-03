@@ -59,8 +59,10 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
     pApp->suspendThread();
     // for debugging
     Qt::Key cur = event.getKey();
-    if ((cur == Settings::getKey_information()) ||
-        cur == Settings::getKey_cancel())
+    if (cur == Settings::getKey_information() ||
+        cur == Settings::getKey_information2() ||
+        cur == Settings::getKey_cancel() ||
+        cur == Settings::getKey_cancel2())
     {
         emit sigFinished();
         detach();

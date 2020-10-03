@@ -2739,206 +2739,207 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="281"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="286"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="289"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="294"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="293"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="298"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="301"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="306"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="305"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="310"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="313"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="317"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="322"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="325"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="330"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="329"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="334"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="337"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="342"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="341"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="346"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="349"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="354"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="353"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="358"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="361"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="366"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="365"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="370"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="373"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="378"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="377"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="382"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="385"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="390"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="389"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="394"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="397"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="402"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="401"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="406"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="409"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="414"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="413"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="418"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="421"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="426"/>
         <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="425"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="430"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="433"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="438"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="437"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="442"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="445"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="450"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="449"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="454"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="457"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="462"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="461"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="466"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="469"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="474"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="473"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="478"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="481"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="486"/>
         <source>Key Zoom In: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="485"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="490"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="493"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="498"/>
         <source>Key Zoom Out: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="497"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="502"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="505"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="510"/>
         <source>Key Show Indirects: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="509"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="514"/>
         <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="517"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="522"/>
         <source>Key Show all: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="521"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="526"/>
         <source>Key to show where all enemy units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5850,7 +5851,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../objects/selectkey.cpp" line="48"/>
-        <location filename="../objects/selectkey.cpp" line="138"/>
+        <location filename="../objects/selectkey.cpp" line="154"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5945,7 +5946,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="142"/>
+        <location filename="../objects/selectkey.cpp" line="124"/>
+        <source>Ctrl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="128"/>
+        <source>Alt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="132"/>
+        <source>AltGr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="136"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="158"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
@@ -5953,92 +5974,126 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="345"/>
-        <location filename="../coreengine/settings.cpp" line="355"/>
-        <location filename="../coreengine/settings.cpp" line="361"/>
-        <location filename="../coreengine/settings.cpp" line="367"/>
-        <location filename="../coreengine/settings.cpp" line="373"/>
-        <location filename="../coreengine/settings.cpp" line="386"/>
-        <location filename="../coreengine/settings.cpp" line="392"/>
-        <location filename="../coreengine/settings.cpp" line="399"/>
-        <location filename="../coreengine/settings.cpp" line="406"/>
-        <location filename="../coreengine/settings.cpp" line="413"/>
-        <location filename="../coreengine/settings.cpp" line="420"/>
-        <location filename="../coreengine/settings.cpp" line="427"/>
-        <location filename="../coreengine/settings.cpp" line="434"/>
-        <location filename="../coreengine/settings.cpp" line="441"/>
-        <location filename="../coreengine/settings.cpp" line="448"/>
-        <location filename="../coreengine/settings.cpp" line="455"/>
-        <location filename="../coreengine/settings.cpp" line="462"/>
-        <location filename="../coreengine/settings.cpp" line="469"/>
-        <location filename="../coreengine/settings.cpp" line="476"/>
-        <location filename="../coreengine/settings.cpp" line="483"/>
-        <location filename="../coreengine/settings.cpp" line="490"/>
-        <location filename="../coreengine/settings.cpp" line="497"/>
-        <location filename="../coreengine/settings.cpp" line="504"/>
-        <location filename="../coreengine/settings.cpp" line="511"/>
-        <location filename="../coreengine/settings.cpp" line="518"/>
-        <location filename="../coreengine/settings.cpp" line="525"/>
-        <location filename="../coreengine/settings.cpp" line="533"/>
-        <location filename="../coreengine/settings.cpp" line="541"/>
-        <location filename="../coreengine/settings.cpp" line="552"/>
-        <location filename="../coreengine/settings.cpp" line="559"/>
-        <location filename="../coreengine/settings.cpp" line="566"/>
-        <location filename="../coreengine/settings.cpp" line="577"/>
-        <location filename="../coreengine/settings.cpp" line="584"/>
-        <location filename="../coreengine/settings.cpp" line="591"/>
-        <location filename="../coreengine/settings.cpp" line="598"/>
-        <location filename="../coreengine/settings.cpp" line="605"/>
-        <location filename="../coreengine/settings.cpp" line="613"/>
-        <location filename="../coreengine/settings.cpp" line="620"/>
+        <location filename="../coreengine/settings.cpp" line="532"/>
+        <location filename="../coreengine/settings.cpp" line="542"/>
+        <location filename="../coreengine/settings.cpp" line="548"/>
+        <location filename="../coreengine/settings.cpp" line="554"/>
+        <location filename="../coreengine/settings.cpp" line="560"/>
+        <location filename="../coreengine/settings.cpp" line="573"/>
+        <location filename="../coreengine/settings.cpp" line="579"/>
+        <location filename="../coreengine/settings.cpp" line="586"/>
+        <location filename="../coreengine/settings.cpp" line="593"/>
+        <location filename="../coreengine/settings.cpp" line="600"/>
+        <location filename="../coreengine/settings.cpp" line="607"/>
+        <location filename="../coreengine/settings.cpp" line="614"/>
+        <location filename="../coreengine/settings.cpp" line="621"/>
         <location filename="../coreengine/settings.cpp" line="628"/>
         <location filename="../coreengine/settings.cpp" line="635"/>
-        <location filename="../coreengine/settings.cpp" line="650"/>
+        <location filename="../coreengine/settings.cpp" line="642"/>
+        <location filename="../coreengine/settings.cpp" line="649"/>
+        <location filename="../coreengine/settings.cpp" line="656"/>
+        <location filename="../coreengine/settings.cpp" line="663"/>
+        <location filename="../coreengine/settings.cpp" line="670"/>
+        <location filename="../coreengine/settings.cpp" line="677"/>
+        <location filename="../coreengine/settings.cpp" line="684"/>
+        <location filename="../coreengine/settings.cpp" line="691"/>
+        <location filename="../coreengine/settings.cpp" line="698"/>
+        <location filename="../coreengine/settings.cpp" line="705"/>
+        <location filename="../coreengine/settings.cpp" line="712"/>
+        <location filename="../coreengine/settings.cpp" line="720"/>
+        <location filename="../coreengine/settings.cpp" line="728"/>
+        <location filename="../coreengine/settings.cpp" line="735"/>
+        <location filename="../coreengine/settings.cpp" line="742"/>
+        <location filename="../coreengine/settings.cpp" line="749"/>
+        <location filename="../coreengine/settings.cpp" line="756"/>
+        <location filename="../coreengine/settings.cpp" line="763"/>
+        <location filename="../coreengine/settings.cpp" line="770"/>
+        <location filename="../coreengine/settings.cpp" line="777"/>
+        <location filename="../coreengine/settings.cpp" line="784"/>
+        <location filename="../coreengine/settings.cpp" line="791"/>
+        <location filename="../coreengine/settings.cpp" line="798"/>
+        <location filename="../coreengine/settings.cpp" line="805"/>
+        <location filename="../coreengine/settings.cpp" line="812"/>
+        <location filename="../coreengine/settings.cpp" line="819"/>
+        <location filename="../coreengine/settings.cpp" line="826"/>
+        <location filename="../coreengine/settings.cpp" line="833"/>
+        <location filename="../coreengine/settings.cpp" line="840"/>
+        <location filename="../coreengine/settings.cpp" line="847"/>
+        <location filename="../coreengine/settings.cpp" line="858"/>
+        <location filename="../coreengine/settings.cpp" line="865"/>
+        <location filename="../coreengine/settings.cpp" line="872"/>
+        <location filename="../coreengine/settings.cpp" line="883"/>
+        <location filename="../coreengine/settings.cpp" line="890"/>
+        <location filename="../coreengine/settings.cpp" line="897"/>
+        <location filename="../coreengine/settings.cpp" line="904"/>
+        <location filename="../coreengine/settings.cpp" line="911"/>
+        <location filename="../coreengine/settings.cpp" line="919"/>
+        <location filename="../coreengine/settings.cpp" line="926"/>
+        <location filename="../coreengine/settings.cpp" line="934"/>
+        <location filename="../coreengine/settings.cpp" line="941"/>
+        <location filename="../coreengine/settings.cpp" line="956"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="345"/>
-        <location filename="../coreengine/settings.cpp" line="355"/>
-        <location filename="../coreengine/settings.cpp" line="361"/>
-        <location filename="../coreengine/settings.cpp" line="367"/>
-        <location filename="../coreengine/settings.cpp" line="373"/>
-        <location filename="../coreengine/settings.cpp" line="386"/>
-        <location filename="../coreengine/settings.cpp" line="392"/>
-        <location filename="../coreengine/settings.cpp" line="399"/>
-        <location filename="../coreengine/settings.cpp" line="406"/>
-        <location filename="../coreengine/settings.cpp" line="413"/>
-        <location filename="../coreengine/settings.cpp" line="420"/>
-        <location filename="../coreengine/settings.cpp" line="427"/>
-        <location filename="../coreengine/settings.cpp" line="434"/>
-        <location filename="../coreengine/settings.cpp" line="441"/>
-        <location filename="../coreengine/settings.cpp" line="448"/>
-        <location filename="../coreengine/settings.cpp" line="455"/>
-        <location filename="../coreengine/settings.cpp" line="462"/>
-        <location filename="../coreengine/settings.cpp" line="469"/>
-        <location filename="../coreengine/settings.cpp" line="476"/>
-        <location filename="../coreengine/settings.cpp" line="483"/>
-        <location filename="../coreengine/settings.cpp" line="490"/>
-        <location filename="../coreengine/settings.cpp" line="497"/>
-        <location filename="../coreengine/settings.cpp" line="504"/>
-        <location filename="../coreengine/settings.cpp" line="511"/>
-        <location filename="../coreengine/settings.cpp" line="518"/>
-        <location filename="../coreengine/settings.cpp" line="525"/>
-        <location filename="../coreengine/settings.cpp" line="533"/>
-        <location filename="../coreengine/settings.cpp" line="541"/>
-        <location filename="../coreengine/settings.cpp" line="552"/>
-        <location filename="../coreengine/settings.cpp" line="559"/>
-        <location filename="../coreengine/settings.cpp" line="566"/>
-        <location filename="../coreengine/settings.cpp" line="577"/>
-        <location filename="../coreengine/settings.cpp" line="584"/>
-        <location filename="../coreengine/settings.cpp" line="591"/>
-        <location filename="../coreengine/settings.cpp" line="598"/>
-        <location filename="../coreengine/settings.cpp" line="605"/>
-        <location filename="../coreengine/settings.cpp" line="613"/>
-        <location filename="../coreengine/settings.cpp" line="620"/>
+        <location filename="../coreengine/settings.cpp" line="532"/>
+        <location filename="../coreengine/settings.cpp" line="542"/>
+        <location filename="../coreengine/settings.cpp" line="548"/>
+        <location filename="../coreengine/settings.cpp" line="554"/>
+        <location filename="../coreengine/settings.cpp" line="560"/>
+        <location filename="../coreengine/settings.cpp" line="573"/>
+        <location filename="../coreengine/settings.cpp" line="579"/>
+        <location filename="../coreengine/settings.cpp" line="586"/>
+        <location filename="../coreengine/settings.cpp" line="593"/>
+        <location filename="../coreengine/settings.cpp" line="600"/>
+        <location filename="../coreengine/settings.cpp" line="607"/>
+        <location filename="../coreengine/settings.cpp" line="614"/>
+        <location filename="../coreengine/settings.cpp" line="621"/>
         <location filename="../coreengine/settings.cpp" line="628"/>
         <location filename="../coreengine/settings.cpp" line="635"/>
-        <location filename="../coreengine/settings.cpp" line="650"/>
+        <location filename="../coreengine/settings.cpp" line="642"/>
+        <location filename="../coreengine/settings.cpp" line="649"/>
+        <location filename="../coreengine/settings.cpp" line="656"/>
+        <location filename="../coreengine/settings.cpp" line="663"/>
+        <location filename="../coreengine/settings.cpp" line="670"/>
+        <location filename="../coreengine/settings.cpp" line="677"/>
+        <location filename="../coreengine/settings.cpp" line="684"/>
+        <location filename="../coreengine/settings.cpp" line="691"/>
+        <location filename="../coreengine/settings.cpp" line="698"/>
+        <location filename="../coreengine/settings.cpp" line="705"/>
+        <location filename="../coreengine/settings.cpp" line="712"/>
+        <location filename="../coreengine/settings.cpp" line="720"/>
+        <location filename="../coreengine/settings.cpp" line="728"/>
+        <location filename="../coreengine/settings.cpp" line="735"/>
+        <location filename="../coreengine/settings.cpp" line="742"/>
+        <location filename="../coreengine/settings.cpp" line="749"/>
+        <location filename="../coreengine/settings.cpp" line="756"/>
+        <location filename="../coreengine/settings.cpp" line="763"/>
+        <location filename="../coreengine/settings.cpp" line="770"/>
+        <location filename="../coreengine/settings.cpp" line="777"/>
+        <location filename="../coreengine/settings.cpp" line="784"/>
+        <location filename="../coreengine/settings.cpp" line="791"/>
+        <location filename="../coreengine/settings.cpp" line="798"/>
+        <location filename="../coreengine/settings.cpp" line="805"/>
+        <location filename="../coreengine/settings.cpp" line="812"/>
+        <location filename="../coreengine/settings.cpp" line="819"/>
+        <location filename="../coreengine/settings.cpp" line="826"/>
+        <location filename="../coreengine/settings.cpp" line="833"/>
+        <location filename="../coreengine/settings.cpp" line="840"/>
+        <location filename="../coreengine/settings.cpp" line="847"/>
+        <location filename="../coreengine/settings.cpp" line="858"/>
+        <location filename="../coreengine/settings.cpp" line="865"/>
+        <location filename="../coreengine/settings.cpp" line="872"/>
+        <location filename="../coreengine/settings.cpp" line="883"/>
+        <location filename="../coreengine/settings.cpp" line="890"/>
+        <location filename="../coreengine/settings.cpp" line="897"/>
+        <location filename="../coreengine/settings.cpp" line="904"/>
+        <location filename="../coreengine/settings.cpp" line="911"/>
+        <location filename="../coreengine/settings.cpp" line="919"/>
+        <location filename="../coreengine/settings.cpp" line="926"/>
+        <location filename="../coreengine/settings.cpp" line="934"/>
+        <location filename="../coreengine/settings.cpp" line="941"/>
+        <location filename="../coreengine/settings.cpp" line="956"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7521,7 +7576,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="104"/>
-        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 1&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
+        <source>&lt;r&gt;Naval Unit. Has unique ability to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;repair other units.&lt;/div&gt;&lt;r&gt; Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;carry X 2&lt;/div&gt;&lt;r&gt; infantry units and capture buildings.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8831,117 +8886,117 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
 <context>
     <name>co_colin</name>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="139"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="142"/>
         <source>Blue Moon&apos;s rich boy CO and Sasha&apos;s little brother. A gifted CO with a sharp, if insecure, mind.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="143"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="146"/>
         <source>Olaf and Grit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="147"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="150"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="151"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="154"/>
         <source>The heir to a vast fortune who can purchase units at bargain-basement prices. Troops are low firepower stems from his lack of confidence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="155"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="158"/>
         <source>
 Global Effect: 
-Units are 20% cheaper and have 15% less firepower.</source>
+Units are %0% cheaper and have %1% less firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="156"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="159"/>
         <source>
 
 CO Zone Effect: 
-Units have only 5% weaker firepower.</source>
+Units have only %2% weaker firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="160"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="165"/>
         <source>Increases current funds by 50 percent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="164"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="169"/>
         <source>Gold Rush</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="168"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="173"/>
         <source>Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="172"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="177"/>
         <source>Power of Money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="176"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="181"/>
         <source>Let me show you the power of money!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="182"/>
         <source>This is not a drill... I won&apos;t give up so easily!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="178"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="183"/>
         <source>People of Blue Moon!  I need your help!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="184"/>
         <source>I&apos;ll give it everything I&apos;ve got!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="180"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="185"/>
         <source>You&apos;re not getting away with this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="186"/>
         <source>I&apos;ll show you what I can do!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="190"/>
         <source>I w-won! Whew!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="186"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="191"/>
         <source>I&apos;ll win if I try my best!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="192"/>
         <source>Whew... I won! I really won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="196"/>
         <source>If only Commander Olaf were here...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="197"/>
         <source>Wait till I tell my sis! Then you&apos;ll be sorry!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="201"/>
         <source>Colin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16446,18 +16501,18 @@ Direct Ground Units have 30% increased firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="245"/>
-        <source>When Xavier&apos;s units drop to 5 HP or less, they are able to strike for maximum luck damage.</source>
+        <source>When Xavier&apos;s units drop to %0 HP or less, they are able to strike for maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="251"/>
         <source>
 Global Effect: 
-Units with 5 HP or less deal maximum luck damage.</source>
+Units with %0 HP or less deal maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="252"/>
         <source>
 
 CO Zone Effect: 
@@ -16465,82 +16520,82 @@ Units have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="258"/>
         <source>Attacks inflict more damage than expected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="262"/>
         <source>Phasing Charge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="266"/>
         <source>Units gain firepower for each own unit nearby the attacked unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="270"/>
         <source>Reality Minus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="274"/>
         <source>You know, the laws of physics are made to be broken. Observe.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="275"/>
         <source>You might say I&apos;m a rather.. twisted individual.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="276"/>
         <source>Reality is only trivial. Watch and learn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="277"/>
         <source>Allow me to reprimand, for your atrocious command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="278"/>
         <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="279"/>
         <source>Are you sure of the truth in what you see?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="283"/>
         <source>... I must return to my work now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="284"/>
         <source>See, this is reality. You never stood a chance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="285"/>
         <source>You are intellectually inferior to me. Simple as that.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="289"/>
         <source>That&apos;s not my reality.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="290"/>
         <source>You were supposed to be intellectually inferior to me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_xavier.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="294"/>
         <source>Xavier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16575,90 +16630,90 @@ None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
-        <source>
-
-CO Zone Effect: 
-Damage against his troops is reduced. Troops deal true damage if the base damage is at least 10%.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="259"/>
         <source>A small army spawns and fights for Yukio.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="263"/>
         <source>Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="267"/>
         <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="271"/>
         <source>Ground-Air-Invasion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
         <source>I show you, what true power means.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
         <source>I&apos;m the evil that destroys you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="277"/>
         <source>Your weapons are the rubbish of my factories.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="278"/>
         <source>The victory is mine!  Alea iacta est!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="279"/>
         <source>My troops are behind you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="280"/>
         <source>I&apos;ll become the ruler of the world.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="282"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="284"/>
         <source>Investment...Profits...great. Continue.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="285"/>
         <source>War is just another tool to make profit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="290"/>
         <source>Even with this loss I made profit...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="291"/>
         <source>I lost but I got your money to build a new army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
         <source>Give me all your money and your lifes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="295"/>
         <source>Yukio</source>
         <translation type="unfinished"></translation>
     </message>

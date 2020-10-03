@@ -91,7 +91,8 @@ void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm())
+        if (cur == Settings::getKey_confirm() ||
+            cur == Settings::getKey_confirm2())
         {
             nextDialogStep();
         }

@@ -43,6 +43,23 @@ Qt::Key Settings::m_key_MapZoomOut                  = Qt::Key_Minus;
 Qt::Key Settings::m_key_MapZoomIn                   = Qt::Key_Plus;
 Qt::Key Settings::m_key_ShowAttackFields            = Qt::Key_2;
 Qt::Key Settings::m_key_ShowIndirectAttackFields    = Qt::Key_1;
+Qt::Key Settings::m_key_up2                         = Qt::Key(0);
+Qt::Key Settings::m_key_down2                       = Qt::Key(0);
+Qt::Key Settings::m_key_right2                      = Qt::Key(0);
+Qt::Key Settings::m_key_left2                       = Qt::Key(0);
+Qt::Key Settings::m_key_confirm2                    = Qt::Key_Enter;
+Qt::Key Settings::m_key_cancel2                     = Qt::Key_Return;
+Qt::Key Settings::m_key_next2                       = Qt::Key_Tab;
+Qt::Key Settings::m_key_previous2                   = Qt::Key(0);
+Qt::Key Settings::m_key_information2                = Qt::Key(0);
+Qt::Key Settings::m_key_moveMapUp2                  = Qt::Key(0);
+Qt::Key Settings::m_key_moveMapDown2                = Qt::Key(0);
+Qt::Key Settings::m_key_moveMapRight2               = Qt::Key(0);
+Qt::Key Settings::m_key_moveMapLeft2                = Qt::Key(0);
+Qt::Key Settings::m_key_MapZoomOut2                 = Qt::Key(0);
+Qt::Key Settings::m_key_MapZoomIn2                  = Qt::Key(0);
+Qt::Key Settings::m_key_ShowAttackFields2           = Qt::Key(0);
+Qt::Key Settings::m_key_ShowIndirectAttackFields2   = Qt::Key(0);
 
 QString Settings::m_language      = "en";
 // Sound
@@ -102,6 +119,176 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+Qt::Key Settings::getKey_ShowIndirectAttackFields2()
+{
+    return m_key_ShowIndirectAttackFields2;
+}
+
+void Settings::setKey_ShowIndirectAttackFields2(const Qt::Key &key_ShowIndirectAttackFields2)
+{
+    m_key_ShowIndirectAttackFields2 = key_ShowIndirectAttackFields2;
+}
+
+Qt::Key Settings::getKey_ShowAttackFields2()
+{
+    return m_key_ShowAttackFields2;
+}
+
+void Settings::setKey_ShowAttackFields2(const Qt::Key &key_ShowAttackFields2)
+{
+    m_key_ShowAttackFields2 = key_ShowAttackFields2;
+}
+
+Qt::Key Settings::getKey_MapZoomIn2()
+{
+    return m_key_MapZoomIn2;
+}
+
+void Settings::setKey_MapZoomIn2(const Qt::Key &key_MapZoomIn2)
+{
+    m_key_MapZoomIn2 = key_MapZoomIn2;
+}
+
+Qt::Key Settings::getKey_MapZoomOut2()
+{
+    return m_key_MapZoomOut2;
+}
+
+void Settings::setKey_MapZoomOut2(const Qt::Key &key_MapZoomOut2)
+{
+    m_key_MapZoomOut2 = key_MapZoomOut2;
+}
+
+Qt::Key Settings::getKey_moveMapLeft2()
+{
+    return m_key_moveMapLeft2;
+}
+
+void Settings::setKey_moveMapLeft2(const Qt::Key &key_moveMapLeft2)
+{
+    m_key_moveMapLeft2 = key_moveMapLeft2;
+}
+
+Qt::Key Settings::getKey_moveMapRight2()
+{
+    return m_key_moveMapRight2;
+}
+
+void Settings::setKey_moveMapRight2(const Qt::Key &key_moveMapRight2)
+{
+    m_key_moveMapRight2 = key_moveMapRight2;
+}
+
+Qt::Key Settings::getKey_moveMapDown2()
+{
+    return m_key_moveMapDown2;
+}
+
+void Settings::setKey_moveMapDown2(const Qt::Key &key_moveMapDown2)
+{
+    m_key_moveMapDown2 = key_moveMapDown2;
+}
+
+Qt::Key Settings::getKey_moveMapUp2()
+{
+    return m_key_moveMapUp2;
+}
+
+void Settings::setKey_moveMapUp2(const Qt::Key &key_moveMapUp2)
+{
+    m_key_moveMapUp2 = key_moveMapUp2;
+}
+
+Qt::Key Settings::getKey_information2()
+{
+    return m_key_information2;
+}
+
+void Settings::setKey_information2(const Qt::Key &key_information2)
+{
+    m_key_information2 = key_information2;
+}
+
+Qt::Key Settings::getKey_previous2()
+{
+    return m_key_previous2;
+}
+
+void Settings::setKey_previous2(const Qt::Key &key_previous2)
+{
+    m_key_previous2 = key_previous2;
+}
+
+Qt::Key Settings::getKey_next2()
+{
+    return m_key_next2;
+}
+
+void Settings::setKey_next2(const Qt::Key &key_next2)
+{
+    m_key_next2 = key_next2;
+}
+
+Qt::Key Settings::getKey_cancel2()
+{
+    return m_key_cancel2;
+}
+
+void Settings::setKey_cancel2(const Qt::Key &key_cancel2)
+{
+    m_key_cancel2 = key_cancel2;
+}
+
+Qt::Key Settings::getKey_confirm2()
+{
+    return m_key_confirm2;
+}
+
+void Settings::setKey_confirm2(const Qt::Key &key_confirm2)
+{
+    m_key_confirm2 = key_confirm2;
+}
+
+Qt::Key Settings::getKey_left2()
+{
+    return m_key_left2;
+}
+
+void Settings::setKey_left2(const Qt::Key &key_left2)
+{
+    m_key_left2 = key_left2;
+}
+
+Qt::Key Settings::getKey_right2()
+{
+    return m_key_right2;
+}
+
+void Settings::setKey_right2(const Qt::Key &key_right2)
+{
+    m_key_right2 = key_right2;
+}
+
+Qt::Key Settings::getKey_down2()
+{
+    return m_key_down2;
+}
+
+void Settings::setKey_down2(const Qt::Key &key_down2)
+{
+    m_key_down2 = key_down2;
+}
+
+Qt::Key Settings::getKey_up2()
+{
+    return m_key_up2;
+}
+
+void Settings::setKey_up2(const Qt::Key &key_up2)
+{
+    m_key_up2 = key_up2;
 }
 
 bool Settings::getAutoCamera()
@@ -517,7 +704,7 @@ void Settings::loadSettings()
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_MapZoomOut";
         Console::print(error, Console::eERROR);
-        m_key_moveMapLeft = Qt::Key_Minus;
+        m_key_MapZoomOut = Qt::Key_Minus;
     }
     m_key_MapZoomIn = static_cast<Qt::Key>(settings.value("key_MapZoomIn", Qt::Key_Plus).toInt(&ok));
     if(!ok)
@@ -532,7 +719,7 @@ void Settings::loadSettings()
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowAttackFields";
         Console::print(error, Console::eERROR);
-        m_key_MapZoomIn = Qt::Key_2;
+        m_key_ShowAttackFields = Qt::Key_2;
     }
 
     m_key_ShowIndirectAttackFields = static_cast<Qt::Key>(settings.value("key_ShowIndirectAttackFields", Qt::Key_1).toInt(&ok));
@@ -541,6 +728,125 @@ void Settings::loadSettings()
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowIndirectAttackFields";
         Console::print(error, Console::eERROR);
         m_key_MapZoomIn = Qt::Key_1;
+    }
+    m_key_up2 = static_cast<Qt::Key>(settings.value("key_up2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_up2";
+        Console::print(error, Console::eERROR);
+        m_key_up2 = Qt::Key(0);
+    }
+    m_key_down2 = static_cast<Qt::Key>(settings.value("key_down2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_down2";
+        Console::print(error, Console::eERROR);
+        m_key_down2 = Qt::Key(0);
+    }
+    m_key_right2 = static_cast<Qt::Key>(settings.value("key_right2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_right2";
+        Console::print(error, Console::eERROR);
+        m_key_right2 = Qt::Key(0);
+    }
+    m_key_left2 = static_cast<Qt::Key>(settings.value("key_left2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_left2";
+        Console::print(error, Console::eERROR);
+        m_key_left2 = Qt::Key(0);
+    }
+    m_key_confirm2 = static_cast<Qt::Key>(settings.value("key_confirm2", Qt::Key_Enter).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_confirm2";
+        Console::print(error, Console::eERROR);
+        m_key_confirm2 = Qt::Key_Enter;
+    }
+    m_key_cancel2 = static_cast<Qt::Key>(settings.value("key_cancel2", Qt::Key_Return).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_cancel2";
+        Console::print(error, Console::eERROR);
+        m_key_cancel2 = Qt::Key_Return;
+    }
+    m_key_next2 = static_cast<Qt::Key>(settings.value("key_next2", Qt::Key_Tab).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_next2";
+        Console::print(error, Console::eERROR);
+        m_key_next2 = Qt::Key_Tab;
+    }
+    m_key_previous2 = static_cast<Qt::Key>(settings.value("key_previous2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_previous2";
+        Console::print(error, Console::eERROR);
+        m_key_previous2 = Qt::Key(0);
+    }
+    m_key_information2 = static_cast<Qt::Key>(settings.value("key_information2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_information2";
+        Console::print(error, Console::eERROR);
+        m_key_information2 = Qt::Key(0);
+    }
+    m_key_moveMapUp2 = static_cast<Qt::Key>(settings.value("key_moveMapUp2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapUp2";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapUp2 = Qt::Key(0);
+    }
+    m_key_moveMapDown2 = static_cast<Qt::Key>(settings.value("key_moveMapDown2", Qt::Key_Down).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapDown2";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapDown2 = Qt::Key_Down;
+    }
+    m_key_moveMapRight2 = static_cast<Qt::Key>(settings.value("key_moveMapRight2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapRight2";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapRight2 = Qt::Key(0);
+    }
+    m_key_moveMapLeft2 = static_cast<Qt::Key>(settings.value("key_moveMapLeft2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapLeft2";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapLeft2 = Qt::Key(0);
+    }
+    m_key_MapZoomOut2 = static_cast<Qt::Key>(settings.value("key_MapZoomOut2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_MapZoomOut2";
+        Console::print(error, Console::eERROR);
+        m_key_MapZoomOut2 = Qt::Key(0);
+    }
+    m_key_MapZoomIn2 = static_cast<Qt::Key>(settings.value("key_MapZoomIn2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_MapZoomIn2";
+        Console::print(error, Console::eERROR);
+        m_key_MapZoomIn2 = Qt::Key(0);
+    }
+    m_key_ShowAttackFields2 = static_cast<Qt::Key>(settings.value("key_ShowAttackFields2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowAttackFields2";
+        Console::print(error, Console::eERROR);
+        m_key_ShowAttackFields2 = Qt::Key(0);
+    }
+    m_key_ShowIndirectAttackFields2 = static_cast<Qt::Key>(settings.value("key_ShowIndirectAttackFields2", Qt::Key(0)).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_ShowIndirectAttackFields2";
+        Console::print(error, Console::eERROR);
+        m_key_ShowIndirectAttackFields2 = Qt::Key(0);
     }
     settings.endGroup();
 
@@ -745,6 +1051,24 @@ void Settings::saveSettings()
         settings.setValue("key_MapZoomOut",                 m_key_MapZoomOut);
         settings.setValue("key_ShowAttackFields",           m_key_ShowAttackFields);
         settings.setValue("key_ShowIndirectAttackFields",   m_key_ShowIndirectAttackFields);
+        settings.setValue("key_up2",                        m_key_up2);
+        settings.setValue("key_down2",                      m_key_down2);
+        settings.setValue("key_right2",                     m_key_right2);
+        settings.setValue("key_left2",                      m_key_left2);
+        settings.setValue("key_confirm2",                   m_key_confirm2);
+        settings.setValue("key_cancel2",                    m_key_cancel2);
+        settings.setValue("key_next2",                      m_key_next2);
+        settings.setValue("key_previous2",                  m_key_previous2);
+        settings.setValue("key_information2",               m_key_information2);
+        settings.setValue("key_moveMapUp2",                 m_key_moveMapUp2);
+        settings.setValue("key_moveMapDown2",               m_key_moveMapDown2);
+        settings.setValue("key_moveMapRight2",              m_key_moveMapRight2);
+        settings.setValue("key_moveMapLeft2",               m_key_moveMapLeft2);
+        settings.setValue("key_MapZoomIn2",                 m_key_MapZoomIn2);
+        settings.setValue("key_MapZoomOut2",                m_key_MapZoomOut2);
+        settings.setValue("key_ShowAttackFields2",          m_key_ShowAttackFields2);
+        settings.setValue("key_ShowIndirectAttackFields2",  m_key_ShowIndirectAttackFields2);
+
         settings.endGroup();
 
         // Sound

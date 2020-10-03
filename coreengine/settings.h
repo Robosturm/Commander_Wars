@@ -45,8 +45,59 @@ public:
     static GameEnums::COInfoPosition getCoInfoPosition();
     static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
 
-
 public slots:
+
+    static Qt::Key getKey_ShowAttackFields2();
+    static void setKey_ShowAttackFields2(const Qt::Key &key_ShowAttackFields2);
+
+    static Qt::Key getKey_ShowIndirectAttackFields2();
+    static void setKey_ShowIndirectAttackFields2(const Qt::Key &key_ShowIndirectAttackFields2);
+
+    static Qt::Key getKey_up2();
+    static void setKey_up2(const Qt::Key &key_up2);
+
+    static Qt::Key getKey_down2();
+    static void setKey_down2(const Qt::Key &key_down2);
+
+    static Qt::Key getKey_right2();
+    static void setKey_right2(const Qt::Key &key_right2);
+
+    static Qt::Key getKey_left2();
+    static void setKey_left2(const Qt::Key &key_left2);
+
+    static Qt::Key getKey_confirm2();
+    static void setKey_confirm2(const Qt::Key &key_confirm2);
+
+    static Qt::Key getKey_cancel2();
+    static void setKey_cancel2(const Qt::Key &key_cancel2);
+
+    static Qt::Key getKey_next2();
+    static void setKey_next2(const Qt::Key &key_next2);
+
+    static Qt::Key getKey_previous2();
+    static void setKey_previous2(const Qt::Key &key_previous2);
+
+    static Qt::Key getKey_information2();
+    static void setKey_information2(const Qt::Key &key_information2);
+
+    static Qt::Key getKey_moveMapUp2();
+    static void setKey_moveMapUp2(const Qt::Key &key_moveMapUp2);
+
+    static Qt::Key getKey_moveMapDown2();
+    static void setKey_moveMapDown2(const Qt::Key &key_moveMapDown2);
+
+    static Qt::Key getKey_moveMapRight2();
+    static void setKey_moveMapRight2(const Qt::Key &key_moveMapRight2);
+
+    static Qt::Key getKey_moveMapLeft2();
+    static void setKey_moveMapLeft2(const Qt::Key &key_moveMapLeft2);
+
+    static Qt::Key getKey_MapZoomOut2();
+    static void setKey_MapZoomOut2(const Qt::Key &key_MapZoomOut2);
+
+    static Qt::Key getKey_MapZoomIn2();
+    static void setKey_MapZoomIn2(const Qt::Key &key_MapZoomIn2);
+
     static bool getAutoCamera();
     static void setAutoCamera(bool autoCamera);
 
@@ -313,7 +364,23 @@ private:
     static Qt::Key m_key_MapZoomIn;
     static Qt::Key m_key_ShowAttackFields;
     static Qt::Key m_key_ShowIndirectAttackFields;
-
+    static Qt::Key m_key_up2;
+    static Qt::Key m_key_down2;
+    static Qt::Key m_key_right2;
+    static Qt::Key m_key_left2;
+    static Qt::Key m_key_confirm2;
+    static Qt::Key m_key_cancel2;
+    static Qt::Key m_key_next2;
+    static Qt::Key m_key_previous2;
+    static Qt::Key m_key_information2;
+    static Qt::Key m_key_moveMapUp2;
+    static Qt::Key m_key_moveMapDown2;
+    static Qt::Key m_key_moveMapRight2;
+    static Qt::Key m_key_moveMapLeft2;
+    static Qt::Key m_key_MapZoomOut2;
+    static Qt::Key m_key_MapZoomIn2;
+    static Qt::Key m_key_ShowAttackFields2;
+    static Qt::Key m_key_ShowIndirectAttackFields2;
 
     static QString m_language;
     // Sound

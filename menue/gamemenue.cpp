@@ -1494,7 +1494,8 @@ void GameMenue::keyInputAll(Qt::Key cur)
     {
         emit sigShowExitGame();
     }
-    else if (cur == Settings::getKey_information())
+    else if (cur == Settings::getKey_information() ||
+             cur == Settings::getKey_information2())
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();

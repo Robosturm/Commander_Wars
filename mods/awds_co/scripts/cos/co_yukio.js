@@ -39,19 +39,19 @@ CO_YUKIO.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attack
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (damage >= 10)
+            if (damage >= CO_YUKIO.mintrueDamage)
             {
                 return 15
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (damage >= 10)
+            if (damage >= CO_YUKIO.mintrueDamage)
             {
                 return 15
             }
             break;
         default:
-            if (damage >= 10)
+            if (damage >= CO_YUKIO.mintrueDamage)
             {
                 return 15
             }

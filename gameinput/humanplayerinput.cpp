@@ -1045,7 +1045,8 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
         {
             // for debugging
             Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_next())
+            if (cur == Settings::getKey_next() ||
+                cur == Settings::getKey_next2())
             {
                 if (m_FieldPoints.size() > 0)
                 {
@@ -1056,7 +1057,8 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
                     nextSelectOption();
                 }
             }
-            else if (cur == Settings::getKey_previous())
+            else if (cur == Settings::getKey_previous() ||
+                     cur == Settings::getKey_previous2())
             {
                 if (m_FieldPoints.size() > 0)
                 {
@@ -1067,11 +1069,13 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
                     previousSelectOption();
                 }
             }
-            else if (cur == Settings::getKey_ShowAttackFields())
+            else if (cur == Settings::getKey_ShowAttackFields() ||
+                     cur == Settings::getKey_ShowAttackFields2())
             {
                 showSelectedUnitAttackableFields(true);
             }
-            else if (cur == Settings::getKey_ShowIndirectAttackFields())
+            else if (cur == Settings::getKey_ShowIndirectAttackFields() ||
+                     cur == Settings::getKey_ShowIndirectAttackFields2())
             {
                 showSelectedUnitAttackableFields(false);
             }

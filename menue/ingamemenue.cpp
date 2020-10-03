@@ -294,11 +294,13 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm())
+        if (cur == Settings::getKey_confirm() ||
+            cur == Settings::getKey_confirm2())
         {
             emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_cancel())
+        else if (cur == Settings::getKey_cancel() ||
+                 cur == Settings::getKey_cancel2())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
@@ -311,11 +313,13 @@ void InGameMenue::keyUp(oxygine::KeyEvent event)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_confirm())
+        if (cur == Settings::getKey_confirm() ||
+            cur == Settings::getKey_confirm2())
         {
             emit sigLeftClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_cancel())
+        else if (cur == Settings::getKey_cancel() ||
+                 cur == Settings::getKey_cancel2())
         {
             emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }

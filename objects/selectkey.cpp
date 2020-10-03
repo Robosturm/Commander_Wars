@@ -119,6 +119,22 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     {
         codeText = tr("Tab");
     }
+    else if (code == Qt::Key_Control)
+    {
+        codeText = tr("Ctrl");
+    }
+    else if (code == Qt::Key_Alt)
+    {
+        codeText = tr("Alt");
+    }
+    else if (code == Qt::Key_AltGr)
+    {
+        codeText = tr("AltGr");
+    }
+    else if (code == 0)
+    {
+        codeText = tr("None");
+    }
     else if (code <= 255)
     {
         const oxygine::glyph* pGlyph = pFont->getGlyph(code, oxygine::glyphOptions());

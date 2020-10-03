@@ -146,7 +146,7 @@ var Constructor = function()
     {
         return "DM";
     };
-
+    this.mintrueDamage = 10;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -185,13 +185,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (damage >= 10)
+                if (damage >= CO_YUKIO.mintrueDamage)
                 {
                     return 15
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (damage >= 10)
+                if (damage >= CO_YUKIO.mintrueDamage)
                 {
                     return 15
                 }
@@ -199,7 +199,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (damage >= 10)
+                    if (damage >= CO_YUKIO.mintrueDamage)
                     {
                         return 15
                     }
@@ -249,8 +249,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNone.") +
-               qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced. Troops deal true damage if the base damage is at least 10%.");
+        var text = qsTr("\nGlobal Effect: \nNone.") +
+               qsTr("\n\nCO Zone Effect: \nDamage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.");
+        text = replaceTextArgs(text, [CO_YUKIO.mintrueDamage]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

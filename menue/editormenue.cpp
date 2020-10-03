@@ -750,7 +750,8 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     }
                 }
             }
-            else if (cur == Settings::getKey_information())
+            else if (cur == Settings::getKey_information() ||
+                     cur == Settings::getKey_information2())
             {
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
@@ -768,7 +769,8 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 }
                 pApp->continueThread();
             }
-            else if (cur == Settings::getKey_cancel())
+            else if (cur == Settings::getKey_cancel() ||
+                     cur == Settings::getKey_cancel2())
             {
                 if (m_EditorMode == EditorModes::RemoveUnits)
                 {

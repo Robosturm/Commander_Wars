@@ -172,7 +172,7 @@ var Constructor = function()
         }
         return 0;
     };
-
+    this.minLuckHp = 5;
     this.getBonusLuck = function(co, unit, posX, posY)
     {
          var hpRounded = unit.getHpRounded();
@@ -180,19 +180,19 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return hpRounded / 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return 20 + hpRounded / 2;
                 }
                 return 20;
             default:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return hpRounded / 2;
                 }
@@ -207,19 +207,19 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return -hpRounded;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return -20 + -hpRounded;
                 }
                 return -20;
             default:
-                if (hpRounded <= 5)
+                if (hpRounded <= CO_XAVIER.minLuckHp)
                 {
                     return -hpRounded;
                 }
@@ -242,12 +242,16 @@ var Constructor = function()
     };
     this.getCODescription = function(co)
     {
-        return qsTr("When Xavier's units drop to 5 HP or less, they are able to strike for maximum luck damage.");
+        var text = qsTr("When Xavier's units drop to %0 HP or less, they are able to strike for maximum luck damage.");
+        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
+        return text;
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nUnits with 5 HP or less deal maximum luck damage.") +
+        var text = qsTr("\nGlobal Effect: \nUnits with %0 HP or less deal maximum luck damage.") +
                qsTr("\n\nCO Zone Effect: \nUnits have increased firepower.");
+        text = replaceTextArgs(text, [CO_XAVIER.minLuckHp]);
+        return text;
     };
     this.getPowerDescription = function(co)
     {

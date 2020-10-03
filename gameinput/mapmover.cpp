@@ -38,48 +38,58 @@ void MapMover::keyInput(oxygine::KeyEvent event)
         // for debugging
         Qt::Key cur = event.getKey();
         Cursor* pCursor = m_pOwner->getCursor();
-        if (cur == Settings::getKey_up())
+        if (cur == Settings::getKey_up() ||
+            cur == Settings::getKey_up2())
         {
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
         }
-        else if (cur == Settings::getKey_down())
+        else if (cur == Settings::getKey_down() ||
+                 cur == Settings::getKey_down2())
         {
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
         }
-        else if (cur == Settings::getKey_left())
+        else if (cur == Settings::getKey_left() ||
+                 cur == Settings::getKey_left2())
         {
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_right())
+        else if (cur == Settings::getKey_right() ||
+                 cur == Settings::getKey_right2())
         {
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_moveMapUp())
+        else if (cur == Settings::getKey_moveMapUp() ||
+                 cur == Settings::getKey_moveMapUp2())
         {
             GameMap::getInstance()->moveMap(0, -GameMap::getImageSize());
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() + 1);
         }
-        else if (cur == Settings::getKey_moveMapDown())
+        else if (cur == Settings::getKey_moveMapDown() ||
+                 cur == Settings::getKey_moveMapDown2())
         {
             GameMap::getInstance()->moveMap(0, GameMap::getImageSize());
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX(), pCursor->getMapPointY() - 1);
         }
-        else if (cur == Settings::getKey_moveMapRight())
+        else if (cur == Settings::getKey_moveMapRight() ||
+                 cur == Settings::getKey_moveMapRight2())
         {
             GameMap::getInstance()->moveMap(GameMap::getImageSize(), 0);
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() - 1, pCursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_moveMapLeft())
+        else if (cur == Settings::getKey_moveMapLeft() ||
+                 cur == Settings::getKey_moveMapLeft2())
         {
             GameMap::getInstance()->moveMap(-GameMap::getImageSize(), 0);
             m_pOwner->calcNewMousePosition(pCursor->getMapPointX() + 1, pCursor->getMapPointY());
         }
-        else if (cur == Settings::getKey_MapZoomIn())
+        else if (cur == Settings::getKey_MapZoomIn() ||
+                 cur == Settings::getKey_MapZoomIn2())
         {
             GameMap::getInstance()->zoom(1);
             m_pOwner->centerMapOnCursor();
         }
-        else if (cur == Settings::getKey_MapZoomOut())
+        else if (cur == Settings::getKey_MapZoomOut() ||
+                 cur == Settings::getKey_MapZoomOut2())
         {
             GameMap::getInstance()->zoom(-1);
             m_pOwner->centerMapOnCursor();

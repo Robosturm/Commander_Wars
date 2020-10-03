@@ -282,6 +282,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_up, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_up2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor up."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_up2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -293,6 +298,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key for moving the cursor left."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_left, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_left2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor left."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_left2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -306,6 +316,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_down, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_down2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor down."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_down2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -317,6 +332,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key for moving the cursor right."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_right, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_right2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor right."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_right2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -330,6 +350,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_confirm, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_confirm2());
+    pSelectKey->setTooltipText(tr("Key for confirming any action or input in the game."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_confirm2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -341,6 +366,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key for canceling any action or input in the game."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_cancel, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_cancel2());
+    pSelectKey->setTooltipText(tr("Key for canceling any action or input in the game."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_cancel2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -354,6 +384,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_next, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_next2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor to the next possible field unit etc."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_next2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -365,6 +400,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key for moving the cursor to the previous possible field unit etc."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_previous, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_previous2());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor to the previous possible field unit etc."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_previous2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -426,6 +466,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_information, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_information2());
+    pSelectKey->setTooltipText(tr("Key to show information about the current field, action, unit at any time in the game."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_information2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -437,6 +482,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key to move the map a field up."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapUp, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapUp2());
+    pSelectKey->setTooltipText(tr("Key to move the map a field up."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapUp2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -450,6 +500,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapLeft, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapLeft2());
+    pSelectKey->setTooltipText(tr("Key to move the map a field left."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapLeft2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -461,6 +516,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key to move the map a field down."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapDown, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapDown2());
+    pSelectKey->setTooltipText(tr("Key to move the map a field down."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapDown2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -474,6 +534,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapRight, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapRight2());
+    pSelectKey->setTooltipText(tr("Key to move the map a field right."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_moveMapRight2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -485,6 +550,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key to zoom into the map."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_MapZoomIn, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_MapZoomIn2());
+    pSelectKey->setTooltipText(tr("Key to zoom into the map."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_MapZoomIn2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
@@ -498,6 +568,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_MapZoomOut, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_MapZoomOut2());
+    pSelectKey->setTooltipText(tr("Key to zoom out of the map."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_MapZoomOut2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -510,6 +585,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowIndirectAttackFields, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_ShowIndirectAttackFields2());
+    pSelectKey->setTooltipText(tr("Key to show where all enemy indirect units can attack near the selected unit."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowIndirectAttackFields2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);
@@ -521,6 +601,11 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pSelectKey->setTooltipText(tr("Key to show where all enemy units can attack near the selected unit."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowAttackFields, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    pSelectKey = new SelectKey(Settings::getKey_ShowAttackFields2());
+    pSelectKey->setTooltipText(tr("Key to show where all enemy units can attack near the selected unit."));
+    pSelectKey->setPosition(sliderOffset + 70, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_ShowAttackFields2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
     y += 40;
 

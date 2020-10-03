@@ -294,7 +294,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
         {
             // for debugging
             Qt::Key cur = event.getKey();
-            if (cur == Settings::getKey_up())
+            if (cur == Settings::getKey_up() ||
+                cur == Settings::getKey_up2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
                 if (currentAction > 0)
@@ -306,7 +307,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     currentAction = m_ActionIDs.size() - 1;
                 }
             }
-            else if (cur == Settings::getKey_down())
+            else if (cur == Settings::getKey_down() ||
+                     cur == Settings::getKey_down2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
                 if (currentAction < m_ActionIDs.size() - 1)
@@ -318,7 +320,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     currentAction = 0;
                 }
             }
-            if (cur == Settings::getKey_left())
+            if (cur == Settings::getKey_left() ||
+                cur == Settings::getKey_left2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
                 if (currentAction - Settings::getMenuItemCount() >= 0)
@@ -330,7 +333,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     currentAction = m_ActionIDs.size() - 1;
                 }
             }
-            else if (cur == Settings::getKey_right())
+            else if (cur == Settings::getKey_right() ||
+                     cur == Settings::getKey_right2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
                 if (currentAction + Settings::getMenuItemCount() < m_ActionIDs.size())
@@ -343,7 +347,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     currentAction = 0;
                 }
             }
-            else if (cur == Settings::getKey_confirm())
+            else if (cur == Settings::getKey_confirm() ||
+                     cur == Settings::getKey_confirm2())
             {
                 if (m_ActionIDs.size() > 0)
                 {
@@ -362,11 +367,13 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     }
                 }
             }
-            else if (cur == Settings::getKey_cancel())
+            else if (cur == Settings::getKey_cancel() ||
+                     cur == Settings::getKey_cancel2())
             {
                 emit sigCanceled(0, 0);
             }
-            else if (cur == Settings::getKey_information())
+            else if (cur == Settings::getKey_information() ||
+                     cur == Settings::getKey_information2())
             {
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
