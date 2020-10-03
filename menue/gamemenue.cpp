@@ -1413,6 +1413,7 @@ void GameMenue::startGame()
         pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();
         updatePlayerinfo();
+        m_ReplayRecorder.startRecording();
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
             !gameStarted)
