@@ -47,8 +47,8 @@ Qt::Key Settings::m_key_up2                         = Qt::Key(0);
 Qt::Key Settings::m_key_down2                       = Qt::Key(0);
 Qt::Key Settings::m_key_right2                      = Qt::Key(0);
 Qt::Key Settings::m_key_left2                       = Qt::Key(0);
-Qt::Key Settings::m_key_confirm2                    = Qt::Key_Enter;
-Qt::Key Settings::m_key_cancel2                     = Qt::Key_Return;
+Qt::Key Settings::m_key_confirm2                    = Qt::Key_Return;
+Qt::Key Settings::m_key_cancel2                     = Qt::Key_Backspace;
 Qt::Key Settings::m_key_next2                       = Qt::Key_Tab;
 Qt::Key Settings::m_key_previous2                   = Qt::Key(0);
 Qt::Key Settings::m_key_information2                = Qt::Key(0);
@@ -757,19 +757,19 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_key_left2 = Qt::Key(0);
     }
-    m_key_confirm2 = static_cast<Qt::Key>(settings.value("key_confirm2", Qt::Key_Enter).toInt(&ok));
+    m_key_confirm2 = static_cast<Qt::Key>(settings.value("key_confirm2", Qt::Key_Return).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_confirm2";
         Console::print(error, Console::eERROR);
-        m_key_confirm2 = Qt::Key_Enter;
+        m_key_confirm2 = Qt::Key_Return;
     }
-    m_key_cancel2 = static_cast<Qt::Key>(settings.value("key_cancel2", Qt::Key_Return).toInt(&ok));
+    m_key_cancel2 = static_cast<Qt::Key>(settings.value("key_cancel2", Qt::Key_Backspace).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_cancel2";
         Console::print(error, Console::eERROR);
-        m_key_cancel2 = Qt::Key_Return;
+        m_key_cancel2 = Qt::Key_Backspace;
     }
     m_key_next2 = static_cast<Qt::Key>(settings.value("key_next2", Qt::Key_Tab).toInt(&ok));
     if(!ok)

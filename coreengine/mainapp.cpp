@@ -604,6 +604,7 @@ void Mainapp::loadArgs(const QStringList & args)
     {
         setSlave(true);
         Settings::setServer(false);
+        Settings::setUsername("Server");
     }
     if (args.contains("-noui"))
     {

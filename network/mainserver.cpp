@@ -109,6 +109,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         args << "-slaveServer";
         args << slaveName;
         args << "-mods";
+        args << "-noui"; // comment out for debugging
         args << Settings::getModConfigString(mods);
         QString markername = "temp/" + slaveName + ".marker";
         if (QFile::exists(markername))

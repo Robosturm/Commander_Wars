@@ -22,6 +22,7 @@ SelectKey::SelectKey(Qt::Key code)
         {
             pText->setX(5);
         }
+        pText->setTooltipText("");
         active = true;
     });
     addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event * )->void
@@ -115,6 +116,14 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     {
         codeText = tr("Return");
     }
+    else if (code == Qt::Key_Enter)
+    {
+        codeText = tr("Enter");
+    }
+    else if (code == Qt::Key_Backspace)
+    {
+        codeText = tr("Backspace");
+    }
     else if (code == Qt::Key_Tab)
     {
         codeText = tr("Tab");
@@ -161,6 +170,7 @@ void SelectKey::setKeycode(Qt::Key code)
         {
             pText->setX(5);
         }
+        pText->setTooltipText("");
         active = false;
         emit sigKeyChanged(currentCode);
     }

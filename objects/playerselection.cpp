@@ -1013,19 +1013,19 @@ void PlayerSelection::selectAI(qint32 player)
             {
                 name = m_playerAIs[player]->getCurrentItemText();
             }
-            qint32 ai;
+            qint32 ai = type;
             if (type == GameEnums::AiTypes_Open)
             {
                 ai = static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else if (m_isServerGame &&
-                     !Mainapp::getSlave() &&
+                     Mainapp::getSlave() &&
                      type != GameEnums::AiTypes_Human)
             {
                 ai = type;
                 createAi(player, GameEnums::AiTypes_ProxyAi);
             }
-            else
+            else if (Mainapp::getSlave())
             {
                 ai = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
@@ -1308,6 +1308,15 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             aiType != GameEnums::AiTypes::AiTypes_ProxyAi)
         {
             m_PlayerSockets[player] = socket;
+            if (m_isServerGame)
+            {
+                if (aiType != GameEnums::AiTypes::AiTypes_Open &&
+                    aiType != GameEnums::AiTypes::AiTypes_Human)
+                {
+                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                }
+                Console::print("Change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+            }
             GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
             setPlayerAi(player, eAiType, name);
             pMap->getPlayer(player)->deserializeObject(stream);

@@ -2568,17 +2568,17 @@ This is immediatly applied.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1541"/>
+        <location filename="../menue/gamemenue.cpp" line="1542"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1559"/>
+        <location filename="../menue/gamemenue.cpp" line="1560"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1588"/>
+        <location filename="../menue/gamemenue.cpp" line="1589"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -6186,123 +6186,133 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
         <translation>Drücke Taste</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="48"/>
-        <location filename="../objects/selectkey.cpp" line="154"/>
+        <location filename="../objects/selectkey.cpp" line="49"/>
+        <location filename="../objects/selectkey.cpp" line="163"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="52"/>
+        <location filename="../objects/selectkey.cpp" line="53"/>
         <source>Space</source>
         <translation>Leertaste</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="56"/>
+        <location filename="../objects/selectkey.cpp" line="57"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="60"/>
+        <location filename="../objects/selectkey.cpp" line="61"/>
         <source>F3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="64"/>
+        <location filename="../objects/selectkey.cpp" line="65"/>
         <source>F4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="68"/>
+        <location filename="../objects/selectkey.cpp" line="69"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="72"/>
+        <location filename="../objects/selectkey.cpp" line="73"/>
         <source>F6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="76"/>
+        <location filename="../objects/selectkey.cpp" line="77"/>
         <source>F7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="80"/>
+        <location filename="../objects/selectkey.cpp" line="81"/>
         <source>F8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="84"/>
+        <location filename="../objects/selectkey.cpp" line="85"/>
         <source>F9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="88"/>
+        <location filename="../objects/selectkey.cpp" line="89"/>
         <source>F10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="92"/>
+        <location filename="../objects/selectkey.cpp" line="93"/>
         <source>F11</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="96"/>
+        <location filename="../objects/selectkey.cpp" line="97"/>
         <source>F12</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="100"/>
+        <location filename="../objects/selectkey.cpp" line="101"/>
         <source>Up</source>
         <translation>Hoch</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="104"/>
+        <location filename="../objects/selectkey.cpp" line="105"/>
         <source>Down</source>
         <translation>Runter</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="108"/>
+        <location filename="../objects/selectkey.cpp" line="109"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="112"/>
+        <location filename="../objects/selectkey.cpp" line="113"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="116"/>
+        <location filename="../objects/selectkey.cpp" line="117"/>
         <source>Return</source>
         <translation>Return</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="120"/>
+        <location filename="../objects/selectkey.cpp" line="121"/>
+        <source>Enter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="125"/>
+        <source>Backspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="129"/>
         <source>Tab</source>
         <translation>Tab</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="124"/>
+        <location filename="../objects/selectkey.cpp" line="133"/>
         <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="128"/>
+        <location filename="../objects/selectkey.cpp" line="137"/>
         <source>Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="132"/>
+        <location filename="../objects/selectkey.cpp" line="141"/>
         <source>AltGr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="136"/>
+        <location filename="../objects/selectkey.cpp" line="145"/>
         <source>None</source>
         <translation type="unfinished">Keine</translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="158"/>
+        <location filename="../objects/selectkey.cpp" line="167"/>
         <source>Key </source>
         <translation>Taste </translation>
     </message>
