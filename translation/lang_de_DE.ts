@@ -2568,17 +2568,17 @@ This is immediatly applied.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1540"/>
+        <location filename="../menue/gamemenue.cpp" line="1541"/>
         <source>Do you want to exit the current game?</source>
         <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1558"/>
+        <location filename="../menue/gamemenue.cpp" line="1559"/>
         <source>Do you want to surrender the current game?</source>
         <translation>Willst du aufgeben?</translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1587"/>
+        <location filename="../menue/gamemenue.cpp" line="1588"/>
         <source>Nickname for the Unit:</source>
         <translation>Nickname der Einheit:</translation>
     </message>
@@ -2835,196 +2835,212 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="298"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="303"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="306"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="311"/>
         <source>Key Down: </source>
         <translation type="unfinished">Unten: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="310"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="315"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="320"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="328"/>
         <source>Key Right: </source>
         <translation type="unfinished">Rechts: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="322"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="332"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="337"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="330"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="345"/>
         <source>Key Confirm: </source>
         <translation type="unfinished">Bestätigen: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="334"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="349"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="354"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="342"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="362"/>
         <source>Key Cancel: </source>
         <translation type="unfinished">Abbrechen: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="346"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="366"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="371"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="354"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="379"/>
         <source>Key Next: </source>
         <translation type="unfinished">Nächste: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="358"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="383"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="388"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="366"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="396"/>
         <source>Key Previous: </source>
         <translation type="unfinished">Vorige: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="370"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="400"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="405"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="378"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="413"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished">Schnellspeichern 1: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="382"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="417"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="390"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="425"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished">Schnellladen 1: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="394"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="429"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="402"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="437"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished">Schnellspeichern 2: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="406"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="441"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="414"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="449"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished">Schnellladen 2: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="418"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="453"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="426"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="461"/>
         <source>Key Information: </source>
         <translation type="unfinished">Information: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="430"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="465"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="470"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="438"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="478"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished">Karte Hoch: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="442"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="482"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="487"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="450"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="495"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished">Karte Links: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="454"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="499"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="504"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="462"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="512"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished">Karte Runter: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="466"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="516"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="521"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="474"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="529"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished">Karte Rechts: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="478"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="533"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="538"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="486"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="546"/>
         <source>Key Zoom In: </source>
         <translation type="unfinished">Reinzoomen: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="490"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="550"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="555"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="498"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="563"/>
         <source>Key Zoom Out: </source>
         <translation type="unfinished">Rauszoomen: </translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="502"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="567"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="572"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="510"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="580"/>
         <source>Key Show Indirects: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="514"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="584"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="589"/>
         <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="522"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="597"/>
         <source>Key Show all: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="526"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="601"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="606"/>
         <source>Key to show where all enemy units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
