@@ -349,6 +349,8 @@ set(${PROJECT_NAME}_SRCS
         multiplayer/multiplayermenu.cpp
         multiplayer/gamedata.cpp
         multiplayer/password.cpp
+        multiplayer/dialogpasswordandadress.cpp
+        multiplayer/dialogpassword.cpp
 
         #campaign support
         ingamescriptsupport/campaigneditor.cpp

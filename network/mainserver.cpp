@@ -79,6 +79,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
                  !game->game.getData().getLaunched())
             {
                 game->game.addClient(m_pGameServer->getClient(socketID));
+                connect(&(game->game), &NetworkGame::sigDisconnectSocket, m_pGameServer, &TCPServer::disconnectClient, Qt::QueuedConnection);
             }
             found = true;
             break;
@@ -105,11 +106,10 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         m_games[pos]->process = new QProcess();
         QStringList args;
         args << "-slave";
-        //args << "-noui";
         args << "-slaveServer";
         args << slaveName;
-        args << "-mods";
         args << "-noui"; // comment out for debugging
+        args << "-mods";
         args << Settings::getModConfigString(mods);
         QString markername = "temp/" + slaveName + ".marker";
         if (QFile::exists(markername))

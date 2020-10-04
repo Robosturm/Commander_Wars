@@ -608,6 +608,7 @@ void Mainapp::loadArgs(const QStringList & args)
     }
     if (args.contains("-noui"))
     {
+        m_noUi = true;
         Settings::setBattleAnimations(GameEnums::BattleAnimationMode_Overworld);
         Settings::setShowAnimations(GameEnums::AnimationMode_None);
         Settings::setAnimationSpeed(100);

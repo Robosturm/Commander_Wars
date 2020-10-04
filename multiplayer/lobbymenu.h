@@ -30,7 +30,8 @@ public slots:
     void hostLocal();
     void hostServer();
     void joinGame();
-    void join(QString adress);
+    void joinGamePassword(QString password);
+    void join(QString adress, QString password);
     void joinAdress();
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     void updateGamesView();

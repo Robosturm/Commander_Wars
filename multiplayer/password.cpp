@@ -9,6 +9,11 @@ Password::Password()
     setPassword("");
 }
 
+Password::Password(QString password)
+{
+    setPassword(password);
+}
+
 void Password::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -29,6 +34,11 @@ void Password::setPassword(QString password)
     m_passwordHash = myHash.result();
 }
 
+void Password::setPassword(const Password & password)
+{
+    m_passwordHash = password.m_passwordHash;
+}
+
 bool Password::isValidPassword(QString password) const
 {
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
@@ -36,7 +46,7 @@ bool Password::isValidPassword(QString password) const
     return (m_passwordHash == myHash.result());
 }
 
-bool Password::areEqualPassword(Password & password) const
+bool Password::areEqualPassword(const Password & password) const
 {
     return (m_passwordHash == password.m_passwordHash);
 }

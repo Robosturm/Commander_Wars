@@ -12,12 +12,14 @@
 #include "menue/mapselectionmapsmenue.h"
 #include "network/NetworkInterface.h"
 
+#include "multiplayer/password.h"
+
 class Multiplayermenu : public MapSelectionMapsMenue
 {
     Q_OBJECT
 public:
-    explicit Multiplayermenu(QString adress, bool host);
-    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, bool host);
+    explicit Multiplayermenu(QString adress, QString password, bool host);
+    explicit Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, bool host);
     virtual ~Multiplayermenu() = default;
 
     /**
@@ -76,6 +78,7 @@ protected:
     GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);
     void clientMapInfo(QDataStream & stream, quint64 socketID);
+    bool checkMods(const QStringList & mods, const QStringList & versions);
     void requestRule(quint64 socketID);
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
     void requestMap(quint64 socketID);
@@ -131,6 +134,7 @@ private:
     bool m_saveGame{false};
     bool m_local{true};
     bool m_slaveGameReady{false};
+    Password m_password;
 };
 
 #endif // MULTIPLAYERMENU_H

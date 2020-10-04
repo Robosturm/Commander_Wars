@@ -1431,5 +1431,7 @@
     <char id="9834" x="956" y="253" width="14" height="22" xoffset="-1" yoffset="3" xadvance="13" page="0" chnl="15" />
     <char id="9835" x="505" y="235" width="17" height="22" xoffset="-2" yoffset="3" xadvance="13" page="0" chnl="15" />
     <char id="9839" x="298" y="433" width="13" height="20" xoffset="0" yoffset="4" xadvance="13" page="0" chnl="15" />
+	<char id="1" x="0" y="518" width="18" height="24" xoffset="0" yoffset="4" xadvance="13" page="0" chnl="15" />
+	<char id="2" x="18" y="521" width="18" height="21" xoffset="0" yoffset="4" xadvance="13" page="0" chnl="15" />
   </chars>
 </font>

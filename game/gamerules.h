@@ -15,6 +15,8 @@
 
 #include "oxygine-framework.h"
 
+#include "multiplayer/password.h"
+
 class Player;
 class Unit;
 
@@ -61,7 +63,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 15;
+        return 16;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -83,9 +85,30 @@ public:
 
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getPassword
+     * @return
+     */
+    const Password & getPassword() const;
+    /**
+     * @brief setPassword
+     * @param password
+     */
+    void setPassword(const QString & password);
+    /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription() const;
+    /**
+     * @brief setDescription
+     * @param description
+     */
+    void setDescription(const QString &description);
     /**
      * @brief getPowerGainSpeed
      * @return
@@ -451,6 +474,9 @@ private:
     QStringList m_allowedPerks;
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
+
+    Password m_password;
+    QString m_description;
 };
 
 #endif // GAMERULES_H

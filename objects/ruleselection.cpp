@@ -18,6 +18,8 @@
 #include "objects/actionlistdialog.h"
 #include "objects/label.h"
 #include "objects/filedialog.h"
+#include "objects/passwordbox.h"
+#include "objects/textbox.h"
 
 constexpr qint32 textWidth = 300;
 
@@ -101,6 +103,38 @@ void RuleSelection::showRuleSelection()
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     QColor headerColor(0, 255, 0, 255);
+    spGameMap pMap = GameMap::getInstance();
+
+    if (m_mode == Mode::Multiplayer)
+    {
+        spLabel textField = new Label(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Game Description: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        spTextbox pTexbox = new Textbox(Settings::getWidth() - 100 - textWidth);
+        pTexbox->setPosition(textWidth, y);
+        pTexbox->setCurrentText("");
+        pTexbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
+        connect(pTexbox.get(), &Textbox::sigTextChanged, pMap->getGameRules(), &GameRules::setDescription, Qt::QueuedConnection);
+        addChild(pTexbox);
+        y += 40;
+
+        textField = new Label(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Password: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+
+        spPasswordbox pPasswordbox = new Passwordbox(Settings::getWidth() - 100 - textWidth);
+        pPasswordbox->setPosition(textWidth, y);
+        pPasswordbox->setCurrentText("");
+        pPasswordbox->setTooltipText(tr("Map description shown for players who want to join. Keep it short here."));
+        connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
+        addChild(pPasswordbox);
+        y += 40;
+    }
+
     spLabel textField = new Label(800);
     style.color = headerColor;
     textField->setStyle(headerStyle);
@@ -111,10 +145,8 @@ void RuleSelection::showRuleSelection()
     y += 60;
 
 
-
     QVector<QString> weatherStrings;
-    QVector<qint32> weatherChances;
-    spGameMap pMap = GameMap::getInstance();
+    QVector<qint32> weatherChances;    
     for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
     {
         Weather* pWeather = pMap->getGameRules()->getWeather(i);

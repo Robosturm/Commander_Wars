@@ -8,6 +8,11 @@ NetworkGameData::NetworkGameData()
 
 }
 
+bool NetworkGameData::hasOpenPlayers()
+{
+    return (m_players < m_maxPlayers);
+}
+
 void NetworkGameData::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -17,6 +22,7 @@ void NetworkGameData::serializeObject(QDataStream& pStream) const
     pStream << m_description;
     pStream << m_mapName;
     pStream << m_slaveName;
+    pStream << m_locked;
 }
 
 void NetworkGameData::deserializeObject(QDataStream& pStream)
@@ -29,6 +35,7 @@ void NetworkGameData::deserializeObject(QDataStream& pStream)
     pStream >> m_description;
     pStream >> m_mapName;
     pStream >> m_slaveName;
+    pStream >> m_locked;
 }
 
 QString NetworkGameData::getMapName() const
@@ -99,4 +106,14 @@ bool NetworkGameData::getLaunched() const
 void NetworkGameData::setLaunched(bool launched)
 {
     m_launched = launched;
+}
+
+bool NetworkGameData::getLocked() const
+{
+    return m_locked;
+}
+
+void NetworkGameData::setLocked(bool locked)
+{
+    m_locked = locked;
 }

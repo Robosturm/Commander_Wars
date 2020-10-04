@@ -41,6 +41,7 @@ public:
 signals:
     void sigDataChanged();
     void sigClose(NetworkGame* pGame);
+    void sigDisconnectSocket(quint64 socketID);
 public slots:
     void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
@@ -81,6 +82,11 @@ public slots:
      * @param exitStatus
      */
     void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    /**
+     * @brief slaveRunning
+     * @param stream
+     */
+    void slaveRunning(QDataStream &stream);
 protected slots:
     void checkServerRunning();
     void sendPlayerJoined(qint32 player);

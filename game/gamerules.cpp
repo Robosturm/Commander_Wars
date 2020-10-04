@@ -824,6 +824,26 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+QString GameRules::getDescription() const
+{
+    return m_description;
+}
+
+void GameRules::setDescription(const QString &description)
+{
+    m_description = description;
+}
+
+const Password & GameRules::getPassword() const
+{
+    return m_password;
+}
+
+void GameRules::setPassword(const QString & password)
+{
+    m_password.setPassword(password);
+}
+
 float GameRules::getPowerGainSpeed() const
 {
     return m_powerGainSpeed;
@@ -1004,6 +1024,8 @@ void GameRules::serializeObject(QDataStream& pStream) const
     {
         m_GameRules[i]->serializeObject(pStream);
     }
+    pStream << m_description;
+    m_password.serializeObject(pStream);
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1225,5 +1247,10 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_GameRules.append(new GameRule());
             m_GameRules[i]->deserializeObject(pStream);
         }
+    }
+    if (version > 15)
+    {
+        pStream >> m_description;
+        m_password.deserializeObject(pStream);
     }
 }

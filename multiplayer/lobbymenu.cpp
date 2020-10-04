@@ -14,10 +14,11 @@
 
 #include "objects/chat.h"
 
-#include "objects/dialogtextinput.h"
 #include "network/mainserver.h"
 
 #include "multiplayer/networkcommands.h"
+#include "multiplayer/dialogpassword.h"
+#include "multiplayer/dialogpasswordandadress.h"
 
 LobbyMenu::LobbyMenu()
     : QObject()
@@ -138,7 +139,7 @@ void LobbyMenu::hostLocal()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Multiplayermenu("", true));
+    oxygine::getStage()->addChild(new Multiplayermenu("", "", true));
     addRef();
     oxygine::Actor::detach();
     deleteLater();
@@ -153,7 +154,7 @@ void LobbyMenu::hostServer()
         pApp->suspendThread();
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, true));
+        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, "", true));
         addRef();
         oxygine::Actor::detach();
         deleteLater();
@@ -162,6 +163,26 @@ void LobbyMenu::hostServer()
 }
 
 void LobbyMenu::joinGame()
+{
+    if (m_currentGame->hasOpenPlayers())
+    {
+        if (m_currentGame->getLocked())
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            spDialogPassword pDialogTextInput = new DialogPassword(tr("Enter Password"), true, "");
+            addChild(pDialogTextInput);
+            connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
+            pApp->continueThread();
+        }
+        else
+        {
+            joinGamePassword("");
+        }
+    }
+}
+
+void LobbyMenu::joinGamePassword(QString password)
 {
     bool exists = false;
     if (m_currentGame.get() != nullptr)
@@ -181,7 +202,7 @@ void LobbyMenu::joinGame()
         pApp->suspendThread();
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         m_usedForHosting = true;
-        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, false));
+        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, password, false));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << NetworkCommands::SERVERJOINGAME;
@@ -199,19 +220,20 @@ void LobbyMenu::joinAdress()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
-    spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Enter Host Adress"), true, "");
+    spDialogPasswordAndAdress pDialogTextInput = new DialogPasswordAndAdress(tr("Enter Host Adress"));
     addChild(pDialogTextInput);
-    connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
+    connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
 
     pApp->continueThread();
 }
 
-void LobbyMenu::join(QString adress)
+void LobbyMenu::join(QString adress, QString password)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Multiplayermenu(adress, false));
+    // todo
+    oxygine::getStage()->addChild(new Multiplayermenu(adress, password, false));
     addRef();
     oxygine::Actor::detach();
     deleteLater();
@@ -249,9 +271,9 @@ void LobbyMenu::updateGamesView()
         m_Gamesview->detach();
         m_Gamesview = nullptr;
     }
-    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods")};
-    qint32 itemWidth = (m_pGamesPanel->getWidth() - 80 - 100) / 3;
-    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth};
+    QStringList header = {tr("Map"), tr("Players"), tr("Description"), tr("Mods"), tr("Locked")};
+    qint32 itemWidth = (m_pGamesPanel->getWidth() - 80 - 100 - 90) / 3;
+    QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
     QVector<QStringList> items;
     for (const auto & game : m_games)
     {
@@ -267,6 +289,12 @@ void LobbyMenu::updateGamesView()
             modString.append(mod + "; ");
         }
         data.append(modString);
+        char lockChar = 1;
+        if (game->getLocked())
+        {
+            lockChar = 2;
+        }
+        data.append(QString(lockChar));
         items.append(data);
     }
     m_Gamesview = new TableView(widths, items, header, true);

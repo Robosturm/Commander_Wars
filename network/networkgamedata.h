@@ -52,6 +52,12 @@ public:
 
     bool getLaunched() const;
     void setLaunched(bool launched);
+
+    bool getLocked() const;
+    void setLocked(bool locked);
+
+    bool hasOpenPlayers();
+
 signals:
 
 private:
@@ -61,6 +67,7 @@ private:
     QString m_description;
     QString m_mapName;
     QString m_slaveName;
+    bool m_locked{false};
     bool m_launched{false};
 };
 

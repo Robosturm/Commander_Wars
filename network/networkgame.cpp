@@ -51,15 +51,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
     Console::print("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
     if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
     {
-        if (m_Clients.size() == 1)
-        {
-            sendPlayerJoined(0);
-            m_slaveRunning = true;
-        }
-        else
-        {
-            emit sigClose(this);
-        }
+        slaveRunning(stream);
     }
     else if (messageType == NetworkCommands::SERVEROPENPLAYERCOUNT)
     {
@@ -73,6 +65,10 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
         quint64 socket;
         stream >> socket;
         clientDisconnect(socket);
+    }
+    else if (messageType == NetworkCommands::INITGAME)
+    {
+        m_data.setLaunched(true);
     }
     else if (m_slaveRunning)
     {
@@ -92,6 +88,25 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
                 emit m_Clients[i]->sig_sendData(socket, data, service, false);
             }
         }
+    }
+}
+
+void NetworkGame::slaveRunning(QDataStream &stream)
+{
+    QString description;
+    stream >> description;
+    bool hasPassword = false;
+    stream >> hasPassword;
+    m_data.setDescription(description);
+    m_data.setLocked(hasPassword);
+    if (m_Clients.size() == 1)
+    {
+        sendPlayerJoined(0);
+        m_slaveRunning = true;
+    }
+    else
+    {
+        emit sigClose(this);
     }
 }
 
@@ -212,6 +227,7 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
     stream << socketId;
     emit m_gameConnection.sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+    emit sigDisconnectSocket(socketId);
     if (isHost)
     {
         Console::print("Closing game: " + getServerName() + " cause host has disconnected.", Console::eDEBUG);

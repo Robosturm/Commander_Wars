@@ -80,7 +80,7 @@ bool PlayerSelection::hasOpenPlayer()
             return true;
         }
     }
-    return true;
+    return false;
 }
 
 QString PlayerSelection::getPlayerAiName(qint32 player)

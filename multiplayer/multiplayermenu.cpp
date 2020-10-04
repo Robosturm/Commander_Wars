@@ -34,10 +34,11 @@
 #include "multiplayer/networkcommands.h"
 
 
-Multiplayermenu::Multiplayermenu(QString adress, bool host)
+Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(host),
-      m_local(true)
+      m_local(true),
+      m_password(password)
 {
     init();
     if (!host)
@@ -62,10 +63,11 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     }
 }
 
-Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, bool host)
+Multiplayermenu::Multiplayermenu(spNetworkInterface pNetworkInterface, QString password, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(host),
-      m_local(false)
+      m_local(false),
+      m_password(password)
 {
     m_NetworkInterface = pNetworkInterface.get();
     init();
@@ -226,6 +228,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
 
 void Multiplayermenu::acceptNewConnection(quint64 socketID)
 {
+    Console::print("Accepting connection for socket " + QString::number(socketID), Console::eDEBUG);
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
     QString file = m_pMapSelectionView->getCurrentFile().filePath();
     QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
@@ -360,6 +363,7 @@ void Multiplayermenu::playerJoinedServer(QDataStream & stream, quint64 socketID)
 {
     if (m_pPlayerSelection->hasOpenPlayer())
     {
+        Console::print("Player joined game for socket " + QString::number(socketID), Console::eDEBUG);
         quint64 socketId;
         stream >> socketId;
         dynamic_cast<LocalServer*>(m_NetworkInterface.get())->addSocket(socketID);
@@ -367,6 +371,7 @@ void Multiplayermenu::playerJoinedServer(QDataStream & stream, quint64 socketID)
     }
     else
     {
+        Console::print("Player rejected cause no player is open for socket " + QString::number(socketID), Console::eDEBUG);
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
@@ -425,27 +430,39 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
     if (!m_NetworkInterface->getIsServer() || !m_local)
     {
         m_pMapSelectionView->getCurrentMap()->getGameRules()->deserializeObject(stream);
-        bool campaign = false;
-        stream >> campaign;
-        if (campaign)
+        if (!m_password.areEqualPassword(m_pMapSelectionView->getCurrentMap()->getGameRules()->getPassword()))
         {
-            m_pMapSelectionView->getCurrentMap()->setCampaign(new Campaign());
-            m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
+            Console::print("Incorrect Password found.", Console::eDEBUG);
+            // quit game with wrong version
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            slotButtonBack();
+            pApp->continueThread();
         }
-        for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+        else
         {
-            QString name;
-            qint32 aiType;
-            stream >> name;
-            stream >> aiType;
-            m_pPlayerSelection->setPlayerAiName(i, name);
-            m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
-            m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<GameEnums::AiTypes>(aiType)));
-            m_pPlayerSelection->updatePlayerData(i);
+            bool campaign = false;
+            stream >> campaign;
+            if (campaign)
+            {
+                m_pMapSelectionView->getCurrentMap()->setCampaign(new Campaign());
+                m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
+            }
+            for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
+            {
+                QString name;
+                qint32 aiType;
+                stream >> name;
+                stream >> aiType;
+                m_pPlayerSelection->setPlayerAiName(i, name);
+                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
+                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<GameEnums::AiTypes>(aiType)));
+                m_pPlayerSelection->updatePlayerData(i);
+            }
+            m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
+            emit sigConnected();
+            emit sigHostGameLaunched();
         }
-        m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
-        emit sigConnected();
-        emit sigHostGameLaunched();
     }
 }
 
@@ -469,47 +486,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             stream >> version;
             versions.append(version);
         }
-        QStringList myMods = Settings::getMods();
-        QStringList myVersions = Settings::getActiveModVersions();
-        bool sameMods = true;
-        if (myMods.size() != mods.size())
-        {
-            sameMods = false;
-        }
-        else
-        {
-            // check mods in both directions
-            for (qint32 i = 0; i < myMods.size(); i++)
-            {
-                if (!mods.contains(myMods[i]))
-                {
-                    sameMods = false;
-                    break;
-                }
-                else
-                {
-                    for (qint32 i2 = 0; i2 < mods.size(); i2++)
-                    {
-                        if (mods[i2] == myMods[i])
-                        {
-                            if (versions[i2] != myVersions[i])
-                            {
-                                sameMods = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            for (qint32 i = 0; i < mods.size(); i++)
-            {
-                if (!myMods.contains(mods[i]))
-                {
-                    sameMods = false;
-                    break;
-                }
-            }
-        }
+        bool sameMods = checkMods(mods, versions);
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
         if (hostRuntime != Filesupport::getRuntimeHash())
         {
@@ -570,6 +547,52 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             pApp->continueThread();
         }
     }
+}
+
+bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions)
+{
+    QStringList myVersions = Settings::getActiveModVersions();
+    QStringList myMods = Settings::getMods();
+    bool sameMods = true;
+    if (myMods.size() != mods.size())
+    {
+        sameMods = false;
+    }
+    else
+    {
+        // check mods in both directions
+        for (qint32 i = 0; i < myMods.size(); i++)
+        {
+            if (!mods.contains(myMods[i]))
+            {
+                sameMods = false;
+                break;
+            }
+            else
+            {
+                for (qint32 i2 = 0; i2 < mods.size(); i2++)
+                {
+                    if (mods[i2] == myMods[i])
+                    {
+                        if (versions[i2] != myVersions[i])
+                        {
+                            sameMods = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        for (qint32 i = 0; i < mods.size(); i++)
+        {
+            if (!myMods.contains(mods[i]))
+            {
+                sameMods = false;
+                break;
+            }
+        }
+    }
+    return sameMods;
 }
 
 void Multiplayermenu::requestMap(quint64 socketID)
@@ -689,9 +712,19 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
 
 void Multiplayermenu::sendSlaveReady()
 {
+    spGameMap pMap = GameMap::getInstance();
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::GAMERUNNINGONSERVER;
+    sendStream << pMap->getGameRules()->getDescription();
+    if (pMap->getGameRules()->getPassword().isValidPassword(""))
+    {
+        sendStream << false;
+    }
+    else
+    {
+        sendStream << true;
+    }
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, true);
 }
 
@@ -907,6 +940,12 @@ void Multiplayermenu::slotButtonBack()
     }
     else if (m_Host)
     {
+        m_pHostAdresse->setVisible(false);
+        if (m_Chat.get() != nullptr)
+        {
+            m_Chat->detach();
+            m_Chat = nullptr;
+        }
         MapSelectionMapsMenue::slotButtonBack();
         if (m_saveGame)
         {
@@ -921,6 +960,8 @@ void Multiplayermenu::slotButtonNext()
 {
     if (m_Host && m_MapSelectionStep == MapSelectionStep::selectRules)
     {
+        spGameMap pMap = GameMap::getInstance();
+        m_password.setPassword(pMap->getGameRules()->getPassword());
         if (m_local)
         {
             m_pHostAdresse->setVisible(true);
@@ -993,16 +1034,9 @@ void Multiplayermenu::disconnectNetwork()
             m_Chat->detach();
             m_Chat = nullptr;
         }
-        if (m_local)
-        {
-            emit m_NetworkInterface->sig_close();
-            m_pPlayerSelection->attachNetworkInterface(nullptr);
-            m_NetworkInterface = nullptr;
-        }
-        else
-        {
-            emit m_NetworkInterface->sigChangeThread(0, pApp->getNetworkThread());
-        }
+        emit m_NetworkInterface->sig_close();
+        m_pPlayerSelection->attachNetworkInterface(nullptr);
+        m_NetworkInterface = nullptr;
     }
     pApp->continueThread();
 }

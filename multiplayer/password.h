@@ -12,6 +12,8 @@ class Password : public QObject, public FileSerializable
     Q_OBJECT
 public:
     explicit Password();
+    explicit Password(QString password);
+
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -30,10 +32,16 @@ public:
     {
         return 1;
     }
+    /**
+     * @brief setPassword
+     * @param password
+     * @return
+     */
+    void setPassword(const Password & password);
 public slots:
     void setPassword(QString password);
     bool isValidPassword(QString password) const;
-    bool areEqualPassword(Password & password) const;
+    bool areEqualPassword(const Password & password) const;
 private:
     QByteArray m_passwordHash;
 };
