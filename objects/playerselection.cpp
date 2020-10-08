@@ -1087,10 +1087,6 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             recievedColorData(socketID, stream);
         }
-        else if (messageType == NetworkCommands::SERVERREADY)
-        {
-            recievePlayerServerReady(socketID, stream);
-        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {

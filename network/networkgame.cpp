@@ -29,7 +29,7 @@ void NetworkGame::addClient(spTCPClient pClient)
 
 void NetworkGame::forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    Console::print("Forwaring message from socket " + QString::number(socketID), Console::eDEBUG);
+    Console::print("Forwarding message from socket " + QString::number(socketID), Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
         if (m_Clients[i]->getSocketID() != socketID)
@@ -48,7 +48,7 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
     {
         stream >> messageType;
     }
-    Console::print("Routing message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
+    Console::print("Recieve Route message:" + messageType + " for socket " + QString::number(socket), Console::eDEBUG);
     if (messageType == NetworkCommands::GAMERUNNINGONSERVER)
     {
         slaveRunning(stream);
@@ -66,13 +66,13 @@ void NetworkGame::recieveSlaveData(quint64 socket, QByteArray data, NetworkInter
         stream >> socket;
         clientDisconnect(socket);
     }
-    else if (messageType == NetworkCommands::INITGAME)
-    {
-        m_data.setLaunched(true);
-    }
     else if (m_slaveRunning)
     {
-        if (messageType == NetworkCommands::PLAYERCHANGED)
+        if (messageType == NetworkCommands::INITGAME)
+        {
+            m_data.setLaunched(true);
+        }
+        else if (messageType == NetworkCommands::PLAYERCHANGED)
         {
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -227,6 +227,13 @@ void NetworkGame::clientDisconnect(quint64 socketId)
     stream << NetworkCommands::PLAYERDISCONNECTEDGAMEONSERVER;
     stream << socketId;
     emit m_gameConnection.sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+    for (qint32 i = 0; i < m_Clients.size(); i++)
+    {
+        if (m_Clients[i]->getSocketID() != socketId)
+        {
+            emit m_Clients[i]->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
+        }
+    }
     emit sigDisconnectSocket(socketId);
     if (isHost)
     {

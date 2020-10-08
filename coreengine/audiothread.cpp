@@ -341,9 +341,8 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
                 count++;
             }
         }
-        if (count < 3)
+        if (count < 10)
         {
-
             QSoundEffect* pSoundEffect = new QSoundEffect();
             qreal value = QAudio::convertVolume(sound,
                                                 QAudio::LogarithmicVolumeScale,

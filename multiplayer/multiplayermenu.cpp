@@ -1063,6 +1063,7 @@ bool Multiplayermenu::getGameReady()
             }
         }
     }
+    Console::print("Game ready", Console::eDEBUG);
     return gameReady;
 }
 
@@ -1127,7 +1128,7 @@ void Multiplayermenu::startCountdown()
         m_GameStartTimer.start();
         emit m_Chat->sigSendText(QString::number(counter) + "...");
     }
-    else if (m_pPlayerSelection->getPlayerReady())
+    else
     {
         Console::print("Stoping countdown", Console::eDEBUG);
         counter = 5;
@@ -1167,9 +1168,9 @@ void Multiplayermenu::sendServerReady(bool value)
 
 void Multiplayermenu::countdown()
 {
-    counter--;
     if (getGameReady())
     {
+        counter--;
         emit m_Chat->sigSendText(QString::number(counter) + "...");
         if (counter == 0)
         {
