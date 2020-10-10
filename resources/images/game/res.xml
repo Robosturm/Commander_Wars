@@ -216,6 +216,24 @@
 		<image file="lz.png"/>
 		<image file="nr.png"/>
 		<image file="dv.png"/>
+		
+		
+		<!-- army icons -->
+		<image file="icon_os.png"/>
+		<image file="icon_bm.png"/>
+		<image file="icon_ge.png"/>
+		<image file="icon_yc.png"/>
+		<image file="icon_bh.png"/>
+		<image file="icon_bg.png"/>
+		<image file="icon_ma.png"/>
+		<image file="icon_ac.png"/>
+		<image file="icon_bd.png"/>
+		<image file="icon_gs.png"/>
+		<image file="icon_pf.png"/>
+		<image file="icon_ti.png"/>
+		<image file="icon_dm.png"/>
+		<image file="icon_co_army.png"/>
+		
 	</atlas>
 </resources>
 

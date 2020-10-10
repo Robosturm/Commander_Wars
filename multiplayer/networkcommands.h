@@ -46,6 +46,10 @@ namespace NetworkCommands
      */
     static const QString PLAYERDATA = "PLAYERDATA";
     /**
+     * @brief PLAYERARMY
+     */
+    static const QString PLAYERARMY = "PLAYERARMY";
+    /**
      * @brief COLORDATA the color of the selected player
      */
     static const QString COLORDATA = "COLORDATA";

@@ -342,6 +342,21 @@ void Player::createTable(QColor baseColor)
     }
 }
 
+void Player::setPlayerArmy(const QString &value)
+{
+    playerArmy = value;
+}
+
+bool Player::getPlayerArmySelected() const
+{
+    return m_playerArmySelected;
+}
+
+void Player::setPlayerArmySelected(bool playerArmySelected)
+{
+    m_playerArmySelected = playerArmySelected;
+}
+
 oxygine::spResAnim Player::getColorTableAnim() const
 {
     return m_ColorTableAnim;
@@ -417,7 +432,7 @@ QString Player::getArmy()
     }
     else
     {
-        // editor memu mode
+        // editor menu mode
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args;
         QJSValue objArg = pInterpreter->newQObject(this);
@@ -1410,7 +1425,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
 
 void Player::defineArmy()
 {
-    if (playerCOs[0].get() != nullptr)
+    if (playerCOs[0].get() != nullptr && !m_playerArmySelected)
     {
         playerArmy = playerCOs[0]->getCOArmy();
     }
@@ -1503,6 +1518,7 @@ void Player::serializeObject(QDataStream& pStream) const
     {
         pStream << m_colorTable.pixel(x, 0);
     }
+    pStream << m_playerArmySelected;
 }
 
 void Player::deserializeObject(QDataStream& pStream)
@@ -1678,5 +1694,9 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         {
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
         }
+    }
+    if (version > 13)
+    {
+         pStream >> m_playerArmySelected;
     }
 }

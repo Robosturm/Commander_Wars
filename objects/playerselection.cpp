@@ -9,6 +9,7 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/gamemanager.h"
 
 #include "objects/buildlistdialog.h"
 #include "objects/coselectiondialog.h"
@@ -22,6 +23,8 @@
 #include "coreengine/filesupport.h"
 
 #include "network/localserver.h"
+
+constexpr const char* const CO_ARMY = "CO_ARMY";
 
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
@@ -39,6 +42,8 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     connect(this, &PlayerSelection::buttonShowPlayerBuildList, this, &PlayerSelection::slotShowPlayerBuildList, Qt::QueuedConnection);
     connect(this, &PlayerSelection::sigAiChanged, this, &PlayerSelection::selectAI, Qt::QueuedConnection);
     connect(this, &PlayerSelection::sigCOsRandom, this, &PlayerSelection::slotCOsRandom, Qt::QueuedConnection);
+    connect(this, &PlayerSelection::sigSelectedArmyChanged, this, &PlayerSelection::selectedArmyChanged, Qt::QueuedConnection);
+
     connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
 
     this->addChild(m_pPlayerSelection);
@@ -137,6 +142,7 @@ void PlayerSelection::resetPlayerSelection()
     m_PlayerSockets.clear();
     m_pReadyBoxes.clear();
     m_playerPerks.clear();
+    m_playerArmy.clear();
     pApp->continueThread();
 }
 
@@ -204,9 +210,9 @@ void PlayerSelection::showPlayerSelection()
     }
     QVector<qint32> xPositions;
     qint32 labelminStepSize = (m_pPlayerSelection->getWidth() - 100) / items.size();
-    if (labelminStepSize < 210)
+    if (labelminStepSize < 220)
     {
-        labelminStepSize = 210;
+        labelminStepSize = 220;
     }
     qint32 curPos = 5;
 
@@ -452,8 +458,9 @@ void PlayerSelection::showPlayerSelection()
             emit sigShowSelectCO(i, 1);
         });
 
+
         oxygine::spButton pIconButton = ObjectManager::createIconButton("perk");
-        pIconButton->setPosition(xPositions[itemIndex] + 75, y + 10);
+        pIconButton->setPosition(xPositions[itemIndex] + 70, y + 10);
         m_pPlayerSelection->addItem(pIconButton);
         m_playerPerks.append(pIconButton);
         pIconButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -466,6 +473,8 @@ void PlayerSelection::showPlayerSelection()
         {
             pIconButton->setEnabled(false);
         }
+        //
+        createArmySelection(ai, xPositions, y, itemIndex, i);
 
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
@@ -669,6 +678,70 @@ void PlayerSelection::showPlayerSelection()
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y + 50);
+    pApp->continueThread();
+}
+
+void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player)
+{
+    auto creator = [](QString army)
+    {
+        GameManager* pGameManager = GameManager::getInstance();
+        oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
+        oxygine::spSprite ret = new oxygine::Sprite();
+        ret->setResAnim(pAnim);
+        return ret;
+    };
+    QStringList armies = getSelectableArmies();
+    spDropDownmenuSprite pArmy = new DropDownmenuSprite(105, armies, creator);
+    pArmy->setTooltipText(tr("Selects the army for the player. CO means the army of the first CO is selected."));
+    m_pPlayerSelection->addItem(pArmy);
+    m_playerArmy.append(pArmy);
+    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
+    {
+        emit sigSelectedArmyChanged(player, pArmy->getCurrentItemText());
+    });
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+        saveGame ||
+        (ai > 0 && m_pCampaign.get() != nullptr))
+    {
+        pArmy->setEnabled(false);
+    }
+    pArmy->setPosition(xPositions[itemIndex] + 105, y);
+}
+
+QStringList PlayerSelection::getSelectableArmies()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction("PLAYER", "getArmies");
+    QStringList ret = erg.toVariant().toStringList();
+    ret.push_front(CO_ARMY);
+    return ret;
+}
+
+void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
+{
+    spGameMap pMap = GameMap::getInstance();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Player* pPlayer = pMap->getPlayer(player);
+    if (army == CO_ARMY)
+    {
+        pPlayer->setPlayerArmySelected(false);
+    }
+    else
+    {
+        pPlayer->setPlayerArmy(army);
+        pPlayer->setPlayerArmySelected(true);
+    }
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << NetworkCommands::PLAYERARMY;
+        sendStream << player;
+        sendStream << army;
+        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+    }
     pApp->continueThread();
 }
 
@@ -1087,6 +1160,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             recievedColorData(socketID, stream);
         }
+        else if (messageType == NetworkCommands::PLAYERARMY)
+        {
+            recievePlayerArmy(socketID, stream);
+        }
         else
         {
             Console::print("Command not handled in playerselection", Console::eDEBUG);
@@ -1466,6 +1543,29 @@ void PlayerSelection::recievedColorData(quint64, QDataStream& stream)
     pApp->continueThread();
 }
 
+void PlayerSelection::recievePlayerArmy(quint64, QDataStream& stream)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGameMap pMap = GameMap::getInstance();
+    qint32 playerIdx = 0;
+    QString army;
+    stream >> playerIdx;
+    stream >> army;
+    Player* pPlayer = pMap->getPlayer(playerIdx);
+    if (army == CO_ARMY)
+    {
+        pPlayer->setPlayerArmySelected(false);
+    }
+    else
+    {
+        pPlayer->setPlayerArmy(army);
+        pPlayer->setPlayerArmySelected(true);
+    }
+    m_playerArmy[playerIdx]->setCurrentItem(army);
+    pApp->continueThread();
+}
+
 void PlayerSelection::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface->getIsServer())
@@ -1544,6 +1644,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerCO1[player]->setEnabled(true);
                 m_playerCO2[player]->setEnabled(true);
                 m_playerPerks[player]->setEnabled(true);
+                m_playerArmy[player]->setEnabled(true);
             }
             else
             {
@@ -1551,6 +1652,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
                 m_playerPerks[player]->setEnabled(false);
+                m_playerArmy[player]->setEnabled(false);
             }
 
             if (pPlayer->getBaseGameInput() != nullptr &&
@@ -1575,6 +1677,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                     m_playerCO1[player]->setEnabled(true);
                     m_playerCO2[player]->setEnabled(true);
                     m_playerPerks[player]->setEnabled(true);
+                    m_playerArmy[player]->setEnabled(true);
                 }
                 else
                 {
@@ -1582,6 +1685,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                     m_playerCO1[player]->setEnabled(false);
                     m_playerCO2[player]->setEnabled(false);
                     m_playerPerks[player]->setEnabled(false);
+                    m_playerArmy[player]->setEnabled(false);
                 }
             }
             else
@@ -1591,6 +1695,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
                 m_playerPerks[player]->setEnabled(false);
+                m_playerArmy[player]->setEnabled(false);
             }
         }
         if (m_pCampaign.get() != nullptr)
@@ -1601,6 +1706,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
                 m_playerPerks[player]->setEnabled(false);
+                m_playerArmy[player]->setEnabled(false);
             }
             m_playerColors[player]->setEnabled(false);
         }

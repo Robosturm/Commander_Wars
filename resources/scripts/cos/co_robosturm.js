@@ -249,7 +249,7 @@ var Constructor = function()
     };
     this.getPowerName = function(co)
     {
-        return qsTr("Machinzied Storm");
+        return qsTr("Machinized Storm");
     };
     this.getSuperPowerDescription = function(co)
     {
@@ -257,7 +257,7 @@ var Constructor = function()
     };
     this.getSuperPowerName = function(co)
     {
-        return qsTr("Machinzied Destruction");
+        return qsTr("Machinized Destruction");
     };
     this.getPowerSentences = function(co)
     {

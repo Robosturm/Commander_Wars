@@ -4,7 +4,7 @@ var Constructor = function()
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
-        wikipage.loadImage("ma", 2);
+        wikipage.loadImage("icon_ma", 2);
         wikipage.loadText(qsTr("The Metall Army is an army of robots. The robots were initially invented by Lash. ") +
                           qsTr("The Robots AI developped its own behaviour instead of following Lash's or Dark Matters orders. ") +
                           qsTr("The Metall Army defends it's own territory at all costs when it looses it's territory. The Army tries to reconquer it.") +

@@ -3911,145 +3911,150 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
         <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
-        <location filename="../objects/playerselection.cpp" line="322"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
+        <location filename="../objects/playerselection.cpp" line="328"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="200"/>
-        <location filename="../objects/playerselection.cpp" line="304"/>
-        <location filename="../objects/playerselection.cpp" line="643"/>
+        <location filename="../objects/playerselection.cpp" line="206"/>
+        <location filename="../objects/playerselection.cpp" line="310"/>
+        <location filename="../objects/playerselection.cpp" line="652"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="203"/>
+        <location filename="../objects/playerselection.cpp" line="209"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="235"/>
+        <location filename="../objects/playerselection.cpp" line="241"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="240"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="248"/>
+        <location filename="../objects/playerselection.cpp" line="254"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="257"/>
+        <location filename="../objects/playerselection.cpp" line="263"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="275"/>
+        <location filename="../objects/playerselection.cpp" line="281"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="290"/>
+        <location filename="../objects/playerselection.cpp" line="296"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
-        <location filename="../objects/playerselection.cpp" line="328"/>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
+        <location filename="../objects/playerselection.cpp" line="334"/>
+        <location filename="../objects/playerselection.cpp" line="348"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="98"/>
-        <location filename="../objects/playerselection.cpp" line="324"/>
+        <location filename="../objects/playerselection.cpp" line="696"/>
+        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="103"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="331"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
-        <location filename="../objects/playerselection.cpp" line="342"/>
+        <location filename="../objects/playerselection.cpp" line="337"/>
+        <location filename="../objects/playerselection.cpp" line="344"/>
+        <location filename="../objects/playerselection.cpp" line="348"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="491"/>
+        <location filename="../objects/playerselection.cpp" line="500"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="509"/>
+        <location filename="../objects/playerselection.cpp" line="518"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="588"/>
+        <location filename="../objects/playerselection.cpp" line="597"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="607"/>
+        <location filename="../objects/playerselection.cpp" line="616"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="626"/>
+        <location filename="../objects/playerselection.cpp" line="635"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="662"/>
+        <location filename="../objects/playerselection.cpp" line="671"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14762,8 +14767,18 @@ Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="252"/>
+        <source>Machinized Storm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="256"/>
         <source>Enemy loses half of their ammo, take 2 HP damage ,his troops can move 2 points more and their defense rises extremly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="260"/>
+        <source>Machinized Destruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14807,16 +14822,6 @@ Units gain 1 additional movement point and have reduced firepower.</source>
 
 CO Zone Effect: 
 Units gain defense and have reduced firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="252"/>
-        <source>Machinzied Storm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="260"/>
-        <source>Machinzied Destruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

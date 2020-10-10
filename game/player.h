@@ -50,7 +50,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 13;
+        return 14;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -103,6 +103,21 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief setPlayerArmy
+     * @param value
+     */
+    void setPlayerArmy(const QString &value);
+    /**
+     * @brief getPlayerArmySelected
+     * @return
+     */
+    bool getPlayerArmySelected() const;
+    /**
+     * @brief setPlayerArmySelected
+     * @param playerArmySelected
+     */
+    void setPlayerArmySelected(bool playerArmySelected);
     /**
      * @brief getFlipUnitSprites
      * @return
@@ -479,6 +494,7 @@ private:
     bool m_BuildlistChanged{false};
     ScriptVariables m_Variables;
     quint64 m_socketId{0};
+    bool m_playerArmySelected{false};
     static oxygine::spResAnim m_neutralTableAnim;
 };
 

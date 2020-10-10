@@ -17,6 +17,8 @@ class DropDownmenuSprite : public DropDownmenuBase
     Q_OBJECT
 public:
     explicit DropDownmenuSprite(qint32 width, QVector<QString>& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1);
+
+    explicit DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1);
     /**
      * @brief getCurrentItemText text of the current item
      * @return

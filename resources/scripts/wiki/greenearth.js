@@ -4,7 +4,7 @@ var Constructor = function()
     this.loadPage = function(wikipage)
     {
         wikipage.loadHeadline(LOADEDWIKIPAGE.getName());
-        wikipage.loadImage("ge", 2);
+        wikipage.loadImage("icon_ge", 2);
         wikipage.loadText(qsTr("Green Earth's forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and ") +
 		                  qsTr("Drake the seas. "));
     };

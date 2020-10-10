@@ -12,6 +12,7 @@
 #include "objects/dropdownmenu.h"
 #include "objects/dropdownmenucolor.h"
 #include "objects/checkbox.h"
+#include "objects/dropdownmenusprite.h"
 
 #include "network/NetworkInterface.h"
 
@@ -81,6 +82,7 @@ signals:
     void buttonShowAllBuildList();
     void buttonShowPlayerBuildList(qint32 player);
     void sigAiChanged(qint32 player);
+    void sigSelectedArmyChanged(qint32 player, QString army);
     /**
      * @brief sigDisconnect emitted when we need to leave the game cause we don't own a player
      */
@@ -93,6 +95,7 @@ public slots:
     void playerStartFundsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
     void playerColorChanged(QColor value, qint32 playerIdx, qint32 item);
+    void selectedArmyChanged(qint32 player, QString army);
     void showSelectCO(qint32 player, quint8 co);
     void playerCO1Changed(QString coid, qint32 playerIdx);
     void updateCO1Sprite(QString coid, qint32 playerIdx);
@@ -105,6 +108,7 @@ public slots:
     void slotChangeAllBuildList(qint32, QStringList buildList);
     void slotChangePlayerBuildList(qint32 player, QStringList buildList);
     void selectAI(qint32 player);
+
     /**
      * @brief showSelectCOPerks
      * @param player
@@ -126,6 +130,24 @@ public slots:
      */
     void recievePlayerReady(quint64 socketID, QDataStream& stream);
 protected:
+    /**
+     * @brief createArmySelection
+     * @param ai
+     * @param xPositions
+     * @param y
+     * @param itemIndex
+     */
+    void createArmySelection(qint32 ai, QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player);
+    /**
+     * @brief getSelectableArmies
+     * @return
+     */
+    QStringList getSelectableArmies();
+    /**
+     * @brief createAi
+     * @param player
+     * @param type
+     */
     void createAi(qint32 player, GameEnums::AiTypes type);
     /**
      * @brief requestPlayer a client requested to get control of a player. We check the request and execute it if it's valid
@@ -163,6 +185,12 @@ protected:
      */
     void recievePlayerServerReady(quint64 socketID, QDataStream& stream);
     /**
+     * @brief recievePlayerArmy
+     * @param socketID
+     * @param stream
+     */
+    void recievePlayerArmy(quint64 socketID, QDataStream& stream);
+    /**
      * @brief sendOpenPlayerCount
      */
     void sendOpenPlayerCount();
@@ -175,6 +203,7 @@ private:
     QVector<oxygine::spSprite> m_playerCO1;
     QVector<oxygine::spSprite> m_playerCO2;
     QVector<oxygine::spButton> m_playerPerks;
+    QVector<spDropDownmenuSprite> m_playerArmy;
     QVector<spDropDownmenuColor> m_playerColors;
     QVector<spSpinBox> m_playerIncomes;
     QVector<spSpinBox> m_playerStartFunds;
