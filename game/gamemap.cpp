@@ -1681,6 +1681,18 @@ void GameMap::initPlayersAndSelectCOs()
 {
     QStringList usedCOs;
     bool singleCO = m_Rules->getSingleRandomCO();
+    for (qint32 i = 0; i < getPlayerCount(); i++)
+    {
+        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        if (pPlayer->getCO(0) == nullptr)
+        {
+            usedCOs.append(pPlayer->getCO(0)->getCoID());
+        }
+        if (pPlayer->getCO(1) != nullptr)
+        {
+            usedCOs.append(pPlayer->getCO(1)->getCoID());
+        }
+    }
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {

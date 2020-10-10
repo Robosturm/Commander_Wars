@@ -128,8 +128,11 @@ var Constructor = function()
         var damage = baseDamage;
         if (baseDamage > 0.0)
         {
+            var hp = attacker.getHp();
+            attacker.setHp(attackerBaseHp);
             var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
             var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition, isDefender);
+            attacker.setHp(hp);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
             damage += attacker.getTrueDamage(damage, attackerPosition, attackerBaseHp,
