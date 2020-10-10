@@ -29,7 +29,7 @@ void LocalServer::connectTCP(QString adress, quint16)
     QObject::connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
     QObject::connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
 
-    Console::print("Server is running. " + adress, Console::eLogLevels::eDEBUG);
+    Console::print("Local Server is running. " + adress, Console::eLogLevels::eDEBUG);
     // create marker file
     QString markername = "temp/" + adress + ".marker";
     QFile file(markername);

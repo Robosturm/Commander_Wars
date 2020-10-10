@@ -1087,6 +1087,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             recievedColorData(socketID, stream);
         }
+        else
+        {
+            Console::print("Command not handled in playerselection", Console::eDEBUG);
+        }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)
     {
@@ -1097,6 +1101,10 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         if (messageType == NetworkCommands::SERVERREQUESTOPENPLAYERCOUNT)
         {
             sendOpenPlayerCount();
+        }
+        else
+        {
+            Console::print("Command not handled in playerselection", Console::eDEBUG);
         }
     }
 }

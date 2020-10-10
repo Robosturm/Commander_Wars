@@ -1117,21 +1117,23 @@ void Multiplayermenu::changeButtonText()
 
 void Multiplayermenu::startCountdown()
 {
+    counter = 5;
     // can we start the game?
     if (getGameReady())
     {
-        Console::print("Starting countdown", Console::eDEBUG);
-        sendServerReady(true);
-        counter = 5;
-        m_GameStartTimer.setInterval(std::chrono::seconds(1));
-        m_GameStartTimer.setSingleShot(false);
-        m_GameStartTimer.start();
-        emit m_Chat->sigSendText(QString::number(counter) + "...");
+        if (!m_GameStartTimer.isActive())
+        {
+            Console::print("Starting countdown", Console::eDEBUG);
+            sendServerReady(true);
+            m_GameStartTimer.setInterval(std::chrono::seconds(1));
+            m_GameStartTimer.setSingleShot(false);
+            m_GameStartTimer.start();
+            emit m_Chat->sigSendText(QString::number(counter) + "...");
+        }
     }
     else
     {
         Console::print("Stoping countdown", Console::eDEBUG);
-        counter = 5;
         m_GameStartTimer.stop();
         sendServerReady(false);
     }
@@ -1171,8 +1173,12 @@ void Multiplayermenu::countdown()
     if (getGameReady())
     {
         counter--;
-        emit m_Chat->sigSendText(QString::number(counter) + "...");
-        if (counter == 0)
+        if (m_Chat.get() != nullptr)
+        {
+            Console::print("Sending game counter..." + QString::number(counter), Console::eDEBUG);
+            emit m_Chat->sigSendText(QString::number(counter) + "...");
+        }
+        if (counter == 0 && m_NetworkInterface.get() != nullptr)
         {
             Console::print("Starting game on server", Console::eDEBUG);
             Mainapp* pApp = Mainapp::getInstance();
@@ -1205,6 +1211,7 @@ void Multiplayermenu::countdown()
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));
             QThread::msleep(200);
+            Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             addRef();
             oxygine::Actor::detach();

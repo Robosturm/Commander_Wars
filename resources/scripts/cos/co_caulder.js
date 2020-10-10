@@ -110,7 +110,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
                 break;
             case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
                 break;
             default:
                 audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)

@@ -21,6 +21,7 @@ MainServer::MainServer()
     : QObject(),
       m_updateTimer(this)
 {
+    Console::print("Game server launched", Console::eDEBUG);
     Interpreter::setCppOwnerShip(this);
     m_updateTimer.setSingleShot(true);
     m_updateTimer.start(5000);

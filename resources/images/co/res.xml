@@ -275,6 +275,9 @@
 		<image file="dm/co_tabitha+face.png" cols = "3" />
 		<image file="dm/co_beast+face.png" cols = "3" />
 		<image file="dm/co_beast+info.png" />
+		<set scale_factor = "0.65" />	
+		<image file="dm/co_beast+nrm.png" />
+		<set scale_factor = "1.0" />	
 		
 		
 		<!-- GE -->

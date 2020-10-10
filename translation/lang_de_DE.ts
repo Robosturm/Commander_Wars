@@ -8891,100 +8891,216 @@ No bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="210"/>
         <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_andy.js" line="211"/>
+        <source>
 
 CO Zone Effect: 
 Units gain %0% firepower and defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="217"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="221"/>
         <source>Hyper Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="225"/>
         <source>Restores five HP to all units. Firepower rises and unit movement increases by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="229"/>
         <source>Hyper Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="233"/>
         <source>I&apos;ve got parts to spare!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="234"/>
         <source>I&apos;m not giving up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="235"/>
         <source>Time to roll up my sleeves!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="236"/>
         <source>I haven&apos;t even cranked the engine yet!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="237"/>
         <source>Pass me my wrench!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="238"/>
         <source>It&apos;s time for a tune-up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="239"/>
         <source>Never give up, and never lose! I&apos;m on my way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="240"/>
         <source>I&apos;m not worried! I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="244"/>
         <source>We won! Wooooooohooo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="245"/>
         <source>I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="246"/>
         <source>I did it! Did you see that!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="250"/>
         <source>Oh, come on!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="251"/>
         <source>Next time I see you, you&apos;re in trouble!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="255"/>
         <source>Andy</source>
         <translation>Andy</translation>
+    </message>
+</context>
+<context>
+    <name>co_beast</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="176"/>
+        <source>Looting, Robbing and Killing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="180"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="184"/>
+        <source>His Units have extremly high firepowers, but take damage when ever they attack.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="188"/>
+        <source>
+Global Effect: 
+No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="195"/>
+        <source>Restores two HP to all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="199"/>
+        <source>Dopping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="172"/>
+        <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="189"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower when attacking. His Units take 1 Damage after attacking.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="203"/>
+        <source>Restores 3 HP to all units. Units movement is increases by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="207"/>
+        <source>Steroids</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="211"/>
+        <source>Loot them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="212"/>
+        <source>Rob them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="213"/>
+        <source>The first one gets the money!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="214"/>
+        <source>Those Steroids, you can&apos;t stand them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="220"/>
+        <source>Burn down all the towns!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="219"/>
+        <source>All that loot is mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="221"/>
+        <source>I did it! Did you see that!?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="225"/>
+        <source>Argghhh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="226"/>
+        <source>We need more steroids. Next time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="230"/>
+        <source>Beast</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

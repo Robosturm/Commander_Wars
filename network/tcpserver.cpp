@@ -29,7 +29,7 @@ void TCPServer::connectTCP(QString, quint16 port)
     QObject::connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
     QObject::connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
 
-    Console::print("Server is running", Console::eLogLevels::eDEBUG);
+    Console::print("TCP Server is running", Console::eLogLevels::eDEBUG);
 }
 
 void TCPServer::disconnectTCP()

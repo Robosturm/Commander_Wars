@@ -164,7 +164,7 @@ void LobbyMenu::hostServer()
 
 void LobbyMenu::joinGame()
 {
-    if (m_currentGame->hasOpenPlayers())
+    if (m_currentGame.get() && m_currentGame->hasOpenPlayers())
     {
         if (m_currentGame->getLocked())
         {
