@@ -355,7 +355,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                     if ((m_EnabledList.size() > 0 && m_EnabledList[currentAction]) ||
                         (m_EnabledList.size() == 0))
                     {
-                        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
                         if (m_CostList.size() == m_ActionIDs.size())
                         {
                             emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
