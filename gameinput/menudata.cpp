@@ -58,7 +58,8 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
 
 bool MenuData::validData()
 {
-    if (texts.size() == actionIDs.size() &&
+    if (texts.size() > 0 &&
+        texts.size() == actionIDs.size() &&
         actionIDs.size() == costList.size() &&
         costList.size() == enabledList.size())
     {

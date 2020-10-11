@@ -2,8 +2,17 @@ var Constructor = function()
 {
     // called for loading the main sprite
     this.canBePerformed = function(action)
-    {		
-        return true;
+    {
+        for (var i = 0; i < map.getPlayerCount(); i++)
+        {
+            var player = map.getPlayer(i);
+            if (player !== currentPlayer &&
+                currentPlayer.isAlly(player))
+            {
+                return true;
+            }
+        }
+        return false;
     };
     
     this.getActionText = function()

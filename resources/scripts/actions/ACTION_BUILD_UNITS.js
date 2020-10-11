@@ -9,7 +9,7 @@ var Constructor = function()
         var units = building.getConstructionList();
         if ((unit === null) &&
             (building !== null) &&
-            (units.length))
+            (units.length > 0))
 		{
             var unitCount = building.getOwner().getUnitCount();
             if ((unitLimit <= 0) ||
