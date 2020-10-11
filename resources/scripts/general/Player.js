@@ -278,23 +278,23 @@ var PLAYER =
                 return qsTr("Dark Matters");
         }
     },
-
+    armies : ["OS",
+              "BM",
+              "GE",
+              "YC",
+              "BH",
+              "BG",
+              "MA",
+              "AC",
+              "BD",
+              "GS",
+              "PF",
+              "TI",
+              "DM"],
     // co selection infos
     getArmies : function()
     {
-        return ["OS",
-                "BM",
-                "GE",
-                "YC",
-                "BH",
-                "BG",
-                "MA",
-                "AC",
-                "BD",
-                "GS",
-                "PF",
-                "TI",
-                "DM"];
+        return PLAYER.armies;
     },
 
     getArmyCOsOS : function()
