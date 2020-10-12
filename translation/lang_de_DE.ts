@@ -8888,9 +8888,7 @@ Hovercrafts gain %0% firepower boost.</source>
         <source>
 Special Unit:
 Repair Tanks
-
-Global Effect: 
-No bonus.</source>
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -31,7 +31,7 @@ replaceTextArgs = function(text, args)
 {
     for (var i = 0; i < args.length; i++)
     {
-        text = text.replace("%" + i.toString(), args[i]);
+        text = text.replaceAll("%" + i.toString(), args[i]);
     }
     return text;
 }
