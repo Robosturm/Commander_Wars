@@ -9353,6 +9353,13 @@ Units gain %0% firepower when attacking units with equal or less health.</source
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="225"/>
+        <source>
+Global Effect: 
+Units loose firepower by %0% and defense by %0%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="232"/>
         <source>All his units gain five Hp and get a offense and defense buff.</source>
         <translation type="unfinished"></translation>
@@ -9395,13 +9402,6 @@ Units gain %0% firepower when attacking units with equal or less health.</source
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="250"/>
         <source>You and your ethnics make you weak. Watch the power of science...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="225"/>
-        <source>
-Global Effect: 
-Units loose firepower by %0% and defense by 10%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

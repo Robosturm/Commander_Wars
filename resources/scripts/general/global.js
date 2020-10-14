@@ -26,12 +26,14 @@ getArmyNameFromTable = function(army, table)
     }
     return "os";
 }
-
 replaceTextArgs = function(text, args)
 {
     for (var i = 0; i < args.length; i++)
     {
-        text = text.replaceAll("%" + i.toString(), args[i]);
+        while (text.includes("%" + i.toString()))
+        {
+            text = text.replace("%" + i.toString(), args[i]);
+        }
     }
     return text;
 }

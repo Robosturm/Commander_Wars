@@ -127,7 +127,7 @@ var Constructor = function()
         return "DM";
     };
     this.coZoneBonus = 60;
-    this.coGlobalBonus = -15;
+    this.coGlobalBonus = 15;
     this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -146,7 +146,7 @@ var Constructor = function()
                     }
                     else
                     {
-                        return CO_CAULDER.coGlobalBonus;
+                        return -CO_CAULDER.coGlobalBonus;
                     }
             }
     };
@@ -168,7 +168,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    return CO_CAULDER.coGlobalBonus;
+                    return -CO_CAULDER.coGlobalBonus;
                 }
         }
     };
@@ -222,7 +222,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by 10%.") +
+        var text = qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by %0%.") +
                qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
         text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
         return text;

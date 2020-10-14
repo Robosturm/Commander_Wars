@@ -2787,10 +2787,13 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> id;
         m_UnitID = id;
     }
+    qint32 bufAmmo1 = 0;
+    qint32 bufAmmo2 = 0;
+    qint32 bufFuel = 0;
     pStream >> hp;
-    pStream >> ammo1;
-    pStream >> ammo2;
-    pStream >> fuel;
+    pStream >> bufAmmo1;
+    pStream >> bufAmmo2;
+    pStream >> bufFuel;
     qint32 value = 0;
     pStream >> value;
     if (!fast)
@@ -2824,9 +2827,9 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         initUnit();
     }
     setHp(hp);
-    setAmmo1(ammo1);
-    setAmmo2(ammo2);
-    setFuel(fuel);
+    setAmmo1(bufAmmo1);
+    setAmmo2(bufAmmo2);
+    setFuel(bufFuel);
     if (version > 1)
     {
         pStream >> m_Moved;

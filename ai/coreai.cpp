@@ -1243,7 +1243,8 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qin
                         if (pMap->onMap(unloadX, unloadY) &&
                             pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
                             pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
-                            !targets.contains(QVector3D(x, y, 1)))
+                            !targets.contains(QVector3D(x, y, 1)) &&
+                            pUnit->getBaseMovementCosts(x, y, x, y) > 0)
                         {
                             targets.append(QVector3D(x, y, 1));
                             break;
