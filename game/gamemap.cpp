@@ -1431,6 +1431,7 @@ void GameMap::startOfTurn(Player* pPlayer)
     qint32 width = getMapWidth();
     QPoint unitWarp = QPoint(-1, -1);
     QPoint hqWarp = QPoint(-1, -1);
+    QPoint buildingWarp = QPoint(-1, -1);
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -1442,7 +1443,10 @@ void GameMap::startOfTurn(Player* pPlayer)
                 {
                     pUnit->removeShineTween();
                     pUnit->startOfTurn();
-                    unitWarp = QPoint(x, y);
+                    if (unitWarp.x() <  0)
+                    {
+                        unitWarp = QPoint(x, y);
+                    }
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
@@ -1454,9 +1458,14 @@ void GameMap::startOfTurn(Player* pPlayer)
                 {
 
                     pBuilding->startOfTurn();
-                    if (pBuilding->getBuildingID() == "HQ")
+                    if (pBuilding->getBuildingID() == "HQ" &&
+                        hqWarp.x() < 0)
                     {
                         hqWarp = QPoint(x, y);
+                    }
+                    else if (buildingWarp.x() < 0)
+                    {
+                        buildingWarp = QPoint(x, y);
                     }
                 }
 
@@ -1475,6 +1484,10 @@ void GameMap::startOfTurn(Player* pPlayer)
     else if (onMap(unitWarp.x(), unitWarp.y()))
     {
         centerMap(unitWarp.x(), unitWarp.y());
+    }
+    else if (onMap(buildingWarp.x(), buildingWarp.y()))
+    {
+        centerMap(buildingWarp.x(), buildingWarp.y());
     }
 
     pApp->continueThread();

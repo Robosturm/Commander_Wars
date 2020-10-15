@@ -20,6 +20,7 @@
 #include "objects/dropdownmenu.h"
 #include "objects/label.h"
 #include "objects/textbox.h"
+#include "objects/spinbox.h"
 
 DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     : QObject(),
@@ -224,17 +225,26 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("AI-Mode: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold")};
+    items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold"), "Patrol", "Patrol Loop"};
     pDropdownmenu = new DropDownmenu(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit\n Normal AI uses the unit like always.\nOffensive AI the ai moves the unit to the closest enemy and attacks\nDefensive AI the ai moves the unit only if it can attack.\nHold AI the ai only attacks but never moves with this unit.\nThis is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit\n"
+                                     "Normal AI uses the unit like always.\n"
+                                     "Offensive AI the ai moves the unit to the closest enemy and attacks\n"
+                                     "Defensive AI the ai moves the unit only if it can attack.\n"
+                                     "Hold AI the ai only attacks but never moves with this unit.\n"
+                                     "Patrol the unit will move to each position in the given order\n"
+                                     "Patrol Loop the unit will move to each position in the given order and restart at the first\n"
+                                     "This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
         m_pUnit->setAiMode(static_cast<GameEnums::GameAi>(value));
+        emit sigUpdateData();
     });
     m_pPanel->addItem(pDropdownmenu);
     y += 40;
+    addLoadLoopPoints(y, sliderOffset);
 
     pLabel = new Label(sliderOffset - 10);
     pLabel->setStyle(style);
@@ -341,4 +351,72 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
     }
     emit sigUpdateData();
     pApp->continueThread();
+}
+
+void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
+{
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    if (m_pUnit->getAiMode() == GameEnums::GameAi_Patrol ||
+        m_pUnit->getAiMode() == GameEnums::GameAi_PatrolLoop)
+    {
+        spLabel pLabel = new Label(sliderOffset - 10);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(tr("Move Point: "));
+        pLabel->setPosition(10, y);
+        m_pPanel->addItem(pLabel);
+        auto points = m_pUnit->getAiMovePath();
+        spGameMap pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < points.size(); i++)
+        {
+            spSpinBox pSpinbox = new SpinBox(200, 0, pMap->getMapWidth() - 1);
+            pSpinbox->setCurrentValue(points[i].x());
+            pSpinbox->setTooltipText("X-Coordinate for the move path.");
+            pSpinbox->setPosition(sliderOffset - 160, y);
+            m_pPanel->addItem(pSpinbox);
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+            {
+                auto points = m_pUnit->getAiMovePath();
+                points[i].setX(value);
+                m_pUnit->setAiMovePathPoint(i, points[i]);
+            });
+            pSpinbox = new SpinBox(200, 0, pMap->getMapHeight() - 1);
+            pSpinbox->setCurrentValue(points[i].y());
+            pSpinbox->setTooltipText("Y-Coordinate for the move path.");
+            pSpinbox->setPosition(sliderOffset + 50, y);
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+            {
+                auto points = m_pUnit->getAiMovePath();
+                points[i].setY(value);
+                m_pUnit->setAiMovePathPoint(i, points[i]);
+            });
+            m_pPanel->addItem(pSpinbox);
+            y += 40;
+        }
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        oxygine::spButton pButton = pObjectManager->createButton(tr("Add Point"), 150);
+        pButton->setPosition(sliderOffset - 160, y + 10);
+        m_pPanel->addItem(pButton);
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            m_pUnit->addAiMovePathPoint(QPoint(0, 0));
+            emit sigUpdateData();
+        });
+        pButton = pObjectManager->createButton(tr("Remove last Point"), 150);
+        pButton->setPosition(sliderOffset, y + 10);
+        m_pPanel->addItem(pButton);
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            m_pUnit->removeLastAiMovePathPoint();
+            emit sigUpdateData();
+        });
+        y += 50;
+    }
+    else
+    {
+        m_pUnit->setAiMovePath(QVector<QPoint>());
+    }
 }

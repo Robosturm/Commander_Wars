@@ -29,6 +29,7 @@ public slots:
 protected slots:
     void updateData();
     void loadUnit(QString unitID, qint32 index);
+    void addLoadLoopPoints(qint32& y, qint32 sliderOffset);
 private:
     void addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y);
     spPanel m_pPanel;

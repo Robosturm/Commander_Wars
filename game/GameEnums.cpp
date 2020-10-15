@@ -72,7 +72,9 @@ void GameEnums::registerEnums()
     value.setProperty("GameAi_Normal", GameAi_Normal);
     value.setProperty("GameAi_Offensive", GameAi_Offensive);
     value.setProperty("GameAi_Defensive", GameAi_Defensive);
-    value.setProperty("GameAi_Hold", GameAi_Hold);
+    value.setProperty("GameAi_Hold", GameAi_Hold);    
+    value.setProperty("GameAi_Patrol", GameAi_Patrol);
+    value.setProperty("GameAi_PatrolLoop", GameAi_PatrolLoop);
 
     value.setProperty("AnimationMode_None", AnimationMode_None);
     value.setProperty("AnimationMode_All", AnimationMode_All);

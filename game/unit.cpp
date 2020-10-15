@@ -2396,6 +2396,45 @@ qint32 Unit::getBonus(QVector<QPoint>& data)
     return ret;
 }
 
+QVector<QPoint> Unit::getAiMovePath() const
+{
+    return m_AiMovePath;
+}
+
+void Unit::setAiMovePath(const QVector<QPoint> &AiMovePath)
+{
+    m_AiMovePath = AiMovePath;
+}
+
+void Unit::addAiMovePathPoint(const QPoint &point)
+{
+    m_AiMovePath.append(point);
+}
+
+void Unit::setAiMovePathPoint(qint32 index, const QPoint &point)
+{
+    if (index < m_AiMovePath.size() && index >= 0)
+    {
+        m_AiMovePath[index] = point;
+    }
+}
+
+void Unit::removeLastAiMovePathPoint()
+{
+    if (m_AiMovePath.size() > 0)
+    {
+        m_AiMovePath.removeLast();
+    }
+}
+
+void Unit::removeFirstAiMovePathPoint()
+{
+    if (m_AiMovePath.size() > 0)
+    {
+        m_AiMovePath.removeFirst();
+    }
+}
+
 bool Unit::onMap()
 {
     return m_pTerrain != nullptr;
@@ -2579,6 +2618,8 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
     unloadIcon("hold");
     unloadIcon("normal");
     unloadIcon("offensive");
+    unloadIcon("patrol");
+    unloadIcon("patrol_loop");
     if (EditorMenue::getInstance() != nullptr)
     {
         switch (m_AiMode)
@@ -2601,6 +2642,16 @@ void Unit::setAiMode(const GameEnums::GameAi &AiMode)
             case GameEnums::GameAi_Normal:
             {
                 loadIcon("normal", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_Patrol:
+            {
+                loadIcon("patrol", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_PatrolLoop:
+            {
+                loadIcon("patrol_loop", 0, 0);
                 break;
             }
         }
@@ -2766,6 +2817,12 @@ void Unit::serializeObject(QDataStream& pStream) const
     pStream << m_cloaked;
     pStream << m_VisionHigh;
     pStream << m_customName;
+    size = m_AiMovePath.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_AiMovePath[i];
+    }
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2956,6 +3013,17 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     if (version > 14)
     {
         pStream >> m_customName;
+    }
+    if (version > 15)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QPoint point;
+            pStream >> point;
+            m_AiMovePath.append(point);
+        }
     }
 }
 

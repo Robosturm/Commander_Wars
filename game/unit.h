@@ -75,7 +75,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 15;
+        return 16;
     }
 
 
@@ -131,9 +131,39 @@ public:
      */
     bool isValid();
 
+
 signals:
 
 public slots:
+    /**
+     * @brief getAiMovePath
+     * @return
+     */
+    QVector<QPoint> getAiMovePath() const;
+    /**
+     * @brief setAiMovePath
+     * @param AiMovePath
+     */
+    void setAiMovePath(const QVector<QPoint> &AiMovePath);
+    /**
+     * @brief addAiMovePathPoint
+     * @param point
+     */
+    void addAiMovePathPoint(const QPoint &point);
+    /**
+     * @brief setAiMovePathPoint
+     * @param index
+     * @param point
+     */
+    void setAiMovePathPoint(qint32 index, const QPoint &point);
+    /**
+     * @brief removeLastAiMovePathPoint
+     */
+    void removeLastAiMovePathPoint();
+    /**
+     * @brief removeFirstAiMovePathPoint
+     */
+    void removeFirstAiMovePathPoint();
     /**
      * @brief onMap
      * @return true if the unit is on the map and not loaded by another unit
@@ -872,6 +902,7 @@ private:
     qint32 vision{1};
     qint32 m_UniqueID{0};
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
+    QVector<QPoint> m_AiMovePath;
     ScriptVariables m_Variables;
     ModdingFlags m_ModdingFlags{ModdingFlags::None};
 
@@ -881,6 +912,7 @@ private:
     qint32 virtuellY{-1};
 
     QVector<QPoint> m_MultiTurnPath;
+
     oxygine::spTween m_ShineTween;
     QString m_MovementType;
 

@@ -259,6 +259,14 @@ bool CoreAI::processPredefinedAi()
                     delete pUnits;
                     return true;
                 }
+                case GameEnums::GameAi_Patrol:
+                case GameEnums::GameAi_PatrolLoop:
+                {
+                    processPredefinedAiPatrol(pUnit);
+                    delete pEnemyUnits;
+                    delete pUnits;
+                    return true;
+                }
                 case GameEnums::GameAi_Normal:
                 {
                     break;
@@ -351,10 +359,37 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits)
 {
     GameAction* pAction = new GameAction(ACTION_FIRE);
-    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
+    bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
+    if (!performed)
+    {
+        // no target move aggressive to the target field
+        QVector<QVector3D> targets;
+        pAction->setActionID(ACTION_WAIT);
+        appendAttackTargets(pUnit, pEnemyUnits, targets);
+        TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
+        targetPfs.explore();
+        qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
+        QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
+        if (targetFields.x() >= 0)
+        {
+            QVector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
+            pAction->setMovepath(path, pfs.getCosts(path));
+            emit performAction(pAction);
+        }
+        else
+        {
+            delete pAction;
+        }
+    }
+}
+
+bool CoreAI::processPredefinedAiAttack(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem & pfs)
+{
+    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
+
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
     CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
@@ -383,20 +418,45 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
             performed = true;
         }
     }
+    return performed;
+}
+
+void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
+{
+    GameAction* pAction = new GameAction(ACTION_FIRE);
+    UnitPathFindingSystem pfs(pUnit);
+    pfs.explore();
+    bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
     if (!performed)
     {
-        // no target move aggressive to the target field
         QVector<QVector3D> targets;
         pAction->setActionID(ACTION_WAIT);
-        appendAttackTargets(pUnit, pEnemyUnits, targets);
-        TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
-        targetPfs.explore();
-        qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
-        QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
-        if (targetFields.x() >= 0)
+        auto path = pUnit->getAiMovePath();
+        if (path.size() > 0)
         {
-            QVector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
-            pAction->setMovepath(path, pfs.getCosts(path));
+            QPoint nextTarget = path[0];
+            targets.append(QVector3D(nextTarget.x(), nextTarget.y(), 1));
+            TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
+            targetPfs.explore();
+            qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
+            QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
+            if (targetFields.x() >= 0)
+            {
+                QVector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
+                pAction->setMovepath(path, pfs.getCosts(path));
+                if (path[0] == nextTarget)
+                {
+                    pUnit->removeFirstAiMovePathPoint();
+                    if (pUnit->getAiMode() == GameEnums::GameAi_PatrolLoop)
+                    {
+                        pUnit->addAiMovePathPoint(nextTarget);
+                    }
+                }
+            }
+            else
+            {
+                pAction->setMovepath(QVector<QPoint>(), 0);
+            }
         }
         else
         {

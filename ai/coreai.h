@@ -281,6 +281,8 @@ protected:
     void processPredefinedAiHold(Unit* pUnit);
     void processPredefinedAiDefensive(Unit* pUnit);
     void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
+    void processPredefinedAiPatrol(Unit* pUnit);
+    bool processPredefinedAiAttack(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem & pfs);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
     void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);

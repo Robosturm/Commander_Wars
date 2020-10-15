@@ -31,6 +31,10 @@
 		<image file="icons/offensive.png"  />
 		<image file="icons/material.png"  />		
 		<image file="icons/material1.png"  />
+		<image file="icons/patrol_loop.png"  />
+		<image file="icons/patrol.png"  />
+		
+		
 			
 		<!-- aircraftcarrier -->
 		<image file="aircraftcarrier.png" cols = "4"  />

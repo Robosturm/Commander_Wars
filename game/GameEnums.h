@@ -121,7 +121,9 @@ public:
         GameAi_Normal,
         GameAi_Offensive,
         GameAi_Defensive,
-        GameAi_Hold
+        GameAi_Hold,
+        GameAi_Patrol,
+        GameAi_PatrolLoop,
     };
     Q_ENUM(GameAi)
 
