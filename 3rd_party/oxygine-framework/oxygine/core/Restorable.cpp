@@ -108,9 +108,9 @@ namespace oxygine
 
     void Restorable::restore()
     {
-        if (!_cb)
-            return;
-
-        _cb(this, _userData);
+        if (_cb.isSet())
+        {
+            _cb(this, _userData);
+        }
     }
 }

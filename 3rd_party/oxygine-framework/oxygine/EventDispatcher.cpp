@@ -18,7 +18,9 @@ namespace oxygine
     int EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
         if (!_listeners)
+        {
             _listeners = new listeners;
+        }
 
         _lastID++;
 
@@ -35,7 +37,9 @@ namespace oxygine
     void EventDispatcher::removeEventListener(int id)
     {
         if (!_listeners)
+        {
             return;
+        }
 
         for (size_t size = _listeners->size(), i = 0; i != size; ++i)
         {
@@ -52,7 +56,9 @@ namespace oxygine
     {
          //Q_ASSERT(_listeners);
         if (!_listeners)
+        {
             return;
+        }
 
         for (size_t size = _listeners->size(), i = 0; i != size; ++i)
         {
@@ -61,38 +67,9 @@ namespace oxygine
             {
                 _listeners->erase(_listeners->begin() + i);
                 break;
-                //Q_ASSERT(hasEventListeners(et, cb) == false);
                 //--i;
             }
         }
-    }
-
-    bool EventDispatcher::hasEventListeners(void* CallbackThis)
-    {
-        if (!_listeners)
-            return false;
-
-        for (size_t size = _listeners->size(), i = 0; i != size; ++i)
-        {
-            const listener& ls = _listeners->at(i);
-            if (ls.cb.p_this == CallbackThis)
-                return true;
-        }
-        return false;
-    }
-
-    bool EventDispatcher::hasEventListeners(eventType et, const EventCallback& cb)
-    {
-        if (!_listeners)
-            return false;
-
-        for (size_t size = _listeners->size(), i = 0; i != size; ++i)
-        {
-            const listener& ls = _listeners->at(i);
-            if (ls.type == et && cb == ls.cb)
-                return true;
-        }
-        return false;
     }
 
     void EventDispatcher::removeEventListeners(void* CallbackThis)
@@ -104,10 +81,9 @@ namespace oxygine
         for (int i = 0; i < _listeners->size(); ++i)
         {
             const listener& ls = _listeners->at(i);
-            if (ls.cb.p_this == CallbackThis)
+            if (ls.cb.isOwner(CallbackThis))
             {
                 _listeners->erase(_listeners->begin() + i);
-                //Q_ASSERT(hasEventListeners(CallbackThis) == false);
                 --i;
             }
         }
@@ -125,7 +101,6 @@ namespace oxygine
             if (ls.type == et)
             {
                 _listeners->erase(_listeners->begin() + i);
-                //Q_ASSERT(hasEventListeners(CallbackThis) == false);
                 --i;
             }
         }
@@ -160,7 +135,9 @@ namespace oxygine
         {
             const listener& ls = _listeners->at(i);
             if (ls.type != event->type)
+            {
                 continue;
+            }
             copy[num] = ls;
             ++num;
         }
@@ -172,7 +149,9 @@ namespace oxygine
             event->listenerID = ls.id;
             ls.cb(event);
             if (event->stopsImmediatePropagation)
+            {
                 break;
+            }
         }
         delete[] copy;
     }

@@ -34,6 +34,7 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
+#include "resource_management/achievementmanager.h"
 
 #include "game/gamemap.h"
 
@@ -318,6 +319,7 @@ void Mainapp::loadRessources()
     COPerkManager::getInstance();
     WikiDatabase::getInstance();
     Userdata::getInstance();
+    AchievementManager::getInstance();
     applyFilter(Settings::getSpriteFilter());
     // start after ressource loading
     m_AudioWorker.setObjectName("AudioThread");

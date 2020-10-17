@@ -112,9 +112,7 @@ namespace oxygine
         pointer_index       getOvered() const;
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
-        UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
         RenderDelegate*     getRenderDelegate() { return _rdelegate; }
-        //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
 
         /**return local actor transformation*/
         const Transform&      getTransform() const;
@@ -189,11 +187,6 @@ namespace oxygine
         void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
         /**setTouchEnabled + setTouchChildrenEnabled*/
         void setTouchEnabled(bool enabled, bool childrenEnabled) { setTouchEnabled(enabled); setTouchChildrenEnabled(childrenEnabled); }
-
-        /**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
-        void setCallbackDoUpdate(UpdateCallback cb) {_cbDoUpdate = cb;}
-        /**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
-        //void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
         virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
@@ -335,7 +328,6 @@ namespace oxygine
 
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
-        UpdateCallback _cbDoUpdate;
 
         mutable Transform _transform;
         mutable Transform _transformInvert;

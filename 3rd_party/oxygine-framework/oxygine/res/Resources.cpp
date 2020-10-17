@@ -81,11 +81,9 @@ namespace oxygine
         return getT<ResFont>(id, ep);
     }
 
-    void Resources::load(ResLoadedCallback)
+    void Resources::load()
     {
         Resource::load(nullptr);
-        //if (cb)
-        //  cb(thi)
     }
 
     void Resources::unload()

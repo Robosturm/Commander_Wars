@@ -16,7 +16,8 @@ namespace oxygine
         _fracShader = fracShader;
         _vertexShader = vertexShader;
         _fracTableShader = fracTableShader;
-        reg(CLOSURE(this, &UberShaderProgramBase::_restore), 0);
+
+        reg(RestoreCallback(this, &UberShaderProgramBase::_restore), 0);
     }
 
     UberShaderProgramBase::~UberShaderProgramBase()

@@ -127,9 +127,8 @@ namespace oxygine
     const int cloneOptionsDoNotCloneClildren = 0x01;
     const int cloneOptionsResetTransform = 0x02;
 
-    typedef Closure<void(Event* ev)> EventCallback;
-    typedef Closure<void(const RenderState& rs)> RenderCallback;
-    typedef Closure<void(const UpdateState& us)> UpdateCallback;
+    using EventCallback = Closure<void, Event*>;
+
     typedef int cloneOptions;
     typedef int copyOptions;//deprecated typedef
     typedef int eventType;

@@ -41,7 +41,6 @@ namespace oxygine
         typedef QMap<QString, spResource> resourcesMap;
 
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
-        typedef Closure<void (Resource*)> ResLoadedCallback;
 
         /**Registers your own resource type.
         @param creation callback
@@ -64,7 +63,7 @@ namespace oxygine
         void add(Resource* r, bool accessByShortenID = false);
 
         /**Calls Resource::load for each resource in the list*/
-        void load(ResLoadedCallback cb = ResLoadedCallback());
+        void load();
 
         /**Unloads data from memory, all resources handles remain valid*/
         void unload();

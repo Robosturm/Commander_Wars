@@ -16,7 +16,7 @@ namespace oxygine
 
     Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), _btnPressed(0), _btnOvered(0)
     {
-        EventCallback ncb = CLOSURE(this, &Button::_mouseEvent);
+        EventCallback ncb = EventCallback(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);
         addEventListener(TouchEvent::OUTX, ncb);
@@ -76,7 +76,7 @@ namespace oxygine
                 {
                     _btnPressed = me->index;
                     setState(statePressed);
-                    addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                 }
             }
             break;
@@ -85,7 +85,7 @@ namespace oxygine
                 if (_btnPressed == me->index)
                 {
                     setState(stateNormal);
-                    removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    removeEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                     _btnPressed = 0;
                 }
             }

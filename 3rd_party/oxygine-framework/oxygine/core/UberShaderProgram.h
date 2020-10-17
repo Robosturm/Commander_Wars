@@ -22,12 +22,6 @@ namespace oxygine
 
         void release();
 
-        typedef Closure<void (IVideoDriver*, ShaderProgram*)> ShaderUniformsCallback;
-
-        ShaderUniformsCallback  getShaderUniformsCallback() const { return _cb; }
-        void setShaderUniformsCallback(ShaderUniformsCallback cb) {_cb = cb;}
-
-
         virtual ShaderProgram*         getShaderProgram(int flags) = 0;
 
 
@@ -38,7 +32,6 @@ namespace oxygine
         QString _fracShader;
         QString _vertexShader;
         QString _fracTableShader;
-        ShaderUniformsCallback _cb;
 
         virtual void releaseShaders() {}
     };

@@ -25,9 +25,9 @@ namespace oxygine
         _finger(0)
     {
         _clip = new ClipRectActor;
-        _clip->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &SlidingActor::_newEvent));
-        _clip->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &SlidingActor::_newEvent));
-        _clip->addEventListener(TouchEvent::MOVE, CLOSURE(this, &SlidingActor::_newEvent));
+        _clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
+        _clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
+        _clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));
 
         addChild(_clip);
     }

@@ -125,7 +125,7 @@ namespace oxygine
         opt.src = mt;
         opt.dest = p.texture;
         load_context->createTexture(opt);
-        p.texture->reg(CLOSURE(this, &ResFontBM::_restore), nullptr);
+        p.texture->reg(Restorable::RestoreCallback(this, &ResFontBM::_restore), nullptr);
     }
 
     void ResFontBM::_load(LoadResourcesContext* load_context)

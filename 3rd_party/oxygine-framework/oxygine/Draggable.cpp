@@ -92,8 +92,8 @@ namespace oxygine
         _actor = actor;
         _dragClient = actor;
 
-        actor->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &Draggable::onEvent));
-        actor->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+        actor->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &Draggable::onEvent));
+        actor->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::start(const PointerState* pointer, Actor* actor, const Vector2& localPosition)
@@ -102,7 +102,7 @@ namespace oxygine
         _actor = actor;
         _dragClient = actor;
 
-        _actor->_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+        _actor->_getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
 
         Vector2 src = pointer->getPosition().cast<Vector2>();
         Vector2 pos = actor->getParent()->stage2local(src);
@@ -121,7 +121,7 @@ namespace oxygine
         //why I did add it?
         //event->stopPropagation();
 
-        _actor->_getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
+        _actor->_getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::onMove(const Vector2& position)

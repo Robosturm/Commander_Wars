@@ -1,79 +1,82 @@
-
-/*
-
-Closure library 1.1
-file "closure.h"
-
-Written by Ivan Yankov aka _Winnie (woowoowoow@bk.ru)
-Many thanks to Wolfhound
-
-*/
-
-
-
-#ifndef CLOSURE_HEADER_
-#define CLOSURE_HEADER_
-
-#define CLOSURE_FUNCTION 1
+#ifndef Closure_HEADER_
+#define Closure_HEADER_
 
 #include <functional>
 #include <memory>
 
-#define TEMPLATE_PARAM_LIST class R
-#define PARAM_TYPE_LIST 
-#define PARAM_TYPE_LIST_COMMA 
-#define PARAM_FORM_ARG_LIST 
-#define PARAM_FORM_ARG_LIST_COMMA 
-#define PARAM_ARG_LIST 
-#define PARAM_ARG_LIST_COMMA 
-#define CLOSURE_NUM Closure0
-#include "closure_impl.h"
+namespace oxygine
+{
+    /**
+     * class for closuring Class Functions and lambdas and std::function into a unique interface.
+     * And providing a way of checking if the closures are equal.
+     */
+    template<typename TRet, typename ...TArgs>
+    class Closure
+    {
+    public:
+        explicit Closure()
+        {
+        }
 
-#define TEMPLATE_PARAM_LIST class R, class P0
-#define PARAM_TYPE_LIST P0
-#define PARAM_TYPE_LIST_COMMA , P0
-#define PARAM_FORM_ARG_LIST P0 p0
-#define PARAM_FORM_ARG_LIST_COMMA , P0 p0
-#define PARAM_ARG_LIST p0
-#define PARAM_ARG_LIST_COMMA , p0
-#define CLOSURE_NUM Closure1
-#include "closure_impl.h"
+        template<class TClass>
+        explicit Closure(TClass* pOwner, TRet(TClass::*callback)(TArgs...))
+            : m_pThis(pOwner)
+        {
+            auto lambda = [pOwner, callback](TArgs... args)
+            {
+                if constexpr(std::is_void<TRet>::value)
+                {
+                    (pOwner->*callback)(args...);
+                }
+                else
+                {
+                    return (pOwner->*callback)(args...);
+                }
+            };
+            m_callback = std::make_shared<std::function<TRet(TArgs...)>>(lambda);
+        }
+        explicit Closure(void* owner, const std::function<TRet(TArgs...)> & callback)
+            : m_pThis(owner),
+              m_callback(std::make_shared<std::function<TRet(TArgs...)>>(callback))
+        {
+        }
+        template<class TLambda>
+        Closure(TLambda lambda)
+        {
+            m_callback = std::make_shared<std::function<TRet(TArgs...)>>(lambda);
+            m_pThis = m_callback.get();
+        }
+        TRet operator()(TArgs... args)
+        {
+            if constexpr(std::is_void<TRet>::value)
+            {
+                (*m_callback)(args...);
+            }
+            else
+            {
+                return (*m_callback)(args...);
+            }
 
-#define TEMPLATE_PARAM_LIST class R, class P0, class P1
-#define PARAM_TYPE_LIST P0, P1
-#define PARAM_TYPE_LIST_COMMA , P0, P1
-#define PARAM_FORM_ARG_LIST P0 p0, P1 p1 
-#define PARAM_FORM_ARG_LIST_COMMA , P0 p0, P1 p1
-#define PARAM_ARG_LIST p0, p1
-#define PARAM_ARG_LIST_COMMA , p0, p1
-#define CLOSURE_NUM Closure2
-#include "closure_impl.h"
+        }
+        bool operator == (const Closure &c) const
+        {
+            return (this->m_pThis == c.m_pThis) &&
+                   (this->m_callback == c.m_callback);
+        }
+        bool isSet()
+        {
+            return (m_pThis != nullptr);
+        }
+        bool isOwner(void* pOwner) const
+        {
+            return (m_pThis == pOwner);
+        }
+    private:
+        void* m_pThis{nullptr};
+        std::shared_ptr<std::function<TRet(TArgs...)>> m_callback;
+    };
 
-#define TEMPLATE_PARAM_LIST class R, class P0, class P1, class P2
-#define PARAM_TYPE_LIST P0, P1, P2
-#define PARAM_TYPE_LIST_COMMA , P0, P1, P2
-#define PARAM_FORM_ARG_LIST P0 p0, P1 p1, P2 p2
-#define PARAM_FORM_ARG_LIST_COMMA , P0 p0, P1 p1, P2 p2
-#define PARAM_ARG_LIST p0, p1, p2
-#define PARAM_ARG_LIST_COMMA , p0, p1, p2
-#define CLOSURE_NUM Closure3
-#include "closure_impl.h"
-
-#define TEMPLATE_PARAM_LIST class R, class P0, class P1, class P2, class P3
-#define PARAM_TYPE_LIST P0, P1, P2, P3
-#define PARAM_TYPE_LIST_COMMA , P0, P1, P2, P3
-#define PARAM_FORM_ARG_LIST P0 p0, P1 p1, P2 p2, P3 p3
-#define PARAM_FORM_ARG_LIST_COMMA , P0 p0, P1 p1, P2 p2, P3 p3
-#define PARAM_ARG_LIST p0, p1, p2, p3
-#define PARAM_ARG_LIST_COMMA , p0, p1, p2, p3
-#define CLOSURE_NUM Closure4
-#include "closure_impl.h"
-
-#define CLOSURE(PTR, MEM_PTR) (detail::CreateClosure(MEM_PTR).Init<MEM_PTR>(PTR))
-
-#if CLOSURE_FUNCTION
-#	define CLOSUREF(F) (detail::CreateClosureF(F))
-#endif
+}
 
 #endif
 

@@ -18,14 +18,12 @@ public:
     {
         QString id;
         qint32 progress{0};
+        qint32 targetValue{0};
     };
 
     static Userdata* getInstance();
     void changeUser();
     void storeUser();
-signals:
-
-public slots:
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -64,6 +62,14 @@ public slots:
      */
     std::tuple<QString, QString, QImage, QImage, bool>* getCOStyle(QString coid);
     /**
+     * @brief getAchievements
+     * @return
+     */
+    QVector<Achievement>* getAchievements();
+signals:
+
+public slots:
+    /**
      * @brief addAchievement
      * @param id
      * @param value
@@ -74,11 +80,10 @@ public slots:
      * @param id
      */
     void addAchievement(QString id);
-    /**
-     * @brief getAchievements
-     * @return
-     */
-    QVector<Achievement>* getAchievements();
+
+private:
+    void showAchieved();
+
 private:
     explicit Userdata();
 

@@ -224,8 +224,10 @@ namespace oxygine
         ev.target = ev.currentTarget = &actor;
         ev.tween = this;
 
-        if (_cbDone)
+        if (_cbDone.isSet())
+        {
             _cbDone(&ev);
+        }
 
         dispatchEvent(&ev);
 

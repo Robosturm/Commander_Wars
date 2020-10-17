@@ -21,7 +21,7 @@ namespace oxygine
         virtual void release() = 0;
 
         void restore();
-        typedef Closure<void (Restorable*, void* userData)> RestoreCallback;
+        using RestoreCallback = Closure<void,Restorable*, void*>;
 
         void reg(RestoreCallback cb, void* user);
         void unreg();

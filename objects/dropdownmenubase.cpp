@@ -106,6 +106,9 @@ void DropDownmenuBase::hideDropDown()
     if (m_OriginalOwner.get() != nullptr &&
         m_OriginalOwner->getParent() == nullptr)
     {
+        m_Panel->setVisible(false);
+        hideTooltip();
+        stopTooltiptimer();
         m_OriginalOwner = nullptr;
     }
     else if (m_Panel->getVisible())

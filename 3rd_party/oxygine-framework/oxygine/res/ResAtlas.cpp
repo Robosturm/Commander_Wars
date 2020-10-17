@@ -167,14 +167,14 @@ namespace oxygine
             if (atl.base.get() == texture)
             {
                 load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.base->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
+                atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
                 break;
             }
 
             if (atl.alpha.get() == texture)
             {
                 load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
+                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
                 break;
             }
         }
@@ -189,12 +189,12 @@ namespace oxygine
                 continue;
 
             load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
-            atl.base->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
+            atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
 
             if (atl.alpha)
             {
                 load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, load_context);
-                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
+                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
             }
         }
     }

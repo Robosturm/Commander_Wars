@@ -23,6 +23,7 @@
 #include "resource_management/gamerulemanager.h"
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
+#include "resource_management/achievementmanager.h"
 #include "wiki/wikidatabase.h"
 
 
@@ -90,8 +91,11 @@ void WorkerThread::start()
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
-    pCOPerkManager->loadAll();
+    pCOPerkManager->loadAll();    
     WikiDatabase::getInstance()->load();
+    // achievements should be loaded last
+    AchievementManager* pAchievementManager = AchievementManager::getInstance();
+    pAchievementManager->loadAll();
     started = true;
     pApp->continueThread();
 }

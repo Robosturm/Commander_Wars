@@ -2,6 +2,7 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/userdata.h"
 #include "resource_management/fontmanager.h"
 
 #include <QDir>
@@ -54,6 +55,10 @@ void Interpreter::init()
     globalObject().setProperty("FontManager", fontManager);
     QJSValue settings = newQObject(Settings::getInstance());
     globalObject().setProperty("settings", settings);
+
+    QJSValue userdata = newQObject(Userdata::getInstance());
+    globalObject().setProperty("Userdata", userdata);
+
     GameEnums::registerEnums();
 
     installExtensions(QJSEngine::Extension::AllExtensions);

@@ -212,7 +212,7 @@ namespace oxygine
         {
             Stage* stage = _getStage();
             if (stage)
-                stage->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+                stage->removeEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
         }
 
         updateStatePressed();
@@ -235,14 +235,15 @@ namespace oxygine
     void Actor::_onGlobalTouchMoveEvent(Event* ev)
     {
         TouchEvent* te = safeCast<TouchEvent*>(ev);
-        if (te->index != _overred)
+        if (_overred == 0)
+        {
             return;
-
+        }
         if (isDescendant(safeCast<Actor*>(ev->target.get())))
             return;
 
         _overred = 0;
-        _getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onGlobalTouchMoveEvent));
+        _getStage()->removeEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
 
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
@@ -268,7 +269,7 @@ namespace oxygine
                 over.bubbles = false;
                 dispatchEvent(&over);
 
-                _getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onGlobalTouchMoveEvent));
+                _getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
         }
 
@@ -278,7 +279,7 @@ namespace oxygine
             if (!_pressedButton[te->mouseButton])
             {
                 if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
-                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
 
                 _pressedButton[te->mouseButton] = te->index;
                 updateStatePressed();
@@ -938,9 +939,6 @@ namespace oxygine
                 _tweens.remove(tween);
             tween = tweenNext;
         }
-
-        if (_cbDoUpdate)
-            _cbDoUpdate(us);
         doUpdate(us);
 
         spActor actor = _children._first;

@@ -106,7 +106,12 @@ void Userdata::increaseAchievement(QString id, qint32 value)
     {
         if (achievement.id == id)
         {
+            bool achieved = (achievement.progress >= achievement.targetValue);
             achievement.progress += value;
+            if (!achieved && (achievement.progress >= achievement.targetValue))
+            {
+                showAchieved();
+            }
         }
     }
 }
@@ -132,6 +137,11 @@ void Userdata::addAchievement(QString id)
 QVector<Userdata::Achievement>* Userdata::getAchievements()
 {
     return &m_achievements;
+}
+
+void Userdata::showAchieved()
+{
+
 }
 
 void Userdata::serializeObject(QDataStream& pStream) const

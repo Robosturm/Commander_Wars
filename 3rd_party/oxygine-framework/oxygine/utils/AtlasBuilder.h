@@ -35,7 +35,7 @@ namespace oxygine
     class MultiAtlas
     {
     public:
-        typedef Closure<spTexture(int w, int h)> createTextureCallback;
+        using createTextureCallback = Closure<spTexture, int, int>;
 
         MultiAtlas(createTextureCallback);
 
