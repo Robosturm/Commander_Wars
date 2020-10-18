@@ -116,7 +116,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
     }
 }
 
-void Userdata::addAchievement(QString id)
+void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide)
 {
     bool found = false;
     for (auto & achievement : m_achievements)
@@ -130,6 +130,11 @@ void Userdata::addAchievement(QString id)
     {
         Achievement achievement;
         achievement.id = id;
+        achievement.targetValue = targetValue;
+        achievement.name = name;
+        achievement.description = description;
+        achievement.hide = hide;
+        achievement.icon = icon;
         m_achievements.append(achievement);
     }
 }

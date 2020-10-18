@@ -19,6 +19,10 @@ public:
         QString id;
         qint32 progress{0};
         qint32 targetValue{0};
+        QString name;
+        QString description;
+        QString icon;
+        bool hide{false};
     };
 
     static Userdata* getInstance();
@@ -78,8 +82,13 @@ public slots:
     /**
      * @brief addAchievement
      * @param id
+     * @param targetValue
+     * @param name
+     * @param description
+     * @param icon
+     * @param hide
      */
-    void addAchievement(QString id);
+    void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false);
 
 private:
     void showAchieved();

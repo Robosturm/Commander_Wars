@@ -162,7 +162,7 @@ var Constructor = function()
     {
         if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
         {
-            defender.setHp(defender.getHp() - 1);
+            attacker.setHp(attacker.getHp() - 1);
         }
     };
 
