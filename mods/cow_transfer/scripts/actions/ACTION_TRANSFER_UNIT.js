@@ -3,6 +3,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
+        var currentPlayer = map.getCurrentPlayer();
         for (var i = 0; i < map.getPlayerCount(); i++)
         {
             var player = map.getPlayer(i);
