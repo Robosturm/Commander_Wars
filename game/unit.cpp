@@ -2240,6 +2240,8 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
 
 void Unit::removeUnit(bool killed)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (killed)
     {
         if (m_UnitRank == GameEnums::UnitRank_CO0)
@@ -2273,10 +2275,13 @@ void Unit::removeUnit(bool killed)
     {
         m_pTerrain->setUnit(nullptr);
     }
+    pApp->continueThread();
 }
 
 void Unit::killUnit()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
     QJSValueList args1;
@@ -2294,6 +2299,7 @@ void Unit::killUnit()
     }
     detach();
     removeUnit();
+    pApp->continueThread();
 }
 
 void Unit::increaseCapturePoints(QPoint position)
@@ -2325,6 +2331,8 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
             return;
         }
     }
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -2348,10 +2356,13 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 
         updateIconTweens();
     }
+    pApp->continueThread();
 }
 
 void Unit::unloadIcon(QString iconID)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -2367,6 +2378,7 @@ void Unit::unloadIcon(QString iconID)
         }
         updateIconTweens();
     }
+    pApp->continueThread();
 }
 
 void Unit::updateBonus(QVector<QPoint>& data)
@@ -2487,6 +2499,8 @@ void Unit::setCloaked(qint32 cloaked)
 
 void Unit::updateIconTweens()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
         m_pIconSprites[i]->removeTweens();
@@ -2563,6 +2577,7 @@ void Unit::updateIconTweens()
             }
         }
     }
+    pApp->continueThread();
 }
 
 void Unit::setMovementType(const QString &movementType)

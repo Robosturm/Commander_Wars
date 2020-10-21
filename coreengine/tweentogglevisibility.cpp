@@ -10,7 +10,7 @@ TweenToggleVisibility::TweenToggleVisibility(float start, float end)
 }
 
 
-void TweenToggleVisibility::update(oxygine::Sprite& actor, float p, const oxygine::UpdateState& us)
+void TweenToggleVisibility::update(oxygine::Sprite& actor, float p, const oxygine::UpdateState&)
 {
     if ((p >= startFraction) && (p <= endFracrtion))
     {

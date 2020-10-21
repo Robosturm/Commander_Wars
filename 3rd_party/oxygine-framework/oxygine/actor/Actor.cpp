@@ -928,15 +928,20 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
+        addRef();
         spTween tween = _tweens._first;
         while (tween)
         {
             spTween tweenNext = tween->getNextSibling();
 
             if (tween->getParentList())
+            {
                 tween->update(*this, us);
+            }
             if (tween->isDone() && tween->getParentList())
+            {
                 _tweens.remove(tween);
+            }
             tween = tweenNext;
         }
         doUpdate(us);
@@ -946,13 +951,16 @@ namespace oxygine
         {
             spActor next = actor->_next;
             if (actor->getParent())
+            {
                 actor->update(us);
+            }
             if (!next)
             {
                 //Q_ASSERT(actor == _children._last);
             }
             actor = next;
         }
+        releaseRef();
     }
 
     void Actor::update(const UpdateState& parentUS)
