@@ -86,7 +86,7 @@ CO_JOEY.getFirstStrike = function(co, unit, posX, posY, attacker)
 {
     if (co.getIsCO0() === true)
     {
-        if(defender !== null)
+        if(unit !== null)
         {
             var defenderValue = unit.getUnitValue();
             var attackerValue = attacker.getUnitValue();

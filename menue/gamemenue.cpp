@@ -928,6 +928,7 @@ void GameMenue::actionPerformed()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("Action performed", Console::eDEBUG);
     finishActionPerformed();
 
     m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);

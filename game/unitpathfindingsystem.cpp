@@ -77,7 +77,27 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
                     }
                 }
             }
-            movecosts[index][direction] = m_pUnit->getMovementCosts(x, y, curX, curY);
+            bool found = false;
+            if (m_fast)
+            {
+                QString id = pMap->getTerrain(curX, curY)->getID() + pMap->getTerrain(x, y)->getID();
+                found = m_costInfo.contains(id);
+                if (found)
+                {
+                    qint32 cost = m_costInfo[id];
+                    movecosts[index][direction] = cost;
+                }
+                else
+                {
+                    qint32 cost = m_pUnit->getMovementCosts(x, y, curX, curY);
+                    m_costInfo.insert(id, cost);
+                    movecosts[index][direction] = cost;
+                }
+            }
+            else
+            {
+                movecosts[index][direction] = m_pUnit->getMovementCosts(x, y, curX, curY);
+            }
             return movecosts[index][direction];
         }
         else
@@ -247,6 +267,16 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
         return true;
     }
     return false;
+}
+
+bool UnitPathFindingSystem::getFast() const
+{
+    return m_fast;
+}
+
+void UnitPathFindingSystem::setFast(bool fast)
+{
+    m_fast = fast;
 }
 
 void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)

@@ -204,7 +204,7 @@ var Constructor = function()
 
     this.getFirstStrike = function(co, unit, posX, posY, attacker)
     {
-        if(defender !== null)
+        if(unit !== null)
         {
             var defenderValue = unit.getUnitValue();
             var attackerValue = attacker.getUnitValue();

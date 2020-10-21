@@ -88,7 +88,9 @@ namespace oxygine
         driver->setViewport(viewport);
 
         if (clearColor)
+        {
             driver->clear(*clearColor);
+        }
 
         Matrix vp = view * proj;
         STDRenderer::instance->setViewProj(vp);

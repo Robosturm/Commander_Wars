@@ -40,6 +40,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
                 {
                     UnitPathFindingSystem pfs(pUnit.get());
                     pfs.setMovepoints(-2);
+                    pfs.setFast(true);
                     pfs.setStartPoint(x, y);
                     pfs.explore();
                     QVector<QPoint> nodes = pfs.getAllNodePoints();

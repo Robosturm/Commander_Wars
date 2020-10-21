@@ -70,11 +70,24 @@ public:
      * @return
      */
     bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints);
+    /**
+     * @brief getFast
+     * @return
+     */
+    bool getFast() const;
+    /**
+     * @brief setFast
+     * @param fast
+     */
+    void setFast(bool fast);
+
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-2};
     qint32 m_MaxFuelCost{-1};
+    bool m_fast{false};
+    QMap<QString, qint32> m_costInfo;
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H
