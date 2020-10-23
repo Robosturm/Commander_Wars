@@ -112,7 +112,10 @@ void RessourceManagement<TClass>::loadRessources(QString resPath)
 {
     if (!resPath.isEmpty())
     {
-        oxygine::Resources::loadXML("resources/" + resPath);
+        if (QFile::exists("resources/" + resPath))
+        {
+            oxygine::Resources::loadXML("resources/" + resPath);
+        }
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
             if (QFile::exists(Settings::getMods().at(i) + resPath))

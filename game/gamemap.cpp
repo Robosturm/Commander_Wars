@@ -1001,10 +1001,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     qint32 heigth = 0;
     qint32 width = 0;
     qint32 playerCount = 0;
-    qint32 mapSize = width * heigth;
     readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
                   width, heigth, playerCount, m_UniqueIdCounter);
-    bool showLoadingScreen = mapSize >= loadingScreenSize && !fast;
+    qint32 mapSize = width * heigth;
+    bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)
     {
         pLoadingScreen->show();
