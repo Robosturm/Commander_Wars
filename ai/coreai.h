@@ -286,7 +286,7 @@ protected:
     virtual void finishTurn();
     // helper functions to get targets for unit actions
     void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
-    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings,  QVector<QVector3D>& targets);
     void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
     void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);
     void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
@@ -413,6 +413,14 @@ protected:
      * @return
      */
     bool needsRefuel(Unit* pUnit);
+    /**
+     * @brief hasMissileTarget
+     * @return
+     */
+    bool hasMissileTarget()
+    {
+        return m_missileTarget;
+    };
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
@@ -421,6 +429,7 @@ protected:
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps aiStep;
     bool usedTransportSystem{false};
+    bool m_missileTarget{false};
 private:
     bool finish{false};
 

@@ -74,8 +74,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     m_pMapSelectionView = new MapSelectionView();
     m_pMapSelectionView->setCurrentCampaign(campaign);
     addChild(m_pMapSelectionView);
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged);
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked, Qt::QueuedConnection);
 
     std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
     m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));

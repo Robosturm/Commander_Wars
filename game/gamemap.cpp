@@ -406,6 +406,7 @@ void GameMap::setCurrentPlayer(qint32 player)
 
 void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
 {
+    Console::print("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites
@@ -1003,6 +1004,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     qint32 playerCount = 0;
     readMapHeader(pStream, version, m_mapName, m_mapAuthor, m_mapDescription,
                   width, heigth, playerCount, m_UniqueIdCounter);
+    Console::print("Loading map " + m_mapName + " Fast =" + (fast ? "true" : "false"), Console::eDEBUG);
     qint32 mapSize = width * heigth;
     bool showLoadingScreen = (mapSize >= loadingScreenSize) && !fast;
     if (showLoadingScreen)

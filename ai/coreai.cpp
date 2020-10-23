@@ -915,11 +915,12 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEne
         // check for capturing or missiles next
         if (canCapture)
         {
+            bool missileTarget = hasMissileTarget();
             for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
             {
                 Building* pBuilding = pEnemyBuildings->at(i2);
                 if (m_IslandMaps[loadingIslandIdx]->getIsland(pBuilding->getX(), pBuilding->getY()) == loadingIsland &&
-                    pBuilding->isCaptureOrMissileBuilding())
+                    pBuilding->isCaptureOrMissileBuilding(missileTarget))
                 {
                     // this unit can do stuff skip it
                     found = true;
@@ -988,13 +989,14 @@ void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBui
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
     {
+        bool missileTarget = hasMissileTarget();
         for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
         {
             Building* pBuilding = pEnemyBuildings->at(i2);
             QPoint point(pBuilding->getX(), pBuilding->getY());
             if (pUnit->canMoveOver(pBuilding->getX(), pBuilding->getY()))
             {
-                if (pBuilding->isCaptureOrMissileBuilding() &&
+                if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
                     targets.append(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
@@ -1090,6 +1092,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits,
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
     spGameMap pMap = GameMap::getInstance();
+    bool missileTarget = hasMissileTarget();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pTransporterUnit = pUnits->at(i);
@@ -1113,7 +1116,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                     if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
                         (m_IslandMaps[transporterIslandIdx]->getIsland(x, y) == transporterIsland) &&
                         (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
-                        (pEnemyBuildings->at(i2)->isCaptureOrMissileBuilding()))
+                        (pEnemyBuildings->at(i2)->isCaptureOrMissileBuilding(missileTarget)))
                     {
                         goodTransporter = true;
                         break;
@@ -1173,6 +1176,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
     // check for capturable buildings
     if (captureUnits.size() > 0)
     {
+        bool missileTarget = hasMissileTarget();
         for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
         {
             Building* pEnemyBuilding = pEnemyBuildings->at(i);
@@ -1184,7 +1188,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
                 // and we didn't checked this island yet -> improves the speed
                 if (targetIsland >= 0 && !checkedIslands[i2].contains(targetIsland))
                 {
-                    if (pEnemyBuilding->isCaptureOrMissileBuilding())
+                    if (pEnemyBuilding->isCaptureOrMissileBuilding(missileTarget))
                     {
                         checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
                                                 loadedUnitIslandIdx[i2], targetIsland, pUnloadArea, targets);
@@ -1281,6 +1285,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
         bool hasMoved = capturUnits[0]->getHasMoved();
         // simulate a not moved unit for checking if we can capture the building or fire a missile from it.
         capturUnits[0]->setHasMoved(false);
+        bool missileTarget = hasMissileTarget();
         for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
         {
             Building* pBuilding = pEnemyBuildings->at(i);
@@ -1288,7 +1293,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
             if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
             {
                 // we can capture it :)
-                if (pBuilding->isCaptureOrMissileBuilding() &&
+                if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
                     // check unload fields

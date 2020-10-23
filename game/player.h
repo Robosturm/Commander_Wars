@@ -312,6 +312,8 @@ public slots:
      * @return -1, -1 for no target found
      */
     QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
+
+    QPoint getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
     /**
      * @brief getRocketTargetDamage
      * @param x
@@ -322,7 +324,7 @@ public slots:
      * @param targetType
      * @return
      */
-    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType);
+    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed);
     /**
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
@@ -471,6 +473,7 @@ private:
     bool loadTableFromFile(QString tablename);
     bool colorToTable(QColor baseColor);
     void createTable(QColor baseColor);
+    qint32 getAverageCost();
 private:
     qint32 funds{0};
     float fundsModifier{1.0f};
@@ -495,6 +498,7 @@ private:
     ScriptVariables m_Variables;
     quint64 m_socketId{0};
     bool m_playerArmySelected{false};
+    qint32 m_averageCosts{-1};
     static oxygine::spResAnim m_neutralTableAnim;
 };
 

@@ -45,7 +45,7 @@ endif()
 add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=15
+    -DMINOR=16
     -DREVISION=0
 )
 

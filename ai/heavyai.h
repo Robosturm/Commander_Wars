@@ -23,6 +23,8 @@ public slots:
     virtual void process() override;
 
     void toggleAiPause();
+protected:
+
 private:
     void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units);
     void updateUnits();

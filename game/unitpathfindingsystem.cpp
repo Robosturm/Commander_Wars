@@ -260,7 +260,8 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
 {
     if ((pNodeUnit == nullptr || // empty field
          (pNodeUnit == m_pUnit) || // current field
-         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) &&  // oozium move
+         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
+         (pNodeUnit != nullptr && !pNodeUnit->isStealthed(m_pPlayer) && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) && // stealthed unit
         (movepoints < 0 || movementCosts <= movepoints) && // inside given cost limits
         (getCosts(getIndex(x, y), x, y, curX, curY) > 0))
     {

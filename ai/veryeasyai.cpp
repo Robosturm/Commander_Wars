@@ -18,6 +18,8 @@
 
 #include "ai/islandmap.h"
 
+const qint32 VeryEasyAI::minSiloDamage = 4000;
+
 VeryEasyAI::VeryEasyAI()
     : CoreAI(GameEnums::AiTypes_VeryEasy),
       m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
@@ -45,6 +47,9 @@ void VeryEasyAI::process()
     QmlVectorBuilding* pEnemyBuildings = m_pPlayer->getEnemyBuildings();
     pEnemyBuildings->randomize();
 
+    qint32 cost = 0;
+    m_pPlayer->getSiloRockettarget(2, 3, cost);
+    m_missileTarget = (cost >= minSiloDamage);
     // create island maps at the start of turn
     if (rebuildIslandMaps)
     {
@@ -179,6 +184,9 @@ bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
 
 bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
 {
+    qint32 cost = 0;
+    QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
+    bool fireSilos = (cost >= minSiloDamage);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -220,25 +228,27 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                     }
                     // try to fire a missile instead
                     pAction->setActionID(ACTION_MISSILE);
-                    for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                    if (fireSilos)
                     {
-                        if (pUnit->getX() == targets[i2].x() &&
-                            pUnit->getY() == targets[i2].y())
+                        for (qint32 i2 = 0; i2 < targets.size(); i2++)
                         {
-                            pAction->setMovepath(QVector<QPoint>(), 0);
-                        }
-                        else
-                        {
-                            QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
-                            pAction->setMovepath(path, pfs.getCosts(path));
-                        }
-                        if (pAction->canBePerformed())
-                        {
-                            // select a target for the rocket and launch it
-                            QPoint rocketTarget = m_pPlayer->getRockettarget(2, 3);
-                            CoreAI::addSelectedFieldData(pAction, rocketTarget);
-                            emit performAction(pAction);
-                            return true;
+                            if (pUnit->getX() == targets[i2].x() &&
+                                pUnit->getY() == targets[i2].y())
+                            {
+                                pAction->setMovepath(QVector<QPoint>(), 0);
+                            }
+                            else
+                            {
+                                QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
+                                pAction->setMovepath(path, pfs.getCosts(path));
+                            }
+                            if (pAction->canBePerformed())
+                            {
+                                // select a target for the rocket and launch it
+                                CoreAI::addSelectedFieldData(pAction, rocketTarget);
+                                emit performAction(pAction);
+                                return true;
+                            }
                         }
                     }
                     delete pAction;

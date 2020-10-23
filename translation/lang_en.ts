@@ -2390,7 +2390,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1014"/>
+        <location filename="../game/gamemap.cpp" line="1016"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2415,7 +2415,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1036"/>
+        <location filename="../game/gamemap.cpp" line="1038"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2427,27 +2427,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="1036"/>
+        <location filename="../game/gamemap.cpp" line="1038"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1063"/>
+        <location filename="../game/gamemap.cpp" line="1065"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1073"/>
+        <location filename="../game/gamemap.cpp" line="1075"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1081"/>
+        <location filename="../game/gamemap.cpp" line="1083"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1093"/>
+        <location filename="../game/gamemap.cpp" line="1095"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>

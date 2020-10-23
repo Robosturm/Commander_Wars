@@ -18,6 +18,7 @@ const float NormalAi::notAttackableDamage = 25.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
 const float NormalAi::directIndirectRatio = 1.75f;
+const qint32 NormalAi::minSiloDamage = 7000;
 
 NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage,
                    float spamingFunds)
@@ -41,6 +42,9 @@ void NormalAi::process()
     QmlVectorUnit* pUnits = nullptr;
     QmlVectorUnit* pEnemyUnits = nullptr;
     QmlVectorBuilding* pEnemyBuildings = nullptr;
+    qint32 cost = 0;
+    m_pPlayer->getSiloRockettarget(2, 3, cost);
+    m_missileTarget = (cost >= minSiloDamage);
 
     if (useBuilding(pBuildings)){}
     else
@@ -236,6 +240,9 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
 bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
 {
     QVector<QVector3D> captureBuildings;
+    qint32 cost = 0;
+    QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
+    bool fireSilos = hasMissileTarget();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -266,7 +273,7 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                     else
                     {
                         action.setActionID(ACTION_MISSILE);
-                        if (action.canBePerformed())
+                        if (action.canBePerformed() && fireSilos)
                         {
                             captureBuildings.append(QVector3D(targets[i2].x(), targets[i2].y(), i));
                         }
@@ -388,12 +395,11 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                         return true;
                     }
                     else
-                    {
-                        QPoint rocketTarget = m_pPlayer->getRockettarget(2, 3);
-                        CoreAI::addSelectedFieldData(pAction, rocketTarget);
-                        pAction->setActionID(ACTION_MISSILE);
-                        emit performAction(pAction);
-                        return true;
+                    {                        
+                            CoreAI::addSelectedFieldData(pAction, rocketTarget);
+                            pAction->setActionID(ACTION_MISSILE);
+                            emit performAction(pAction);
+                            return true;
                     }
                 }
             }
@@ -1325,7 +1331,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, Q
 }
 
 void NormalAi::updateEnemyData(QmlVectorUnit* pUnits)
-{
+{    
     rebuildIsland(pUnits);
     if (m_EnemyUnits.size() == 0)
     {
@@ -1796,12 +1802,13 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
     }
     if (dummy.getActionList().contains(ACTION_CAPTURE))
     {
+        bool missileTarget = hasMissileTarget();
         for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
         {
             Building* pBuilding = pEnemyBuildings->at(i);
             if (dummy.canMoveOver(pBuilding->getX(), pBuilding->getY()))
             {
-                if (pBuilding->isCaptureOrMissileBuilding() &&
+                if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
                     qint32 distance = Mainapp::getDistance(pos, pBuilding->getPosition());
@@ -2207,6 +2214,7 @@ bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit
     // check for capturable buildings
     if (pLoadedUnit->getActionList().contains(ACTION_CAPTURE) && targets.size() == 0)
     {
+        bool missileTarget = hasMissileTarget();
         for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
         {
             Building* pEnemyBuilding = pEnemyBuildings->at(i);
@@ -2216,7 +2224,7 @@ bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit
             // and we didn't checked this island yet -> improves the speed
             if (targetIsland >= 0 )
             {
-                if (pEnemyBuilding->isCaptureOrMissileBuilding())
+                if (pEnemyBuilding->isCaptureOrMissileBuilding(missileTarget))
                 {
                     checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
                                             loadedUnitIslandIdx, targetIsland, pUnloadArea, targets);

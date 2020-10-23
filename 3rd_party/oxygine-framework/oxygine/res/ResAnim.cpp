@@ -152,7 +152,6 @@ namespace oxygine
 
     const AnimationFrame&   ResAnim::getFrame(int index) const
     {
-        Q_ASSERT(index < (int)_frames.size());
         if (index < (int)_frames.size())
         {
             return _frames[index];
@@ -163,7 +162,6 @@ namespace oxygine
     void ResAnim::setFrame(int col, int row, const AnimationFrame& frame)
     {
         int i = row * _columns + col;
-        Q_ASSERT(i < (int)_frames.size());
         if (i < (int)_frames.size())
         {
             _frames[i] = frame;

@@ -64,8 +64,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     }
     addChild(m_pMapSelectionView);
 
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged);
-    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
 
     m_pButtonBack = ObjectManager::createButton(tr("Back"));
     m_pButtonBack->setPosition(10, Settings::getHeight() - 10 - m_pButtonBack->getHeight());
@@ -223,6 +223,7 @@ void MapSelectionMapsMenue::slotButtonNext()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("slotButtonNext()", Console::eDEBUG);
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:
@@ -288,6 +289,7 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
     QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     if (info.isFile())
     {
+        m_pMapSelectionView->setCurrentFile(info.filePath());
         emit buttonNext();
     }
     pApp->continueThread();
@@ -372,6 +374,7 @@ void MapSelectionMapsMenue::startGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("Start game", Console::eDEBUG);
     defeatClosedPlayers();
     spGameMap pMap = GameMap::getInstance();
     pMap->setVisible(false);

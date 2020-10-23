@@ -274,8 +274,6 @@ protected:
      * @return
      */
     qint32 getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
-
-
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -302,6 +300,7 @@ private:
     static const float midDamage;
     static const float highDamage;
     static const float directIndirectRatio;
+    static const qint32 minSiloDamage;
 
     float minMovementDamage;
     float minAttackFunds;

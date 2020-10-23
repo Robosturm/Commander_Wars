@@ -845,13 +845,13 @@ bool Building::canRepair(Unit* pUnit)
     return erg.toVariant().toStringList().contains(pUnit->getUnitID());
 }
 
-bool Building::isCaptureOrMissileBuilding()
+bool Building::isCaptureOrMissileBuilding(bool hasSiloTarget)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCapturableBuildings";
     QJSValue erg = pInterpreter->doFunction(CoreAI::ACTION_CAPTURE, function1);
     bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
-    if (!capturable)
+    if (!capturable && hasSiloTarget)
     {
         function1 = "getMissileBuildings";
         erg = pInterpreter->doFunction(CoreAI::ACTION_MISSILE, function1);

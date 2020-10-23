@@ -339,7 +339,7 @@ public slots:
      * @brief isCaptureOrMissileBuilding
      * @return
      */
-    bool isCaptureOrMissileBuilding();
+    bool isCaptureOrMissileBuilding(bool hasSiloTarget);
     /**
      * @brief isProductionBuilding
      * @return

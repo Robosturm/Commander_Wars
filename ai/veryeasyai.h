@@ -104,13 +104,14 @@ protected:
      * @brief finishTurn
      */
     virtual void finishTurn() override;
-protected:    
+protected:
 private:
     DecisionTree m_COUnitTree;
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
     bool rebuildIslandMaps{true};
+    static const qint32 minSiloDamage;
 };
 
 #endif // VERYEASYAI_H

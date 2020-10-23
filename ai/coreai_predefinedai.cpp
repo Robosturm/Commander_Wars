@@ -91,7 +91,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                 for (qint32 i2 = 0; i2 < targets.size(); i2++)
                 {
-                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints, 5, 1.2f, GameEnums::RocketTarget_Money);
+                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints, 5, 1.2f, GameEnums::RocketTarget_Money, true);
                     if (damageDone > maxDamage)
                     {
                         bestTargets.clear();

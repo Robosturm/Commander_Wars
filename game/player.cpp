@@ -142,6 +142,7 @@ void Player::swapCOs()
 
 void Player::setColor(QColor color, qint32 table)
 {
+    Console::print("Setting player color", Console::eDEBUG);
     m_Color = color;
     bool loaded = loadTable(table);
     if (!loaded)
@@ -1319,7 +1320,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType);
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType, true);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -1344,23 +1345,67 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
 }
 
-qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
+QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    qint32 averageCosts = 0;
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
+    spGameMap pMap = GameMap::getInstance();
+    QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
+    highestDamage = -1;
+    QVector<QPoint> targets;
+
+    for (qint32 x = 0; x < pMap->getMapWidth(); x++)
     {
-        QString unitId = pUnitSpriteManager->getID(i);
-        QString function1 = "getBaseCost";
-        QJSValue erg = pInterpreter->doFunction(unitId, function1);
-        if (erg.isNumber())
+        for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            averageCosts += erg.toInt();
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType, false);
+            if (damageDone > highestDamage)
+            {
+                highestDamage = damageDone;
+                targets.clear();
+                targets.append(QPoint(x, y));
+            }
+            else if ((damageDone == highestDamage) && highestDamage >= 0)
+            {
+                targets.append(QPoint(x, y));
+            }
         }
     }
-    averageCosts = averageCosts / pUnitSpriteManager->getCount();
+    delete pPoints;
 
+    if (targets.size() >= 0)
+    {
+        return targets[Mainapp::randInt(0, targets.size() - 1)];
+    }
+    else
+    {
+        return QPoint(-1, -1);
+    }
+}
+
+qint32 Player::getAverageCost()
+{
+    if (m_averageCosts < 0)
+    {
+        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        m_averageCosts = 0;
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)
+        {
+            QString unitId = pUnitSpriteManager->getID(i);
+            QString function1 = "getBaseCost";
+            QJSValue erg = pInterpreter->doFunction(unitId, function1);
+            if (erg.isNumber())
+            {
+                m_averageCosts += erg.toInt();
+            }
+        }
+        m_averageCosts = m_averageCosts / pUnitSpriteManager->getCount();
+    }
+    return m_averageCosts;
+}
+
+qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType, bool ignoreStealthed)
+{
+    qint32 averageCosts = getAverageCost();
     spGameMap pMap = GameMap::getInstance();
     qint32 damageDone = 0;
     for (qint32 i = 0; i < pPoints->size(); i++)
@@ -1372,50 +1417,53 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
             (pMap->getTerrain(x2, y2)->getUnit() != nullptr))
         {
             Unit* pUnit = pMap->getTerrain(x2, y2)->getUnit();
-            float modifier = 1.0f;
-            if (!isEnemyUnit(pUnit))
+            if (!pUnit->isStealthed(this) || ignoreStealthed)
             {
-                modifier = -ownUnitValue;
-            }
-            float damagePoints = damage;
-            qint32 hpRounded = pUnit->getHpRounded();
-            if (hpRounded < damage)
-            {
-                damagePoints = hpRounded;
-            }
-            switch (targetType)
-            {
-                case GameEnums::RocketTarget_Money:
+                float modifier = 1.0f;
+                if (!isEnemyUnit(pUnit))
                 {
-                    // calc funds damage
-                    damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
-                    break;
+                    modifier = -ownUnitValue;
                 }
-                case GameEnums::RocketTarget_HpHighMoney:
+                float damagePoints = damage;
+                qint32 hpRounded = pUnit->getHpRounded();
+                if (hpRounded < damage)
                 {
-                    // calc funds damage
-                    if (pUnit->getCosts() >= averageCosts / 2)
-                    {
-                        damageDone += damagePoints * modifier * 4;
-                    }
-                    else
-                    {
-                        damageDone += damagePoints * modifier;
-                    }
-                    break;
+                    damagePoints = hpRounded;
                 }
-                case GameEnums::RocketTarget_HpLowMoney:
+                switch (targetType)
                 {
-                    // calc funds damage
-                    if (pUnit->getCosts() <= averageCosts / 2)
+                    case GameEnums::RocketTarget_Money:
                     {
-                        damageDone += damagePoints * modifier * 4;
+                        // calc funds damage
+                        damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
+                        break;
                     }
-                    else
+                    case GameEnums::RocketTarget_HpHighMoney:
                     {
-                        damageDone += damagePoints * modifier;
+                        // calc funds damage
+                        if (pUnit->getCosts() >= averageCosts / 2)
+                        {
+                            damageDone += damagePoints * modifier * 4;
+                        }
+                        else
+                        {
+                            damageDone += damagePoints * modifier;
+                        }
+                        break;
                     }
-                    break;
+                    case GameEnums::RocketTarget_HpLowMoney:
+                    {
+                        // calc funds damage
+                        if (pUnit->getCosts() <= averageCosts / 2)
+                        {
+                            damageDone += damagePoints * modifier * 4;
+                        }
+                        else
+                        {
+                            damageDone += damagePoints * modifier;
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -1679,6 +1727,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         if (!fast)
         {
+            Console::print("Loading colortable", Console::eDEBUG);
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
         }
     }
@@ -1692,6 +1741,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         m_Color = m_colorTable.pixel(8, 0);
         if (!fast)
         {
+            Console::print("Loading colortable", Console::eDEBUG);
             Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
         }
     }

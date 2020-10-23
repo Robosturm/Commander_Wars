@@ -188,6 +188,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     if (info.isFile() &&
+        (info != m_currentMapFile || !fast) &&
         (info.fileName().endsWith(".map") ||
          info.fileName().endsWith(".msav")))
     {

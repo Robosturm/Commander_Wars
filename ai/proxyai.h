@@ -48,6 +48,9 @@ public:
 public slots:
     virtual void nextAction() override;
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
+
+protected:
+
 private:
     QList<GameAction*> m_ActionBuffer;
     bool actionRunning{false};
