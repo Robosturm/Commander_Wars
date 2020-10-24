@@ -494,15 +494,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="101"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="114"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="128"/>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="141"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="103"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="116"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="130"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="143"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="149"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="151"/>
         <source>Refills fuel and ammo to all units surrounding this unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -515,12 +515,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="110"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="112"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="123"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="125"/>
         <source>Repairs and refills the target unit. The repair costs don&apos;t have to be paid.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,12 +551,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="110"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="112"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="123"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="125"/>
         <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -767,7 +767,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="288"/>
+        <location filename="../game/co.cpp" line="296"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2362,6 +2362,19 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/folderdialog.cpp" line="236"/>
         <source>Do you want to delete the folder </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GAMERULE_REFILL_MATERIAL</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/rules/GAMERULE_REFILL_MATERIAL.js" line="5"/>
+        <source>If enabled material can be refilled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/rules/GAMERULE_REFILL_MATERIAL.js" line="9"/>
+        <source>Material Refill</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7043,6 +7056,77 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>achievement_build_unit</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="3"/>
+        <source>Saucy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="4"/>
+        <source>You da man!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="5"/>
+        <source>Shoot them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="6"/>
+        <source>Bully for you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="7"/>
+        <source>All tremble!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="8"/>
+        <source>Don&apos;t tread on me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="9"/>
+        <source>Good gravy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="10"/>
+        <source>You&apos;re the one!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="11"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="16"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="17"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="18"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="19"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="20"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="21"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="22"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="23"/>
+        <source>Big spenda&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="13"/>
+        <source>Right on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="14"/>
+        <source>Rainin&apos; the hurt!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="15"/>
+        <source>Massive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>action</name>
     <message>
         <location filename="../resources/scripts/general/action.js" line="17"/>
@@ -7773,7 +7857,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="167"/>
+        <location filename="../resources/scripts/general/building.js" line="169"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8668,34 +8752,34 @@ Units gain %0% firepower and defence.</source>
 <context>
     <name>co_beast</name>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="172"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="175"/>
         <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="176"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="179"/>
         <source>Looting, Robbing and Killing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="180"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="183"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="184"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="187"/>
         <source>His Units have extremly high firepowers, but take damage when ever they attack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="188"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="191"/>
         <source>
 Global Effect: 
 No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="192"/>
         <source>
 
 CO Zone Effect: 
@@ -8703,73 +8787,73 @@ Units gain %0% firepower when attacking. His Units take 1 Damage after attacking
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="198"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="202"/>
         <source>Dopping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="206"/>
         <source>Restores 3 HP to all units. Units movement is increases by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="210"/>
         <source>Steroids</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="214"/>
         <source>Loot them!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="215"/>
         <source>Rob them!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="216"/>
         <source>The first one gets the money!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="217"/>
         <source>Those Steroids, you can&apos;t stand them!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="215"/>
-        <location filename="../resources/scripts/cos/co_beast.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="223"/>
         <source>Burn down all the towns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="222"/>
         <source>All that loot is mine!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="224"/>
         <source>I did it! Did you see that!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="228"/>
         <source>Argghhh!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="229"/>
         <source>We need more steroids. Next time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_beast.js" line="233"/>
         <source>Beast</source>
         <translation type="unfinished"></translation>
     </message>

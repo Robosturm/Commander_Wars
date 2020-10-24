@@ -158,7 +158,9 @@ var BUILDING =
             {
                 // our unit and a repairable one
                 // replenish it
-                unit.refill();
+                var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
+                var refillMaterial = (typeof refillRule === 'undefined'); // an existing rule equals it's set
+                unit.refill(refillMaterial);
                 var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
                 UNIT.repairUnit(unit, repairAmount);
                 if (!unit.isStealthed(map.getCurrentViewPlayer()))

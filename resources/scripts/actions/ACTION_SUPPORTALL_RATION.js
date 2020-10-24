@@ -86,6 +86,8 @@ var Constructor = function()
 
     this.giveRation = function(unit)
     {
+        var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
+        var refillMaterial = (typeof refillRule === 'undefined'); // an existing rule equals it's set
         var x = unit.getX() + 1;
         var y = unit.getY();
         var animation = null;
@@ -94,7 +96,7 @@ var Constructor = function()
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill();
+            refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
@@ -107,7 +109,7 @@ var Constructor = function()
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill();
+            refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
@@ -121,7 +123,7 @@ var Constructor = function()
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill();
+            refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);
@@ -134,7 +136,7 @@ var Constructor = function()
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
-            refillUnit.refill();
+            refillUnit.refill(refillMaterial);
             if (!refillUnit.isStealthed(map.getCurrentViewPlayer()))
             {
                 animation = GameAnimationFactory.createAnimation(x, y);

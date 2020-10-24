@@ -198,14 +198,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap->deleteMap();
             m_pCurrentMap = nullptr;
         }
-        if (fast)
-        {
-            m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast);
-        }
-        else
-        {
-            m_pCurrentMap = new GameMap(info.absoluteFilePath(), false, fast);
-        }
+        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast);
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapPanel->addItem(m_pMinimap);

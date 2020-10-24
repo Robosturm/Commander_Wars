@@ -160,9 +160,12 @@ var Constructor = function()
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
-        if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
+        if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
         {
-            attacker.setHp(attacker.getHp() - 1);
+            if (attacker.getOwner() === co.getOwner() && attacker.getHp() > 0)
+            {
+                attacker.setHp(attacker.getHp() - 1);
+            }
         }
     };
 

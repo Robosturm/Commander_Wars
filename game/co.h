@@ -564,6 +564,9 @@ public slots:
      * @return
      */
     QString getSuperPowerName();
+protected:
+    void limitPowerbar(float previousValue);
+
 private:
     Player* m_Owner;
     QString coID;
@@ -574,6 +577,7 @@ private:
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
     qint32 powerUsed{0};
+    bool m_powerCharging{false};
 
     QStringList m_perkList;
 };

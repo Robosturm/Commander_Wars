@@ -145,7 +145,8 @@ void PerkSelection::toggleAll(bool toggle)
     }
     if (toggle)
     {
-        m_perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+        COPerkManager* pCOPerkManager = COPerkManager::getInstance();
+        m_perks = pCOPerkManager->getLoadedRessources();
     }
     else
     {

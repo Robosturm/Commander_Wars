@@ -104,6 +104,8 @@ var Constructor = function()
     };
     this.performPostAnimation = function(postAnimation)
     {
+        var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
+        var refillMaterial = (typeof refillRule === 'undefined'); // an existing rule equals it's set
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
@@ -111,7 +113,7 @@ var Constructor = function()
         animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
         animation.addSprite("repair", map.getImageSize() / 2 + 8, 1, 400, 1.7);
 
-        repairUnit.refill();
+        repairUnit.refill(refillMaterial);
         repairUnit.setHp(repairUnit.getHp() + 1);
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationUnit.setHasMoved(true);
         ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationUnit = null;

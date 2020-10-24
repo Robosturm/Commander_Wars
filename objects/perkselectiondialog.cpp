@@ -30,8 +30,8 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit sigFinished();
         emit editFinished(m_pPerkSelection->getPerks());
+        emit sigFinished();
         detach();
     });
 

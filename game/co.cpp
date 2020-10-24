@@ -106,31 +106,39 @@ void CO::setPowerFilled(const double &value)
 {
     if (!GameMap::getInstance()->getGameRules()->getNoPower())
     {
-        if (GameMenue::getInstance() != nullptr)
-        {
-            Mainapp* pApp = Mainapp::getInstance();
-            if (powerFilled < powerStars && value >= powerStars)
-            {
-                pApp->getAudioThread()->playSound("powerready.wav");
-            }
-            else if (powerFilled < powerStars + superpowerStars && value >= powerStars + superpowerStars)
-            {
-                pApp->getAudioThread()->playSound("superpowerready.wav");
-            }
-        }
+        float currentValue = powerFilled;
         powerFilled = value;
-        if (powerFilled > powerStars + superpowerStars)
+        if (!m_powerCharging)
         {
-            powerFilled = powerStars + superpowerStars;
-        }
-        else if (powerFilled < 0)
-        {
-            powerFilled = 0;
+            limitPowerbar(currentValue);
         }
     }
     if (GameMenue::getInstance() != nullptr)
     {
         GameMenue::getInstance()->updatePlayerinfo();
+    }
+}
+void CO::limitPowerbar(float previousValue)
+{
+    if (powerFilled > powerStars + superpowerStars)
+    {
+        powerFilled = powerStars + superpowerStars;
+    }
+    else if (powerFilled < 0)
+    {
+        powerFilled = 0;
+    }
+    if (GameMenue::getInstance() != nullptr)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        if (previousValue < powerStars && powerFilled >= powerStars)
+        {
+            pApp->getAudioThread()->playSound("powerready.wav");
+        }
+        else if (previousValue < powerStars + superpowerStars && powerFilled >= powerStars + superpowerStars)
+        {
+            pApp->getAudioThread()->playSound("superpowerready.wav");
+        }
     }
 }
 
@@ -851,7 +859,7 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     QJSValue obj2 = pInterpreter->newQObject(pDefender);
     args1 << obj2;
     args1 << defPosition.x();
-    args1 << defPosition.y();    
+    args1 << defPosition.y();
     args1 << isDefender;
     qint32 ergValue = 0;
     for (const auto & perk : m_perkList)
@@ -970,6 +978,8 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
 {
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
+        float currentValue = powerFilled;
+        m_powerCharging = true;
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
@@ -986,6 +996,8 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
         {
             pInterpreter->doFunction(perk, function1, args1);
         }
+        m_powerCharging = false;
+        limitPowerbar(currentValue);
     }
 }
 
@@ -1149,8 +1161,8 @@ bool CO::getWeatherImmune()
 }
 
 GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
-                                   qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
-                                   GameEnums::AiTurnMode turnMode)
+                                       qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
+                                       GameEnums::AiTurnMode turnMode)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getAiUsePower";
