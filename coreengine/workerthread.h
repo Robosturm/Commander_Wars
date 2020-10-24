@@ -5,6 +5,7 @@
 #include "qtimer.h"
 
 #include "coreengine/interpreter.h"
+#include "oxygine-framework.h"
 
 class WorkerThread : public QObject
 {
@@ -21,6 +22,10 @@ protected slots:
     void start();
     void showMainwindow();
     void startSlaveGame();
+    void mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+    void wheelEvent(qint32 x, qint32 y);
+    void mouseMoveEvent(qint32 x, qint32 y);
 private:
     bool started{false};
 };

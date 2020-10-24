@@ -197,9 +197,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
         if (mode == GameEnums::Recoloring_Mask)
         {
             QColor color = m_pUnit->getOwner()->getColor();
-            oxygine::Sprite::TweenColor tweenColor(color);
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(color);
         }
         else if (mode == GameEnums::Recoloring_Table)
         {

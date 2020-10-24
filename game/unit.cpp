@@ -245,9 +245,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         if (mode == GameEnums::Recoloring_Mask)
         {
             QColor color = m_pOwner->getColor();
-            oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(color);
         }
         else if (mode == GameEnums::Recoloring_Table)
         {
@@ -263,9 +261,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_pUnitSprites.append(pSprite);
-        oxygine::Sprite::TweenColor tweenColor(QColor(100, 100, 100, 170));
-        oxygine::spTween tweenWait = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-        pWaitSprite->addTween(tweenWait);
+        pWaitSprite->setColor(QColor(100, 100, 100, 170));
         pWaitSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pWaitSprite);

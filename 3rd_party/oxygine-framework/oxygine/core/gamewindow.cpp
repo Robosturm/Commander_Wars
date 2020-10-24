@@ -16,7 +16,6 @@
 #include "qapplication.h"
 
 #include "../MaterialCache.h"
-#include "../PointerState.h"
 #include "../PostProcess.h"
 #include "../STDRenderDelegate.h"
 #include "../actor/Stage.h"
@@ -87,7 +86,6 @@ namespace oxygine
     {
         // Request an update
         update();
-
     }
 
     void GameWindow::updateData()
@@ -99,25 +97,25 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
+        updateData();
         if (m_Mutex.tryLock())
         {
-            updateData();
             oxygine::getStage()->update();
-            if (beginRendering())
-            {
-                QColor clearColor(181, 255, 32, 255);
-                QSize size = oxygine::GameWindow::getWindow()->size();
-                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
-                // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::getStage()->render(clearColor, viewport);
-                swapDisplayBuffers();
-            }
-            // check for termination
-            if (m_quit)
-            {
-                QApplication::exit();
-            }
             m_Mutex.unlock();
+        }
+        if (beginRendering())
+        {
+            QColor clearColor(181, 255, 32, 255);
+            QSize size = oxygine::GameWindow::getWindow()->size();
+            oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
+            // Render all actors inside the stage. Actor::render will also be called for all its children
+            oxygine::getStage()->render(clearColor, viewport);
+            swapDisplayBuffers();
+        }
+        // check for termination
+        if (m_quit)
+        {
+            QApplication::exit();
         }
     }
 
@@ -237,100 +235,67 @@ namespace oxygine
 
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
-        if (m_Mutex.tryLock(25))
+        MouseButton b = MouseButton_Left;
+        switch (event->button())
         {
-            if (!_useTouchAPI)
+            case Qt::MouseButton::LeftButton:
             {
-                MouseButton b = MouseButton_Left;
-                switch (event->button())
-                {
-                    case Qt::MouseButton::LeftButton:
-                    {
-                        b = MouseButton_Left;
-                        break;
-                    }
-                    case Qt::MouseButton::MiddleButton:
-                    {
-                        b = MouseButton_Middle;
-                        break;
-                    }
-                    case Qt::MouseButton::RightButton:
-                    {
-                        b = MouseButton_Right;
-                        break;
-                    }
-                    default:
-                    {
-                        // do nothing
-                    }
-                }
-
-                Input* input = &Input::instance;
-                input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
-                                              TouchEvent::TOUCH_DOWN, &input->_pointerMouse);
+                b = MouseButton_Left;
+                break;
             }
-            m_Mutex.unlock();
+            case Qt::MouseButton::MiddleButton:
+            {
+                b = MouseButton_Middle;
+                break;
+            }
+            case Qt::MouseButton::RightButton:
+            {
+                b = MouseButton_Right;
+                break;
+            }
+            default:
+            {
+                // do nothing
+            }
         }
+        emit sigMousePressEvent(b, event->x(), event->y());
     }
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
     {
-        if (m_Mutex.tryLock(25))
+        MouseButton b = MouseButton_Left;
+        switch (event->button())
         {
-            if (!_useTouchAPI)
+            case Qt::MouseButton::LeftButton:
             {
-                MouseButton b = MouseButton_Left;
-                switch (event->button())
-                {
-                    case Qt::MouseButton::LeftButton:
-                    {
-                        b = MouseButton_Left;
-                        break;
-                    }
-                    case Qt::MouseButton::MiddleButton:
-                    {
-                        b = MouseButton_Middle;
-                        break;
-                    }
-                    case Qt::MouseButton::RightButton:
-                    {
-                        b = MouseButton_Right;
-                        break;
-                    }
-                    default:
-                    {
-                        // do nothing
-                    }
-                }
-
-                Input* input = &Input::instance;
-                input->sendPointerButtonEvent(oxygine::getStage(), b, event->x(), event->y(), 1.0f,
-                                              TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                b = MouseButton_Left;
+                break;
             }
-            m_Mutex.unlock();
+            case Qt::MouseButton::MiddleButton:
+            {
+                b = MouseButton_Middle;
+                break;
+            }
+            case Qt::MouseButton::RightButton:
+            {
+                b = MouseButton_Right;
+                break;
+            }
+            default:
+            {
+                // do nothing
+            }
         }
+        emit sigMouseReleaseEvent(b, event->x(), event->y());
     }
 
     void GameWindow::wheelEvent(QWheelEvent *event)
     {
-        if (m_Mutex.tryLock(25))
-        {
-            Input* input = &Input::instance;
-            input->sendPointerWheelEvent(oxygine::getStage(), Vector2(event->angleDelta().x(), event->angleDelta().y()), &input->_pointerMouse);
-            m_Mutex.unlock();
-        }
+        emit sigWheelEvent(event->angleDelta().x(), event->angleDelta().y());
     }
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
-        if (m_Mutex.tryLock(25))
-        {
-            if (!_useTouchAPI)
-            {
-                Input* input = &Input::instance;
-                input->sendPointerMotionEvent(oxygine::getStage(), event->x(), event->y(), 1.0f, &input->_pointerMouse);
-            }
-            m_Mutex.unlock();
-        }
+        emit sigMouseMoveEvent(event->x(), event->y());
     }
 
     spEventDispatcher GameWindow::getDispatcher()

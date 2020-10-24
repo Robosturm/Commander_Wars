@@ -186,9 +186,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     pBox->addTween(queuedAnim);
     if (color != Qt::white)
     {
-        oxygine::Sprite::TweenColor tweenColor(color);
-        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-        pBox->addTween(tween);
+        pBox->setColor(color);
     }
     this->addChild(pBox);
     pBox->setPosition(offsetX, offsetY);

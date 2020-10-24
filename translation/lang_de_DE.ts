@@ -3252,18 +3252,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="563"/>
+        <location filename="../coreengine/mainapp.cpp" line="568"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="569"/>
+        <location filename="../coreengine/mainapp.cpp" line="574"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="571"/>
+        <location filename="../coreengine/mainapp.cpp" line="576"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -6835,31 +6835,31 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="180"/>
-        <location filename="../menue/victorymenue.cpp" line="470"/>
+        <location filename="../menue/victorymenue.cpp" line="468"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="189"/>
-        <location filename="../menue/victorymenue.cpp" line="475"/>
+        <location filename="../menue/victorymenue.cpp" line="473"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="198"/>
-        <location filename="../menue/victorymenue.cpp" line="480"/>
+        <location filename="../menue/victorymenue.cpp" line="478"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="207"/>
-        <location filename="../menue/victorymenue.cpp" line="485"/>
+        <location filename="../menue/victorymenue.cpp" line="483"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="216"/>
-        <location filename="../menue/victorymenue.cpp" line="490"/>
+        <location filename="../menue/victorymenue.cpp" line="488"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6894,7 +6894,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="540"/>
+        <location filename="../menue/victorymenue.cpp" line="538"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

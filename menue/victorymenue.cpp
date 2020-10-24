@@ -343,9 +343,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                     pTextMask->setResAnim(pAnim);
                     pTextMask->setPosition(5, 5 + y);
                     QColor color = pPlayer->getColor();
-                    oxygine::Sprite::TweenColor tweenColor(color);
-                    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-                    pTextMask->addTween(tween);
+                    pTextMask->setColor(color);
                     m_VictoryPanel->addItem(pTextMask);
 
                     oxygine::spSprite pWinLooseSprite = new oxygine::Sprite();

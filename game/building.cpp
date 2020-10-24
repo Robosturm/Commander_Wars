@@ -173,15 +173,11 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         if (mode == GameEnums::Recoloring_Mask && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
-            oxygine::Sprite::TweenColor tweenColor(color);
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(color);
         }
         else if (mode == GameEnums::Recoloring_Mask)
         {
-            oxygine::Sprite::TweenColor tweenColor(QColor(150, 150, 150, 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(QColor(150, 150, 150, 255));
         }
         else if (mode == GameEnums::Recoloring_Table && m_pOwner != nullptr)
         {

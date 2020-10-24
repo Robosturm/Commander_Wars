@@ -49,10 +49,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-
-    oxygine::Sprite::TweenColor tweenColor(color);
-    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-    firstSpriteMask->addTween(tween);
+    firstSpriteMask->setColor(color);
 
     // second sprite for rotating
     oxygine::spBox9Sprite secondSpriteMask = new oxygine::Box9Sprite();
@@ -60,8 +57,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-    secondSpriteMask->addTween(tween2);
+    secondSpriteMask->setColor(color);
 
     // rotating sprite
     spRotatingSprite rotSprite = new RotatingSprite();

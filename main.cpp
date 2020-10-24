@@ -116,6 +116,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
     qRegisterMetaType<oxygine::spResAnim>("oxygine::spResAnimf");
     qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
+    qRegisterMetaType<oxygine::MouseButton>("oxygine::MouseButton");
     qRegisterMetaType<QVector<std::tuple<QString,float>>>("QVector<std::tuple<QString,float>>");
     qRegisterMetaType<QVector<float>>("QVector<float>");
     qRegisterMetaType<QList<qint32>>("QList<qint32>");

@@ -209,9 +209,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
 
         if (mode == GameEnums::Recoloring_Mask)
         {
-            oxygine::Sprite::TweenColor tweenColor(pPlayer->getColor());
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(pPlayer->getColor());
         }
         else if (mode == GameEnums::Recoloring_Table)
         {

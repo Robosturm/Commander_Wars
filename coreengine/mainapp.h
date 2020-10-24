@@ -112,6 +112,8 @@ public:
      * @return
      */
     static QThread* getGameServerThread();
+    bool getNoUi() const;
+
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);

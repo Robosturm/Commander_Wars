@@ -484,6 +484,11 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+bool Mainapp::getNoUi() const
+{
+    return m_noUi;
+}
+
 QThread* Mainapp::getGameServerThread()
 {
     return &m_GameServerThread;

@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include "../oxygine-include.h"
+#include "../PointerState.h"
 
 #include <qopenglwindow.h>
 #include <qopenglfunctions.h>
@@ -66,6 +67,11 @@ namespace oxygine
         static bool isEvenScale(qint32 width1, qint32 width2);
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
+
+        void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+        void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
+        void sigWheelEvent(qint32 x, qint32 y);
+        void sigMouseMoveEvent(qint32 x, qint32 y);
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
 
@@ -87,7 +93,6 @@ namespace oxygine
         bool beginRendering();
         void swapDisplayBuffers();
 
-        bool _useTouchAPI = false;
         bool _renderEnabled = true;
         spEventDispatcher _dispatcher;
 

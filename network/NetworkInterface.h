@@ -47,7 +47,7 @@ public:
         : isServer(false),
           isConnected(false)
     {
-        oxygine::intrusive_ptr_add_ref(this);
+        addRef();
         QObject::connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         QObject::connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
         QObject::connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
@@ -197,7 +197,7 @@ public slots:
 protected slots:
     void closeNetworkInterface()
     {
-        oxygine::intrusive_ptr_release(this);
+        releaseRef();
     }
 protected:
     bool isServer;

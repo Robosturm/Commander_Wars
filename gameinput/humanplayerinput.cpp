@@ -706,9 +706,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
     {
         pSprite->setResAnim(pAnim);
     }
-    oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), color.alpha()));
-    oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-    pSprite->addTween(tween2);
+    pSprite->setColor(color);;
 
     if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
     {
