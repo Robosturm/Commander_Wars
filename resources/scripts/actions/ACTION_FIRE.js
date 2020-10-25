@@ -544,11 +544,17 @@ var Constructor = function()
     this.postUnitAnimationDefender = null;
     this.performPostUnitAnimation = function()
     {
+        var player = map.getCurrentPlayer();
         var attacker = ACTION_FIRE.postUnitAnimationAttacker;
         var defUnit = ACTION_FIRE.postUnitAnimationDefender;
         // level up and defender destruction
         if (attacker.getHp() <= 0)
         {
+            // achievements
+            if (defUnit.getOwner().getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            {
+                ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
+            }
             attacker.killUnit();
             // we destroyed a unit
             map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID());
@@ -557,6 +563,11 @@ var Constructor = function()
         // level up and attacker destruction
         if (defUnit.getHp() <= 0)
         {
+            // achievements
+            if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            {
+                ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
+            }
             defUnit.killUnit();
             // we destroyed a unit nice
             map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());

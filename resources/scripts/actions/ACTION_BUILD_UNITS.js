@@ -47,12 +47,16 @@ var Constructor = function()
         var unitID = action.readDataString();
         var player = map.getCurrentPlayer();
         var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
-
         // pay for the unit
         map.getCurrentPlayer().addFunds(-action.getCosts());
         map.getGameRecorder().buildUnit(player.getPlayerID());
         unit.setHasMoved(true);
         player.buildedUnit(unit);
+        // achievements
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
+        }
     };
 
     this.getStepInputType = function(action)

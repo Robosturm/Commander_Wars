@@ -18,6 +18,7 @@
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/achievementmanager.h"
 
 #include "objects/filedialog.h"
 
@@ -1085,6 +1086,7 @@ void GameMenue::victory(qint32 team)
             Console::print("Informaing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
             pMap->getCampaign()->mapFinished(humanWin);
         }
+        AchievementManager::getInstance()->onVictory(team, humanWin);
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue(m_pNetworkInterface));
         oxygine::Actor::detach();

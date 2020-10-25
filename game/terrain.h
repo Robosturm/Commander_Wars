@@ -33,6 +33,7 @@ public:
         Terrain = 0,
         Shroud,
         Building,
+        Fog,
         MarkedField,
         Arrow
     };

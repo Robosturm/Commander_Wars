@@ -79,12 +79,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="104"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="105"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -97,12 +97,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="104"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="105"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -115,12 +115,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="104"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="105"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -162,7 +162,7 @@
 <context>
     <name>ACTION_BUILD_WATERPLANE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="84"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,7 +292,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="588"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="599"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -644,6 +644,19 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="48"/>
         <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Achievementmenu</name>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="43"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="137"/>
+        <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2468,97 +2481,97 @@ This is immediatly applied.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="80"/>
+        <location filename="../menue/gamemenue.cpp" line="81"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="275"/>
+        <location filename="../menue/gamemenue.cpp" line="276"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="390"/>
+        <location filename="../menue/gamemenue.cpp" line="391"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="398"/>
+        <location filename="../menue/gamemenue.cpp" line="399"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="448"/>
+        <location filename="../menue/gamemenue.cpp" line="449"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="580"/>
+        <location filename="../menue/gamemenue.cpp" line="581"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1148"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1170"/>
+        <location filename="../menue/gamemenue.cpp" line="1172"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1180"/>
+        <location filename="../menue/gamemenue.cpp" line="1182"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1543"/>
+        <location filename="../menue/gamemenue.cpp" line="1545"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1561"/>
+        <location filename="../menue/gamemenue.cpp" line="1563"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1590"/>
+        <location filename="../menue/gamemenue.cpp" line="1592"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3272,67 +3285,72 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="61"/>
+        <location filename="../menue/mainwindow.cpp" line="62"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="73"/>
+        <location filename="../menue/mainwindow.cpp" line="74"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="84"/>
+        <location filename="../menue/mainwindow.cpp" line="85"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="95"/>
+        <location filename="../menue/mainwindow.cpp" line="96"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="106"/>
+        <location filename="../menue/mainwindow.cpp" line="107"/>
         <source>Load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="117"/>
+        <location filename="../menue/mainwindow.cpp" line="118"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="128"/>
+        <location filename="../menue/mainwindow.cpp" line="129"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="139"/>
+        <location filename="../menue/mainwindow.cpp" line="140"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="150"/>
+        <location filename="../menue/mainwindow.cpp" line="151"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="161"/>
+        <location filename="../menue/mainwindow.cpp" line="162"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="172"/>
+        <location filename="../menue/mainwindow.cpp" line="173"/>
+        <source>Achievements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="184"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="183"/>
+        <location filename="../menue/mainwindow.cpp" line="195"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="195"/>
+        <location filename="../menue/mainwindow.cpp" line="207"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7099,30 +7117,789 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="11"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="16"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="17"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="18"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="19"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="20"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="21"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="22"/>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="23"/>
         <source>Big spenda&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="13"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="12"/>
         <source>Right on!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="14"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="13"/>
         <source>Rainin&apos; the hurt!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="15"/>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="14"/>
         <source>Massive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="15"/>
+        <source>Run, runner!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="16"/>
+        <source>That&apos;s a ton!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="17"/>
+        <source>Eye of the tiger!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="18"/>
+        <source>Make them pay!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="19"/>
+        <source>You&apos;re like an air ninja!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="20"/>
+        <source>You&apos;re the bomb!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="21"/>
+        <source>B cool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="22"/>
+        <source>T-riffic!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="23"/>
+        <source>Ahoy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="24"/>
+        <source>Carry on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="25"/>
+        <source>Time for a snak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="26"/>
+        <source>Punish everyone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="27"/>
+        <source>Impressive!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="28"/>
+        <source>Where&apos;s your tank now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="29"/>
+        <source>Floating cannon!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="30"/>
+        <source>Prepare for mines!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="31"/>
+        <source>I have a ship!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="32"/>
+        <source>Blobs of Blobs!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="33"/>
+        <source>This is a plan!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="34"/>
+        <source>This can cross the sea?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="35"/>
+        <source>Floating enemies ahead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="36"/>
+        <source>It&apos;s a flak!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="37"/>
+        <source>Capture them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="38"/>
+        <source>Air over Sea!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="39"/>
+        <source>I carry this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="40"/>
+        <source>I can fix this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="41"/>
+        <source>Kirov reporting!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="42"/>
+        <source>A spider is here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="43"/>
+        <source>Rockets from below!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="44"/>
+        <source>A healing rank!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="45"/>
+        <source>Better armor for me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="56"/>
+        <source>Build a given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_kill_unit</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="3"/>
+        <source>Go!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="4"/>
+        <source>Brutal!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="5"/>
+        <source>You shoot nothing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="6"/>
+        <source>Sweet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="7"/>
+        <source>Cool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="8"/>
+        <source>Tanks a lot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="9"/>
+        <source>Boss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="10"/>
+        <source>Neocool!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="11"/>
+        <source>w00t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="12"/>
+        <source>Oof!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="13"/>
+        <source>Rockin&apos;!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="14"/>
+        <source>Aces!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="15"/>
+        <source>Ouch!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="16"/>
+        <source>Poor APC&apos;s!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="17"/>
+        <source>Huge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="18"/>
+        <source>Fresh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="19"/>
+        <source>Good eyes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="20"/>
+        <source>Sassy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="21"/>
+        <source>Great!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="22"/>
+        <source>Zing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="23"/>
+        <source>Hoo-ha!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="24"/>
+        <source>No mercy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="25"/>
+        <source>Pwn3d!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="26"/>
+        <source>Sink those stinkers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="27"/>
+        <source>Wow!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="28"/>
+        <source>We have anti anti-tank-cannons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="29"/>
+        <source>Boom!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="30"/>
+        <source>Sinking feeling!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="31"/>
+        <source>Destroyed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="32"/>
+        <source>Squish!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="33"/>
+        <source>Into the dust!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="34"/>
+        <source>Now it can&apos;t!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="35"/>
+        <source>Was it a tank?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="36"/>
+        <source>Flak is dead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="37"/>
+        <source>Capture them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="38"/>
+        <source>A poor landing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="39"/>
+        <source>Sea won!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="40"/>
+        <source>Got out damaged!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="41"/>
+        <source>For mother russia!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="42"/>
+        <source>I hate spiders!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="43"/>
+        <source>Did you have a sub!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="44"/>
+        <source>No healing for you!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="45"/>
+        <source>You lost your armor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="55"/>
+        <source>Kill the given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_unit.js" line="55"/>
+        <source>. Only battle kills count.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_victory</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="3"/>
+        <source>I&apos;m good at math!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="4"/>
+        <source>Sidekick!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="5"/>
+        <source>Windy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="6"/>
+        <source>Blue Politics!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="7"/>
+        <source>I love crystals!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="8"/>
+        <source>Quantum + EMP!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="9"/>
+        <source>Party time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="10"/>
+        <source>Robberies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="11"/>
+        <source>Helped a lot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="12"/>
+        <source>Roses are red!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="13"/>
+        <source>Mad doctor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="14"/>
+        <source>Tons of Soldiers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="15"/>
+        <source>Vision Battle!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="16"/>
+        <source>I&apos;m a pirat!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="17"/>
+        <source>Goggles in the air!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="18"/>
+        <source>Tested it!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="19"/>
+        <source>Blast through!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="20"/>
+        <source>Noble war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="21"/>
+        <source>Snipped them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="22"/>
+        <source>Novel reader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="23"/>
+        <source>I&apos;m an admiral!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="24"/>
+        <source>Lightning grimm!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="25"/>
+        <source>Wild western!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="26"/>
+        <source>Sold out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="27"/>
+        <source>I have my own plans!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="28"/>
+        <source>Direct artillery!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="29"/>
+        <source>For Will!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="30"/>
+        <source>Plains fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="31"/>
+        <source>Noble ritter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="32"/>
+        <source>Green Land!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="33"/>
+        <source>Fair play!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="34"/>
+        <source>Booting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="35"/>
+        <source>Propaganda mistress!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="36"/>
+        <source>Samurai!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="37"/>
+        <source>Urban fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="38"/>
+        <source>Not Adder!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="39"/>
+        <source>I&apos;m a crazy genius!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="40"/>
+        <source>Teaser!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="41"/>
+        <source>Bloody Mary!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="42"/>
+        <source>MAAAAAAAAAAAX!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="43"/>
+        <source>Veteran fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="44"/>
+        <source>Nature fighter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="45"/>
+        <source>Deceptively dangerous!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="46"/>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="62"/>
+        <source>Rice Cakes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="47"/>
+        <source>Splash damages!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="48"/>
+        <source>French war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="49"/>
+        <source>Lucky star!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="50"/>
+        <source>Winter is coming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="51"/>
+        <source>Grooving!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="52"/>
+        <source>Mr. Bear!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="53"/>
+        <source>General Peter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="54"/>
+        <source>Just a sister?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="55"/>
+        <source>Out numbered?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="56"/>
+        <source>Puppet master!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="57"/>
+        <source>I&apos;m the programmer now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="58"/>
+        <source>Field repairs!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="59"/>
+        <source>Infantry specalist!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="60"/>
+        <source>Noble trader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="61"/>
+        <source>Dominatrix!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="63"/>
+        <source>Cranky Paratrooper!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="64"/>
+        <source>Yelled dominant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="65"/>
+        <source>Sees all, knows all!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="66"/>
+        <source>Mail call!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="67"/>
+        <source>Evil invader!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="68"/>
+        <source>Extremly cruel!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="69"/>
+        <source>Revenge for John!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="70"/>
+        <source>Caviar and war!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="71"/>
+        <source>Immortal Evil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="72"/>
+        <source>Long standing guardian!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="73"/>
+        <source>Flying over the skies!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="74"/>
+        <source>Joung and winning!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="75"/>
+        <source>Assasins!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="76"/>
+        <source>The ultimate evil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="77"/>
+        <source>Sandy times!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="84"/>
+        <source>Win the given amount of games %0 with the given CO.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

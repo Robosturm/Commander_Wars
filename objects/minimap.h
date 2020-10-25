@@ -23,6 +23,17 @@ signals:
 public slots:
     void updateMinimap(spGameMap pMap, bool useVision = false);
 private:
+    struct MinimapFieldInfo
+    {
+        QString terrainId;
+        qint32 terrainOwner;
+        QString unitId;
+        qint32 unitPlayer;
+        oxygine::spSprite background;
+        oxygine::spSprite unit;
+    };
+    QVector<MinimapFieldInfo> m_Items;
+
     static const qint32 ImageSize{4};
 };
 

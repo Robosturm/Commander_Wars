@@ -40,14 +40,21 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    // clear minimap
-    removeChildren();
     // load new minimap
     if (pMap.get() != nullptr)
     {
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
+        qint32 size = width * heigth;
         setSize(ImageSize * width, ImageSize * heigth);
+        if (size != m_Items.length())
+        {
+            // clear minimap
+            removeChildren();
+            m_Items.clear();
+            m_Items.reserve(size);
+        }
+
         Player* pPlayer = pMap->getCurrentPlayer();
         spGameMenue pGamemenu = GameMenue::getInstance();
         if (pGamemenu.get() != nullptr)
@@ -60,46 +67,82 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
         {
             for (qint32 y = 0; y < heigth; y++)
             {
+                qint32 item = x * heigth + y;
+                if (item >= m_Items.size())
+                {
+                    m_Items.append(MinimapFieldInfo());
+                }
                 if (pPlayer->getFieldVisibleType(x, y) == GameEnums::VisionType_Shrouded &&
-                    pMap->getGameRules()->getFogMode() == GameEnums::Fog_OfShroud)
+                    pMap->getGameRules()->getFogMode() == GameEnums::Fog_OfShroud &&
+                    m_Items[item].terrainId != "||SHROUDED||")
                 {
                     oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
                     pSprite->setColor(Qt::black);
                     pSprite->setPosition(x * ImageSize, y * ImageSize);
                     pSprite->setSize(ImageSize, ImageSize);
                     addChild(pSprite);
+                    if (m_Items[item].background.get())
+                    {
+                        m_Items[item].background->detach();
+                    }
+                    m_Items[item].background = pSprite;
+                    m_Items[item].terrainId = "||SHROUDED||";
                 }
                 else
                 {
+
                     Terrain* pTerrain = pMap->getTerrain(x, y);
                     Building* pBuilding = pTerrain->getBuilding();
+                    QString id = pTerrain->getID();
                     if (pBuilding != nullptr)
                     {
-                        oxygine::ResAnim* pAnim = pGameManager->getResAnim(pBuilding->getMinimapIcon());
-                        if (pAnim != nullptr)
+                        qint32 owner = -1;
+                        Player* pPlayer = pBuilding->getOwner();
+                        if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
                         {
-                            oxygine::spSprite pSprite = new oxygine::Sprite();
-                            if (pAnim->getTotalFrames() > 1)
+                            owner = pPlayer->getPlayerID();
+                        }
+                        if (id != m_Items[item].terrainId || owner != m_Items[item].terrainOwner)
+                        {
+                            if (m_Items[item].background.get())
                             {
-                                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-                                pSprite->addTween(tween);
+                                m_Items[item].background->detach();
                             }
-                            else
+                            m_Items[item].terrainId = id;
+                            m_Items[item].terrainOwner = owner;
+                            oxygine::ResAnim* pAnim = pGameManager->getResAnim(pBuilding->getMinimapIcon());
+                            if (pAnim != nullptr)
                             {
-                                pSprite->setResAnim(pAnim);
+                                oxygine::spSprite pSprite = new oxygine::Sprite();
+                                if (pAnim->getTotalFrames() > 1)
+                                {
+                                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                                    pSprite->addTween(tween);
+                                }
+                                else
+                                {
+                                    pSprite->setResAnim(pAnim);
+                                }
+                                pSprite->setPosition(x * ImageSize, y * ImageSize);
+
+                                if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
+                                {
+                                    QColor color = pPlayer->getColor();
+                                    pSprite->setColor(color.red(), color.green(), color.blue(), 255);
+                                }
+                                addChild(pSprite);
+                                m_Items[item].background = pSprite;
                             }
-                            pSprite->setPosition(x * ImageSize, y * ImageSize);
-                            Player* pPlayer = pBuilding->getOwner();
-                            if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
-                            {
-                                QColor color = pPlayer->getColor();
-                                pSprite->setColor(color.red(), color.green(), color.blue(), 255);
-                            }
-                            addChild(pSprite);
                         }
                     }
-                    else
+                    else if (id != m_Items[item].terrainId)
                     {
+                        if (m_Items[item].background.get())
+                        {
+                            m_Items[item].background->detach();
+                        }
+                        m_Items[item].terrainId = id;
+                        m_Items[item].terrainOwner = -1;
                         oxygine::ResAnim* pAnim = pGameManager->getResAnim(pTerrain->getMinimapIcon());
                         if (pAnim != nullptr)
                         {
@@ -115,35 +158,58 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             }
                             pSprite->setPosition(x * ImageSize, y * ImageSize);
                             addChild(pSprite);
+                            m_Items[item].background = pSprite;
                         }
                     }
                     Unit* pUnit = pTerrain->getUnit();
+                    bool removeUnit = true;
                     if (pUnit != nullptr)
                     {
                         if (!useVision || !pUnit->isStealthed(pPlayer))
                         {
-                            oxygine::ResAnim* pAnim = pGameManager->getResAnim("minimap_unit");
-                            if (pAnim != nullptr)
+                            if (pUnit->getUnitID() != m_Items[item].unitId ||
+                                pUnit->getOwner()->getPlayerID() != m_Items[item].unitPlayer)
                             {
-                                oxygine::spSprite pSprite = new oxygine::Sprite();
-                                if (pAnim->getTotalFrames() > 1)
+                                removeUnit = false;
+                                if (m_Items[item].unit.get())
                                 {
-                                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
-                                    pSprite->addTween(tween);
+                                    m_Items[item].unit->detach();
                                 }
-                                else
+                                m_Items[item].unitId = pUnit->getUnitID();
+                                m_Items[item].unitPlayer = pUnit->getOwner()->getPlayerID();
+                                oxygine::ResAnim* pAnim = pGameManager->getResAnim("minimap_unit");
+                                if (pAnim != nullptr)
                                 {
-                                    pSprite->setResAnim(pAnim);
+                                    oxygine::spSprite pSprite = new oxygine::Sprite();
+                                    if (pAnim->getTotalFrames() > 1)
+                                    {
+                                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                                        pSprite->addTween(tween);
+                                    }
+                                    else
+                                    {
+                                        pSprite->setResAnim(pAnim);
+                                    }
+                                    oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), oxygine::timeMS(1000), -1);
+                                    pSprite->addTween(tween2);
+                                    pSprite->setPosition(x * ImageSize, y * ImageSize);
+                                    Player* pPlayer = pUnit->getOwner();
+                                    QColor color = pPlayer->getColor();
+                                    pSprite->setColor(color.red(), color.green(), color.blue(), 255);
+                                    pSprite->setPriority(1);
+                                    addChild(pSprite);
+                                    m_Items[item].unit = pSprite;
                                 }
-                                oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), oxygine::timeMS(1000), -1);
-                                pSprite->addTween(tween2);
-                                pSprite->setPosition(x * ImageSize, y * ImageSize);
-                                Player* pPlayer = pUnit->getOwner();
-                                QColor color = pPlayer->getColor();
-                                pSprite->setColor(color.red(), color.green(), color.blue(), 255);
-                                pSprite->setPriority(1);
-                                addChild(pSprite);
                             }
+                        }
+                    }
+                    if (removeUnit)
+                    {
+                        if (m_Items[item].unit.get())
+                        {
+                            m_Items[item].unit->detach();
+                            m_Items[item].unitId = "";
+                            m_Items[item].unitPlayer = -1;
                         }
                     }
                 }

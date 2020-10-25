@@ -109,7 +109,11 @@ namespace oxygine
             QSize size = oxygine::GameWindow::getWindow()->size();
             oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
             // Render all actors inside the stage. Actor::render will also be called for all its children
-            oxygine::getStage()->render(clearColor, viewport);
+            if (m_Mutex.tryLock())
+            {
+                oxygine::getStage()->render(clearColor, viewport);
+                m_Mutex.unlock();
+            }
             swapDisplayBuffers();
         }
         // check for termination

@@ -655,11 +655,11 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
         {
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            sprite->setSize(GameMap::getImageSize() + 0.5f, GameMap::getImageSize() + 0.5f);
             sprite->setColor(70, 70, 70, 100);
-            sprite->setPosition(GameMap::getImageSize() * x, y * GameMap::getImageSize());
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
-            pMap->addChild(sprite);
+            sprite->setPosition(0.5f, 0.5f);
+            sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Fog));
+            pMap->getTerrain(x, y)->addChild(sprite);
             m_FogSprites[x][y] = sprite;
         }
     }
@@ -712,11 +712,11 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             }
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            sprite->setSize(GameMap::getImageSize() + 0.5f, GameMap::getImageSize() + 0.5f);
             sprite->setColor(70, 70, 70, 100);
-            sprite->setPosition(GameMap::getImageSize() * x, y * GameMap::getImageSize());
-            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
-            pMap->addChild(sprite);
+            sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Fog));
+            sprite->setPosition(0.5f, 0.5f);
+            pMap->getTerrain(x, y)->addChild(sprite);
             m_FogSprites[x][y] = sprite;
             break;
         }
@@ -730,9 +730,9 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
             }
             // create fog of war sprite
             oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
-            sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
+            sprite->setSize(GameMap::getImageSize() + 0.5f, GameMap::getImageSize() + 0.5f);
             sprite->setColor(0, 0, 0, 255);
-            sprite->setPosition(0, 0);
+            sprite->setPosition(0.5f, 0.5f);
             sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
             pTerrain->addChild(sprite);
             pTerrain->setSpriteVisibility(false);

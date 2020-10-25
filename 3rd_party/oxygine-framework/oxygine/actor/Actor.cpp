@@ -240,7 +240,9 @@ namespace oxygine
             return;
         }
         if (isDescendant(safeCast<Actor*>(ev->target.get())))
+        {
             return;
+        }
 
         _overred = 0;
         _getStage()->removeEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));

@@ -73,6 +73,11 @@ var Constructor = function()
         unit.setHasMoved(true);
         spawnUnit.setHasMoved(true);
         player.buildedUnit(spawnUnit);
+        // achievements
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
+        }
     };    
     this.getDescription = function()
     {

@@ -7,8 +7,9 @@ Label::Label(qint32 width)
     _clipRect = new oxygine::ClipRectActor();
     _clipRect->setWidth(width);
     _clipRect->setHeight(28);
-    setWidth(width);
     _textField = new oxygine::TextField();
+    _textField->setWidth(width);
+    setWidth(width);
     _clipRect->addChild(_textField);
     addChild(_clipRect);
 }
@@ -18,6 +19,7 @@ void Label::setWidth(float width)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     _clipRect->setWidth(width);
+    _textField->setWidth(width);
     oxygine::Sprite::setWidth(width);
     pApp->continueThread();
 }

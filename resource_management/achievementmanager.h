@@ -6,9 +6,19 @@
 class AchievementManager : public QObject, public RessourceManagement<AchievementManager>
 {
     Q_OBJECT
+public:
+    /**
+     * @brief loadAll loads all weapons data
+     */
+    virtual void loadAll() override;
+    /**
+     * @brief victory
+     */
+    void onVictory(qint32 team, bool humanWin);
 protected:
     friend RessourceManagement<AchievementManager>;
     AchievementManager();
+
 private:
     virtual ~AchievementManager() = default;
 };

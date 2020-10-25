@@ -57,7 +57,7 @@ void Interpreter::init()
     globalObject().setProperty("settings", settings);
 
     QJSValue userdata = newQObject(Userdata::getInstance());
-    globalObject().setProperty("Userdata", userdata);
+    globalObject().setProperty("userdata", userdata);
 
     GameEnums::registerEnums();
 

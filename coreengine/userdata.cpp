@@ -124,6 +124,12 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
         if (achievement.id == id)
         {
             found = true;
+            achievement.targetValue = targetValue;
+            achievement.name = name;
+            achievement.description = description;
+            achievement.hide = hide;
+            achievement.icon = icon;
+            achievement.loaded = true;
         }
     }
     if (!found)
@@ -136,6 +142,7 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
         achievement.hide = hide;
         achievement.icon = icon;
         m_achievements.append(achievement);
+        achievement.loaded = true;
     }
 }
 

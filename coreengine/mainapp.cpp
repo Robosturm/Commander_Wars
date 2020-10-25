@@ -342,7 +342,7 @@ void Mainapp::loadRessources()
     }
     if (!m_noUi)
     {
-        m_Timer.start(1, this);
+        m_Timer.start(10, this);
     }
     if (!m_slave)
     {

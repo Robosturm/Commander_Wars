@@ -98,6 +98,12 @@ var Constructor = function()
         var unit = map.spawnUnit(x, y, unitID, player);
         map.getGameRecorder().buildUnit(player.getPlayerID());
         player.buildedUnit(unit);
+
+        // achievements
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_BUILD_UNIT.unitProduced(unitID);
+        }
     };
     this.getDescription = function()
     {

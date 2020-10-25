@@ -23,6 +23,7 @@ public:
         QString description;
         QString icon;
         bool hide{false};
+        bool loaded{false};
     };
 
     static Userdata* getInstance();

@@ -202,6 +202,7 @@ set(${PROJECT_NAME}_SRCS
         objects/gameplayandkeys.cpp
         objects/actionlistdialog.cpp
         objects/passwordbox.cpp
+        objects/progressinfobar.cpp
 
         #modding
         modding/csvtableimporter.cpp
@@ -219,6 +220,7 @@ set(${PROJECT_NAME}_SRCS
         menue/wikimenu.cpp
         menue/costylemenu.cpp
         menue/replaymenu.cpp
+        menue/achievementmenu.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp
