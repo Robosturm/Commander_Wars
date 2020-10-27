@@ -47,6 +47,11 @@ var WEATHER =
         return 0;
     },
 
+    getMovementpointModifier : function(weather, unit, terrain)
+    {
+        return 0;
+    },
+
     getVisionrangeModifier : function(weather)
     {
         // only called when the weather is active

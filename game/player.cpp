@@ -1122,6 +1122,30 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     return modifier;
 }
 
+qint32 Player::getBonusMovementpoints(Unit* pUnit, QPoint position)
+{
+     qint32 movementModifier = 0;
+    CO* pCO = getCO(0);
+    if (pCO != nullptr)
+    {
+        movementModifier += pCO->getMovementpointModifier(pUnit, position);
+    }
+    pCO = getCO(1);
+    if (pCO != nullptr)
+    {
+        movementModifier += pCO->getMovementpointModifier(pUnit, position);
+    }
+    if (pUnit->getOwner() == this)
+    {
+        spGameMap pMap = GameMap::getInstance();
+        if (!getWeatherImmune())
+        {
+            movementModifier += pMap->getGameRules()->getCurrentWeather()->getMovementpointModifier(pUnit, pMap->getTerrain(position.x(), position.y()));
+        }
+    }
+    return movementModifier;
+}
+
 void Player::startOfTurn()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

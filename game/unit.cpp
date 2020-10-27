@@ -2027,16 +2027,7 @@ qint32 Unit::getBonusMovementpoints(QPoint position)
 {
     qint32 movementModifier = 0;
     movementModifier += getBonus(m_MovementBonus);
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
-    {
-        movementModifier += pCO->getMovementpointModifier(this, position);
-    }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
-    {
-        movementModifier += pCO->getMovementpointModifier(this, position);
-    }
+    movementModifier += m_pOwner->getBonusMovementpoints(this, position);
     return movementModifier;
 }
 

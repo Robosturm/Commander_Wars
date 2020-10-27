@@ -303,6 +303,13 @@ public slots:
      */
     qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getBonusMovementpoints
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getBonusMovementpoints(Unit* pUnit, QPoint position);
+    /**
      * @brief getRockettarget finds the most valuable target for damaging units in a diamond.
      * If multiple targets with the same value are found.
      * One is selected at random
