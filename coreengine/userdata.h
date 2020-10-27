@@ -90,7 +90,11 @@ public slots:
      * @param hide
      */
     void addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide = false);
-
+    /**
+     * @brief deleteAchievement
+     * @param id
+     */
+    void deleteAchievement(QString id);
 private:
     void showAchieved();
 

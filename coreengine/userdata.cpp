@@ -116,6 +116,18 @@ void Userdata::increaseAchievement(QString id, qint32 value)
     }
 }
 
+void Userdata::deleteAchievement(QString id)
+{
+    for (qint32 i = 0; i < m_achievements.size(); i++)
+    {
+        if (m_achievements[i].id == id)
+        {
+            m_achievements.removeAt(i);
+            break;
+        }
+    }
+}
+
 void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide)
 {
     bool found = false;

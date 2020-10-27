@@ -655,7 +655,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="137"/>
+        <location filename="../menue/achievementmenu.cpp" line="136"/>
         <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>

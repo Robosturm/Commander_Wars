@@ -6,6 +6,8 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/gamemanager.h"
+#include "resource_management/achievementmanager.h"
+#include "resource_management/buildingspritemanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -291,6 +293,10 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
     {
         pAnim = COPerkManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
+    if (pAnim == nullptr)
+    {
+        pAnim = AchievementManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
@@ -299,6 +305,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
     else
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         if (pUnitSpriteManager->exists(file))
         {
             spPlayer pPlayer = new Player();
@@ -307,6 +314,20 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
             pUnit->setScale(size / GameMap::getImageSize());
             pUnit->setOwner(nullptr);
             pSprite = pUnit.get();
+        }
+        else if (pBuildingSpriteManager->exists(file))
+        {
+            // check buildings?
+            spGameMap pMap = GameMap::getInstance();
+            spPlayer pPlayer = nullptr;
+            if (pMap.get() != nullptr)
+            {
+                pPlayer = pMap->getCurrentPlayer();
+            }
+            Building* pBuilding = new Building(file);
+            pBuilding->setOwner(pPlayer.get());
+            pBuilding->scaleAndShowOnSingleTile();
+            return pBuilding;
         }
     }
     return pSprite;
