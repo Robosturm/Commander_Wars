@@ -309,17 +309,21 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
 
 QString Building::getName()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function1 = "getName";
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
-    if (ret.isString())
+    if (m_BuildingName.isEmpty())
     {
-        return ret.toString();
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "getName";
+        QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1);
+        if (ret.isString())
+        {
+            return ret.toString();
+        }
+        else
+        {
+            return "";
+        }
     }
-    else
-    {
-        return "";
-    }
+    return m_BuildingName;
 }
 
 quint32 Building::getBaseIncome() const
@@ -747,6 +751,16 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     return GameEnums::BuildingTarget_All;
 }
 
+QString Building::getBuildingName() const
+{
+    return m_BuildingName;
+}
+
+void Building::setBuildingName(const QString &BuildingName)
+{
+    m_BuildingName = BuildingName;
+}
+
 qint32 Building::getVisionHigh() const
 {
     return m_VisionHigh;
@@ -925,6 +939,7 @@ void Building::serializeObject(QDataStream& pStream) const
     pStream << m_Hp;
     pStream << fireCount;
     m_Variables.serializeObject(pStream);
+    pStream << m_BuildingName;
 }
 
 void Building::deserializeObject(QDataStream& pStream)
@@ -966,5 +981,9 @@ void Building::deserializer(QDataStream& pStream, bool fast)
     if (version > 2)
     {
         m_Variables.deserializeObject(pStream);
+    }
+    if (version > 4)
+    {
+        pStream >> m_BuildingName;
     }
 }

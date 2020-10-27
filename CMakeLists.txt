@@ -203,6 +203,7 @@ set(${PROJECT_NAME}_SRCS
         objects/actionlistdialog.cpp
         objects/passwordbox.cpp
         objects/progressinfobar.cpp
+        objects/dialogmodifybuilding.cpp
 
         #modding
         modding/csvtableimporter.cpp

@@ -21,17 +21,12 @@
 #include "objects/filedialog.h"
 
 #include "objects/mapeditdialog.h"
-
 #include "objects/dialogmodifyunit.h"
-
+#include "objects/dialogmodifybuilding.h"
 #include "objects/playerselectiondialog.h"
-
 #include "objects/ruleselectiondialog.h"
-
 #include "objects/dialograndommap.h"
-
 #include "objects/dialogmodifyterrain.h"
-
 #include "objects/dialogmessagebox.h"
 #include "objects/label.h"
 
@@ -93,7 +88,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
     m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
-    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain"));
+    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain or building"));
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
     m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
@@ -1065,6 +1060,14 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 spDialogModifyTerrain pDialog = new DialogModifyTerrain(pTerrain);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                setFocused(false);
+            }
+            else
+            {
+                createTempFile();
+                spDialogModifyBuilding pDialog = new DialogModifyBuilding(pTerrain->getBuilding());
+                addChild(pDialog);
+                connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
             }
             break;

@@ -71,7 +71,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief getOffset
@@ -88,9 +88,20 @@ public:
      * @brief scaleAndShowOnSingleTile
      */
     void scaleAndShowOnSingleTile();
+
 signals:
 
 public slots:
+    /**
+     * @brief getBuildingName
+     * @return
+     */
+    QString getBuildingName() const;
+    /**
+     * @brief setBuildingName
+     * @param BuildingName
+     */
+    void setBuildingName(const QString &BuildingName);
     /**
      * @brief getVisionHide
      * @return
@@ -364,6 +375,8 @@ private:
      * @brief m_BuildingID the id of this building
      */
     QString m_BuildingID;
+
+    QString m_BuildingName;
     /**
      * @brief m_Owner our owner a nullptr means we're a neutral building
      */
