@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "exitgame";
+        return "options";
     };
     this.perform = function(action)
     {

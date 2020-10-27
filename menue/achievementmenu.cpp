@@ -50,11 +50,6 @@ Achievementmenu::Achievementmenu()
     });
     connect(this, &Achievementmenu::sigExitMenue, this, &Achievementmenu::exitMenue, Qt::QueuedConnection);
 
-    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 110);
-    m_MainPanel = new Panel(true, size, size);
-    m_MainPanel->setPosition(10, 50);
-    addChild(m_MainPanel);
-
     oxygine::TextStyle styleLarge = FontManager::getMainFont48();
     styleLarge.color = FontManager::getFontColor();
     styleLarge.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -67,75 +62,51 @@ Achievementmenu::Achievementmenu()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
+    qint32 y = 10;
+    qint32 width = 150;
+    spLabel pTextfield = new Label(width - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Search: "));
+    pTextfield->setPosition(10, y);
+    addChild(pTextfield);
+    m_SearchString = new Textbox(Settings::getWidth() - 380);
+    m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
+    m_SearchString->setPosition(150, y);
+    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &Achievementmenu::searchChanged, Qt::QueuedConnection);
+    addChild(m_SearchString);
+    oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
+    addChild(pButton);
+    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigSearch();
+    });
+    connect(this, &Achievementmenu::sigSearch, this, &Achievementmenu::search, Qt::QueuedConnection);
+    y += 50;
+
+    QSize size(Settings::getWidth() - 20, Settings::getHeight() - 150);
+    m_MainPanel = new Panel(true, size, size);
+    m_MainPanel->setPosition(10, 90);
+    addChild(m_MainPanel);
+
+    qint32 singleWidth = Settings::getWidth() - 80;
     Userdata* pUserdata = Userdata::getInstance();
     auto achievements = pUserdata->getAchievements();
-    qint32 x = 10;
-    qint32 y = 10;
-    qint32 singleWidth = Settings::getWidth() - 80;
     qint32 achieveCount = 0;
     for (auto achievement : *achievements)
     {
-
         if (achievement.progress >= achievement.targetValue)
         {
-            WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-            oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-            pIcon->setPosition(x, y + 16);
-            m_MainPanel->addItem(pIcon);
             achieveCount += 1;
         }
-        else
-        {
-//            WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-//            oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-//            pIcon->setPosition(x, y + 16);
-//            m_MainPanel->addItem(pIcon);
-            spLabel pTextfield = new Label(50);
-            pTextfield->setStyle(styleLarge);
-            pTextfield->setText("?");
-            pTextfield->setPosition(x, y + 8);
-            m_MainPanel->addItem(pTextfield);
-        }
-
-        spLabel pTextfield = new Label(singleWidth - 60);
-        pTextfield->setStyle(style);
-        if (achievement.hide)
-        {
-            pTextfield->setText("?");
-        }
-        else
-        {
-            pTextfield->setText(achievement.name);
-        }
-        pTextfield->setPosition(x + 60, y);
-        m_MainPanel->addItem(pTextfield);
-
-        pTextfield = new Label(singleWidth - 60);
-        pTextfield->setStyle(style);
-        if (achievement.hide)
-        {
-            pTextfield->setText("?");
-        }
-        else
-        {
-            pTextfield->setText(achievement.description);
-        }
-        pTextfield->setPosition(x + 60, y + 40);
-        m_MainPanel->addItem(pTextfield);
-
-        QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
-        spProgressInfoBar pProgressInfoBar = new ProgressInfoBar(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
-        pProgressInfoBar->setPosition(x, y + 80);
-        m_MainPanel->addItem(pProgressInfoBar);
-        y += 120;
     }
-    m_MainPanel->setContentHeigth(y + 50);
-
-    spLabel pTextfield = new Label(singleWidth);
+    pTextfield = new Label(singleWidth);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
-    pTextfield->setPosition(10, 10);
+    pTextfield->setPosition(10, 50);
     addChild(pTextfield);
+
+    searchChanged("");
 }
 
 void Achievementmenu::exitMenue()
@@ -148,3 +119,83 @@ void Achievementmenu::exitMenue()
     pApp->continueThread();
 }
 
+void Achievementmenu::search()
+{
+    searchChanged(m_SearchString->getCurrentText());
+}
+
+void Achievementmenu::searchChanged(QString text)
+{
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    m_MainPanel->clearContent();
+
+    Userdata* pUserdata = Userdata::getInstance();
+    auto achievements = pUserdata->getAchievements();
+    qint32 x = 10;
+    qint32 y = 10;
+    qint32 singleWidth = Settings::getWidth() - 80;
+    for (auto achievement : *achievements)
+    {
+        if (text.isEmpty() ||
+            achievement.name.contains(text) ||
+            achievement.description.contains(text))
+        {
+            if (achievement.progress >= achievement.targetValue)
+            {
+                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                pIcon->setPosition(x, y + 16);
+                m_MainPanel->addItem(pIcon);
+            }
+            else
+            {
+                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
+                m_MainPanel->addItem(pIcon);
+                //            spLabel pTextfield = new Label(50);
+                //            pTextfield->setStyle(styleLarge);
+                //            pTextfield->setText("?");
+                //            pTextfield->setPosition(x, y + 8);
+                //            m_MainPanel->addItem(pTextfield);
+            }
+
+            spLabel pTextfield = new Label(singleWidth - 60);
+            pTextfield->setStyle(style);
+            if (achievement.hide)
+            {
+                pTextfield->setText("?");
+            }
+            else
+            {
+                pTextfield->setText(achievement.name);
+            }
+            pTextfield->setPosition(x + 60, y);
+            m_MainPanel->addItem(pTextfield);
+
+            pTextfield = new Label(singleWidth - 60);
+            pTextfield->setStyle(style);
+            if (achievement.hide)
+            {
+                pTextfield->setText("?");
+            }
+            else
+            {
+                pTextfield->setText(achievement.description);
+            }
+            pTextfield->setPosition(x + 60, y + 40);
+            m_MainPanel->addItem(pTextfield);
+
+            QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
+            spProgressInfoBar pProgressInfoBar = new ProgressInfoBar(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
+            pProgressInfoBar->setPosition(x, y + 80);
+            m_MainPanel->addItem(pProgressInfoBar);
+            y += 120;
+        }
+    }
+    m_MainPanel->setContentHeigth(y + 50);
+}

@@ -8,6 +8,7 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/achievementmanager.h"
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/terrainmanager.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -306,6 +307,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
     {
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+        TerrainManager* pTerrainManager = TerrainManager::getInstance();
         if (pUnitSpriteManager->exists(file))
         {
             spPlayer pPlayer = new Player();
@@ -328,6 +330,12 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
             pBuilding->setOwner(pPlayer.get());
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;
+        }
+        else if (pTerrainManager->exists(file))
+        {
+            spTerrain pTerrain = Terrain::createTerrain(file, -1, -1, "");
+            pTerrain->loadSprites();
+            return pTerrain.get();
         }
     }
     return pSprite;

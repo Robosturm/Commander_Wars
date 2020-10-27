@@ -137,6 +137,9 @@
 		<image file="hq+captured.png" />
 		<image file="hq+lost.png" />
 		<image file="flareshot.png" />
+		<image file="unit_info.png" />
+		<image file="options.png" />
+		<image file="nickname.png" />
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

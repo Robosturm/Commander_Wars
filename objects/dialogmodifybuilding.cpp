@@ -92,7 +92,6 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
         {
             m_pBuilding->setOwner(pMap->getPlayer(value));
         }
-
     });
     m_pPanel->addItem(pDropdownmenu);
     y += 40;

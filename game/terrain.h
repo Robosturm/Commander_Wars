@@ -20,7 +20,7 @@ class TerrainFindingSystem;
 class Terrain;
 typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
-class Terrain : public QObject, public oxygine::Actor, public FileSerializable
+class Terrain : public QObject, public oxygine::Sprite, public FileSerializable
 {
     Q_OBJECT
 public:

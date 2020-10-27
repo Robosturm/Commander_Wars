@@ -1,6 +1,6 @@
 var Constructor = function()
 {
-    this.UnitTabel = [  ["INFANTRY",                700,    qsTr("Saucy!")],
+    this.unitTable = [  ["INFANTRY",                700,    qsTr("Saucy!")],
                         ["MECH",                    500,    qsTr("You da man!")],
                         ["SNIPER",                  500,    qsTr("Shoot them!")],
                         ["RECON",                   300,    qsTr("Bully for you!")],
@@ -47,9 +47,9 @@ var Constructor = function()
 
     this.registerAchievements = function()
     {
-        for (var i = 0; i < ACHIEVEMENT_BUILD_UNIT.UnitTabel.length; ++i)
+        for (var i = 0; i < ACHIEVEMENT_BUILD_UNIT.unitTable.length; ++i)
         {
-            var data = ACHIEVEMENT_BUILD_UNIT.UnitTabel[i];
+            var data = ACHIEVEMENT_BUILD_UNIT.unitTable[i];
             userdata.addAchievement("BUILD_UNIT_" + data[0],
                                     data[1],
                                     data[2],

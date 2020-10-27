@@ -15,7 +15,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "help";
+        return "nickname";
     };
     this.isFinalStep = function(action)
     {

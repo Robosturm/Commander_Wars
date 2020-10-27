@@ -122,6 +122,12 @@ var Constructor = function()
                 }
             }
             building.setUnitOwner(ACTION_CAPTURE.postAnimationUnit);
+            // achievements
+            var player = map.getCurrentPlayer();
+            if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            {
+                ACHIEVEMENT_CAPTURED_BUILDING.buildingCaptured(building.getBuildingID());
+            }
         }
         // disable unit commandments for this turn
         ACTION_CAPTURE.postAnimationUnit.setHasMoved(true);

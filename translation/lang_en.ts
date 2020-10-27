@@ -193,7 +193,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="139"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="145"/>
         <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,7 +292,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="599"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="610"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -655,7 +655,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="136"/>
+        <location filename="../menue/achievementmenu.cpp" line="69"/>
+        <source>Search: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="73"/>
+        <source>Text that will be searched for in the title of each wikipage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="77"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/achievementmenu.cpp" line="105"/>
         <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1504,12 +1519,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="102"/>
+        <location filename="../objects/dialogmodifybuilding.cpp" line="101"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="105"/>
+        <location filename="../objects/dialogmodifybuilding.cpp" line="104"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7336,6 +7351,132 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/achievements/achievement_build_unit.js" line="56"/>
         <source>Build a given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_captured_building</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="3"/>
+        <source>What&apos;s an airport?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="4"/>
+        <source>My factory now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="5"/>
+        <source>Onto the sea!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="6"/>
+        <source>Nice HQ you got!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="7"/>
+        <source>Blob spawnpoint!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="8"/>
+        <source>There&apos;s some gold!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="9"/>
+        <source>We found some oil!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="10"/>
+        <source>What&apos;s in those pipes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="11"/>
+        <source>I can see you now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="12"/>
+        <source>We have a good connection now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="13"/>
+        <source>We need you for money!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="24"/>
+        <source>Capture a given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>achievement_kill_neutral_building</name>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="3"/>
+        <source>Nice!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="4"/>
+        <source>Smashing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="5"/>
+        <source>Beaming!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="6"/>
+        <source>Yeah!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="7"/>
+        <source>Oh, boy!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="8"/>
+        <source>Aurora explodes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="9"/>
+        <source>No lasers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="10"/>
+        <source>We can walk here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="11"/>
+        <source>Why?!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="12"/>
+        <source>We can pass here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="22"/>
+        <source>Kill the given amount of </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_kill_neutral_building.js" line="22"/>
+        <source>. Only battle kills count.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -581,15 +581,26 @@ var Constructor = function()
     this.performPostBuildingAnimation = function()
     {
         var defBuilding = ACTION_FIRE.postBuildingAnimationTerrain.getBuilding();
+        var player = map.getCurrentPlayer();
         if (defBuilding !== null)
         {
             if ((defBuilding.getHp() <= 0))
             {
+                // achievements
+                if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+                {
+                    ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(defBuilding.getBuildingID());
+                }
                 Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
             }
         }
         else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
         {
+            // achievements
+            if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+            {
+                ACHIEVEMENT_KILL_NEUTRAL_BUILDING.killed(ACTION_FIRE.postBuildingAnimationTerrain.getID());
+            }
             Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
         }
         ACTION_FIRE.postBuildingAnimationTerrain = null;
