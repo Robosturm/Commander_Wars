@@ -774,6 +774,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     m_EditorMode = EditorModes::RemoveUnits;
                 }
             }
+            m_EditorSelection->KeyInput(cur);
         }
     }
     pApp->continueThread();

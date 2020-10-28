@@ -609,6 +609,96 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Editor"));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Place Terrain: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorPlaceTerrain());
+    pSelectKey->setTooltipText(tr("Key to select Place Terrain in the editor"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorPlaceTerrain, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Place Unit: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorPlaceUnit());
+    pSelectKey->setTooltipText(tr("Key to select Place Unit in the editor"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorPlaceUnit, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Place Building: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorPlaceBuilding());
+    pSelectKey->setTooltipText(tr("Key to select Place Building in the editor"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorPlaceBuilding, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Next Team: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorNextTeam());
+    pSelectKey->setTooltipText(tr("Key to select the next player in the editor"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorNextTeam, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Previous Team: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorPreviousTeam());
+    pSelectKey->setTooltipText(tr("Key to select the previous player in the editor"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorPreviousTeam, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Next Item: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorSelectionRight());
+    pSelectKey->setTooltipText(tr("Key to select the next editor item"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorSelectionRight, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Previous Item: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_EditorSelectionLeft());
+    pSelectKey->setTooltipText(tr("Key to select the previous editor item"));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_EditorSelectionLeft, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
     m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();
 }

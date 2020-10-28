@@ -61,6 +61,14 @@ Qt::Key Settings::m_key_MapZoomIn2                  = Qt::Key(0);
 Qt::Key Settings::m_key_ShowAttackFields2           = Qt::Key(0);
 Qt::Key Settings::m_key_ShowIndirectAttackFields2   = Qt::Key(0);
 
+Qt::Key Settings::m_key_EditorPlaceTerrain          = Qt::Key_1;
+Qt::Key Settings::m_key_EditorPlaceBuilding         = Qt::Key_2;
+Qt::Key Settings::m_key_EditorPlaceUnit             = Qt::Key_3;
+Qt::Key Settings::m_key_EditorNextTeam              = Qt::Key_Tab;
+Qt::Key Settings::m_key_EditorPreviousTeam          = Qt::Key_Asterisk;
+Qt::Key Settings::m_key_EditorSelectionRight        = Qt::Key_R;
+Qt::Key Settings::m_key_EditorSelectionLeft         = Qt::Key_T;
+
 QString Settings::m_language      = "en";
 // Sound
 qint32 Settings::m_TotalVolume       = 100;
@@ -119,6 +127,76 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+Qt::Key Settings::getKey_EditorSelectionLeft()
+{
+    return m_key_EditorSelectionLeft;
+}
+
+void Settings::setKey_EditorSelectionLeft(const Qt::Key &key_EditorSelectionLeft)
+{
+    m_key_EditorSelectionLeft = key_EditorSelectionLeft;
+}
+
+Qt::Key Settings::getKey_EditorSelectionRight()
+{
+    return m_key_EditorSelectionRight;
+}
+
+void Settings::setKey_EditorSelectionRight(const Qt::Key &key_EditorSelectionRight)
+{
+    m_key_EditorSelectionRight = key_EditorSelectionRight;
+}
+
+Qt::Key Settings::getKey_EditorPreviousTeam()
+{
+    return m_key_EditorPreviousTeam;
+}
+
+void Settings::setKey_EditorPreviousTeam(const Qt::Key &key_EditorPreviousTeam)
+{
+    m_key_EditorPreviousTeam = key_EditorPreviousTeam;
+}
+
+Qt::Key Settings::getKey_EditorNextTeam()
+{
+    return m_key_EditorNextTeam;
+}
+
+void Settings::setKey_EditorNextTeam(const Qt::Key &key_EditorNextTeam)
+{
+    m_key_EditorNextTeam = key_EditorNextTeam;
+}
+
+Qt::Key Settings::getKey_EditorPlaceUnit()
+{
+    return m_key_EditorPlaceUnit;
+}
+
+void Settings::setKey_EditorPlaceUnit(const Qt::Key &key_EditorPlaceUnit)
+{
+    m_key_EditorPlaceUnit = key_EditorPlaceUnit;
+}
+
+Qt::Key Settings::getKey_EditorPlaceBuilding()
+{
+    return m_key_EditorPlaceBuilding;
+}
+
+void Settings::setKey_EditorPlaceBuilding(const Qt::Key &key_EditorPlaceBuilding)
+{
+    m_key_EditorPlaceBuilding = key_EditorPlaceBuilding;
+}
+
+Qt::Key Settings::getKey_EditorPlaceTerrain()
+{
+    return m_key_EditorPlaceTerrain;
+}
+
+void Settings::setKey_EditorPlaceTerrain(const Qt::Key &key_EditorPlaceTerrain)
+{
+    m_key_EditorPlaceTerrain = key_EditorPlaceTerrain;
 }
 
 Qt::Key Settings::getKey_ShowIndirectAttackFields2()
@@ -848,6 +926,63 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_key_ShowIndirectAttackFields2 = Qt::Key(0);
     }
+
+
+    m_key_EditorPlaceTerrain = static_cast<Qt::Key>(settings.value("key_EditorPlaceTerrain", Qt::Key_1).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorPlaceTerrain";
+        Console::print(error, Console::eERROR);
+        m_key_EditorPlaceTerrain = Qt::Key_1;
+    }
+
+    m_key_EditorPlaceBuilding = static_cast<Qt::Key>(settings.value("key_EditorPlaceBuilding", Qt::Key_2).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorPlaceBuilding";
+        Console::print(error, Console::eERROR);
+        m_key_EditorPlaceBuilding = Qt::Key_2;
+    }
+
+    m_key_EditorPlaceUnit = static_cast<Qt::Key>(settings.value("key_EditorPlaceUnit", Qt::Key_3).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorPlaceUnit";
+        Console::print(error, Console::eERROR);
+        m_key_EditorPlaceUnit = Qt::Key_3;
+    }
+
+    m_key_EditorNextTeam = static_cast<Qt::Key>(settings.value("key_EditorNextTeam", Qt::Key_Tab).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorNextTeam";
+        Console::print(error, Console::eERROR);
+        m_key_EditorNextTeam = Qt::Key_Tab;
+    }
+
+    m_key_EditorPreviousTeam = static_cast<Qt::Key>(settings.value("key_EditorPreviousTeam", Qt::Key_Asterisk).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorPreviousTeam";
+        Console::print(error, Console::eERROR);
+        m_key_EditorPreviousTeam = Qt::Key_Asterisk;
+    }
+
+    m_key_EditorSelectionRight = static_cast<Qt::Key>(settings.value("key_EditorSelectionRight", Qt::Key_R).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorSelectionRight";
+        Console::print(error, Console::eERROR);
+        m_key_EditorSelectionRight = Qt::Key_R;
+    }
+
+    m_key_EditorSelectionLeft = static_cast<Qt::Key>(settings.value("key_EditorSelectionLeft", Qt::Key_T).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_EditorSelectionLeft";
+        Console::print(error, Console::eERROR);
+        m_key_EditorSelectionLeft = Qt::Key_T;
+    }
     settings.endGroup();
 
     // Sound
@@ -1068,6 +1203,13 @@ void Settings::saveSettings()
         settings.setValue("key_MapZoomOut2",                m_key_MapZoomOut2);
         settings.setValue("key_ShowAttackFields2",          m_key_ShowAttackFields2);
         settings.setValue("key_ShowIndirectAttackFields2",  m_key_ShowIndirectAttackFields2);
+        settings.setValue("key_EditorPlaceTerrain",         m_key_EditorPlaceTerrain);
+        settings.setValue("key_EditorPlaceBuilding",        m_key_EditorPlaceBuilding);
+        settings.setValue("key_EditorPlaceUnit",            m_key_EditorPlaceUnit);
+        settings.setValue("key_EditorNextTeam",             m_key_EditorNextTeam);
+        settings.setValue("key_EditorPreviousTeam",         m_key_EditorPreviousTeam);
+        settings.setValue("key_EditorSelectionRight",       m_key_EditorSelectionRight);
+        settings.setValue("key_EditorSelectionLeft",        m_key_EditorSelectionLeft);
 
         settings.endGroup();
 

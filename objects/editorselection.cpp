@@ -395,6 +395,14 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     // update buildings
+    if (player < 0)
+    {
+        m_currentPlayer = nullptr;
+    }
+    else
+    {
+        m_currentPlayer = m_Players.at(player + 1)->getOwner();
+    }
     for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
     {
         if (player < 0)
@@ -819,6 +827,114 @@ void EditorSelection::selectUnit(QString unitID)
     pApp->continueThread();
 }
 
+void EditorSelection::KeyInput(Qt::Key cur)
+{
+    if (cur == Settings::getKey_EditorPlaceTerrain())
+    {
+        oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
+        event.target = m_pSpriteTerrainMode;
+        event.currentTarget = m_pSpriteTerrainMode;
+        m_pSpriteTerrainMode->dispatchEvent(&event);
+    }
+    else if (cur  == Settings::getKey_EditorPlaceBuilding())
+    {
+        oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
+        event.target = m_pSpriteBuildingMode;
+        event.currentTarget = m_pSpriteBuildingMode;
+        m_pSpriteBuildingMode->dispatchEvent(&event);
+    }
+    else if (cur  == Settings::getKey_EditorPlaceUnit())
+    {
+        oxygine::TouchEvent event(oxygine::TouchEvent::CLICK, false);
+        event.target = m_pSpriteUnitMode;
+        event.currentTarget = m_pSpriteUnitMode;
+        m_pSpriteUnitMode->dispatchEvent(&event);
+    }
+    else if (cur  == Settings::getKey_EditorNextTeam())
+    {
+        spGameMap pMap = GameMap::getInstance();
+        qint32 player = 0;
+        if (m_currentPlayer.get() != nullptr)
+        {
+            player = m_currentPlayer->getPlayerID() + 1;
+            if (player >= pMap->getPlayerCount())
+            {
+                player = -1;
+            }
+        }
+        else
+        {
+            player = 0;
+        }
+        changeSelectedPlayer(player);
+    }
+    else if (cur  == Settings::getKey_EditorPreviousTeam())
+    {
+        spGameMap pMap = GameMap::getInstance();
+        qint32 player = 0;
+        if (m_currentPlayer.get() != nullptr)
+        {
+            player = m_currentPlayer->getPlayerID() - 1;
+        }
+        else
+        {
+            player = pMap->getPlayerCount() - 1;
+        }
+        changeSelectedPlayer(player);
+    }
+    else if (cur == Settings::getKey_EditorSelectionLeft())
+    {
+        qint32 item = m_selectedItem - 1;
+        changeSelection(item);
+    }
+    else if (cur == Settings::getKey_EditorSelectionRight())
+    {
+        qint32 item = m_selectedItem + 1;
+        changeSelection(item);
+    }
+}
+
+void EditorSelection::changeSelection(qint32 item)
+{
+    if (item < 0)
+    {
+        item = 0;
+    }
+    switch (m_Mode)
+    {
+        case EditorMode::Unit:
+        {
+            if (item >= m_Units.size())
+            {
+                item = m_Units.size() - 1;
+            }
+            selectUnit(item);
+            break;
+        }
+        case EditorMode::Terrain:
+        {
+            if (item >= m_Terrains.size())
+            {
+                item = m_Terrains.size() - 1;
+            }
+            selectTerrain(item);
+            break;
+        }
+        case EditorMode::Building:
+        {
+            if (item >= m_Buildings.size())
+            {
+                item = m_Buildings.size() - 1;
+            }
+            selectBuilding(item);
+            break;
+        }
+        case EditorMode::All:
+        {
+            break;
+        }
+    }
+}
 
 EditorSelection::PlacementSize EditorSelection::getSizeMode() const
 {

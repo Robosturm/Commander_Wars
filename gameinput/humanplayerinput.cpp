@@ -1219,6 +1219,7 @@ void HumanPlayerInput::nextMarkedField()
                     if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
                         (y == static_cast<qint32>(m_FieldPoints[i].y())))
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                         break;
@@ -1240,6 +1241,7 @@ void HumanPlayerInput::nextMarkedField()
                     if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
                         (y == static_cast<qint32>(m_FieldPoints[i].y())))
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                         break;
@@ -1279,6 +1281,7 @@ void HumanPlayerInput::previousMarkedField()
                     if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
                         (y == static_cast<qint32>(m_FieldPoints[i].y())))
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                         break;
@@ -1300,6 +1303,7 @@ void HumanPlayerInput::previousMarkedField()
                     if (x == static_cast<qint32>(m_FieldPoints[i].x()) &&
                         (y == static_cast<qint32>(m_FieldPoints[i].y())))
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                         break;
@@ -1342,6 +1346,7 @@ void HumanPlayerInput::nextSelectOption()
                         pUnit->getOwner() == m_pPlayer &&
                         !pUnit->getHasMoved())
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                     }
@@ -1355,6 +1360,7 @@ void HumanPlayerInput::nextSelectOption()
                         {
                             if (action.canBePerformed(actions[i]))
                             {
+                                pMap->centerMap(x, y);
                                 pGameMenue->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
@@ -1378,6 +1384,7 @@ void HumanPlayerInput::nextSelectOption()
                         pUnit->getOwner() == m_pPlayer &&
                         !pUnit->getHasMoved())
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                     }
@@ -1391,6 +1398,7 @@ void HumanPlayerInput::nextSelectOption()
                         {
                             if (action.canBePerformed(actions[i]))
                             {
+                                pMap->centerMap(x, y);
                                 pGameMenue->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
@@ -1435,6 +1443,7 @@ void HumanPlayerInput::previousSelectOption()
                         pUnit->getOwner() == m_pPlayer &&
                         !pUnit->getHasMoved())
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                     }
@@ -1448,6 +1457,7 @@ void HumanPlayerInput::previousSelectOption()
                         {
                             if (action.canBePerformed(actions[i]))
                             {
+                                pMap->centerMap(x, y);
                                 pGameMenue->calcNewMousePosition(x, y);
                                 found = true;
                                 break;
@@ -1471,6 +1481,7 @@ void HumanPlayerInput::previousSelectOption()
                         pUnit->getOwner() == m_pPlayer &&
                         !pUnit->getHasMoved())
                     {
+                        pMap->centerMap(x, y);
                         pGameMenue->calcNewMousePosition(x, y);
                         found = true;
                     }
@@ -1484,6 +1495,7 @@ void HumanPlayerInput::previousSelectOption()
                         {
                             if (action.canBePerformed(actions[i]))
                             {
+                                pMap->centerMap(x, y);
                                 pGameMenue->calcNewMousePosition(x, y);
                                 found = true;
                                 break;

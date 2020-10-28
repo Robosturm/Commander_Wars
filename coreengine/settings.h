@@ -47,6 +47,27 @@ public:
 
 public slots:
 
+    static Qt::Key getKey_EditorPlaceTerrain();
+    static void setKey_EditorPlaceTerrain(const Qt::Key &key_EditorPlaceTerrain);
+
+    static Qt::Key getKey_EditorPlaceBuilding();
+    static void setKey_EditorPlaceBuilding(const Qt::Key &key_EditorPlaceBuilding);
+
+    static Qt::Key getKey_EditorPlaceUnit();
+    static void setKey_EditorPlaceUnit(const Qt::Key &key_EditorPlaceUnit);
+
+    static Qt::Key getKey_EditorNextTeam();
+    static void setKey_EditorNextTeam(const Qt::Key &key_EditorNextTeam);
+
+    static Qt::Key getKey_EditorPreviousTeam();
+    static void setKey_EditorPreviousTeam(const Qt::Key &key_EditorPreviousTeam);
+
+    static Qt::Key getKey_EditorSelectionRight();
+    static void setKey_EditorSelectionRight(const Qt::Key &key_EditorSelectionRight);
+
+    static Qt::Key getKey_EditorSelectionLeft();
+    static void setKey_EditorSelectionLeft(const Qt::Key &key_EditorSelectionLeft);
+
     static Qt::Key getKey_ShowAttackFields2();
     static void setKey_ShowAttackFields2(const Qt::Key &key_ShowAttackFields2);
 
@@ -381,6 +402,17 @@ private:
     static Qt::Key m_key_MapZoomIn2;
     static Qt::Key m_key_ShowAttackFields2;
     static Qt::Key m_key_ShowIndirectAttackFields2;
+
+    static Qt::Key m_key_EditorPlaceTerrain;
+    static Qt::Key m_key_EditorPlaceBuilding;
+    static Qt::Key m_key_EditorPlaceUnit;
+    static Qt::Key m_key_EditorNextTeam;
+    static Qt::Key m_key_EditorPreviousTeam;
+    static Qt::Key m_key_EditorSelectionUp;
+    static Qt::Key m_key_EditorSelectionDown;
+    static Qt::Key m_key_EditorSelectionRight;
+    static Qt::Key m_key_EditorSelectionLeft;
+
 
     static QString m_language;
     // Sound

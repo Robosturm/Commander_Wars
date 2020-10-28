@@ -50,12 +50,6 @@ Achievementmenu::Achievementmenu()
     });
     connect(this, &Achievementmenu::sigExitMenue, this, &Achievementmenu::exitMenue, Qt::QueuedConnection);
 
-    oxygine::TextStyle styleLarge = FontManager::getMainFont48();
-    styleLarge.color = FontManager::getFontColor();
-    styleLarge.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    styleLarge.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    styleLarge.multiline = false;
-
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -131,6 +125,13 @@ void Achievementmenu::searchChanged(QString text)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
+
+    oxygine::TextStyle styleLarge = FontManager::getMainFont48();
+    styleLarge.color = FontManager::getFontColor();
+    styleLarge.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    styleLarge.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    styleLarge.multiline = false;
+
     m_MainPanel->clearContent();
     text = text.toLower();
 
@@ -154,15 +155,15 @@ void Achievementmenu::searchChanged(QString text)
             }
             else
             {
-                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-                pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
-                m_MainPanel->addItem(pIcon);
-                //            spLabel pTextfield = new Label(50);
-                //            pTextfield->setStyle(styleLarge);
-                //            pTextfield->setText("?");
-                //            pTextfield->setPosition(x, y + 8);
-                //            m_MainPanel->addItem(pTextfield);
+//                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+//                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+//                pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
+//                m_MainPanel->addItem(pIcon);
+                spLabel pTextfield = new Label(50);
+                pTextfield->setStyle(styleLarge);
+                pTextfield->setText("?");
+                pTextfield->setPosition(x, y + 8);
+                m_MainPanel->addItem(pTextfield);
             }
 
             spLabel pTextfield = new Label(singleWidth - 60);

@@ -64,13 +64,20 @@ public:
      * @return
      */
     spUnit getCurrentSpUnit();
-
-
+    /**
+     * @brief getSizeMode
+     * @return
+     */
     PlacementSize getSizeMode() const;
     /**
      * @brief createPlayerSelection
      */
     void createPlayerSelection();
+    /**
+     * @brief KeyInput
+     * @param event
+     */
+    void KeyInput(Qt::Key cur);
 
 signals:
    void sigUpdateSelectedPlayer();
@@ -145,6 +152,11 @@ private:
      * @brief hideSelection
      */
     void hideSelection();
+    /**
+     * @brief changeSelection
+     * @param item
+     */
+    void changeSelection(qint32 item);
 private:
     // small hints for the ui
     static const qint32 frameSize = 30;

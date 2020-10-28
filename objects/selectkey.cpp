@@ -140,6 +140,22 @@ QString SelectKey::getKeycodeText(Qt::Key code)
     {
         codeText = tr("AltGr");
     }
+    else if (code == Qt::Key_Plus)
+    {
+        codeText = tr("+");
+    }
+    else if (code == Qt::Key_Minus)
+    {
+        codeText = tr("-");
+    }
+    else if (code == Qt::Key_Asterisk)
+    {
+        codeText = tr("*");
+    }
+    else if (code == Qt::Key_Slash)
+    {
+        codeText = tr("/");
+    }
     else if (code == 0)
     {
         codeText = tr("None");
