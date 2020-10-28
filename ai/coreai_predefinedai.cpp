@@ -40,7 +40,7 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 {
                     UnitPathFindingSystem turnPfs(pUnit);
                     turnPfs.explore();
-                    GameAction* pAction = new GameAction(ACTION_HOELLIUM_WAIT);
+                    spGameAction pAction = new GameAction(ACTION_HOELLIUM_WAIT);
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                     QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -57,7 +57,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> enemyTargets;
-    QmlVectorPoint* enemyFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint enemyFields = Mainapp::getCircle(1, 1);
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
         Unit* pUnit = pEnemyUnits->at(i);
@@ -73,7 +73,6 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             }
         }
     }
-    delete enemyFields;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -83,15 +82,15 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             {
                 UnitPathFindingSystem turnPfs(pUnit);
                 turnPfs.explore();
-                QmlVectorPoint* pPoints = Mainapp::getCircle(1, 3);
+                spQmlVectorPoint pPoints = Mainapp::getCircle(1, 3);
                 QVector<QPoint> targets = turnPfs.getAllNodePoints();
                 qint32 maxDamage = 0;
                 QVector<QPoint> bestTargets;
-                GameAction* pAction = new GameAction(ACTION_EXPLODE);
+                spGameAction pAction = new GameAction(ACTION_EXPLODE);
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                 for (qint32 i2 = 0; i2 < targets.size(); i2++)
                 {
-                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints, 5, 1.2f, GameEnums::RocketTarget_Money, true);
+                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints.get(), 5, 1.2f, GameEnums::RocketTarget_Money, true);
                     if (damageDone > maxDamage)
                     {
                         bestTargets.clear();
@@ -104,7 +103,6 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                         maxDamage = damageDone;
                     }
                 }
-                delete pPoints;
                 if (bestTargets.size() > 0 && maxDamage > 0)
                 {
                     QPoint target = bestTargets[Mainapp::randIntBase(0, bestTargets.size() - 1)];
@@ -141,7 +139,7 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
     QVector<QPoint> unitPos;
-    QmlVectorPoint* unitFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint unitFields = Mainapp::getCircle(1, 1);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -179,7 +177,6 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
             }
         }
     }
-    delete unitFields;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -190,7 +187,7 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
             QStringList actions = pUnit->getActionList();
             for (const auto& action : actions)
             {
-                GameAction* pAction = new GameAction(action);
+                spGameAction pAction = new GameAction(action);
                 if (action.startsWith(ACTION_SUPPORTSINGLE) ||
                     action.startsWith(ACTION_SUPPORTALL))
                 {
@@ -216,7 +213,6 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
                             }
                         }
                     }
-                    delete pAction;
                 }
             }
         }
@@ -226,10 +222,10 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
 
 bool CoreAI::processPredefinedAi()
 {
-    QmlVectorUnit* pUnits = m_pPlayer->getUnits();
+    spQmlVectorUnit pUnits = m_pPlayer->getUnits();
     pUnits->randomize();
 
-    QmlVectorUnit* pEnemyUnits = m_pPlayer->getEnemyUnits();
+    spQmlVectorUnit pEnemyUnits = m_pPlayer->getEnemyUnits();
     pEnemyUnits->randomize();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -241,30 +237,22 @@ bool CoreAI::processPredefinedAi()
                 case GameEnums::GameAi_Hold:
                 {
                     processPredefinedAiHold(pUnit);
-                    delete pEnemyUnits;
-                    delete pUnits;
                     return true;
                 }
                 case GameEnums::GameAi_Offensive:
                 {
-                    processPredefinedAiOffensive(pUnit, pEnemyUnits);
-                    delete pEnemyUnits;
-                    delete pUnits;
+                    processPredefinedAiOffensive(pUnit, pEnemyUnits.get());
                     return true;
                 }
                 case GameEnums::GameAi_Defensive:
                 {
                     processPredefinedAiDefensive(pUnit);
-                    delete pEnemyUnits;
-                    delete pUnits;
                     return true;
                 }
                 case GameEnums::GameAi_Patrol:
                 case GameEnums::GameAi_PatrolLoop:
                 {
                     processPredefinedAiPatrol(pUnit);
-                    delete pEnemyUnits;
-                    delete pUnits;
                     return true;
                 }
                 case GameEnums::GameAi_Normal:
@@ -274,14 +262,12 @@ bool CoreAI::processPredefinedAi()
             }
         }
     }
-    delete pEnemyUnits;
-    delete pUnits;
     return false;
 }
 
 void CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
-    GameAction* pAction = new GameAction(ACTION_FIRE);
+    spGameAction pAction = new GameAction(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
@@ -312,7 +298,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
 
 void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
-    GameAction* pAction = new GameAction(ACTION_FIRE);
+    spGameAction pAction = new GameAction(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
@@ -358,7 +344,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 
 void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits)
 {
-    GameAction* pAction = new GameAction(ACTION_FIRE);
+    spGameAction pAction = new GameAction(ACTION_FIRE);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);
@@ -378,14 +364,10 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
             pAction->setMovepath(path, pfs.getCosts(path));
             emit performAction(pAction);
         }
-        else
-        {
-            delete pAction;
-        }
     }
 }
 
-bool CoreAI::processPredefinedAiAttack(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem & pfs)
+bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem & pfs)
 {
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
@@ -423,7 +405,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, GameAction* pAction, UnitPat
 
 void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
-    GameAction* pAction = new GameAction(ACTION_FIRE);
+    spGameAction pAction = new GameAction(ACTION_FIRE);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
     bool performed = processPredefinedAiAttack(pUnit, pAction,  pfs);

@@ -2164,7 +2164,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         }
         if (moveCost > 0)
         {
-            QmlVectorPoint* pCircle;
+            spQmlVectorPoint pCircle;
             qint32 visionRange = getVision(movePath[i]);
             Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
             if (visionBlock)
@@ -2199,7 +2199,6 @@ void Unit::moveUnit(QVector<QPoint> movePath)
                     }
                 }
             }
-            delete pCircle;
         }
     }
     if (movePath.size() > 1)
@@ -2731,7 +2730,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
             (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
              pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
         {
-            QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
+            spQmlVectorPoint pPoints = Mainapp::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 QPoint point = pPoints->at(i);
@@ -2742,13 +2741,11 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
                     {
                         if (pPlayer->checkAlliance(pVisionUnit->getOwner()) == GameEnums::Alliance_Friend)
                         {
-                            delete pPoints;
                             return false;
                         }
                     }
                 }
             }
-            delete pPoints;
             return true;
         }
     }

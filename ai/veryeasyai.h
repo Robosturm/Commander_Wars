@@ -91,7 +91,7 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions,
+    bool moveUnit(spGameAction pAction, Unit* pUnit, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload = false);
     /**
      * @brief buildUnits

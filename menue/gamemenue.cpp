@@ -490,9 +490,9 @@ void GameMenue::editFinishedCanceled()
     setFocused(true);
 }
 
-GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
+spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
 {
-    if (pGameAction != nullptr &&
+    if (pGameAction.get() != nullptr &&
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
@@ -516,7 +516,7 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
                         {
                             // replace current action with auto moving none moved units
                             m_pStoredAction = pGameAction;
-                            GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
+                            spGameAction multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
                             if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
                             {
                                 multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
@@ -548,7 +548,7 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
                         else if (pUnit->getCapturePoints() > 0 && pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
                         {
                             m_pStoredAction = pGameAction;
-                            GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_CAPTURE);
+                            spGameAction multiTurnMovement = new GameAction(CoreAI::ACTION_CAPTURE);
                             multiTurnMovement->setTarget(pUnit->getPosition());
                             return multiTurnMovement;
                         }
@@ -560,11 +560,11 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
     return pGameAction;
 }
 
-void GameMenue::performAction(GameAction* pGameAction)
+void GameMenue::performAction(spGameAction pGameAction)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (pGameAction != nullptr)
+    if (pGameAction.get() != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
         bool multiplayer = !pGameAction->getIsLocal() &&
@@ -629,13 +629,12 @@ void GameMenue::performAction(GameAction* pGameAction)
                                 break;
                             }
                         }
-                        GameAction* pTrapAction = new GameAction("ACTION_TRAP");
+                        spGameAction pTrapAction = new GameAction("ACTION_TRAP");
                         pTrapAction->setMovepath(trapPath, trapPathCost);
                         pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
                         pTrapAction->writeDataInt32(point.x());
                         pTrapAction->writeDataInt32(point.y());
                         pTrapAction->setTarget(pGameAction->getTarget());
-                        delete pGameAction;
                         pGameAction = pTrapAction;
                         break;
                     }
@@ -679,12 +678,12 @@ void GameMenue::performAction(GameAction* pGameAction)
             }
             if (Settings::getAutoCamera() && pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
             {
-                centerMapOnAction(pGameAction);
+                centerMapOnAction(pGameAction.get());
             }
             m_CurrentActionUnit = pMoveUnit;
             pGameAction->perform();
             // clean up the action
-            delete pGameAction;
+            pGameAction = nullptr;
             skipAnimations();
             if (!pMap->anyPlayerAlive())
             {
@@ -694,7 +693,7 @@ void GameMenue::performAction(GameAction* pGameAction)
             else if (pMap->getCurrentPlayer()->getIsDefeated())
             {
                 Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-                GameAction* pAction = new GameAction();
+                spGameAction pAction = new GameAction();
                 pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
             }
@@ -703,14 +702,14 @@ void GameMenue::performAction(GameAction* pGameAction)
     pApp->continueThread();
 }
 
-bool GameMenue::isTrap(QString function, GameAction* pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
+bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
 {
     spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
 
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
-    QJSValue obj1 = pInterpreter->newQObject(pAction);
+    QJSValue obj1 = pInterpreter->newQObject(pAction.get());
     args << obj1;
     QJSValue obj2 = pInterpreter->newQObject(pMoveUnit);
     args << obj2;
@@ -947,10 +946,10 @@ void GameMenue::actionPerformed()
         else if (pMap->getCurrentPlayer()->getIsDefeated())
         {
             Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-            GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+            spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
             performAction(pAction);
         }
-        else if (m_pStoredAction != nullptr)
+        else if (m_pStoredAction.get() != nullptr)
         {
             performAction(m_pStoredAction);
         }
@@ -1402,7 +1401,7 @@ void GameMenue::startGame()
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         Console::print("Triggering action next player in order to start the game.", Console::eDEBUG);
-        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
         if (m_pNetworkInterface.get() != nullptr)
         {
             pAction->setSeed(pApp->getSeed());
@@ -1572,7 +1571,7 @@ void GameMenue::surrenderGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameAction* pAction = new GameAction();
+    spGameAction pAction = new GameAction();
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
     m_Focused = true;
@@ -1605,7 +1604,7 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameAction* pAction = new GameAction();
+    spGameAction pAction = new GameAction();
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);

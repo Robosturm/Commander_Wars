@@ -11,7 +11,9 @@
 
 class Unit;
 
-class MenuData : public QObject
+class MenuData;
+typedef oxygine::intrusive_ptr<MenuData> spMenuData;
+class MenuData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

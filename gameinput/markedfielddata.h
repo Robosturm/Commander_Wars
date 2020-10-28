@@ -9,7 +9,11 @@
 
 #include <QColor>
 
-class MarkedFieldData : public QObject
+#include "oxygine-framework.h"
+
+class MarkedFieldData;
+typedef oxygine::intrusive_ptr<MarkedFieldData> spMarkedFieldData;
+class MarkedFieldData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

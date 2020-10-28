@@ -67,7 +67,7 @@ void ReplayRecorder::startRecording()
     }
 }
 
-void ReplayRecorder::recordAction(GameAction* pAction)
+void ReplayRecorder::recordAction(spGameAction pAction)
 {
     if (m_recording && !pAction->getIsLocal())
     {
@@ -134,7 +134,7 @@ bool ReplayRecorder::loadRecord(QString filename)
     return playing;
 }
 
-GameAction* ReplayRecorder::nextAction()
+spGameAction ReplayRecorder::nextAction()
 {
     if (playing)
     {
@@ -143,7 +143,7 @@ GameAction* ReplayRecorder::nextAction()
             _progress < _count)
         {
             _progress++;
-            GameAction* pAction = new GameAction();
+            spGameAction pAction = new GameAction();
             pAction->deserializeObject(m_stream);
             return pAction;
         }

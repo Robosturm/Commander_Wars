@@ -18,6 +18,7 @@
 #include "ai/decisiontree.h"
 
 class GameAction;
+typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class Unit;
 class UnitPathFindingSystem;
 class QmlVectorUnit;
@@ -111,7 +112,7 @@ signals:
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
      * @param pAction
      */
-    void performAction(GameAction* pAction);
+    void performAction(spGameAction pAction);
 public slots:
     /**
      * @brief process
@@ -177,7 +178,7 @@ public slots:
      * @param target
      * @return x = unit damage and y = counter damage
      */
-    QRectF calcUnitDamage(GameAction* pAction, QPoint target);
+    QRectF calcUnitDamage(spGameAction pAction, QPoint target);
     /**
      * @brief CoreAI::calcVirtuelUnitDamage
      * @param pAttacker
@@ -198,14 +199,14 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief getAttacksFromField
      * @param pUnit
      * @param pAction
      * @param ret
      */
-    void getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief getAttackTargets
      * @param pUnit
@@ -214,7 +215,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttackTargets(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief getAttacksFromField
      * @param pUnit
@@ -222,7 +223,7 @@ public slots:
      * @param ret
      * @param moveTargetFields
      */
-    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief moveAwayFromProduction
      * @param pUnits
@@ -265,8 +266,8 @@ public slots:
                                  QVector<spDecisionQuestion>& readQuestions,
                                  QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
-    void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
-    void addSelectedFieldData(GameAction* pGameAction, QPoint point);
+    void addMenuItemData(spGameAction pGameAction, QString itemID, qint32 cost);
+    void addSelectedFieldData(spGameAction pGameAction, QPoint point);
     /**
      * @brief isAttackOnTerrainAllowed
      * @param pTerrain
@@ -282,7 +283,7 @@ protected:
     void processPredefinedAiDefensive(Unit* pUnit);
     void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
     void processPredefinedAiPatrol(Unit* pUnit);
-    bool processPredefinedAiAttack(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem & pfs);
+    bool processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem & pfs);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
     void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);

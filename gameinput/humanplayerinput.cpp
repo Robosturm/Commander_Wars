@@ -6,8 +6,6 @@
 
 #include "game/terrain.h"
 
-#include "game/unitpathfindingsystem.h"
-
 #include "game/building.h"
 
 #include "game/player.h"
@@ -51,9 +49,7 @@ void HumanPlayerInput::init()
 
 HumanPlayerInput::~HumanPlayerInput()
 {
-    delete m_pGameAction;
     m_pGameAction = nullptr;
-    delete m_pUnitPathFindingSystem;
     m_pUnitPathFindingSystem = nullptr;
 }
 
@@ -64,7 +60,7 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        if (m_FieldPoints.size() > 0 && m_pGameAction == nullptr)
+        if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
         {
             cleanUpInput();
         }
@@ -88,7 +84,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             GameAnimationFactory::finishAllAnimations();
             pApp->continueThread();
         }
-        else if (m_pGameAction != nullptr)
+        else if (m_pGameAction.get() != nullptr)
         {
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
@@ -129,7 +125,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         }
         else
         {
-            if (m_FieldPoints.size() == 0 && m_pGameAction == nullptr)
+            if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
@@ -176,7 +172,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
-            QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
+            spQmlVectorPoint pPoints = Mainapp::getCircle(minRange, maxRange);
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
@@ -197,7 +193,6 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                     }
                 }
             }
-            delete pPoints;
         }
     }
     else
@@ -205,10 +200,10 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
         if (pBuilding != nullptr)
         {
-            QmlVectorPoint* pPoints = pBuilding->getActionTargetFields();
+            spQmlVectorPoint pPoints = pBuilding->getActionTargetFields();
             QPoint targetOffset = pBuilding->getActionTargetOffset();
             QPoint buildingPos(pBuilding->getX(), pBuilding->getY());
-            if (pPoints != nullptr && pPoints->size() > 0)
+            if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                 for (qint32 i = 0; i < pPoints->size(); i++)
@@ -216,7 +211,6 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                     createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
                 }
             }
-            delete pPoints;
         }
     }
 }
@@ -225,9 +219,7 @@ void HumanPlayerInput::cleanUpInput()
 {
     clearMenu();
     // delete action
-    delete m_pGameAction;
     m_pGameAction = nullptr;
-    delete m_pUnitPathFindingSystem;
     m_pUnitPathFindingSystem = nullptr;
     clearMarkedFields();
     deleteArrow();
@@ -263,11 +255,7 @@ void HumanPlayerInput::clearMarkedFields()
     }
     m_FieldPoints.clear();
     m_Fields.clear();
-    if (m_pMarkedFieldData != nullptr)
-    {
-        delete m_pMarkedFieldData;
-        m_pMarkedFieldData = nullptr;
-    }
+    m_pMarkedFieldData = nullptr;
     if (m_ZInformationLabel.get() != nullptr)
     {
         m_ZInformationLabel->detach();
@@ -303,7 +291,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
                 cancelActionInput();
             }
-            else if (m_pMarkedFieldData != nullptr)
+            else if (m_pMarkedFieldData.get() != nullptr)
             {
                 // did we select a marked field?
                 if (m_pMarkedFieldData->getAllFields())
@@ -325,12 +313,12 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
             }
             // no action selected
-            else if (m_Fields.size() > 0 && m_pGameAction == nullptr)
+            else if (m_Fields.size() > 0 && m_pGameAction.get() == nullptr)
             {
                 // do nothing
                 // some one spawned them to give some info hints player needs to remove them by canceling.
             }
-            else if (m_pGameAction == nullptr)
+            else if (m_pGameAction.get() == nullptr)
             {
                 // prepare action
                 m_pGameAction = new GameAction();
@@ -401,16 +389,15 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 else
                 {
-                    delete m_pGameAction;
                     m_pGameAction = nullptr;
                 }
             }
             // we want to select an action
             else if (m_pPlayer != nullptr &&
-                     m_pGameAction != nullptr &&
+                     m_pGameAction.get() != nullptr &&
                      m_pGameAction->getActionID() == "")
             {
-                if ((m_pUnitPathFindingSystem != nullptr) &&
+                if ((m_pUnitPathFindingSystem.get() != nullptr) &&
                     (m_pUnitPathFindingSystem->isReachable(x, y)) &&
                     (m_CurrentMenu.get() == nullptr))
                 {
@@ -530,13 +517,12 @@ void HumanPlayerInput::getNextStepData()
         QString stepType = m_pGameAction->getStepInputType();
         if (stepType.toUpper() == "MENU")
         {
-            MenuData* pData = m_pGameAction->getMenuStepData();
+            spMenuData pData = m_pGameAction->getMenuStepData();
             if (pData->validData())
             {
                 m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
                 attachActionMenu(m_pGameAction->getActionTarget().x(), m_pGameAction->getActionTarget().y());
             }
-            delete pData;
         }
         else if (stepType.toUpper() == "FIELD")
         {
@@ -547,13 +533,12 @@ void HumanPlayerInput::getNextStepData()
                 createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldMap);
             }
             m_pMarkedFieldData = pData;
-            CursorData* pCursordata = m_pGameAction->getStepCursor();
+            spCursorData pCursordata = m_pGameAction->getStepCursor();
             pMenu->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
             if (!m_pMarkedFieldData->getAllFields())
             {
                 nextMarkedField();
             }
-            delete pCursordata;
         }
         else
         {
@@ -742,7 +727,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 void HumanPlayerInput::createMarkedMoveFields()
 {
     clearMarkedFields();
-    if (m_pUnitPathFindingSystem != nullptr)
+    if (m_pUnitPathFindingSystem.get() != nullptr)
     {
         qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
         QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
@@ -770,7 +755,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
 
-        if (m_pMarkedFieldData != nullptr)
+        if (m_pMarkedFieldData.get() != nullptr)
         {
             if (m_pMarkedFieldData->getShowZData())
             {
@@ -859,7 +844,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 }
             }
         }
-        else if (m_pUnitPathFindingSystem != nullptr)
+        else if (m_pUnitPathFindingSystem.get() != nullptr)
         {
             if ((m_CurrentMenu.get() == nullptr) && m_pGameAction->getActionID() == "")
             {
@@ -1100,8 +1085,8 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_pUnitPathFindingSystem != nullptr &&
-        m_pGameAction != nullptr &&
+    if (m_pUnitPathFindingSystem.get() != nullptr &&
+        m_pGameAction.get() != nullptr &&
         m_CurrentMenu.get() == nullptr)
     {
         if (m_InfoFields.size() > 0)
@@ -1176,7 +1161,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     spGameMap pMap = GameMap::getInstance();
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
-    QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
+    spQmlVectorPoint pPoints = Mainapp::getCircle(minRange, maxRange);
     for (qint32 i = 0; i < points.size(); i++)
     {
         if (canMoveAndFire ||
@@ -1194,7 +1179,6 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
             }
         }
     }
-    delete pPoints;
 }
 
 void HumanPlayerInput::nextMarkedField()
@@ -1556,7 +1540,7 @@ void HumanPlayerInput::autoEndTurn()
                 }
             }
             Console::print("Auto triggering next player cause current player can't input any actions.", Console::eDEBUG);
-            GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+            spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
             emit performAction(pAction);
         }
     }

@@ -52,7 +52,7 @@ public slots:
 protected:
 
 private:
-    QList<GameAction*> m_ActionBuffer;
+    QList<spGameAction> m_ActionBuffer;
     bool actionRunning{false};
     QMutex m_ActionMutex;
 };

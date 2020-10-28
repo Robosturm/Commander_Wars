@@ -12,8 +12,11 @@
 #include "coreengine/fileserializable.h"
 #include "unit.h"
 #include "building.h"
+#include "oxygine-framework.h"
 
-class GameAction : public QObject, public FileSerializable
+class GameAction;
+typedef oxygine::intrusive_ptr<GameAction> spGameAction;
+class GameAction : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 

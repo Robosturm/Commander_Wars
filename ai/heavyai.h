@@ -26,6 +26,7 @@ public slots:
 protected:
 
 private:
+    void setupTurn();
     void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units);
@@ -34,11 +35,13 @@ private:
     QVector<UnitData> m_ownUnits;
     QVector<QPoint> m_updatePoints;
 
-    QmlVectorUnit* m_pUnits = nullptr;
-    QmlVectorUnit* m_pEnemyUnits = nullptr;
+    spQmlVectorUnit m_pUnits = nullptr;
+    spQmlVectorUnit m_pEnemyUnits = nullptr;
 
     QTimer m_timer;
     bool m_pause{false};
+
+    static const qint32 minSiloDamage;
 };
 
 #endif // HEAVYAI_H

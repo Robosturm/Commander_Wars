@@ -10,7 +10,8 @@ var Constructor = function()
                           ["PIPESTATION",             300,    qsTr("What's in those pipes?")],
                           ["RADAR",                   300,    qsTr("I can see you now!")],
                           ["TOWER",                   300,    qsTr("We have a good connection now!")],
-                          ["TOWN",                   1500,    qsTr("We need you for money!")],];
+                          ["TOWN",                   1500,    qsTr("We need you for money!")],
+                          ["SILO",                    300,    qsTr("All fear your name!")],];
 
 
     this.registerAchievements = function()
@@ -29,6 +30,10 @@ var Constructor = function()
     this.buildingCaptured = function(buildingId)
     {
         userdata.increaseAchievement("CAPTURED_BUILDING_" + buildingId, 1);
+    };
+    this.siloFired = function()
+    {
+        userdata.increaseAchievement("CAPTURED_BUILDING_SILO", 1);
     };
 };
 

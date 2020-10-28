@@ -4,6 +4,8 @@
 
 #include "game/player.h"
 
+const qint32 HeavyAi::minSiloDamage = 7000;
+
 HeavyAi::HeavyAi()
     : CoreAI(GameEnums::AiTypes_Heavy)
 {
@@ -18,39 +20,53 @@ void HeavyAi::toggleAiPause()
 
 void HeavyAi::process()
 {
+    spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
+    pBuildings->randomize();
     if (m_pause)
     {
         m_timer.start(1000);
         return;
     }
+    if (useBuilding(pBuildings.get())){}
+    else
+    {
+        setupTurn();
 
-    if (m_pUnits == nullptr)
+
+        turnMode = GameEnums::AiTurnMode_EndOfDay;
+        if (useCOPower(m_pUnits.get(), m_pEnemyUnits.get()))
+        {
+            turnMode = GameEnums::AiTurnMode_DuringDay;
+        }
+        else
+        {
+            // end the turn for the player
+            turnMode = GameEnums::AiTurnMode_StartOfDay;
+            m_pUnits = nullptr;
+            m_pEnemyUnits = nullptr;
+            finishTurn();
+        }
+    }
+}
+
+void HeavyAi::setupTurn()
+{
+    if (m_pUnits.get() == nullptr)
     {
         m_pUnits = m_pPlayer->getUnits();
         m_pUnits->sortShortestMovementRange(true);
-        initUnits(m_pUnits, m_ownUnits);
+        initUnits(m_pUnits.get(), m_ownUnits);
     }
-    if (m_pEnemyUnits == nullptr)
+    if (m_pEnemyUnits.get() == nullptr)
     {
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
-        initUnits(m_pEnemyUnits, m_enemyUnits);
+        initUnits(m_pEnemyUnits.get(), m_enemyUnits);
     }
 
-    turnMode = GameEnums::AiTurnMode_EndOfDay;
-    if (useCOPower(m_pUnits, m_pEnemyUnits))
-    {
-        turnMode = GameEnums::AiTurnMode_DuringDay;
-    }
-    else
-    {
-        turnMode = GameEnums::AiTurnMode_StartOfDay;
-        delete m_pUnits;
-        m_pUnits = nullptr;
-        delete m_pEnemyUnits;
-        m_pEnemyUnits = nullptr;
-        finishTurn();
-    }
+    qint32 cost = 0;
+    m_pPlayer->getSiloRockettarget(2, 3, cost);
+    m_missileTarget = (cost >= minSiloDamage);
 }
 
 void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
@@ -61,6 +77,7 @@ void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
         UnitData data;
         data.m_pUnit = pUnits->at(i);
         data.m_pPfs = new UnitPathFindingSystem(pUnits->at(i));
+        data.m_pPfs->explore();
         units.append(data);
     }
 }

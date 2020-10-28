@@ -301,7 +301,6 @@ void EditorSelection::createBoxPlacementSize()
 
 void EditorSelection::createPlayerSelection()
 {
-    // delete all
     // since we can get called when the player count changes :)
     m_BoxSelectedPlayer->removeChildren();
     m_Players.clear();

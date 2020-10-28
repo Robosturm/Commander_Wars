@@ -328,12 +328,12 @@ QStringList GameMap::getAllUnitIDs()
     return UnitSpriteManager::getInstance()->getLoadedRessources();
 }
 
-GameAction* GameMap::createAction()
+spGameAction GameMap::createAction()
 {
     return new GameAction();
 }
 
-void GameMap::queueAction(GameAction* pAction)
+void GameMap::queueAction(spGameAction pAction)
 {
     emit sigQueueAction(pAction);
 }

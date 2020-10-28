@@ -408,7 +408,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="131"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="138"/>
         <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -655,22 +655,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="69"/>
+        <location filename="../menue/achievementmenu.cpp" line="63"/>
         <source>Search: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="73"/>
+        <location filename="../menue/achievementmenu.cpp" line="67"/>
         <source>Text that will be searched for in the title of each wikipage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="77"/>
+        <location filename="../menue/achievementmenu.cpp" line="71"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="105"/>
+        <location filename="../menue/achievementmenu.cpp" line="99"/>
         <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2569,67 +2569,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1151"/>
+        <location filename="../menue/gamemenue.cpp" line="1150"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1173"/>
+        <location filename="../menue/gamemenue.cpp" line="1172"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1183"/>
+        <location filename="../menue/gamemenue.cpp" line="1182"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1542"/>
+        <location filename="../menue/gamemenue.cpp" line="1541"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1560"/>
+        <location filename="../menue/gamemenue.cpp" line="1559"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1589"/>
+        <location filename="../menue/gamemenue.cpp" line="1588"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7521,7 +7521,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="24"/>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="14"/>
+        <source>All fear your name!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_captured_building.js" line="25"/>
         <source>Capture a given amount of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8231,6 +8236,26 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="84"/>
         <source>Win the given amount of games %0 with the given CO.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>Win the given amount of games.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>The best!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Loose the given amount of games.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Biggest Looser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

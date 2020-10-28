@@ -5,8 +5,10 @@
 #include <QFile>
 #include <QDataStream>
 #include <QBuffer>
+#include "oxygine-framework.h"
 
 class GameAction;
+typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class ReplayRecorder : public QObject
 {
@@ -22,7 +24,7 @@ public:
      * @brief recordAction
      * @param pAction
      */
-    void recordAction(GameAction* pAction);
+    void recordAction(spGameAction pAction);
     /**
      * @brief loadRecord
      * @param filename
@@ -31,7 +33,7 @@ public:
     /**
      * @brief nextAction
      */
-    GameAction* nextAction();
+    spGameAction nextAction();
     /**
      * @brief getMods
      * @return

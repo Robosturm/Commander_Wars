@@ -90,6 +90,9 @@ var Constructor = function()
                                     data[0] + "+face",
                                     false);
         }
+
+        userdata.addAchievement("GAME_VICTORY", 500, qsTr("The best!"),       qsTr("Win the given amount of games."),     "s_rang",       false);
+        userdata.addAchievement("GAME_LOST",    100, qsTr("Biggest Looser"),  qsTr("Loose the given amount of games."),   "surrender",    false);
     };
     this.onVictory = function(team, humanWin)
     {
@@ -113,6 +116,11 @@ var Constructor = function()
                     }
                 }
             }
+            userdata.increaseAchievement("GAME_VICTORY", 1);
+        }
+        else if (team >= 0 && !humanWin)
+        {
+            userdata.increaseAchievement("GAME_LOST", 1);
         }
     };
 };

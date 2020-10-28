@@ -85,6 +85,13 @@ var Constructor = function()
         ACTION_MISSILE.postAnimationTargetX = action.readDataInt32();
         ACTION_MISSILE.postAnimationTargetY = action.readDataInt32();
         ACTION_MISSILE.postAnimationUnit = unit;
+
+        // achievements
+        var player = map.getCurrentPlayer();
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_CAPTURED_BUILDING.siloFired();
+        }
     };
     this.performPostAnimation = function(postAnimation)
     {

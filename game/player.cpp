@@ -718,13 +718,12 @@ qint32 Player::calcIncome(float modifier)
 
 qint32 Player::calcArmyValue()
 {
-    auto pUnits = GameMap::getInstance()->getUnits(this);
+    spQmlVectorUnit pUnits = GameMap::getInstance()->getUnits(this);
     qint32 armyValue = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         armyValue += pUnits->at(i)->getUnitValue();
     }
-    delete pUnits;
     return armyValue;
 }
 
@@ -905,7 +904,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                 qint32 visionRange = pTerrain->getVision(this);
                 if (visionRange >= 0)
                 {
-                    QmlVectorPoint* pPoints;
+                    spQmlVectorPoint pPoints;
                     if (visionBlock)
                     {
                         pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
@@ -930,7 +929,6 @@ void Player::updatePlayerVision(bool reduceTimer)
                             }
                         }
                     }
-                    delete pPoints;
                 }
                 // check building vision
                 Building* pBuilding = pTerrain->getBuilding();
@@ -942,7 +940,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
-                        QmlVectorPoint* pPoints;
+                        spQmlVectorPoint pPoints;
                         if (visionBlock)
                         {
                             pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
@@ -967,7 +965,6 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 }
                             }
                         }
-                        delete pPoints;
                     }
                 }
                 // create unit vision
@@ -976,7 +973,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     (isAlly(pUnit->getOwner())))
                 {
                     qint32 visionRange = pUnit->getVision(QPoint(x, y));
-                    QmlVectorPoint* pPoints;
+                    spQmlVectorPoint pPoints;
                     if (visionBlock)
                     {
                         if (pBuilding != nullptr)
@@ -1017,7 +1014,6 @@ void Player::updatePlayerVision(bool reduceTimer)
                             }
                         }
                     }
-                    delete pPoints;
                 }
             }
         }
@@ -1336,7 +1332,7 @@ void Player::setCO(QString coId, quint8 idx)
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
+    spQmlVectorPoint pPoints = Mainapp::getCircle(0, radius);
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1344,7 +1340,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType, true);
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, true);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -1357,7 +1353,6 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
             }
         }
     }
-    delete pPoints;
 
     if (targets.size() >= 0)
     {
@@ -1372,7 +1367,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
 QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
+    spQmlVectorPoint pPoints = Mainapp::getCircle(0, radius);
     highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1380,7 +1375,7 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType, false);
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints.get(), damage, ownUnitValue, targetType, false);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -1393,7 +1388,6 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
             }
         }
     }
-    delete pPoints;
 
     if (targets.size() >= 0)
     {

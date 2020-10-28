@@ -32,6 +32,7 @@
 #include "player.h"
 
 class GameAction;
+typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class GameMap;
 typedef oxygine::intrusive_ptr<GameMap> spGameMap;
@@ -329,7 +330,7 @@ signals:
     void sigShowGameInfo();
     void sigShowAttackLog();
     void sigShowUnitInfo();
-    void sigQueueAction(GameAction* pAction);
+    void sigQueueAction(spGameAction pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowOptions();
@@ -422,12 +423,12 @@ public slots:
      * @brief createAction
      * @return
      */
-    GameAction* createAction();
+    spGameAction createAction();
     /**
      * @brief queueAction
      * @param pAction
      */
-    void queueAction(GameAction* pAction);
+    void queueAction(spGameAction pAction);
     /**
      * @brief getGameRecorder
      * @return

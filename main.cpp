@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<QList<qint32>>("QList<qint32>");
     qRegisterMetaType<QLocalSocket::LocalSocketError>("QLocalSocket::LocalSocketError");
     qRegisterMetaType<spTextbox>("spTextbox");
-
+    qRegisterMetaType<spGameAction>("spGameAction");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint", 1);
     qmlRegisterInterface<Terrain>("Terrain", 1);

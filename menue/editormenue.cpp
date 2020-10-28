@@ -1645,7 +1645,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
         {
             if (p2.x() > 0)
             {
-                QmlVectorPoint* pPoints = Mainapp::getCircle(p2.x(), p2.x());
+                spQmlVectorPoint pPoints = Mainapp::getCircle(p2.x(), p2.x());
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {
@@ -1691,7 +1691,6 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         pActor->addChild(pSprite);
                     }
                 }
-                delete pPoints;
             }
             break;
         }

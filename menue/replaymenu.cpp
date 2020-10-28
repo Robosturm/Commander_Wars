@@ -105,7 +105,7 @@ void ReplayMenu::nextReplayAction()
     }
     else if (!_paused)
     {
-        GameAction* pAction = m_ReplayRecorder.nextAction();
+        spGameAction pAction = m_ReplayRecorder.nextAction();
         _HumanInput->cleanUpInput();
         float progress = 0.0f;
         if (m_ReplayRecorder.getRecordSize() > 0)
@@ -113,7 +113,7 @@ void ReplayMenu::nextReplayAction()
             progress = static_cast<float>(m_ReplayRecorder.getProgess()) / static_cast<float>(m_ReplayRecorder.getRecordSize());
         }
         _progressBar->setScrollvalue(progress);
-        if (pAction != nullptr)
+        if (pAction.get() != nullptr)
         {
             performAction(pAction);
         }

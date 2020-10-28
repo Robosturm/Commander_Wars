@@ -3,7 +3,11 @@
 
 #include <QObject>
 
-class CursorData : public QObject
+#include "oxygine-framework.h"
+
+class CursorData;
+typedef oxygine::intrusive_ptr<CursorData> spCursorData;
+class CursorData : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

@@ -45,14 +45,14 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         if (m_pPlayer->getPlayerID() == player)
         {
             QMutexLocker locker(&m_ActionMutex);
-            GameAction* pAction = new GameAction();
+            spGameAction pAction = new GameAction();
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
             if (actionRunning == false &&
                 m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
             {
                 actionRunning = true;
-                GameAction* pAction = m_ActionBuffer.front();
+                spGameAction pAction = m_ActionBuffer.front();
                 m_ActionBuffer.pop_front();
                 emit performAction(pAction);
             }
@@ -69,7 +69,7 @@ void ProxyAi::nextAction()
         if (m_ActionBuffer.size() > 0)
         {
             actionRunning = true;
-            GameAction* pAction = m_ActionBuffer.front();
+            spGameAction pAction = m_ActionBuffer.front();
             m_ActionBuffer.pop_front();
             emit performAction(pAction);
         }

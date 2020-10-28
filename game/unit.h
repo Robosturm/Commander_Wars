@@ -11,6 +11,7 @@
 #include "game/GameEnums.h"
 
 class GameAction;
+typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class Player;
 class Terrain;

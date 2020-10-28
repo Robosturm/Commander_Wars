@@ -13,8 +13,12 @@
 
 #include "game/terrain.h"
 
+#include "oxygine-framework.h"
 
-class QmlVectorPoint : public QObject
+class QmlVectorPoint;
+typedef oxygine::intrusive_ptr<QmlVectorPoint> spQmlVectorPoint;
+
+class QmlVectorPoint : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -47,7 +51,9 @@ private:
     QVector<QPoint> m_Vector;
 };
 
-class QmlVectorUnit : public QObject
+class QmlVectorUnit;
+typedef oxygine::intrusive_ptr<QmlVectorUnit> spQmlVectorUnit;
+class QmlVectorUnit : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -85,7 +91,9 @@ private:
     QVector<spUnit> m_Vector;
 };
 
-class QmlVectorBuilding: public QObject
+class QmlVectorBuilding;
+typedef oxygine::intrusive_ptr<QmlVectorBuilding> spQmlVectorBuilding;
+class QmlVectorBuilding: public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

@@ -79,7 +79,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pSpriteBox->addChild(pText);
 
     y += 40;
-    QmlVectorUnit* pUnits = pPlayer->getUnits();
+    spQmlVectorUnit pUnits = pPlayer->getUnits();
 
     y = 10;
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -164,7 +164,6 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pPanel->addItem(pButton);
         y += 40;
     }
-    delete pUnits;
     pPanel->setContentWidth(950);
     pPanel->setContentHeigth(y + 40);
 

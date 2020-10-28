@@ -8,6 +8,7 @@
 #include <QPoint>
 
 #include "gameinput/basegameinputif.h"
+#include "game/unitpathfindingsystem.h"
 
 #include "menue/gamemenue.h"
 
@@ -142,7 +143,7 @@ signals:
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
      * @param pAction
      */
-    void performAction(GameAction* pAction);
+    void performAction(spGameAction pAction);
 public slots:
     void rightClickDown(qint32 x, qint32 y);
     void rightClickUp(qint32 x, qint32 y);
@@ -169,12 +170,12 @@ protected:
      */
     oxygine::spSprite createMarkedFieldActor(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
 private:
-    GameAction* m_pGameAction{nullptr};
-    UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};
+    spGameAction m_pGameAction{nullptr};
+    spUnitPathFindingSystem m_pUnitPathFindingSystem{nullptr};
 
     QVector<oxygine::spActor> m_Fields;
     QVector<QVector3D> m_FieldPoints;
-    MarkedFieldData* m_pMarkedFieldData{nullptr};
+    spMarkedFieldData m_pMarkedFieldData{nullptr};
 
     QVector<oxygine::spActor> m_InfoFields;
 

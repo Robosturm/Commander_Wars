@@ -86,7 +86,7 @@ public slots:
      * @brief performAction performs the given action and deletes it afterwards.
      * @param pGameAction
      */
-    void performAction(GameAction* pGameAction);
+    void performAction(spGameAction pGameAction);
     /**
      * @brief isTrap
      * @param pAction
@@ -95,7 +95,7 @@ public slots:
      * @param previousPoint
      * @return
      */
-    bool isTrap(QString function, GameAction* pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
+    bool isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost);
     /**
      * @brief finsihActionPerformed
      */
@@ -108,7 +108,7 @@ public slots:
      * @brief doMultiTurnMovement
      * @param pGameAction
      */
-    GameAction* doMultiTurnMovement(GameAction* pGameAction);
+    spGameAction doMultiTurnMovement(spGameAction pGameAction);
     /**
      * @brief updatePlayerinfo
      */
@@ -263,7 +263,7 @@ protected:
 
     QTimer m_UpdateTimer;
     QTimer m_AutoSavingTimer;
-    GameAction* m_pStoredAction{nullptr};
+    spGameAction m_pStoredAction{nullptr};
     spUnit m_CurrentActionUnit{nullptr};
 
     qint64 m_syncCounter{0};

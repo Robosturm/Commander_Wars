@@ -85,7 +85,7 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
+    bool moveUnit(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
                   bool shortenPathForTarget,
                   QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
@@ -111,7 +111,7 @@ protected:
      * @param targets
      * @return
      */
-    bool moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
+    bool moveToUnloadArea(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
                           QVector<QVector3D>& targets,
                           QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
     /**
@@ -158,7 +158,7 @@ protected:
      * @param turnPfs
      * @return
      */
-    bool suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
+    bool suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
     /**
      * @brief getIndirectTarget
      * @param pUnit
