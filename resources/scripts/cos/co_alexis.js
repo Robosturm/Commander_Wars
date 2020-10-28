@@ -103,13 +103,15 @@ var Constructor = function()
                 var point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))
                 {
-                    unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                    var unitX = x + point.x;
+                    var unitY = y + point.y;
+                    unit = map.getTerrain(unitX, unitY).getUnit();
                     if ((unit !== null) &&
-                            (unit.getOwner() === player))
+                        (unit.getOwner() === player))
                     {
                         animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                        animation.writeDataInt32(unit.getX());
-                        animation.writeDataInt32(unit.getY());
+                        animation.writeDataInt32(unitX);
+                        animation.writeDataInt32(unitY);
                         animation.writeDataInt32(3);
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
                         if (animations.length < 5)
@@ -280,6 +282,7 @@ var Constructor = function()
     {
         var buildings = co.getOwner().getBuildings();
         var fields = globals.getCircle(1, 1);
+        var viewplayer = map.getCurrentViewPlayer();
         for (var i2 = 0; i2 < buildings.size(); i2++)
         {
             var building = buildings.at(i2);
@@ -294,13 +297,19 @@ var Constructor = function()
                     var point = fields.at(i);
                     if (map.onMap(x + point.x, y + point.y))
                     {
-                        var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                        var unitX = x + point.x;
+                        var unitY = y + point.y;
+                        var unit = map.getTerrain(unitX, unitY).getUnit();
                         if ((unit !== null) &&
-                                (unit.getOwner() === co.getOwner()))
+                            (unit.getOwner() === co.getOwner()))
                         {
                             UNIT.repairUnit(unit, 1);
-                            animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                            animation = GameAnimationFactory.createAnimation(unitX, unitY);
                             animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                            if (!viewplayer.getFieldVisible(unitX, unitY))
+                            {
+                                animation.setVisible(false);
+                            }
                         }
                     }
                 }

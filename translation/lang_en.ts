@@ -9513,34 +9513,34 @@ Units gain %0% firepower and defence.</source>
 <context>
     <name>co_alexis</name>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
         <source>A crystal-obsessed person. Blindly follows orders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>Crystals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="338"/>
         <source>Experiments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="342"/>
         <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired one HP less on the building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="346"/>
         <source>
 Global Effect: 
 Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="347"/>
         <source>
 
 CO Zone Effect: 
@@ -9548,82 +9548,82 @@ Units gain %0% firepower and defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="353"/>
         <source>Units nearby an allied property receive firepower bonuses and restore three HP from each property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="348"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="357"/>
         <source>Crystal Brace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="352"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="361"/>
         <source>Units nearby an allied property receive firepower bonuses and restore three HP from each property. Enemies nearby their own property suffer three HP of damage from each property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="365"/>
         <source>Crystal Edge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="360"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="369"/>
         <source>You&apos;ll regret angering me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="361"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="370"/>
         <source>It&apos;s time you learned the real power of the crystals!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="371"/>
         <source>You were probably enjoying this battle, until now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="363"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="372"/>
         <source>Witness the power the Black Crystal gave to me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="364"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="373"/>
         <source>I hope you&apos;re ready for what&apos;s coming next!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="365"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="374"/>
         <source>See, now my army really shines, like diamonds!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="369"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="378"/>
         <source>I&apos;m unbreakable, just like a diamond!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="370"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="379"/>
         <source>Haha, you were shattered!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="371"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="380"/>
         <source>I&apos;ll leave you to clean this up, &apos;kay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="375"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="384"/>
         <source>My diamonds didn&apos;t help me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="385"/>
         <source>My diamonds broke?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="380"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="389"/>
         <source>Alexis</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10218,79 +10218,79 @@ Units gain %0% firepower when attacking units with equal or less health.</source
 <context>
     <name>co_caulder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="216"/>
         <source>Head of IDS - the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="220"/>
         <source>Unrestricted experiments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="224"/>
         <source>Ethics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="228"/>
         <source>His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 HP each turn inside his CO-Zone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="232"/>
         <source>
 Global Effect: 
 Units loose firepower by %0% and defense by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
         <source>All his units gain five Hp and get a offense and defense buff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="243"/>
         <source>Mass Regeneration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="247"/>
         <source>All his units heal to full and gain a massive offense and defense buff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="251"/>
         <source>Perfect Healing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="255"/>
         <source>Ahhh watch this experiment. I wonder what it does...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="256"/>
         <source>March my clones, march and kill them all.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
         <source>Interesting. Very interesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
         <source>Argh I&apos;m useless as well? Impossible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="257"/>
         <source>You and your ethnics make you weak. Watch the power of science...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
         <source>
 
 CO Zone Effect: 
@@ -10298,23 +10298,23 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="251"/>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="264"/>
         <source>I am simply curious.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="263"/>
         <source>Quite satisfactory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="268"/>
         <source>Only a failed experiment nothing to worry about!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="273"/>
         <source>Caulder</source>
         <translation type="unfinished"></translation>
     </message>

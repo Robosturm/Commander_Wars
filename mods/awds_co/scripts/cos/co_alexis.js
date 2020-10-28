@@ -52,6 +52,7 @@ CO_ALEXIS.startOfTurn = function(co)
     {
         var buildings = co.getOwner().getBuildings();
         var fields = globals.getCircle(1, 1);
+        var viewplayer = map.getCurrentViewPlayer();
         for (var i2 = 0; i2 < buildings.size(); i2++)
         {
             var building = buildings.at(i2);
@@ -61,15 +62,21 @@ CO_ALEXIS.startOfTurn = function(co)
             for (var i = 0; i < fields.size(); i++)
             {
                 var point = fields.at(i);
-                if (map.onMap(x + point.x, y + point.y))
+                var unitX = x + point.x;
+                var unitY = y + point.y;
+                if (map.onMap(unitX, unitY))
                 {
-                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                    var unit = map.getTerrain(unitX, unitY).getUnit();
                     if ((unit !== null) &&
-                            (unit.getOwner() === co.getOwner()))
+                        (unit.getOwner() === co.getOwner()))
                     {
                         UNIT.repairUnit(unit, 1);
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(unitX, unitY);
                         animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        if (!viewplayer.getFieldVisible(unitX, unitY))
+                        {
+                            animation.setVisible(false);
+                        }
                     }
                 }
             }

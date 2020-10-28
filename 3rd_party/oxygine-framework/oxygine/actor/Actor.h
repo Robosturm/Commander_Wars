@@ -89,7 +89,7 @@ namespace oxygine
         /**Returns rotation angle in degrees*/
         float               getRotationDegrees() const {return _rotation / M_PI * 180.0f;}
         int                 getPriority() const {return _zOrder;}
-        bool                getVisible() const {return (_flags & flag_visible) != 0;}
+        virtual bool        getVisible() const {return (_flags & flag_visible) != 0;}
         Actor*              getParent() {return _parent;}
         const Actor*        getParent() const {return _parent;}
         const Vector2&      getSize() const {return _size;}

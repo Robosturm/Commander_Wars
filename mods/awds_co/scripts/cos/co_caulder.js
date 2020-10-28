@@ -43,12 +43,17 @@ CO_CAULDER.startOfTurn = function(co)
     {
         var units = co.getOwner().getUnits();
         units.randomize();
+        var viewplayer = map.getCurrentViewPlayer();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
             UNIT.repairUnit(unit, 1);
             animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+            if (!viewplayer.getFieldVisible(unitX, unitY))
+            {
+                animation.setVisible(false);
+            }
         }
         units.remove();
     }

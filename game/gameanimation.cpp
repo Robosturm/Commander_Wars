@@ -113,6 +113,15 @@ void GameAnimation::update(const oxygine::UpdateState& us)
     oxygine::Sprite::update(us);
 }
 
+bool GameAnimation::getVisible() const
+{
+    return oxygine::Sprite::getVisible();
+}
+void GameAnimation::setVisible(bool vis)
+{
+    oxygine::Sprite::setVisible(vis);
+}
+
 void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
 {
     m_previousAnimation = previousAnimation;

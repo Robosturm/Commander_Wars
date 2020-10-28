@@ -184,18 +184,25 @@ var Constructor = function()
             var x = counit.getX();
             var y = counit.getY();
             var animation = null;
+            var viewplayer = map.getCurrentViewPlayer();
             for (var i = 0; i < fields.size(); i++)
             {
                 var point = fields.at(i);
-                if (map.onMap(x + point.x, y + point.y))
-                {
-                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                var unitX = x + point.x;
+                var unitY = y + point.y;
+                if (map.onMap(unitX, unitY))
+                {                    
+                    var unit = map.getTerrain(unitX, unitY).getUnit();
                     if ((unit !== null) &&
-                            (unit.getOwner() === counit.getOwner()))
+                        (unit.getOwner() === counit.getOwner()))
                     {
                         UNIT.repairUnit(unit, CO_CAULDER.coHealing);
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation = GameAnimationFactory.createAnimation(unitX, unitY);
                         animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        if (!viewplayer.getFieldVisible(unitX, unitY))
+                        {
+                            animation.setVisible(false);
+                        }
                     }
                 }
             }

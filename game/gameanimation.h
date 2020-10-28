@@ -255,6 +255,16 @@ public slots:
         }
         return data;
     }
+    /**
+     * @brief getVisible
+     * @return
+     */
+    virtual bool getVisible() const override;
+    /**
+     * @brief setVisible
+     * @param vis
+     */
+    virtual void setVisible(bool vis) override;
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     quint32 m_frameTime{1};
