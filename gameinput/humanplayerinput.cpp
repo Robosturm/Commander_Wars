@@ -218,7 +218,6 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
 void HumanPlayerInput::cleanUpInput()
 {
     clearMenu();
-    // delete action
     m_pGameAction = nullptr;
     m_pUnitPathFindingSystem = nullptr;
     clearMarkedFields();

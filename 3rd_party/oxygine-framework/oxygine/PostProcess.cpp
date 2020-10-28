@@ -30,7 +30,7 @@ namespace oxygine
 
 
 
-        IVideoDriver* driver = IVideoDriver::instance;
+        spIVideoDriver driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
         // read shader data
@@ -303,7 +303,7 @@ namespace oxygine
         {
             _renderingPP = true;
 
-            IVideoDriver* driver = IVideoDriver::instance;
+            spIVideoDriver driver = IVideoDriver::instance;
             //driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
 
@@ -336,7 +336,7 @@ namespace oxygine
 
     void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
     {
-        IVideoDriver* driver = IVideoDriver::instance;
+        spIVideoDriver driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(driver->getVertexDeclaration(vertexPCT2::FORMAT));
         driver->setRenderTarget(destTexture);
@@ -431,7 +431,7 @@ namespace oxygine
         Material::null->apply();
 
 
-        IVideoDriver* driver = IVideoDriver::instance;
+        spIVideoDriver driver = IVideoDriver::instance;
 
         driver->setRenderTarget(_rt);
 
@@ -464,7 +464,7 @@ namespace oxygine
 
         //Q_ASSERT(0);
         RenderDelegate* rd = actor->getRenderDelegate();
-        actor->setRenderDelegate(STDRenderDelegate::instance);
+        actor->setRenderDelegate(STDRenderDelegate::instance.get());
         STDRenderDelegate::instance->RenderDelegate::render(actor, rs);
 
         STDRenderer::current->flush();

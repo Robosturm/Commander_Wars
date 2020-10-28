@@ -13,7 +13,7 @@ typedef oxygine::intrusive_ptr<FileDialog> spFileDialog;
 
 /**
  * @brief The FileDialog class file dialog for accessing folder and files.
- * Upon success or cancel the dialog will delete itself from the scene.
+ * Upon success or cancel the dialog will remove itself from the scene.
  * You have to hold a smart pointer to this object if you need further info from it.
  */
 class FileDialog : public QObject, public oxygine::Actor

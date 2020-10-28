@@ -2,6 +2,7 @@
 #include "../oxygine-include.h"
 #include "ResFont.h"
 #include "../core/Texture.h"
+#include "../Font.h"
 #include <vector>
 
 namespace oxygine
@@ -42,7 +43,7 @@ namespace oxygine
 
         typedef QVector<page> pages;
         pages _pages;
-        Font* _font;
+        spFont _font;
         bool _sdf;
 
         ImageData::TextureFormat _format;

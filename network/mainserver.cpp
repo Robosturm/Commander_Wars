@@ -43,7 +43,6 @@ MainServer::~MainServer()
         m_games[i]->process->kill();
         m_games[i]->m_runner.terminate();
         delete m_games[i]->process;
-        delete m_games[i];
     }
 }
 
@@ -101,7 +100,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
     {
         m_slaveGameIterator++;
         QString slaveName = "Commander_Wars_Slave_" + QString::number(m_slaveGameIterator);
-        m_games.append(new stNetworkGame);
+        m_games.append(new InternNetworkGame);
         qint32 pos = m_games.size() - 1;
         QString program = "Commander_Wars.exe";
         m_games[pos]->process = new QProcess();
@@ -178,7 +177,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     qint32 sizePos = buffer.pos();
     out << sizePos;
     qint32 count = 0;
-    for (const auto * game : m_games)
+    for (const auto game : m_games)
     {
         if (!game->game.getData().getLaunched() &&
             game->game.getSlaveRunning())

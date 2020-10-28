@@ -485,8 +485,9 @@ namespace oxygine
           _uberShader(0)
     {
         if (!driver)
-            driver = IVideoDriver::instance;
-
+        {
+            driver = IVideoDriver::instance.get();
+        }
         _driver = driver;
         _vp.identity();
 

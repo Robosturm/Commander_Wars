@@ -84,7 +84,7 @@ namespace oxygine
     void Stage::render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
 
-        IVideoDriver* driver = IVideoDriver::instance;
+        spIVideoDriver driver = IVideoDriver::instance;
         driver->setViewport(viewport);
 
         if (clearColor)

@@ -17,22 +17,18 @@ namespace oxygine
 
         Node::~Node()
         {
-            Node* child = _firstChild;
-            while (child)
-            {
-                Node* next = child->_nextSibling;
-                delete child;
-
-                child = next;
-            }
         }
 
         void Node::appendNode(Node* tn)
         {
             if (!_firstChild)
+            {
                 _firstChild = tn;
+            }
             else
+            {
                 _lastChild->_nextSibling = tn;
+            }
 
             _lastChild = tn;
         }
@@ -48,7 +44,7 @@ namespace oxygine
 
         void Node::resizeChildren(Aligner& rd)
         {
-            Node* child = _firstChild;
+            spNode child = _firstChild;
             while (child)
             {
                 child->resize(rd);
@@ -60,7 +56,7 @@ namespace oxygine
         {
             xfinalPass(rd);
 
-            Node* child = _firstChild;
+            spNode child = _firstChild;
             while (child)
             {
                 child->finalPass(rd);
@@ -70,7 +66,7 @@ namespace oxygine
 
         void Node::drawChildren(DrawContext& dc)
         {
-            Node* child = _firstChild;
+            spNode child = _firstChild;
             while (child)
             {
                 child->draw(dc);
@@ -80,7 +76,7 @@ namespace oxygine
 
         Symbol* Node::getSymbol(int& pos)
         {
-            Node* node = _firstChild;
+            spNode node = _firstChild;
             while (node)
             {
                 Symbol* res = node->getSymbol(pos);
@@ -100,7 +96,7 @@ namespace oxygine
 
         void Node::updateMaterial(const STDMaterial& mat)
         {
-            Node* node = _firstChild;
+            spNode node = _firstChild;
             while (node)
             {
                 node->updateMaterial(mat);

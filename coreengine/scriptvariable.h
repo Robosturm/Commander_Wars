@@ -45,7 +45,7 @@ public:
     template<typename ListType>
     void writeList(QList <ListType> list)
     {
-        // delete the buffer content
+        // remove the buffer content
         buffer.close();
         buffer.setData(QByteArray());
         buffer.open(QIODevice::ReadWrite);
@@ -84,7 +84,7 @@ public:
      */
     void writeData(type data)
     {
-        // delete the buffer content
+        // remove the buffer content
         buffer.close();
         buffer.setData(QByteArray());
         buffer.open(QIODevice::ReadWrite);

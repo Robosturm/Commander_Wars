@@ -5,11 +5,13 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(STDRenderDelegate, spSTDRenderDelegate);
+    class STDRenderDelegate;
+    typedef oxygine::intrusive_ptr<STDRenderDelegate> spSTDRenderDelegate;
+
     class STDRenderDelegate : public RenderDelegate
     {
     public:
-        static STDRenderDelegate* instance;
+        static spSTDRenderDelegate instance;
 
         STDRenderDelegate() {}
 

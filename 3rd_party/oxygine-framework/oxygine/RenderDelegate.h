@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    class RenderDelegate
+    class RenderDelegate : public oxygine::ref_counter
     {
     public:
         virtual ~RenderDelegate();

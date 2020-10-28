@@ -9,7 +9,10 @@
 
 namespace oxygine
 {
-    class IVideoDriver
+    class IVideoDriver;
+    typedef oxygine::intrusive_ptr<IVideoDriver> spIVideoDriver;
+
+    class IVideoDriver : public oxygine::ref_counter
     {
     public:
 
@@ -65,7 +68,7 @@ namespace oxygine
             STATE_NUM
         };
 
-        static IVideoDriver* instance;
+        static spIVideoDriver instance;
         virtual ~IVideoDriver();
 
         virtual void reset() = 0;

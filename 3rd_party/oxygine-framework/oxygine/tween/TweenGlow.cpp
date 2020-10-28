@@ -48,7 +48,7 @@ namespace oxygine
             int h = _pp._screen.size.y;
 
 
-            IVideoDriver* driver = IVideoDriver::instance;
+            spIVideoDriver driver = IVideoDriver::instance;
             _downsample = 1;
             spNativeTexture rt = _pp._rt;
             spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);

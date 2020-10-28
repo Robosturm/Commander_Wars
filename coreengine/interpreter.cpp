@@ -10,7 +10,7 @@
 #include <QTextStream>
 #include <QThread>
 
-Interpreter* Interpreter::m_pInstance = nullptr;
+spInterpreter Interpreter::m_pInstance = nullptr;
 QString Interpreter::m_runtimeData;
 //Interpreter::Interpreter(QString script)
 //    : QQmlEngine()
@@ -19,7 +19,6 @@ QString Interpreter::m_runtimeData;
 //    this->moveToThread(pApp->getWorkerthread());
 //    init();
 //    openScript(script);
-
 //}
 
 Interpreter::Interpreter()
@@ -32,7 +31,6 @@ Interpreter::Interpreter()
 
 void Interpreter::reloadInterpreter(QString runtime)
 {
-    delete m_pInstance;
     m_pInstance = new Interpreter();
     m_pInstance->loadScript(runtime, "Interpreter Runtime");
 }

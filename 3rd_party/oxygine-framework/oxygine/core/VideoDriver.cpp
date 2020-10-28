@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    IVideoDriver* IVideoDriver::instance = nullptr;
+    spIVideoDriver IVideoDriver::instance = nullptr;
 
     IVideoDriver::~IVideoDriver()
     {

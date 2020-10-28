@@ -116,11 +116,6 @@ namespace oxygine
     {
         _resourcesMap.clear();
         _resources.clear();
-
-        for (int i = 0; i < _docs.size(); ++i)
-        {
-            delete _docs[i];
-        }
         _docs.clear();
     }
 
@@ -186,12 +181,13 @@ namespace oxygine
         updateName(xmlFile);
         qDebug("step2");
 
-        QDomDocument* doc = new QDomDocument();
-        _docs.push_back(doc);
-        bool loaded = doc->setContent(&file);
+
+        _docs.push_back(QDomDocument());
+        QDomDocument& doc = _docs.last();
+        bool loaded = doc.setContent(&file);
         Q_ASSERT(loaded);
 
-        QDomElement resources = doc->documentElement();
+        QDomElement resources = doc.documentElement();
         QString id;
         qDebug("loading xml resources");
         XmlWalker walker("", 1.0f, opt._loadCompletely, true, resources);

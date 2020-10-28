@@ -72,11 +72,13 @@ namespace oxygine
     const oxygine::Font* ResFontBM::getClosestFont(float, int styleFontSize, float& resScale) const
     {
         if (!styleFontSize)
+        {
             styleFontSize = _size;
+        }
 
         float scale = _size / float(styleFontSize) * _font->getScale();
         resScale = scale;
-        return _font;
+        return _font.get();
     }
 
     void ResFontBM::init(QString path, bool premultipliedAlpha)
@@ -94,7 +96,6 @@ namespace oxygine
             p.texture->release();
         }
         _pages.clear();
-        delete _font;
         _font = nullptr;
         _loadCounter = 0;
     }
@@ -348,6 +349,6 @@ namespace oxygine
 
     const Font* ResFontBM::getFont(QString, int) const
     {
-        return _font;
+        return _font.get();
     }
 }

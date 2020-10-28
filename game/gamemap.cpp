@@ -1204,7 +1204,6 @@ void GameMap::startGame()
 
 void GameMap::clearMap()
 {
-    // delete all data
     for (qint32 y = 0; y < fields.size(); y++)
     {
         for (qint32 x = 0; x < fields[y].size(); x++)

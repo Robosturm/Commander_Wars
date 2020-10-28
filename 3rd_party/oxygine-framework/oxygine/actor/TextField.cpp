@@ -33,8 +33,6 @@ namespace oxygine
 
     TextField::~TextField()
     {
-        delete _root;
-        _root = nullptr;
     }
 
     bool TextField::isOn(const Vector2& localPosition, float localScale)
@@ -151,7 +149,7 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::sizeChanged(const Vector2& size)
+    void TextField::sizeChanged(const Vector2&)
     {
         needRebuild();
     }
@@ -265,8 +263,9 @@ namespace oxygine
     text::Node* TextField::getRootNode(float globalScale)
     {
         if (!_style.font)
-            return _root;
-
+        {
+            return _root.get();
+        }
 
         globalScale = qAbs(globalScale);
 
@@ -277,7 +276,7 @@ namespace oxygine
         {
             _rtscale = scale;
             //_realFontSize = fontSize;
-            delete _root;
+            _root = nullptr;
 
             _flags &= ~flag_rebuild;
 
@@ -305,7 +304,7 @@ namespace oxygine
             dispatchEvent(&ev);
         }
 
-        return _root;
+        return _root.get();
     }
 
     void TextField::doRender(RenderState const& rs)

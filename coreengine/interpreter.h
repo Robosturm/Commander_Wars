@@ -4,25 +4,29 @@
 #include <QObject>
 #include <QQmlEngine>
 
+#include "oxygine-framework.h"
+
+class Interpreter;
+typedef oxygine::intrusive_ptr<Interpreter> spInterpreter;
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter : public QQmlEngine
+class Interpreter : public QQmlEngine, public oxygine::ref_counter
 {
     Q_OBJECT
 
 public:
     static Interpreter* getInstance()
     {
-        return m_pInstance;
+        return m_pInstance.get();
     }
     static Interpreter* createInstance()
     {
-        if (m_pInstance == nullptr)
+        if (m_pInstance.get() == nullptr)
         {
             m_pInstance = new Interpreter();
         }
-        return m_pInstance;
+        return m_pInstance.get();
     }
 
     virtual ~Interpreter();
@@ -78,7 +82,7 @@ private:
      */
     void init();
     static QString m_runtimeData;
-    static Interpreter* m_pInstance;
+    static spInterpreter m_pInstance;
 };
 
 #endif // INTERPRETER_H

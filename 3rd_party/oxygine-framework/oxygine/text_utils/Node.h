@@ -36,7 +36,10 @@ namespace oxygine
             QColor primary;
         };
 
-        class Node
+        class Node;
+        typedef oxygine::intrusive_ptr<Node> spNode;
+
+        class Node : public oxygine::ref_counter
         {
         public:
             Node();
@@ -59,9 +62,9 @@ namespace oxygine
             virtual void xupdateMaterial(const STDMaterial& mat) {}
 
 
-            Node* _firstChild;
-            Node* _lastChild;
-            Node* _nextSibling;
+            spNode _firstChild;
+            spNode _lastChild;
+            spNode _nextSibling;
         };
 
         class TextNode: public Node

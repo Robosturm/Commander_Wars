@@ -52,7 +52,7 @@ public:
      */
     void setBaseTerrain(spTerrain terrain);
     /**
-     * @brief setUnit will place the units on this terrain ignoring all rules nullptr to delete it.
+     * @brief setUnit will place the units on this terrain ignoring all rules nullptr to remove it.
      * @param pUnit
      */
     void setUnit(spUnit pUnit);
@@ -279,7 +279,7 @@ public slots:
      */
     QString getID();
     /**
-     * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to delete it.
+     * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to remove it.
      * @param pBuilding
      */
     void setBuilding(Building* pBuilding);

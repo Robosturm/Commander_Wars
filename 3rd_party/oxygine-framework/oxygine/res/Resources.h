@@ -140,6 +140,6 @@ namespace oxygine
         static registeredResources _registeredResources;
 
         QString _name;
-        QVector<QDomDocument*> _docs;
+        QVector<QDomDocument> _docs;
     };
 }

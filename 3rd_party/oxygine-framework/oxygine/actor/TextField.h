@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "../TextStyle.h"
 #include "../VisualStyle.h"
+#include "../text_utils/Node.h"
 
 namespace oxygine
 {
@@ -93,7 +94,7 @@ namespace oxygine
         QString  _text;
         TextStyle _style;
 
-        text::Node* _root;
+        text::spNode _root;
         Rect _textRect;
         float _rtscale;
         int _realFontSize;

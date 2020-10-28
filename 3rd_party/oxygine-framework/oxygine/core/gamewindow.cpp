@@ -25,6 +25,9 @@
 #include "../res/ResBuffer.h"
 #include "../res/ResFontBM.h"
 #include "../res/Resources.h"
+
+#include "../STDRenderDelegate.h"
+
 #include "gl/VideoDriverGLES20.h"
 
 #include "../STDRenderer.h"
@@ -63,10 +66,7 @@ namespace oxygine
         mc().clear();
 
         STDRenderer::release();
-        delete STDRenderDelegate::instance;
         STDRenderDelegate::instance = nullptr;
-
-        delete IVideoDriver::instance;
         IVideoDriver::instance = nullptr;
 
         Input::instance.cleanup();
@@ -197,7 +197,7 @@ namespace oxygine
 
         IVideoDriver::instance->setDefaultSettings();
 
-        rsCache().setDriver(IVideoDriver::instance);
+        rsCache().setDriver(IVideoDriver::instance.get());
 
         STDRenderer::initialize();
 

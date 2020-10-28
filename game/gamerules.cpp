@@ -309,7 +309,7 @@ void GameRules::startOfTurn(bool newDay)
     spGameMap pMap = GameMap::getInstance();
     if (newDay && m_WeatherDays.size() > 0)
     {
-        // delete last day weather
+        // remove last day weather
         m_WeatherDays.removeAt(0);
     }
     // todo maybe make this changeable some day

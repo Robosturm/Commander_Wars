@@ -29,7 +29,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
     m_Armies = ret.toVariant().toStringList();
     QStringList allowedArmies;
-    // delete unused armies
+    // remove unused armies
     // first search avaible armies if the selection is set like that
     for (qint32 i = 0; i < m_Coids.size(); i++)
     {
@@ -47,7 +47,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     // we have allowed armies? Else allow everything
     if (allowedArmies.size() > 0)
     {
-        // delete all other armies
+        // remove all other armies
         qint32 iter = 0;
         while (iter < m_Armies.size())
         {
@@ -233,7 +233,7 @@ void COSelection::armyChanged(QString army)
     qint32 index = 0;
     if (m_Coids.size() > 0)
     {
-        // delete all unallowed co's
+        // remove all unallowed co's
         while (index < preSetCOOrder.size())
         {
             if (m_Coids.contains(preSetCOOrder[index]))

@@ -693,7 +693,7 @@ void Terrain::setBuilding(Building* pBuilding)
             createBuildingDownStream();
         }
     }
-    // delete current unit to avoid strange impact :)
+    // remove current unit to avoid strange impact :)
     setUnit(nullptr);
 }
 
@@ -703,17 +703,17 @@ void Terrain::removeBuilding()
     {
         if (m_Building->getTerrain() == this)
         {
-            // delete it
+            // remove it
             m_Building->detach();
             qint32 width = m_Building->getBuildingWidth();
             qint32 heigth = m_Building->getBuildingHeigth();
             spGameMap pMap = GameMap::getInstance();
-            // delete pointers
+            // remove pointers
             for (qint32 x1 = 0; x1 < width; x1++)
             {
                 for (qint32 y1 = 0; y1 < heigth; y1++)
                 {
-                    // delete down stream on all other fields
+                    // remove down stream on all other fields
                     if (!((x1 == 0) && (y1 == 0)) &&
                         pMap->onMap(x - x1, y - y1))
                     {
@@ -747,7 +747,7 @@ void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
             this->addChild(pBuilding);
         }
     }
-    // delete current unit to avoid strange impact :)
+    // remove current unit to avoid strange impact :)
     setUnit(nullptr);
 }
 
@@ -788,7 +788,18 @@ void Terrain::setUnit(spUnit pUnit)
         pUnit->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(Terrain::y) + 2);
         pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         pUnit->setPosition(Terrain::x * GameMap::getImageSize(), Terrain::y * GameMap::getImageSize());
-        GameMap::getInstance()->addChild(pUnit);
+
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap.get())
+        {
+            Player* pPlayer = pMap->getCurrentViewPlayer();
+            if (pPlayer != nullptr &&
+                !pPlayer->getFieldVisible(Terrain::x, Terrain::y))
+            {
+                pUnit->setVisible(false);
+            }
+            pMap->addChild(pUnit);
+        }
     }
 }
 

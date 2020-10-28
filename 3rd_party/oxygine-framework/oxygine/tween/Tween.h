@@ -132,7 +132,7 @@ namespace oxygine
         void setClient(Actor* client) { _client = client; }
         void setTwoSides(bool ts) { _twoSides = ts; }
 
-        /**delete actor from parent node when tween done*/
+        /** remove actor from parent node when tween done*/
         void detachWhenDone(bool detach = true) { _detach = detach; }
 
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/

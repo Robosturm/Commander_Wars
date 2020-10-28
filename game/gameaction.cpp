@@ -13,7 +13,7 @@ GameAction::GameAction()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer->open(QIODevice::ReadWrite);
+    buffer.open(QIODevice::ReadWrite);
     _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
@@ -24,7 +24,7 @@ GameAction::GameAction(QString actionID)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer->open(QIODevice::ReadWrite);
+    buffer.open(QIODevice::ReadWrite);
     _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
@@ -35,7 +35,6 @@ void GameAction::setSeed(quint32 seed)
 
 GameAction::~GameAction()
 {
-    delete buffer;
 }
 
 void GameAction::deleteAction()
@@ -64,10 +63,8 @@ void GameAction::reset()
     costs = 0;
     inputStep = 0;
     m_MultiTurnPath.clear();
-    delete buffer;
-    buffer = new QBuffer();
-    buffer->open(QIODevice::ReadWrite);
-    actionData.setDevice(buffer);
+    buffer.close();
+    buffer.open(QIODevice::ReadWrite);
 }
 
 qint64 GameAction::getSyncCounter() const
@@ -126,7 +123,7 @@ void GameAction::printAction()
                 "Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
     QString data;
-    QByteArray bytes = buffer->data();
+    QByteArray bytes = buffer.data();
     for (qint32 i = 0; i < bytes.size(); i++)
     {
         data += "0x" + QString::number(bytes[i])+ " ";
@@ -433,7 +430,7 @@ void GameAction::serializeObject(QDataStream& stream) const
     }
     stream << inputStep;
     stream << costs;
-    QByteArray data = buffer->data();
+    QByteArray data = buffer.data();
     stream << static_cast<qint32>(data.size());
     for (qint32 i = 0; i < data.size(); i++)
     {
@@ -467,7 +464,7 @@ void GameAction::deserializeObject(QDataStream& stream)
     stream >> inputStep;
     stream >> costs;
     stream >> size;
-    buffer->seek(0);
+    buffer.seek(0);
     for (qint32 i = 0; i < size; i++)
     {
         qint8 value = 0;

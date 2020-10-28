@@ -75,7 +75,7 @@ namespace oxygine
                 fs  += _fracShader;
             }
             QString vs = prepend + _vertexShader;
-            VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance);
+            VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance.get());
             const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
             ShaderProgramGL* pgl = new ShaderProgramGL(vs, fs, decl);
             driver->setShaderProgram(pgl);

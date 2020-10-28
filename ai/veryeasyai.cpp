@@ -54,7 +54,7 @@ void VeryEasyAI::process()
     if (rebuildIslandMaps)
     {
         rebuildIslandMaps = false;
-        // delete island maps of the last turn
+        // remove island maps of the last turn
         m_IslandMaps.clear();
     }
     rebuildIsland(pUnits.get());
