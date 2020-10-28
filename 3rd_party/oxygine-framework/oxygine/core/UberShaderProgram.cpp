@@ -85,8 +85,7 @@ namespace oxygine
             driver->setUniformInt("mask_texture", UberShaderProgram::SAMPLER_MASK);
             s.program = pgl;
         }
-
-        return s.program;
+        return s.program.get();
     }
 
     UberShaderProgram::UberShaderProgram()
@@ -104,8 +103,7 @@ namespace oxygine
         for (int i = 0; i < _SIZE; ++i)
         {
             shader& s = _shaders[i];
-            delete s.program;
-            s.program = 0;
+            s.program = nullptr;
         }
     }
 

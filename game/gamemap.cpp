@@ -317,8 +317,7 @@ GameMap::~GameMap()
     // clean up session
     for (qint32 y = 0; y < fields.size(); y++)
     {
-        fields.at(y)->clear();
-        delete fields.at(y);
+        fields[y].clear();
     }
     fields.clear();
 }
@@ -342,7 +341,7 @@ spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        return fields.at(y)->at(x);
+        return fields[y][x];
     }
     else
     {
@@ -354,7 +353,7 @@ Terrain* GameMap::getTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        return fields.at(y)->at(x).get();
+        return fields[y][x].get();
     }
     else
     {
@@ -418,14 +417,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
             {
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
-                fields.at(y)->at(x)->loadSprites();
-                if (fields.at(y)->at(x)->getUnit() != nullptr)
+                fields[y][x]->loadSprites();
+                if (fields[y][x]->getUnit() != nullptr)
                 {
-                    fields.at(y)->at(x)->getUnit()->updateSprites(editor);
+                    fields[y][x]->getUnit()->updateSprites(editor);
                 }
-                if (fields.at(y)->at(x)->getBuilding() != nullptr)
+                if (fields[y][x]->getBuilding() != nullptr)
                 {
-                    fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
+                    fields[y][x]->getBuilding()->updateBuildingSprites(false);
                 }
                 pApp->continueThread();
             }
@@ -442,14 +441,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
                 {
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->suspendThread();
-                    fields.at(y)->at(x)->loadSprites();
-                    if (fields.at(y)->at(x)->getUnit() != nullptr)
+                    fields[y][x]->loadSprites();
+                    if (fields[y][x]->getUnit() != nullptr)
                     {
-                        fields.at(y)->at(x)->getUnit()->updateSprites(editor);
+                        fields[y][x]->getUnit()->updateSprites(editor);
                     }
-                    if (fields.at(y)->at(x)->getBuilding() != nullptr)
+                    if (fields[y][x]->getBuilding() != nullptr)
                     {
-                        fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
+                        fields[y][x]->getBuilding()->updateBuildingSprites(false);
                     }
                     pApp->continueThread();
                 }
@@ -464,7 +463,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            fields.at(y)->at(x)->syncAnimation();
+            fields[y][x]->syncAnimation();
         }
     }
     pApp->continueThread();
@@ -485,11 +484,11 @@ void GameMap::killDeadUnits()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            Unit* pUnit = fields[y][x]->getUnit();
             if (pUnit != nullptr &&
                 pUnit->getHp() <= 0)
             {
-                fields.at(y)->at(x)->setUnit(nullptr);
+                fields[y][x]->setUnit(nullptr);
             }
         }
     }
@@ -641,7 +640,7 @@ qint32 GameMap::getMapWidth() const
 {
     if (fields.size() > 0)
     {
-        return fields.at(0)->size();
+        return fields[0].size();
     }
     return 0;
 }
@@ -818,7 +817,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        spTerrain pTerrainOld = fields.at(y)->at(x);
+        spTerrain pTerrainOld = fields[y][x];
         if (pTerrainOld->getTerrainID() != terrainID)
         {
             pTerrainOld->removeBuilding();
@@ -834,7 +833,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
             {
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
-                fields.at(y)->replace(x, pTerrain);
+                fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
@@ -842,7 +841,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
             else
             {
                 pTerrainOld->detach();
-                fields.at(y)->replace(x, pTerrain);
+                fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
@@ -888,9 +887,9 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
             {
                 if (onMap(xPos, yPos))
                 {
-                    if (!canBePlaced(fields.at(yPos)->at(xPos)->getTerrainID(), xPos, yPos))
+                    if (!canBePlaced(fields[yPos][xPos]->getTerrainID(), xPos, yPos))
                     {
-                        replaceTerrain(fields.at(yPos)->at(xPos)->getBaseTerrainID(), xPos, yPos, false, true);
+                        replaceTerrain(fields[yPos][xPos]->getBaseTerrainID(), xPos, yPos, false, true);
                     }
                 }
             }
@@ -948,7 +947,7 @@ void GameMap::serializeObject(QDataStream& pStream) const
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            fields.at(y)->at(x)->serializeObject(pStream);
+            fields[y][x]->serializeObject(pStream);
         }
     }
     m_Rules->serializeObject(pStream);
@@ -1037,11 +1036,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
         }
-        fields.append(new QVector<spTerrain>());
+        fields.append(QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
-            fields[y]->append(pTerrain);
+            fields[y].append(pTerrain);
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {
@@ -1171,9 +1170,9 @@ void GameMap::startGame()
     m_Recorder = new GameRecorder();
     for (qint32 y = 0; y < fields.size(); y++)
     {
-        for (qint32 x = 0; x < fields.at(y)->size(); x++)
+        for (qint32 x = 0; x < fields[y].size(); x++)
         {
-            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            Unit* pUnit = fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->applyMod();
@@ -1208,16 +1207,16 @@ void GameMap::clearMap()
     // delete all data
     for (qint32 y = 0; y < fields.size(); y++)
     {
-        for (qint32 x = 0; x < fields.at(y)->size(); x++)
+        for (qint32 x = 0; x < fields[y].size(); x++)
         {
-            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            Unit* pUnit = fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->detach();
             }
-            fields.at(y)->at(x)->detach();
+            fields[y][x]->detach();
         }
-        fields.at(y)->clear();
+        fields[y].clear();
     }
     fields.clear();
     players.clear();
@@ -1249,7 +1248,7 @@ void GameMap::enableUnits(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1301,7 +1300,7 @@ void GameMap::updateUnitIcons()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 Mainapp* pApp = Mainapp::getInstance();
@@ -1388,7 +1387,7 @@ void GameMap::refillAll()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 pUnit->refill();
@@ -1438,7 +1437,7 @@ void GameMap::startOfTurn(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1452,7 +1451,7 @@ void GameMap::startOfTurn(Player* pPlayer)
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
-            spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
+            spBuilding pBuilding = fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == pPlayer &&
@@ -1474,7 +1473,7 @@ void GameMap::startOfTurn(Player* pPlayer)
             }
             if (pPlayer == nullptr)
             {
-                fields.at(y)->at(x)->startOfDay();
+                fields[y][x]->startOfDay();
             }
         }
     }
@@ -1503,7 +1502,7 @@ void GameMap::checkFuel(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if ((pUnit->getOwner() == pPlayer) &&
@@ -1525,7 +1524,7 @@ Unit* GameMap::getUnit(qint32 uniqueID)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            Unit* pUnit = fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 if (pUnit->getUniqueID() == uniqueID)
@@ -1579,7 +1578,7 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if ((pUnit->getOwner() == pPlayer))
@@ -1601,8 +1600,8 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
-            if (pBuilding.get() != nullptr && pBuilding->getTerrain() == fields.at(y)->at(x).get())
+            spBuilding pBuilding = fields[y][x]->getSpBuilding();
+            if (pBuilding.get() != nullptr && pBuilding->getTerrain() == fields[y][x].get())
             {
                 if ((pBuilding->getOwner() == pPlayer))
                 {

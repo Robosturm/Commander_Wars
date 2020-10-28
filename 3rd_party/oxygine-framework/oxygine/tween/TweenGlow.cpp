@@ -55,12 +55,12 @@ namespace oxygine
 
             Rect rc(0, 0, w, h);
 
-            driver->setShaderProgram(PostProcess::shaderBlurH);
+            driver->setShaderProgram(PostProcess::shaderBlurH.get());
             driver->setUniform("step", 1.0f / rt->getWidth());
             pass(rt, rc, rt2, rc);
             QColor c = _color;
             c.setAlpha(64);
-            driver->setShaderProgram(PostProcess::shaderBlurV);
+            driver->setShaderProgram(PostProcess::shaderBlurV.get());
             driver->setUniform("step", 1.0f / rt2->getHeight());
 
             pass(rt2, rc, rt, rc, qRgba(premultiply(c)));

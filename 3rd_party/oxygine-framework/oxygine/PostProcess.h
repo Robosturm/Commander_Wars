@@ -6,6 +6,8 @@
 #include "math/Rect.h"
 #include "tween/Tween.h"
 
+#include "core/ShaderProgram.h"
+
 namespace oxygine
 {
     class PostProcessOptions
@@ -38,9 +40,9 @@ namespace oxygine
     {
     public:
 
-        static ShaderProgram* shaderBlurV;
-        static ShaderProgram* shaderBlurH;
-        static ShaderProgram* shaderBlit;
+        static spShaderProgram shaderBlurV;
+        static spShaderProgram shaderBlurH;
+        static spShaderProgram shaderBlit;
 
         static void initShaders();
         static void freeShaders();

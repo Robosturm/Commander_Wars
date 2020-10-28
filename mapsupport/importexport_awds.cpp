@@ -43,12 +43,12 @@ void GameMap::importAWDSMap(QString file)
         stream >> sign;
         for (qint32 y = 0; y < heigth; y++)
         {
-            fields.append(new QVector<spTerrain>());
+            fields.append(QVector<spTerrain>());
             for (qint32 x = 0; x < width; x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
-                fields[y]->append(pTerrain);
+                fields[y].append(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }

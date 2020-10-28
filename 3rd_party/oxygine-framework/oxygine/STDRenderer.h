@@ -44,14 +44,17 @@ namespace oxygine
         ShaderProgramChangedHook* next;
 
         std::function< void() > hook;
-    };
+    };    
 
-    class STDRenderer : public ShaderProgramChangedHook
+    class STDRenderer;
+    typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+
+    class STDRenderer : public ShaderProgramChangedHook, public oxygine::ref_counter
     {
     public:
 
-        static STDRenderer* current;
-        static STDRenderer* instance;
+        static spSTDRenderer current;
+        static spSTDRenderer instance;
         /**Initializes internal classes. Called automatically from oxygine::init();*/
         static void initialize();
         /**Clears internal data*/

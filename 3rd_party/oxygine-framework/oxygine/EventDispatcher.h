@@ -30,8 +30,7 @@ namespace oxygine
     public:
         EventDispatcher(const EventDispatcher& ed)
             : Object(ed),
-              _lastID(0),
-              _listeners(nullptr)
+              _lastID(0)
         {
         }
         EventDispatcher();
@@ -60,7 +59,7 @@ namespace oxygine
         int getListenersCount() const;
         int getLastListenerID() const { return _lastID; }
 
-        const EventCallback& getListenerByIndex(int index) const { return (*_listeners)[index].cb; }
+        const EventCallback& getListenerByIndex(int index) const { return _listeners[index].cb; }
 
 
         bool getEnabled() const;
@@ -82,7 +81,7 @@ namespace oxygine
         int _lastID;
 
         typedef QVector<listener> listeners;
-        listeners* _listeners;
+        listeners _listeners;
 
         bool m_enabled{true};
     };

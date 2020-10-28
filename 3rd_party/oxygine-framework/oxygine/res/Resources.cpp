@@ -118,7 +118,9 @@ namespace oxygine
         _resources.clear();
 
         for (int i = 0; i < _docs.size(); ++i)
+        {
             delete _docs[i];
+        }
         _docs.clear();
     }
 

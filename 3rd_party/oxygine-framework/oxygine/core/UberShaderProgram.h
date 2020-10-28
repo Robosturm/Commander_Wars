@@ -3,15 +3,21 @@
 #include "Restorable.h"
 #include <vector>
 
+#include "oxygine/core/ShaderProgram.h"
+
 namespace oxygine
 {
+
     class UberShaderProgramBase: public Restorable
     {
     public:
         struct shader
         {
-            shader(): program(0), flags(0) {}
-            ShaderProgram* program;
+            shader()
+                : flags(0)
+            {
+            }
+            spShaderProgram program;
             int flags;
         };
 

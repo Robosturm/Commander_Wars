@@ -4,6 +4,10 @@
 
 namespace oxygine
 {
+
+    class ShaderProgram;
+    typedef oxygine::intrusive_ptr<ShaderProgram> spShaderProgram;
+
     class ShaderProgram: public Object
     {
     public:

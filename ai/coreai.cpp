@@ -348,7 +348,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
     // check if the action can be performed here
     if (pAction->canBePerformed())
     {
-        MarkedFieldData* pMarkedFieldData = pAction->getMarkedFieldStepData();
+        spMarkedFieldData pMarkedFieldData = pAction->getMarkedFieldStepData();
         for (qint32 i = 0; i < pMarkedFieldData->getPoints()->size(); i++)
         {
             QPoint target = pMarkedFieldData->getPoints()->at(i);
@@ -406,7 +406,6 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
                 }
             }
         }
-        delete pMarkedFieldData;
     }
 }
 

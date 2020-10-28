@@ -4,24 +4,17 @@
 namespace oxygine
 {
     EventDispatcher::EventDispatcher()
-        : _lastID(0),
-          _listeners(nullptr)
+        : _lastID(0)
     {
 
     }
 
     EventDispatcher::~EventDispatcher()
     {
-        delete _listeners;
     }
 
     int EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
-        if (!_listeners)
-        {
-            _listeners = new listeners;
-        }
-
         _lastID++;
 
 
@@ -29,24 +22,20 @@ namespace oxygine
         ls.type = et;
         ls.cb = cb;
         ls.id = _lastID;
-        _listeners->push_back(ls);
+        _listeners.push_back(ls);
 
         return ls.id;
     }
 
     void EventDispatcher::removeEventListener(int id)
     {
-        if (!_listeners)
-        {
-            return;
-        }
 
-        for (size_t size = _listeners->size(), i = 0; i != size; ++i)
+        for (size_t size = _listeners.size(), i = 0; i != size; ++i)
         {
-            const listener& ls = _listeners->at(i);
+            const listener& ls = _listeners.at(i);
             if (ls.id == id)
             {
-                _listeners->erase(_listeners->begin() + i);
+                _listeners.erase(_listeners.begin() + i);
                 break;
             }
         }
@@ -54,18 +43,12 @@ namespace oxygine
 
     void EventDispatcher::removeEventListener(eventType et, const EventCallback& cb)
     {
-         //Q_ASSERT(_listeners);
-        if (!_listeners)
+        for (size_t size = _listeners.size(), i = 0; i != size; ++i)
         {
-            return;
-        }
-
-        for (size_t size = _listeners->size(), i = 0; i != size; ++i)
-        {
-            const listener& ls = _listeners->at(i);
+            const listener& ls = _listeners.at(i);
             if (ls.type == et && cb == ls.cb)
             {
-                _listeners->erase(_listeners->begin() + i);
+                _listeners.erase(_listeners.begin() + i);
                 break;
                 //--i;
             }
@@ -74,16 +57,12 @@ namespace oxygine
 
     void EventDispatcher::removeEventListeners(void* CallbackThis)
     {
-        if (!_listeners)
+        for (int i = 0; i < _listeners.size(); ++i)
         {
-            return;
-        }
-        for (int i = 0; i < _listeners->size(); ++i)
-        {
-            const listener& ls = _listeners->at(i);
+            const listener& ls = _listeners.at(i);
             if (ls.cb.isOwner(CallbackThis))
             {
-                _listeners->erase(_listeners->begin() + i);
+                _listeners.erase(_listeners.begin() + i);
                 --i;
             }
         }
@@ -91,16 +70,12 @@ namespace oxygine
 
     void EventDispatcher::removeEventListenersByType(eventType et)
     {
-        if (!_listeners)
+        for (int i = 0; i < _listeners.size(); ++i)
         {
-            return;
-        }
-        for (int i = 0; i < _listeners->size(); ++i)
-        {
-            const listener& ls = _listeners->at(i);
+            const listener& ls = _listeners.at(i);
             if (ls.type == et)
             {
-                _listeners->erase(_listeners->begin() + i);
+                _listeners.erase(_listeners.begin() + i);
                 --i;
             }
         }
@@ -109,8 +84,7 @@ namespace oxygine
 
     void EventDispatcher::removeAllEventListeners()
     {
-        delete _listeners;
-        _listeners = nullptr;
+        _listeners.clear();
     }
 
 
@@ -121,48 +95,32 @@ namespace oxygine
             event->target = this;
         }
 
-        if (!_listeners || !m_enabled)
+        if (!m_enabled)
         {
             return;
         }
 
-        size_t size = _listeners->size();
-        size_t num = 0;
-
-        listenerbase* copy = new listenerbase[size];
+        size_t size = _listeners.size();
 
         for (size_t i = 0; i != size; ++i)
         {
-            const listener& ls = _listeners->at(i);
-            if (ls.type != event->type)
+            listener& ls = _listeners[i];
+            if (ls.type == event->type)
             {
-                continue;
-            }
-            copy[num] = ls;
-            ++num;
-        }
-
-        for (size_t i = 0; i != num; ++i)
-        {
-            listenerbase& ls = copy[i];
-            event->currentTarget = this;
-            event->listenerID = ls.id;
-            ls.cb(event);
-            if (event->stopsImmediatePropagation)
-            {
-                break;
+                event->currentTarget = this;
+                event->listenerID = ls.id;
+                ls.cb(event);
+                if (event->stopsImmediatePropagation)
+                {
+                    break;
+                }
             }
         }
-        delete[] copy;
     }
 
     int EventDispatcher::getListenersCount() const
     {
-        if (!_listeners)
-        {
-            return 0;
-        }
-        return (int)_listeners->size();
+        return _listeners.size();
     }
 
     bool EventDispatcher::getEnabled() const

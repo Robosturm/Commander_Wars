@@ -27,6 +27,8 @@
 #include "../res/Resources.h"
 #include "gl/VideoDriverGLES20.h"
 
+#include "../STDRenderer.h"
+
 #include "../Clock.h"
 
 #include "QMutexLocker"

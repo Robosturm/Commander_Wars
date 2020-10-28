@@ -5,6 +5,7 @@
 #include "core/gl/ShaderProgramGL.h"
 #include "core/gl/VertexDeclarationGL.h"
 #include "core/oxygine.h"
+#include "core/Renderer.h"
 
 #include "core/gamewindow.h"
 
@@ -13,11 +14,12 @@
 #include <qfile.h>
 #include <qtextstream.h>
 
+
 namespace oxygine
 {
-    ShaderProgram* PostProcess::shaderBlurV = nullptr;
-    ShaderProgram* PostProcess::shaderBlurH = nullptr;
-    ShaderProgram* PostProcess::shaderBlit = nullptr;
+    spShaderProgram PostProcess::shaderBlurV = nullptr;
+    spShaderProgram PostProcess::shaderBlurH = nullptr;
+    spShaderProgram PostProcess::shaderBlit = nullptr;
     bool _ppBuilt = false;
 
     void PostProcess::initShaders()
@@ -74,26 +76,21 @@ namespace oxygine
         }
         // create shaders
         shaderBlurV = new ShaderProgramGL(vs_v, fs_blur, decl);
-        driver->setShaderProgram(shaderBlurV);
+        driver->setShaderProgram(shaderBlurV.get());
         driver->setUniformInt("s_texture", 0);
         shaderBlurH = new ShaderProgramGL(vs_h, fs_blur, decl);
-        driver->setShaderProgram(shaderBlurH);
+        driver->setShaderProgram(shaderBlurH.get());
         driver->setUniformInt("s_texture", 0);
         shaderBlit = new ShaderProgramGL(vs_blit, fs_blit, decl);
-        driver->setShaderProgram(shaderBlit);
+        driver->setShaderProgram(shaderBlit.get());
         driver->setUniformInt("s_texture", 0);
     }
 
     void PostProcess::freeShaders()
     {
-        delete shaderBlit;
-        shaderBlit = 0;
-
-        delete shaderBlurH;
-        shaderBlurH = 0;
-
-        delete shaderBlurV;
-        shaderBlurV = 0;
+        shaderBlit = nullptr;
+        shaderBlurH = nullptr;
+        shaderBlurV = nullptr;
     }
 
     const int ALIGN_SIZE = 256;
@@ -446,7 +443,7 @@ namespace oxygine
 
 
         RenderState rs;
-        STDRenderer* renderer = STDRenderer::instance;
+        spSTDRenderer renderer = STDRenderer::instance;
 
 
         RectF clip = vp.cast<RectF>();

@@ -2482,7 +2482,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="1038"/>
+        <location filename="../game/gamemap.cpp" line="1037"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2506,32 +2506,32 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1016"/>
+        <location filename="../game/gamemap.cpp" line="1015"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1038"/>
+        <location filename="../game/gamemap.cpp" line="1037"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1065"/>
+        <location filename="../game/gamemap.cpp" line="1064"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1075"/>
+        <location filename="../game/gamemap.cpp" line="1074"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1083"/>
+        <location filename="../game/gamemap.cpp" line="1082"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1095"/>
+        <location filename="../game/gamemap.cpp" line="1094"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>

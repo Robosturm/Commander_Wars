@@ -725,7 +725,7 @@ private:
     QString m_mapName;
     QString m_mapAuthor;
     QString m_mapDescription;
-    QVector<QVector<spTerrain>*> fields;
+    QVector<QVector<spTerrain>> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
     qint32 currentDay{0};

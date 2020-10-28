@@ -13,11 +13,14 @@
 #include "qfile.h"
 #include "qtextstream.h"
 
+class STDRenderer;
+typedef oxygine::intrusive_ptr<STDRenderer> spSTDRenderer;
+
 namespace oxygine
 {
     static bool _restored = false;
-    STDRenderer* STDRenderer::instance = nullptr;
-    STDRenderer* STDRenderer::current = nullptr;
+    spSTDRenderer STDRenderer::instance = nullptr;
+    spSTDRenderer STDRenderer::current = nullptr;
 
 
     spNativeTexture STDRenderer::white;
@@ -220,15 +223,17 @@ namespace oxygine
         vertexShaderBody.clear();
         fracTableShaderBody.clear();
         if (white)
+        {
             white->release();
-        white = 0;
+        }
+        white = nullptr;
 
         if (invisible)
+        {
             invisible->release();
-        invisible = 0;
-
-        delete instance;
-        instance = 0;
+        }
+        invisible = nullptr;
+        instance = nullptr;
     }
 
     void STDRenderer::reset()
@@ -279,7 +284,7 @@ namespace oxygine
 
     STDRenderer* STDRenderer::getCurrent()
     {
-        return current;
+        return current.get();
     }
 
     STDRenderer::~STDRenderer()
