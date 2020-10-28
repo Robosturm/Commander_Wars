@@ -37,18 +37,6 @@ namespace oxygine
         _root = nullptr;
     }
 
-    void TextField::copyFrom(const TextField& src, cloneOptions opt)
-    {
-        VStyleActor::copyFrom(src, opt);
-        _text = src._text;
-        _style = src._style;
-        _root = nullptr;
-        _rtscale = 1.0f;
-
-        _flags |= flag_rebuild;
-        _textRect = src._textRect;
-    }
-
     bool TextField::isOn(const Vector2& localPosition, float localScale)
     {
         Rect r = getTextRect(localScale);

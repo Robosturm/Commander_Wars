@@ -78,9 +78,8 @@ void DropDownmenuBase::showDropDown()
     m_OriginalPosition = getPosition();
     auto transform = computeGlobalTransform();
     setPosition(transform.x, transform.y);
-    addRef();
-    oxygine::getStage()->addChild(this);
-    releaseRef();
+    oxygine::spActor pMe = this;
+    oxygine::getStage()->addChild(pMe);
     if (getY() > Settings::getHeight() / 2)
     {
         if (m_Panel->getH_Scrollbar()->getVisible())
@@ -116,9 +115,8 @@ void DropDownmenuBase::hideDropDown()
         m_Panel->setVisible(false);
         hideTooltip();
         stopTooltiptimer();
-        addRef();
-        m_OriginalOwner->addChild(this);
-        releaseRef();
+        oxygine::spActor pMe = this;
+        m_OriginalOwner->addChild(pMe);
         setPosition(m_OriginalPosition);
         m_OriginalOwner = nullptr;
     }

@@ -6,11 +6,6 @@
 
 namespace oxygine
 {
-    void ClipRectActor::copyFrom(const ClipRectActor& src, cloneOptions opt)
-    {
-        Actor::copyFrom(src, opt);
-        _clipping = src._clipping;
-    }
 
     ClipRectActor::ClipRectActor(): _clipping(true)
     {

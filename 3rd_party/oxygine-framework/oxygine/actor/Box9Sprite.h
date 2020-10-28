@@ -9,7 +9,6 @@ namespace oxygine
     class Box9Sprite: public Sprite
     {
     public:
-        DECLARE_COPYCLONE_NEW(Box9Sprite);
         enum StretchMode
         {
             TILING,

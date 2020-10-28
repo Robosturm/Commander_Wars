@@ -1,5 +1,5 @@
 #pragma  once
-#include "core/ref_counter.h"
+#include "core/intrusive_ptr.h"
 #include "closure/closure.h"
 
 #include <chrono>
@@ -7,13 +7,6 @@
 #define DECLARE_SMART(class_name, spname) \
     class class_name;\
     typedef oxygine::intrusive_ptr<class_name> spname;
-
-#define DECLARENS_SMART(name_space, class_name, spname) \
-    namespace name_space \
-    {\
-        class class_name;\
-        typedef oxygine::intrusive_ptr<class_name> spname;\
-    }
 
 namespace pugi
 {
@@ -134,21 +127,4 @@ namespace oxygine
     typedef int eventType;
     typedef size_t glyphOptions;
     typedef void* nativeTextureHandle;
-
-
-#define DECLARE_COPYCLONE(type) type(const type &src, cloneOptions);\
-    virtual type* clone(cloneOptions opt=0) const override {return new type(*this, opt);}\
-
-
-#define DECLARE_COPYCLONE_NEW(type)  type(const type &src, cloneOptions opt = 0){copyFrom(src, opt);}\
-    virtual type* clone(cloneOptions opt=0) const override {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}\
-    void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define DECLARE_COPYCLONE_NEW2(type)  type(const type &src, cloneOptions opt = 0);\
-    virtual type* clone(cloneOptions opt=0) const override;\
-    void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define CREATE_COPYCLONE_NEW(type) type::type(const type &src, cloneOptions opt){copyFrom(src, opt);}\
-    type* type::clone(cloneOptions opt) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}
-
 }

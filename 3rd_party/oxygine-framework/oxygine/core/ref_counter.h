@@ -1,6 +1,5 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "intrusive_ptr.h"
 
 #include <atomic>
 
@@ -29,10 +28,9 @@ namespace oxygine
 
         void releaseRef()
         {
-
             _ref_counter--;
             Q_ASSERT(_ref_counter >= 0);
-            if (_ref_counter == 0)
+            if (_ref_counter <= 0)
             {
                 QObject* pObj = dynamic_cast<QObject*>(this);
                 if (pObj == nullptr)
@@ -51,38 +49,5 @@ namespace oxygine
         const ref_counter& operator=(const ref_counter&) = delete ;
         ref_counter(const ref_counter&&) = delete ;
         const ref_counter&& operator=(const ref_counter&&) = delete ;
-    };
-
-
-    inline void intrusive_ptr_add_ref(ref_counter* p)
-    {
-        p->addRef();
-    }
-
-    inline void intrusive_ptr_release(ref_counter* p)
-    {
-        p->releaseRef();
-    }
-
-
-    class AutoRefHolder
-    {
-    public:
-        AutoRefHolder(ref_counter* rc)
-            : _rc(rc)
-        {
-            _rc->addRef();
-        }
-
-        ~AutoRefHolder()
-        {
-            _rc->releaseRef();
-        }
-
-        ref_counter* _rc;
-
-    private:
-        AutoRefHolder(const AutoRefHolder&);
-        AutoRefHolder& operator=(const AutoRefHolder&);
     };
 }

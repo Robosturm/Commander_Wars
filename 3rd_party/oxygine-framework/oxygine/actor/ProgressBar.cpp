@@ -55,14 +55,6 @@ namespace oxygine
 
     }
 
-    void ProgressBar::copyFrom(const ProgressBar& src, cloneOptions opt)
-    {
-        Sprite::copyFrom(src, opt);
-        _progress = src._progress;
-        _direction = src._direction;
-        _originalFrame = src._originalFrame;
-    }
-
     void ProgressBar::animFrameChanged(const AnimationFrame& f)
     {
         _originalFrame = f;

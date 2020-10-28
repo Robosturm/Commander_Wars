@@ -283,21 +283,25 @@ var Constructor = function()
         for (var i2 = 0; i2 < buildings.size(); i2++)
         {
             var building = buildings.at(i2);
-            var x = building.getX();
-            var y = building.getY();
-            var animation = null;
-            for (var i = 0; i < fields.size(); i++)
+            var id = building.getBuildingID();
+            if (!id.startsWith("TEMPORARY_"))
             {
-                var point = fields.at(i);
-                if (map.onMap(x + point.x, y + point.y))
+                var x = building.getX();
+                var y = building.getY();
+                var animation = null;
+                for (var i = 0; i < fields.size(); i++)
                 {
-                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
-                    if ((unit !== null) &&
-                            (unit.getOwner() === co.getOwner()))
+                    var point = fields.at(i);
+                    if (map.onMap(x + point.x, y + point.y))
                     {
-                        UNIT.repairUnit(unit, 1);
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                        if ((unit !== null) &&
+                                (unit.getOwner() === co.getOwner()))
+                        {
+                            UNIT.repairUnit(unit, 1);
+                            animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        }
                     }
                 }
             }

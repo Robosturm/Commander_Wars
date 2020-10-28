@@ -187,7 +187,11 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             pRet->setScale(2.0f);
             pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
                               Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
-            GameMenue::getInstance()->addChild(pRet);
+            spGameMenue pMenu = GameMenue::getInstance();
+            if (pMenu.get())
+            {
+                pMenu->addChild(pRet);
+            }
             m_Animations.append(pRet);
         }
         else

@@ -20,12 +20,6 @@ namespace oxygine
         _mat = mc().cache(mat);
     }
 
-    void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
-    {
-        Actor::copyFrom(src, opt);
-        _vstyle = src._vstyle;
-    }
-
     void VisualStyle::setColor(const QColor& color)
     {
         _color = color;

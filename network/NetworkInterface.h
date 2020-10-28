@@ -47,7 +47,7 @@ public:
         : isServer(false),
           isConnected(false)
     {
-        addRef();
+        m_pNetworkInterface = this;
         QObject::connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
         QObject::connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
         QObject::connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
@@ -197,9 +197,10 @@ public slots:
 protected slots:
     void closeNetworkInterface()
     {
-        releaseRef();
+        m_pNetworkInterface = nullptr;
     }
 protected:
+    spNetworkInterface m_pNetworkInterface;
     bool isServer;
     bool isConnected;
     quint64 m_socketID{0};

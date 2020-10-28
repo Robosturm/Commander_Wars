@@ -27,6 +27,12 @@ var Constructor = function()
         map.getCurrentPlayer().getCO(1).activateSuperpower(GameEnums.PowerMode_Tagpower);
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
+        // achievements
+        var player = map.getCurrentPlayer();
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_POWERS.powerUsed("TAGPOWER");
+        }
     };
     this.isFinalStep = function(action)
     {

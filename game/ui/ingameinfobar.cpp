@@ -90,205 +90,208 @@ void IngameInfoBar::updatePlayerInfo()
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        spGameMenue pGamemenu = GameMenue::getInstance();
-        Player* pPlayer = pMap->getCurrentPlayer();
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        CO* pCO = pPlayer->getCO(0);
-        oxygine::ResAnim* pAnim = nullptr;
-        if (pCO != nullptr)
+        spGameMenue pMenu = GameMenue::getInstance();
+        if (pMenu.get() != nullptr)
         {
-            pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
-        }
-        else
-        {
-            pAnim = pCOSpriteManager->getResAnim("no_co+face");
-        }
-        pSprite->setScale(1.8f);
-        pSprite->setResAnim(pAnim);
-        pSprite->setPosition(12, 10);
-        m_pGameInfoBox->addChild(pSprite);
-        pSprite = new oxygine::Sprite();
-        pCO = pPlayer->getCO(1);
-        if (pCO != nullptr)
-        {
-            pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
-        }
-        else
-        {
-            pAnim = pCOSpriteManager->getResAnim("no_co+face");
-        }
-        pSprite->setResAnim(pAnim);
-        pSprite->setPosition(109, 10);
-        pSprite->setScale(1.8f);
-        m_pGameInfoBox->addChild(pSprite);
-
-        pSprite = new oxygine::Sprite();
-        pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
-        if (pAnim != nullptr)
-        {
+            Player* pPlayer = pMap->getCurrentPlayer();
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            CO* pCO = pPlayer->getCO(0);
+            oxygine::ResAnim* pAnim = nullptr;
+            if (pCO != nullptr)
+            {
+                pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
+            }
+            else
+            {
+                pAnim = pCOSpriteManager->getResAnim("no_co+face");
+            }
+            pSprite->setScale(1.8f);
             pSprite->setResAnim(pAnim);
-            pSprite->setPosition(205, 12);
-            pSprite->setScale(85 / pAnim->getWidth());
-        }
-        m_pGameInfoBox->addChild(pSprite);
-
-        // boxes for co's and weather
-        ObjectManager* pObjectManager = ObjectManager::getInstance();
-        pAnim = pObjectManager->getResAnim("panel_transparent");
-        oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setResAnim(pAnim);
-        pBox->setSize(95, 95);
-        pBox->setPosition(104, 8);
-        m_pGameInfoBox->addChild(pBox);
-        pBox = new oxygine::Box9Sprite();
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setResAnim(pAnim);
-        pBox->setSize(95, 95);
-        pBox->setPosition(7, 8);
-        m_pGameInfoBox->addChild(pBox);
-        // weather box
-        pBox = new oxygine::Box9Sprite();
-        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-        pBox->setResAnim(pAnim);
-        pBox->setSize(95, 95);
-        pBox->setPosition(199, 8);
-        m_pGameInfoBox->addChild(pBox);
-
-        if (pMap->getGameRules()->getWeatherPrediction())
-        {
+            pSprite->setPosition(12, 10);
+            m_pGameInfoBox->addChild(pSprite);
             pSprite = new oxygine::Sprite();
-            Weather* pWeather = pMap->getGameRules()->getWeatherAtDay(1, pMap->getCurrentPlayer()->getPlayerID());
-            if (pWeather != nullptr)
+            pCO = pPlayer->getCO(1);
+            if (pCO != nullptr)
             {
-                pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
-                if (pAnim != nullptr)
-                {
-                    pSprite->setResAnim(pAnim);
-                    pSprite->setPosition(206, 108);
-                    pSprite->setScale(37 / pAnim->getWidth());
-                }
+                pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
+            }
+            else
+            {
+                pAnim = pCOSpriteManager->getResAnim("no_co+face");
+            }
+            pSprite->setResAnim(pAnim);
+            pSprite->setPosition(109, 10);
+            pSprite->setScale(1.8f);
+            m_pGameInfoBox->addChild(pSprite);
+
+            pSprite = new oxygine::Sprite();
+            pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
+            if (pAnim != nullptr)
+            {
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(205, 12);
+                pSprite->setScale(85 / pAnim->getWidth());
             }
             m_pGameInfoBox->addChild(pSprite);
+
+            // boxes for co's and weather
+            ObjectManager* pObjectManager = ObjectManager::getInstance();
+            pAnim = pObjectManager->getResAnim("panel_transparent");
+            oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+            pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+            pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+            pBox->setResAnim(pAnim);
+            pBox->setSize(95, 95);
+            pBox->setPosition(104, 8);
+            m_pGameInfoBox->addChild(pBox);
             pBox = new oxygine::Box9Sprite();
             pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
             pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-            pAnim = pObjectManager->getResAnim("panel_transparent");
             pBox->setResAnim(pAnim);
-            pBox->setSize(47, 47);
-            pBox->setPosition(200, 104);
+            pBox->setSize(95, 95);
+            pBox->setPosition(7, 8);
             m_pGameInfoBox->addChild(pBox);
-
-            pSprite = new oxygine::Sprite();
-            pWeather = pMap->getGameRules()->getWeatherAtDay(2, pMap->getCurrentPlayer()->getPlayerID());
-            if (pWeather != nullptr)
-            {
-                pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
-                if (pAnim != nullptr)
-                {
-                    pSprite->setResAnim(pAnim);
-                    pSprite->setPosition(253, 108);
-                    pSprite->setScale(37 / pAnim->getWidth());
-                }
-            }
-            m_pGameInfoBox->addChild(pSprite);
+            // weather box
             pBox = new oxygine::Box9Sprite();
             pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
             pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-            pAnim = pObjectManager->getResAnim("panel_transparent");
             pBox->setResAnim(pAnim);
-            pBox->setSize(47, 47);
-            pBox->setPosition(247, 104);
+            pBox->setSize(95, 95);
+            pBox->setPosition(199, 8);
             m_pGameInfoBox->addChild(pBox);
+
+            if (pMap->getGameRules()->getWeatherPrediction())
+            {
+                pSprite = new oxygine::Sprite();
+                Weather* pWeather = pMap->getGameRules()->getWeatherAtDay(1, pMap->getCurrentPlayer()->getPlayerID());
+                if (pWeather != nullptr)
+                {
+                    pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
+                    if (pAnim != nullptr)
+                    {
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setPosition(206, 108);
+                        pSprite->setScale(37 / pAnim->getWidth());
+                    }
+                }
+                m_pGameInfoBox->addChild(pSprite);
+                pBox = new oxygine::Box9Sprite();
+                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+                pAnim = pObjectManager->getResAnim("panel_transparent");
+                pBox->setResAnim(pAnim);
+                pBox->setSize(47, 47);
+                pBox->setPosition(200, 104);
+                m_pGameInfoBox->addChild(pBox);
+
+                pSprite = new oxygine::Sprite();
+                pWeather = pMap->getGameRules()->getWeatherAtDay(2, pMap->getCurrentPlayer()->getPlayerID());
+                if (pWeather != nullptr)
+                {
+                    pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
+                    if (pAnim != nullptr)
+                    {
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setPosition(253, 108);
+                        pSprite->setScale(37 / pAnim->getWidth());
+                    }
+                }
+                m_pGameInfoBox->addChild(pSprite);
+                pBox = new oxygine::Box9Sprite();
+                pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+                pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+                pAnim = pObjectManager->getResAnim("panel_transparent");
+                pBox->setResAnim(pAnim);
+                pBox->setSize(47, 47);
+                pBox->setPosition(247, 104);
+                m_pGameInfoBox->addChild(pBox);
+            }
+
+
+            oxygine::TextStyle style = FontManager::getMainFont16();
+            style.color = FontManager::getFontColor();
+            style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+            style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+            style.multiline = false;
+
+            qint32 count = pPlayer->getBuildingCount();
+            qint32 width = 285;
+            qint32 y = 110;
+
+            spLabel pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+            pTextfield->setHtmlText((tr("Day: ") + QString::number(pMap->getCurrentDay())));
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += 25;
+
+            Player* pViewPlayer = pMenu->getCurrentViewPlayer();
+            pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+            {
+                pTextfield->setHtmlText((tr("Buildings: ") + "?"));
+            }
+            else
+            {
+                pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
+            }
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += 25;
+
+            count = pPlayer->getUnitCount();
+            pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+            {
+                pTextfield->setHtmlText((tr("Units: ") + "?"));
+            }
+            else
+            {
+                pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
+            }
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += 25;
+
+            count = pPlayer->getFunds();
+            pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+
+            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+            {
+                pTextfield->setHtmlText((tr("Funds: ") + "?"));
+            }
+            else
+            {
+                pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)));
+            }
+
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += 25;
+
+            count = pPlayer->getPlayerID();
+            pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+            pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)));
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            y += 25;
+
+            count = pPlayer->getTeam();
+            pTextfield = new Label(width);
+            pTextfield->setStyle(style);
+            pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
+            pTextfield->setPosition(10, y);
+            m_pGameInfoBox->addChild(pTextfield);
+            pApp->continueThread();
+            y += 25;
         }
-
-
-        oxygine::TextStyle style = FontManager::getMainFont16();
-        style.color = FontManager::getFontColor();
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = false;
-
-        qint32 count = pPlayer->getBuildingCount();
-        qint32 width = 285;
-        qint32 y = 110;
-
-        spLabel pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-        pTextfield->setHtmlText((tr("Day: ") + QString::number(pMap->getCurrentDay())));
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        y += 25;
-
-        Player* pViewPlayer = pGamemenu->getCurrentViewPlayer();
-        pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
-        {
-            pTextfield->setHtmlText((tr("Buildings: ") + "?"));
-        }
-        else
-        {
-            pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
-        }
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        y += 25;
-
-        count = pPlayer->getUnitCount();
-        pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
-        {
-            pTextfield->setHtmlText((tr("Units: ") + "?"));
-        }
-        else
-        {
-            pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
-        }
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        y += 25;
-
-        count = pPlayer->getFunds();
-        pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-
-        if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
-            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
-        {
-            pTextfield->setHtmlText((tr("Funds: ") + "?"));
-        }
-        else
-        {
-            pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)));
-        }
-
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        y += 25;
-
-        count = pPlayer->getPlayerID();
-        pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-        pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)));
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        y += 25;
-
-        count = pPlayer->getTeam();
-        pTextfield = new Label(width);
-        pTextfield->setStyle(style);
-        pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
-        pTextfield->setPosition(10, y);
-        m_pGameInfoBox->addChild(pTextfield);
-        pApp->continueThread();
-        y += 25;
     }
 }
 

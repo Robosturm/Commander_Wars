@@ -276,9 +276,7 @@ void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAt
         pInput->createMarkedField(QPoint(posAtkX, posAtkY), pMap->getPlayer(playerAtk)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
         pInput->createMarkedField(QPoint(posDefX, posDefY), pMap->getPlayer(playerDef)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
     }
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     emit sigFinished();
     pApp->continueThread();
 }

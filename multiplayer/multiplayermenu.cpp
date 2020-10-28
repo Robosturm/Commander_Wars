@@ -317,9 +317,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 !m_local)
             {
                 initClientGame(socketID, stream);
-                addRef();
                 oxygine::Actor::detach();
-                deleteLater();
             }
         }
         else if (messageType == NetworkCommands::STARTSERVERGAME ||
@@ -919,9 +917,7 @@ void Multiplayermenu::disconnected(quint64)
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new LobbyMenu());
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
     }
 }
 
@@ -934,9 +930,7 @@ void Multiplayermenu::slotButtonBack()
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new LobbyMenu());
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
     }
     else if (m_Host)
     {
@@ -1213,9 +1207,7 @@ void Multiplayermenu::countdown()
             QThread::msleep(200);
             Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
-            addRef();
             oxygine::Actor::detach();
-            deleteLater();
             pApp->continueThread();
         }
     }

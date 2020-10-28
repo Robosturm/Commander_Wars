@@ -14,8 +14,6 @@ namespace oxygine
     class Sprite : public VStyleActor
     {
     public:
-        DECLARE_COPYCLONE_NEW(Sprite)
-
         Sprite();
         virtual ~Sprite() override;
 

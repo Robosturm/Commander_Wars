@@ -15,7 +15,6 @@ namespace oxygine
 
         enum {EVENT_REBUILD = sysEventID('T', 'F', 'r') };
 
-        DECLARE_COPYCLONE_NEW(TextField);
         TextField();
         ~TextField();
 

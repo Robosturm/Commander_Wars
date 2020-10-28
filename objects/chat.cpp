@@ -115,7 +115,7 @@ void Chat::addMessage(QString message, bool local)
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     bool show = true;
-    if (message.startsWith("@") && pMap.get() != nullptr)
+    if (message.startsWith("@") && pMap.get() != nullptr && pGamemenu.get() != nullptr)
     {
         QString target = message.split(" ")[0];
         message = message.remove(0, message.indexOf(" "));

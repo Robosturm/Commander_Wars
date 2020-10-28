@@ -132,6 +132,7 @@ void Achievementmenu::searchChanged(QString text)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_MainPanel->clearContent();
+    text = text.toLower();
 
     Userdata* pUserdata = Userdata::getInstance();
     auto achievements = pUserdata->getAchievements();
@@ -141,8 +142,8 @@ void Achievementmenu::searchChanged(QString text)
     for (auto achievement : *achievements)
     {
         if (text.isEmpty() ||
-            achievement.name.contains(text) ||
-            achievement.description.contains(text))
+            achievement.name.toLower().contains(text) ||
+            achievement.description.toLower().contains(text))
         {
             if (achievement.progress >= achievement.targetValue)
             {

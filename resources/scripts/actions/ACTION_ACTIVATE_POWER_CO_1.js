@@ -33,6 +33,12 @@ var Constructor = function()
         map.getCurrentPlayer().getCO(1).activatePower();
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_Power);
+        // achievements
+        var player = map.getCurrentPlayer();
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_POWERS.powerUsed("POWER");
+        }
     };
     this.isFinalStep = function(action)
     {

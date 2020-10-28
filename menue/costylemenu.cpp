@@ -70,9 +70,7 @@ void COStyleMenu::exitMenue()
     pApp->suspendThread();
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 
@@ -82,9 +80,7 @@ void COStyleMenu::reloadMenue()
     pApp->suspendThread();
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new COStyleMenu());
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 

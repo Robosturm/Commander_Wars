@@ -8,8 +8,6 @@ namespace oxygine
     class Polygon : public Sprite
     {
     public:
-        DECLARE_COPYCLONE_NEW(Polygon);
-
         Polygon();
         ~Polygon();
 

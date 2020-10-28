@@ -17,8 +17,6 @@
 
 namespace oxygine
 {
-    CREATE_COPYCLONE_NEW(Actor);
-
     Actor::Actor()
         : _rdelegate(STDRenderDelegate::instance),
           _stage(nullptr),
@@ -34,49 +32,6 @@ namespace oxygine
         _transformInvert.identity();
         _pressedOvered = 0;
     }
-
-    void Actor::copyFrom(const Actor& src, cloneOptions opt)
-    {
-        _stage = nullptr;
-
-        _pos = src._pos;
-        _extendedIsOn = src._extendedIsOn;
-        _size = src._size;
-        _zOrder = src._zOrder;
-        _anchor = src._anchor;
-        _scale = src._scale;
-        _rotation = src._rotation;
-        _flags = src._flags;
-        _parent = nullptr;
-        _alpha = src._alpha;
-
-        _pressedOvered = 0;
-        _rdelegate = src._rdelegate;
-
-        _transform = src._transform;
-        _transformInvert = src._transformInvert;
-
-
-        if (!(opt & cloneOptionsDoNotCloneClildren))
-        {
-            spActor child = src.getFirstChild();
-            while (child)
-            {
-                spActor copy = child->clone(opt);
-                addChild(copy);
-                child = child->getNextSibling();
-            }
-        }
-
-        if (opt & cloneOptionsResetTransform)
-        {
-            setPosition(0, 0);
-            setRotation(0);
-            setScale(1);
-        }
-        setName(src.getName());
-    }
-
 
     Actor::~Actor()
     {
@@ -930,7 +885,6 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
-        addRef();
         spTween tween = _tweens._first;
         while (tween)
         {
@@ -962,7 +916,6 @@ namespace oxygine
             }
             actor = next;
         }
-        releaseRef();
     }
 
     void Actor::update(const UpdateState& parentUS)

@@ -91,6 +91,7 @@ namespace oxygine
 
 
         Actor* _actor;
+        spActor m_pActorRef;
         PostProcess _pp;
         float _progress;
 

@@ -5,14 +5,6 @@
 
 namespace oxygine
 {
-    void Button::copyFrom(const Button& src, cloneOptions opt)
-    {
-        Sprite::copyFrom(src, opt);
-
-        _state = src._state;
-        _resAnim = src._resAnim;
-        _row = src._row;
-    }
 
     Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), _btnPressed(0), _btnOvered(0)
     {

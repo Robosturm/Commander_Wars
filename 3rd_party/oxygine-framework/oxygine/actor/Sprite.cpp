@@ -25,24 +25,6 @@ namespace oxygine
         }
     }
 
-    void Sprite::copyFrom(const Sprite& src, cloneOptions opt)
-    {
-        VStyleActor::copyFrom(src, opt);
-
-        _frame = src._frame;
-        _localScale = src._localScale;
-        _mat = src._mat;
-        animFrameChanged(_frame);
-
-        _vstyle = src._vstyle;
-        if (getManageResAnim())
-        {
-            ResAnim* rs = _frame.getResAnim();
-            if (rs)
-                rs->getAtlas()->load();
-        }
-    }
-
     void Sprite::setManageResAnim(bool manage)
     {
         _flags &= ~flag_manageResAnim;

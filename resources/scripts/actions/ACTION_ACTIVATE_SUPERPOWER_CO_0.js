@@ -33,6 +33,12 @@ var Constructor = function()
         map.getCurrentPlayer().getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
+        // achievements
+        var player = map.getCurrentPlayer();
+        if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
+        {
+            ACHIEVEMENT_POWERS.powerUsed("SUPERPOWER");
+        }
     };
     this.isFinalStep = function(action)
     {

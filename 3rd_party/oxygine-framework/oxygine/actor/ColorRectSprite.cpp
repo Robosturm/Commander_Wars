@@ -5,10 +5,6 @@
 
 namespace oxygine
 {
-    void ColorRectSprite::copyFrom(const ColorRectSprite& src, cloneOptions opt)
-    {
-        Sprite::copyFrom(src, opt);
-    }
 
     ColorRectSprite::ColorRectSprite()
     {

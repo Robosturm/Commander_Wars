@@ -8,8 +8,6 @@ namespace oxygine
     class MaskedSprite: public Sprite
     {
     public:
-        DECLARE_COPYCLONE_NEW(MaskedSprite);
-
         MaskedSprite();
         ~MaskedSprite();
 

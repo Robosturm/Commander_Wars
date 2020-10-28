@@ -9,25 +9,6 @@
 
 namespace oxygine
 {
-    void Box9Sprite::copyFrom(const Box9Sprite& src, cloneOptions opt)
-    {
-        Sprite::copyFrom(src, opt);
-
-        _prepared = src._prepared;
-
-        _vertMode = src._vertMode;
-        _horzMode = src._horzMode;
-
-        _guideX[0] = src._guideX[0];
-        _guideX[1] = src._guideX[1];
-        _guideY[0] = src._guideY[0];
-        _guideY[1] = src._guideY[1];
-
-        _guidesX = src._guidesX;
-        _guidesY = src._guidesY;
-        _pointsX = src._pointsX;
-        _pointsY = src._pointsY;
-    }
 
     Box9Sprite::Box9Sprite() :
         _prepared(false),

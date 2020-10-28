@@ -181,9 +181,7 @@ void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
         pGamemenu->MoveMap(posX, posY);
         pGamemenu->calcNewMousePosition(posX, posY);
     }
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     emit sigFinished();
     pApp->continueThread();
 }

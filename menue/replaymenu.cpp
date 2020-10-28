@@ -87,9 +87,7 @@ void ReplayMenu::exitReplay()
     }
     Console::print("Leaving Replay Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 

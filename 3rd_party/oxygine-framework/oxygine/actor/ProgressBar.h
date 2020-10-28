@@ -21,8 +21,6 @@ namespace oxygine
             __dir_radial_ccw//not implemented!!
         };
 
-        DECLARE_COPYCLONE_NEW(ProgressBar);
-
         ProgressBar();
         ~ProgressBar();
 

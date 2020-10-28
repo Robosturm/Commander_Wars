@@ -43,10 +43,6 @@ namespace oxygine
         typedef intrusive_list_item<spActor> intr_list;
 
     public:
-        Actor(const Actor& src, cloneOptions opt = 0);
-        virtual Actor* clone(cloneOptions opt = 0) const;
-        void copyFrom(const Actor& src, cloneOptions opt = 0);
-
         Actor();
         virtual ~Actor() override;
 

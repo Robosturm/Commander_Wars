@@ -11,7 +11,6 @@ namespace oxygine
     class ClipRectActor : public Actor
     {
     public:
-        DECLARE_COPYCLONE_NEW(ClipRectActor);
         ClipRectActor();
         ~ClipRectActor();
 

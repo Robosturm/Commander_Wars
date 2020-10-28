@@ -26,7 +26,6 @@ namespace oxygine
     class VStyleActor : public Actor
     {
     public:
-        DECLARE_COPYCLONE_NEW(VStyleActor)
         VStyleActor();
 
         blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}

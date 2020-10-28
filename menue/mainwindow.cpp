@@ -412,9 +412,7 @@ void Mainwindow::leaveMenue()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Main Menue", Console::eDEBUG);
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 

@@ -3,7 +3,7 @@
 #define INTRUSIVE_PTR_HEADER
 
 #include "../oxygine-include.h"
-//#include "ref_counter.h"
+#include "ref_counter.h"
 #include "QtGlobal"
 
 namespace oxygine
@@ -24,7 +24,7 @@ namespace oxygine
         {
             if (_ptr != nullptr)
             {
-                intrusive_ptr_add_ref(s._ptr);
+                s._ptr->addRef();
             }
         }
 
@@ -34,7 +34,7 @@ namespace oxygine
         {
             if (_ptr != nullptr)
             {
-                intrusive_ptr_add_ref(_ptr);
+                _ptr->addRef();
             }
         }
 
@@ -61,12 +61,12 @@ namespace oxygine
             T* ptr = s.get();
             if (ptr != nullptr)
             {
-                intrusive_ptr_add_ref(ptr);
+                ptr->addRef();
             }
             // if we own a pointer release it
             if (_ptr != nullptr)
             {
-                intrusive_ptr_release(_ptr);
+                _ptr->releaseRef();
             }
             // and swap the pointer
             _ptr = ptr;
@@ -78,12 +78,12 @@ namespace oxygine
             // if the new ptr is not nothing increase it's ref
             if (ptr != nullptr)
             {
-                intrusive_ptr_add_ref(ptr);
+                ptr->addRef();
             }
             // if we own a pointer release it
             if (_ptr != nullptr)
             {
-                intrusive_ptr_release(_ptr);
+                _ptr->releaseRef();
             }
             // then add it to us
             _ptr = ptr;
@@ -95,7 +95,7 @@ namespace oxygine
         {
             if (p != nullptr)
             {
-                intrusive_ptr_add_ref(p);
+                p->addRef();
             }
         }
 
@@ -119,7 +119,7 @@ namespace oxygine
         {
             if (_ptr != nullptr)
             {
-                intrusive_ptr_release(_ptr);
+                _ptr->releaseRef();
             }
         }
     };
@@ -173,19 +173,6 @@ namespace oxygine
     {
         return dynamic_cast<T*>(p.get());
     }
-
-
-    template <class T>
-    class RefHolder : public T
-    {
-    public:
-        RefHolder() {this->_ref_counter = 1000000;}
-        void addRef()
-        {}
-
-        void releaseRef()
-        {}
-    };
 }
 
 #endif

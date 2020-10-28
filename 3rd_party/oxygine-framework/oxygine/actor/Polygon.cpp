@@ -25,11 +25,6 @@ namespace oxygine
             delete[] _verticesData;
     }
 
-    void Polygon::copyFrom(const Polygon& src, cloneOptions opt)
-    {
-        Sprite::copyFrom(src, opt);
-    }
-
     void Polygon::setVertices(const void* data, int size, int bformat, bool own)
     {
         if (_own && data != _verticesData)

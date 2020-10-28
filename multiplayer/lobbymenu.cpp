@@ -128,9 +128,7 @@ void LobbyMenu::exitMenue()
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 
@@ -140,9 +138,7 @@ void LobbyMenu::hostLocal()
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu("", "", true));
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 
@@ -155,9 +151,7 @@ void LobbyMenu::hostServer()
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, "", true));
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
         pApp->continueThread();
     }
 }
@@ -208,9 +202,7 @@ void LobbyMenu::joinGamePassword(QString password)
         stream << NetworkCommands::SERVERJOINGAME;
         stream << m_currentGame->getSlaveName();
         emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
         pApp->continueThread();
     }
 }
@@ -234,9 +226,7 @@ void LobbyMenu::join(QString adress, QString password)
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     // todo
     oxygine::getStage()->addChild(new Multiplayermenu(adress, password, false));
-    addRef();
     oxygine::Actor::detach();
-    deleteLater();
     pApp->continueThread();
 }
 

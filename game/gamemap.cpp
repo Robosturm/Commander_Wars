@@ -1702,8 +1702,12 @@ void GameMap::nextTurn()
     }
     if (permanent)
     {
-        GameAnimationNextDay* pAnim = new GameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, true);
-        GameMenue::getInstance()->addChild(pAnim);
+        spGameMenue pMenu = GameMenue::getInstance();
+        if (pMenu.get() != nullptr)
+        {
+            GameAnimationNextDay* pAnim = new GameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, true);
+            pMenu->addChild(pAnim);
+        }
     }
     else
     {

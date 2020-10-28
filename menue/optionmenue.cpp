@@ -136,9 +136,7 @@ void OptionMenue::exitMenue()
     {
         Console::print("Leaving Option Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
     }
     pApp->continueThread();
 }
@@ -161,13 +159,12 @@ void OptionMenue::reloadSettings()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Option Menue", Console::eDEBUG);
-    addRef();
-    oxygine::Actor::detach();
+
     OptionMenue* newMenu = new OptionMenue();
     // carry over restart flag
     newMenu->restartNeeded = restartNeeded;
     oxygine::getStage()->addChild(newMenu);
-    deleteLater();
+    oxygine::Actor::detach();
     pApp->continueThread();
 }
 

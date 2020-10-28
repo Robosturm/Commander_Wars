@@ -554,18 +554,14 @@ void VictoryMenue::exitMenue()
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
         oxygine::getStage()->addChild(new CampaignMenu(campaign, multiplayer));
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
     }
     else
     {
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
-        addRef();
         oxygine::Actor::detach();
-        deleteLater();
     }
 
     if (m_pNetworkInterface.get() != nullptr)

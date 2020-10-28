@@ -64,7 +64,8 @@ float CO::getUnitBuildValue(QString unitID)
 
 void CO::setCOUnit(Unit* pUnit)
 {
-    if (pUnit == nullptr && m_pCOUnit != nullptr && GameMenue::getInstance() != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pUnit == nullptr && m_pCOUnit != nullptr && pMenu.get() != nullptr)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
@@ -113,9 +114,10 @@ void CO::setPowerFilled(const double &value)
             limitPowerbar(currentValue);
         }
     }
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pMenu->updatePlayerinfo();
     }
 }
 void CO::limitPowerbar(float previousValue)
@@ -128,7 +130,8 @@ void CO::limitPowerbar(float previousValue)
     {
         powerFilled = 0;
     }
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         if (previousValue < powerStars && powerFilled >= powerStars)
@@ -742,9 +745,10 @@ void CO::activatePower()
     {
         pInterpreter->doFunction(perk, function1, args1);
     }
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }
@@ -763,9 +767,10 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     {
         pInterpreter->doFunction(perk, function1, args1);
     }
-    if (GameMenue::getInstance() != nullptr)
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
     {
-        GameMenue::getInstance()->updatePlayerinfo();
+        pMenu->updatePlayerinfo();
     }
     addUnitShines();
 }

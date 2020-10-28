@@ -173,8 +173,8 @@ namespace oxygine
             return false;
 
         if (t->getFormat() == tf &&
-                t->getWidth() >= w && t->getHeight() >= h &&
-                t->getWidth() <= (w + ALIGN_SIZE) && t->getHeight() <= (h + ALIGN_SIZE))
+            t->getWidth() >= w && t->getHeight() >= h &&
+            t->getWidth() <= (w + ALIGN_SIZE) && t->getHeight() <= (h + ALIGN_SIZE))
             return true;
         return false;
     }
@@ -286,7 +286,9 @@ namespace oxygine
     {
         vector<PPTask*>::iterator i = std::find(postProcessItems.begin(), postProcessItems.end(), t);
         if (i == postProcessItems.end())
+        {
             return;
+        }
         t->releaseRefPP();
         postProcessItems.erase(i);
     }
@@ -506,12 +508,12 @@ namespace oxygine
 
     void TweenPostProcess::addRefPP()
     {
-        _actor->addRef();
+        m_pActorRef = _actor;
     }
 
     void TweenPostProcess::releaseRefPP()
     {
-        _actor->releaseRef();
+        m_pActorRef = nullptr;
     }
 
     void TweenPostProcess::init(Actor& actor)

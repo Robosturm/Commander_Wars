@@ -48,13 +48,13 @@
 #include <QTime>
 #include <qguiapplication.h>
 
-GameMenue* GameMenue::m_pInstance = nullptr;
+spGameMenue GameMenue::m_pInstance = nullptr;
 
 GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
       m_SaveGame(saveGame)
 {
-    addRef();
+    m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     m_pNetworkInterface = pNetworkInterface;
@@ -101,7 +101,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_SaveGame(saveGame)
 
 {
-    addRef();
+    m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
     loadGameMenue();
@@ -111,7 +111,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 GameMenue::GameMenue()
     : InGameMenue()
 {
-    addRef();
+    m_pInstance = this;
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -300,8 +300,6 @@ void GameMenue::loadGameMenue()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-
-    m_pInstance = this;
     if (m_pNetworkInterface.get() != nullptr)
     {
         m_Multiplayer = true;
@@ -733,6 +731,8 @@ bool GameMenue::isTrap(QString function, GameAction* pAction, Unit* pMoveUnit, Q
 
 void GameMenue::centerMapOnAction(GameAction* pGameAction)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Unit* pUnit = pGameAction->getTargetUnit();
     Player* pPlayer = getCurrentViewPlayer();
     spGameMap pMap = GameMap::getInstance();
@@ -755,6 +755,7 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     {
         pMap->centerMap(target.x(), target.y());
     }
+    pApp->continueThread();
 }
 
 void GameMenue::skipAnimations()
@@ -1090,7 +1091,7 @@ void GameMenue::victory(qint32 team)
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue(m_pNetworkInterface));
         oxygine::Actor::detach();
-        deleteLater();
+        m_pInstance = nullptr;
     }
     pApp->continueThread();
 }
@@ -1453,9 +1454,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->suspendThread();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
-                    addRef();
                     oxygine::Actor::detach();
-                    deleteLater();
                     GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
@@ -1470,13 +1469,11 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->suspendThread();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
-                    addRef();
-                    oxygine::Actor::detach();
-                    deleteLater();
                     GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
+                    oxygine::Actor::detach();
                     pApp->continueThread();
                 }
             }
