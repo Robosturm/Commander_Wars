@@ -57,43 +57,20 @@ namespace oxygine
 
         intrusive_ptr& operator = (const intrusive_ptr& s)
         {
-            // if the new ptr is not nothing increase it's ref
-            T* ptr = s.get();
-            if (ptr != nullptr)
-            {
-                ptr->addRef();
-            }
-            // if we own a pointer release it
-            if (_ptr != nullptr)
-            {
-                _ptr->releaseRef();
-            }
-            // and swap the pointer
-            _ptr = ptr;
+            intrusive_ptr(s).swap(*this);
             return *this;
         }
 
         intrusive_ptr& operator = (T* ptr)
         {
-            // if the new ptr is not nothing increase it's ref
-            if (ptr != nullptr)
-            {
-                ptr->addRef();
-            }
-            // if we own a pointer release it
-            if (_ptr != nullptr)
-            {
-                _ptr->releaseRef();
-            }
-            // then add it to us
-            _ptr = ptr;
+            intrusive_ptr(ptr).swap(*this);
             return *this;
         }
 
         intrusive_ptr(T* p)
             : _ptr(p)
         {
-            if (p != nullptr)
+            if (p)
             {
                 p->addRef();
             }

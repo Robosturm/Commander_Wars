@@ -128,6 +128,18 @@ void Userdata::deleteAchievement(QString id)
     }
 }
 
+bool Userdata::achieved(QString id)
+{
+    for (const auto & achievement : m_achievements)
+    {
+        if (achievement.id == id)
+        {
+           return (achievement.progress >= achievement.targetValue);
+        }
+    }
+    return false;
+}
+
 void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide)
 {
     bool found = false;

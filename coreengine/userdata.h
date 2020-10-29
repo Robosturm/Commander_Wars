@@ -95,6 +95,12 @@ public slots:
      * @param id
      */
     void deleteAchievement(QString id);
+    /**
+     * @brief achieved
+     * @param id
+     * @return
+     */
+    bool achieved(QString id);
 private:
     void showAchieved();
 

@@ -21,16 +21,14 @@ namespace oxygine
         {
         }
 
-        void addRef()
+        inline void addRef()
         {
-            _ref_counter++;
+            ++_ref_counter;
         }
 
-        void releaseRef()
+        inline void releaseRef()
         {
-            _ref_counter--;
-            Q_ASSERT(_ref_counter >= 0);
-            if (_ref_counter <= 0)
+            if (0 == --_ref_counter)
             {
                 QObject* pObj = dynamic_cast<QObject*>(this);
                 if (pObj == nullptr)
