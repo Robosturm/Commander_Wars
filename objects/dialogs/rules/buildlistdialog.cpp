@@ -33,8 +33,8 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
@@ -245,7 +245,7 @@ void BuildListDialog::showSaveBannlist()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
+    spDialogTextInput pSaveInput = new DialogTextInput(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);
     pApp->continueThread();

@@ -26,22 +26,24 @@ public:
      */
     enum class ZOrder
     {
-        Background = -32000,
+        Background = std::numeric_limits<qint32>::min(),
         Map,
-        Terrain = -30000,
-        CORange = 30000,
+        Terrain,
+        // gap for stacking the terrain sprites
+        CORange = std::numeric_limits<qint32>::max() - 200,
         FogFields,
         MarkedFields,
         Weather,
         Cursor,
         Animation,
-        Objects = 31998,
+        Objects,
         FocusedObjects,
         AnimationFullScreen,
         Dialogs,
         DropDownList,
         Tooltip,
         Loadingscreen,
+        Achievement,
         Console
     };
 

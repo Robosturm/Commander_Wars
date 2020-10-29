@@ -16,7 +16,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");

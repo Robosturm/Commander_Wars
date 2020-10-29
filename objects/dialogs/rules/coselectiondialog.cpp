@@ -28,8 +28,8 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     m_COSelection = new COSelection(QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
     m_COSelection->colorChanged(color);

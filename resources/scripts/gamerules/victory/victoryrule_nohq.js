@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("A player looses when he looses his last HQ. All buildings will be owned by the current player.")
+        return qsTr("A player loses when he loses his last HQ. All buildings will be owned by the current player.")
     };
     this.getRuleName = function(itemNumber)
     {

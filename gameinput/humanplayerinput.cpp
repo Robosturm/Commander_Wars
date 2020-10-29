@@ -710,7 +710,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
     {
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
         pSprite->setPosition(point.x() * GameMap::getImageSize(), point.y() * GameMap::getImageSize());
-        pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
+        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::MarkedFields));
         pMap->addChild(pSprite);
     }
     else
@@ -830,7 +830,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     textField2->attachTo(m_ZInformationLabel);
                     m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,
                                                      y * GameMap::getImageSize() - GameMap::getImageSize() * 2.0f);
-                    m_ZInformationLabel->setPriority(static_cast<qint16>(Mainapp::ZOrder::Animation));
+                    m_ZInformationLabel->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
                     pMap->addChild(m_ZInformationLabel);
                 }
                 else

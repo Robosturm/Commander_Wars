@@ -22,7 +22,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     oxygine::spButton pArrowUp = new oxygine::Button();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowUp->setResAnim(pAnim);
-    pArrowUp->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pArrowUp->setFlippedY(true);
     pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -50,7 +50,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     qint32 y = arrowHeigth + 5;
 
 
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     pAnim = pObjectManager->getResAnim("mapSelectionTop");
     oxygine::spBox9Sprite pBackground = new oxygine::Box9Sprite();
@@ -130,7 +130,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     oxygine::spButton pArrowDown = new oxygine::Button();
     pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowDown->setResAnim(pAnim);
-    pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));

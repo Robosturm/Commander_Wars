@@ -22,7 +22,7 @@ EditorSelection::EditorSelection()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(Settings::getWidth() / 4.0f);
     this->setPosition(Settings::getWidth() - Settings::getWidth() / 4.0f, 0);
     m_BoxSelectionType = createV9Box(0, startHSelectionType, Settings::getWidth() / 4.0f, selectionHeight);
@@ -46,7 +46,7 @@ EditorSelection::EditorSelection()
 
     m_CurrentSelector = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
-    m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_CurrentSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
     if (pAnim->getTotalFrames() > 1)
     {
@@ -60,7 +60,7 @@ EditorSelection::EditorSelection()
 
     oxygine::spButton pButtonTop = new oxygine::Button();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    pButtonTop->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -81,7 +81,7 @@ EditorSelection::EditorSelection()
 
     oxygine::spButton pButtonDown = new oxygine::Button();
     pButtonDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    pButtonDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonDown.get();
     pButtonDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -110,7 +110,7 @@ EditorSelection::EditorSelection()
 
     m_PlacementActor->addChild(m_CurrentSelector);
     m_CurrentSelector->setPosition(frameSize, startH);
-    m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_CurrentSelector->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     // create terrains
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
@@ -234,7 +234,7 @@ void EditorSelection::createBoxPlacementSize()
 
     m_CurrentSelectorSize = new oxygine::Sprite();
     oxygine::ResAnim* pAnimMarker = pObjectManager->getResAnim("editor+selector");
-    m_CurrentSelectorSize->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_CurrentSelectorSize->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
@@ -307,7 +307,7 @@ void EditorSelection::createPlayerSelection()
 
     oxygine::spButton pButtonLeft = new oxygine::Button();
     pButtonLeft->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
-    pButtonLeft->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonLeft.get();
     pButtonLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -333,7 +333,7 @@ void EditorSelection::createPlayerSelection()
 
     oxygine::spButton pButtonRight = new oxygine::Button();
     pButtonRight->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
-    pButtonRight->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonRight->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonRight.get();
     pButtonRight->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -459,7 +459,7 @@ void EditorSelection::createBoxSelectionMode()
 
     m_CurrentSelectorMode = new oxygine::Sprite();
     oxygine::ResAnim* pAnimMarker = pObjectManager->getResAnim("editor+selector");
-    m_CurrentSelectorMode->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_CurrentSelectorMode->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
@@ -529,7 +529,7 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
     pSprite->setResAnim(pAnim);
     pSprite->setSize(width, heigth);
     pSprite->setPosition(x, y);
-    pSprite->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     return pSprite;
 }
 

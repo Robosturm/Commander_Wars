@@ -28,8 +28,8 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     m_Data = new ScriptData();
 

@@ -44,7 +44,7 @@ IngameInfoBar::IngameInfoBar()
     setSize(width, Settings::getHeight());
 
 
-    pMiniMapBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pMiniMapBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pMinimap = new Minimap();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->updateMinimap(GameMap::getInstance());
@@ -63,7 +63,7 @@ IngameInfoBar::IngameInfoBar()
     m_pGameInfoBox->setResAnim(pAnim);
     m_pGameInfoBox->setPosition(0, pMiniMapBox->getHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
-    m_pGameInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    m_pGameInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
 
 
@@ -73,7 +73,7 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setResAnim(pAnim);
     m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
-    m_pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    m_pCursorInfoBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     setX(Settings::getWidth() - getScaledWidth());
     addChild(m_pCursorInfoBox);

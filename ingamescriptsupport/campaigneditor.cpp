@@ -53,8 +53,8 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     qint32 y = 30;
     oxygine::TextStyle style = FontManager::getMainFont24();

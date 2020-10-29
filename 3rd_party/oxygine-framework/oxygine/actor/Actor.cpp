@@ -432,10 +432,12 @@ namespace oxygine
     }
 
 
-    void Actor::setPriority(short zorder)
+    void Actor::setPriority(qint32 zorder)
     {
         if (_zOrder == zorder) // fixed by Evgeniy Golovin
+        {
             return;
+        }
 
         _zOrder = zorder;
         if (_parent)
@@ -466,7 +468,9 @@ namespace oxygine
                 parent->_children.insert_after(me, s);
             }
             else
+            {
                 parent->_children.prepend(me);
+            }
         }
     }
 

@@ -20,8 +20,8 @@ GenericBox::GenericBox(bool cancel)
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
-    m_pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
 
     // ok button

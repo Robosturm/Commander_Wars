@@ -218,7 +218,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
 
     qint32 bottomHeigth = createBottomSprite(x, y, width);
     this->addChild(m_Cursor);
-    this->setPriority(static_cast<qint16>(Mainapp::ZOrder::FocusedObjects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     this->setHeight(maxY + bottomHeigth);
     this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
 }

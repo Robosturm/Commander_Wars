@@ -69,7 +69,7 @@ public:
     enum DefeatType
     {
         DefeatType_Alive, /**< the player will not loose the game cause of this rule for now */
-        DefeatType_Defeated, /**< all units will get destroyed and the player looses the game */
+        DefeatType_Defeated, /**< all units will get destroyed and the player loses the game */
         DefeatType_ByCurrentPlayer, /**< all buildings will get controlled by the current player and all units will get destroyed */
         DefeatType_Domination /**< all units and buildings will get controlled by the current player */
     };

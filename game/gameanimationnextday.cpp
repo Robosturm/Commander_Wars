@@ -38,7 +38,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (permanent)
     {
         pSprite->setColor(color);
-        this->setPriority(static_cast<short>(Mainapp::ZOrder::AnimationFullScreen));
+        this->setPriority(static_cast<qint32>(Mainapp::ZOrder::AnimationFullScreen));
     }
     else
     {

@@ -85,7 +85,7 @@ void Tooltip::showTooltip()
                 QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
 
                 m_Tooltip = new oxygine::Actor();
-                m_Tooltip->setPriority(static_cast<short>(Mainapp::ZOrder::Tooltip));
+                m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
                 oxygine::getStage()->addChild(m_Tooltip);
 
                 oxygine::TextStyle style = FontManager::getMainFont24();
@@ -103,7 +103,7 @@ void Tooltip::showTooltip()
                 pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
                 m_Tooltip->addChild(pSpriteBox);
                 pSpriteBox->setPosition(0, 0);
-                pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+                pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
                 oxygine::spTextField pText = new oxygine::TextField();
                 pText->setHtmlText(m_tooltipText);
                 pText->setWidth(Settings::getWidth() / 4);

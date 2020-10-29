@@ -139,7 +139,7 @@ void RuleSelection::showRuleSelection()
     style.color = headerColor;
     textField->setStyle(headerStyle);
     style.color = FontManager::getFontColor();
-    textField->setHtmlText(tr("Enviroment"));
+    textField->setHtmlText(tr("Environment"));
     textField->setPosition(30, y);
     addChild(textField);
     y += 60;
@@ -224,7 +224,7 @@ void RuleSelection::showRuleSelection()
     y += 40;
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
-    textField->setHtmlText(tr("CO Bannlist: "));
+    textField->setHtmlText(tr("CO Banlist: "));
     textField->setPosition(30, y);
     addChild(textField);
     oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit"), 150);
@@ -239,7 +239,7 @@ void RuleSelection::showRuleSelection()
 
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
-    textField->setHtmlText(tr("Perk Bannlist: "));
+    textField->setHtmlText(tr("Perk Banlist: "));
     textField->setPosition(30, y);
     addChild(textField);
     oxygine::spButton perkBannlist = ObjectManager::createButton(tr("Edit"), 150);
@@ -254,7 +254,7 @@ void RuleSelection::showRuleSelection()
 
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
-    textField->setHtmlText(tr("Action Bannlist: "));
+    textField->setHtmlText(tr("Action Banlist: "));
     textField->setPosition(30, y);
     addChild(textField);
     oxygine::spButton actionBannlist = ObjectManager::createButton(tr("Edit"), 150);
@@ -423,7 +423,7 @@ void RuleSelection::showRuleSelection()
     addChild(textField);
     QVector<QString> dayModes = {tr("Default"), tr("Permanent")};
     spDropDownmenu pDropDownmenu = new DropDownmenu(300, dayModes);
-    pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war."));
+    pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human pr not. Decision is depending of chosen fog of war."));
     pDropDownmenu->setPosition(textWidth, textField->getY());
     addChild(pDropDownmenu);
     pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getDayToDayScreen()));

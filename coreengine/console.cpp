@@ -65,7 +65,7 @@ Console::Console()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     // move console to top
-    oxygine::Actor::setPriority(static_cast<qint16>(Mainapp::ZOrder::Console));
+    oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
     m_pBackgroundsprite = new oxygine::ColorRectSprite();
     m_pBackgroundsprite->setPosition(0, 0);
     m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());

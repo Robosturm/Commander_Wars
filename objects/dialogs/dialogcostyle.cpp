@@ -30,8 +30,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(m_pSpriteBox);
     m_pSpriteBox->setPosition(0, 0);
-    m_pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // ok button
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Apply"), 150);
@@ -262,7 +262,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
     pBox->setPosition(pBox->getWidth() * m_pCOSprites.size() + 10, 10);
-    pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pCOPanel->addItem(pBox);
     // add some event handling :)
     qint32 index = m_pCOBoxes.size();

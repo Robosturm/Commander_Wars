@@ -85,7 +85,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
         connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
 
         m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
-        m_pChat->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+        m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
     }
@@ -384,7 +384,7 @@ void GameMenue::loadUIButtons()
         pButtonBox->setSize(286, 50);
     }
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
     saveGame->setPosition(8, 4);
@@ -418,7 +418,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);
@@ -442,7 +442,7 @@ void GameMenue::loadUIButtons()
         pButtonBox->setResAnim(pAnim);
         pButtonBox->setSize(144, 50);
         pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight());
-        pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+        pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         addChild(pButtonBox);
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
         m_ChatButton->setPosition(8, 4);

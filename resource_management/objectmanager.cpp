@@ -16,7 +16,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
 {
     oxygine::spButton pButton = new oxygine::Button();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button"));
-    pButton->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     //Create Actor with Text and add it to button as child
     spLabel textField = new Label(width - 10);
@@ -70,7 +70,7 @@ oxygine::spButton ObjectManager::createIconButton(QString icon)
 {
     oxygine::spButton pButton = new oxygine::Button();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
-    pButton->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(30, 30);
 
     oxygine::spSprite pSprite = new oxygine::Sprite();

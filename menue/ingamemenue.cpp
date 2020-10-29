@@ -57,7 +57,7 @@ void InGameMenue::loadBackground()
     sprite->setResAnim(pBackground);
     sprite->setPosition(-1, -1);
     // background should be last to draw
-    sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
+    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
     sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
     sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 }

@@ -80,7 +80,7 @@ GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint
     {
         animation->setPosition(x, y);
     }
-    animation->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
+    animation->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(animation);
     m_Animations.append(animation);
     pApp->continueThread();
@@ -92,7 +92,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationWalk* pGameAnimationWalk = new GameAnimationWalk(pUnit, pAction->getMovePath());
-    pGameAnimationWalk->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
+    pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
     m_Animations.append(pGameAnimationWalk);
     pApp->continueThread();
@@ -104,7 +104,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationPower* pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
-    pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
@@ -120,7 +120,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
-    pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pAnim->setDialog(text);
     pAnim->setCO(coid, mood);
     pAnim->setColor(color);
@@ -155,7 +155,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints, maxPoints);
-    pGameAnimationCapture->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
+    pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     GameMap::getInstance()->addChild(pGameAnimationCapture);
     m_Animations.append(pGameAnimationCapture);

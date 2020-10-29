@@ -345,6 +345,22 @@ protected:
                                  qint32 loadedUnitIslandIdx, qint32 targetIsland,
                                  QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
     /**
+     * @brief appendFlareTargets
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void appendFlareTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
+    /**
+     * @brief getBestFlareTarget
+     * @param pUnit
+     * @param pAction
+     * @param pPfs
+     * @param ret
+     * @param moveTargetFields
+     */
+    void getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
      * @brief isUnloadTerrain
      * @param pUnit
      * @param pTerrain

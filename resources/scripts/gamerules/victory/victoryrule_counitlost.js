@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("A player looses if he lost the given amount of co units.")
+        return qsTr("A player loses if he lost the given amount of co units.")
     };
     this.getRuleName = function(itemNumber)
     {

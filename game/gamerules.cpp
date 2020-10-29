@@ -514,7 +514,7 @@ void GameRules::createWeatherSprites()
                         }
                         pSprite->setScale(GameMap::getImageSize() / pAnim->getWidth());
                         pSprite->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
-                        pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::Weather));
+                        pSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Weather));
                         m_WeatherSprites.append(pSprite);
                         pMap->addChild(pSprite);
                     }

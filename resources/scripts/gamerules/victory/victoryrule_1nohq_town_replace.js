@@ -3,7 +3,7 @@ var Constructor = function()
 	// needs to be first in case of HQ replacing
     this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("A player looses when he lost his last HQ. All buildings will be owned by the current player. A captured HQ and neutral HQ's will be converted into a town.")
+        return qsTr("A player loses when he lost his last HQ. All buildings will be owned by the current player. A captured HQ and neutral HQ's will be converted into a town.")
     };
     this.getRuleName = function(itemNumber)
     {

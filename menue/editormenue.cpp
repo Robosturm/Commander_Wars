@@ -120,7 +120,7 @@ EditorMenue::EditorMenue()
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     addChild(m_Topbar);
 

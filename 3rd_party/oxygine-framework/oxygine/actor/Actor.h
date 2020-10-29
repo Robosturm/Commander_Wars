@@ -88,7 +88,7 @@ namespace oxygine
         float               getRotation() const {return _rotation;}
         /**Returns rotation angle in degrees*/
         float               getRotationDegrees() const {return _rotation / M_PI * 180.0f;}
-        int                 getPriority() const {return _zOrder;}
+        qint32              getPriority() const {return _zOrder;}
         virtual bool        getVisible() const {return (_flags & flag_visible) != 0;}
         Actor*              getParent() {return _parent;}
         const Actor*        getParent() const {return _parent;}
@@ -142,7 +142,7 @@ namespace oxygine
         /**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
         void setTransform(const AffineTransform& tr);
         /** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/
-        void setPriority(short zorder);
+        void setPriority(qint32 zorder);
         void setScale(float scale);
         void setScale(const Vector2& scale);
         void setScale(float scaleX, float scaleY);
@@ -377,7 +377,7 @@ namespace oxygine
         Vector2 _scale;
         Vector2 _size;
         float   _rotation;
-        short   _zOrder;
+        qint32   _zOrder;
     };
 
 

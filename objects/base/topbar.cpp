@@ -19,8 +19,8 @@ Topbar::Topbar(qint32 x, qint32 width)
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(width, 80);
     m_pSpriteBox->setPosition(x, 0);
-    m_pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
         for (qint32 i = 0; i < m_Items.size(); i++)
@@ -58,7 +58,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
 
     spTooltip pTooltip = new Tooltip();
     pTooltip->setTooltipText(tooltip);
-    pTooltip->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pTooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
     pBox->setVerticalMode(oxygine::Box9Sprite::TILING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
@@ -81,7 +81,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group)->size());
     m_Items.at(group)->append(pBox);
     pBox->setVisible(false);
-    pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pTooltip->addChild(pBox);
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)

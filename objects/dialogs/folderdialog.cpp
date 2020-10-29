@@ -20,8 +20,8 @@ FolderDialog::FolderDialog(QString startFolder)
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
     m_CurrentFolder = new Textbox(Settings::getWidth() - 60);
@@ -79,7 +79,7 @@ FolderDialog::FolderDialog(QString startFolder)
     textField->setWidth(pBox->getWidth() - 18);
     textField->setX(8);
     pBox->setPosition(0, 0);
-    pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->m_MainPanel->addItem(pBox);
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
@@ -172,7 +172,7 @@ void FolderDialog::showFolder(QString folder)
         textField->setWidth(pBox->getWidth() - 18);
         textField->setX(13);
         textField->setY(5);
-        pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+        pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
         this->m_MainPanel->addItem(pBox);
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)

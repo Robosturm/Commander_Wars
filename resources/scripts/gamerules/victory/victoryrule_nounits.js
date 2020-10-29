@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("A player looses when he looses his last unit.")
+        return qsTr("A player loses when he loses his last unit.")
     };
     this.getRuleName = function(itemNumber)
     {

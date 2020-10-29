@@ -7,7 +7,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
@@ -39,7 +39,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
@@ -72,7 +72,7 @@ void DropDownmenuBase::showDropDown()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    setPriority(static_cast<short>(Mainapp::ZOrder::DropDownList));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
     m_OriginalPosition = getPosition();
@@ -120,7 +120,7 @@ void DropDownmenuBase::hideDropDown()
         setPosition(m_OriginalPosition);
         m_OriginalOwner = nullptr;
     }
-    setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pApp->continueThread();
 }
 
@@ -153,7 +153,7 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     pBox->setPosition(0, 40 * m_Items.size());
 
     m_Items.append(pBox);
-    pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->m_Panel->addItem(pBox);
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)

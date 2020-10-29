@@ -164,7 +164,7 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(Settings::getWidth() - m_IngameInfoBar->getWidth(), 50);
     pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight() + 6);
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
@@ -240,7 +240,7 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
-    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     pApp->continueThread();
 }
@@ -271,7 +271,7 @@ void ReplayMenu::loadSeekUi()
     pDayBox->addChild(_seekDayLabel);
     pDayBox->setSize(160, 50);
     pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getHeight() + 6 - pDayBox->getHeight());
-    pDayBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
     _seekActor = pDayBox;
     _seekActor->setVisible(false);

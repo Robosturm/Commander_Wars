@@ -12,7 +12,7 @@ Cursor::Cursor()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Cursor));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
     m_cursorRangeOutline = new oxygine::Actor();
     addChild(m_cursorRangeOutline);
     connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);

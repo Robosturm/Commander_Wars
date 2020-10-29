@@ -119,7 +119,7 @@ void GameMap::loadMapData()
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
     m_zoom = 2.0f;
     setScale(m_zoom);
-    setPriority(static_cast<short>(Mainapp::ZOrder::Map));
+    setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
 }
 
 qint32 GameMap::getUniqueIdCounter()
@@ -836,7 +836,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
                 fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
             else
             {
@@ -844,7 +844,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
                 fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+                pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
             }
         }
         else
@@ -1048,7 +1048,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 {
                     this->addChild(pTerrain);
                     pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
-                    pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+                    pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
                 }
             }
             else

@@ -12,7 +12,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     this->moveToThread(pApp->getWorkerthread());
 
     m_ScrollTimer.start();
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setSize(width, 33);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
@@ -25,7 +25,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
 
     m_pArrowRigth = new oxygine::Button();
     m_pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
-    m_pArrowRigth->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowRigth->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         if (m_enabled)
@@ -64,7 +64,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     oxygine::spButton pArrowLeft = new oxygine::Button();
     // pButton->setPosition(200, 200);
     pArrowLeft->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
-    pArrowLeft->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pArrowLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pArrowLeft->setFlippedX(true);
     pArrowLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -119,7 +119,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     }
 
     m_slider->setSize(sliderWidth, 18);
-    m_slider->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_slider->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_slider->setPosition(20, 9);
     m_pBox->addChild(m_slider);
     m_slider->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)

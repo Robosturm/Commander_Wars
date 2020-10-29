@@ -58,7 +58,7 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
 }
 
 QString Terrain::getTerrainDescription() const
@@ -785,7 +785,7 @@ void Terrain::setUnit(spUnit pUnit)
             pTerrain->setUnit(nullptr);
         }
         // add Terrain to unit and unit to drawing actor
-        pUnit->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(Terrain::y) + 2);
+        pUnit->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(Terrain::y) + 2);
         pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         pUnit->setPosition(Terrain::x * GameMap::getImageSize(), Terrain::y * GameMap::getImageSize());
 

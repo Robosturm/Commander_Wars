@@ -3053,7 +3053,7 @@ void Unit::createCORange(qint32 coRange)
         m_CORange = new oxygine::Actor();
     }
     m_CORange->removeChildren();
-    m_CORange->setPriority(static_cast<qint16>(Mainapp::ZOrder::CORange));
+    m_CORange->setPriority(static_cast<qint32>(Mainapp::ZOrder::CORange));
     if (m_pTerrain != nullptr)
     {
         QColor color = m_pOwner->getColor();

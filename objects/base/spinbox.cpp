@@ -14,7 +14,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
     m_Textbox = new oxygine::Box9Sprite();
@@ -53,7 +53,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 
     m_pArrowDown = new oxygine::Button();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
-    m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
@@ -81,7 +81,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pArrowUp = new oxygine::Button();
     // pButton->setPosition(200, 200);
     m_pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
-    m_pArrowUp->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowUp->setFlippedY(true);
     m_pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {

@@ -60,7 +60,7 @@ namespace oxygine
         typedef argT<Actor*, Actor*, Actor, &Actor::attachTo> attachTo;
         typedef argT<QColor, const QColor&, VStyleActor, &VStyleActor::setColor> color;
         typedef argT<blend_mode, blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
-        typedef argT<short, short, Actor, &Actor::setPriority> priority;
+        typedef argT<qint32, qint32, Actor, &Actor::setPriority> priority;
         typedef argT<const void*, const void*, ObjectBase, &ObjectBase::setUserData> userData;
         typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 

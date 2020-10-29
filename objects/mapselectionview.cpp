@@ -129,7 +129,7 @@ MapSelectionView::MapSelectionView()
 
     oxygine::spButton pButtonTop = new oxygine::Button();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
-    pButtonTop->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -156,7 +156,7 @@ MapSelectionView::MapSelectionView()
 
     pButtonTop = new oxygine::Button();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
-    pButtonTop->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonTop.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {

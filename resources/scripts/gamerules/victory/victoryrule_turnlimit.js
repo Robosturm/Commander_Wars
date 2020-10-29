@@ -8,7 +8,7 @@ var Constructor = function()
         }
         else
         {
-            return qsTr("The Team winning the game if the time is up. ∞ for all player loose the game.");
+            return qsTr("The Team winning the game if the time is up. Infinite for all player losing the game.");
         }
     };
     this.getRuleName = function(itemNumber)

@@ -159,6 +159,7 @@ set(${PROJECT_NAME}_SRCS
         objects/mapselection.cpp
         objects/coselection.cpp
         objects/playerselection.cpp
+        objects/achievementbanner.cpp
         # objects base
         objects/base/topbar.cpp
         objects/base/textbox.cpp

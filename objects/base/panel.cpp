@@ -8,7 +8,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     m_HScrollbar = new H_Scrollbar(size.height() - sliderSize, contentSize.height());
