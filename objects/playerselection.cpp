@@ -11,9 +11,9 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamemanager.h"
 
-#include "objects/buildlistdialog.h"
-#include "objects/coselectiondialog.h"
-#include "objects/perkselectiondialog.h"
+#include "objects/dialogs/rules/buildlistdialog.h"
+#include "objects/dialogs/rules/coselectiondialog.h"
+#include "objects/dialogs/rules/perkselectiondialog.h"
 
 #include "gameinput/humanplayerinput.h"
 #include "ai/veryeasyai.h"

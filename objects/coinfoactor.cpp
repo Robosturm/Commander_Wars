@@ -18,7 +18,7 @@
 
 #include "game/gamemap.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 #include "wiki/wikidatabase.h"
 

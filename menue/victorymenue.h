@@ -8,8 +8,8 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
-#include "objects/checkbox.h"
+#include "objects/base/panel.h"
+#include "objects/base/checkbox.h"
 #include "network/NetworkInterface.h"
 
 class VictoryMenue : public QObject, public oxygine::Actor

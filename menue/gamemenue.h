@@ -8,11 +8,11 @@
 #include "game/gamemap.h"
 #include "game/ui/playerinfo.h"
 #include "game/ui/ingameinfobar.h"
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 #include "network/NetworkInterface.h"
 
-#include "objects/chat.h"
+#include "objects/base/chat.h"
 
 #include "game/gamerecording/replayrecorder.h"
 

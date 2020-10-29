@@ -4,7 +4,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "game/gamemap.h"
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning)
     : m_pCO(pCO),

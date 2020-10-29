@@ -8,8 +8,8 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/filedialog.h"
-#include "objects/dropdownmenusprite.h"
+#include "objects/dialogs/filedialog.h"
+#include "objects/base/dropdownmenusprite.h"
 #include "qfileinfo.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)

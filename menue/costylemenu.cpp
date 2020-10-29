@@ -15,7 +15,7 @@
 
 #include "objects/coselection.h"
 
-#include "objects/dialogcostyle.h"
+#include "objects/dialogs/dialogcostyle.h"
 
 COStyleMenu::COStyleMenu()
     : QObject()

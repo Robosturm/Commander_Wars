@@ -7,7 +7,7 @@
 #include <QTimer>
 #include "oxygine-framework.h"
 
-#include "objects/chat.h"
+#include "objects/base/chat.h"
 
 #include "menue/mapselectionmapsmenue.h"
 #include "network/NetworkInterface.h"

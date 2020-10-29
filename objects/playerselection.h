@@ -5,14 +5,14 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/dropdownmenu.h"
-#include "objects/dropdownmenucolor.h"
-#include "objects/checkbox.h"
-#include "objects/dropdownmenusprite.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/dropdownmenusprite.h"
 
 #include "network/NetworkInterface.h"
 

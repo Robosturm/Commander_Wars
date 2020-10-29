@@ -11,7 +11,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 Wikimenu::Wikimenu()
     : QObject()

@@ -8,15 +8,15 @@
 
 #include "game/gamemap.h"
 
-#include "objects/filedialog.h"
+#include "objects/dialogs/filedialog.h"
 
-#include "objects/folderdialog.h"
+#include "objects/dialogs/folderdialog.h"
 
-#include "objects/checkbox.h"
+#include "objects/base/checkbox.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/dialogmessagebox.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "ingamescriptsupport/genericbox.h"
 
@@ -24,7 +24,7 @@
 
 #include "qfile.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 const QString CampaignEditor::campaign = "campaign";
 const QString CampaignEditor::campaignName = "campaignName";

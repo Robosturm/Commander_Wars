@@ -7,9 +7,9 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptEventDefeatPlayer::ScriptEventDefeatPlayer()
     : ScriptEvent (ScriptEvent::EventType::defeatPlayer)

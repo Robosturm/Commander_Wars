@@ -146,64 +146,69 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
 set(${PROJECT_NAME}_SRCS
         main.cpp
 
-        # objects
-        objects/editorselection.cpp
-        objects/topbar.cpp
-        objects/textbox.cpp
-        objects/h_scrollbar.cpp
-        objects/v_scrollbar.cpp
-        objects/dropdownmenu.cpp
-        objects/dropdownmenucolor.cpp
-        objects/panel.cpp
-        objects/filedialog.cpp
-        objects/mapeditdialog.cpp
-        objects/spinbox.cpp
-        objects/minimap.cpp
-        objects/mapselection.cpp
-        objects/coselection.cpp
-        objects/coselectiondialog.cpp
-        objects/checkbox.cpp
-        objects/slider.cpp
-        objects/multislider.cpp
-        objects/rotatingsprite.cpp
-        objects/colorselectiondialog.cpp
-        objects/buildlistdialog.cpp
-        objects/coinfodialog.cpp
-        objects/dialogmodifyunit.cpp
-        objects/playerselection.cpp
-        objects/playerselectiondialog.cpp
-        objects/selectkey.cpp
-        objects/dialogtextinput.cpp
-        objects/chat.cpp
-        objects/dialogvictoryconditions.cpp
-        objects/dialogconnecting.cpp
-        objects/dialogmessagebox.cpp
-        objects/dialograndommap.cpp
-        objects/dialogmodifyterrain.cpp
-        objects/mapselectionview.cpp
-        objects/timespinbox.cpp
-        objects/ruleselection.cpp
-        objects/ruleselectiondialog.cpp
-        objects/folderdialog.cpp
+        #objects
         objects/coinfoactor.cpp
-        objects/tableview.cpp
-        objects/dialogcostyle.cpp
-        objects/colorselector.cpp
-        objects/cobannlistdialog.cpp
-        objects/tooltip.cpp
-        objects/dialogattacklog.cpp
-        objects/dialogunitinfo.cpp
-        objects/dropdownmenusprite.cpp
-        objects/dropdownmenubase.cpp
-        objects/label.cpp
+        objects/rotatingsprite.cpp
+        objects/ruleselection.cpp
+        objects/minimap.cpp
         objects/perkselection.cpp
-        objects/perkselectiondialog.cpp
+        objects/mapselectionview.cpp
         objects/loadingscreen.cpp
         objects/gameplayandkeys.cpp
-        objects/actionlistdialog.cpp
-        objects/passwordbox.cpp
-        objects/progressinfobar.cpp
-        objects/dialogmodifybuilding.cpp
+        objects/editorselection.cpp
+        objects/mapselection.cpp
+        objects/coselection.cpp
+        objects/playerselection.cpp
+        # objects base
+        objects/base/topbar.cpp
+        objects/base/textbox.cpp
+        objects/base/h_scrollbar.cpp
+        objects/base/v_scrollbar.cpp
+        objects/base/dropdownmenu.cpp
+        objects/base/dropdownmenucolor.cpp
+        objects/base/panel.cpp
+        objects/base/spinbox.cpp
+        objects/base/checkbox.cpp
+        objects/base/slider.cpp
+        objects/base/multislider.cpp
+        objects/base/passwordbox.cpp
+        objects/base/progressinfobar.cpp
+        objects/base/selectkey.cpp
+        objects/base/chat.cpp
+        objects/base/timespinbox.cpp
+        objects/base/dropdownmenubase.cpp
+        objects/base/label.cpp
+        objects/base/colorselector.cpp
+        objects/base/dropdownmenusprite.cpp
+        objects/base/tooltip.cpp
+        objects/base/tableview.cpp
+        # objects dialogs
+        objects/dialogs/colorselectiondialog.cpp
+        objects/dialogs/dialogconnecting.cpp
+        objects/dialogs/filedialog.cpp
+        objects/dialogs/dialogcostyle.cpp
+        objects/dialogs/dialogmessagebox.cpp
+        objects/dialogs/dialogtextinput.cpp
+        objects/dialogs/folderdialog.cpp
+        # objects dialogs editor
+        objects/dialogs/editor/dialogmodifyunit.cpp
+        objects/dialogs/editor/dialogmodifybuilding.cpp
+        objects/dialogs/editor/dialogmodifyterrain.cpp
+        objects/dialogs/editor/dialograndommap.cpp
+        objects/dialogs/editor/mapeditdialog.cpp
+        # objects dialogs rules
+        objects/dialogs/rules/actionlistdialog.cpp
+        objects/dialogs/rules/buildlistdialog.cpp
+        objects/dialogs/rules/cobannlistdialog.cpp
+        objects/dialogs/rules/coselectiondialog.cpp
+        objects/dialogs/rules/perkselectiondialog.cpp
+        objects/dialogs/rules/playerselectiondialog.cpp
+        objects/dialogs/rules/ruleselectiondialog.cpp
+        # objects dialogs ingame
+        objects/dialogs/ingame/coinfodialog.cpp
+        objects/dialogs/ingame/dialogvictoryconditions.cpp
+        objects/dialogs/ingame/dialogattacklog.cpp
+        objects/dialogs/ingame/dialogunitinfo.cpp
 
         #modding
         modding/csvtableimporter.cpp

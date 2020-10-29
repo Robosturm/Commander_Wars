@@ -9,16 +9,16 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/gameanimationmanager.h"
 
-#include "objects/spinbox.h"
-#include "objects/dropdownmenucolor.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/dropdownmenucolor.h"
 
 #include "coreengine/settings.h"
 
-#include "objects/filedialog.h"
+#include "objects/dialogs/filedialog.h"
 
 #include "qcoreapplication.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptEventAnimation::ScriptEventAnimation()
     : ScriptEvent(EventType::animation)

@@ -678,32 +678,32 @@
 <context>
     <name>ActionListDialog</name>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="39"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="49"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="117"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="117"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="89"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/actionlistdialog.cpp" line="203"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="203"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -737,57 +737,57 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="40"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="40"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="50"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="50"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="59"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="59"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="72"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="72"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="73"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="73"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="74"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="74"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="75"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="75"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="76"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="76"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="94"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="94"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="122"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="122"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="248"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="248"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -803,57 +803,57 @@
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="39"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="49"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="58"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="70"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="70"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="71"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="71"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="72"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="72"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="73"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="73"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="74"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="74"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="91"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="91"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="120"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="120"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="302"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="302"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -909,17 +909,17 @@
 <context>
     <name>COInfoDialog</name>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="43"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="43"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="52"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="62"/>
+        <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="62"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,17 +927,17 @@
 <context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="42"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="42"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="62"/>
+        <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="62"/>
         <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1171,46 +1171,46 @@
 <context>
     <name>Chat</name>
     <message>
-        <location filename="../objects/chat.cpp" line="44"/>
+        <location filename="../objects/base/chat.cpp" line="44"/>
         <source>Send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="76"/>
+        <location filename="../objects/base/chat.cpp" line="76"/>
         <source>Message to send via chat. Start a message with one of the folling items to send </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="77"/>
+        <location filename="../objects/base/chat.cpp" line="77"/>
         <source>a message to specific targets. 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="78"/>
+        <location filename="../objects/base/chat.cpp" line="78"/>
         <source> send message to all your allies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="79"/>
+        <location filename="../objects/base/chat.cpp" line="79"/>
         <source> send message to all your enemies.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="80"/>
+        <location filename="../objects/base/chat.cpp" line="80"/>
         <source> send message to the given team X.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="81"/>
+        <location filename="../objects/base/chat.cpp" line="81"/>
         <source> send message to the given player X.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/chat.cpp" line="85"/>
+        <location filename="../objects/base/chat.cpp" line="85"/>
         <source>Message to send via chat.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,12 +1236,12 @@
 <context>
     <name>ColorSelectionDialog</name>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="26"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="26"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="36"/>
+        <location filename="../objects/dialogs/colorselectiondialog.cpp" line="36"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1249,17 +1249,17 @@
 <context>
     <name>ColorSelector</name>
     <message>
-        <location filename="../objects/colorselector.cpp" line="42"/>
+        <location filename="../objects/base/colorselector.cpp" line="42"/>
         <source>Red: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselector.cpp" line="56"/>
+        <location filename="../objects/base/colorselector.cpp" line="56"/>
         <source>Green: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselector.cpp" line="69"/>
+        <location filename="../objects/base/colorselector.cpp" line="69"/>
         <source>Blue: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1420,23 +1420,23 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="46"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="46"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="118"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="118"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="180"/>
-        <location filename="../objects/dialogattacklog.cpp" line="236"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="180"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="236"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="240"/>
+        <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="240"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1444,23 +1444,23 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="37"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="37"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="49"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="113"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="113"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="181"/>
-        <location filename="../objects/dialogcostyle.cpp" line="195"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="181"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="195"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1468,7 +1468,7 @@
 <context>
     <name>DialogConnecting</name>
     <message>
-        <location filename="../objects/dialogconnecting.cpp" line="39"/>
+        <location filename="../objects/dialogs/dialogconnecting.cpp" line="39"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1476,12 +1476,12 @@
 <context>
     <name>DialogMessageBox</name>
     <message>
-        <location filename="../objects/dialogmessagebox.cpp" line="40"/>
+        <location filename="../objects/dialogs/dialogmessagebox.cpp" line="40"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmessagebox.cpp" line="51"/>
+        <location filename="../objects/dialogs/dialogmessagebox.cpp" line="51"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1489,42 +1489,42 @@
 <context>
     <name>DialogModifyBuilding</name>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="34"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="34"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="64"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="64"/>
         <source>Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="71"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="71"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="78"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="78"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="80"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="82"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="82"/>
         <source>Selects the Owner of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="101"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="101"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifybuilding.cpp" line="104"/>
+        <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="104"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1532,47 +1532,47 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="35"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="35"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="62"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="62"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="65"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
         <source>Custom Name of the Terrain. Empty name equals the default name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="75"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="75"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="78"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="78"/>
         <source>Custom Description of the Terrain. Empty description equals the default description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="119"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="119"/>
         <source>Terrain Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="123"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="123"/>
         <source>Current select terrain image or terrain path or empty for default selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="128"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="136"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="136"/>
         <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1580,119 +1580,119 @@
 <context>
     <name>DialogModifyUnit</name>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="44"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="44"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="85"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="92"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="85"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="92"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="98"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="98"/>
         <source>Selects the custom name of the unit shown instead of the actual unit name. An empty name equals the actual unit name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="108"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="108"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="111"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="111"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="112"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="112"/>
         <source>Selects the HP of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="125"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="125"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="128"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="129"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="129"/>
         <source>Selects the Fuel of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="151"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="151"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="154"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="180"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="154"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="180"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="155"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="155"/>
         <source>Selects the Ammo 1 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="177"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="181"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="181"/>
         <source>Selects the Ammo 2 of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="202"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="202"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="209"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="209"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="212"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="212"/>
         <source>Selects the Owner of the current unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="225"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="225"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="228"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="228"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="228"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="228"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="228"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="230"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="230"/>
         <source>Selects how the AI uses this unit
 Normal AI uses the unit like always.
 Offensive AI the ai moves the unit to the closest enemy and attacks
@@ -1704,47 +1704,47 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="251"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="251"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="260"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="260"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="261"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="261"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="263"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="263"/>
         <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="307"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="307"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="321"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="321"/>
         <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="368"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="368"/>
         <source>Move Point: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="400"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="400"/>
         <source>Add Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="408"/>
+        <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="408"/>
         <source>Remove last Point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1783,147 +1783,147 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="41"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="41"/>
         <source>Generator:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="45"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="45"/>
         <source>Selects the generator script used to generate the random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="49"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="49"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="63"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="63"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="67"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="67"/>
         <source>Selects the name of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="76"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="76"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="80"/>
         <source>Selects the author of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="89"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="89"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="93"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="93"/>
         <source>Selects the description for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="102"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="106"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="106"/>
         <source>Selects the width for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="115"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="115"/>
         <source>Heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="119"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="119"/>
         <source>Selects the heigth for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="128"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="132"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="132"/>
         <source>Selects the amount of players for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="142"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="142"/>
         <source>Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="146"/>
         <source>The seed to generate the new map. Same map settings with the same seed generate the same map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="155"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="155"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="159"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="159"/>
         <source>If selected roads are created between the HQ&apos;s of the players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="168"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="168"/>
         <source>Base Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="173"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="173"/>
         <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="181"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="181"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="187"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="187"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="193"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="193"/>
         <source>Owner Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="200"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="200"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="231"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="332"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="332"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="337"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="337"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="341"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="341"/>
         <source>The percent distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1931,12 +1931,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="296"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="296"/>
         <source>The percent distribution between the different terrains when a terrain is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="313"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="313"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1944,12 +1944,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogTextInput</name>
     <message>
-        <location filename="../objects/dialogtextinput.cpp" line="43"/>
+        <location filename="../objects/dialogs/dialogtextinput.cpp" line="43"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogtextinput.cpp" line="58"/>
+        <location filename="../objects/dialogs/dialogtextinput.cpp" line="58"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1957,12 +1957,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogUnitInfo</name>
     <message>
-        <location filename="../objects/dialogunitinfo.cpp" line="41"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogunitinfo.cpp" line="156"/>
+        <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="156"/>
         <source>Go to Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1970,17 +1970,17 @@ This is immediatly applied.</source>
 <context>
     <name>DialogVictoryConditions</name>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="36"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="36"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="68"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="68"/>
         <source>Victory Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="107"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="107"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1988,7 +1988,7 @@ This is immediatly applied.</source>
 <context>
     <name>DropDownmenu</name>
     <message>
-        <location filename="../objects/dropdownmenu.cpp" line="27"/>
+        <location filename="../objects/base/dropdownmenu.cpp" line="27"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1996,367 +1996,367 @@ This is immediatly applied.</source>
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="68"/>
+        <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="68"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="68"/>
         <source>Saves a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
+        <location filename="../menue/editormenue.cpp" line="69"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
+        <location filename="../menue/editormenue.cpp" line="69"/>
         <source>Loads a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="71"/>
+        <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="71"/>
+        <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Edit and create a script for any map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Edit and create a campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Undo Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="73"/>
         <source>Redo Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="73"/>
         <source>Redo the last undo command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Exits the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
+        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
+        <location filename="../menue/editormenue.cpp" line="77"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
+        <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Create a new map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Edit the information for a map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
+        <location filename="../menue/editormenue.cpp" line="79"/>
         <source>Resize Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
+        <location filename="../menue/editormenue.cpp" line="79"/>
         <source>Resizes the map using left, top, right and bottom size changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="82"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="84"/>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Flips the map at the y-axis. Flipping the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="82"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="84"/>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Flips and rotates the map at the y-axis. Using the top half of the map. The bottom half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="85"/>
+        <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="85"/>
+        <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Creates a new random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="87"/>
+        <location filename="../menue/editormenue.cpp" line="86"/>
         <source>Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="88"/>
+        <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="88"/>
+        <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Selects the editor mode placing the current tile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="89"/>
+        <location filename="../menue/editormenue.cpp" line="88"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="89"/>
+        <location filename="../menue/editormenue.cpp" line="88"/>
         <source>Selects the editor mode deleting units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="90"/>
+        <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Selects the editor mode modifying the stats of a unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Edit Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="91"/>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Selects the editor mode editing the style of a terrain or building</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="92"/>
+        <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Edit the CO&apos;s and player start setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Selects the editor rules for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="94"/>
+        <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Removes all players with no units or buildings from the map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="95"/>
+        <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy. Copying is based on the current placing mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="96"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="96"/>
+        <location filename="../menue/editormenue.cpp" line="95"/>
         <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Paste Ctrl+Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="97"/>
+        <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Paste the current selected area with all terrain, buildings, units. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="99"/>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="100"/>
+        <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="101"/>
+        <location filename="../menue/editormenue.cpp" line="100"/>
         <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="102"/>
+        <location filename="../menue/editormenue.cpp" line="101"/>
         <source>Exports the map to an AWS Map Editor file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="103"/>
+        <location filename="../menue/editormenue.cpp" line="102"/>
         <source>Deletes the current map and imports an AW DoR/DC Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="104"/>
+        <location filename="../menue/editormenue.cpp" line="103"/>
         <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="299"/>
+        <location filename="../menue/editormenue.cpp" line="298"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="531"/>
+        <location filename="../menue/editormenue.cpp" line="530"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="535"/>
+        <location filename="../menue/editormenue.cpp" line="534"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="544"/>
+        <location filename="../menue/editormenue.cpp" line="543"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="548"/>
+        <location filename="../menue/editormenue.cpp" line="547"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="557"/>
+        <location filename="../menue/editormenue.cpp" line="556"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="561"/>
+        <location filename="../menue/editormenue.cpp" line="560"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="570"/>
+        <location filename="../menue/editormenue.cpp" line="569"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="574"/>
+        <location filename="../menue/editormenue.cpp" line="573"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2403,17 +2403,17 @@ This is immediatly applied.</source>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/filedialog.cpp" line="43"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="43"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/filedialog.cpp" line="81"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="81"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/filedialog.cpp" line="314"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="314"/>
         <source>Do you want to delete the item </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2421,17 +2421,17 @@ This is immediatly applied.</source>
 <context>
     <name>FolderDialog</name>
     <message>
-        <location filename="../objects/folderdialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="38"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/folderdialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="52"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/folderdialog.cpp" line="236"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="236"/>
         <source>Do you want to delete the folder </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3491,107 +3491,107 @@ This is immediatly applied.</source>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="38"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="42"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="42"/>
         <source>The name of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="51"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="51"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="55"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="55"/>
         <source>The author of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="64"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="64"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="68"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="68"/>
         <source>The description for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="77"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="77"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="80"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="84"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="84"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="98"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="98"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="102"/>
         <source>The width of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="111"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="111"/>
         <source>Heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="115"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="115"/>
         <source>The heigth of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="124"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="124"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="128"/>
         <source>The amount of players for this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="137"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="137"/>
         <source>Turn Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="141"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="141"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="150"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="150"/>
         <source>Deploy Limit:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="154"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="154"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="160"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="160"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="174"/>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="174"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3996,27 +3996,27 @@ Version: </source>
 <context>
     <name>PerkSelectionDialog</name>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="28"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="28"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="93"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="93"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="102"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="102"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="129"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="129"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/perkselectiondialog.cpp" line="169"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="169"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4243,7 +4243,7 @@ Version: </source>
 <context>
     <name>PlayerSelectionDialog</name>
     <message>
-        <location filename="../objects/playerselectiondialog.cpp" line="25"/>
+        <location filename="../objects/dialogs/rules/playerselectiondialog.cpp" line="25"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4742,17 +4742,17 @@ Version: </source>
 <context>
     <name>RuleSelectionDialog</name>
     <message>
-        <location filename="../objects/ruleselectiondialog.cpp" line="29"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="29"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselectiondialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="38"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselectiondialog.cpp" line="47"/>
+        <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="47"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6104,158 +6104,158 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>SelectKey</name>
     <message>
-        <location filename="../objects/selectkey.cpp" line="19"/>
+        <location filename="../objects/base/selectkey.cpp" line="19"/>
         <source>Press Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="49"/>
-        <location filename="../objects/selectkey.cpp" line="179"/>
+        <location filename="../objects/base/selectkey.cpp" line="49"/>
+        <location filename="../objects/base/selectkey.cpp" line="179"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="53"/>
+        <location filename="../objects/base/selectkey.cpp" line="53"/>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="57"/>
+        <location filename="../objects/base/selectkey.cpp" line="57"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="61"/>
+        <location filename="../objects/base/selectkey.cpp" line="61"/>
         <source>F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="65"/>
+        <location filename="../objects/base/selectkey.cpp" line="65"/>
         <source>F4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="69"/>
+        <location filename="../objects/base/selectkey.cpp" line="69"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="73"/>
+        <location filename="../objects/base/selectkey.cpp" line="73"/>
         <source>F6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="77"/>
+        <location filename="../objects/base/selectkey.cpp" line="77"/>
         <source>F7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="81"/>
+        <location filename="../objects/base/selectkey.cpp" line="81"/>
         <source>F8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="85"/>
+        <location filename="../objects/base/selectkey.cpp" line="85"/>
         <source>F9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="89"/>
+        <location filename="../objects/base/selectkey.cpp" line="89"/>
         <source>F10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="93"/>
+        <location filename="../objects/base/selectkey.cpp" line="93"/>
         <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="97"/>
+        <location filename="../objects/base/selectkey.cpp" line="97"/>
         <source>F12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="101"/>
+        <location filename="../objects/base/selectkey.cpp" line="101"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="105"/>
+        <location filename="../objects/base/selectkey.cpp" line="105"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="109"/>
+        <location filename="../objects/base/selectkey.cpp" line="109"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="113"/>
+        <location filename="../objects/base/selectkey.cpp" line="113"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="117"/>
+        <location filename="../objects/base/selectkey.cpp" line="117"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="121"/>
+        <location filename="../objects/base/selectkey.cpp" line="121"/>
         <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="125"/>
+        <location filename="../objects/base/selectkey.cpp" line="125"/>
         <source>Backspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="129"/>
+        <location filename="../objects/base/selectkey.cpp" line="129"/>
         <source>Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="133"/>
+        <location filename="../objects/base/selectkey.cpp" line="133"/>
         <source>Ctrl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="137"/>
+        <location filename="../objects/base/selectkey.cpp" line="137"/>
         <source>Alt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="141"/>
+        <location filename="../objects/base/selectkey.cpp" line="141"/>
         <source>AltGr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="145"/>
+        <location filename="../objects/base/selectkey.cpp" line="145"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="149"/>
+        <location filename="../objects/base/selectkey.cpp" line="149"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="153"/>
+        <location filename="../objects/base/selectkey.cpp" line="153"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="157"/>
+        <location filename="../objects/base/selectkey.cpp" line="157"/>
         <source>/</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="161"/>
+        <location filename="../objects/base/selectkey.cpp" line="161"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="183"/>
+        <location filename="../objects/base/selectkey.cpp" line="183"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>

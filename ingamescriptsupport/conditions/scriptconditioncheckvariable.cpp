@@ -7,10 +7,10 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
-#include "objects/textbox.h"
-#include "objects/dropdownmenu.h"
-#include "objects/label.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/textbox.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/label.h"
 
 ScriptConditionCheckVariable::ScriptConditionCheckVariable()
     : ScriptCondition (ConditionType::checkVariable)

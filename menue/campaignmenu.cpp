@@ -16,7 +16,7 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "objects/filedialog.h"
+#include "objects/dialogs/filedialog.h"
 
 CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     : QObject(),

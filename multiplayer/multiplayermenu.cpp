@@ -21,9 +21,9 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "objects/dialogconnecting.h"
-#include "objects/filedialog.h"
-#include "objects/dialogmessagebox.h"
+#include "objects/dialogs/dialogconnecting.h"
+#include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "ingamescriptsupport/genericbox.h"
 

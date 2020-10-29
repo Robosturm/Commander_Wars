@@ -43,7 +43,7 @@
 #include "game/gamescript.h"
 #include "wiki/wikidatabase.h"
 
-#include "objects/textbox.h"
+#include "objects/base/textbox.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"

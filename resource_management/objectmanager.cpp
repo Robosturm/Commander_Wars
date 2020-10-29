@@ -4,7 +4,7 @@
 
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")

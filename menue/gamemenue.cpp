@@ -20,14 +20,14 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/achievementmanager.h"
 
-#include "objects/filedialog.h"
+#include "objects/dialogs/filedialog.h"
 
-#include "objects/coinfodialog.h"
+#include "objects/dialogs/ingame/coinfodialog.h"
 
-#include "objects/dialogvictoryconditions.h"
-#include "objects/dialogconnecting.h"
-#include "objects/dialogmessagebox.h"
-#include "objects/dialogtextinput.h"
+#include "objects/dialogs/ingame/dialogvictoryconditions.h"
+#include "objects/dialogs/dialogconnecting.h"
+#include "objects/dialogs/dialogmessagebox.h"
+#include "objects/dialogs/dialogtextinput.h"
 
 #include "coreengine/tweenaddcolorall.h"
 
@@ -39,9 +39,9 @@
 
 #include "ingamescriptsupport/genericbox.h"
 
-#include "objects/tableview.h"
-#include "objects/dialogattacklog.h"
-#include "objects/dialogunitinfo.h"
+#include "objects/base/tableview.h"
+#include "objects/dialogs/ingame/dialogattacklog.h"
+#include "objects/dialogs/ingame/dialogunitinfo.h"
 #include "objects/gameplayandkeys.h"
 
 #include <QFile>

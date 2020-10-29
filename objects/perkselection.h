@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QVector>
 
-#include "objects/checkbox.h"
+#include "objects/base/checkbox.h"
 #include "oxygine-framework.h"
 #include "game/co.h"
 

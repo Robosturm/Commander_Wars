@@ -13,8 +13,8 @@
 #include "game/gamemap.h"
 #include "wiki/wikidatabase.h"
 
-#include "objects/label.h"
-#include "objects/progressinfobar.h"
+#include "objects/base/label.h"
+#include "objects/base/progressinfobar.h"
 
 Achievementmenu::Achievementmenu()
     : QObject()

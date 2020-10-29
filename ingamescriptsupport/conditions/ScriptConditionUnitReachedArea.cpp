@@ -7,9 +7,9 @@
 
 #include "resource_management/fontmanager.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea()
     : ScriptCondition (ConditionType::unitReachedArea)

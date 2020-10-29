@@ -7,12 +7,12 @@
 #include "resource_management/objectmanager.h"
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
-#include "objects/checkbox.h"
-#include "objects/dropdownmenu.h"
-#include "objects/textbox.h"
-#include "objects/label.h"
-#include "objects/filedialog.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/textbox.h"
+#include "objects/base/label.h"
+#include "objects/dialogs/filedialog.h"
 
 ScriptEventGeneric::ScriptEventGeneric(EventType type, QString eventIdentifier)
     : ScriptEvent (type),

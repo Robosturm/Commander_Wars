@@ -11,7 +11,7 @@
 
 #include "game/co.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 const float EditorSelection::xFactor = 1.5f;
 const float EditorSelection::yFactor = 2.5f;

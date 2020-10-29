@@ -7,15 +7,15 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
 #include "resource_management/unitspritemanager.h"
 
-#include "objects/dropdownmenu.h"
+#include "objects/base/dropdownmenu.h"
 
-#include "objects/checkbox.h"
+#include "objects/base/checkbox.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptEventChangeBuildlist::ScriptEventChangeBuildlist()
     : ScriptEvent (EventType::changeBuildlist)

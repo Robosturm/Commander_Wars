@@ -4,8 +4,8 @@
 #include <QObject>
 #include "oxygine-framework.h"
 
-#include "objects/multislider.h"
-#include "objects/textbox.h"
+#include "objects/base/multislider.h"
+#include "objects/base/textbox.h"
 
 class RuleSelection;
 typedef oxygine::intrusive_ptr<RuleSelection> spRuleSelection;

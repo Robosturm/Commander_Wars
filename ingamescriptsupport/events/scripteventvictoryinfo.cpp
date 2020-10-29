@@ -8,8 +8,8 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/textbox.h"
-#include "objects/label.h"
+#include "objects/base/textbox.h"
+#include "objects/base/label.h"
 
 ScriptEventVictoryInfo::ScriptEventVictoryInfo()
     : ScriptEvent (EventType::victoryInfo)

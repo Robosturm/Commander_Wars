@@ -5,8 +5,8 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
-#include "objects/tableview.h"
+#include "objects/base/panel.h"
+#include "objects/base/tableview.h"
 
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"

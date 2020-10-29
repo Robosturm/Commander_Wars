@@ -9,9 +9,9 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptConditionTerrainDestroyed::ScriptConditionTerrainDestroyed()
     : ScriptCondition(ConditionType::terrainDestroyed)

@@ -7,9 +7,9 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
-#include "objects/textbox.h"
+#include "objects/base/textbox.h"
 
 #include "qtextstream.h"
 

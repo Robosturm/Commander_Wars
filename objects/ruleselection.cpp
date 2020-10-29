@@ -9,17 +9,17 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "objects/checkbox.h"
-#include "objects/spinbox.h"
-#include "objects/dropdownmenu.h"
-#include "objects/timespinbox.h"
-#include "objects/cobannlistdialog.h"
-#include "objects/perkselectiondialog.h"
-#include "objects/actionlistdialog.h"
-#include "objects/label.h"
-#include "objects/filedialog.h"
-#include "objects/passwordbox.h"
-#include "objects/textbox.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/timespinbox.h"
+#include "objects/dialogs/rules/cobannlistdialog.h"
+#include "objects/dialogs/rules/perkselectiondialog.h"
+#include "objects/dialogs/rules/actionlistdialog.h"
+#include "objects/base/label.h"
+#include "objects/dialogs/filedialog.h"
+#include "objects/base/passwordbox.h"
+#include "objects/base/textbox.h"
 
 constexpr qint32 textWidth = 300;
 

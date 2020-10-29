@@ -5,7 +5,7 @@
 
 #include <qfileinfo.h>
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
 #include "oxygine-framework.h"
 

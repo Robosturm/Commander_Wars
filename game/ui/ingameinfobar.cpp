@@ -16,7 +16,7 @@
 #include "game/battleanimationsprite.h"
 #include "menue/gamemenue.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 IngameInfoBar::IngameInfoBar()
     : QObject()

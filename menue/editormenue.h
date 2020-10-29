@@ -7,8 +7,8 @@
 
 #include "objects/editorselection.h"
 
-#include "objects/topbar.h"
-#include "objects/label.h"
+#include "objects/base/topbar.h"
+#include "objects/base/label.h"
 
 #include "oxygine/KeyEvent.h"
 

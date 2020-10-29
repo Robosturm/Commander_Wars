@@ -5,12 +5,12 @@
 
 #include "game/gamemap.h"
 
-#include "objects/label.h"
-#include "objects/dropdownmenu.h"
-#include "objects/slider.h"
-#include "objects/checkbox.h"
-#include "objects/spinbox.h"
-#include "objects/selectkey.h"
+#include "objects/base/label.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/slider.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/selectkey.h"
 
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {

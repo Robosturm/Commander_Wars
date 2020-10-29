@@ -3,9 +3,9 @@
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
-#include "objects/dropdownmenusprite.h"
-#include "objects/spinbox.h"
-#include "objects/label.h"
+#include "objects/base/dropdownmenusprite.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/label.h"
 
 #include "game/terrain.h"
 

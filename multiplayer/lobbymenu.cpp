@@ -12,7 +12,7 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "objects/chat.h"
+#include "objects/base/chat.h"
 
 #include "network/mainserver.h"
 

@@ -4,8 +4,8 @@
 #include "oxygine-framework.h"
 #include <QObject>
 
-#include "objects/panel.h"
-#include "objects/textbox.h"
+#include "objects/base/panel.h"
+#include "objects/base/textbox.h"
 
 class Achievementmenu : public QObject, public oxygine::Actor
 {

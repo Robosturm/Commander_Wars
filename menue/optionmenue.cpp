@@ -12,14 +12,14 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "objects/slider.h"
-#include "objects/dropdownmenu.h"
-#include "objects/selectkey.h"
-#include "objects/spinbox.h"
-#include "objects/textbox.h"
-#include "objects/label.h"
-#include "objects/timespinbox.h"
-#include "objects/checkbox.h"
+#include "objects/base/slider.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/selectkey.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/textbox.h"
+#include "objects/base/label.h"
+#include "objects/base/timespinbox.h"
+#include "objects/base/checkbox.h"
 
 #include <QDir>
 #include <QFileInfoList>

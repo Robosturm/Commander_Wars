@@ -13,7 +13,7 @@
 
 #include "objects/mapselectionview.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
 class CampaignMenu : public QObject, public oxygine::Actor
 {

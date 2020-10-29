@@ -5,8 +5,8 @@
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
-#include "objects/spinbox.h"
-#include "objects/label.h"
+#include "objects/base/spinbox.h"
+#include "objects/base/label.h"
 
 ScriptEventModifyUnit::ScriptEventModifyUnit()
     : ScriptEvent (ScriptEvent::EventType::modifyUnit)

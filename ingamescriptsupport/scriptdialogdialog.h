@@ -9,11 +9,11 @@
 
 #include "ingamescriptsupport/events/scripteventdialog.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
-#include "objects/dropdownmenu.h"
-#include "objects/dropdownmenucolor.h"
-#include "objects/textbox.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/dropdownmenucolor.h"
+#include "objects/base/textbox.h"
 
 class ScriptDialogDialog;
 typedef oxygine::intrusive_ptr<ScriptDialogDialog> spScriptDialogDialog;

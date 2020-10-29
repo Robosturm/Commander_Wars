@@ -23,8 +23,8 @@
 #include "menue/achievementmenu.h"
 #include "multiplayer/lobbymenu.h"
 
-#include "objects/filedialog.h"
-#include "objects/dialogtextinput.h"
+#include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogtextinput.h"
 
 #include <QFile>
 

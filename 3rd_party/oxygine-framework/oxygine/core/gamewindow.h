@@ -39,7 +39,7 @@ namespace oxygine
          */
         inline void continueThread()
         {
-            Q_ASSERT(isWorker() );
+            Q_ASSERT(isWorker());
             m_Mutex.unlock();
             m_lockCounter--;
         }

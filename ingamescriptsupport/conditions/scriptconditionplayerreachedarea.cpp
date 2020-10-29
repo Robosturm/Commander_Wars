@@ -8,9 +8,9 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "objects/spinbox.h"
+#include "objects/base/spinbox.h"
 
-#include "objects/label.h"
+#include "objects/base/label.h"
 
 ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea()
     : ScriptCondition (ConditionType::playerReachedArea)

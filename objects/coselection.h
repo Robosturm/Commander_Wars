@@ -11,8 +11,8 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
-#include "objects/label.h"
+#include "objects/base/panel.h"
+#include "objects/base/label.h"
 
 class COSelection;
 typedef oxygine::intrusive_ptr<COSelection> spCOSelection;

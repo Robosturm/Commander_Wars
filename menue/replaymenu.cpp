@@ -6,9 +6,9 @@
 
 #include "menue/mainwindow.h"
 
-#include "objects/dialogmessagebox.h"
-#include "objects/dropdownmenu.h"
-#include "objects/slider.h"
+#include "objects/dialogs/dialogmessagebox.h"
+#include "objects/base/dropdownmenu.h"
+#include "objects/base/slider.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"

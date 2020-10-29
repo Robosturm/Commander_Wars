@@ -18,17 +18,18 @@
 
 #include "coreengine/console.h"
 
-#include "objects/filedialog.h"
+#include "objects/dialogs/filedialog.h"
 
-#include "objects/mapeditdialog.h"
-#include "objects/dialogmodifyunit.h"
-#include "objects/dialogmodifybuilding.h"
-#include "objects/playerselectiondialog.h"
-#include "objects/ruleselectiondialog.h"
-#include "objects/dialograndommap.h"
-#include "objects/dialogmodifyterrain.h"
-#include "objects/dialogmessagebox.h"
-#include "objects/label.h"
+#include "objects/dialogs/editor/mapeditdialog.h"
+#include "objects/dialogs/editor/dialogmodifyunit.h"
+#include "objects/dialogs/editor/dialogmodifybuilding.h"
+#include "objects/dialogs/rules/playerselectiondialog.h"
+#include "objects/dialogs/rules/ruleselectiondialog.h"
+#include "objects/dialogs/editor/dialograndommap.h"
+#include "objects/dialogs/editor/dialogmodifyterrain.h"
+#include "objects/dialogs/dialogmessagebox.h"
+#include "objects/base/label.h"
+#include "objects/base/selectkey.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 
@@ -38,8 +39,6 @@
 #include "game/co.h"
 
 #include "wiki/fieldinfo.h"
-
-#include "objects/selectkey.h"
 
 #include "ingamescriptsupport/genericbox.h"
 

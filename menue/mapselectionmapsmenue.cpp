@@ -19,8 +19,8 @@
 
 #include "game/co.h"
 
-#include "objects/dialograndommap.h"
-#include "objects/filedialog.h"
+#include "objects/dialogs/editor/dialograndommap.h"
+#include "objects/dialogs/filedialog.h"
 
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"

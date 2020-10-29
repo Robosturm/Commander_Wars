@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
 #include "oxygine/KeyEvent.h"
 

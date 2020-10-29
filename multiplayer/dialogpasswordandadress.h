@@ -5,8 +5,8 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/textbox.h"
-#include "objects/passwordbox.h"
+#include "objects/base/textbox.h"
+#include "objects/base/passwordbox.h"
 
 class DialogPasswordAndAdress;
 typedef oxygine::intrusive_ptr<DialogPasswordAndAdress> spDialogPasswordAndAdress;

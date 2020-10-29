@@ -4,7 +4,7 @@
 #include <qvector.h>
 
 #include "scriptevent.h"
-#include "objects/textbox.h"
+#include "objects/base/textbox.h"
 
 class ScriptEventGeneric : public ScriptEvent
 {

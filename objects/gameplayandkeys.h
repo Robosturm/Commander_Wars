@@ -5,7 +5,7 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
 class GameplayAndKeys;
 typedef oxygine::intrusive_ptr<GameplayAndKeys> spGameplayAndKeys;

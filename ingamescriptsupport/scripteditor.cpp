@@ -6,8 +6,8 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/filedialog.h"
-#include "objects/dialogmessagebox.h"
+#include "objects/dialogs/filedialog.h"
+#include "objects/dialogs/dialogmessagebox.h"
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "ingamescriptsupport/events/scriptevent.h"

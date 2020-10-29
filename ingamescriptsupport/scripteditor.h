@@ -5,10 +5,10 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/panel.h"
+#include "objects/base/panel.h"
 
-#include "objects/checkbox.h"
-#include "objects/dropdownmenu.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/dropdownmenu.h"
 
 #include "ingamescriptsupport/scriptdata.h"
 
