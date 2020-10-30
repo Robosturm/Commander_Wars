@@ -459,6 +459,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
     qint32 width = getMapWidth();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("synchronizing animations", Console::eDEBUG);
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -471,7 +472,6 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
     {
         m_Rules->createWeatherSprites();
     }
-
 }
 
 void GameMap::killDeadUnits()

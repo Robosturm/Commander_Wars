@@ -477,6 +477,7 @@ void GameRules::createWeatherSprites()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("creating weather Sprites", Console::eDEBUG);
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
         m_CurrentWeather = 0;

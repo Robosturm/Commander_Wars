@@ -793,7 +793,9 @@ void Terrain::setUnit(spUnit pUnit)
         if (pMap.get())
         {
             Player* pPlayer = pMap->getCurrentViewPlayer();
-            if (pPlayer != nullptr &&
+            Player* pCurrentPlayer = pMap->getCurrentPlayer();
+            if (pPlayer != pCurrentPlayer &&
+                pPlayer != nullptr &&
                 !pPlayer->getFieldVisible(Terrain::x, Terrain::y))
             {
                 pUnit->setVisible(false);
