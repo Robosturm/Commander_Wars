@@ -43,12 +43,28 @@ var Constructor = function()
     {
         return "FIELD";
     };
+
+    this.getMinRange = function()
+    {
+        return 1;
+    }
+
+    this.getMaxRange = function()
+    {
+        return 5;
+    }
+    this.getUnfogRange = function()
+    {
+        return 2;
+    }
+
     this.getStepData = function(action, data)
     {
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
-        var fields = globals.getCircle(1, 5);
+        var fields = globals.getCircle(ACTION_FLARE.getMinRange(),
+                                       ACTION_FLARE.getMaxRange());
         data.setColor("#C8FF0000");
         data.setZLabelColor("#ff4500");
         data.setShowZData(false);
@@ -90,7 +106,7 @@ var Constructor = function()
         animation.addSprite("flare_explosion", -map.getImageSize() - 36, -map.getImageSize() - 37, 0, 1.5);
         audio.playSound("flare_launch.wav");
         audio.playSound("flare_explosion.wav", 1, "resources/sounds/", 300);
-        var fields = globals.getCircle(0, 2);
+        var fields = globals.getCircle(0, ACTION_FLARE.getUnfogRange());
         for (var i = 0; i < fields.size(); i++)
         {
             var x = fields.at(i).x + ACTION_FLARE.postAnimationTargetX;

@@ -14,6 +14,36 @@
 
 #include "game/gamemap.h"
 
+bool CoreAI::moveFlares(QmlVectorUnit* pUnits)
+{
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved())
+        {
+            if (pUnit->getActionList().contains(ACTION_FLARE))
+            {
+                UnitPathFindingSystem turnPfs(pUnit);
+                turnPfs.explore();
+                spGameAction pAction = new GameAction(ACTION_FLARE);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                QPoint moveTarget;
+                QPoint flareTarget;
+                CoreAI::getBestFlareTarget(pUnit, pAction, &turnPfs, flareTarget, moveTarget);
+                // found something?
+                if (moveTarget.x() >= 0)
+                {
+                    QVector<QPoint> path = turnPfs.getPath(moveTarget.x(), moveTarget.y());
+                    pAction->setMovepath(path, turnPfs.getCosts(path));
+                    addSelectedFieldData(pAction, flareTarget);
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {

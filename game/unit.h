@@ -388,6 +388,12 @@ public slots:
      * @return
      */
     bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
+    /**
+     * @brief hasTerrainHide
+     * @param pPlayer
+     * @return
+     */
+    bool hasTerrainHide(Player* pPlayer);
 
     qint32 getUnitRank() const;
     void setUnitRank(const qint32 &UnitRank);

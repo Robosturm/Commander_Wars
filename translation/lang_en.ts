@@ -305,7 +305,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="116"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="132"/>
         <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
         <translation type="unfinished"></translation>
     </message>

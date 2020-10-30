@@ -57,7 +57,7 @@ void NormalAi::process()
         pEnemyBuildings->randomize();
         updateEnemyData(pUnits.get());
         if (useCOPower(pUnits.get(), pEnemyUnits.get()))
-        {
+        {            
             clearEnemyData();
         }
         else
@@ -77,6 +77,7 @@ void NormalAi::process()
                     if (useCOPower(pUnits.get(), pEnemyUnits.get()))
                     {
                         clearEnemyData();
+                        usedTransportSystem = false;
                         turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
                     else
@@ -100,6 +101,7 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
                                   QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     if (aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}

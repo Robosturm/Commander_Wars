@@ -2697,6 +2697,16 @@ void Unit::updateStealthIcon()
     }
 }
 
+bool Unit::hasTerrainHide(Player* pPlayer)
+{
+    qint32 x = getX();
+    qint32 y = getY();
+    bool visibleField = pPlayer->getFieldVisible(x, y);
+    spGameMap pMap = GameMap::getInstance();
+    return (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
+            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off);
+}
+
 bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 testX, qint32 testY)
 {
     if (pPlayer != nullptr &&
@@ -2727,8 +2737,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         }
         // a unit can be stealth by itself or by the terrain it's on.
         if (getHidden() ||
-            (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
-             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
+            hasTerrainHide(pPlayer))
         {
             spQmlVectorPoint pPoints = Mainapp::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
@@ -3058,10 +3067,10 @@ void Unit::createCORange(qint32 coRange)
     {
         QColor color = m_pOwner->getColor();
         CreateOutline::addCursorRangeOutline(m_CORange, "co+range+marker", coRange, color);
-//        QColor playerColor = color;
-//        QColor inversColor = playerColor;
-//        oxygine::Sprite::TweenColor tweenColor(inversColor);
-//        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
+        //        QColor playerColor = color;
+        //        QColor inversColor = playerColor;
+        //        oxygine::Sprite::TweenColor tweenColor(inversColor);
+        //        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
         m_CORange->setPosition(GameMap::getImageSize() * getX(), GameMap::getImageSize() * getY());
         pMap->addChild(m_CORange);
     }

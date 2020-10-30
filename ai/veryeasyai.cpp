@@ -76,6 +76,7 @@ void VeryEasyAI::process()
                 turnMode = GameEnums::AiTurnMode_EndOfDay;
                 if (useCOPower(pUnits.get(), pEnemyUnits.get()))
                 {
+                    usedTransportSystem = false;
                     turnMode = GameEnums::AiTurnMode_DuringDay;
                 }
                 else
@@ -91,6 +92,7 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
                                     QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     if (aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveFlares(pUnits)){}
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}

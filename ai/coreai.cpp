@@ -49,6 +49,7 @@ const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPO
 const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
 const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
+const QString CoreAI::ACTION_FLARE = "ACTION_FLARE";
 
 CoreAI::CoreAI(GameEnums::AiTypes aiType)
     : BaseGameInputIF(aiType),
@@ -57,6 +58,24 @@ CoreAI::CoreAI(GameEnums::AiTypes aiType)
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+
+    // load static information from scripts to improve performance
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction(ACTION_FLARE, "getMinRange");
+    if (erg.isNumber())
+    {
+        m_flareInfo.minRange = erg.toNumber();
+    }
+    erg = pInterpreter->doFunction(ACTION_FLARE, "getMaxRange");
+    if (erg.isNumber())
+    {
+        m_flareInfo.maxRange = erg.toNumber();
+    }
+    erg = pInterpreter->doFunction(ACTION_FLARE, "getUnfogRange");
+    if (erg.isNumber())
+    {
+        m_flareInfo.unfogRange = erg.toNumber();
+    }
 }
 
 CoreAI::~CoreAI()
@@ -1206,6 +1225,94 @@ bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
         return ret.toBool();
     }
     return false;
+}
+
+void CoreAI::appendFlareTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
+{
+
+}
+
+void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QPoint& flareTarget, QPoint& moveTargetField)
+{
+    flareTarget  = QPoint(-1, -1);
+    moveTargetField  = QPoint(-1, -1);
+    if (pAction->canBePerformed())
+    {
+        spQmlVectorPoint pUnfogCircle = Mainapp::getCircle(0, m_flareInfo.unfogRange);
+        spQmlVectorPoint pTargetCircle = Mainapp::getCircle(m_flareInfo.minRange, m_flareInfo.maxRange);
+        pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
+        spGameMap pMap = GameMap::getInstance();
+        QVector<QPoint> targets = pPfs->getAllNodePoints();
+        qint32 score = std::numeric_limits<qint32>::min();
+        for (qint32 i = 0; i < targets.size(); i++)
+        {
+            Unit* pFieldUnit = pMap->getTerrain(targets[i].x(), targets[i].y())->getUnit();
+            if (pFieldUnit == nullptr ||
+                pFieldUnit == pUnit)
+            {
+                for (qint32 i2 = 0; i2 < pTargetCircle->size(); ++i2)
+                {
+                    QPoint target = pTargetCircle->at(i2) + targets[i];
+                    if (pMap->onMap(target.x(), target.y()))
+                    {
+                        qint32 currentScore = getFlareTargetScore(targets[i], target, pUnfogCircle);
+                        if (score < currentScore)
+                        {
+                            score = currentScore;
+                            flareTarget  = target;
+                            moveTargetField  = targets[i];
+                        }
+                        else if (score == currentScore && Mainapp::randInt(0, 10) > 5)
+                        {
+                            flareTarget  = target;
+                            moveTargetField  = targets[i];
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle)
+{
+    spGameMap pMap = GameMap::getInstance();
+    qint32 score = 0;
+    for (qint32 i = 0; i < pUnfogCircle->size(); ++i)
+    {
+        QPoint target = pUnfogCircle->at(i) + flareTarget;
+        if (pMap->onMap(target.x(), target.y()))
+        {
+            Unit* pFieldUnit = pMap->getTerrain(target.x(), target.y())->getUnit();
+            if (pFieldUnit != nullptr && m_pPlayer->isEnemyUnit(pFieldUnit))
+            {
+                if (pFieldUnit->isStealthed(m_pPlayer))
+                {
+                    // unstealthing stealthed units is more important.
+                    // than unfogging plain fields
+                    if (pFieldUnit->isStatusStealthed() ||
+                        pFieldUnit->hasTerrainHide(m_pPlayer))
+                    {
+                        score += 2;
+                    }
+                    else
+                    {
+                        score++;
+                    }
+                }
+            }
+        }
+    }
+    if (score > 0)
+    {
+        // the farther away from the flare the better it is usually
+        score += Mainapp::getDistance(moveTarget, flareTarget) * pUnfogCircle->size() * 3;
+    }
+    else
+    {
+        score = -1;
+    }
+    return score;
 }
 
 void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qint32>& checkedIslands,

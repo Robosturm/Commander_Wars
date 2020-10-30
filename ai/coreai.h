@@ -17,6 +17,8 @@
 
 #include "ai/decisiontree.h"
 
+#include "coreengine/qmlvector.h"
+
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class Unit;
@@ -68,6 +70,7 @@ public:
     static const QString ACTION_CO_UNIT_0;
     static const QString ACTION_CO_UNIT_1;
     static const QString ACTION_EXPLODE;
+    static const QString ACTION_FLARE;
 
     explicit CoreAI(GameEnums::AiTypes aiType);
     virtual ~CoreAI();
@@ -154,6 +157,12 @@ public slots:
      * @param pEnemyUnits
      */
     bool moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    /**
+     * @brief moveFlares
+     * @param pUnits
+     * @return
+     */
+    bool moveFlares(QmlVectorUnit* pUnits);
     /**
      * @brief moveBlackBombs
      * @param pUnits
@@ -356,10 +365,18 @@ protected:
      * @param pUnit
      * @param pAction
      * @param pPfs
-     * @param ret
-     * @param moveTargetFields
+     * @param flareTarget
+     * @param moveTargetField
      */
-    void getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QPoint& flareTarget, QPoint& moveTargetField);
+    /**
+     * @brief getFlareTargetScore
+     * @param moveTarget
+     * @param flareTarget
+     * @param pUnfogCircle
+     * @return
+     */
+    qint32 getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle);
     /**
      * @brief isUnloadTerrain
      * @param pUnit
@@ -449,7 +466,13 @@ protected:
     bool m_missileTarget{false};
 private:
     bool finish{false};
-
+    struct FlareInfo
+    {
+        qint32 minRange{0};
+        qint32 maxRange{0};
+        qint32 unfogRange{0};
+    };
+    FlareInfo m_flareInfo;
 
 };
 
