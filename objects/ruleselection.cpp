@@ -423,7 +423,7 @@ void RuleSelection::showRuleSelection()
     addChild(textField);
     QVector<QString> dayModes = {tr("Default"), tr("Permanent")};
     spDropDownmenu pDropDownmenu = new DropDownmenu(300, dayModes);
-    pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human pr not. Decision is depending of chosen fog of war."));
+    pDropDownmenu->setTooltipText(tr("Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war."));
     pDropDownmenu->setPosition(textWidth, textField->getY());
     addChild(pDropDownmenu);
     pDropDownmenu->setCurrentItem(static_cast<qint32>(pMap->getGameRules()->getDayToDayScreen()));

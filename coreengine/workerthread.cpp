@@ -71,10 +71,6 @@ void WorkerThread::start()
             pInterpreter->openScript(file, true);
         }
     }
-
-    // achievements should be loaded first?
-    AchievementManager* pAchievementManager = AchievementManager::getInstance();
-    pAchievementManager->loadAll();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -96,6 +92,9 @@ void WorkerThread::start()
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     pCOPerkManager->loadAll();
     WikiDatabase::getInstance()->load();
+    // achievements should be loaded last
+    AchievementManager* pAchievementManager = AchievementManager::getInstance();
+    pAchievementManager->loadAll();
 
     connect(pApp, &Mainapp::sigMousePressEvent, this, &WorkerThread::mousePressEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);

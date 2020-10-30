@@ -7,6 +7,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
+#include "objects/achievementbanner.h"
 
 Userdata* Userdata::m_pInstance = nullptr;
 
@@ -110,7 +111,11 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             achievement.progress += value;
             if (!achieved && (achievement.progress >= achievement.targetValue))
             {
-                showAchieved();
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
+                spAchievementBanner banner = new AchievementBanner(achievement);
+                oxygine::getStage()->addChild(banner);
+                pApp->continueThread();
             }
         }
     }
@@ -154,6 +159,7 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
             achievement.hide = hide;
             achievement.icon = icon;
             achievement.loaded = true;
+            break;
         }
     }
     if (!found)
@@ -173,11 +179,6 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
 QVector<Userdata::Achievement>* Userdata::getAchievements()
 {
     return &m_achievements;
-}
-
-void Userdata::showAchieved()
-{
-
 }
 
 void Userdata::serializeObject(QDataStream& pStream) const

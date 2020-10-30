@@ -6,6 +6,10 @@
 #include "coreengine/userdata.h"
 #include "oxygine-framework.h"
 
+
+class AchievementBanner;
+typedef oxygine::intrusive_ptr<AchievementBanner> spAchievementBanner;
+
 class AchievementBanner : public QObject, public oxygine::Actor
 {
     Q_OBJECT

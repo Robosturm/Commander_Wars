@@ -142,61 +142,67 @@ void Achievementmenu::searchChanged(QString text)
     qint32 singleWidth = Settings::getWidth() - 80;
     for (auto achievement : *achievements)
     {
-        if (text.isEmpty() ||
-            achievement.name.toLower().contains(text) ||
-            achievement.description.toLower().contains(text))
+        if (achievement.loaded)
         {
-            if (achievement.progress >= achievement.targetValue)
+            bool achieved = achievement.progress >= achievement.targetValue;
+            if (text.isEmpty() ||
+                ((achievement.name.toLower().contains(text) ||
+                  achievement.description.toLower().contains(text)) &&
+                 (!achievement.hide || achieved)))
             {
-                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-                pIcon->setPosition(x, y + 16);
-                m_MainPanel->addItem(pIcon);
-            }
-            else
-            {
-                WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-                pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
-                m_MainPanel->addItem(pIcon);
-//                spLabel pTextfield = new Label(50);
-//                pTextfield->setStyle(styleLarge);
-//                pTextfield->setText("?");
-//                pTextfield->setPosition(x, y + 8);
-//                m_MainPanel->addItem(pTextfield);
-            }
 
-            spLabel pTextfield = new Label(singleWidth - 60);
-            pTextfield->setStyle(style);
-            if (achievement.hide)
-            {
-                pTextfield->setText("?");
-            }
-            else
-            {
-                pTextfield->setText(achievement.name);
-            }
-            pTextfield->setPosition(x + 60, y);
-            m_MainPanel->addItem(pTextfield);
+                if (achieved)
+                {
+                    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                    pIcon->setPosition(x, y + 16);
+                    m_MainPanel->addItem(pIcon);
+                }
+                else
+                {
+                    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                    pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
+                    m_MainPanel->addItem(pIcon);
+                    //                spLabel pTextfield = new Label(50);
+                    //                pTextfield->setStyle(styleLarge);
+                    //                pTextfield->setText("?");
+                    //                pTextfield->setPosition(x, y + 8);
+                    //                m_MainPanel->addItem(pTextfield);
+                }
 
-            pTextfield = new Label(singleWidth - 60);
-            pTextfield->setStyle(style);
-            if (achievement.hide)
-            {
-                pTextfield->setText("?");
-            }
-            else
-            {
-                pTextfield->setText(achievement.description);
-            }
-            pTextfield->setPosition(x + 60, y + 40);
-            m_MainPanel->addItem(pTextfield);
+                spLabel pTextfield = new Label(singleWidth - 60);
+                pTextfield->setStyle(style);
+                if (achievement.hide && !achieved)
+                {
+                    pTextfield->setText("?");
+                }
+                else
+                {
+                    pTextfield->setText(achievement.name);
+                }
+                pTextfield->setPosition(x + 60, y);
+                m_MainPanel->addItem(pTextfield);
 
-            QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
-            spProgressInfoBar pProgressInfoBar = new ProgressInfoBar(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
-            pProgressInfoBar->setPosition(x, y + 80);
-            m_MainPanel->addItem(pProgressInfoBar);
-            y += 120;
+                pTextfield = new Label(singleWidth - 60);
+                pTextfield->setStyle(style);
+                if (achievement.hide && !achieved)
+                {
+                    pTextfield->setText("?");
+                }
+                else
+                {
+                    pTextfield->setText(achievement.description);
+                }
+                pTextfield->setPosition(x + 60, y + 40);
+                m_MainPanel->addItem(pTextfield);
+
+                QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
+                spProgressInfoBar pProgressInfoBar = new ProgressInfoBar(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
+                pProgressInfoBar->setPosition(x, y + 80);
+                m_MainPanel->addItem(pProgressInfoBar);
+                y += 120;
+            }
         }
     }
     m_MainPanel->setContentHeigth(y + 50);

@@ -788,7 +788,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="248"/>
-        <source>Bannlist Name</source>
+        <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -854,7 +854,7 @@
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="302"/>
-        <source>Bannlist Name</source>
+        <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4487,11 +4487,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="142"/>
-        <source>Enviroment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="157"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
@@ -4542,11 +4537,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="227"/>
-        <source>CO Bannlist: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="230"/>
         <location filename="../objects/ruleselection.cpp" line="245"/>
         <location filename="../objects/ruleselection.cpp" line="260"/>
@@ -4554,13 +4544,23 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="142"/>
+        <source>Environment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="227"/>
+        <source>CO Banlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="242"/>
-        <source>Perk Bannlist: </source>
+        <source>Perk Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="257"/>
-        <source>Action Bannlist: </source>
+        <source>Action Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4705,7 +4705,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="426"/>
-        <source>Defines if the day to day banner is shown permanent for humans or. Decided based on fog of war.</source>
+        <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11185,7 +11185,7 @@ Air units have increased firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_empty_ma.js" line="51"/>
-        <source>The Metall Army defends it&apos;s own territory at all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18605,7 +18605,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="10"/>
-        <source>The Metall Army defends it&apos;s own territory at all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
+        <source>The Metall Army defends it&apos;s own territory at all costs when it loses it&apos;s territory. The Army tries to reconquer it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19120,7 +19120,7 @@ Units have increased firepower during sandstorm.</source>
     <name>victoryrule_1nohq_town_replace</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_1nohq_town_replace.js" line="6"/>
-        <source>A player looses when he lost his last HQ. All buildings will be owned by the current player. A captured HQ and neutral HQ&apos;s will be converted into a town.</source>
+        <source>A player loses when he lost his last HQ. All buildings will be owned by the current player. A captured HQ and neutral HQ&apos;s will be converted into a town.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19156,7 +19156,7 @@ Units have increased firepower during sandstorm.</source>
     <name>victoryrule_counitlost</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="5"/>
-        <source>A player looses if he lost the given amount of co units.</source>
+        <source>A player loses if he lost the given amount of co units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19192,7 +19192,7 @@ Units have increased firepower during sandstorm.</source>
     <name>victoryrule_nohq</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="5"/>
-        <source>A player looses when he looses his last HQ. All buildings will be owned by the current player.</source>
+        <source>A player loses when he loses his last HQ. All buildings will be owned by the current player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19205,7 +19205,7 @@ Units have increased firepower during sandstorm.</source>
     <name>victoryrule_nounits</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="5"/>
-        <source>A player looses when he looses his last unit.</source>
+        <source>A player loses when he loses his last unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19223,7 +19223,7 @@ Units have increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="11"/>
-        <source>The Team winning the game if the time is up. âˆž for all player loose the game.</source>
+        <source>The Team winning the game if the time is up. Infinite for all player losing the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
