@@ -99,7 +99,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     pAnim = pObjectManager->getResAnim("co_cursor");
     m_Cursor = new oxygine::Sprite();
     m_Cursor->setResAnim(pAnim);
-    m_Cursor->setPosition(5, 7 + y);
+    m_Cursor->setPosition(5, 7);
     m_Cursor->setPriority(1);
     m_Cursor->setScale(scale);
     m_CoFieldPanel->addItem(m_Cursor);

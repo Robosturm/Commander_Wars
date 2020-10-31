@@ -172,6 +172,7 @@ void MapSelectionMapsMenue::slotButtonBack()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("slotButtonBack()", Console::eDEBUG);
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:

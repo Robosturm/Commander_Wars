@@ -736,6 +736,7 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("centerMapOnAction()", Console::eDEBUG);
     Unit* pUnit = pGameAction->getTargetUnit();
     Player* pPlayer = getCurrentViewPlayer();
     spGameMap pMap = GameMap::getInstance();
@@ -1093,7 +1094,7 @@ void GameMenue::victory(qint32 team)
         }
         if (pMap->getCampaign() != nullptr)
         {
-            Console::print("Informaing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
+            Console::print("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
             pMap->getCampaign()->mapFinished(humanWin);
         }
         AchievementManager::getInstance()->onVictory(team, humanWin);
@@ -1110,7 +1111,7 @@ void GameMenue::showAttackLog()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Focused = false;
-
+    Console::print("showAttackLog()", Console::eDEBUG);
     spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getCurrentPlayer());
     connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
     {
@@ -1125,7 +1126,7 @@ void GameMenue::showUnitInfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Focused = false;
-
+    Console::print("showUnitInfo()", Console::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getCurrentPlayer());
     connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
     {
@@ -1140,6 +1141,7 @@ void GameMenue::showOptions()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Focused = false;
+    Console::print("showOptions()", Console::eDEBUG);
     spGenericBox pDialogOptions = new GenericBox();
     spGameplayAndKeys pGameplayAndKeys = new GameplayAndKeys(Settings::getHeight() - 80);
     pGameplayAndKeys->setY(0);
@@ -1157,6 +1159,7 @@ void GameMenue::showGameInfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Focused = false;
+    Console::print("showGameInfo()", Console::eDEBUG);
     QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Killed"), tr("Army Value"), tr("Income"), tr("Funds"), tr("Bases")};
     QVector<QStringList> data;
     spGameMap pMap = GameMap::getInstance();
@@ -1224,7 +1227,7 @@ void GameMenue::showCOInfo()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    Console::print("showCOInfo()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     spCOInfoDialog pCOInfoDialog = new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
@@ -1318,6 +1321,7 @@ void GameMenue::showSaveAndExitGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("showSaveAndExitGame()", Console::eDEBUG);
     QVector<QString> wildcards;
     if (m_pNetworkInterface.get() != nullptr ||
         m_Multiplayer)
@@ -1341,6 +1345,7 @@ void GameMenue::victoryInfo()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("victoryInfo()", Console::eDEBUG);
     spDialogVictoryConditions pVictoryConditions = new DialogVictoryConditions();
     addChild(pVictoryConditions);
     setFocused(false);
@@ -1350,6 +1355,7 @@ void GameMenue::victoryInfo()
 
 void GameMenue::autoSaveMap()
 {
+    Console::print("autoSaveMap()", Console::eDEBUG);
     saveMap("savegames/" + GameMap::getInstance()->getMapName() + "_autosave_" + QString::number(m_autoSaveCounter + 1) + getSaveFileEnding());
     m_autoSaveCounter++;
     if (m_autoSaveCounter >= Settings::getAutoSavingCycle())
@@ -1548,6 +1554,7 @@ void GameMenue::showExitGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("showExitGame()", Console::eDEBUG);
     m_Focused = false;
     spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -1566,6 +1573,7 @@ void GameMenue::showSurrenderGame()
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+        Console::print("showSurrenderGame()", Console::eDEBUG);
         m_Focused = false;
         spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
@@ -1596,6 +1604,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     spUnit pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
     if (pUnit.get() != nullptr)
     {
+        Console::print("showNicknameUnit()", Console::eDEBUG);
         spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Nickname for the Unit:"), true, pUnit->getName());
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
         {

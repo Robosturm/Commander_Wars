@@ -2316,47 +2316,47 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="298"/>
+        <location filename="../menue/editormenue.cpp" line="301"/>
         <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="530"/>
+        <location filename="../menue/editormenue.cpp" line="534"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="534"/>
+        <location filename="../menue/editormenue.cpp" line="538"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="543"/>
+        <location filename="../menue/editormenue.cpp" line="547"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="547"/>
+        <location filename="../menue/editormenue.cpp" line="551"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="556"/>
+        <location filename="../menue/editormenue.cpp" line="560"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="560"/>
+        <location filename="../menue/editormenue.cpp" line="564"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="569"/>
+        <location filename="../menue/editormenue.cpp" line="573"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="573"/>
+        <location filename="../menue/editormenue.cpp" line="577"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2569,67 +2569,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1160"/>
+        <location filename="../menue/gamemenue.cpp" line="1163"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1182"/>
+        <location filename="../menue/gamemenue.cpp" line="1185"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1192"/>
+        <location filename="../menue/gamemenue.cpp" line="1195"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1552"/>
+        <location filename="../menue/gamemenue.cpp" line="1559"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1570"/>
+        <location filename="../menue/gamemenue.cpp" line="1578"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1599"/>
+        <location filename="../menue/gamemenue.cpp" line="1608"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>

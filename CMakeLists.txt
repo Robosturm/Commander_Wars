@@ -257,7 +257,6 @@ set(${PROJECT_NAME}_SRCS
         coreengine/scriptvariables.cpp
         coreengine/scriptvariable.cpp
         coreengine/workerthread.cpp
-        coreengine/dijkstramap.cpp
         coreengine/timer.cpp
         coreengine/userdata.cpp
         coreengine/crashreporter.cpp

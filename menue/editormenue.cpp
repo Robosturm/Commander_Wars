@@ -205,6 +205,7 @@ void EditorMenue::cleanTemp(qint32 step)
 
 void EditorMenue::createTempFile(bool cleanUp)
 {
+    Console::print(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", Console::eDEBUG);
     if (cleanUp)
     {
         cleanTemp(tempCounter);
@@ -292,6 +293,8 @@ void EditorMenue::clickedTopbar(QString itemID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("clickedTopbar(" + itemID + ")", Console::eDEBUG);
+
     if (itemID == "EXIT")
     {
         m_Focused = false;
@@ -513,6 +516,7 @@ void EditorMenue::showResizeMap()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
+    Console::print("showResizeMap()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     spGenericBox pBox = new GenericBox(true);
 

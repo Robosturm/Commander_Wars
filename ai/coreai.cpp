@@ -19,6 +19,7 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
+#include "coreengine/console.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -108,9 +109,10 @@ void CoreAI::nextAction()
         m_pPlayer == GameMap::getInstance()->getCurrentPlayer() &&
         pMenue->getGameStarted())
     {
+
         if (!processPredefinedAi())
         {
-
+            Console::print("Processing ai specific behaviour", Console::eDEBUG);
             // if so execute next action
             process();
         }

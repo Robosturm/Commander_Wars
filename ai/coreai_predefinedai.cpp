@@ -1,5 +1,7 @@
 #include "ai/coreai.h"
 
+#include "coreengine/console.h"
+
 #include "game/unitpathfindingsystem.h"
 
 #include "ai/targetedunitpathfindingsystem.h"
@@ -16,6 +18,7 @@
 
 bool CoreAI::moveFlares(QmlVectorUnit* pUnits)
 {
+    Console::print("moveFlares()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -47,7 +50,7 @@ bool CoreAI::moveFlares(QmlVectorUnit* pUnits)
 
 bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
-    //
+    Console::print("moveOoziums()", Console::eDEBUG);
     QVector<QVector3D> targets;
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
@@ -85,6 +88,7 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 
 bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
+    Console::print("moveBlackBombs()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> enemyTargets;
     spQmlVectorPoint enemyFields = Mainapp::getCircle(1, 1);
@@ -252,6 +256,7 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
 
 bool CoreAI::processPredefinedAi()
 {
+    Console::print("processPredefinedAi()", Console::eDEBUG);
     spQmlVectorUnit pUnits = m_pPlayer->getUnits();
     pUnits->randomize();
 
