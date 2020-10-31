@@ -114,12 +114,18 @@ void GameMap::loadMapData()
     deleteMap();
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
-    pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
+    registerMapAtInterpreter();
     m_zoom = 2.0f;
     setScale(m_zoom);
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Map));
+}
+
+void GameMap::registerMapAtInterpreter()
+{
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
+    pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
 }
 
 qint32 GameMap::getUniqueIdCounter()

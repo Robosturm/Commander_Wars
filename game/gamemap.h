@@ -322,6 +322,10 @@ public:
      * @return
      */
     bool anyPlayerAlive();
+    /**
+     * @brief registerMapAtInterpreter
+     */
+    void registerMapAtInterpreter();
 signals:
     void signalExitGame();
     void signalSaveGame();

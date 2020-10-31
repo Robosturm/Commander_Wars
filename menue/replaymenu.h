@@ -77,7 +77,7 @@ private:
     oxygine::spButton _configButton;
     GameEnums::AnimationMode _StoredShowAnimations = GameEnums::AnimationMode_All;
     spHumanPlayerInput _HumanInput;
-    Viewplayer _Viewplayer;
+    spViewplayer m_Viewplayer;
 
     GameEnums::AnimationMode _storedAnimMode;
     GameEnums::BattleAnimationMode _storedBatteAnimMode;
@@ -86,7 +86,6 @@ private:
 
     bool _seekPause{false};
     bool _seeking{false};
-    qint32 _seekDay = -1;
     oxygine::spActor _seekActor;
     spLabel _seekDayLabel;
 };

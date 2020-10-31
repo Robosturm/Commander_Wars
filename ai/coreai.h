@@ -354,13 +354,6 @@ protected:
                                  qint32 loadedUnitIslandIdx, qint32 targetIsland,
                                  QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
     /**
-     * @brief appendFlareTargets
-     * @param pUnit
-     * @param pEnemyUnits
-     * @param targets
-     */
-    void appendFlareTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
-    /**
      * @brief getBestFlareTarget
      * @param pUnit
      * @param pAction

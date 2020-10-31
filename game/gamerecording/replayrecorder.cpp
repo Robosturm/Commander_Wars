@@ -6,6 +6,7 @@
 #include "game/gameaction.h"
 #include "gameinput/basegameinputif.h"
 #include "coreengine/filesupport.h"
+#include "coreengine/console.h"
 
 #include <QByteArray>
 #include <QDateTime>
@@ -18,6 +19,7 @@ ReplayRecorder::ReplayRecorder()
 
 ReplayRecorder::~ReplayRecorder()
 {
+    Console::print("Saving record", Console::eDEBUG);
     if (m_recording)
     {
         _dailyMapPos = m_recordFile.pos();
@@ -32,6 +34,7 @@ ReplayRecorder::~ReplayRecorder()
     m_recordFile.close();
     if (playing)
     {
+        Console::print("Restoring interpreter after record replay", Console::eDEBUG);
         Interpreter::reloadInterpreter(Interpreter::getRuntimeData());
     }
 }
@@ -40,6 +43,7 @@ void ReplayRecorder::startRecording()
 {
     if (Settings::getRecord())
     {
+        Console::print("Starting recording", Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         // compress script enviroment
         QByteArray data = Interpreter::getRuntimeData().toUtf8();

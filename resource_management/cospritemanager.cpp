@@ -6,6 +6,13 @@
 
 #include "spritingsupport/spritecreator.h"
 
+COSpriteManager::COSpriteManager()
+    : RessourceManagement<COSpriteManager>("/images/co/res.xml",
+                                           "/scripts/cos")
+{
+    connect(this, &COSpriteManager::sigLoadResAnim, this, &COSpriteManager::loadResAnim, Qt::QueuedConnection);
+}
+
 QVector<QString> COSpriteManager::getSpriteCOIDs()
 {
     QVector<QString> ret;
@@ -47,8 +54,10 @@ QStringList COSpriteManager::getCOStyles(qint32 position)
     return QStringList();
 }
 
-void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable, bool useColorBox)
+void COSpriteManager::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
+    colorTable.convertTo(QImage::Format_ARGB32);
+    maskTable.convertTo(QImage::Format_ARGB32);
     QString coidLower = coid.toLower();
     bool nrmFound = false;
     bool faceFound = false;
@@ -57,28 +66,31 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable
     {
         if (coidLower+ "+nrm" == std::get<0>(m_Ressources[i]))
         {
-            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+nrm", oxygine::error_policy::ep_ignore_error);
-            std::get<1>(m_Ressources[i]) = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+nrm", oxygine::error_policy::ep_ignore_error);
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            m_Ressources[i] = std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim);
             nrmFound = true;
         }
         else if (coidLower + "+face" == std::get<0>(m_Ressources[i]))
         {
-            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+face", oxygine::error_policy::ep_ignore_error);
-            std::get<1>(m_Ressources[i]) = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+face", oxygine::error_policy::ep_ignore_error);
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            m_Ressources[i] = std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim);
             faceFound = true;
         }
         else if (coidLower + "+info" == std::get<0>(m_Ressources[i]))
         {
-            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+info", oxygine::error_policy::ep_ignore_error);
-            std::get<1>(m_Ressources[i]) = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+info", oxygine::error_policy::ep_ignore_error);
+            oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            m_Ressources[i] = std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim);
             infoFound = true;
         }
     }
 
     if (!faceFound)
     {
-        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+face", oxygine::error_policy::ep_ignore_error);
-        if (pAnim != nullptr)
+        oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+face", oxygine::error_policy::ep_ignore_error);
+        if (pAnim.get() != nullptr)
         {
             oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
@@ -89,8 +101,8 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable
     }
     if (!infoFound)
     {
-        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+info", oxygine::error_policy::ep_ignore_error);
-        if (pAnim != nullptr)
+        oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+info", oxygine::error_policy::ep_ignore_error);
+        if (pAnim.get() != nullptr)
         {
             oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)
@@ -101,8 +113,8 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable
     }
     if (!nrmFound)
     {
-        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim(coidLower + "+nrm", oxygine::error_policy::ep_ignore_error);
-        if (pAnim != nullptr)
+        oxygine::spResAnim pAnim = oxygine::Resources::getResAnim(coidLower + "+nrm", oxygine::error_policy::ep_ignore_error);
+        if (pAnim.get() != nullptr)
         {
             oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
             if (pCOAnim.get() != nullptr)

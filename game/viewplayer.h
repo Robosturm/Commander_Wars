@@ -3,6 +3,9 @@
 
 #include "game/player.h"
 
+class Viewplayer;
+typedef oxygine::intrusive_ptr<Viewplayer> spViewplayer;
+
 class Viewplayer : public Player
 {
     Q_OBJECT

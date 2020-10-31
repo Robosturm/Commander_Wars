@@ -54,6 +54,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
       m_SaveGame(saveGame)
 {
+    Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
@@ -101,6 +102,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_SaveGame(saveGame)
 
 {
+    Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
@@ -111,6 +113,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 GameMenue::GameMenue()
     : InGameMenue()
 {
+    Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
 }
 
@@ -482,6 +485,7 @@ bool GameMenue::getGameStarted() const
 
 GameMenue::~GameMenue()
 {
+    Console::print("Deleting game menu singleton", Console::eDEBUG);
     m_pInstance = nullptr;
 }
 
@@ -929,40 +933,46 @@ void GameMenue::actionPerformed()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    Console::print("Action performed", Console::eDEBUG);
-    finishActionPerformed();
-
-    m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
-    m_IngameInfoBar->updateMinimap();
-    m_IngameInfoBar->updatePlayerInfo();
-    if (GameAnimationFactory::getAnimationCount() == 0)
+    if (getParent() != nullptr)
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (!pMap->anyPlayerAlive())
-        {
-            Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
-            emit sigExitGame();
-        }
-        else if (pMap->getCurrentPlayer()->getIsDefeated())
-        {
-            Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-            spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
-            performAction(pAction);
-        }
-        else if (m_pStoredAction.get() != nullptr)
-        {
-            performAction(m_pStoredAction);
-        }
-        else
-        {
-            Mainapp::setUseSeed(false);
+        Console::print("Action performed", Console::eDEBUG);
+        finishActionPerformed();
 
-            if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+        m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
+        m_IngameInfoBar->updateMinimap();
+        m_IngameInfoBar->updatePlayerInfo();
+        if (GameAnimationFactory::getAnimationCount() == 0)
+        {
+            spGameMap pMap = GameMap::getInstance();
+            if (!pMap->anyPlayerAlive())
             {
-                pMap->getGameRules()->resumeRoundTime();
+                Console::print("Forcing exiting the game cause no player is alive", Console::eDEBUG);
+                emit sigExitGame();
             }
-            emit sigActionPerformed();
+            else if (pMap->getCurrentPlayer()->getIsDefeated())
+            {
+                Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
+                spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+                performAction(pAction);
+            }
+            else if (m_pStoredAction.get() != nullptr)
+            {
+                performAction(m_pStoredAction);
+            }
+            else
+            {
+                Mainapp::setUseSeed(false);
+                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
+                {
+                    pMap->getGameRules()->resumeRoundTime();
+                }
+                emit sigActionPerformed();
+            }
         }
+    }
+    else
+    {
+        Console::print("Skipping action performed due to exiting the game", Console::eDEBUG);
     }
     pApp->continueThread();
 }
@@ -1377,6 +1387,7 @@ void GameMenue::exitGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Console::print("Finishing running animations and exiting game", Console::eDEBUG);
     gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {

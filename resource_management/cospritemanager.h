@@ -27,6 +27,9 @@ public:
      * @return
      */
     virtual oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+signals:
+    void sigLoadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
+public slots:
     /**
      * @brief loadResAnim
      * @param coid
@@ -34,14 +37,10 @@ public:
      * @param colorTable
      * @param maskTable
      */
-    void loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable, bool useColorBox);
+    void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 protected:
     friend RessourceManagement<COSpriteManager>;
-    COSpriteManager()
-        : RessourceManagement<COSpriteManager>("/images/co/res.xml",
-                                               "/scripts/cos")
-    {
-    }
+    COSpriteManager();
 private:
     virtual ~COSpriteManager() = default;
     QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;

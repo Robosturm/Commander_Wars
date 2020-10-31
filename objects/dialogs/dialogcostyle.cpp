@@ -37,10 +37,11 @@ DialogCOStyle::DialogCOStyle(QString coid)
     oxygine::spButton pOkButton = pObjectManager->createButton(tr("Apply"), 150);
     pOkButton->setPosition(Settings::getWidth() - pOkButton->getWidth() - 30, Settings::getHeight() - 30 - pOkButton->getHeight());
     m_pSpriteBox->addChild(pOkButton);
-    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* event)
     {
+        event->stopPropagation();
         Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
-        pCOSpriteManager->loadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
+        emit pCOSpriteManager->sigLoadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
         detach();
         emit sigFinished();
     });

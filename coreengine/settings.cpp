@@ -66,8 +66,8 @@ Qt::Key Settings::m_key_EditorPlaceBuilding         = Qt::Key_2;
 Qt::Key Settings::m_key_EditorPlaceUnit             = Qt::Key_3;
 Qt::Key Settings::m_key_EditorNextTeam              = Qt::Key_Tab;
 Qt::Key Settings::m_key_EditorPreviousTeam          = Qt::Key_Asterisk;
-Qt::Key Settings::m_key_EditorSelectionRight        = Qt::Key_R;
-Qt::Key Settings::m_key_EditorSelectionLeft         = Qt::Key_T;
+Qt::Key Settings::m_key_EditorSelectionRight        = Qt::Key_T;
+Qt::Key Settings::m_key_EditorSelectionLeft         = Qt::Key_R;
 
 QString Settings::m_language      = "en";
 // Sound

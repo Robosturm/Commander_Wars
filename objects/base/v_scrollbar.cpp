@@ -131,10 +131,11 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_slider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event* event)
     {
         if (m_enabled)
         {
+            event->stopPropagation();
             bool emitSignal = getSliding();
             setSliding(false);
             if (emitSignal)
@@ -143,20 +144,25 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             }
         }
     });
-    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* event)
     {
         if (m_enabled)
         {
+            event->stopPropagation();
             setSliding(true);
             emit sigStartEditValue();
         }
     });
-    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* event)
     {
         if (m_enabled)
         {
-            setSliding(false);
-            emit sigEndEditValue(m_Scrollvalue);
+            event->stopPropagation();
+            if (getSliding())
+            {
+                setSliding(false);
+                emit sigEndEditValue(m_Scrollvalue);
+            }
         }
     });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)

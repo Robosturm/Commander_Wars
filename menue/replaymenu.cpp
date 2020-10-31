@@ -28,12 +28,14 @@ ReplayMenu::ReplayMenu(QString filename)
     bool valid = m_ReplayRecorder.loadRecord(filename);
     if (valid)
     {
+        m_Viewplayer = new Viewplayer();
         // store animation modes
         _storedAnimMode = Settings::getShowAnimations();
         _storedBatteAnimMode = Settings::getBattleAnimations();
         _storedAnimationSpeed = Settings::getAnimationSpeedValue();
         _storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         spGameMap pMap = GameMap::getInstance();
+        pMap->registerMapAtInterpreter();
         oxygine::Actor::addChild(pMap);
         pMap->updateSprites();
         loadHandling();
@@ -99,11 +101,7 @@ void ReplayMenu::nextReplayAction()
         _paused = true;
         _requestPause = false;
     }
-    if (_seekDay > 0)
-    {
-        seekToDay(_seekDay);
-    }
-    else if (!_paused)
+    if (!_paused)
     {
         spGameAction pAction = m_ReplayRecorder.nextAction();
         _HumanInput->cleanUpInput();
@@ -143,7 +141,7 @@ void ReplayMenu::showExitGame()
 
 Player* ReplayMenu::getCurrentViewPlayer()
 {
-    return &_Viewplayer;
+    return m_Viewplayer.get();
 }
 
 void ReplayMenu::loadUIButtons()
@@ -305,7 +303,11 @@ void ReplayMenu::seekChanged(float value)
     pApp->suspendThread();
     _seekActor->setVisible(true);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
-    qint32 day = m_ReplayRecorder.getDayFromPosition(count);
+    qint32 day = 0;
+    if (m_ReplayRecorder.getRecordSize() > 0)
+    {
+        day = m_ReplayRecorder.getDayFromPosition(count);
+    }
     _seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
     pApp->continueThread();
 }
@@ -317,14 +319,7 @@ void ReplayMenu::seekRecord(float value)
     pApp->suspendThread();
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
-    if (_paused)
-    {
-        seekToDay(day);
-    }
-    else
-    {
-        _seekDay = day;
-    }
+    seekToDay(day);
     _seekActor->setVisible(false);
     _seeking = false;
     pApp->continueThread();
@@ -333,24 +328,27 @@ void ReplayMenu::seekRecord(float value)
 void ReplayMenu::seekToDay(qint32 day)
 {
     QMutexLocker locker(&_replayMutex);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    _seekDay = -1;
-
-    spGameMap pMap = GameMap::getInstance();
-    auto pos = pMap->getPosition();
-    m_ReplayRecorder.seekToDay(day);
-    pMap = GameMap::getInstance();
-    addChild(pMap);
-    pMap->setPosition(pos);
-    pMap->updateSprites();
-    pMap->getGameRules()->createFogVision();
-    connectMap();
-    connectMapCursor();
-    pApp->continueThread();
-    if (_seekPause)
+    if (m_ReplayRecorder.getRecordSize() > 0)
     {
-        swapPlay();
+        Console::print("Seeking to day " + QString::number(day), Console::eDEBUG);
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        spGameMap pMap = GameMap::getInstance();
+        auto pos = pMap->getPosition();
+        m_ReplayRecorder.seekToDay(day);
+        pMap = GameMap::getInstance();
+        pMap->registerMapAtInterpreter();
+        addChild(pMap);
+        pMap->setPosition(pos);
+        pMap->updateSprites();
+        pMap->getGameRules()->createFogVision();
+        connectMap();
+        connectMapCursor();
+        pApp->continueThread();
+        if (_seekPause)
+        {
+            swapPlay();
+        }
     }
 }
 
@@ -425,7 +423,7 @@ void ReplayMenu::showConfig()
     teamNames.append(tr("Current Team"));
     teamNames.append(tr("All Teams"));
     teamNames.append(tr("Map"));
-    qint32 viewType = _Viewplayer.getViewType();
+    qint32 viewType = m_Viewplayer->getViewType();
     bool found = false;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -563,7 +561,7 @@ void ReplayMenu::setViewTeam(qint32 item)
     spGameMap pMap = GameMap::getInstance();
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
-        _Viewplayer.setViewType(item + Viewplayer::ViewType::CurrentTeam);
+        m_Viewplayer->setViewType(item + Viewplayer::ViewType::CurrentTeam);
     }
     else
     {
@@ -575,7 +573,7 @@ void ReplayMenu::setViewTeam(qint32 item)
             {
                 if (teams.size() == item + Viewplayer::ViewType::CurrentTeam)
                 {
-                    _Viewplayer.setViewType(team);
+                    m_Viewplayer->setViewType(team);
                     break;
                 }
                 teams.append(team);

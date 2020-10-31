@@ -160,15 +160,15 @@ void Achievementmenu::searchChanged(QString text)
                 }
                 else
                 {
-                    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
-                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
-                    pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
-                    m_MainPanel->addItem(pIcon);
-                    //                spLabel pTextfield = new Label(50);
-                    //                pTextfield->setStyle(styleLarge);
-                    //                pTextfield->setText("?");
-                    //                pTextfield->setPosition(x, y + 8);
-                    //                m_MainPanel->addItem(pTextfield);
+                    //                    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+                    //                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
+                    //                    pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
+                    //                    m_MainPanel->addItem(pIcon);
+                    spLabel pTextfield = new Label(50);
+                    pTextfield->setStyle(styleLarge);
+                    pTextfield->setText("?");
+                    pTextfield->setPosition(x, y + 8);
+                    m_MainPanel->addItem(pTextfield);
                 }
 
                 spLabel pTextfield = new Label(singleWidth - 60);

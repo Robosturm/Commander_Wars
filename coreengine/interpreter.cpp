@@ -31,6 +31,7 @@ Interpreter::Interpreter()
 
 void Interpreter::reloadInterpreter(QString runtime)
 {
+    m_pInstance = nullptr;
     m_pInstance = new Interpreter();
     m_pInstance->loadScript(runtime, "Interpreter Runtime");
 }
@@ -53,7 +54,6 @@ void Interpreter::init()
     globalObject().setProperty("FontManager", fontManager);
     QJSValue settings = newQObject(Settings::getInstance());
     globalObject().setProperty("settings", settings);
-
     QJSValue userdata = newQObject(Userdata::getInstance());
     globalObject().setProperty("userdata", userdata);
 

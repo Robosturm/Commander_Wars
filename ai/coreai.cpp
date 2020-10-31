@@ -1227,11 +1227,6 @@ bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
     return false;
 }
 
-void CoreAI::appendFlareTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
-{
-
-}
-
 void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QPoint& flareTarget, QPoint& moveTargetField)
 {
     flareTarget  = QPoint(-1, -1);

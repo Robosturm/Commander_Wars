@@ -416,6 +416,14 @@ public slots:
      */
     virtual bool getFieldVisible(qint32 x, qint32 y);
     /**
+     * @brief getFieldVisibleLoaded
+     * @return
+     */
+    inline bool getFieldVisibleLoaded()
+    {
+        return m_FogVisionFields.size() > 0;
+    }
+    /**
      * @brief getFieldVisibleType
      * @param x
      * @param y
