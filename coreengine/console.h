@@ -44,6 +44,7 @@ public:
     void init();
 
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
+
 public slots:
     static void print(QString message, qint8 LogLevel);
     /**
@@ -55,7 +56,16 @@ public slots:
     static void createfunnymessage(qint32 message = -1);
     // Lua Libs Functions
     void setVolume(qint32 volume);
+    /**
+     * @brief setLogLevel
+     * @param newLogLevel
+     */
     void setLogLevel(eLogLevels newLogLevel);
+    /**
+     * @brief getLogLevel
+     * @return
+     */
+    eLogLevels getLogLevel();
     /**
      * @brief createSprites
      * @param input

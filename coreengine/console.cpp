@@ -281,6 +281,11 @@ void Console::toggleView()
     toggled = true;
 }
 
+Console::eLogLevels Console::getLogLevel()
+{
+    return LogLevel;
+}
+
 void Console::setVolume(qint32 volume)
 {
     Mainapp::getInstance()->getAudioThread()->setVolume(volume);

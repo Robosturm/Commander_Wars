@@ -82,11 +82,15 @@ DecisionTree::~DecisionTree()
 
 float DecisionTree::getDecision(QVector<float>& input)
 {
-	return m_pRootNode->getDecision(input);
+    Console::print("getDecision() for decision tree()", Console::eDEBUG);
+    float output = m_pRootNode->getDecision(input);
+    Console::print("Result = " + QString::number(output), Console::eDEBUG);
+    return output;
 }
 
 spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
+    Console::print("training decision tree()", Console::eDEBUG);
 	float gain = 0;
     spDecisionQuestion pQuestion = findBestSplit(trainingData, gain, questions);
 	if (gain <= 0.0f)
