@@ -171,8 +171,8 @@ void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QStr
         achievement.description = description;
         achievement.hide = hide;
         achievement.icon = icon;
-        m_achievements.append(achievement);
         achievement.loaded = true;
+        m_achievements.append(achievement);
     }
 }
 
