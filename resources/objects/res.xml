@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/objects/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- button -->
 		<image file="button.png" cols = "3" />
 		<image file="button_square.png" cols = "3" />
@@ -68,7 +68,7 @@
 		<image file="barforeground.png"/>
 	</atlas>
 	
-	<atlas clamp2edge="false"> 
+	<atlas clamp2edge="false" > 
 		<image file="line.png" trim="false" extend="false" border="0" />
 	</atlas>
 </resources>

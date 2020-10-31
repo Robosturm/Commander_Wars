@@ -794,20 +794,20 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
                     pSprite->setScale(2.0f);
                     pSprite2->setScale(2.0f);
-                    m_ZInformationLabel->addChild(pSprite);
                     m_ZInformationLabel->addChild(pSprite2);
+                    m_ZInformationLabel->addChild(pSprite);
                     // add text to the label
                     oxygine::spClipRectActor clipRec = new oxygine::ClipRectActor();
                     clipRec->setX(2);
-                    clipRec->setY(1);
-                    clipRec->setSize(28 * 2, 18);
+                    clipRec->setY(0);
+                    clipRec->setSize(28 * 2, 20);
                     oxygine::spTextField textField = new oxygine::TextField();
-                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).
+                    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont72()).
                                                withColor(FontManager::getFontColor()).
                                                alignLeft().
                                                alignTop();
                     textField->setStyle(style);
-
+                    textField->setScale(16.0f / 72.0f);
                     textField->setHtmlText(m_pMarkedFieldData->getZLabelText());
                     textField->attachTo(clipRec);
                     clipRec->attachTo(m_ZInformationLabel);
@@ -826,6 +826,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                             break;
                         }
                     }
+                    textField2->setScale(16.0f / 72.0f);
                     textField2->setHtmlText(labelText);
                     textField2->attachTo(m_ZInformationLabel);
                     m_ZInformationLabel->setPosition(x * GameMap::getImageSize() - GameMap::getImageSize() + 4,

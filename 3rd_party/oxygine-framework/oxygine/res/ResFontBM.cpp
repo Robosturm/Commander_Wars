@@ -116,7 +116,9 @@ namespace oxygine
     void ResFontBM::_loadPage(const page& p, LoadResourcesContext* load_context)
     {
         if (!load_context->isNeedProceed(p.texture))
+        {
             return;
+        }
 
         spImage mt = new Image;
 
@@ -125,6 +127,8 @@ namespace oxygine
         CreateTextureTask opt;
         opt.src = mt;
         opt.dest = p.texture;
+        opt.linearFilter = m_linearFilter;
+        opt.clamp2edge = m_clamp2edge;
         load_context->createTexture(opt);
         p.texture->reg(Restorable::RestoreCallback(this, &ResFontBM::_restore), nullptr);
     }
@@ -133,13 +137,14 @@ namespace oxygine
     {
         Q_ASSERT(!_pages.empty());
         if (_pages.empty())
+        {
             return;
+        }
 
         for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
         {
             const page& p = *i;
             _loadPage(p, load_context);
-
         }
     }
 
@@ -163,16 +168,51 @@ namespace oxygine
         _pages.push_back(p);
     }
 
+    void ResFontBM::loadBase(QDomElement node)
+    {
+        QVariant value = QVariant(node.attribute("linearFilter"));
+        if (value.type() == QVariant::Type::String &&
+            !value.isNull())
+        {
+            if (value.toBool())
+            {
+                m_linearFilter = GL_LINEAR;
+            }
+            else
+            {
+                m_linearFilter = GL_NEAREST;
+            }
+        }
+        else
+        {
+            m_linearFilter = GL_LINEAR;
+        }
+        value = QVariant(node.attribute("clamp2edge"));
+        if (value.type() == QVariant::Type::String &&
+            !value.isNull())
+        {
+            m_clamp2edge = value.toBool();
+        }
+        else
+        {
+            m_clamp2edge = true;
+        }
+    }
+
     void ResFontBM::_finalize()
     {
         glyphOptions opt = 0;
         const glyph* g = _font->getGlyph(0xA0, opt);
         if (g)
+        {
             return;
+        }
 
         g = _font->getGlyph(' ', opt);
         if (!g)
+        {
             return;
+        }
 
         glyph p = *g;
         p.ch = 0xA0;
@@ -245,6 +285,7 @@ namespace oxygine
         QDomElement pages = root.firstChildElement("pages");
         tw /= downsample;
         th /= downsample;
+        loadBase(pages);
 
         QDir dir = QFileInfo(path).dir();
         for (QDomElement page_node = pages.firstChildElement("page"); !page_node.isNull(); page_node = page_node.nextSiblingElement("page"))

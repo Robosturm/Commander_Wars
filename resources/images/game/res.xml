@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/game/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- battle sprite -->
 		<image file="battlesprites/base_air.png" />
 		<image file="battlesprites/base_forest.png" />

@@ -24,7 +24,8 @@ namespace oxygine
 
         const Font* getFont(QString name = "", int size = 0) const override;
         const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const override;
-
+    private:
+        void loadBase(QDomElement node);
     private:
         struct page
         {
@@ -50,5 +51,9 @@ namespace oxygine
 
         QString _file;
         bool _premultipliedAlpha;
+
+        //settings from xml
+        quint32 m_linearFilter;
+        bool m_clamp2edge;
     };
 }

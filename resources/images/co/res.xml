@@ -2,7 +2,7 @@
 <resources>
 	<set path = "resources/images/co/" />
 	
-	<atlas clamp2edge="false"> 
+	<atlas clamp2edge="false" linearFilter="false"> 
 		<image file="hit.png" trim="false" extend="false" border="0" guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
 		<image file="miss.png" trim="false" extend="false" border="0" guideX1="13" guideX2="27" guideY1="2" guideY2="14" />
 		<image file="skill.png" trim="false" extend="false" border="0" guideX1="21" guideX2="24" guideY1="2" guideY2="14" />

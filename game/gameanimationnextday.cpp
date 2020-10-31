@@ -32,8 +32,9 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
 
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnim);
-    pSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
-    pSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+    pSprite->setScaleX((Settings::getWidth() + 8.0f) / pAnim->getWidth());
+    pSprite->setScaleY((Settings::getHeight() + 8.0f) / pAnim->getHeight());
+    pSprite->setPosition(-4.0f, -4.0f);
     QColor color = pPlayer->getColor();
     if (permanent)
     {
@@ -45,8 +46,6 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         color.setAlpha(150);
         pSprite->setColor(color);
     }
-
-
     addChild(pSprite);
 
     CO* pCO = pPlayer->getCO(0);

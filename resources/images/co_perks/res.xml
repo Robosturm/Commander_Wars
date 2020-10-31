@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/images/co_perks/" />
-	<atlas>
+	<atlas linearFilter="false">
 		<!-- battle sprite -->
 		<image file="apcboost.png" />
 		<image file="apcguard.png" />

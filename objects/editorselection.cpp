@@ -50,7 +50,7 @@ EditorSelection::EditorSelection()
     m_CurrentSelector->setScale(GameMap::getImageSize() / pAnim->getWidth());
     if (pAnim->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime * 2), -1);
         m_CurrentSelector->addTween(tween);
     }
     else
@@ -237,7 +237,7 @@ void EditorSelection::createBoxPlacementSize()
     m_CurrentSelectorSize->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime * 2), -1);
         m_CurrentSelectorSize->addTween(tween);
     }
     else
@@ -462,7 +462,7 @@ void EditorSelection::createBoxSelectionMode()
     m_CurrentSelectorMode->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime * 2), -1);
         m_CurrentSelectorMode->addTween(tween);
     }
     else

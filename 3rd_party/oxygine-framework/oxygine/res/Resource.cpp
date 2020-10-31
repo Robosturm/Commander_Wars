@@ -22,10 +22,14 @@ namespace oxygine
     void Resource::load(LoadResourcesContext* context /* = 0 */)
     {
         if (!context)
+        {
             context = LoadResourcesContext::get();
+        }
 
         if (_loadCounter == 0)
+        {
             _load(context);
+        }
 
         _loadCounter = _useLoadCounter ? _loadCounter + 1 : 1;
     }
