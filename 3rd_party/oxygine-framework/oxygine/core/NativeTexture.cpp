@@ -7,27 +7,6 @@ namespace oxygine
 {
     volatile int NativeTexture::created = 0;
 
-    QVector<spNativeTexture> NativeTexture::getCreatedTextures()
-    {
-
-        QVector<spNativeTexture> t;
-
-        const ObjectBase::__createdObjects& obj = ObjectBase::__getCreatedObjects();
-        for (ObjectBase::__createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)
-        {
-            ObjectBase* ob = *i;
-            NativeTexture* nt = dynamic_cast<NativeTexture*>(ob);
-            if (!nt)
-                continue;
-            if (!nt->getHandle())
-                continue;
-
-            t.push_back(nt);
-        }
-        return t;
-    }
-
-
     void NativeTextureNull::init(nativeTextureHandle, int, int, ImageData::TextureFormat)
     {
 

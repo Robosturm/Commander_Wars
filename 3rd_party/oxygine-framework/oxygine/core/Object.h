@@ -2,70 +2,24 @@
 #include "../oxygine-include.h"
 #include "ref_counter.h"
 #include <qstring.h>
-#include <vector>
+#include <QObject>
 
 namespace oxygine
 {
-    /**Base class for each oxygine object. Each object has unique internal ID and name. Debug build is tracking all created and deleted objects. Using memory pools*/
-    class ObjectBase
-    {
-    public:
-        ObjectBase(const ObjectBase& src);
-        ObjectBase(bool assignID = true);
-        virtual ~ObjectBase();
-
-        QString  getName() const;
-        const void*         getUserData() const {return __userData;}
-        quint64              getUserData64() const { return __userData64; }
-        int                 getUserData32() const { return __userData32; }
-        int                 getObjectID()const {return __id;}
-        bool                isName(QString name) const;
-
-
-
-        void setName(QString name);
-
-        /**void*, uin64 and int userData is UNION!*/
-        void setUserData(const void* data) { __userData64 = 0; __userData = data; }
-        /**void*, uin64 and int userData is UNION!*/
-        void setUserData64(quint64 data) { __userData64 = data; }
-        /**void*, uin64 and int userData is UNION!*/
-        void setUserData32(int data) { __userData32 = data; }
-
-        /**Shows assert when object with this unique ID will be created.*/
-        static void showAssertInCtor(int id);
-        /**Shows assert when object with this unique ID will be destroyed.*/
-        static void showAssertInDtor(int id);
-
-        //debug functions
-        typedef QVector<ObjectBase*> __createdObjects;
-        static __createdObjects&    __getCreatedObjects();
-
-    protected:
-        void __generateID();
-        QString __name;
-        int __id;
-
-        union
-        {
-            const void* __userData;
-            quint64 __userData64;
-            int    __userData32;
-        };
-
-        static int _lastID;
-        static int _assertCtorID;
-        static int _assertDtorID;
-    };
-
     DECLARE_SMART(Object, spObject);
-    class Object: public ref_counter, public ObjectBase
-    {
+    class Object : public ref_counter
+    {        
     public:
         Object(const Object& src);
-        Object(bool assignUniqueID = true);
+        Object();
+        virtual ~Object() = default;
+
+        QString  getName() const;
+        bool                isName(QString name) const;
+        void setName(QString name);
 
     protected:
+        QString __name;
     };
 
 
@@ -73,7 +27,9 @@ namespace oxygine
     dest safeCast(src ptr)
     {
         if (!ptr)
+        {
             return 0;
+        }
 #ifdef OXYGINE_DEBUG_SAFECAST
         dest cast = dynamic_cast<dest>(ptr);
         Q_ASSERT(cast && "can't cast pointer");
@@ -87,7 +43,9 @@ namespace oxygine
     intrusive_ptr<T> safeSpCast(intrusive_ptr<U> const& p)
     {
         if (!p)
+        {
             return 0;
+        }
 #ifdef OXYGINE_DEBUG_SAFECAST
         intrusive_ptr<T> t = dynamic_cast<T*>(p.get());
         Q_ASSERT(t && "can't cast pointer");

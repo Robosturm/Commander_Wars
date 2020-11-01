@@ -130,37 +130,6 @@ namespace oxygine
         setName(file.fileName());
     }
 
-
-    class ObjectBasePredicate
-    {
-    public:
-        bool operator()(const ObjectBase* res, QString name) const
-        {
-            return res->getName() < name;
-        }
-
-        bool operator()(const spResource& res, QString name) const
-        {
-            return res->getName() < name;
-        }
-
-        bool operator()(const spResource& resA, const spResource& resB) const
-        {
-            return resA->getName() < resB->getName();
-        }
-
-        bool operator()(QString name, const ObjectBase* res) const
-        {
-            return name < res->getName();
-        }
-
-        bool operator()(const ObjectBase* resA, const ObjectBase* resB) const
-        {
-            return resA->getName() < resB->getName();
-        }
-    };
-
-
     bool Resources::loadXML(const QString xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;

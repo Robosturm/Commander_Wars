@@ -38,7 +38,7 @@ namespace oxygine
     class Font;
     typedef oxygine::intrusive_ptr<Font> spFont;
 
-    class Font: public ObjectBase, public oxygine::ref_counter
+    class Font : public Object
     {
     public:
         Font();

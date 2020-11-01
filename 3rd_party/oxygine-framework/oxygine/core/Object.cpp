@@ -9,73 +9,28 @@
 
 namespace oxygine
 {    
-    ObjectBase::__createdObjects&   ObjectBase::__getCreatedObjects()
+    Object::Object(const Object& src)
+        : __name("")
     {
-        static __createdObjects __objects;
-        return __objects;
+        setName(src.__name);
     }
 
-    int ObjectBase::_lastID = 0;
-    int ObjectBase::_assertCtorID = -1;
-    int ObjectBase::_assertDtorID = -1;
+    Object::Object()
+    {
+    }
 
-    QString ObjectBase::getName() const
+    QString Object::getName() const
     {
         return __name;
     }
 
-    bool ObjectBase::isName(QString name) const
+    bool Object::isName(QString name) const
     {
         return name == __name;
     }
 
-    void ObjectBase::setName(QString name)
+    void Object::setName(QString name)
     {
         __name = name;
-    }
-
-    ObjectBase::ObjectBase(const ObjectBase& src)
-        : __name(""),
-          __id(0)
-    {
-        __userData64 = src.__userData64;
-        setName(src.__name);
-        __generateID();
-    }
-
-    void ObjectBase::__generateID()
-    {
-        __id = ++_lastID;
-    }
-
-    ObjectBase::ObjectBase(bool assignID): __id(0)
-    {
-        __userData64 = 0;
-
-        if (assignID)
-            __generateID();
-    }
-
-    void ObjectBase::showAssertInCtor(int id)
-    {
-        _assertCtorID = id;
-    }
-
-    void ObjectBase::showAssertInDtor(int id)
-    {
-        _assertDtorID = id;
-    }
-
-    ObjectBase::~ObjectBase()
-    {
-
-    }
-
-    Object::Object(const Object& src): ObjectBase(src)
-    {
-    }
-
-    Object::Object(bool assignUniqueID): ObjectBase(assignUniqueID)
-    {
     }
 }

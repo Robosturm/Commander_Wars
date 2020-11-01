@@ -52,7 +52,7 @@ namespace oxygine
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setSize> size;
         typedef argT<float, float, Actor, &Actor::setScale> scale;
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setScale> scale2;
-        typedef argT<QString, QString, ObjectBase, &ObjectBase::setName> name;
+        typedef argT<QString, QString, Object, &Object::setName> name;
         typedef argT<float, float, Actor, &Actor::setScaleX> scaleX;
         typedef argT<float, float, Actor, &Actor::setScaleY> scaleY;
         typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;
@@ -61,7 +61,6 @@ namespace oxygine
         typedef argT<QColor, const QColor&, VStyleActor, &VStyleActor::setColor> color;
         typedef argT<blend_mode, blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
         typedef argT<qint32, qint32, Actor, &Actor::setPriority> priority;
-        typedef argT<const void*, const void*, ObjectBase, &ObjectBase::setUserData> userData;
         typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 
         typedef argT<TextStyle, const TextStyle&, TextField, &TextField::setStyle> style;
