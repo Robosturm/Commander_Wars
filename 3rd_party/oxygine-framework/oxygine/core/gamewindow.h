@@ -30,19 +30,33 @@ namespace oxygine
          */
         inline void suspendThread()
         {
-            Q_ASSERT(isWorker());
-            m_lockCounter++;
-            m_Mutex.lock();
+//            Q_ASSERT(isWorker());
+//            m_lockCounter++;
+//            m_Mutex.lock();
         }
         /**
          * @brief continueThread continues rendering
          */
         inline void continueThread()
         {
+//            Q_ASSERT(isWorker());
+//            m_Mutex.unlock();
+//            m_lockCounter--;
+        }
+
+        inline void suspendThread2()
+        {
+            Q_ASSERT(isWorker());
+            m_lockCounter++;
+            m_Mutex.lock();
+        }
+        inline void continueThread2()
+        {
             Q_ASSERT(isWorker());
             m_Mutex.unlock();
             m_lockCounter--;
         }
+
         /**
          * @brief quitGame quits this game
          */

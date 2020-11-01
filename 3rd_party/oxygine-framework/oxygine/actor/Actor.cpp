@@ -2,9 +2,11 @@
 #include "Stage.h"
 #include "../Clock.h"
 #include "../core/Texture.h"
+#include "../core/gamewindow.h"
 #include "../math/AffineTransform.h"
 #include "../res/ResAnim.h"
 #include "../tween/Tween.h"
+
 #include <sstream>
 #include <typeinfo>
 
@@ -79,8 +81,6 @@ namespace oxygine
             actor = next;
         }
     }
-
-
 
     void Actor::transformUpdated()
     {
@@ -167,7 +167,9 @@ namespace oxygine
         {
             Stage* stage = _getStage();
             if (stage)
+            {
                 stage->removeEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+            }
         }
 
         updateStatePressed();
@@ -177,8 +179,9 @@ namespace oxygine
     {
         TouchEvent* te = safeCast<TouchEvent*>(ev);
         if (te->index != _pressedButton[te->mouseButton])
+        {
             return;
-
+        }
         setNotPressed(te->mouseButton);
 
         TouchEvent up = *te;
@@ -346,7 +349,6 @@ namespace oxygine
         }
     }
 
-
     void Actor::markTranformDirty()
     {
         _flags |= flag_transformDirty | flag_transformInvertDirty;
@@ -379,7 +381,9 @@ namespace oxygine
     void Actor::setPosition(const Vector2& pos)
     {
         if (_pos == pos)
+        {
             return;
+        }
         _pos = pos;
         markTranformDirty();
     }
@@ -392,7 +396,9 @@ namespace oxygine
     void Actor::setX(float x)
     {
         if (_pos.x == x)
+        {
             return;
+        }
         _pos.x = x;
         markTranformDirty();
     }
@@ -400,7 +406,9 @@ namespace oxygine
     void Actor::setY(float y)
     {
         if (_pos.y == y)
+        {
             return;
+        }
         _pos.y = y;
         markTranformDirty();
     }
@@ -408,7 +416,9 @@ namespace oxygine
     void Actor::setAnchorX(float x)
     {
         if (_anchor.x == x)
+        {
             return;
+        }
         _anchor.x = x;
         _flags &= ~flag_anchorInPixels;
         markTranformDirty();
@@ -417,7 +427,9 @@ namespace oxygine
     void Actor::setAnchorY(float y)
     {
         if (_anchor.y == y)
+        {
             return;
+        }
         _anchor.y = y;
         _flags &= ~flag_anchorInPixels;
         markTranformDirty();
@@ -430,7 +442,6 @@ namespace oxygine
         _flags &= ~flag_fastTransform;
         _flags |= flag_transformInvertDirty;
     }
-
 
     void Actor::setPriority(qint32 zorder)
     {
@@ -505,7 +516,9 @@ namespace oxygine
     void Actor::setScaleY(float sy)
     {
         if (_scale.y == sy)
+        {
             return;
+        }
         _scale.y = sy;
         markTranformDirty();
         _flags &= ~flag_fastTransform;
@@ -514,8 +527,9 @@ namespace oxygine
     void Actor::setRotation(float rotation)
     {
         if (_rotation == rotation)
+        {
             return;
-
+        }
         _rotation = rotation;
         markTranformDirty();
         _flags &= ~flag_fastTransform;
@@ -535,7 +549,9 @@ namespace oxygine
     void Actor::_setSize(const Vector2& size)
     {
         if (_size == size)
+        {
             return;
+        }
         _size = size;
         markTranformDirty();
     }
@@ -575,7 +591,6 @@ namespace oxygine
     {
         _rdelegate = mat;
     }
-
 
     const Transform& Actor::getTransform() const
     {
@@ -743,11 +758,15 @@ namespace oxygine
     {
         actor->_parent = parent;
         if (parent && parent->_getStage())
+        {
             actor->added2stage(parent->_getStage());
+        }
         else
         {
             if (actor->_getStage())
+            {
                 actor->removedFromStage();
+            }
         }
     }
 
@@ -757,7 +776,9 @@ namespace oxygine
         Q_ASSERT(actor);
         Q_ASSERT(_parent);
         if (!_parent)
+        {
             return;
+        }
         actor->detach();
         spActor t = this;
         _parent->_children.insert_before(actor, t);
@@ -770,7 +791,9 @@ namespace oxygine
         Q_ASSERT(actor);
         Q_ASSERT(_parent);
         if (!_parent)
+        {
             return;
+        }
         actor->detach();
         spActor t = this;
         _parent->_children.insert_after(actor, t);
@@ -788,7 +811,9 @@ namespace oxygine
         Q_ASSERT(parent != this);
         Q_ASSERT(parent);
         if (!parent)
+        {
             return;
+        }
         parent->addChild(this);
     }
 
@@ -796,7 +821,9 @@ namespace oxygine
     {
         Q_ASSERT(actor);
         if (!actor)
+        {
             return;
+        }
 
         Q_ASSERT(actor != this);
 
@@ -813,14 +840,18 @@ namespace oxygine
             while (sibling)
             {
                 if (sibling->getPriority() <= z)
+                {
                     break;
+                }
                 sibling = sibling->getPrevSibling();
             }
         }
 
 
         if (sibling)
+        {
             sibling->insertSiblingAfter(actor);
+        }
         else
         {
             spActor t = actor;
@@ -837,11 +868,17 @@ namespace oxygine
     void Actor::prependChild(Actor* actor)
     {
         if (actor == getFirstChild().get())
+        {
             return;
+        }
         if (getFirstChild())
+        {
             getFirstChild()->insertSiblingBefore(actor);
+        }
         else
+        {
             addChild(actor);
+        }
     }
 
     void Actor::addChild(spActor actor)
@@ -854,16 +891,17 @@ namespace oxygine
         Q_ASSERT(actor);
         if (actor)
         {
+            oxygine::GameWindow* pWindow = oxygine::GameWindow::getWindow();
+            pWindow->suspendThread2();
             Q_ASSERT(actor->_parent == this);
             if (actor->_parent == this)
             {
                 setParent(actor.get(), nullptr);
                 _children.remove(actor);
             }
+            pWindow->continueThread2();
         }
     }
-
-
 
     void Actor::removeChildren()
     {
@@ -990,12 +1028,14 @@ namespace oxygine
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
     {
         if (!(_flags & flag_visible))
+        {
             return false;
-
+        }
         unsigned char alpha = (parentRS.alpha * _alpha) / 255;
         if (!alpha)
+        {
             return false;
-
+        }
         rs = parentRS;
         rs.alpha = alpha;
 
@@ -1007,8 +1047,9 @@ namespace oxygine
             rs.transform.translate(Vector2(tr.x, tr.y));
         }
         else
+        {
             Transform::multiply(rs.transform, tr, parentRS.transform);
-
+        }
 
         if (_flags & flag_cull)
         {
@@ -1016,7 +1057,9 @@ namespace oxygine
             RectF intersection = ss_rect;
             intersection.clip(*rs.clip);
             if (intersection.isEmpty())
+            {
                 return false;
+            }
         }
 
         return true;
@@ -1030,7 +1073,9 @@ namespace oxygine
     bool Actor::internalRender(RenderState& rs, const RenderState& parentRS)
     {
         if (!prepareRender(rs, parentRS))
+        {
             return false;
+        }
 
         //if (!_renderer->render(this, rs))
         doRender(rs);
@@ -1102,7 +1147,9 @@ namespace oxygine
         while (tween)
         {
             if (tween->isName(name))
+            {
                 return tween;
+            }
             tween = tween->getNextSibling();
         }
         handleErrorPolicy(ep, "can't find tween: " + name);
@@ -1113,7 +1160,9 @@ namespace oxygine
     {
         Q_ASSERT(v);
         if (!v)
+        {
             return;
+        }
 
         if (v->getParentList() == &_tweens)
         {
@@ -1131,9 +1180,13 @@ namespace oxygine
             t = t->getNextSibling();
 
             if (callComplete)
+            {
                 c->complete();
+            }
             else
+            {
                 removeTween(c);
+            }
         }
     }
 
@@ -1155,7 +1208,9 @@ namespace oxygine
     Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         if (child->getParent() && child->getParent() != parent)
+        {
             pos = convert_global2local_(child->getParent(), parent, pos);
+        }
 
         pos = child->parent2local(pos);
         return pos;
@@ -1185,7 +1240,9 @@ namespace oxygine
     Vector2 convert_local2stage(spActor actor, const Vector2& pos, spActor root)
     {
         if (!root)
+        {
             root = getStage();
+        }
         return convert_local2global(actor, root, pos);
     }
 
@@ -1201,14 +1258,18 @@ namespace oxygine
     Vector2 convert_stage2local(spActor actor, const Vector2& pos, spActor root)
     {
         if (!root)
+        {
             root = getStage();
+        }
         return convert_global2local(actor, root, pos);
     }
 
     Vector2 convert_stage2local(const Actor* actor, const Vector2& pos, const Actor* root)
     {
         if (!root)
+        {
             root = getStage().get();
+        }
         return convert_global2local_(actor, root, pos);
     }
 
@@ -1225,12 +1286,12 @@ namespace oxygine
         return t;
     }
 
-
-
     spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root)
     {
         if (!root)
+        {
             root = getStage().get();
+        }
         dur = timeMS(std::max((long long) dur.count(), 1ll));
         spTween t = root->addTween(TweenDummy(), dur);
         t->setDoneCallback(cb);
@@ -1266,11 +1327,12 @@ namespace oxygine
         }
 
         if (newParent != mutualParent)
+        {
             pos = convert_global2local(newParent, mutualParent, pos);
+        }
         actor->setPosition(pos);
         actor->attachTo(newParent);
     }
-
 
     void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale)
     {
@@ -1312,7 +1374,6 @@ namespace oxygine
         actor->setScale(scale);
     }
 
-
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)
     {
         RectF rect = actor->getDestRect();
@@ -1332,10 +1393,6 @@ namespace oxygine
 
         return RectF(ntl, size);
     }
-
-
-
-
 
     extern int HIT_TEST_DOWNSCALE;
 
