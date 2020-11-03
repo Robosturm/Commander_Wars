@@ -421,8 +421,6 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
         {
             for (qint32 x = 0; x < width; x++)
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 fields[y][x]->loadSprites();
                 if (fields[y][x]->getUnit() != nullptr)
                 {
@@ -432,7 +430,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
                 {
                     fields[y][x]->getBuilding()->updateBuildingSprites(false);
                 }
-                pApp->continueThread();
+                
             }
         }
     }
@@ -445,8 +443,6 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
             {
                 if (onMap(x, y))
                 {
-                    Mainapp* pApp = Mainapp::getInstance();
-                    pApp->suspendThread();
                     fields[y][x]->loadSprites();
                     if (fields[y][x]->getUnit() != nullptr)
                     {
@@ -456,15 +452,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
                     {
                         fields[y][x]->getBuilding()->updateBuildingSprites(false);
                     }
-                    pApp->continueThread();
+                    
                 }
             }
         }
     }
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("synchronizing animations", Console::eDEBUG);
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -473,7 +468,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
             fields[y][x]->syncAnimation();
         }
     }
-    pApp->continueThread();
+    
     if (m_Rules.get() != nullptr)
     {
         m_Rules->createWeatherSprites();
@@ -484,8 +479,7 @@ void GameMap::killDeadUnits()
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -498,7 +492,7 @@ void GameMap::killDeadUnits()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void GameMap::setImagesize(const qint32 &imagesize)
@@ -821,8 +815,6 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
 {
     if (onMap(x, y))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spTerrain pTerrainOld = fields[y][x];
         if (pTerrainOld->getTerrainID() != terrainID)
         {
@@ -862,7 +854,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         {
             this->updateSprites(x, y);
         }
-        pApp->continueThread();
+        
     }
 }
 
@@ -874,11 +866,9 @@ void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             pTerrain->setBuilding(pBuilding.get());
             pBuilding->setOwner(nullptr);
-            pApp->continueThread();
+            
         }
     }
 }
@@ -1308,10 +1298,8 @@ void GameMap::updateUnitIcons()
             spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 pUnit->updateIcons(getCurrentViewPlayer());
-                pApp->continueThread();
+                
             }
         }
     }
@@ -1426,8 +1414,7 @@ Player* GameMap::getCurrentViewPlayer()
 
 void GameMap::startOfTurn(Player* pPlayer)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (pPlayer != nullptr)
     {
         pPlayer->startOfTurn();
@@ -1496,7 +1483,7 @@ void GameMap::startOfTurn(Player* pPlayer)
         centerMap(buildingWarp.x(), buildingWarp.y());
     }
 
-    pApp->continueThread();
+    
 }
 
 void GameMap::checkFuel(Player* pPlayer)

@@ -26,17 +26,15 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
 }
 
 bool GameAnimationWalk::onFinished()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+{    
     Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
-    pApp->getAudioThread()->stopAllSounds();
+    Mainapp::getInstance()->getAudioThread()->stopAllSounds();
     if (!m_pUnit->isStealthed(pPlayer))
     {
         m_pUnit->setUnitVisible(true);
     }
     bool ret = GameAnimation::onFinished();
-    pApp->continueThread();
+    
     return ret;
 }
 

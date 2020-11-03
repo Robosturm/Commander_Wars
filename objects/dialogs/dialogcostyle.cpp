@@ -150,8 +150,6 @@ void DialogCOStyle::changeCOStyle(qint32 index)
 {
     if (index != m_CurrentIndex)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         for (qint32 i = 0; i < m_Styles.size(); i++)
         {
@@ -200,7 +198,6 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         }
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {
-            pApp->suspendThread();
             maskTable = baseColorTable.copy(0, item, baseColorTable.width(), 1);
             for (qint32 i = 0; i < maskTable.width(); i++)
             {
@@ -208,7 +205,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
                 m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
             }
             m_update = true;
-            pApp->continueThread();
+            
         });
         m_pPixelPanel->clearContent();
         m_Pixels.clear();
@@ -246,7 +243,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             }
         }
         m_pPixelPanel->setContentHeigth(y + 40);
-        pApp->continueThread();
+        
     }
 }
 

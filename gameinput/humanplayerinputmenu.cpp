@@ -375,8 +375,6 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 QString id = m_ActionIDs[currentAction];
                 UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                 if (pUnitSpriteManager->exists(id))
@@ -405,7 +403,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                         m_Focused = false;
                     }
                 }
-                pApp->continueThread();
+                
             }
 
             qint32 x = 0;

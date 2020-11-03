@@ -220,8 +220,6 @@ bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
 
 spWikipage WikiDatabase::getPage(pageData data)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     spWikipage ret;
     QString id = std::get<1>(data);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -273,7 +271,7 @@ spWikipage WikiDatabase::getPage(pageData data)
     {
         ret = new DefaultWikipage(id);
     }
-    pApp->continueThread();
+    
     return ret;
 }
 

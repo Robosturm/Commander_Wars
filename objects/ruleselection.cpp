@@ -85,8 +85,7 @@ void RuleSelection::confirmRuleSelectionSetup()
 
 void RuleSelection::showRuleSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     removeChildren();
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -146,7 +145,7 @@ void RuleSelection::showRuleSelection()
 
 
     QVector<QString> weatherStrings;
-    QVector<qint32> weatherChances;    
+    QVector<qint32> weatherChances;
     for (qint32 i = 0; i < pMap->getGameRules()->getWeatherCount(); i++)
     {
         Weather* pWeather = pMap->getGameRules()->getWeather(i);
@@ -561,7 +560,7 @@ void RuleSelection::showRuleSelection()
         }
     }
     setHeight(y + pGameRuleManager->getVictoryRuleCount() * 50 + 50);
-    pApp->continueThread();
+    
 }
 
 void RuleSelection::addCustomGamerules(qint32 & y)
@@ -673,48 +672,40 @@ void RuleSelection::weatherChancesChanged()
 
 void RuleSelection::showCOBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     spCOBannListDialog pBannlist = new COBannListDialog(pMap->getGameRules()->getCOBannlist());
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void RuleSelection::showPerkBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
     spPerkSelectionDialog pBannlist = new PerkSelectionDialog(nullptr, -1, true);
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &PerkSelectionDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedPerks, Qt::QueuedConnection);
-    pApp->continueThread();
 }
 
 void RuleSelection::showActionBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
     spActionListDialog pBannlist = new ActionListDialog(pMap->getGameRules()->getAllowedActions());
     oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &ActionListDialog::editFinished, pMap->getGameRules(), &GameRules::setAllowedActions, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void RuleSelection::showSelectScript()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     oxygine::getStage()->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelection::scriptFileChanged, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void RuleSelection::scriptFileChanged(QString file)
@@ -722,10 +713,8 @@ void RuleSelection::scriptFileChanged(QString file)
     file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
     file = file.replace(QCoreApplication::applicationDirPath(), "");
     m_MapScriptFile->setCurrentText(file);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     spGameMap pMap = GameMap::getInstance();
     pMap->getGameScript()->setScriptFile(file);
     pMap->getGameScript()->init();
-    pApp->continueThread();
+    
 }

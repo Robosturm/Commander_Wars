@@ -164,18 +164,16 @@ void PerkSelectionDialog::changeCO(qint32 index)
 
 void PerkSelectionDialog::showSavePerklist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Perklist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &PerkSelectionDialog::savePerklist, Qt::QueuedConnection);
     addChild(pSaveInput);
-    pApp->continueThread();
+    
 }
 
 void PerkSelectionDialog::savePerklist(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Mainapp::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");
-    pApp->continueThread();
+    
 }

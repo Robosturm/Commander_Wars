@@ -47,11 +47,9 @@ void DropDownmenu::setCurrentItem(qint32 index)
 {
     if ((index >= 0) && (index < m_ItemTexts.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         m_currentItem = index;
         m_Textfield->setHtmlText(m_ItemTexts[index]);
-        pApp->continueThread();
+        
     }
 }
 
@@ -74,12 +72,11 @@ QString DropDownmenu::getCurrentItemText()
 
 void DropDownmenu::setCurrentItemText(QString value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Textfield->setHtmlText(value);
     m_currentItem = -1;
     hideTooltip();
-    pApp->continueThread();
+    
 }
 
 void DropDownmenu::addDropDownText(QString text, qint32 id)
@@ -103,9 +100,8 @@ void DropDownmenu::addDropDownText(QString text, qint32 id)
 
 void DropDownmenu::itemChanged(qint32 item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Textfield->setHtmlText(m_ItemTexts[item]);
     emit sigItemChanged(m_currentItem);
-    pApp->continueThread();
+    
 }

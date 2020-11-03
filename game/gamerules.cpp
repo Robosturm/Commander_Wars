@@ -180,8 +180,7 @@ void GameRules::init()
 
 void GameRules::checkVictory()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
@@ -215,7 +214,7 @@ void GameRules::checkVictory()
             }
         }
     }
-     pApp->continueThread();
+     
 }
 
 void GameRules::addWeather(QString weatherId, qint32 weatherChance)
@@ -304,8 +303,7 @@ qint32 GameRules::getWeatherChance(QString weatherId)
 
 void GameRules::startOfTurn(bool newDay)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     if (newDay && m_WeatherDays.size() > 0)
     {
@@ -371,7 +369,7 @@ void GameRules::startOfTurn(bool newDay)
     }
     setCurrentWeather(m_WeatherDays[0][currentPlayer]);
     createFogVision();
-    pApp->continueThread();
+    
 }
 
 void GameRules::setStartWeather(qint32 index)
@@ -455,8 +453,7 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
 
 void GameRules::setCurrentWeather(qint32 weatherId)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
         if (m_CurrentWeather != weatherId)
@@ -471,12 +468,11 @@ void GameRules::setCurrentWeather(qint32 weatherId)
         // create weather sprites :)
         createWeatherSprites();
     }
-    pApp->continueThread();
+    
 }
 void GameRules::createWeatherSprites()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("creating weather Sprites", Console::eDEBUG);
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
@@ -523,7 +519,7 @@ void GameRules::createWeatherSprites()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 qint32 GameRules::getUnitLimit() const
@@ -558,8 +554,7 @@ void GameRules::setFogMode(const GameEnums::Fog &FogMode)
 
 void GameRules::createFogVision()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
@@ -609,7 +604,7 @@ void GameRules::createFogVision()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)
@@ -745,8 +740,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
 
 void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     switch (pPlayer->checkAlliance(pUnit->getOwner()))
     {
         case GameEnums::Alliance_Enemy:
@@ -767,7 +761,7 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 qint32 GameRules::getStartWeather() const

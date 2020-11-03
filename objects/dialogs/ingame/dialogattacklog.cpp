@@ -267,8 +267,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
 
 void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(pMap->getCurrentPlayer()->getBaseGameInput());
     if (pInput != nullptr)
@@ -278,5 +277,5 @@ void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAt
     }
     oxygine::Actor::detach();
     emit sigFinished();
-    pApp->continueThread();
+    
 }

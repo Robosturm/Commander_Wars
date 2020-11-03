@@ -158,8 +158,7 @@ void FileDialog::setPreview(bool preview)
 
 void FileDialog::showFolder(QString folder)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -264,7 +263,7 @@ void FileDialog::showFolder(QString folder)
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
-    pApp->continueThread();
+    
 }
 
 void FileDialog::update(const oxygine::UpdateState& us)
@@ -301,8 +300,6 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
         !m_CurrentFile->getFocused() &&
         m_focused)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         switch(cur)
         {
             case Qt::Key_Delete:
@@ -327,6 +324,6 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                 break;
             }
         }
-        pApp->continueThread();
+        
     }
 }

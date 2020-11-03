@@ -124,35 +124,31 @@ LobbyMenu::~LobbyMenu()
 
 void LobbyMenu::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void LobbyMenu::hostLocal()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu("", "", true));
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void LobbyMenu::hostServer()
 {
     if (m_pTCPClient.get() != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, "", true));
         oxygine::Actor::detach();
-        pApp->continueThread();
+        
     }
 }
 
@@ -162,12 +158,10 @@ void LobbyMenu::joinGame()
     {
         if (m_currentGame->getLocked())
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             spDialogPassword pDialogTextInput = new DialogPassword(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
             connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
-            pApp->continueThread();
+            
         }
         else
         {
@@ -192,8 +186,6 @@ void LobbyMenu::joinGamePassword(QString password)
     }
     if (exists)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         m_usedForHosting = true;
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, password, false));
@@ -203,31 +195,29 @@ void LobbyMenu::joinGamePassword(QString password)
         stream << m_currentGame->getSlaveName();
         emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
         oxygine::Actor::detach();
-        pApp->continueThread();
+        
     }
 }
 
 void LobbyMenu::joinAdress()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     spDialogPasswordAndAdress pDialogTextInput = new DialogPasswordAndAdress(tr("Enter Host Adress"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
 
-    pApp->continueThread();
+    
 }
 
 void LobbyMenu::join(QString adress, QString password)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     // todo
     oxygine::getStage()->addChild(new Multiplayermenu(adress, password, false));
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -254,8 +244,7 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
 
 void LobbyMenu::updateGamesView()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_Gamesview.get() != nullptr)
     {
         m_Gamesview->detach();
@@ -291,7 +280,7 @@ void LobbyMenu::updateGamesView()
     connect(m_Gamesview.get(), &TableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
     m_pGamesPanel->addItem(m_Gamesview);
     m_pGamesPanel->setContentHeigth(m_Gamesview->getHeight() + 40);
-    pApp->continueThread();
+    
 }
 
 void LobbyMenu::selectGame()

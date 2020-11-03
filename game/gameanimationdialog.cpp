@@ -115,8 +115,6 @@ void GameAnimationDialog::nextDialogStep()
         }
         else
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             float textHeight = m_TextField->getTextRect().getHeight();
             qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
             // loop till two lines of text will be shown
@@ -136,7 +134,7 @@ void GameAnimationDialog::nextDialogStep()
             {
                 paused = true;
             }
-            pApp->continueThread();
+            
         }
     }
 }

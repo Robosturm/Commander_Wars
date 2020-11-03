@@ -111,11 +111,9 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             achievement.progress += value;
             if (!achieved && (achievement.progress >= achievement.targetValue))
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 spAchievementBanner banner = new AchievementBanner(achievement);
                 oxygine::getStage()->addChild(banner);
-                pApp->continueThread();
+                
             }
         }
     }

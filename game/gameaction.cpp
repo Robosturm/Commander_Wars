@@ -313,8 +313,7 @@ CursorData* GameAction::getStepCursor()
 MenuData* GameAction::getMenuStepData()
 {
     Console::print("Reading menu step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Interpreter* pInterpreter = Interpreter::getInstance();
     MenuData* data = new MenuData;
     QString function1 = "getStepData";
@@ -322,7 +321,7 @@ MenuData* GameAction::getMenuStepData()
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data);
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
-    pApp->continueThread();
+    
     return data;
 }
 

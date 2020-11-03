@@ -7,8 +7,7 @@
 
 void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 range, QColor color)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 i = 0; i <= range; i++)
     {
         if (i == 0)
@@ -24,7 +23,7 @@ void CreateOutline::addCursorRangeOutline(oxygine::spActor pOutlineSprite, QStri
             createOutline(pOutlineSprite, prefix, i, range, color);
         }
     }
-    pApp->continueThread();
+    
 }
 
 void CreateOutline::createOuterLeftRightOutline(oxygine::spActor pOutlineSprite, QString prefix, qint32 range, QColor color)

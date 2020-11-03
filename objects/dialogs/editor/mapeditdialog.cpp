@@ -190,13 +190,12 @@ void MapEditDialog::scriptFileChanged(QString file)
 
 void MapEditDialog::showSelectScript()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }

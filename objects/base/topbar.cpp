@@ -36,8 +36,7 @@ Topbar::Topbar(qint32 x, qint32 width)
 
 void Topbar::hide()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
         for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
@@ -45,13 +44,12 @@ void Topbar::hide()
             m_Items.at(i)->at(i2)->setVisible(false);
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
@@ -106,13 +104,12 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     });
     addChild(pTooltip);
 
-    pApp->continueThread();
+    
 }
 
 void Topbar::addGroup(QString text)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
     oxygine::spTextField textField = new oxygine::TextField();
@@ -152,5 +149,5 @@ void Topbar::addGroup(QString text)
     m_Buttons.append(pButton);
     m_Items.append(new QVector<oxygine::spBox9Sprite>());
 
-    pApp->continueThread();
+    
 }

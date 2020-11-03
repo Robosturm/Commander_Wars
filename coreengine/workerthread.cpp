@@ -43,7 +43,6 @@ WorkerThread::~WorkerThread()
 void WorkerThread::start()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     Console* pConsole = Console::getInstance();
     // create the initial menue no need to store the object
     // it will add itself to the current stage
@@ -101,7 +100,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     started = true;
-    pApp->continueThread();
+    
 }
 
 void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)

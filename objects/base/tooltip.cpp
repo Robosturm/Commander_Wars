@@ -75,7 +75,6 @@ void Tooltip::showTooltip()
     if (!m_disabled)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         hideTooltip();
 
         if (oxygine::getStage()->isDescendant(this) && m_enabled)
@@ -130,7 +129,7 @@ void Tooltip::showTooltip()
                 }
             }
         }
-        pApp->continueThread();
+        
     }
 }
 
@@ -148,13 +147,12 @@ void Tooltip::disableTooltip()
 
 void Tooltip::hideTooltip()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
         m_Tooltip = nullptr;
         stopTooltiptimer();
     }
-    pApp->continueThread();
+    
 }

@@ -253,8 +253,6 @@ void GameMenue::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -284,7 +282,7 @@ void GameMenue::disconnected(quint64 socketID)
             Console::print("Closing slave cause a player has disconnected.", Console::eDEBUG);
             QCoreApplication::exit(0);
         }
-        pApp->continueThread();
+        
 
     }
 }
@@ -462,8 +460,7 @@ void GameMenue::loadUIButtons()
 
 void GameMenue::updateTimer()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QTimer* pTimer = GameMap::getInstance()->getGameRules()->getRoundTimer();
     qint32 roundTime = pTimer->remainingTime();
     if (!pTimer->isActive())
@@ -475,7 +472,7 @@ void GameMenue::updateTimer()
         roundTime = 0;
     }
     m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
-    pApp->continueThread();
+    
 }
 
 bool GameMenue::getGameStarted() const
@@ -566,8 +563,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
 
 void GameMenue::performAction(spGameAction pGameAction)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (pGameAction.get() != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
@@ -703,7 +699,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)
@@ -734,8 +730,7 @@ bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, 
 
 void GameMenue::centerMapOnAction(GameAction* pGameAction)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("centerMapOnAction()", Console::eDEBUG);
     Unit* pUnit = pGameAction->getTargetUnit();
     Player* pPlayer = getCurrentViewPlayer();
@@ -759,13 +754,12 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
     {
         pMap->centerMap(target.x(), target.y());
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::skipAnimations()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
@@ -910,13 +904,12 @@ void GameMenue::skipAnimations()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::finishActionPerformed()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_CurrentActionUnit.get() != nullptr)
     {
         m_CurrentActionUnit->postAction();
@@ -927,13 +920,12 @@ void GameMenue::finishActionPerformed()
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
-    pApp->continueThread();
+    
 }
 
 void GameMenue::actionPerformed()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (getParent() != nullptr)
     {
         Console::print("Action performed", Console::eDEBUG);
@@ -975,15 +967,13 @@ void GameMenue::actionPerformed()
     {
         Console::print("Skipping action performed due to exiting the game", Console::eDEBUG);
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)
 {
     if (xyTextInfo.get() != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
         QPoint pos = getMousePos(x, y);
         bool flip = m_pPlayerinfo->getFlippedX();
@@ -1033,14 +1023,13 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
             m_pPlayerinfo->setFlippedX(flip);
             m_pPlayerinfo->updateData();
         }
-        pApp->continueThread();
+        
     }
 }
 
 void GameMenue::updatePlayerinfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pPlayerinfo->updateData();
     m_IngameInfoBar->updatePlayerInfo();
     spGameMap pMap = GameMap::getInstance();
@@ -1048,13 +1037,12 @@ void GameMenue::updatePlayerinfo()
     {
         pMap->getPlayer(i)->updateVisualCORange();
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::victory(qint32 team)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     bool exit = true;
     bool humanWin = false;
@@ -1103,13 +1091,12 @@ void GameMenue::victory(qint32 team)
         oxygine::Actor::detach();
         m_pInstance = nullptr;
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showAttackLog()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     Console::print("showAttackLog()", Console::eDEBUG);
     spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getCurrentPlayer());
@@ -1118,13 +1105,12 @@ void GameMenue::showAttackLog()
         m_Focused = true;
     });
     addChild(pAttackLog);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showUnitInfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     Console::print("showUnitInfo()", Console::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getCurrentPlayer());
@@ -1133,13 +1119,12 @@ void GameMenue::showUnitInfo()
         m_Focused = true;
     });
     addChild(pDialogUnitInfo);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showOptions()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     Console::print("showOptions()", Console::eDEBUG);
     spGenericBox pDialogOptions = new GenericBox();
@@ -1151,13 +1136,12 @@ void GameMenue::showOptions()
         m_Focused = true;
     });
     addChild(pDialogOptions);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showGameInfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     Console::print("showGameInfo()", Console::eDEBUG);
     QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Killed"), tr("Army Value"), tr("Income"), tr("Funds"), tr("Bases")};
@@ -1220,13 +1204,12 @@ void GameMenue::showGameInfo()
             m_Focused = true;
         });
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showCOInfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("showCOInfo()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     spCOInfoDialog pCOInfoDialog = new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
@@ -1286,13 +1269,12 @@ void GameMenue::showCOInfo()
     addChild(pCOInfoDialog);
     setFocused(false);
     connect(pCOInfoDialog.get(), &COInfoDialog::quit, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::saveGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
@@ -1301,7 +1283,7 @@ void GameMenue::saveGame()
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 QString GameMenue::getSaveFileEnding()
@@ -1319,8 +1301,7 @@ QString GameMenue::getSaveFileEnding()
 
 void GameMenue::showSaveAndExitGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("showSaveAndExitGame()", Console::eDEBUG);
     QVector<QString> wildcards;
     if (m_pNetworkInterface.get() != nullptr ||
@@ -1338,19 +1319,18 @@ void GameMenue::showSaveAndExitGame()
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
     connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::victoryInfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("victoryInfo()", Console::eDEBUG);
     spDialogVictoryConditions pVictoryConditions = new DialogVictoryConditions();
     addChild(pVictoryConditions);
     setFocused(false);
     connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::autoSaveMap()
@@ -1366,8 +1346,7 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".sav") || filename.endsWith(".msav"))
     {
         QFile file(filename);
@@ -1379,7 +1358,7 @@ void GameMenue::saveMap(QString filename)
         Settings::setLastSaveGame(filename);
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::saveMapAndExit(QString filename)
@@ -1391,8 +1370,7 @@ void GameMenue::saveMapAndExit(QString filename)
 
 void GameMenue::exitGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Finishing running animations and exiting game", Console::eDEBUG);
     gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
@@ -1400,13 +1378,12 @@ void GameMenue::exitGame()
         GameAnimationFactory::finishAllAnimations();
     }
     victory(-1);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::startGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameAnimationFactory::clearAllAnimations();
     spGameMap pMap = GameMap::getInstance();
     if (!m_SaveGame)
@@ -1443,7 +1420,7 @@ void GameMenue::startGame()
     }
     pMap->setVisible(true);
     gameStarted = true;
-    pApp->continueThread();
+    
 }
 
 void GameMenue::keyInput(oxygine::KeyEvent event)
@@ -1468,29 +1445,27 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 if (QFile::exists("savegames/quicksave1.sav"))
                 {
                     Mainapp* pApp = Mainapp::getInstance();
-                    pApp->suspendThread();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
                     oxygine::Actor::detach();
                     GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
-                    pApp->continueThread();
+                    
                 }
             }
             else if (cur == Settings::getKey_quickload2())
             {
                 if (QFile::exists("savegames/quicksave2.sav"))
                 {
-                    Mainapp* pApp = Mainapp::getInstance();
-                    pApp->suspendThread();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
                     GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
+                    Mainapp* pApp = Mainapp::getInstance();
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
                     oxygine::Actor::detach();
-                    pApp->continueThread();
+                    
                 }
             }
             else
@@ -1514,8 +1489,6 @@ void GameMenue::keyInputAll(Qt::Key cur)
     else if (cur == Settings::getKey_information() ||
              cur == Settings::getKey_information2())
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getCurrentViewPlayer();
         GameEnums::VisionType visionType = pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
@@ -1536,7 +1509,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
             });
             setFocused(false);
         }
-        pApp->continueThread();
+        
     }
 }
 
@@ -1552,8 +1525,7 @@ Chat* GameMenue::getChat() const
 
 void GameMenue::showExitGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("showExitGame()", Console::eDEBUG);
     m_Focused = false;
     spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the current game?"), true);
@@ -1563,7 +1535,7 @@ void GameMenue::showExitGame()
         m_Focused = true;
     });
     addChild(pExit);
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showSurrenderGame()
@@ -1571,8 +1543,6 @@ void GameMenue::showSurrenderGame()
     spGameMap pMap = GameMap::getInstance();
     if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         Console::print("showSurrenderGame()", Console::eDEBUG);
         m_Focused = false;
         spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
@@ -1582,25 +1552,23 @@ void GameMenue::showSurrenderGame()
             m_Focused = true;
         });
         addChild(pSurrender);
-        pApp->continueThread();
+        
     }
 }
 
 void GameMenue::surrenderGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameAction pAction = new GameAction();
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
     m_Focused = true;
-    pApp->continueThread();
+    
 }
 
 void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spUnit pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
     if (pUnit.get() != nullptr)
     {
@@ -1617,18 +1585,17 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
         addChild(pDialogTextInput);
         m_Focused = false;
     }
-    pApp->continueThread();
+    
 }
 
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameAction pAction = new GameAction();
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);
     performAction(pAction);
     m_Focused = true;
-    pApp->continueThread();
+    
 }

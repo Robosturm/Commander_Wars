@@ -240,97 +240,87 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterMultiplayer()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new LobbyMenu());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterEditor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new EditorMenue());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterOptionmenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new OptionMenue());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterWikimenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new Wikimenu());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterCreditsmenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new CreditsMenue());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterAchievementmenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new Achievementmenu());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterLoadGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.sav");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterLoadCampaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::loadCampaign(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -345,20 +335,19 @@ void Mainwindow::loadCampaign(QString filename)
             leaveMenue();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterReplayGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.rec");
     QString path = QCoreApplication::applicationDirPath() + "/data/records";
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::replayGame, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::lastSaveGame()
@@ -368,8 +357,7 @@ void Mainwindow::lastSaveGame()
 
 void Mainwindow::loadGame(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -383,13 +371,12 @@ void Mainwindow::loadGame(QString filename)
             leaveMenue();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::replayGame(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".rec"))
     {
         QFile file(filename);
@@ -404,25 +391,23 @@ void Mainwindow::replayGame(QString filename)
             leaveMenue();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::leaveMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Main Menue", Console::eDEBUG);
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::enterCOStyleMenu()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(new COStyleMenu());
     leaveMenue();
-    pApp->continueThread();
+    
 }
 
 void Mainwindow::quitGame()

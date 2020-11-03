@@ -172,60 +172,55 @@ CampaignEditor::CampaignEditor()
 
 void CampaignEditor::showExitBox()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the campaign editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &CampaignEditor::exitEditor, Qt::QueuedConnection);
     addChild(pExit);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::exitEditor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     emit sigFinished();
     detach();
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::showAddCampaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/" + m_CampaignFolder->getCurrentText();
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::showSaveCampaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards, m_Name->getCurrentText());
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::showLoadCampaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::addCampaign(QString filename)
@@ -255,13 +250,12 @@ QString CampaignEditor::getMapName(QString filename)
 
 void CampaignEditor::showSelectFolder()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFolderDialog folderDialog = new FolderDialog(path);
     this->addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::selectFolder(QString folder)
@@ -277,17 +271,15 @@ void CampaignEditor::selectFolder(QString folder)
 
 void CampaignEditor::clearCampaignData()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     mapDatas.clear();
     m_Panel->clearContent();
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::updateCampaignData()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Panel->clearContent();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < mapDatas.size(); i++)
@@ -354,7 +346,7 @@ void CampaignEditor::updateCampaignData()
     }
     m_Panel->setContentHeigth(mapDatas.size() * 40 + 40);
     m_Panel->setContentWidth(1010);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::loadCampaign(QString filename)
@@ -703,8 +695,7 @@ void CampaignEditor::saveCampaign(QString filename)
 
 void CampaignEditor::showEditEnableMaps(qint32 index)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGenericBox pBox = new GenericBox();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
     spPanel pPanel = new Panel(true, size, size);
@@ -770,13 +761,12 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
         }
     }
     addChild(pBox);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::showEditDisableMaps(qint32 index)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGenericBox pBox = new GenericBox();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
     spPanel pPanel = new Panel(true, size, size);
@@ -839,13 +829,12 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         counter++;
     }
     CampaignEditor::addChild(pBox);
-    pApp->continueThread();
+    
 }
 
 void CampaignEditor::showEditScriptVariables(qint32 index)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGenericBox pBox = new GenericBox();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
     spPanel pPanel = new Panel(true, size, size);
@@ -1020,5 +1009,5 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     y += 40;
     pPanel->setContentHeigth(y);
     CampaignEditor::addChild(pBox);
-    pApp->continueThread();
+    
 }

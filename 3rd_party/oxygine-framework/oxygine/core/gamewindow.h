@@ -34,15 +34,6 @@ namespace oxygine
 //            m_lockCounter++;
 //            m_Mutex.lock();
         }
-        /**
-         * @brief continueThread continues rendering
-         */
-        inline void continueThread()
-        {
-//            Q_ASSERT(isWorker());
-//            m_Mutex.unlock();
-//            m_lockCounter--;
-        }
 
         inline void suspendThread2()
         {

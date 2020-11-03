@@ -55,8 +55,6 @@ Wikipage::Wikipage()
 
 void Wikipage::keyInput(oxygine::KeyEvent event)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     // for debugging
     Qt::Key cur = event.getKey();
     if (cur == Settings::getKey_information() ||
@@ -67,7 +65,7 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
         emit sigFinished();
         detach();
     }
-    pApp->continueThread();
+    
 }
 
 void Wikipage::loadText(QString text)
@@ -104,8 +102,6 @@ void Wikipage::loadHeadline(QString text)
 
 void Wikipage::showLink(QString pageID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     auto entry = pWikiDatabase->getEntry(pageID);
     if (!std::get<0>(entry).isEmpty() &&
@@ -113,7 +109,7 @@ void Wikipage::showLink(QString pageID)
     {
        oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
-    pApp->continueThread();
+    
 }
 
 void Wikipage::loadImage(QString file, float scale, QString pageID)

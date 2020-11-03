@@ -241,21 +241,19 @@ DialogRandomMap::DialogRandomMap()
 
 void DialogRandomMap::showGeneratorSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/data/randomMaps";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     filename = filename.replace(QCoreApplication::applicationDirPath() + "/", "");
     m_GeneratorFile->setCurrentText(filename);
     QFile file(filename);
@@ -316,13 +314,12 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         m_OwnerDistributionLabel->setY(m_BuildingChances->getY() + 40 * buildingStrings.size());
         playerChanged(0);
     }
-    pApp->continueThread();
+    
 }
 
 void DialogRandomMap::playerChanged(qreal)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_OwnerDistribution.get())
     {
         m_OwnerDistribution->detach();
@@ -342,5 +339,5 @@ void DialogRandomMap::playerChanged(qreal)
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 40);
     m_pPanel->addItem(m_OwnerDistribution);
     m_pPanel->setContentHeigth(m_OwnerDistribution->getY() + 40 * (playerStrings.size() + 1));
-    pApp->continueThread();
+    
 }

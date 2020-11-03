@@ -102,8 +102,7 @@ void COSelectionDialog::showCOInfo()
 
 void COSelectionDialog::selectedCOIDChanged(QString coid)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_currentCOID = coid;
-    pApp->continueThread();
+    
 }

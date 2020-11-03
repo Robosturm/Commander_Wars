@@ -173,8 +173,7 @@ MapSelection::~MapSelection()
 
 void MapSelection::setSelection(QString folder, QStringList files)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
@@ -184,13 +183,12 @@ void MapSelection::setSelection(QString folder, QStringList files)
         currentItem = m_Files[0];
         emit sigStartItemChangeTimer();
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelection::changeFolder(QString folder)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_itemClicked = false;
     QString newFolder = folder;
     if (folder == "")
@@ -246,7 +244,7 @@ void MapSelection::changeFolder(QString folder)
             emit sigStartItemChangeTimer();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelection::update(const oxygine::UpdateState& us)
@@ -262,8 +260,7 @@ void MapSelection::update(const oxygine::UpdateState& us)
 
 void MapSelection::updateSelection(qint32 startIndex)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_itemClicked = false;
     currentStartIndex = startIndex;
     if (currentStartIndex < 0)
@@ -342,7 +339,7 @@ void MapSelection::updateSelection(qint32 startIndex)
         currentItem = m_Files[currentIdx + currentStartIndex];
         emit sigStartItemChangeTimer();
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelection::itemChangeTimerExpired()

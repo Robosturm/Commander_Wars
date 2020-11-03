@@ -124,8 +124,7 @@ OptionMenue::~OptionMenue()
 
 void OptionMenue::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // save changed settings :)
     Settings::saveSettings();
     if (restartNeeded)
@@ -138,26 +137,24 @@ void OptionMenue::exitMenue()
         oxygine::getStage()->addChild(new Mainwindow());
         oxygine::Actor::detach();
     }
-    pApp->continueThread();
+    
 }
 
 
 void OptionMenue::showGameplayAndKeys()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pOptions->setVisible(false);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
     m_ModSelector->setVisible(false);
     m_pGameplayAndKeys->setVisible(true);
-    pApp->continueThread();
+    
 }
 
 void OptionMenue::reloadSettings()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Option Menue", Console::eDEBUG);
 
     OptionMenue* newMenu = new OptionMenue();
@@ -165,20 +162,19 @@ void OptionMenue::reloadSettings()
     newMenu->restartNeeded = restartNeeded;
     oxygine::getStage()->addChild(newMenu);
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void OptionMenue::showSettings()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pOptions->setVisible(true);
     m_pMods->setVisible(false);
     m_pModDescription->setVisible(false);
     m_ModSelector->setVisible(false);
     m_pGameplayAndKeys->setVisible(false);
     m_pOptions->clearContent();
-
+    Mainapp* pApp = Mainapp::getInstance();
     AudioThread* pAudio = pApp->getAudioThread();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -629,13 +625,12 @@ void OptionMenue::showSettings()
     y += 40;
 
     m_pOptions->setContentHeigth(20 + y);
-    pApp->continueThread();
+    
 }
 
 void OptionMenue::showMods()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pMods->clearContent();
     m_pModDescription->clearContent();
 
@@ -765,13 +760,12 @@ void OptionMenue::showMods()
     }
     m_pMods->setContentWidth(width);
     m_pMods->setContentHeigth(50 + mods * 50);
-    pApp->continueThread();
+    
 }
 
 void OptionMenue::selectMods(qint32 item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QStringList removeList;
     QStringList addList;
     switch (item)
@@ -829,7 +823,7 @@ void OptionMenue::selectMods(qint32 item)
     }
     restartNeeded = true;
     showMods();
-    pApp->continueThread();
+    
 }
 
 void OptionMenue::restart()

@@ -62,8 +62,7 @@ ReplayMenu::~ReplayMenu()
 
 void ReplayMenu::showRecordInvalid()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     QString modList;
     QStringList mods = m_ReplayRecorder.getMods();
@@ -75,13 +74,12 @@ void ReplayMenu::showRecordInvalid()
                                                     modList, false);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);    
     addChild(pExit);
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::exitReplay()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
@@ -90,7 +88,7 @@ void ReplayMenu::exitReplay()
     Console::print("Leaving Replay Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::nextReplayAction()
@@ -126,8 +124,7 @@ void ReplayMenu::nextReplayAction()
 
 void ReplayMenu::showExitGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Focused = false;
     spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the current replay?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
@@ -136,7 +133,7 @@ void ReplayMenu::showExitGame()
         m_Focused = true;
     });
     addChild(pExit);
-    pApp->continueThread();
+    
 }
 
 Player* ReplayMenu::getCurrentViewPlayer()
@@ -146,8 +143,7 @@ Player* ReplayMenu::getCurrentViewPlayer()
 
 void ReplayMenu::loadUIButtons()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     loadSeekUi();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -240,13 +236,12 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::loadSeekUi()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -273,7 +268,7 @@ void ReplayMenu::loadSeekUi()
     addChild(pDayBox);
     _seekActor = pDayBox;
     _seekActor->setVisible(false);
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::startSeeking()
@@ -284,8 +279,7 @@ void ReplayMenu::startSeeking()
         _seekPause = true;
         swapPlay();
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     _StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     if (GameAnimationFactory::getAnimationCount() > 0)
@@ -294,13 +288,12 @@ void ReplayMenu::startSeeking()
     }
     Settings::setShowAnimations(_StoredShowAnimations);
     _seeking = true;
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::seekChanged(float value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     _seekActor->setVisible(true);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = 0;
@@ -309,20 +302,19 @@ void ReplayMenu::seekChanged(float value)
         day = m_ReplayRecorder.getDayFromPosition(count);
     }
     _seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::seekRecord(float value)
 {
     QMutexLocker locker(&_replayMutex);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
     _seekActor->setVisible(false);
     _seeking = false;
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::seekToDay(qint32 day)
@@ -331,8 +323,6 @@ void ReplayMenu::seekToDay(qint32 day)
     if (m_ReplayRecorder.getRecordSize() > 0)
     {
         Console::print("Seeking to day " + QString::number(day), Console::eDEBUG);
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spGameMap pMap = GameMap::getInstance();
         auto pos = pMap->getPosition();
         m_ReplayRecorder.seekToDay(day);
@@ -344,7 +334,7 @@ void ReplayMenu::seekToDay(qint32 day)
         pMap->getGameRules()->createFogVision();
         connectMap();
         connectMapCursor();
-        pApp->continueThread();
+        
         if (_seekPause)
         {
             swapPlay();
@@ -377,15 +367,14 @@ void ReplayMenu::swapPlay()
 void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&_replayMutex);
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     _StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::stopFastForward()
@@ -396,8 +385,7 @@ void ReplayMenu::stopFastForward()
 
 void ReplayMenu::showConfig()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (_pauseButton->getVisible())
     {
         swapPlay();
@@ -551,13 +539,12 @@ void ReplayMenu::showConfig()
     y += 40;
 
     addChild(pBox);
-    pApp->continueThread();
+    
 }
 
 void ReplayMenu::setViewTeam(qint32 item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     if (item <= -Viewplayer::ViewType::CurrentTeam)
     {
@@ -581,5 +568,5 @@ void ReplayMenu::setViewTeam(qint32 item)
         }
     }
     pMap->getGameRules()->createFogVision();
-    pApp->continueThread();
+    
 }

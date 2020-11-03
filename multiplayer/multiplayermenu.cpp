@@ -152,8 +152,7 @@ void Multiplayermenu::showIPs()
 
 void Multiplayermenu::showLoadSaveGameDialog()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // dummy impl for loading
     QVector<QString> wildcards;
     wildcards.append("*.msav");
@@ -161,13 +160,12 @@ void Multiplayermenu::showLoadSaveGameDialog()
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::loadSaveGame(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".msav"))
     {
         QFile file(filename);
@@ -182,25 +180,23 @@ void Multiplayermenu::loadSaveGame(QString filename)
             slotButtonNext();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::hideMapSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pButtonLoadSavegame->setVisible(false);
     MapSelectionMapsMenue::hideMapSelection();
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::showMapSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pButtonLoadSavegame->setVisible(true);
     MapSelectionMapsMenue::showMapSelection();
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::playerJoined(quint64 socketID)
@@ -432,10 +428,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         {
             Console::print("Incorrect Password found.", Console::eDEBUG);
             // quit game with wrong version
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            slotButtonBack();
-            pApp->continueThread();
+            slotButtonBack();            
         }
         else
         {
@@ -537,12 +530,10 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         else
         {
             // quit game with wrong version
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version or other mods loaded leaving the game again."));
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
-            pApp->continueThread();
+            
         }
     }
 }
@@ -804,8 +795,7 @@ void Multiplayermenu::loadMultiplayerMap()
 
 void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     pMap->setVisible(false);
     if (!m_saveGame)
@@ -839,7 +829,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     sendStream << NetworkCommands::CLIENTINITGAME;
     sendStream << m_NetworkInterface->getSocketID();
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
-    pApp->continueThread();
+    
 }
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash)
@@ -893,8 +883,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
 
 void Multiplayermenu::showRuleSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRuleSelection->setVisible(true);
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
@@ -903,7 +892,7 @@ void Multiplayermenu::showRuleSelection()
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::disconnected(quint64)
@@ -1006,20 +995,18 @@ void Multiplayermenu::startGameOnServer()
 
 void Multiplayermenu::createChat()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Chat = new Chat(m_NetworkInterface,
                       QSize(Settings::getWidth() - 20, 300),
                       NetworkInterface::NetworkSerives::GameChat);
     m_Chat->setPosition(10, Settings::getHeight() - 360);
     addChild(m_Chat);
-    pApp->continueThread();
+    
 }
 
 void Multiplayermenu::disconnectNetwork()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_GameStartTimer.stop();
     if (m_NetworkInterface.get() != nullptr)
     {
@@ -1032,7 +1019,7 @@ void Multiplayermenu::disconnectNetwork()
         m_pPlayerSelection->attachNetworkInterface(nullptr);
         m_NetworkInterface = nullptr;
     }
-    pApp->continueThread();
+    
 }
 
 bool Multiplayermenu::getGameReady()
@@ -1175,8 +1162,6 @@ void Multiplayermenu::countdown()
         if (counter == 0 && m_NetworkInterface.get() != nullptr)
         {
             Console::print("Starting game on server", Console::eDEBUG);
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             defeatClosedPlayers();
             spGameMap pMap = GameMap::getInstance();
             pMap->setVisible(false);
@@ -1208,7 +1193,7 @@ void Multiplayermenu::countdown()
             Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             oxygine::Actor::detach();
-            pApp->continueThread();
+            
         }
     }
     else

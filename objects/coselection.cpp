@@ -218,8 +218,7 @@ COSelection::~COSelection()
 
 void COSelection::armyChanged(QString army)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         m_COFields[i]->detach();
@@ -304,7 +303,7 @@ void COSelection::armyChanged(QString army)
     }
     colorChanged(m_CurrentColor);
     m_CoFieldPanel->setContentHeigth(y * 51 * scale + 30);
-    pApp->continueThread();
+    
 }
 
 void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QString army)
@@ -357,8 +356,7 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
 
 void COSelection::colorChanged(QColor color)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QColor colorAlpha(color);
     colorAlpha.setAlpha(120);
     for (qint32 i = 0; i < m_COFields.size(); i++)
@@ -368,13 +366,12 @@ void COSelection::colorChanged(QColor color)
     }
     m_Cursor->setColor(color);
     m_CurrentColor = color;
-    pApp->continueThread();
+    
 }
 
 void COSelection::hoveredCOChanged(QString coid)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (coid != "")
     {
         QString coName = "";
@@ -447,5 +444,5 @@ void COSelection::hoveredCOChanged(QString coid)
         m_COSuperpower->setHtmlText("");
         m_pCurrentCO->setResAnim(nullptr);
     }
-    pApp->continueThread();
+    
 }

@@ -66,41 +66,37 @@ COStyleMenu::COStyleMenu()
 
 void COStyleMenu::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void COStyleMenu::reloadMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new COStyleMenu());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void COStyleMenu::selectedCOIDChanged(QString coid)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_currentCOID = coid;
-    pApp->continueThread();
+    
 }
 
 void COStyleMenu::editCOStyle()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (!m_currentCOID.isEmpty())
     {
         spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);
         addChild(pDialogCOStyle);
         connect(pDialogCOStyle.get(), &DialogCOStyle::sigFinished, this, &COStyleMenu::reloadMenue, Qt::QueuedConnection);
     }
-    pApp->continueThread();
+    
 }

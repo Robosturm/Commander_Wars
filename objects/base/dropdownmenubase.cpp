@@ -70,8 +70,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 
 void DropDownmenuBase::showDropDown()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     setPriority(static_cast<qint32>(Mainapp::ZOrder::DropDownList));
     m_Panel->setVisible(true);
     m_OriginalOwner = getParent();
@@ -95,13 +94,12 @@ void DropDownmenuBase::showDropDown()
     {
         m_Panel->setY(m_Box->getHeight());
     }
-    pApp->continueThread();
+    
 }
 
 void DropDownmenuBase::hideDropDown()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_OriginalOwner.get() != nullptr &&
         m_OriginalOwner->getParent() == nullptr)
     {
@@ -121,18 +119,17 @@ void DropDownmenuBase::hideDropDown()
         m_OriginalOwner = nullptr;
     }
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pApp->continueThread();
+    
 }
 
 void DropDownmenuBase::setEnabled(bool value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_Box->setEnabled(value);
     m_Panel->setVisible(false);
-    pApp->continueThread();
+    
 }
 
 qint32 DropDownmenuBase::getCurrentItem() const

@@ -291,8 +291,7 @@ void EditorMenue::editorRedo()
 
 void EditorMenue::clickedTopbar(QString itemID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("clickedTopbar(" + itemID + ")", Console::eDEBUG);
 
     if (itemID == "EXIT")
@@ -508,13 +507,12 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         showResizeMap();
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::showResizeMap()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     Console::print("showResizeMap()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
@@ -587,15 +585,14 @@ void EditorMenue::showResizeMap()
         emit sigResizeMap(leftBox->getCurrentValue(), topBox->getCurrentValue(),
                           rightBox->getCurrentValue(), bottomBox->getCurrentValue());
     });
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameMap::getInstance()->resizeMap(left, top, right, bottom);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::createRandomMap(QString mapName, QString author, QString description,
@@ -606,8 +603,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
                                   QVector<float> ownedBaseSize,
                                   float startBaseSize)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     cleanTemp(-1);
     GameMap* pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
@@ -618,18 +614,17 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
     pGameMap->updateSprites();
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::playersChanged()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_EditorSelection->createPlayerSelection();
     spGameMap pMap = GameMap::getInstance();
     pMap->updateSprites();
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::rulesChanged()
@@ -639,8 +634,7 @@ void EditorMenue::rulesChanged()
 
 void EditorMenue::optimizePlayers()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     createTempFile();
     spGameMap pMap = GameMap::getInstance();
     QVector<bool> foundPlayers(pMap->getPlayerCount(), false);
@@ -680,13 +674,12 @@ void EditorMenue::optimizePlayers()
         }
     }
     m_EditorSelection->createPlayerSelection();
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::KeyInput(oxygine::KeyEvent event)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (!event.getContinousPress())
     {
         InGameMenue::keyInput(event);
@@ -749,9 +742,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
-                spGameMap pMap = GameMap::getInstance();
+               spGameMap pMap = GameMap::getInstance();
                 if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
                     Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
@@ -763,7 +754,7 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     });
                     setFocused(false);
                 }
-                pApp->continueThread();
+                
             }
             else if (cur == Settings::getKey_cancel() ||
                      cur == Settings::getKey_cancel2())
@@ -780,13 +771,12 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
             m_EditorSelection->KeyInput(cur);
         }
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Topbar->hide();
     xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
 
@@ -903,13 +893,12 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // resolve click
     spGameMap pMap = GameMap::getInstance();
 
@@ -956,13 +945,12 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         }
     }
     m_EditorMode = EditorModes::PlaceEditorSelection;
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // resolve click
     switch (m_EditorMode)
     {
@@ -988,13 +976,12 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // resolve click
     switch (m_EditorMode)
     {
@@ -1020,13 +1007,12 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // resolve click
     switch (m_EditorMode)
     {
@@ -1108,7 +1094,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::editFinishedCanceled()
@@ -1215,8 +1201,6 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             if (points.size() < 14)
             {
                 pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
@@ -1225,7 +1209,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             {
                 pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
             }
-            pApp->continueThread();
+            
         }
     }
     if (points.size() >= 14)
@@ -1288,8 +1272,6 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             if (pCurrentBuilding->getBuildingID() != pMap->getTerrain(curX, curY)->getTerrainID())
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
@@ -1298,7 +1280,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
                     pMap->updateTerrain(points.at(i).x(), points.at(i).y());
                     pMap->updateSprites(points.at(i).x(), points.at(i).y());
                 }
-                pApp->continueThread();
+                
             }
         }
     }
@@ -1343,14 +1325,12 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         qint32 curY = points.at(i).y();
         if (canUnitBePlaced(curX, curY))
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             spGameMap pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
-            pApp->continueThread();
+            
         }
     }
 
@@ -1358,8 +1338,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
 
 void EditorMenue::saveMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".map"))
     {
@@ -1371,13 +1350,12 @@ void EditorMenue::saveMap(QString filename)
         file.close();
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::loadMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".map"))
     {
@@ -1397,13 +1375,12 @@ void EditorMenue::loadMap(QString filename)
         }
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::importAWDCAw4Map(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".aw4"))
     {
@@ -1416,13 +1393,12 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         }
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::importAWByWeb(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".txt"))
     {
@@ -1435,13 +1411,12 @@ void EditorMenue::importAWByWeb(QString filename)
         }
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::importAWDSAwsMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".aws"))
     {
@@ -1454,26 +1429,24 @@ void EditorMenue::importAWDSAwsMap(QString filename)
         }
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".aws"))
     {
         GameMap::getInstance()->exportAWDSMap(filename);
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::importCoWTxTMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".txt"))
     {
@@ -1486,15 +1459,14 @@ void EditorMenue::importCoWTxTMap(QString filename)
         }
     }
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::newMap(QString mapName, QString author, QString description, QString scriptFile,
                          qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
                          qint32 turnLimit, quint32 buildLimit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     cleanTemp(-1);
     spGameMap pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
@@ -1507,15 +1479,14 @@ void EditorMenue::newMap(QString mapName, QString author, QString description, Q
 
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::changeMap(QString mapName, QString author, QString description, QString scriptFile,
                             qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
                             qint32 turnLimit, quint32 buildLimit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     createTempFile();
     spGameMap pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
@@ -1527,7 +1498,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     pMap->getGameRecorder()->setMapTime(turnLimit);
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::selectionChanged()
@@ -1827,18 +1798,16 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 
 void EditorMenue::exitEditor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Editor Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void EditorMenue::autosave()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QString filename = "maps/autosave.map";
     if (filename.endsWith(".map"))
     {
@@ -1849,5 +1818,5 @@ void EditorMenue::autosave()
         pMap->serializeObject(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }

@@ -214,8 +214,7 @@ bool V_Scrollbar::getSliding() const
 
 void V_Scrollbar::setSliding(bool sliding)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_sliding = sliding;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (sliding)
@@ -228,7 +227,7 @@ void V_Scrollbar::setSliding(bool sliding)
         oxygine::ResAnim* pAnimState = pObjectManager->getResAnim("v_scrollbar");
         m_slider->setResAnim(pAnimState);
     }
-    pApp->continueThread();
+    
 }
 
 float V_Scrollbar::getScrollspeed() const
@@ -243,8 +242,7 @@ void V_Scrollbar::setScrollspeed(float Scrollspeed)
 
 void V_Scrollbar::setContentWidth(qint32 width)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_ContentWidth = width;
     qint32 sliderWidth = 50;
     sliderWidth = ((this->getWidth() - 20 - 20) * this->getWidth()) / m_ContentWidth;
@@ -259,7 +257,7 @@ void V_Scrollbar::setContentWidth(qint32 width)
     m_Scrollvalue = 0;
     m_slider->setSize(sliderWidth, 18);
     setScrollvalue(m_Scrollvalue);
-    pApp->continueThread();
+    
 }
 
 void V_Scrollbar::update(const oxygine::UpdateState& us)
@@ -286,8 +284,7 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
 
 void V_Scrollbar::changeScrollValue(float value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Scrollvalue += value;
     if (m_Scrollvalue < 0)
     {
@@ -303,7 +300,7 @@ void V_Scrollbar::changeScrollValue(float value)
     }
     setScrollvalue(m_Scrollvalue);
     emit sigScrollValueChanged(m_Scrollvalue);
-    pApp->continueThread();
+    
 }
 
 float V_Scrollbar::getScrollvalue() const
@@ -313,8 +310,7 @@ float V_Scrollbar::getScrollvalue() const
 
 void V_Scrollbar::setScrollvalue(float Scrollvalue)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Scrollvalue = Scrollvalue;
     if (m_Scrollvalue < 0)
     {
@@ -329,17 +325,16 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
         // all fine do nothing
     }
     m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
-    pApp->continueThread();
+    
 }
 
 void V_Scrollbar::setWidth(float w)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::Actor::setWidth(w);
     m_Width = w;
     m_pBox->setWidth(w);
     m_pArrowRigth->setPosition(m_Width - m_pArrowRigth->getWidth() - 8, 9);
     setContentWidth(m_ContentWidth);
-    pApp->continueThread();
+    
 }

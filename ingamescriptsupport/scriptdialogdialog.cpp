@@ -75,8 +75,7 @@ void ScriptDialogDialog::addItem()
 
 void ScriptDialogDialog::updateDialog()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_Panel->clearContent();
     qint32 count = m_Event->getDialogSize();
     qint32 panelWidth = Settings::getWidth();
@@ -193,7 +192,7 @@ void ScriptDialogDialog::updateDialog()
     }
     m_Panel->setContentHeigth(count * 40 + 20);
     m_Panel->setContentWidth(panelWidth);
-    pApp->continueThread();
+    
 
 }
 
@@ -208,8 +207,7 @@ void ScriptDialogDialog::removeLast()
 
 void ScriptDialogDialog::showChangeBackground()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(dialogIndex);
     QFileInfo file(pDialog->background);
     QString folder = "maps/";
@@ -222,7 +220,7 @@ void ScriptDialogDialog::showChangeBackground()
     spFileDialog pFileDialog = new FileDialog(folder, QVector<QString>(1, "*.png"), fileName);
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void ScriptDialogDialog::setCurrentDialogBackground(QString file)

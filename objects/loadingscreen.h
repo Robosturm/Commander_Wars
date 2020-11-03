@@ -33,15 +33,9 @@ public:
      * @brief hide
      */
     void hide();
-    /**
-     * @brief doUpdate
-     * @param us
-     */
-    virtual void doUpdate(const oxygine::UpdateState& us) override;
-signals:
+
 private:
     explicit LoadingScreen();
-    void triggerUpdate();
 private:
     bool loaded = false;
 
@@ -49,7 +43,7 @@ private:
     oxygine::spTextField m_loadingProgress;
     oxygine::spColorRectSprite m_BackgroundBar;
     oxygine::spColorRectSprite m_LoadingBar;
-    QSemaphore m_semaphore;
+
 
     static spLoadingScreen m_pLoadingScreen;
 };

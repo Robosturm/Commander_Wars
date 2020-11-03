@@ -185,8 +185,7 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(QFileInfo info, bool fast)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (info.isFile() &&
         (info != m_currentMapFile || !fast) &&
         (info.fileName().endsWith(".map") ||
@@ -261,7 +260,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     }
     m_MapInfo->setContentWidth(maxWidth + 30);
     m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
-    pApp->continueThread();
+
 }
 
 void MapSelectionView::updateMapData()

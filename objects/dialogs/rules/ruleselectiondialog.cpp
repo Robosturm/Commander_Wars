@@ -66,34 +66,31 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode)
 
 void RuleSelectionDialog::showLoadRules()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::loadRules, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void RuleSelectionDialog::showSaveRules()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::saveRules, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void RuleSelectionDialog::loadRules(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".grl"))
     {
@@ -113,13 +110,12 @@ void RuleSelectionDialog::loadRules(QString filename)
             m_pPanel->setContentWidth(m_pRuleSelection->getWidth());
         }
     }
-    pApp->continueThread();
+    
 }
 
 void RuleSelectionDialog::saveRules(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".grl"))
     {
@@ -130,15 +126,14 @@ void RuleSelectionDialog::saveRules(QString filename)
         pMap->getGameRules()->serializeObject(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }
 
 void RuleSelectionDialog::pressedOk()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRuleSelection->confirmRuleSelectionSetup();
     emit sigRulesChanged();
     detach();
-    pApp->continueThread();
+    
 }

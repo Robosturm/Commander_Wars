@@ -146,8 +146,6 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
     Qt::Key cur = event.getKey();
     if (m_focused)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         restartTooltiptimer();
         if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
@@ -253,7 +251,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                 }
             }
         }
-        pApp->continueThread();
+        
     }
 }
 

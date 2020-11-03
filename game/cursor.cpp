@@ -20,8 +20,7 @@ Cursor::Cursor()
 
 void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, float scale)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (m_CurrentCursor.get() != nullptr)
     {
@@ -42,7 +41,7 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
     m_CurrentCursor->setScale(scale * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
     m_CurrentCursor->setPosition(xOffset, yOffset);
     this->addChild(m_CurrentCursor);
-    pApp->continueThread();
+    
 }
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
@@ -55,8 +54,6 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
         onMap = pMap->onMap(x, y);
         if (onMap)
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             // play tick sound when changing the field
             if ((x != m_MapPointX) ||
                 (y != m_MapPointY))
@@ -69,7 +66,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
             this->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
             // provide cursor move signal
             emit sigCursorMoved(m_MapPointX, m_MapPointY);
-            pApp->continueThread();
+            
         }
     }
 }
@@ -81,8 +78,7 @@ void Cursor::addCursorRangeOutline(qint32 range, QColor color)
 
 void Cursor::resetCursorRangeOutline()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_cursorRangeOutline->removeChildren();
-    pApp->continueThread();
+    
 }

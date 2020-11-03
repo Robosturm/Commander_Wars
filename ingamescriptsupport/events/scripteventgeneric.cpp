@@ -185,8 +185,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
 
 void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QString currentFile, spTextbox pTextbox)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append(filter);
     QString path = QCoreApplication::applicationDirPath() + startFolder;
@@ -198,5 +197,5 @@ void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QS
         emit pTextbox->sigTextChanged(file);
     });
     oxygine::getStage()->addChild(fileDialog);
-    pApp->continueThread();
+    
 }

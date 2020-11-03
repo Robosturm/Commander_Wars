@@ -94,9 +94,8 @@ void COInfoDialog::slotBack()
 
 void COInfoDialog::showCO()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_COInfo->showCO(m_CurrentCO, m_pCurrentPlayer);
     m_pPanel->setContentHeigth(m_COInfo->getHeight());
-    pApp->continueThread();
+    
 }

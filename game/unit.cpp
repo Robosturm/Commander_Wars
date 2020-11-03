@@ -177,20 +177,17 @@ void Unit::setTerrain(Terrain* pTerrain)
 
 void Unit::addShineTween()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     removeShineTween();
     m_ShineTween = oxygine::createTween(TweenAddColorAll(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
     addTween(m_ShineTween);
-    pApp->continueThread();
+    
 }
 
 void Unit::removeShineTween()
 {
     if (m_ShineTween.get() != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         m_ShineTween->remove();
         m_ShineTween = nullptr;
         QColor addColor(0, 0, 0, 0);
@@ -201,7 +198,7 @@ void Unit::removeShineTween()
             child->setAddColor(addColor);
             child = static_cast<oxygine::VStyleActor*>(child->getNextSibling().get());
         }
-        pApp->continueThread();
+        
     }
 }
 
@@ -2145,8 +2142,7 @@ void Unit::moveUnitAction(GameAction* pAction)
 
 void Unit::moveUnit(QVector<QPoint> movePath)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (movePath.size() < 1)
     {
         movePath.append(QPoint(getX(), getY()));
@@ -2205,13 +2201,12 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::moveUnitToField(qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // reset capture points when moving  a unit
     setCapturePoints(0);
 
@@ -2221,13 +2216,12 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     pMap->getTerrain(x, y)->setUnit(pUnit);
     showCORange();
     pUnit = nullptr;
-    pApp->continueThread();
+    
 }
 
 void Unit::removeUnit(bool killed)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (killed)
     {
         if (m_UnitRank == GameEnums::UnitRank_CO0)
@@ -2261,13 +2255,12 @@ void Unit::removeUnit(bool killed)
     {
         m_pTerrain->setUnit(nullptr);
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::killUnit()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
     QJSValueList args1;
@@ -2285,7 +2278,7 @@ void Unit::killUnit()
     }
     detach();
     removeUnit();
-    pApp->continueThread();
+    
 }
 
 void Unit::increaseCapturePoints(QPoint position)
@@ -2317,8 +2310,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
             return;
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -2342,13 +2334,12 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 
         updateIconTweens();
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::unloadIcon(QString iconID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
@@ -2364,7 +2355,7 @@ void Unit::unloadIcon(QString iconID)
         }
         updateIconTweens();
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::updateBonus(QVector<QPoint>& data)
@@ -2485,8 +2476,7 @@ void Unit::setCloaked(qint32 cloaked)
 
 void Unit::updateIconTweens()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
         m_pIconSprites[i]->removeTweens();
@@ -2563,7 +2553,7 @@ void Unit::updateIconTweens()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::setMovementType(const QString &movementType)
@@ -3037,8 +3027,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
 
 void Unit::showCORange()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         createCORange(m_pOwner->getCO(0)->getCORange());
@@ -3051,7 +3040,7 @@ void Unit::showCORange()
     {
         // do nothing
     }
-    pApp->continueThread();
+    
 }
 
 void Unit::createCORange(qint32 coRange)

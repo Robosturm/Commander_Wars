@@ -177,8 +177,7 @@ COInfoActor::COInfoActor(qint32 width)
 
 void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     QString coid = "";
@@ -365,7 +364,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     }
     setHeight(y + 100);
     connect(this, &COInfoActor::sigShowLink, this, &COInfoActor::showLink, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void COInfoActor::showCOBoost(spUnit pUnit, spCO pCO, qint32 & x, qint32 & y)
@@ -580,8 +579,7 @@ void COInfoActor::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint3
 
 void COInfoActor::showLink(QString pageID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     auto entry = pWikiDatabase->getEntry(pageID);
     if (!std::get<0>(entry).isEmpty() &&
@@ -589,5 +587,5 @@ void COInfoActor::showLink(QString pageID)
     {
         oxygine::getStage()->addChild(pWikiDatabase->getPage(entry));
     }
-    pApp->continueThread();
+    
 }

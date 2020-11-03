@@ -170,8 +170,7 @@ MapSelectionMapsMenue::~MapSelectionMapsMenue()
 
 void MapSelectionMapsMenue::slotButtonBack()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("slotButtonBack()", Console::eDEBUG);
     switch (m_MapSelectionStep)
     {
@@ -213,13 +212,12 @@ void MapSelectionMapsMenue::slotButtonBack()
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::slotButtonNext()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("slotButtonNext()", Console::eDEBUG);
     switch (m_MapSelectionStep)
     {
@@ -274,53 +272,48 @@ void MapSelectionMapsMenue::slotButtonNext()
             break;
         }
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     if (info.isFile())
     {
         m_pMapSelectionView->setCurrentFile(info.filePath());
         emit buttonNext();
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     m_pMapSelectionView->loadMap(info);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::hideMapSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRandomMap->setVisible(false);
     m_pMapSelectionView->setVisible(false);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showMapSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRandomMap->setVisible(true);
     m_pMapSelectionView->setVisible(true);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRuleSelection->setVisible(false);
     m_pButtonSaveRules->setVisible(false);
     m_pButtonLoadRules->setVisible(false);
@@ -330,13 +323,12 @@ void MapSelectionMapsMenue::hideRuleSelection()
         m_pRuleSelectionView = nullptr;
     }
     m_pRuleSelection->clearContent();
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showRuleSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pRuleSelection->setVisible(true);
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
@@ -345,7 +337,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showPlayerSelection()
@@ -367,8 +359,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 
 void MapSelectionMapsMenue::startGame()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Start game", Console::eDEBUG);
     defeatClosedPlayers();
     spGameMap pMap = GameMap::getInstance();
@@ -381,7 +372,7 @@ void MapSelectionMapsMenue::startGame()
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(false, nullptr));
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
@@ -416,8 +407,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             QVector<float> ownedBaseSize,
                                             float startBaseSize)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameMap* pGameMap = new GameMap(width, heigth, playerCount);
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
@@ -432,39 +422,36 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
     m_pMapSelectionView->setCurrentMap(pGameMap);
     emit buttonNext();
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showLoadRules()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showSaveRules()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::loadRules(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".grl"))
     {
@@ -480,13 +467,12 @@ void MapSelectionMapsMenue::loadRules(QString filename)
             showRuleSelection();
         }
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::saveRules(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     if (filename.endsWith(".grl"))
     {
@@ -497,26 +483,24 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         pMap->getGameRules()->serializeObject(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::showSaveMap()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/maps/";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -526,5 +510,5 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         pMap->serializeObject(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }

@@ -115,8 +115,7 @@ FolderDialog::~FolderDialog()
 
 void FolderDialog::showFolder(QString folder)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -203,7 +202,7 @@ void FolderDialog::showFolder(QString folder)
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
-    pApp->continueThread();
+    
 }
 
 void FolderDialog::deleteItem()
@@ -224,8 +223,6 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
     if (!m_CurrentFolder->getFocused() &&
          m_focused)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         switch(cur)
         {
             case Qt::Key_Delete:
@@ -248,6 +245,6 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
                 break;
             }
         }
-        pApp->continueThread();
+        
     }
 }

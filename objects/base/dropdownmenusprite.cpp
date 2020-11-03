@@ -45,8 +45,6 @@ void DropDownmenuSprite::setCurrentItem(qint32 index)
 {
     if ((index >= 0) && (index < m_ItemTexts.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         m_currentItem = index;
         m_currentText = m_ItemTexts[index];
         m_pClipActor->removeChildren();
@@ -54,7 +52,7 @@ void DropDownmenuSprite::setCurrentItem(qint32 index)
         pSprite->setScaleX((m_Box->getWidth() - 13 - 65) / pSprite->getWidth());
         pSprite->setScaleY((m_Box->getHeight() - 12) / pSprite->getHeight());
         m_pClipActor->addChild(pSprite);
-        pApp->continueThread();
+        
     }
 }
 

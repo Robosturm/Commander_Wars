@@ -38,8 +38,7 @@ Minimap::~Minimap()
 
 void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // load new minimap
     if (pMap.get() != nullptr)
     {
@@ -87,6 +86,12 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                     }
                     m_Items[item].background = pSprite;
                     m_Items[item].terrainId = "||SHROUDED||";
+                    if (m_Items[item].unit.get())
+                    {
+                        m_Items[item].unit->detach();
+                        m_Items[item].unitId = "";
+                        m_Items[item].unitPlayer = -1;
+                    }
                 }
                 else
                 {
@@ -167,10 +172,10 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                     {
                         if (!useVision || !pUnit->isStealthed(pPlayer))
                         {
+                            removeUnit = false;
                             if (pUnit->getUnitID() != m_Items[item].unitId ||
                                 pUnit->getOwner()->getPlayerID() != m_Items[item].unitPlayer)
                             {
-                                removeUnit = false;
                                 if (m_Items[item].unit.get())
                                 {
                                     m_Items[item].unit->detach();
@@ -216,5 +221,5 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
             }
         }
     }
-    pApp->continueThread();
+
 }

@@ -63,8 +63,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
 
 void DialogModifyUnit::updateData()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pPanel->clearContent();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -291,7 +290,7 @@ void DialogModifyUnit::updateData()
         addLoadUnit(m_pUnit->getLoadedUnitCount(), sliderOffset, y);
     }
     m_pPanel->setContentHeigth(y);
-    pApp->continueThread();
+    
 }
 
 void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
@@ -338,8 +337,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
 
 void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (unitID == "-")
     {
         m_pUnit->unloadUnitAtIndex(index, QPoint(-1, -1));
@@ -350,7 +348,7 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
         m_pUnit->loadUnit(pUnit);
     }
     emit sigUpdateData();
-    pApp->continueThread();
+    
 }
 
 void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)

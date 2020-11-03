@@ -303,8 +303,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
                                                      qint32 loops, float scale, short priority, qint32 showDelay,
                                                      bool _invertFlipX, qint32 frameTime, qint32 frames)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
@@ -384,7 +383,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
         }
         m_Actor->addChild(pSprite);
     }
-    pApp->continueThread();
+    
 }
 
 void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
@@ -406,10 +405,9 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
 
 void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     pActor->detach();
-    pApp->continueThread();
+    
 }
 
 qint32 BattleAnimationSprite::getHpRounded() const

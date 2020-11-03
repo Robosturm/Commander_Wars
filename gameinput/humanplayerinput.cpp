@@ -58,13 +58,11 @@ void HumanPlayerInput::rightClickUp(qint32, qint32)
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         if (m_FieldPoints.size() > 0 && m_pGameAction.get() == nullptr)
         {
             cleanUpInput();
         }
-        pApp->continueThread();
+        
     }
 }
 
@@ -79,15 +77,11 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             GameAnimationFactory::finishAllAnimations();
-            pApp->continueThread();
+            
         }
         else if (m_pGameAction.get() != nullptr)
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
             if ((m_pGameAction->getInputStep() > 0) ||
                 (m_pGameAction->getActionID() != ""))
@@ -121,16 +115,14 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             {
                 cancelActionInput();
             }
-            pApp->continueThread();
+            
         }
         else
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
-                Mainapp* pApp = Mainapp::getInstance();
-                pApp->suspendThread();
                 showAttackableFields(x, y);
-                pApp->continueThread();
+                
             }
         }
     }
@@ -279,8 +271,6 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
             m_pPlayer == nullptr)
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
             if (GameAnimationFactory::getAnimationCount() > 0)
             {
                 // do nothing
@@ -444,15 +434,14 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             {
                 //cleanUpInput();
             }
-            pApp->continueThread();
+            
         }
     }
 }
 
 void HumanPlayerInput::markedFieldSelected(QPoint point)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pGameAction->writeDataInt32(point.x());
     m_pGameAction->writeDataInt32(point.y());
     clearMarkedFields();
@@ -467,13 +456,12 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
         // else introduce next step
         getNextStepData();
     }
-    pApp->continueThread();
+    
 }
 
 void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // we're currently selecting the action for this action
     if (m_pGameAction->getActionID() == "")
     {
@@ -500,7 +488,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
         // else introduce next step
         getNextStepData();
     }
-    pApp->continueThread();
+    
 }
 
 void HumanPlayerInput::getNextStepData()
@@ -751,8 +739,6 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
          m_pPlayer == nullptr) &&
         pMap->onMap(x, y))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
 
         if (m_pMarkedFieldData.get() != nullptr)
         {
@@ -865,7 +851,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 }
             }
         }
-        pApp->continueThread();
+        
     }
 
 }
@@ -1083,8 +1069,7 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
         m_CurrentMenu.get() == nullptr)
@@ -1128,7 +1113,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
                         qint32 currentMaxDistance = distance;
                         currentMaxDistance += pUnit->getMovementpoints(unitPositionpUnit);
                         currentMaxDistance += pUnit->getMaxRange(unitPositionpUnit);
-                        if (pApp->getDistance(unitPositionpUnit, position) <= currentMaxDistance)
+                        if (Mainapp::getDistance(unitPositionpUnit, position) <= currentMaxDistance)
                         {
                             if(all || pUnit->getBaseMaxRange() > 1)
                             {
@@ -1140,7 +1125,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedFields)

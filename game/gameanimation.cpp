@@ -294,10 +294,8 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 }
 
 bool GameAnimation::onFinished()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    pApp->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
+{    
+    Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
         GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
@@ -311,7 +309,7 @@ bool GameAnimation::onFinished()
         pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
     }
     GameAnimationFactory::removeAnimation(this);
-    pApp->continueThread();
+    
     return true;
 }
 

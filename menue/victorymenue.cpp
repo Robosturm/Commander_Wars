@@ -441,8 +441,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {
@@ -540,13 +539,12 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     }
     m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
 
-    pApp->continueThread();
+    
 }
 
 void VictoryMenue::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spCampaign campaign = GameMap::getInstance()->getSpCampaign();
     if (campaign.get() != nullptr && campaign->getCampaignFinished() == false)
     {
@@ -569,7 +567,7 @@ void VictoryMenue::exitMenue()
         emit m_pNetworkInterface->sig_close();
         m_pNetworkInterface = nullptr;
     }
-    pApp->continueThread();
+    
 }
 
 oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
@@ -625,8 +623,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 
 void VictoryMenue::updateGraph()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     if (m_CurrentGraphMode < GraphModes::Max)
     {
@@ -716,7 +713,7 @@ void VictoryMenue::updateGraph()
             }
         }
     }
-    pApp->continueThread();
+    
 }
 
 void VictoryMenue::finishGraph()

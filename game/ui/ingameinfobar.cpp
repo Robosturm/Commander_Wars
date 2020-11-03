@@ -81,8 +81,7 @@ IngameInfoBar::IngameInfoBar()
 
 void IngameInfoBar::updatePlayerInfo()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pGameInfoBox->removeChildren();
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -289,7 +288,7 @@ void IngameInfoBar::updatePlayerInfo()
             pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
             pTextfield->setPosition(10, y);
             m_pGameInfoBox->addChild(pTextfield);
-            pApp->continueThread();
+            
             y += 25;
         }
     }
@@ -307,8 +306,7 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 
 void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr && pMap->onMap(x, y) && (m_LastX != x || m_LastY != y || update))
     {
@@ -817,5 +815,5 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             }
         }
     }
-    pApp->continueThread();
+    
 }

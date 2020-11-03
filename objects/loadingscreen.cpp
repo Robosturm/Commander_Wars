@@ -23,8 +23,7 @@ LoadingScreen::LoadingScreen()
 
 void LoadingScreen::show()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     oxygine::getStage()->addChild(this);
     if (!loaded)
     {
@@ -75,44 +74,24 @@ void LoadingScreen::show()
     m_loadingProgress->setText("0 %");
     m_LoadingBar->setWidth(1);
     setVisible(true);
-    triggerUpdate();
-    pApp->continueThread();
+    
 }
 
-void LoadingScreen::triggerUpdate()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    qint32 counter = pApp->getLockCounter();
-    for (qint32 i = 0; i < counter; i++)
-    {
-        pApp->continueThread();
-    }
-    m_semaphore.acquire();
-    for (qint32 i = 0; i < counter; i++)
-    {
-        pApp->suspendThread();
-    }
-}
 
 void LoadingScreen::setProgress(QString workText, qint32 value)
 {
     m_workText->setText(workText);
     m_loadingProgress->setText(QString::number(value) + " %");
     m_LoadingBar->setWidth(value * Settings::getWidth() / 100);
-    triggerUpdate();
+
 }
 
 void LoadingScreen::setWorktext(QString workText)
 {
     m_workText->setText(workText);
-    triggerUpdate();
+
 }
 
-void LoadingScreen::doUpdate(const oxygine::UpdateState& us)
-{
-    m_semaphore.release();
-    oxygine::Actor::doUpdate(us);
-}
 
 void LoadingScreen::hide()
 {

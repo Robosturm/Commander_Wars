@@ -198,18 +198,16 @@ void ActionListDialog::setBuildlist(qint32)
 
 void ActionListDialog::showSaveBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &ActionListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);
-    pApp->continueThread();
+    
 }
 
 void ActionListDialog::saveBannlist(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Mainapp::storeList(filename, m_CurrentActionList, "data/actionbannlist/");
-    pApp->continueThread();
+    
 }

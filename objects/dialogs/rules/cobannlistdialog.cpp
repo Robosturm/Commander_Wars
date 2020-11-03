@@ -297,18 +297,16 @@ void COBannListDialog::setCOBannlist(qint32 item)
 
 void COBannListDialog::showSaveBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &COBannListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);
-    pApp->continueThread();
+    
 }
 
 void COBannListDialog::saveBannlist(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Mainapp::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
-    pApp->continueThread();
+    
 }

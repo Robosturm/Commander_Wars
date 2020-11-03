@@ -172,8 +172,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 
 void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameMenue pGamemenu = GameMenue::getInstance();
     if (pGamemenu.get() != nullptr)
     {
@@ -182,5 +181,5 @@ void DialogUnitInfo::moveToUnit(qint32 posX, qint32 posY)
     }
     oxygine::Actor::detach();
     emit sigFinished();
-    pApp->continueThread();
+    
 }

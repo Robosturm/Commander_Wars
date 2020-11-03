@@ -94,8 +94,7 @@ qint32 Multislider::getSliderValue(qint32 slider)
 
 void Multislider::sliderValueChanged(qint32 slider)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     qint32 totalSliderValue = 0;
     for (qint32 i = 0; i < m_Slider.size(); i++)
     {
@@ -129,5 +128,5 @@ void Multislider::sliderValueChanged(qint32 slider)
         }
     }
     emit signalSliderChanged();
-    pApp->continueThread();
+    
 }

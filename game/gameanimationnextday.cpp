@@ -180,15 +180,13 @@ bool GameAnimationNextDay::onFinished()
     bool ret = true;
     if (!m_permanent)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spGameMap pMap = GameMap::getInstance();
         if (pMap.get() != nullptr)
         {
             pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
         }
         ret = GameAnimation::onFinished();
-        pApp->continueThread();
+        
     }
     return ret;
 }

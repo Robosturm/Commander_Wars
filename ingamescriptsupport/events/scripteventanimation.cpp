@@ -279,15 +279,14 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
 
 void ScriptEventAnimation::showLoadDialog()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.png");
     QString path = QCoreApplication::applicationDirPath() + "/resources/images/animations/";
     spFileDialog fileDialog = new FileDialog(path, wildcards, sprite, true);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEventAnimation::selectAnimation, Qt::QueuedConnection);
     oxygine::getStage()->addChild(fileDialog);
-    pApp->continueThread();
+    
 }
 
 void ScriptEventAnimation::selectAnimation(QString id)

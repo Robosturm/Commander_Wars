@@ -98,13 +98,12 @@ Wikimenu::Wikimenu()
 
 void Wikimenu::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     // save changed settings :)
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void Wikimenu::searchChanged(QString)
@@ -114,8 +113,7 @@ void Wikimenu::searchChanged(QString)
 
 void Wikimenu::search(bool onlyTag)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_MainPanel->clearContent();
     QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;
@@ -164,7 +162,7 @@ void Wikimenu::search(bool onlyTag)
         itemCount++;
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
-    pApp->continueThread();
+    
 }
 
 void Wikimenu::showWikipage(WikiDatabase::pageData page)

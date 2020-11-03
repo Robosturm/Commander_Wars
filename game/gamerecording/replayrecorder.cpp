@@ -163,8 +163,6 @@ void ReplayRecorder::seekToDay(qint32 day)
     }
     else
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spGameMap pMap = GameMap::getInstance();
         pMap->deleteMap();
 
@@ -200,14 +198,13 @@ void ReplayRecorder::seekToDay(qint32 day)
                 m_recordFile.seek(seekPos + size);
             }
         }
-        pApp->continueThread();
+        
     }
 }
 
 void ReplayRecorder::seekToStart()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_recordFile.seek(_mapPos);
     spGameMap pMap = GameMap::getInstance();
     pMap->deleteMap();
@@ -218,7 +215,7 @@ void ReplayRecorder::seekToStart()
     {
         pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
     }
-    pApp->continueThread();
+    
 }
 
 qint32 ReplayRecorder::getDayFromPosition(qint32 count)

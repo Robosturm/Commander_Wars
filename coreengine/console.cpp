@@ -140,8 +140,6 @@ void Console::extendMaskImages(QString folder, QString filter)
 
 void Console::dotask(QString message)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     Interpreter* pInterpreter = Interpreter::getInstance();
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
@@ -165,7 +163,6 @@ void Console::dotask(QString message)
             }
         }
     }
-    pApp->continueThread();
 }
 
 void Console::print(QString message, qint8 LogLevel)
@@ -1318,8 +1315,6 @@ void Console::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
     Qt::Key cur = event.getKey();
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     if (cur == Settings::getKeyConsole())
     {
         Console::toggleView();
@@ -1459,7 +1454,7 @@ void Console::KeyInput(oxygine::KeyEvent event)
             }
         }
     }
-    pApp->continueThread();
+
 }
 
 void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)

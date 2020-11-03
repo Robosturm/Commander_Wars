@@ -59,12 +59,11 @@ void DropDownmenuColor::setCurrentItem(qint32 index)
 
 void DropDownmenuColor::setCurrentItem(QColor color)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_currentColor = color;
     hideTooltip();
     m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
-    pApp->continueThread();
+    
 }
 
 QColor DropDownmenuColor::getCurrentItemColor()
@@ -83,23 +82,20 @@ void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
 
 void DropDownmenuColor::itemChanged(qint32 item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_currentColor = m_ItemColors[item];
     m_Colorfield->setColor(m_currentColor.red(), m_currentColor.green(), m_currentColor.blue(), 255);
     emit sigItemChanged(m_currentColor);
-    pApp->continueThread();
+    
 }
 
 void DropDownmenuColor::showColorDialog()
 {
     if (getEnabled())
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         spColorSelectionDialog pDialog = new ColorSelectionDialog(m_currentColor);
         oxygine::getStage()->addChild(pDialog);
         connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
-        pApp->continueThread();
+        
     }
 }

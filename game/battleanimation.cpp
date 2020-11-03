@@ -273,8 +273,6 @@ void BattleAnimation::setSpritePosition(oxygine::spSprite pSprite, Unit* pUnit1,
 
 oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     oxygine::spSprite ret = new oxygine::Sprite();
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnimBase = nullptr;
@@ -299,7 +297,7 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
     pSprite->setResAnim(pAnimFore);
     ret->addChild(pSprite);
     pSprite->setSpeed(speed);
-    pApp->continueThread();
+    
     return ret;
 }
 
@@ -368,8 +366,6 @@ bool BattleAnimation::onFinished()
 
 void BattleAnimation::nextAnimatinStep()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     switch (currentState)
     {
         case AnimationProgress::MoveIn:
@@ -469,7 +465,7 @@ void BattleAnimation::nextAnimatinStep()
         }
     }
     currentState = static_cast<AnimationProgress>(static_cast<qint32>(currentState) + 1);
-    pApp->continueThread();
+    
     if (currentState >= AnimationProgress::Finished)
     {
         onFinished();
@@ -488,40 +484,34 @@ Unit *BattleAnimation::getAtkUnit() const
 
 void BattleAnimation::loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     pSprite->loadAnimation(BattleAnimationSprite::moveInAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getMoveInDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    pApp->continueThread();
+    
 }
 
 void BattleAnimation::loadStopAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     pSprite->loadAnimation(BattleAnimationSprite::stopAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getStopDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    pApp->continueThread();
+    
 }
 
 
 void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     pSprite->loadAnimation(BattleAnimationSprite::fireAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getFireDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    pApp->continueThread();
+    
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
                                           oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (endHp < 0.0f)
     {
         endHp = 0.0f;
@@ -566,16 +556,14 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
     battleTimer.start(pSprite->getImpactDurationMS(pUnit2) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    pApp->continueThread();
+    
 }
 
 
 void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, float, qint32 weapon)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     pSprite->loadAnimation(BattleAnimationSprite::dyingAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getDyingDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    pApp->continueThread();
+    
 }

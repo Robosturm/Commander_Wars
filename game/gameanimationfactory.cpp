@@ -69,8 +69,7 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
 
 GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spGameAnimation animation = new GameAnimation(frameTime);
     if (mapPosition)
     {
@@ -83,26 +82,24 @@ GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint
     animation->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(animation);
     m_Animations.append(animation);
-    pApp->continueThread();
+    
     return animation.get();
 }
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, GameAction* pAction)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameAnimationWalk* pGameAnimationWalk = new GameAnimationWalk(pUnit, pAction->getMovePath());
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
     m_Animations.append(pGameAnimationWalk);
-    pApp->continueThread();
+    
     return pGameAnimationWalk;
 }
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameAnimationPower* pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
     pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     spGameMenue pGameMenue = GameMenue::getInstance();
@@ -111,14 +108,13 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
         pGameMenue->addChild(pAnim);
     }
     m_Animations.append(pAnim);
-    pApp->continueThread();
+    
     return pAnim;
 }
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
     pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pAnim->setDialog(text);
@@ -130,7 +126,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
         pGameMenue->addChild(pAnim);
     }
     m_Animations.append(pAnim);
-    pApp->continueThread();
+    
     return pAnim;
 }
 
@@ -139,12 +135,10 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
         GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false);
         pGameMenue->addChild(pAnim);
         m_Animations.append(pAnim);
-        pApp->continueThread();
+        
         return pAnim;
     }
     return nullptr;
@@ -152,22 +146,20 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints, maxPoints);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     GameMap::getInstance()->addChild(pGameAnimationCapture);
     m_Animations.append(pGameAnimationCapture);
-    pApp->continueThread();
+    
     return pGameAnimationCapture;
 }
 
 GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     GameAnimation* pRet = nullptr;
     if (pDefUnit != nullptr)
     {
@@ -232,7 +224,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
         pRet->setSound("talongunhit.wav", 1);
     }
-    pApp->continueThread();
+    
     return pRet;
 }
 
@@ -252,8 +244,7 @@ GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -272,25 +263,23 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
     {
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
-    pApp->continueThread();
+    
 }
 
 void GameAnimationFactory::clearAllAnimations()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         m_Animations[i]->detach();
     }
     m_Animations.clear();
-    pApp->continueThread();
+    
 }
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -300,5 +289,5 @@ void GameAnimationFactory::finishAllAnimations()
             i++;
         }
     }
-    pApp->continueThread();
+    
 }

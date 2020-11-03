@@ -174,53 +174,48 @@ ScriptEditor::ScriptEditor()
 
 void ScriptEditor::showExitBox()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the script editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &ScriptEditor::exitEditor, Qt::QueuedConnection);
     addChild(pExit);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::exitEditor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     emit sigFinished();
     detach();
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::showSaveScript()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::saveScript, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::showLoadScript()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/maps";
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &ScriptEditor::loadScript, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::saveScript(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".js"))
     {
         QFile file(filename);
@@ -229,13 +224,12 @@ void ScriptEditor::saveScript(QString filename)
         m_Data->writeScript(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::loadScript(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".js"))
     {
         QFile file(filename);
@@ -245,7 +239,7 @@ void ScriptEditor::loadScript(QString filename)
         file.close();
     }
     updateConditios();
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::changeImmediateStart()
@@ -255,8 +249,7 @@ void ScriptEditor::changeImmediateStart()
 
 void ScriptEditor::updateConditios()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_ImmediateStart->setChecked(m_Data->getStartMode());
 
     m_ConditionPanel->clearContent();
@@ -284,7 +277,7 @@ void ScriptEditor::updateConditios()
     m_CurrentCondition = nullptr;
     updateEvents();
     m_ConditionPanel->setContentHeigth(y + 40);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
@@ -366,8 +359,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 
 void ScriptEditor::updateEvents()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_EventPanel->clearContent();
     qint32 y = 10;
     if (m_CurrentCondition.get() != nullptr)
@@ -381,7 +373,7 @@ void ScriptEditor::updateEvents()
 
     }
     m_EventPanel->setContentHeigth(y + 40);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
@@ -460,18 +452,16 @@ void ScriptEditor::addEvent()
 
 void ScriptEditor::showEditCondition(spScriptCondition pCondition)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     pCondition->showEditCondition(this);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::showEditEvent(spScriptEvent pEvent)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     pEvent->showEditEvent(this);
-    pApp->continueThread();
+    
 }
 
 void ScriptEditor::duplicateEvent(spScriptEvent pEvent)

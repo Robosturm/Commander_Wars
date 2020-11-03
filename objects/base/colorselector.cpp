@@ -157,8 +157,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 
 void ColorSelector::selecetedColorChanged(QColor color)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_CurrentColor = color;
     m_SpinBoxRed->setCurrentValue(m_CurrentColor.red());
     m_SpinBoxGreen->setCurrentValue(m_CurrentColor.green());
@@ -179,7 +178,7 @@ void ColorSelector::selecetedColorChanged(QColor color)
     }
     m_Cursor2->setY(color.blue() * pixelSize - m_Cursor2->getResAnim()->getHeight() / 2);
 
-    pApp->continueThread();
+    
 }
 
 QColor ColorSelector::getCurrentColor() const

@@ -243,18 +243,16 @@ void BuildListDialog::setBuildlist(qint32 item)
 
 void BuildListDialog::showSaveBannlist()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);
-    pApp->continueThread();
+    
 }
 
 void BuildListDialog::saveBannlist(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Mainapp::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
-    pApp->continueThread();
+    
 }

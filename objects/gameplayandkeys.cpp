@@ -14,8 +14,7 @@
 
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
 
     QSize size(Settings::getWidth() - 20,
                heigth);
@@ -700,5 +699,5 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     y += 40;
 
     m_pOptions->setContentHeigth(20 + y);
-    pApp->continueThread();
+    
 }

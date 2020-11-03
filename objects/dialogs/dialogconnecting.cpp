@@ -73,8 +73,7 @@ void DialogConnecting::connectionTimeout()
 
 void DialogConnecting::timeout()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     counter++;
     if (counter % 3 == 0)
     {
@@ -88,5 +87,5 @@ void DialogConnecting::timeout()
     {
         m_Text->setHtmlText((m_Message + "  ."));
     }
-    pApp->continueThread();
+    
 }

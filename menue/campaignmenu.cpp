@@ -83,39 +83,35 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
 void CampaignMenu::exitMenue()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
     oxygine::Actor::detach();
-    pApp->continueThread();
+    
 }
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     if (info.isFile())
     {
         emit buttonNext();
     }
-    pApp->continueThread();
+    
 }
 
 void CampaignMenu::mapSelectionItemChanged(QString item)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     m_pMapSelectionView->loadMap(info);
-    pApp->continueThread();
+    
 }
 
 void CampaignMenu::slotButtonNext()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pMapSelectionView->loadCurrentMap();
     if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
@@ -139,26 +135,24 @@ void CampaignMenu::slotButtonNext()
         oxygine::getStage()->addChild(new MapSelectionMapsMenue(-1, m_pMapSelectionView));
         oxygine::Actor::detach();
     }
-    pApp->continueThread();
+    
 }
 
 void CampaignMenu::showSaveCampaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);
-    pApp->continueThread();
+    
 }
 
 void CampaignMenu::saveCampaign(QString filename)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     if (filename.endsWith(".camp"))
     {
         QFile file(filename);
@@ -167,5 +161,5 @@ void CampaignMenu::saveCampaign(QString filename)
         m_pMapSelectionView->getCurrentCampaign()->serializeObject(stream);
         file.close();
     }
-    pApp->continueThread();
+    
 }

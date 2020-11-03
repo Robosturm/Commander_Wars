@@ -20,8 +20,7 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
 
 void PerkSelection::updatePerksView(CO* pCO)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
+    
     m_pCO = pCO;
     removeChildren();
     if (m_banning)
@@ -115,7 +114,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     y += GameMap::getImageSize() * 2 + 10;
     setHeight(y);
     updatePerkCount();
-    pApp->continueThread();
+    
 }
 
 void PerkSelection::updatePerkCount()
