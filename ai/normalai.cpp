@@ -822,14 +822,19 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits
                 QVector<QPoint> path = turnPfs.getPath(movePath[idx].x(), movePath[idx].y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
             }
+            bool lockedUnit = (pAction->getMovePath().size() == 1) &&
+                              (pUnit->getHp() < 4.0f);
             // when we don't move try to attack if possible
-            if ((pUnit->getHp() > 3.5f))
+            if ((pUnit->getHp() > 3.5f) ||
+                 lockedUnit)
             {
                 pAction->setActionID(ACTION_FIRE);
                 QVector<QVector3D> ret;
                 QVector<QVector3D> moveTargetFields;
                 getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
-                if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
+                if (ret.size() > 0 &&
+                    (ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage ||
+                     lockedUnit))
                 {
                     qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
                     QVector3D target = ret[selection];

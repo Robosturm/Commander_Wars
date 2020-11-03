@@ -11,6 +11,8 @@ public:
 
 signals:
 
+private:
+
 };
 
 #endif // INFLUENCEFRONTMAP_H
