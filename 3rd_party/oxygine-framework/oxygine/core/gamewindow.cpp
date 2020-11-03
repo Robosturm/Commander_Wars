@@ -155,7 +155,9 @@ namespace oxygine
     bool GameWindow::isReady2Render()
     {
         if (!_renderEnabled)
+        {
             return false;
+        }
         return STDRenderer::isReady();
     }
 
@@ -164,12 +166,7 @@ namespace oxygine
         IVideoDriver::_stats.duration = Clock::getTimeMS() - IVideoDriver::_stats.start;
         //sleep(1000/50);
     }
-    
-    qint32 GameWindow::getLockCounter() const
-    {
-        return m_lockCounter;
-    }
-    
+
     void GameWindow::registerResourceTypes()
     {
         Resources::registerResourceType(ResAtlas::create, "atlas");

@@ -26,6 +26,7 @@ bool CoreAI::moveFlares(QmlVectorUnit* pUnits)
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
             {
+                Console::print("", Console::eDEBUG);
                 UnitPathFindingSystem turnPfs(pUnit);
                 turnPfs.explore();
                 spGameAction pAction = new GameAction(ACTION_FLARE);

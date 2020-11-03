@@ -7,6 +7,7 @@
 #include "ai/proxyai.h"
 #include "ai/normalai.h"
 #include "ai/heavyai.h"
+#include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 
@@ -183,4 +184,23 @@ qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
         return std::get<0>(m_MoveCostMap[x][y]);
     }
     return 0.0f;
+}
+
+void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
+{
+    if (Settings::getAutoCamera())
+    {
+        if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+            m_pPlayer == nullptr)
+        {
+            if (pAction != nullptr)
+            {
+                GameMenue::getInstance()->centerMapOnAction(pAction);
+            }
+            else
+            {
+                GameMap::getInstance()->centerOnPlayer(m_pPlayer);
+            }
+        }
+    }
 }

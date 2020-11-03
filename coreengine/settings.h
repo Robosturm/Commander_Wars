@@ -45,7 +45,11 @@ public:
     static GameEnums::COInfoPosition getCoInfoPosition();
     static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
 
+
 public slots:
+
+    static GameEnums::AutoFocusing getAutoFocusing();
+    static void setAutoFocusing(const GameEnums::AutoFocusing &autoFocusing);
 
     static Qt::Key getKey_EditorPlaceTerrain();
     static void setKey_EditorPlaceTerrain(const Qt::Key &key_EditorPlaceTerrain);
@@ -450,6 +454,7 @@ private:
     static GameEnums::COInfoPosition coInfoPosition;
     static bool m_autoScrolling;
     static bool m_autoCamera;
+    static GameEnums::AutoFocusing m_autoFocusing;
 
     // internal members
     static Settings* m_pInstance;

@@ -81,7 +81,6 @@ QString Settings::m_ServerAdress      = "";
 QString Settings::m_slaveServerName   = "";
 bool Settings::m_Server               = false;
 bool Settings::m_record               = true;
-bool Settings::m_showIngameCoordinates  = true;
 // auto saving
 std::chrono::seconds Settings::autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::autoSavingCycle = 0;
@@ -104,6 +103,8 @@ quint32 Settings::m_spriteFilter = GL_LINEAR_MIPMAP_LINEAR;
 GameEnums::COInfoPosition Settings::coInfoPosition = GameEnums::COInfoPosition_Flipping;
 bool Settings::m_autoScrolling = true;
 bool Settings::m_autoCamera = true;
+bool Settings::m_showIngameCoordinates  = true;
+GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastPos;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -127,6 +128,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+GameEnums::AutoFocusing Settings::getAutoFocusing()
+{
+    return m_autoFocusing;
+}
+
+void Settings::setAutoFocusing(const GameEnums::AutoFocusing &autoFocusing)
+{
+    m_autoFocusing = autoFocusing;
 }
 
 Qt::Key Settings::getKey_EditorSelectionLeft()
@@ -1083,14 +1094,21 @@ void Settings::loadSettings()
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
     m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
     m_autoScrolling = settings.value("AutoScrolling", true).toBool();
-    m_autoCamera = settings.value("AutoCamera", true).toBool();
-
+    m_autoCamera = settings.value("AutoCamera", true).toBool();    
+    m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " COInfoPosition";
         Console::print(error, Console::eERROR);
         coInfoPosition = GameEnums::COInfoPosition_Flipping;
+    }
+    m_autoFocusing  = static_cast<GameEnums::AutoFocusing>(settings.value("AutoFocusing", 0).toInt(&ok));
+    if (!ok || m_autoFocusing < GameEnums::AutoFocusing_LastPos || m_autoFocusing > GameEnums::AutoFocusing_Owned)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " AutoFocusing";
+        Console::print(error, Console::eERROR);
+        m_autoFocusing = GameEnums::AutoFocusing_LastPos;
     }
     settings.endGroup();
 
@@ -1238,6 +1256,10 @@ void Settings::saveSettings()
         settings.setValue("COInfoPosition",                 static_cast<qint32>(coInfoPosition));
         settings.setValue("AutoScrolling",                  m_autoScrolling);
         settings.setValue("AutoCamera",                     m_autoCamera);
+        settings.setValue("ShowIngameCoordinates",          m_showIngameCoordinates);
+        settings.setValue("AutoFocusing",                   m_autoFocusing);
+
+
         settings.endGroup();
 
         // network

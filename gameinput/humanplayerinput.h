@@ -138,6 +138,8 @@ public:
     {
         return 1;
     }
+
+    virtual void centerCameraOnAction(GameAction* pAction) override;
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -185,6 +187,8 @@ private:
     oxygine::spActor m_ZInformationLabel;
 
     spHumanPlayerInputMenu m_CurrentMenu{nullptr};
+
+    QPoint m_lastMapView{std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::min()};
 };
 
 #endif // HUMANPLAYERINPUT_H

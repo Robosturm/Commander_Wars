@@ -250,6 +250,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Show Coordinates: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If active the map coordinates are shown during a game."));
+    pCheckbox->setChecked(Settings::getShowIngameCoordinates());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setShowIngameCoordinates(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Camera: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -262,6 +278,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Auto Camare Mode: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("Last Position"), tr("Owned HQ")};
+    spDropDownmenu pAutoFocusMode = new DropDownmenu(450, items);
+    pAutoFocusMode->setCurrentItem(static_cast<qint32>(Settings::getAutoFocusing()));
+    pAutoFocusMode->setPosition(sliderOffset - 130, y);
+    pAutoFocusMode->setTooltipText(tr("Select where the game starts during a human player phase, when auto focusing is active."));
+    m_pOptions->addItem(pAutoFocusMode);
+    connect(pAutoFocusMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setAutoFocusing(static_cast<GameEnums::AutoFocusing>(value));
+    });
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);

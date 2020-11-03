@@ -487,8 +487,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
     {
         // else introduce next step
         getNextStepData();
-    }
-    
+    }    
 }
 
 void HumanPlayerInput::getNextStepData()
@@ -735,6 +734,8 @@ void HumanPlayerInput::createMarkedMoveFields()
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
+    auto mapPos = pMap->getPosition();
+    m_lastMapView = QPoint(mapPos.x, mapPos.y);
     if ((pMap->getCurrentPlayer() == m_pPlayer ||
          m_pPlayer == nullptr) &&
         pMap->onMap(x, y))
@@ -1539,4 +1540,28 @@ void HumanPlayerInput::deserializeObject(QDataStream& stream)
 {
     qint32 version;
     stream >> version;
+}
+
+void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
+{
+    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
+        m_pPlayer == nullptr)
+    {
+        if (Settings::getAutoCamera() && pAction == nullptr)
+        {
+            switch (Settings::getAutoFocusing())
+            {
+                case GameEnums::AutoFocusing_Owned:
+                {
+                    GameMap::getInstance()->centerOnPlayer(m_pPlayer);
+                    break;
+                }
+                case GameEnums::AutoFocusing_LastPos:
+                {
+                    GameMap::getInstance()->setPosition(m_lastMapView.x(), m_lastMapView.y());
+                    break;
+                }
+            }
+        }
+    }
 }

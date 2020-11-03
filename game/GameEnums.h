@@ -212,6 +212,13 @@ public:
     };
     Q_ENUM(COInfoPosition)
 
+    enum AutoFocusing
+    {
+        AutoFocusing_LastPos,
+        AutoFocusing_Owned,
+    };
+    Q_ENUM(AutoFocusing)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

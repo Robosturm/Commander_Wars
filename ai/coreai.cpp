@@ -1268,7 +1268,12 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
                 }
             }
         }
+        if (score > 0)
+        {
+            Console::print("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+        }
     }
+
 }
 
 qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle)
@@ -1307,7 +1312,7 @@ qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flare
     }
     else
     {
-        score = -1;
+        score = std::numeric_limits<qint32>::min();
     }
     return score;
 }
@@ -1538,12 +1543,14 @@ bool CoreAI::needsRefuel(Unit *pUnit)
         return true;
     }
     if (pUnit->getMaxAmmo1() > 0 &&
-        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 3.0f)
+        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 3.0f &&
+        !pUnit->getWeapon1ID().isEmpty())
     {
         return true;
     }
     if (pUnit->getMaxAmmo2() > 0 &&
-        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 3.0f)
+        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 3.0f &&
+        !pUnit->getWeapon2ID().isEmpty())
     {
         return true;
     }

@@ -421,6 +421,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
+    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
     addChild(pButtonBox);
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
@@ -676,10 +677,8 @@ void GameMenue::performAction(spGameAction pGameAction)
             {
                 pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
             }
-            if (Settings::getAutoCamera() && pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
-            {
-                centerMapOnAction(pGameAction.get());
-            }
+
+            pCurrentPlayer->getBaseGameInput()->centerCameraOnAction(pGameAction.get());
             m_CurrentActionUnit = pMoveUnit;
             pGameAction->perform();
             // clean up the action
@@ -729,8 +728,7 @@ bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, 
 }
 
 void GameMenue::centerMapOnAction(GameAction* pGameAction)
-{
-    
+{    
     Console::print("centerMapOnAction()", Console::eDEBUG);
     Unit* pUnit = pGameAction->getTargetUnit();
     Player* pPlayer = getCurrentViewPlayer();

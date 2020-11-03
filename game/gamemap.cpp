@@ -1413,13 +1413,16 @@ Player* GameMap::getCurrentViewPlayer()
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
-{
-    
+{    
     if (pPlayer != nullptr)
     {
         pPlayer->startOfTurn();
-
+        pPlayer->getBaseGameInput()->centerCameraOnAction(nullptr);
     }
+}
+
+void GameMap::centerOnPlayer(Player* pPlayer)
+{
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     QPoint unitWarp = QPoint(-1, -1);
@@ -1469,7 +1472,6 @@ void GameMap::startOfTurn(Player* pPlayer)
             }
         }
     }
-
     if (onMap(hqWarp.x(), hqWarp.y()))
     {
         centerMap(hqWarp.x(), hqWarp.y());
@@ -1482,8 +1484,6 @@ void GameMap::startOfTurn(Player* pPlayer)
     {
         centerMap(buildingWarp.x(), buildingWarp.y());
     }
-
-    
 }
 
 void GameMap::checkFuel(Player* pPlayer)

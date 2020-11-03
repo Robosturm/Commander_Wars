@@ -11,6 +11,7 @@
 #include "game/GameEnums.h"
 
 class Player;
+class GameAction;
 
 class BaseGameInputIF;
 typedef oxygine::intrusive_ptr<BaseGameInputIF> spBaseGameInputIF;
@@ -30,6 +31,8 @@ public:
     static BaseGameInputIF* deserializeInterface(QDataStream& pStream, qint32 version);
 
     static BaseGameInputIF* createAi(GameEnums::AiTypes type);
+
+    virtual void centerCameraOnAction(GameAction* pAction);
 signals:
 
 public slots:

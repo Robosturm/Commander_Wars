@@ -38,14 +38,12 @@ namespace oxygine
         inline void suspendThread2()
         {
             Q_ASSERT(isWorker());
-            m_lockCounter++;
             m_Mutex.lock();
         }
         inline void continueThread2()
         {
             Q_ASSERT(isWorker());
             m_Mutex.unlock();
-            m_lockCounter--;
         }
 
         /**
@@ -56,11 +54,6 @@ namespace oxygine
             m_quit = true;
         }
         void loadResAnim(oxygine::spResAnim pAnim, const QImage & image);
-        /**
-         * @brief getLockCounter
-         * @return
-         */
-        qint32 getLockCounter() const;
 
         virtual bool isWorker() = 0;
         /**
@@ -102,12 +95,10 @@ namespace oxygine
         spEventDispatcher _dispatcher;
 
         bool m_quit{false};
-        QMutex m_Mutex{QMutex::RecursionMode::Recursive};
+        QMutex m_Mutex;
         QBasicTimer m_Timer;
 
         static GameWindow* _window;
-
-        qint32 m_lockCounter{0};
     };
 }
 

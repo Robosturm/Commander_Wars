@@ -643,6 +643,11 @@ public slots:
      */
     void startOfTurn(Player* pPlayer);
     /**
+     * @brief centerOnPlayer
+     * @param pPlayer
+     */
+    void centerOnPlayer(Player* pPlayer);
+    /**
      * @brief nextPlayer next player
      */
     bool nextPlayer();
