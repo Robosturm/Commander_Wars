@@ -487,7 +487,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
     {
         // else introduce next step
         getNextStepData();
-    }    
+    }
 }
 
 void HumanPlayerInput::getNextStepData()
@@ -1547,7 +1547,8 @@ void HumanPlayerInput::centerCameraOnAction(GameAction* pAction)
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr)
     {
-        if (Settings::getAutoCamera() && pAction == nullptr)
+        if (Settings::getAutoCamera() && pAction == nullptr &&
+            m_lastMapView.x() != std::numeric_limits<qint32>::min())
         {
             switch (Settings::getAutoFocusing())
             {

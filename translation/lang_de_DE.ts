@@ -6,12 +6,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="18"/>
         <source>Power of </source>
-        <translation type="unfinished"></translation>
+        <translation>Gabe von </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="49"/>
         <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert die Gabe deines ersten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
 </context>
 <context>
@@ -19,12 +19,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="18"/>
         <source>Power of </source>
-        <translation type="unfinished"></translation>
+        <translation>Gabe von </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="50"/>
         <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert die Gabe deines zweiten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
 </context>
 <context>
@@ -32,12 +32,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="18"/>
         <source>Superpower of </source>
-        <translation type="unfinished"></translation>
+        <translation>Spezialgabe von </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="50"/>
         <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert die Spezial Gabe deines ersten KO. Lies die KO-Spezial Gabe für mehr Information.</translation>
     </message>
 </context>
 <context>
@@ -45,12 +45,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="18"/>
         <source>Superpower of </source>
-        <translation type="unfinished"></translation>
+        <translation>Spezialgabe von </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="49"/>
         <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert die Gabe deines ersten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
 </context>
 <context>
@@ -58,12 +58,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="18"/>
         <source>Tagpower</source>
-        <translation type="unfinished"></translation>
+        <translation>Doppelgabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="43"/>
         <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert die Spezialgabe beider KO. Lies die KO-Spezial Gaben für mehr Information. Dies wird ebenfalls die Doppelgabensynergie hinzufügen.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_TAGPOWER.js" line="44"/>
@@ -72,21 +72,28 @@
     </message>
 </context>
 <context>
+    <name>ACTION_ATTACKLOG</name>
+    <message>
+        <source>Attack Log</source>
+        <translation type="vanished">Angriffslog</translation>
+    </message>
+</context>
+<context>
     <name>ACTION_BLACKHOLEFACTORY_DOOR1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="23"/>
         <source>Build Door 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Baue am Tor 1</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
-        <translation type="unfinished"></translation>
+        <translation>Befehligt einer Black Hole Fabrik eine Einheit am ersten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
 </context>
 <context>
@@ -94,17 +101,17 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="23"/>
         <source>Build Door 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Baue am Tor 2</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
-        <translation type="unfinished"></translation>
+        <translation>Befehligt einer Black Hole Fabrik eine Einheit am zweiten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
 </context>
 <context>
@@ -112,17 +119,17 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="23"/>
         <source>Build Door 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Baue am Tor 3</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="110"/>
         <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
-        <translation type="unfinished"></translation>
+        <translation>Befehligt einer Black Hole Fabrik eine Einheit am dritten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="111"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
 </context>
 <context>
@@ -130,12 +137,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="29"/>
         <source>Build Airport</source>
-        <translation type="unfinished"></translation>
+        <translation>Flughafen bauen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="95"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehlt einen TTP einen Hangar auf einer Ebene zu bauen welcher dazu verwendet werden kann Lufteinheiten mit Rationen zu versorgen. Der Hangar reduziert die Materialmenge des TTP um 1.</translation>
     </message>
 </context>
 <context>
@@ -143,7 +150,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="29"/>
         <source>Build Harbour</source>
-        <translation type="unfinished"></translation>
+        <translation>Hafen bauen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="96"/>
@@ -156,7 +163,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="25"/>
         <source>Build</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauen</translation>
     </message>
 </context>
 <context>
@@ -164,7 +171,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_WATERPLANE.js" line="84"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehlt einen Flugzeugträger ein Bordflugzeug zu bauen welches in der nächsten Runde eingesetzt werden kann.</translation>
     </message>
 </context>
 <context>
@@ -172,17 +179,17 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="18"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="88"/>
         <source>Damage</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaden</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="124"/>
         <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehlt einen Minigeschützturm oder Schwarze Kanone eine einzelne Einheit anzugreifen um somit Schaden zu verursachen.</translation>
     </message>
 </context>
 <context>
@@ -190,7 +197,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="49"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Erobern</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="145"/>
@@ -199,11 +206,18 @@
     </message>
 </context>
 <context>
+    <name>ACTION_COINFO</name>
+    <message>
+        <source>CO Info</source>
+        <translation type="vanished">KO Info</translation>
+    </message>
+</context>
+<context>
     <name>ACTION_CO_UNIT_0</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="33"/>
         <source>CO 1</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 1</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="51"/>
@@ -216,7 +230,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="33"/>
         <source>CO 2</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 2</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="51"/>
@@ -229,12 +243,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="18"/>
         <source>Heal</source>
-        <translation type="unfinished"></translation>
+        <translation>Heilen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="61"/>
         <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -242,12 +256,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="18"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="82"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehlt einen</translation>
     </message>
 </context>
 <context>
@@ -255,7 +269,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="23"/>
         <source>Delete Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheit entfernen</translation>
     </message>
 </context>
 <context>
@@ -263,7 +277,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="10"/>
         <source>Exit Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel Verlassen</translation>
     </message>
 </context>
 <context>
@@ -271,12 +285,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="26"/>
         <source>Explode</source>
-        <translation type="unfinished"></translation>
+        <translation>Explodieren</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="117"/>
         <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zerstört die momentane Einheit in einer großen Explosion. Die Explosion erteilt Schaden auf alle Einheiten die sich drum herum befinden.</translation>
     </message>
 </context>
 <context>
@@ -284,12 +298,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="67"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="303"/>
         <source>Damage</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaden</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="610"/>
@@ -302,7 +316,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="25"/>
         <source>Flare</source>
-        <translation type="unfinished"></translation>
+        <translation>Leuchtpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="132"/>
@@ -311,11 +325,18 @@
     </message>
 </context>
 <context>
+    <name>ACTION_GAMEINFO</name>
+    <message>
+        <source>Game Info</source>
+        <translation type="vanished">Spielinfo</translation>
+    </message>
+</context>
+<context>
     <name>ACTION_HOELLIUM_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="28"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="55"/>
@@ -326,19 +347,19 @@
 <context>
     <name>ACTION_INFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="10"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
+        <source>CO Info</source>
+        <translation>KO Info</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="61"/>
         <source>Victory Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Siegbedingungen</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
-        <source>CO Info</source>
-        <translation type="unfinished"></translation>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="10"/>
+        <source>Info</source>
+        <translation>Info</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="63"/>
@@ -348,12 +369,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="64"/>
         <source>Game Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielinfo</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_INFO.js" line="65"/>
         <source>Attack Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Angriffslog</translation>
     </message>
 </context>
 <context>
@@ -361,12 +382,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="36"/>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Einen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="112"/>
         <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
-        <translation type="unfinished"></translation>
+        <translation>Kombiniert verletzte Einheiten des selben Einheitentyps mit der momentanen Einheit. Dies hat zur Folge das folgende Attribute mit der Einheit kombiniert werden: Munition, Rationen, TP und der höchste Rang. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="113"/>
@@ -379,7 +400,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="18"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="123"/>
@@ -392,7 +413,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="57"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="88"/>
@@ -405,7 +426,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="35"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="138"/>
@@ -418,7 +439,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
         <source>Next Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Zug beenden</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="26"/>
@@ -431,7 +452,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_NICKNAME_UNIT.js" line="14"/>
         <source>Nickname Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Nickname Einheit</translation>
     </message>
 </context>
 <context>
@@ -439,7 +460,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_OPTIONS.js" line="10"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Optionen</translation>
     </message>
 </context>
 <context>
@@ -447,7 +468,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="61"/>
         <source>Place Mine</source>
-        <translation type="unfinished"></translation>
+        <translation>Mine plazieren</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="135"/>
@@ -460,7 +481,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="10"/>
         <source>Save Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel speichern</translation>
     </message>
 </context>
 <context>
@@ -468,7 +489,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="26"/>
         <source>Stealth</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarnen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="69"/>
@@ -491,7 +512,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="60"/>
         <source>Ration</source>
-        <translation type="unfinished"></translation>
+        <translation>Ration</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="103"/>
@@ -499,7 +520,7 @@
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="130"/>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="143"/>
         <source>RATION</source>
-        <translation type="unfinished"></translation>
+        <translation>RATION</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="151"/>
@@ -512,12 +533,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="27"/>
         <source>Repair</source>
-        <translation type="unfinished"></translation>
+        <translation>Reparieren</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="112"/>
         <source>REPAIR</source>
-        <translation type="unfinished"></translation>
+        <translation>REPARIEREN</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_FREEREPAIR.js" line="125"/>
@@ -530,12 +551,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="27"/>
         <source>Iron Shield</source>
-        <translation type="unfinished"></translation>
+        <translation>Eiserner Schild</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="110"/>
         <source>DEFENSE</source>
-        <translation type="unfinished"></translation>
+        <translation>VERTEIDIGUNG</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_IRON_SHIELD.js" line="121"/>
@@ -548,12 +569,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="27"/>
         <source>Repair</source>
-        <translation type="unfinished"></translation>
+        <translation>Reparieren</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="112"/>
         <source>REPAIR</source>
-        <translation type="unfinished"></translation>
+        <translation>REPARIEREN</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="125"/>
@@ -566,7 +587,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="10"/>
         <source>Surrender Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgeben</translation>
     </message>
 </context>
 <context>
@@ -574,7 +595,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="11"/>
         <source>Swap CO&apos;s</source>
-        <translation type="unfinished"></translation>
+        <translation>KO&apos;s Tauschen</translation>
     </message>
 </context>
 <context>
@@ -582,7 +603,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="18"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="68"/>
@@ -595,7 +616,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="29"/>
         <source>TRAP!</source>
-        <translation type="unfinished"></translation>
+        <translation>FALLE!</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="38"/>
@@ -608,12 +629,12 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="98"/>
         <source>Unload</source>
-        <translation type="unfinished"></translation>
+        <translation>Entladen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="264"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="344"/>
@@ -626,7 +647,7 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="26"/>
         <source>Unstealth</source>
-        <translation type="unfinished"></translation>
+        <translation>Enttarnen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="69"/>
@@ -635,11 +656,18 @@
     </message>
 </context>
 <context>
+    <name>ACTION_VICTORYINFO</name>
+    <message>
+        <source>Victory Info</source>
+        <translation type="vanished">Sieg Info</translation>
+    </message>
+</context>
+<context>
     <name>ACTION_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="26"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten</translation>
     </message>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="48"/>
@@ -652,12 +680,12 @@
     <message>
         <location filename="../menue/achievementmenu.cpp" line="43"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="63"/>
         <source>Search: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Suche: </translation>
     </message>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="67"/>
@@ -667,7 +695,7 @@
     <message>
         <location filename="../menue/achievementmenu.cpp" line="71"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Suche</translation>
     </message>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="99"/>
@@ -680,32 +708,36 @@
     <message>
         <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="39"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="49"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Abwählen / Alle anwählen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="117"/>
         <source>Action List</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktionsliste</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Build List</source>
+        <translation type="obsolete">Bauliste</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="202"/>
         <source>Bannlist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Bannliste mit Namen</translation>
     </message>
 </context>
 <context>
@@ -713,7 +745,7 @@
     <message>
         <location filename="../resources/scripts/terrain/BEACH.js" line="16"/>
         <source>Beach</source>
-        <translation type="unfinished"></translation>
+        <translation>Strand</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/BEACH.js" line="144"/>
@@ -726,7 +758,7 @@
     <message>
         <location filename="../resources/scripts/terrain/BRIDGE.js" line="15"/>
         <source>Bridge</source>
-        <translation type="unfinished"></translation>
+        <translation>Brücke</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/BRIDGE.js" line="59"/>
@@ -739,57 +771,61 @@
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="40"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="59"/>
         <source>Un/Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine/Alle</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="72"/>
         <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="73"/>
         <source>Advance Wars DoR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="74"/>
         <source>Advance Wars DS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="75"/>
         <source>Advance Wars 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="76"/>
         <source>Advance Wars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="94"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="122"/>
         <source>Build List</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauliste</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="247"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bannlist Name</source>
+        <translation type="vanished">Baulistenname</translation>
     </message>
 </context>
 <context>
@@ -797,7 +833,7 @@
     <message>
         <location filename="../game/co.cpp" line="299"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
@@ -805,57 +841,61 @@
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="39"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="49"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine/Alle</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="70"/>
         <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="71"/>
         <source>Advance Wars DoR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="72"/>
         <source>Advance Wars DS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="73"/>
         <source>Advance Wars 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="74"/>
         <source>Advance Wars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="91"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="120"/>
         <source>CO Bann List</source>
-        <translation type="unfinished"></translation>
+        <translation>KO Bannliste</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="301"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bannlist Name</source>
+        <translation type="vanished">Bannliste</translation>
     </message>
 </context>
 <context>
@@ -863,27 +903,27 @@
     <message>
         <location filename="../objects/coinfoactor.cpp" line="42"/>
         <source>CO Information</source>
-        <translation type="unfinished"></translation>
+        <translation>KO Information</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="71"/>
         <source>Hit</source>
-        <translation type="unfinished"></translation>
+        <translation>Fein</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="90"/>
         <source>Miss</source>
-        <translation type="unfinished"></translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="110"/>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="155"/>
         <source>Synergy</source>
-        <translation type="unfinished"></translation>
+        <translation>Synergie</translation>
     </message>
     <message>
         <location filename="../objects/coinfoactor.cpp" line="161"/>
@@ -903,7 +943,7 @@
     <message>
         <location filename="../objects/coinfoactor.cpp" line="242"/>
         <source>CO-Zone-Range: </source>
-        <translation type="unfinished"></translation>
+        <translation>KO-Zone: </translation>
     </message>
 </context>
 <context>
@@ -911,17 +951,17 @@
     <message>
         <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="43"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="52"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/coinfodialog.cpp" line="62"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück</translation>
     </message>
 </context>
 <context>
@@ -929,17 +969,17 @@
     <message>
         <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="42"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="52"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/coselectiondialog.cpp" line="62"/>
         <source>Show CO Info</source>
-        <translation type="unfinished"></translation>
+        <translation>KO Information</translation>
     </message>
 </context>
 <context>
@@ -947,34 +987,19 @@
     <message>
         <location filename="../menue/costylemenu.cpp" line="43"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/costylemenu.cpp" line="52"/>
         <source>Edit CO</source>
-        <translation type="unfinished"></translation>
+        <translation>KO bearbeiten</translation>
     </message>
 </context>
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="67"/>
-        <source>Folder:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="71"/>
         <source>Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="76"/>
-        <source>Folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="87"/>
-        <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -983,18 +1008,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="99"/>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="103"/>
         <source>Name of the author shown in the map selection screen.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="111"/>
-        <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1003,24 +1018,49 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="67"/>
+        <source>Folder:</source>
+        <translation>Ordner:</translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="76"/>
+        <source>Folder</source>
+        <translation>Ordner</translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="87"/>
+        <source>Name:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="99"/>
+        <source>Author:</source>
+        <translation>Autor:</translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="111"/>
+        <source>Description:</source>
+        <translation>Beschreibung:</translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="127"/>
         <source>Add Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte hinzufügen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="136"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="145"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="154"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="176"/>
@@ -1040,7 +1080,7 @@
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="314"/>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Variablen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="322"/>
@@ -1096,7 +1136,7 @@
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="868"/>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="945"/>
         <source>Variable: </source>
-        <translation type="unfinished"></translation>
+        <translation>Variable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="872"/>
@@ -1108,7 +1148,7 @@
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="885"/>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="962"/>
         <source>Compare: </source>
-        <translation type="unfinished"></translation>
+        <translation>Komperator: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="891"/>
@@ -1120,7 +1160,7 @@
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="904"/>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="979"/>
         <source>Value: </source>
-        <translation type="unfinished"></translation>
+        <translation>Wert: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="908"/>
@@ -1155,17 +1195,17 @@
     <message>
         <location filename="../menue/campaignmenu.cpp" line="45"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="55"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="64"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
 </context>
 <context>
@@ -1173,30 +1213,33 @@
     <message>
         <location filename="../objects/base/chat.cpp" line="44"/>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden</translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="75"/>
         <source>Message to send via chat. Start a message with one of the folling items to send </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nachricht per Chat versenden. Startet eine Nachricht mit </translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="76"/>
         <source>a message to specific targets. 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>eine Nachricht zu bestimme Ziele. 
+</translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="77"/>
         <source> send message to all your allies.
 </source>
-        <translation type="unfinished"></translation>
+        <translation> sende die Nachricht zu allen Verbündeten.
+</translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="78"/>
         <source> send message to all your enemies.
 </source>
-        <translation type="unfinished"></translation>
+        <translation> sende die Nachricht zu allen Gegenspielern.
+</translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="79"/>
@@ -1207,7 +1250,7 @@
     <message>
         <location filename="../objects/base/chat.cpp" line="80"/>
         <source> send message to the given player X.</source>
-        <translation type="unfinished"></translation>
+        <translation> sende die Nachricht zu einem spezifischen Spieler.</translation>
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="84"/>
@@ -1220,17 +1263,17 @@
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="120"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation>Gabe</translation>
     </message>
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="151"/>
         <source>Superpower</source>
-        <translation type="unfinished"></translation>
+        <translation>Spezialgabe</translation>
     </message>
     <message>
         <location filename="../game/ui/copowermeter.cpp" line="182"/>
         <source>Tagpower</source>
-        <translation type="unfinished"></translation>
+        <translation>Doppelgabe</translation>
     </message>
 </context>
 <context>
@@ -1238,12 +1281,12 @@
     <message>
         <location filename="../objects/dialogs/colorselectiondialog.cpp" line="26"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/colorselectiondialog.cpp" line="36"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1251,17 +1294,24 @@
     <message>
         <location filename="../objects/base/colorselector.cpp" line="42"/>
         <source>Red: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rot: </translation>
     </message>
     <message>
         <location filename="../objects/base/colorselector.cpp" line="56"/>
         <source>Green: </source>
-        <translation type="unfinished"></translation>
+        <translation>Grün: </translation>
     </message>
     <message>
         <location filename="../objects/base/colorselector.cpp" line="69"/>
         <source>Blue: </source>
-        <translation type="unfinished"></translation>
+        <translation>Blau: </translation>
+    </message>
+</context>
+<context>
+    <name>Console</name>
+    <message>
+        <source>Starting Game...</source>
+        <translation type="vanished">Spiel starten...</translation>
     </message>
 </context>
 <context>
@@ -1269,7 +1319,7 @@
     <message>
         <location filename="../menue/creditsmenue.cpp" line="39"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
 </context>
 <context>
@@ -1277,7 +1327,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT.js" line="15"/>
         <source>Desert</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüste</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT.js" line="81"/>
@@ -1290,7 +1340,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="14"/>
         <source>Desert Destroyed Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüste</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="102"/>
@@ -1303,7 +1353,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="15"/>
         <source>Desert Forest</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüstenwald</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="58"/>
@@ -1321,7 +1371,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="14"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="51"/>
@@ -1334,7 +1384,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="15"/>
         <source>Desert Pipeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüstenpipeline</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="81"/>
@@ -1347,7 +1397,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="15"/>
         <source>Rock</source>
-        <translation type="unfinished"></translation>
+        <translation>Fels</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="62"/>
@@ -1357,7 +1407,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="63"/>
         <source>vision +3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicht +3.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="64"/>
@@ -1370,7 +1420,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="14"/>
         <source>Try River</source>
-        <translation type="unfinished"></translation>
+        <translation>Trockenerfluss</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="55"/>
@@ -1383,7 +1433,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="14"/>
         <source>Desert Wasteland</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüstenödland</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="34"/>
@@ -1396,7 +1446,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="16"/>
         <source>Desert Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüstenschweißnaht</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="114"/>
@@ -1409,7 +1459,7 @@
     <message>
         <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="14"/>
         <source>Destroyed Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="97"/>
@@ -1422,23 +1472,43 @@
     <message>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="46"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="118"/>
         <source>Day </source>
-        <translation type="unfinished"></translation>
+        <translation>Tag </translation>
+    </message>
+    <message>
+        <source>Attacker: </source>
+        <translation type="vanished">Angreifer: </translation>
+    </message>
+    <message>
+        <source> at X: </source>
+        <translation type="vanished"> X: </translation>
+    </message>
+    <message>
+        <source> Y: </source>
+        <translation type="vanished"> Y: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="180"/>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="236"/>
         <source>Hp</source>
-        <translation type="unfinished"></translation>
+        <translation>KP</translation>
+    </message>
+    <message>
+        <source>to Defender </source>
+        <translation type="vanished">Verteidiger </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogattacklog.cpp" line="240"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Fields</source>
+        <translation type="vanished">Anzeigen</translation>
     </message>
 </context>
 <context>
@@ -1446,12 +1516,12 @@
     <message>
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="37"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Annehmen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="50"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="114"/>
@@ -1462,7 +1532,7 @@
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="180"/>
         <location filename="../objects/dialogs/dialogcostyle.cpp" line="194"/>
         <source>CO Style </source>
-        <translation type="unfinished"></translation>
+        <translation>KO Style </translation>
     </message>
 </context>
 <context>
@@ -1470,7 +1540,7 @@
     <message>
         <location filename="../objects/dialogs/dialogconnecting.cpp" line="39"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1478,12 +1548,12 @@
     <message>
         <location filename="../objects/dialogs/dialogmessagebox.cpp" line="40"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/dialogmessagebox.cpp" line="51"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1491,7 +1561,7 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="34"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="64"/>
@@ -1501,17 +1571,17 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="71"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="78"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="80"/>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neutral</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="82"/>
@@ -1521,7 +1591,7 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="101"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Name:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifybuilding.cpp" line="104"/>
@@ -1534,12 +1604,7 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="35"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="62"/>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="65"/>
@@ -1547,9 +1612,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="62"/>
+        <source>Name:</source>
+        <translation type="unfinished">Name:</translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="75"/>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beschreibung:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="78"/>
@@ -1559,7 +1629,7 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="119"/>
         <source>Terrain Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrainstyl</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="123"/>
@@ -1569,12 +1639,12 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="128"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyterrain.cpp" line="136"/>
         <source>Select Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild</translation>
     </message>
 </context>
 <context>
@@ -1582,13 +1652,13 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="44"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="84"/>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="91"/>
         <source>Unit: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheit: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="97"/>
@@ -1598,12 +1668,12 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="107"/>
         <source>HP: </source>
-        <translation type="unfinished"></translation>
+        <translation>KP: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="110"/>
         <source>HP</source>
-        <translation type="unfinished"></translation>
+        <translation>KP</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="111"/>
@@ -1613,12 +1683,12 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="124"/>
         <source>Fuel: </source>
-        <translation type="unfinished"></translation>
+        <translation>Treib.: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="127"/>
         <source>Fuel</source>
-        <translation type="unfinished"></translation>
+        <translation>Treib.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="128"/>
@@ -1628,13 +1698,13 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="150"/>
         <source>Ammo 1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 1: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="153"/>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="179"/>
         <source>Ammo</source>
-        <translation type="unfinished"></translation>
+        <translation>Muni.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="154"/>
@@ -1644,7 +1714,7 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="176"/>
         <source>Ammo 2: </source>
-        <translation type="unfinished"></translation>
+        <translation>Muni. 2:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="180"/>
@@ -1654,12 +1724,12 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="201"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="208"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="211"/>
@@ -1669,27 +1739,27 @@
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="224"/>
         <source>AI-Mode: </source>
-        <translation type="unfinished"></translation>
+        <translation>KI-Modus: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="227"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="227"/>
         <source>Offensive</source>
-        <translation type="unfinished"></translation>
+        <translation>Offensiv</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="227"/>
         <source>Defensive</source>
-        <translation type="unfinished"></translation>
+        <translation>Defensiv</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="227"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Halten</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="229"/>
@@ -1706,17 +1776,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="250"/>
         <source>Unit Rank: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rang: </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="259"/>
         <source>CO 1</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 1</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="260"/>
         <source>CO 2</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 2</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="262"/>
@@ -1726,7 +1796,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="306"/>
         <source>Loaded Unit </source>
-        <translation type="unfinished"></translation>
+        <translation>Ladung </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialogmodifyunit.cpp" line="320"/>
@@ -1754,12 +1824,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/dialogpassword.cpp" line="43"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <location filename="../multiplayer/dialogpassword.cpp" line="58"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1772,12 +1842,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/dialogpasswordandadress.cpp" line="56"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <location filename="../multiplayer/dialogpasswordandadress.cpp" line="70"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1785,7 +1855,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="41"/>
         <source>Generator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="45"/>
@@ -1795,21 +1865,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="49"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="63"/>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="67"/>
         <source>Selects the name of the new map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="76"/>
-        <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1818,18 +1878,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="89"/>
-        <source>Description:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="93"/>
         <source>Selects the description for the new map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="102"/>
-        <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1838,18 +1888,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="115"/>
-        <source>Heigth:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="119"/>
         <source>Selects the heigth for the new map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="128"/>
-        <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1858,9 +1898,39 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="63"/>
+        <source>Name:</source>
+        <translation>Name:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="76"/>
+        <source>Author:</source>
+        <translation>Autor:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="89"/>
+        <source>Description:</source>
+        <translation>Beschreibung:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="102"/>
+        <source>Width:</source>
+        <translation>Breite:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="115"/>
+        <source>Heigth:</source>
+        <translation>Höhe:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="128"/>
+        <source>Player:</source>
+        <translation>Spieler:</translation>
+    </message>
+    <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="142"/>
         <source>Seed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seed:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="146"/>
@@ -1870,7 +1940,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="155"/>
         <source>Create Road:</source>
-        <translation type="unfinished"></translation>
+        <translation>Straßen:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="159"/>
@@ -1880,7 +1950,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="168"/>
         <source>Base Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Basengröße:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="173"/>
@@ -1890,37 +1960,37 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="181"/>
         <source>Terrain Distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrainverteilung</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="187"/>
         <source>Building Distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebäudeverteilung</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="193"/>
         <source>Owner Distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielerverteilung</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="200"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="231"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="329"/>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>Neutral</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="334"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler </translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="338"/>
@@ -1946,12 +2016,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/dialogtextinput.cpp" line="43"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/dialogtextinput.cpp" line="58"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1959,7 +2029,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="41"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogunitinfo.cpp" line="156"/>
@@ -1972,17 +2042,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="36"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="68"/>
         <source>Victory Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Sieg Info</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="107"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1990,7 +2060,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/base/dropdownmenu.cpp" line="27"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1998,12 +2068,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="68"/>
         <source>Save Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="68"/>
@@ -2013,7 +2083,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
         <source>Load Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
@@ -2023,7 +2093,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Edit Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Skript editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="70"/>
@@ -2033,7 +2103,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Edit Campaign</source>
-        <translation type="unfinished"></translation>
+        <translation>Kampagne editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="71"/>
@@ -2042,12 +2112,17 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
-        <source>Undo Ctrl+Z</source>
+        <source>Undo the last map modification.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
-        <source>Undo the last map modification.</source>
+        <source>Undo Ctrl+Z</source>
+        <translation>Rückgängig Strg+Z</translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="73"/>
+        <source>Redo the last undo command.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2056,14 +2131,9 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
-        <source>Redo the last undo command.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Exit Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="74"/>
@@ -2073,22 +2143,22 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Map Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Karten Info</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="77"/>
         <source>New Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Karte</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Create a new map</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Karte erzeugen</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Edit Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="78"/>
@@ -2108,16 +2178,26 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Flip Map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
-        <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Flippen X</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Flip Map Y</source>
+        <translation>Flippen Y</translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="82"/>
+        <source>Rotate Map X</source>
+        <translation>Rotieren X</translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="83"/>
+        <source>Rotate Map Y</source>
+        <translation>Rotieren Y</translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="80"/>
+        <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2127,17 +2207,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="82"/>
-        <source>Rotate Map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
-        <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2148,22 +2218,22 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Random Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufällige Karte</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Creates a new random map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle eine neue zufällig generierte Karte.</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="86"/>
         <source>Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommandos</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Place Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Plazieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="87"/>
@@ -2173,7 +2243,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="88"/>
         <source>Delete Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten entfernen</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="88"/>
@@ -2183,7 +2253,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Edit Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten Editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
@@ -2193,7 +2263,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Edit Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain Editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="90"/>
@@ -2203,7 +2273,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Edit Players</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
@@ -2213,7 +2283,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Edit Rules</source>
-        <translation type="unfinished"></translation>
+        <translation>Regeln editieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
@@ -2223,7 +2293,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="93"/>
         <source>Optimize Players</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler optimieren</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="93"/>
@@ -2233,7 +2303,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="94"/>
         <source>Copy Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren Strg+V</translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="94"/>
@@ -2323,7 +2393,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="532"/>
         <source>Left: </source>
-        <translation type="unfinished"></translation>
+        <translation>Links: </translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="536"/>
@@ -2333,7 +2403,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="545"/>
         <source>Top: </source>
-        <translation type="unfinished"></translation>
+        <translation>Oben: </translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="549"/>
@@ -2343,7 +2413,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="558"/>
         <source>Right: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts: </translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="562"/>
@@ -2353,7 +2423,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/editormenue.cpp" line="571"/>
         <source>Bottom: </source>
-        <translation type="unfinished"></translation>
+        <translation>Unten: </translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="575"/>
@@ -2366,7 +2436,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="14"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="61"/>
@@ -2379,7 +2449,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../resources/scripts/terrain/FOG.js" line="15"/>
         <source>Fog</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebel</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FOG.js" line="62"/>
@@ -2392,7 +2462,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="15"/>
         <source>Forest</source>
-        <translation type="unfinished"></translation>
+        <translation>Wald</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="55"/>
@@ -2405,17 +2475,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/filedialog.cpp" line="43"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/filedialog.cpp" line="81"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/filedialog.cpp" line="311"/>
         <source>Do you want to delete the item </source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du diese Items löschen </translation>
     </message>
 </context>
 <context>
@@ -2423,17 +2493,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/folderdialog.cpp" line="38"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/folderdialog.cpp" line="52"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/folderdialog.cpp" line="233"/>
         <source>Do you want to delete the folder </source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du diesen Ordner löschen </translation>
     </message>
 </context>
 <context>
@@ -2459,43 +2529,30 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/gameanimationnextday.cpp" line="136"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
+    </message>
+</context>
+<context>
+    <name>GameEnums</name>
+    <message>
+        <source>Air</source>
+        <translation type="vanished">Luft</translation>
+    </message>
+    <message>
+        <source>Naval</source>
+        <translation type="vanished">See</translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="vanished">Boden</translation>
+    </message>
+    <message>
+        <source>Infantry</source>
+        <translation type="vanished">Infantrie</translation>
     </message>
 </context>
 <context>
     <name>GameMap</name>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="34"/>
-        <source>Reading Map File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="51"/>
-        <source>Creating Player</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
-        <source>Loading Empty Map Row </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="1033"/>
-        <source> of </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <source>Importing Map Row </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="1042"/>
-        <source>Loading Sprites</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../mapsupport/randomMap.cpp" line="64"/>
         <location filename="../mapsupport/randomMap.cpp" line="98"/>
@@ -2503,37 +2560,69 @@ This is immediatly applied.</source>
         <location filename="../mapsupport/randomMap.cpp" line="594"/>
         <location filename="../mapsupport/randomMap.cpp" line="598"/>
         <source>Generating </source>
-        <translation type="unfinished"></translation>
+        <translation>Generieren </translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1011"/>
         <source>Loading Players</source>
+        <translation>Lade Spieler</translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="34"/>
+        <source>Reading Map File</source>
+        <translation>Lese Kartendaten</translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="51"/>
+        <source>Creating Player</source>
+        <translation>Spieler erstellen</translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
+        <source>Loading Empty Map Row </source>
+        <translation>Lade leere Kartenreihe </translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <source>Importing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1033"/>
         <source>Loading Map Row </source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Kartenreihe </translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="1042"/>
+        <source>Loading Sprites</source>
+        <translation>Lade Sprites</translation>
+    </message>
+    <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <location filename="../game/gamemap.cpp" line="1033"/>
+        <source> of </source>
+        <translation> von </translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1060"/>
         <source>Loading Rules</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Regeln</translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1070"/>
         <source>Loading Record</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Aufnahme</translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1078"/>
         <source>Loading scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Skripte</translation>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="1090"/>
         <source>Loading Campaign</source>
-        <translation type="unfinished"></translation>
+        <translation>Kampanie laden</translation>
     </message>
 </context>
 <context>
@@ -2541,97 +2630,97 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/gamemenue.cpp" line="82"/>
         <source>Waiting for Players</source>
-        <translation type="unfinished"></translation>
+        <translation>Warte auf Spieler</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="277"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Spieler hat sich vom Spiel getrennt! Das Spiel wird nun unterbrochen. Du kannst das Spiel speichern und erneut laden um es fortzusetzen.</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="390"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="398"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="449"/>
         <source>Show Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat anzeigen</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="580"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Spiel ist asynchron und kann nicht fortgesetzt werden. Das Spiel wurde unterbrochen. Du kannst das Spiel speichern und neu starten.</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Produced</source>
-        <translation type="unfinished"></translation>
+        <translation>Produziert</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Lost</source>
-        <translation type="unfinished"></translation>
+        <translation>Verluste</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Killed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/gamemenue.cpp" line="1145"/>
-        <source>Army Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Vernichtet</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Income</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkommen</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Funds</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonds</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1145"/>
         <source>Bases</source>
-        <translation type="unfinished"></translation>
+        <translation>Basen</translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="1145"/>
+        <source>Army Value</source>
+        <translation>Armeegröße</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1167"/>
         <source>Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler </translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1177"/>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1529"/>
         <source>Do you want to exit the current game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Willst du das aktuelle Spiel verlassen?</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1546"/>
         <source>Do you want to surrender the current game?</source>
-        <translation type="unfinished"></translation>
+        <translation>Willst du aufgeben?</translation>
     </message>
     <message>
         <location filename="../menue/gamemenue.cpp" line="1574"/>
         <source>Nickname for the Unit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nickname der Einheit:</translation>
     </message>
 </context>
 <context>
@@ -2639,7 +2728,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/gamescript.cpp" line="84"/>
         <source>This is a normal game with the following Victory Conditions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies ist ein normales Spiel mit den nachfolgenden Siegbedingungen.</translation>
     </message>
 </context>
 <context>
@@ -2647,7 +2736,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="35"/>
         <source>Gameplay Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieleinstellungen</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="42"/>
@@ -2657,47 +2746,47 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="45"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keine</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="45"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="45"/>
         <source>Own</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eigene</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="45"/>
         <source>Ally</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Allierte</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="45"/>
         <source>Enemy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gegner</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="46"/>
         <source>Only Detailed Battle All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur alle Kämpfe</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="46"/>
         <source>Only Detailed Battle Own</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur eigene Kämpfe</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="47"/>
         <source>Only Detailed Battle Ally</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur allierte Kämpfe</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="47"/>
         <source>Only Detailed Battle Enemy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur Gegner Kämpfe</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="51"/>
@@ -2705,19 +2794,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="61"/>
-        <source>Battle Animations: </source>
-        <translation type="unfinished"></translation>
+        <source>Kampfanimationen: </source>
+        <translation type="obsolete">Kampfanimationen: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="64"/>
         <source>Detailed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animation</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="64"/>
         <source>Overworld</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schlacht</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="66"/>
@@ -2727,7 +2815,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="78"/>
         <source>Animation Speed: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animationsgeschwindigkeit: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="82"/>
@@ -2745,6 +2833,11 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="61"/>
+        <source>Battle Animations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="110"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
@@ -2757,7 +2850,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="126"/>
         <source>Multi Turn Plantime: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rundenplanung: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="130"/>
@@ -2767,7 +2860,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="142"/>
         <source>Auto End Turn: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Auto Rundenende: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="146"/>
@@ -2777,7 +2870,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="158"/>
         <source>Menu Heigth: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menühöhe: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="162"/>
@@ -2827,12 +2920,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="223"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Links</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="223"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rechts</translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="227"/>
@@ -2897,7 +2990,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="309"/>
         <source>Key Up: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hoch: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="313"/>
@@ -2908,7 +3001,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="326"/>
         <source>Key Left: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Links: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="330"/>
@@ -2919,7 +3012,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="343"/>
         <source>Key Down: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unten: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="347"/>
@@ -2930,7 +3023,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="360"/>
         <source>Key Right: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rechts: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="364"/>
@@ -2941,7 +3034,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="377"/>
         <source>Key Confirm: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestätigen: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="381"/>
@@ -2952,7 +3045,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="394"/>
         <source>Key Cancel: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abbrechen: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="398"/>
@@ -2963,7 +3056,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="411"/>
         <source>Key Next: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nächste: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="415"/>
@@ -2974,7 +3067,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="428"/>
         <source>Key Previous: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vorige: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="432"/>
@@ -2985,7 +3078,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="445"/>
         <source>Key Quicksave 1: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schnellspeichern 1: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="449"/>
@@ -2995,7 +3088,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="457"/>
         <source>Key Quickload 1: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schnellladen 1: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="461"/>
@@ -3005,7 +3098,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="469"/>
         <source>Key Quicksave 2: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schnellspeichern 2: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="473"/>
@@ -3015,7 +3108,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="481"/>
         <source>Key Quickload 2: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schnellladen 2: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="485"/>
@@ -3025,7 +3118,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="493"/>
         <source>Key Information: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Information: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="497"/>
@@ -3036,7 +3129,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="510"/>
         <source>Key Move Map Up: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Karte Hoch: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="514"/>
@@ -3047,7 +3140,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="527"/>
         <source>Key Move Map Left: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Karte Links: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="531"/>
@@ -3058,7 +3151,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="544"/>
         <source>Key Move Map Down: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Karte Runter: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="548"/>
@@ -3069,7 +3162,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="561"/>
         <source>Key Move Map Right: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Karte Rechts: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="565"/>
@@ -3080,7 +3173,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="578"/>
         <source>Key Zoom In: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reinzoomen: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="582"/>
@@ -3091,7 +3184,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="595"/>
         <source>Key Zoom Out: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rauszoomen: </translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="599"/>
@@ -3132,38 +3225,13 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="664"/>
-        <source>Key Place Unit: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="676"/>
-        <source>Key Place Building: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="688"/>
-        <source>Key Next Team: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="700"/>
-        <source>Key Previous Team: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="712"/>
-        <source>Key Next Item: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="724"/>
-        <source>Key Previous Item: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="656"/>
         <source>Key to select Place Terrain in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="664"/>
+        <source>Key Place Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3172,8 +3240,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="676"/>
+        <source>Key Place Building: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="680"/>
         <source>Key to select Place Building in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="688"/>
+        <source>Key Next Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3182,13 +3260,28 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="700"/>
+        <source>Key Previous Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="704"/>
         <source>Key to select the previous player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="712"/>
+        <source>Key Next Item: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="716"/>
         <source>Key to select the next editor item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="724"/>
+        <source>Key Previous Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3202,12 +3295,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../ingamescriptsupport/genericbox.cpp" line="28"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/genericbox.cpp" line="39"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -3221,29 +3314,29 @@ This is immediatly applied.</source>
         <location filename="../game/ui/ingameinfobar.cpp" line="233"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="237"/>
         <source>Buildings: </source>
-        <translation type="unfinished"></translation>
+        <translation>Gebäude: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="249"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="253"/>
         <source>Units: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="266"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="270"/>
         <source>Funds: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fonds: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="280"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="288"/>
         <source>Team: </source>
-        <translation type="unfinished"></translation>
+        <translation>Team: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="358"/>
@@ -3251,89 +3344,89 @@ This is immediatly applied.</source>
         <location filename="../game/ui/ingameinfobar.cpp" line="415"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="419"/>
         <source>HP: </source>
-        <translation type="unfinished"></translation>
+        <translation>KP: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="460"/>
         <source>Ammo1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 1: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="476"/>
         <source>Ammo1: -/-</source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 1: -/-</translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="492"/>
         <source>Ammo2: </source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 2: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="508"/>
         <source>Ammo2: -/-</source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 2: -/-</translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="525"/>
         <source>Fuel: </source>
-        <translation type="unfinished"></translation>
+        <translation>Treib.: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="542"/>
         <source>Fuel: -/-</source>
-        <translation type="unfinished"></translation>
+        <translation>Treib.: -/-</translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="689"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="734"/>
         <source>Owner: Player </source>
-        <translation type="unfinished"></translation>
+        <translation>Besitzer: Spieler </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
         <source>Owner: Neutral</source>
-        <translation type="unfinished"></translation>
+        <translation>Besitzer: Neutral</translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="707"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
         <source>Resistance: </source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="743"/>
         <source>Weapon 1: </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 1: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="754"/>
         <source>Weapon 2: </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 2: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="763"/>
         <source>Move: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bew.art: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="771"/>
         <source>Movepoints: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bew.punkte: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="779"/>
         <source>Vision: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sicht: </translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="791"/>
         <source>Loaded Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladung</translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="809"/>
         <source>Loaded Units: ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladung: ?</translation>
     </message>
 </context>
 <context>
@@ -3341,7 +3434,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="53"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
+    </message>
+    <message>
+        <source>Host Game</source>
+        <translation type="vanished">Host</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="62"/>
@@ -3356,12 +3453,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="80"/>
         <source>Join Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel Beitreten</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="89"/>
         <source>Join Adress</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresse Beitreten</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
@@ -3371,12 +3468,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="206"/>
         <source>Enter Host Adress</source>
-        <translation type="unfinished"></translation>
+        <translation>Host Adresse</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Karte</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
@@ -3391,7 +3488,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Modifikationen</translation>
     </message>
     <message>
         <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
@@ -3400,16 +3497,39 @@ This is immediatly applied.</source>
     </message>
 </context>
 <context>
+    <name>LocalServer</name>
+    <message>
+        <source>Server is closed</source>
+        <translation type="vanished">Server ist geschlossen</translation>
+    </message>
+    <message>
+        <source>Server is running. </source>
+        <translation type="vanished">Server läuft. </translation>
+    </message>
+    <message>
+        <source>Client disconnected.</source>
+        <translation type="vanished">Client unterbrochen.</translation>
+    </message>
+    <message>
+        <source>New Client connection.</source>
+        <translation type="vanished">Neue Client-Verbindung.</translation>
+    </message>
+</context>
+<context>
     <name>METEOR</name>
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="16"/>
         <source>Meteor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="150"/>
         <source>&lt;r&gt;Meteor pieces which can be attacked and destroyed &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to eliminate plasma.</source>
+        <translation type="vanished">um Plasma zu eliminieren.</translation>
     </message>
 </context>
 <context>
@@ -3417,12 +3537,16 @@ This is immediatly applied.</source>
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="15"/>
         <source>Mountain</source>
-        <translation type="unfinished"></translation>
+        <translation>Berg</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="57"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vision +3.</source>
+        <translation type="vanished">Sicht +3.</translation>
     </message>
 </context>
 <context>
@@ -3450,52 +3574,52 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/mainwindow.cpp" line="62"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="74"/>
         <source>Singleplayer</source>
-        <translation type="unfinished"></translation>
+        <translation>Einzelspieler</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="85"/>
         <source>Multiplayer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehrspieler</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="96"/>
         <source>Load Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel laden</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="107"/>
         <source>Load Campaign</source>
-        <translation type="unfinished"></translation>
+        <translation>Kampanie laden</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="118"/>
         <source>Replay Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielaufnahme</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="129"/>
         <source>Map Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Karteneditor</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="140"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionen</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="151"/>
         <source>CO Style</source>
-        <translation type="unfinished"></translation>
+        <translation>KO Style</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="162"/>
         <source>Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiki</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="173"/>
@@ -3505,60 +3629,40 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/mainwindow.cpp" line="184"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Credits</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="195"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="207"/>
         <source>Select Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzername auswählen</translation>
     </message>
 </context>
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="38"/>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="42"/>
         <source>The name of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="51"/>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Name der Karte.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="55"/>
         <source>The author of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="64"/>
-        <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Author der Karte.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="68"/>
         <source>The description for the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="77"/>
-        <source>Script:</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Beschreibung der Karte.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="80"/>
         <source>Select File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="84"/>
@@ -3566,44 +3670,64 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="98"/>
-        <source>Width:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="102"/>
         <source>The width of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="111"/>
-        <source>Heigth:</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Breite der Karte.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="115"/>
         <source>The heigth of the map.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="124"/>
-        <source>Player:</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Höhe der Karte.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="128"/>
         <source>The amount of players for this map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzahl an Spieler auf dieser Karte.</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="38"/>
+        <source>Name:</source>
+        <translation>Name:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="51"/>
+        <source>Author:</source>
+        <translation>Autor:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="64"/>
+        <source>Description:</source>
+        <translation>Beschreibung:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="77"/>
+        <source>Script:</source>
+        <translation>Skript:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="98"/>
+        <source>Width:</source>
+        <translation>Breite:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="111"/>
+        <source>Heigth:</source>
+        <translation>Höhe:</translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="124"/>
+        <source>Player:</source>
+        <translation>Spieler:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="137"/>
         <source>Turn Limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl Runden:</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="141"/>
         <source>The amount of turns in which the map needs to be finished to get a maximum score.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzahl an Zügen die zu abschließen der Karte benötigt werden um den maximalen Score zu erreichen.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="150"/>
@@ -3613,17 +3737,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="154"/>
         <source>The amount of units allowed to be deploayed to get a maximum score.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzahl an Einheiten die erstellt werden können um den maximalen Score zu erreichen.</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="160"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/editor/mapeditdialog.cpp" line="174"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -3631,37 +3755,37 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="70"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="79"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="88"/>
         <source>Random Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufall</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="97"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="107"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="117"/>
         <source>Save Map</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Speichern</translation>
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="128"/>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Starten</translation>
     </message>
 </context>
 <context>
@@ -3669,37 +3793,37 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/mapselectionview.cpp" line="61"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Name: </translation>
     </message>
     <message>
         <location filename="../objects/mapselectionview.cpp" line="71"/>
         <source>Author: </source>
-        <translation type="unfinished"></translation>
+        <translation>Autor: </translation>
     </message>
     <message>
         <location filename="../objects/mapselectionview.cpp" line="81"/>
         <source>Description </source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung </translation>
     </message>
 </context>
 <context>
     <name>Multiplayermenu</name>
     <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="109"/>
+        <source>Load Savegame</source>
+        <translation>Lade Spielstand</translation>
+    </message>
+    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="80"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="1095"/>
         <source>Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereit</translation>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="98"/>
         <source>Connecting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="109"/>
-        <source>Load Savegame</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinde</translation>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="134"/>
@@ -3714,12 +3838,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="144"/>
         <source>Host Adress: </source>
-        <translation type="unfinished"></translation>
+        <translation>Host Adresse: </translation>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="533"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Host hat eine andere Spielversion oder andere geladene Mods. Spiel wird verlassen.</translation>
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="989"/>
@@ -3729,7 +3853,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="1091"/>
         <source>Not Ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht Bereit</translation>
     </message>
 </context>
 <context>
@@ -3737,32 +3861,176 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="55"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="67"/>
         <source>Mods</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifikationen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="76"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="88"/>
         <source>Gameplay &amp;amp; Keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel &amp;amp; Tastatur</translation>
+    </message>
+    <message>
+        <source>Gameplay Settings</source>
+        <translation type="vanished">Spieleinstellungen</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="vanished">Keine</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="vanished">Alle</translation>
+    </message>
+    <message>
+        <source>Own</source>
+        <translation type="vanished">Eigene</translation>
+    </message>
+    <message>
+        <source>Ally</source>
+        <translation type="vanished">Allierte</translation>
+    </message>
+    <message>
+        <source>Enemy</source>
+        <translation type="vanished">Gegner</translation>
+    </message>
+    <message>
+        <source>Only Detailed Battle All</source>
+        <translation type="vanished">Nur alle Kämpfe</translation>
+    </message>
+    <message>
+        <source>Only Detailed Battle Own</source>
+        <translation type="vanished">Nur eigene Kämpfe</translation>
+    </message>
+    <message>
+        <source>Only Detailed Battle Ally</source>
+        <translation type="vanished">Nur allierte Kämpfe</translation>
+    </message>
+    <message>
+        <source>Only Detailed Battle Enemy</source>
+        <translation type="vanished">Nur Gegner Kämpfe</translation>
+    </message>
+    <message>
+        <source>Kampfanimationen: </source>
+        <translation type="vanished">Kampfanimationen: </translation>
+    </message>
+    <message>
+        <source>Detailed</source>
+        <translation type="vanished">Animation</translation>
+    </message>
+    <message>
+        <source>Overworld</source>
+        <translation type="vanished">Schlacht</translation>
+    </message>
+    <message>
+        <source>Animation Speed: </source>
+        <translation type="vanished">Animationsgeschwindigkeit: </translation>
+    </message>
+    <message>
+        <source>Multi Turn Plantime: </source>
+        <translation type="vanished">Rundenplanung: </translation>
+    </message>
+    <message>
+        <source>Auto End Turn: </source>
+        <translation type="vanished">Auto Rundenende: </translation>
+    </message>
+    <message>
+        <source>Menu Heigth: </source>
+        <translation type="vanished">Menühöhe: </translation>
+    </message>
+    <message>
+        <source>Key Up: </source>
+        <translation type="vanished">Hoch: </translation>
+    </message>
+    <message>
+        <source>Key Left: </source>
+        <translation type="vanished">Links: </translation>
+    </message>
+    <message>
+        <source>Key Down: </source>
+        <translation type="vanished">Unten: </translation>
+    </message>
+    <message>
+        <source>Key Right: </source>
+        <translation type="vanished">Rechts: </translation>
+    </message>
+    <message>
+        <source>Key Confirm: </source>
+        <translation type="vanished">Bestätigen: </translation>
+    </message>
+    <message>
+        <source>Key Cancel: </source>
+        <translation type="vanished">Abbrechen: </translation>
+    </message>
+    <message>
+        <source>Key Next: </source>
+        <translation type="vanished">Nächste: </translation>
+    </message>
+    <message>
+        <source>Key Previous: </source>
+        <translation type="vanished">Vorige: </translation>
+    </message>
+    <message>
+        <source>Key Quicksave 1: </source>
+        <translation type="vanished">Schnellspeichern 1: </translation>
+    </message>
+    <message>
+        <source>Key Quickload 1: </source>
+        <translation type="vanished">Schnellladen 1: </translation>
+    </message>
+    <message>
+        <source>Key Quicksave 2: </source>
+        <translation type="vanished">Schnellspeichern 2: </translation>
+    </message>
+    <message>
+        <source>Key Quickload 2: </source>
+        <translation type="vanished">Schnellladen 2: </translation>
+    </message>
+    <message>
+        <source>Key Information: </source>
+        <translation type="vanished">Information: </translation>
+    </message>
+    <message>
+        <source>Key Move Map Up: </source>
+        <translation type="vanished">Karte Hoch: </translation>
+    </message>
+    <message>
+        <source>Key Move Map Left: </source>
+        <translation type="vanished">Karte Links: </translation>
+    </message>
+    <message>
+        <source>Key Move Map Down: </source>
+        <translation type="vanished">Karte Runter: </translation>
+    </message>
+    <message>
+        <source>Key Move Map Right: </source>
+        <translation type="vanished">Karte Rechts: </translation>
+    </message>
+    <message>
+        <source>Key Zoom In: </source>
+        <translation type="vanished">Reinzoomen: </translation>
+    </message>
+    <message>
+        <source>Key Zoom Out: </source>
+        <translation type="vanished">Rauszoomen: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="324"/>
         <source>Screen Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmeinstellungen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="332"/>
         <source>Screen Resolution: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmauflösung: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="338"/>
@@ -3772,22 +4040,22 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="349"/>
         <source>Screen Mode: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmmodus: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="352"/>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="352"/>
         <source>Bordered</source>
-        <translation type="unfinished"></translation>
+        <translation>Randlos</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="352"/>
         <source>Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="354"/>
@@ -3797,7 +4065,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="363"/>
         <source>Sprite Aliasing: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="367"/>
@@ -3807,12 +4075,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="388"/>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="394"/>
         <source>Global Volume: </source>
-        <translation type="unfinished"></translation>
+        <translation>Globale Lautst.: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="398"/>
@@ -3822,7 +4090,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="411"/>
         <source>Music Volume: </source>
-        <translation type="unfinished"></translation>
+        <translation>Musiklautsträrke: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="415"/>
@@ -3832,7 +4100,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="428"/>
         <source>Sound Volume: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sound: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="432"/>
@@ -3842,7 +4110,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="444"/>
         <source>Language: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="472"/>
@@ -3855,6 +4123,15 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/optionmenue.cpp" line="517"/>
+        <source>Record Games: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autospeichern: </source>
+        <translation type="vanished">Autospeichern: </translation>
+    </message>
+    <message>
         <location filename="../menue/optionmenue.cpp" line="491"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
@@ -3862,7 +4139,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="503"/>
         <source>Auto Saving Cycle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Autom. speichern Zyklus: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="507"/>
@@ -3870,9 +4147,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="517"/>
-        <source>Record Games: </source>
-        <translation type="unfinished"></translation>
+        <source>Spielaufnahme: </source>
+        <translation type="vanished">Spielaufnahme: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="521"/>
@@ -3882,12 +4158,12 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="530"/>
         <source>Network Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Netzwerkeinstellungen</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="537"/>
         <source>Username: </source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzername: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="541"/>
@@ -3897,7 +4173,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="564"/>
         <source>Server Adress: </source>
-        <translation type="unfinished"></translation>
+        <translation>Serveradresse: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="568"/>
@@ -3907,7 +4183,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="580"/>
         <source>Lobby port: </source>
-        <translation type="unfinished"></translation>
+        <translation>Lobby Port: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="584"/>
@@ -3917,17 +4193,17 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="596"/>
         <source>Server: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="600"/>
         <source>Enables this game as global server.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert dieses Spiel als globalen Server.</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="613"/>
         <source>Game port: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spiele Port: </translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="617"/>
@@ -3937,27 +4213,27 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="660"/>
         <source>Advance Wars Game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Advance Wars Spiel:</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="662"/>
         <source>Unkown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="663"/>
         <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
+        <translation>Commander Wars</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="664"/>
         <source>Advance Wars DS</source>
-        <translation type="unfinished"></translation>
+        <translation>Advance Wars DS</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="665"/>
         <source>Advance Wars DC</source>
-        <translation type="unfinished"></translation>
+        <translation>Advance Wars DC</translation>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="667"/>
@@ -3968,7 +4244,8 @@ This is immediatly applied.</source>
         <location filename="../menue/optionmenue.cpp" line="753"/>
         <source>
 Version: </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Version: </translation>
     </message>
 </context>
 <context>
@@ -3976,7 +4253,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/PIPELINE.js" line="15"/>
         <source>Pipeline</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/PIPELINE.js" line="77"/>
@@ -3985,11 +4262,18 @@ Version: </source>
     </message>
 </context>
 <context>
+    <name>PLAINS</name>
+    <message>
+        <source>Plains</source>
+        <translation type="vanished">Ebene</translation>
+    </message>
+</context>
+<context>
     <name>PLAINS_DESTROYED</name>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="14"/>
         <source>Plains</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="45"/>
@@ -4002,7 +4286,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="14"/>
         <source>Plains</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="46"/>
@@ -4015,7 +4299,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/PLASMA.js" line="15"/>
         <source>Plasma</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/PLASMA.js" line="47"/>
@@ -4028,27 +4312,27 @@ Version: </source>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="28"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="93"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="102"/>
         <source>Un/Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Abwählen / alle auswählen</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="129"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="168"/>
         <source>Perklist Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Boniliste mit Namen</translation>
     </message>
 </context>
 <context>
@@ -4056,139 +4340,148 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="254"/>
         <source>Orange Star</source>
-        <translation type="unfinished"></translation>
+        <translation>Orange Star</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="256"/>
         <source>Blue Moon</source>
-        <translation type="unfinished"></translation>
+        <translation>Blue Moon</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="258"/>
         <source>Green Earth</source>
-        <translation type="unfinished"></translation>
+        <translation>Green Earth</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="260"/>
         <source>Yellow Comet</source>
-        <translation type="unfinished"></translation>
+        <translation>Yellow Comet</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="262"/>
         <source>Black Hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Black Hole</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="264"/>
         <source>Bolt Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bolt Guard</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="266"/>
         <source>Metall Army</source>
-        <translation type="unfinished"></translation>
+        <translation>Metal Army</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="268"/>
         <source>Amber Corona</source>
-        <translation type="unfinished"></translation>
+        <translation>Amber Corona</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="270"/>
         <source>Brown Desert</source>
-        <translation type="unfinished"></translation>
+        <translation>Brown Desert</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="272"/>
         <source>Jade Sun</source>
-        <translation type="unfinished"></translation>
+        <translation>Jade Sun</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="274"/>
         <source>Pink Crystal</source>
-        <translation type="unfinished"></translation>
+        <translation>Pink Crystal</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="276"/>
         <source>Teal Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>Teal Guard</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Player.js" line="278"/>
         <source>Dark Matters</source>
-        <translation type="unfinished"></translation>
+        <translation>Dark Matters</translation>
+    </message>
+</context>
+<context>
+    <name>PlayerInfo</name>
+    <message>
+        <source>Power</source>
+        <translation type="vanished">Gabe</translation>
+    </message>
+    <message>
+        <source>Superpower</source>
+        <translation type="vanished">Spezialgabe</translation>
+    </message>
+    <message>
+        <source>Tagpower</source>
+        <translation type="vanished">Doppelgabe</translation>
     </message>
 </context>
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="103"/>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>CO&apos;s</source>
-        <translation type="unfinished"></translation>
+        <translation>KO&apos;s</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>AI Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>KI</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>Startfunds</source>
-        <translation type="unfinished"></translation>
+        <translation>Startfonds</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>Income Modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkommen</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <location filename="../objects/playerselection.cpp" line="325"/>
         <source>Team</source>
-        <translation type="unfinished"></translation>
+        <translation>Team</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <location filename="../objects/playerselection.cpp" line="307"/>
         <location filename="../objects/playerselection.cpp" line="649"/>
         <source>Build List</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauliste</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="206"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbunden</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="238"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="243"/>
         <source>All Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Zufällig</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="251"/>
         <source>CO 1 Random</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 1 Zufällig</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="260"/>
         <source>CO 2 Random</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 2 Zufällig</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="278"/>
@@ -4205,26 +4498,37 @@ Version: </source>
         <location filename="../objects/playerselection.cpp" line="331"/>
         <location filename="../objects/playerselection.cpp" line="345"/>
         <source>Human</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensch</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="327"/>
         <source>Very Easy</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr Leicht</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="327"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="327"/>
         <source>Normal Off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal Off.</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="327"/>
         <source>Normal Def.</source>
+        <translation>Normal Def.</translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="693"/>
+        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="103"/>
+        <location filename="../objects/playerselection.cpp" line="327"/>
+        <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4232,7 +4536,7 @@ Version: </source>
         <location filename="../objects/playerselection.cpp" line="341"/>
         <location filename="../objects/playerselection.cpp" line="345"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offen</translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="497"/>
@@ -4264,18 +4568,13 @@ Version: </source>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="693"/>
-        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PlayerSelectionDialog</name>
     <message>
         <location filename="../objects/dialogs/rules/playerselectiondialog.cpp" line="25"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -4284,7 +4583,7 @@ Version: </source>
         <location filename="../main.cpp" line="76"/>
         <location filename="../main.cpp" line="83"/>
         <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4292,7 +4591,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/REAF.js" line="15"/>
         <source>Reaf</source>
-        <translation type="unfinished"></translation>
+        <translation>Riff</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/REAF.js" line="76"/>
@@ -4305,7 +4604,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/RIVER.js" line="14"/>
         <source>River</source>
-        <translation type="unfinished"></translation>
+        <translation>Fluss</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/RIVER.js" line="81"/>
@@ -4318,7 +4617,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="15"/>
         <source>Rough Sea</source>
-        <translation type="unfinished"></translation>
+        <translation>Raue See</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="62"/>
@@ -4331,7 +4630,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="15"/>
         <source>Ruin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruine</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="51"/>
@@ -4342,19 +4641,14 @@ Version: </source>
 <context>
     <name>ReplayMenu</name>
     <message>
-        <location filename="../menue/replaymenu.cpp" line="73"/>
-        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/replaymenu.cpp" line="129"/>
         <source>Do you want to exit the current replay?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du die momentane Aufnahme verlassen?</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="164"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="262"/>
@@ -4363,34 +4657,29 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/replaymenu.cpp" line="427"/>
+        <source>Team </source>
+        <translation>Team </translation>
+    </message>
+    <message>
         <location filename="../menue/replaymenu.cpp" line="411"/>
         <source>Current Team</source>
+        <translation>Momentanes Team</translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="73"/>
+        <source>The current active mods or the current record are invalid! Exiting the Replay now. Mods used in the Replay:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="412"/>
         <source>All Teams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="413"/>
-        <source>Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="427"/>
-        <source>Team </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="432"/>
-        <source>Teamview:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Teams</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="452"/>
         <source>Gameplay Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieleinstellungen</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="459"/>
@@ -4399,48 +4688,48 @@ Version: </source>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="462"/>
-        <source>None</source>
-        <translation type="unfinished"></translation>
+        <source>All</source>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="462"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
+        <source>None</source>
+        <translation>Keine</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="462"/>
         <source>Own</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigene</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="462"/>
         <source>Ally</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbündete</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="462"/>
         <source>Enemy</source>
-        <translation type="unfinished"></translation>
+        <translation>Gegner</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="463"/>
         <source>Only Detailed Battle All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur alle Kämpfe</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="463"/>
         <source>Only Detailed Battle Own</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur eigene Kämpfe</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="464"/>
         <source>Only Detailed Battle Ally</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur allierte Kämpfe</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="464"/>
         <source>Only Detailed Battle Enemy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nur Gegner Kämpfe</translation>
     </message>
     <message>
         <location filename="../menue/replaymenu.cpp" line="468"/>
@@ -4450,31 +4739,6 @@ Version: </source>
     <message>
         <location filename="../menue/replaymenu.cpp" line="478"/>
         <source>Battle Animations: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="481"/>
-        <source>Detailed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="481"/>
-        <source>Overworld</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="483"/>
-        <source>Selects which battle animations are played when fighting an enemy.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="495"/>
-        <source>Animation Speed: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/replaymenu.cpp" line="499"/>
-        <source>Selects the speed at which animations are played. Except battle animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4493,9 +4757,60 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Kampfanimationen: </source>
+        <translation type="vanished">Kampfanim.-Geschw.: </translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="481"/>
+        <source>Detailed</source>
+        <translation>Detailiert</translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="481"/>
+        <source>Overworld</source>
+        <translation type="unfinished">Schlacht</translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="483"/>
+        <source>Selects which battle animations are played when fighting an enemy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="495"/>
+        <source>Animation Speed: </source>
+        <translation>Animationsgeschwindigkeit: </translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="499"/>
+        <source>Selects the speed at which animations are played. Except battle animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kampfanim.-Geschw.: </source>
+        <translation type="vanished">Kampfanim.-Geschw.: </translation>
+    </message>
+    <message>
         <location filename="../menue/replaymenu.cpp" line="531"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="413"/>
+        <source>Map</source>
+        <translation>Karte</translation>
+    </message>
+    <message>
+        <location filename="../menue/replaymenu.cpp" line="432"/>
+        <source>Teamview:</source>
+        <translation>Teamansicht:</translation>
+    </message>
+    <message>
+        <source>Player: </source>
+        <translation type="obsolete">Spieler: </translation>
+    </message>
+    <message>
+        <source>Funds: </source>
+        <translation type="obsolete">Fonds: </translation>
     </message>
 </context>
 <context>
@@ -4517,6 +4832,10 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Enviroment</source>
+        <translation type="vanished">Wetterbedingungen</translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="156"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
@@ -4524,7 +4843,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="164"/>
         <source>Random Weather: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zufallswetter: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="168"/>
@@ -4534,7 +4853,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="177"/>
         <source>Start Weather: </source>
-        <translation type="unfinished"></translation>
+        <translation>Startwetter: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="182"/>
@@ -4544,7 +4863,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="192"/>
         <source>Weather Forecast: </source>
-        <translation type="unfinished"></translation>
+        <translation>Wettervorhersage: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="196"/>
@@ -4554,12 +4873,12 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="207"/>
         <source>Gameplay</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielweise</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="213"/>
         <source>Unit Ranking: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheitenränge: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="217"/>
@@ -4567,11 +4886,15 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>CO Bannlist: </source>
+        <translation type="vanished">KO Bannliste: </translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="229"/>
         <location filename="../objects/ruleselection.cpp" line="244"/>
         <location filename="../objects/ruleselection.cpp" line="259"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="141"/>
@@ -4596,7 +4919,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="271"/>
         <source>No CO Powers: </source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Gabe: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="275"/>
@@ -4616,7 +4939,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="297"/>
         <source>CO Specific Units: </source>
-        <translation type="unfinished"></translation>
+        <translation>KO Spezialeinheiten: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="301"/>
@@ -4626,7 +4949,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="309"/>
         <source>AI Attack Terrain: </source>
-        <translation type="unfinished"></translation>
+        <translation>KI Terrainangriff: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="313"/>
@@ -4636,22 +4959,22 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="321"/>
         <source>Fog Of War: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kriegsnebel: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="324"/>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="324"/>
         <source>Fog of War</source>
-        <translation type="unfinished"></translation>
+        <translation>Kriegsnebel</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="324"/>
         <source>Shroud of War</source>
-        <translation type="unfinished"></translation>
+        <translation>Kriegsschatten</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="326"/>
@@ -4661,7 +4984,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="338"/>
         <source>Vision Block: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtblock: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="342"/>
@@ -4684,21 +5007,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="369"/>
-        <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="378"/>
-        <source>Unit Limit: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="382"/>
-        <source>The maximum amount of units a single player can own at any time.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="392"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
@@ -4709,9 +5017,38 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="425"/>
+        <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="441"/>
+        <source>If checked units of the same team have the same direction rather than based on player order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Building Vision Denial: </source>
+        <translation type="vanished">Gebäudeschatten: </translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="369"/>
+        <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="378"/>
+        <source>Unit Limit: </source>
+        <translation>Einheitenlimit: </translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="382"/>
+        <source>The maximum amount of units a single player can own at any time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="407"/>
         <source>Round Time: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rundenlimit: </translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="411"/>
@@ -4734,29 +5071,19 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="425"/>
-        <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="437"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="441"/>
-        <source>If checked units of the same team have the same direction rather than based on player order.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="455"/>
         <source>Script:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skript:</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="458"/>
         <source>Select File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datei auswählen</translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="462"/>
@@ -4766,7 +5093,7 @@ Version: </source>
     <message>
         <location filename="../objects/ruleselection.cpp" line="478"/>
         <source>Victory Rules</source>
-        <translation type="unfinished"></translation>
+        <translation>Siegesbedingungen</translation>
     </message>
 </context>
 <context>
@@ -4774,17 +5101,17 @@ Version: </source>
     <message>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="29"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="38"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../objects/dialogs/rules/ruleselectiondialog.cpp" line="47"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
 </context>
 <context>
@@ -4792,7 +5119,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SEA.js" line="15"/>
         <source>Sea</source>
-        <translation type="unfinished"></translation>
+        <translation>See</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SEA.js" line="129"/>
@@ -4805,7 +5132,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW.js" line="14"/>
         <source>Snow</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnee</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW.js" line="50"/>
@@ -4818,7 +5145,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="14"/>
         <source>Snowy Destroyed Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnee</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="97"/>
@@ -4831,7 +5158,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="15"/>
         <source>Snowy Forest</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschneiter Wald</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="54"/>
@@ -4844,12 +5171,16 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="15"/>
         <source>Snowy Mountain</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschneiter Berg</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="57"/>
         <source>&lt;r&gt;Clear view. In Fog of War, Infantry unit&apos;s gain &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;vision +3.&lt;/div&gt;&lt;r&gt; Extremly high movement costs for infantry units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vision +3.</source>
+        <translation type="obsolete">Sicht +3.</translation>
     </message>
 </context>
 <context>
@@ -4857,7 +5188,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="15"/>
         <source>Snowy Pipeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschneite Pipeline</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="77"/>
@@ -4870,7 +5201,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="15"/>
         <source>Snowy Wasteland</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschneites Ödland</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="31"/>
@@ -4883,7 +5214,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="16"/>
         <source>Snowy Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschneite Schweißnaht</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="110"/>
@@ -4896,7 +5227,7 @@ Version: </source>
     <message>
         <location filename="../resources/scripts/terrain/STREET.js" line="14"/>
         <source>Street</source>
-        <translation type="unfinished"></translation>
+        <translation>Straße</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/STREET.js" line="47"/>
@@ -4909,32 +5240,32 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="149"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation>X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="153"/>
         <source>X Location of the Building that has to be captured.</source>
-        <translation type="unfinished"></translation>
+        <translation>X Position des Gebäudes welches einzunehmen ist.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="165"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="169"/>
         <source>Y Location of the Building that has to be captured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Y Position des Gebäudes welches einzunehmen ist.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="181"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="185"/>
         <source>Player that has to capture the building.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler welcher Gebäude einzunehmen hat.</translation>
     </message>
 </context>
 <context>
@@ -4942,22 +5273,22 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="111"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation>X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="115"/>
         <source>X Location of the Building that has to be destroyed.</source>
-        <translation type="unfinished"></translation>
+        <translation>X Position des Gebäudes welches zu zerstören ist.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="127"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="131"/>
         <source>Y Location of the Building that has to be destroyed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Y Position des Gebäudes welches zu zerstören ist.</translation>
     </message>
 </context>
 <context>
@@ -4965,22 +5296,22 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="129"/>
         <source>Count: </source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="133"/>
         <source>Amount of Buildings that has to be owned.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl an Gebäuden die einem gehören müssen.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="145"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="149"/>
         <source>Player that has to own the given amount of buildings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Spieler welcher die Anzahl der benötigtien Gebäude haben muss.</translation>
     </message>
 </context>
 <context>
@@ -4988,7 +5319,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="114"/>
         <source>Variable: </source>
-        <translation type="unfinished"></translation>
+        <translation>Variable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="118"/>
@@ -4998,7 +5329,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="130"/>
         <source>Compare: </source>
-        <translation type="unfinished"></translation>
+        <translation>Komparator: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="135"/>
@@ -5008,7 +5339,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="147"/>
         <source>Value: </source>
-        <translation type="unfinished"></translation>
+        <translation>Wert: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="151"/>
@@ -5018,7 +5349,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="163"/>
         <source>Campaign Variable: </source>
-        <translation type="unfinished"></translation>
+        <translation>Kampagnenvariable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="167"/>
@@ -5031,7 +5362,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="104"/>
         <source>Each Day: </source>
-        <translation type="unfinished"></translation>
+        <translation>Jeden Tag: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="108"/>
@@ -5041,7 +5372,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="116"/>
         <source>Start Day: </source>
-        <translation type="unfinished"></translation>
+        <translation>Starttag: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="120"/>
@@ -5052,7 +5383,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="128"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
 </context>
 <context>
@@ -5060,7 +5391,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="118"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="122"/>
@@ -5073,7 +5404,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="187"/>
         <source>Target X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ziel X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="191"/>
@@ -5083,7 +5414,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="204"/>
         <source>Target Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ziel Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="208"/>
@@ -5093,7 +5424,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="221"/>
         <source>Target Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielbreite: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="225"/>
@@ -5103,7 +5434,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="238"/>
         <source>Target Heigth: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielhöhe: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="242"/>
@@ -5113,7 +5444,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="262"/>
         <source>Add Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler hinzufügen: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="266"/>
@@ -5123,7 +5454,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="272"/>
         <source>Add Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler hinzufügen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="284"/>
@@ -5133,7 +5464,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="302"/>
         <source>Players: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
 </context>
 <context>
@@ -5151,7 +5482,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="106"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="110"/>
@@ -5164,7 +5495,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="110"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="114"/>
@@ -5174,7 +5505,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="126"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="130"/>
@@ -5187,7 +5518,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="131"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="135"/>
@@ -5197,7 +5528,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="147"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="151"/>
@@ -5210,7 +5541,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="187"/>
         <source>Unit X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheit Position X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="191"/>
@@ -5220,7 +5551,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="203"/>
         <source>Unit Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheit Position Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="207"/>
@@ -5230,7 +5561,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="219"/>
         <source>Target X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielposition X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="223"/>
@@ -5240,7 +5571,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="235"/>
         <source>Target Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielposition Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="239"/>
@@ -5250,7 +5581,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="251"/>
         <source>Target Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielbreite: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="255"/>
@@ -5260,7 +5591,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="267"/>
         <source>Target Heigth: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zielhöhe: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp" line="271"/>
@@ -5273,22 +5604,22 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="130"/>
         <source>Count: </source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="134"/>
         <source>Amount of units that has to be killed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Menge von Einheiten die zu zerstören sind.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="146"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="147"/>
         <source>Player who has to kill the units.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler welcher Einheiten vernichten muss.</translation>
     </message>
 </context>
 <context>
@@ -5296,7 +5627,7 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="81"/>
         <source>Team: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Team: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="85"/>
@@ -5309,58 +5640,59 @@ Version: </source>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="39"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="49"/>
         <source>add Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog hinzufügen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="57"/>
         <source>remove Last</source>
-        <translation type="unfinished"></translation>
+        <translation>entferne letztes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="94"/>
         <source>The text the CO should talk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Text den der KO sprechen soll.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
         <source>Happy</source>
-        <translation type="unfinished"></translation>
+        <translation>Glücklich</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
         <source>Sad</source>
-        <translation type="unfinished"></translation>
+        <translation>Traurig</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="104"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die KO Stimmung / Icon das wärend des Dialogs verwendet wird.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="151"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die ID des KO&apos;s der sprechen soll.
+Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="175"/>
         <source>The background color of the dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Hintergrundfarbe des Dialogs.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="184"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrund</translation>
     </message>
 </context>
 <context>
@@ -5368,7 +5700,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="44"/>
         <source>Conditions</source>
-        <translation type="unfinished"></translation>
+        <translation>Bedingungen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="65"/>
@@ -5378,18 +5710,18 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="69"/>
         <source>Add Condition</source>
-        <translation type="unfinished"></translation>
+        <translation>Bedingung hinzufügen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="408"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplizieren</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="89"/>
         <source>Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Events</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
@@ -5399,7 +5731,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Event hinzufügen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="132"/>
@@ -5414,39 +5746,39 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="143"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="151"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="158"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="178"/>
         <source>Do you want to exit the script editor?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du den Skripteditor verlassen?</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="313"/>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="393"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="320"/>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="400"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="328"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl</translation>
     </message>
 </context>
 <context>
@@ -5454,22 +5786,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="74"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="78"/>
         <source>Player that earns the given amount of funds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler welcher die angegebene Menge an Fonds besitzt.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="90"/>
         <source>Funds: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fonds: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="94"/>
         <source>The funds the given player will earn.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Fonds die ein gegebener Spieler einnimmt.</translation>
     </message>
 </context>
 <context>
@@ -5477,27 +5809,27 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="87"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="91"/>
         <source>Field X on which the animation will be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>Feld X auf dem eine Animation gezeigt wird.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="103"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="107"/>
         <source>Field Y on which the animation will be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>Feld Y auf dem eine Animation gezeigt wird.</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="119"/>
         <source>Offset X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Offset X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="124"/>
@@ -5507,7 +5839,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="136"/>
         <source>Offset Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Offset Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="141"/>
@@ -5537,7 +5869,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="187"/>
         <source>Scale X: </source>
-        <translation type="unfinished"></translation>
+        <translation>Skaliere auf X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="192"/>
@@ -5547,7 +5879,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="204"/>
         <source>Scale Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Skaliere auf Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="209"/>
@@ -5557,7 +5889,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="221"/>
         <source>Delay: </source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerung: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="226"/>
@@ -5577,12 +5909,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="250"/>
         <source>Select Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bild</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="261"/>
         <source>Frames: </source>
-        <translation type="unfinished"></translation>
+        <translation>Frames: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="266"/>
@@ -5600,7 +5932,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventcentermap.cpp" line="13"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventcentermap.cpp" line="19"/>
@@ -5610,7 +5942,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventcentermap.cpp" line="22"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
 </context>
 <context>
@@ -5618,32 +5950,32 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="11"/>
         <source>X Position of the Building</source>
-        <translation type="unfinished"></translation>
+        <translation>Position X des Gebäudes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="14"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation>X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="20"/>
         <source>Y Position of the Building</source>
-        <translation type="unfinished"></translation>
+        <translation>Position Y des Gebäudes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="23"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation>Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="29"/>
         <source>New Owner of the Building</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Besitzer des Gebäudes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildingowner.cpp" line="30"/>
         <source>Owner: </source>
-        <translation type="unfinished"></translation>
+        <translation>Besitzer: </translation>
     </message>
 </context>
 <context>
@@ -5651,7 +5983,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="92"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="96"/>
@@ -5661,7 +5993,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="108"/>
         <source>Unit ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten ID: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="124"/>
@@ -5671,7 +6003,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="135"/>
         <source>Remove: </source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="140"/>
@@ -5684,7 +6016,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="91"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="95"/>
@@ -5722,7 +6054,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="11"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="19"/>
@@ -5732,7 +6064,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeplayerteam.cpp" line="22"/>
         <source>Team: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Team: </translation>
     </message>
 </context>
 <context>
@@ -5745,7 +6077,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="14"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="20"/>
@@ -5755,7 +6087,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="23"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="29"/>
@@ -5770,22 +6102,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="41"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Normal</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="42"/>
         <source>Offensive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offensiv</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="43"/>
         <source>Defensive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Defensiv</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitai.cpp" line="44"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Halten</translation>
     </message>
 </context>
 <context>
@@ -5798,7 +6130,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="14"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="20"/>
@@ -5808,7 +6140,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="23"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="29"/>
@@ -5818,7 +6150,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventchangeunitowner.cpp" line="30"/>
         <source>Owner: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Besitzer: </translation>
     </message>
 </context>
 <context>
@@ -5849,7 +6181,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="58"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="62"/>
@@ -5860,9 +6192,13 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventGeneric</name>
     <message>
+        <source>Select Image</source>
+        <translation type="obsolete">Bild</translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/events/scripteventgeneric.cpp" line="170"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Auswahl</translation>
     </message>
 </context>
 <context>
@@ -5870,7 +6206,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="59"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="63"/>
@@ -5880,7 +6216,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="71"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="75"/>
@@ -5903,7 +6239,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="63"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="67"/>
@@ -5913,7 +6249,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="75"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="79"/>
@@ -5966,7 +6302,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="93"/>
         <source>Variable: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Variable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="97"/>
@@ -5986,7 +6322,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="126"/>
         <source>Value: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wert: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="130"/>
@@ -5996,7 +6332,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="142"/>
         <source>Campaign Variable: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kampagnenvariable: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="146"/>
@@ -6034,7 +6370,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventplaysound.cpp" line="34"/>
         <source>Delay: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verzögerung: </translation>
     </message>
 </context>
 <context>
@@ -6045,29 +6381,29 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
-        <source>Owner: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="29"/>
         <source>X Position of the Building</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Position X des Gebäudes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="32"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="38"/>
         <source>Y Position of the Building</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Position Y des Gebäudes</translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="41"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
+        <source>Owner: </source>
+        <translation type="unfinished">Besitzer: </translation>
     </message>
 </context>
 <context>
@@ -6075,7 +6411,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="116"/>
         <source>X: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="120"/>
@@ -6085,7 +6421,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="128"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="132"/>
@@ -6095,7 +6431,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="140"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spieler: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="144"/>
@@ -6105,7 +6441,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="156"/>
         <source>Unit: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Einheit: </translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="180"/>
@@ -6128,7 +6464,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="62"/>
         <source>Victory Info: </source>
-        <translation type="unfinished"></translation>
+        <translation>Sieg Info: </translation>
     </message>
 </context>
 <context>
@@ -6136,98 +6472,98 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="19"/>
         <source>Press Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Drücke Taste</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="49"/>
         <location filename="../objects/base/selectkey.cpp" line="178"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="53"/>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Leertaste</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="57"/>
         <source>F2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="61"/>
         <source>F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="65"/>
         <source>F4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="69"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="73"/>
         <source>F6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="77"/>
         <source>F7</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="81"/>
         <source>F8</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="85"/>
         <source>F9</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="89"/>
         <source>F10</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="93"/>
         <source>F11</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="97"/>
         <source>F12</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="101"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoch</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="105"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Runter</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="109"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="113"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="117"/>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Return</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="121"/>
@@ -6242,7 +6578,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="129"/>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="133"/>
@@ -6282,12 +6618,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="161"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keine</translation>
     </message>
     <message>
         <location filename="../objects/base/selectkey.cpp" line="182"/>
         <source>Key </source>
-        <translation type="unfinished"></translation>
+        <translation>Taste </translation>
     </message>
 </context>
 <context>
@@ -6360,7 +6696,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../coreengine/settings.cpp" line="1102"/>
         <location filename="../coreengine/settings.cpp" line="1109"/>
         <source>Error in the Ini File: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../coreengine/settings.cpp" line="621"/>
@@ -6430,7 +6766,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../coreengine/settings.cpp" line="1102"/>
         <location filename="../coreengine/settings.cpp" line="1109"/>
         <source>Setting:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6438,12 +6774,13 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
         <source>Teleport Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Teleportstrecke</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="55"/>
         <source>A mysterious tile that costs 0MP to move over.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Wo wird denn das verwendet?</translatorcomment>
+        <translation>Eine mysteriöse Fläche welche 0MP kostet um sich fortbewegen zu können.</translation>
     </message>
 </context>
 <context>
@@ -6586,7 +6923,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <location filename="../resources/scripts/general/Tagpower.js" line="184"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="199"/>
         <source>Tagpower</source>
-        <translation type="unfinished"></translation>
+        <translation>Doppelgabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/Tagpower.js" line="10"/>
@@ -6924,32 +7261,36 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="52"/>
         <source>Terrain Information </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="70"/>
         <source>Defense:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verteidigung:</translation>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="87"/>
         <source>Income:</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkommen:</translation>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="105"/>
         <source>Builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Baut</translation>
+    </message>
+    <message>
+        <source>Builds and Supplies</source>
+        <translation type="vanished">Produziert und Repariert</translation>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="118"/>
         <source>Supplies</source>
-        <translation type="unfinished"></translation>
+        <translation>Repariert</translation>
     </message>
     <message>
         <location filename="../wiki/terraininfo.cpp" line="138"/>
         <source>Movement Costs</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegungskosten</translation>
     </message>
 </context>
 <context>
@@ -6957,57 +7298,57 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="55"/>
         <source>Unit Information </source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten Information </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="89"/>
         <source>Unit Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheitentyp:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="108"/>
         <source>Firerange:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reichweite:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="124"/>
         <source>Movepoints: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegungspunkte: </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="139"/>
         <source>Vision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicht:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="154"/>
         <source>Fuel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Treibstoff:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="178"/>
         <source>Ammo 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 1:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="195"/>
         <source>Ammo 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Muni 2:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="213"/>
         <source>Loading Place:</source>
-        <translation type="unfinished"></translation>
+        <translation>Platz:</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="225"/>
         <source>Loadable Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Geladen</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="237"/>
         <source>Loaded Units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ladung</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="248"/>
@@ -7017,22 +7358,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="257"/>
         <source>Transporters</source>
-        <translation type="unfinished"></translation>
+        <translation>Transporter</translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="273"/>
         <source>Movement </source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegungsart </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="366"/>
         <source>Weapon 1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 1 </translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="377"/>
         <source>Weapon 2 </source>
-        <translation type="unfinished"></translation>
+        <translation>Waffe 2 </translation>
     </message>
 </context>
 <context>
@@ -7040,7 +7381,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resource_management/unitspritemanager.cpp" line="85"/>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Boden</translation>
     </message>
 </context>
 <context>
@@ -7048,72 +7389,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../menue/victorymenue.cpp" line="94"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="180"/>
         <location filename="../menue/victorymenue.cpp" line="467"/>
         <source>Funds</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonds</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="189"/>
         <location filename="../menue/victorymenue.cpp" line="472"/>
         <source>Income</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkommen</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="198"/>
         <location filename="../menue/victorymenue.cpp" line="477"/>
         <source>Buildings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebäude</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="207"/>
         <location filename="../menue/victorymenue.cpp" line="482"/>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheiten</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="216"/>
         <location filename="../menue/victorymenue.cpp" line="487"/>
         <source>Player Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielerstärke</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="227"/>
         <source>Ranking</source>
-        <translation type="unfinished"></translation>
+        <translation>Rang</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="258"/>
         <source>Player: </source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler: </translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="293"/>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ges</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="298"/>
         <source>Force</source>
-        <translation type="unfinished"></translation>
+        <translation>Stärke</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="303"/>
         <source>Tech.</source>
-        <translation type="unfinished"></translation>
+        <translation>Technik.</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="308"/>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>Total</translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="537"/>
         <source>Victory</source>
-        <translation type="unfinished"></translation>
+        <translation>Gewonnen</translation>
     </message>
 </context>
 <context>
@@ -7121,7 +7462,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/WALL.js" line="15"/>
         <source>Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>Mauer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/WALL.js" line="54"/>
@@ -7134,7 +7475,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/WASTELAND.js" line="14"/>
         <source>Wasteland</source>
-        <translation type="unfinished"></translation>
+        <translation>Ödland</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/WASTELAND.js" line="31"/>
@@ -7147,7 +7488,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="16"/>
         <source>Weak Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwache Mauer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="90"/>
@@ -7160,7 +7501,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/terrain/WELD.js" line="16"/>
         <source>Weld</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweißnaht</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/WELD.js" line="110"/>
@@ -7173,12 +7514,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../menue/wikimenu.cpp" line="44"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen</translation>
     </message>
     <message>
         <location filename="../menue/wikimenu.cpp" line="58"/>
         <source>Search: </source>
-        <translation type="unfinished"></translation>
+        <translation>Suche: </translation>
     </message>
     <message>
         <location filename="../menue/wikimenu.cpp" line="62"/>
@@ -7188,12 +7529,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../menue/wikimenu.cpp" line="66"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location filename="../menue/wikimenu.cpp" line="78"/>
         <source>Tags: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../menue/wikimenu.cpp" line="82"/>
@@ -7206,7 +7547,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../wiki/wikipage.cpp" line="37"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
@@ -7214,7 +7555,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="52"/>
         <source>Crystal Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Kristallpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_CRYSTAL_TANK.js" line="61"/>
@@ -7227,7 +7568,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_IRON_SHIELD_GENERATOR.js" line="47"/>
         <source>Iron Shield Gen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eisernerschild</translation>
     </message>
 </context>
 <context>
@@ -7235,7 +7576,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="38"/>
         <source>Kirov</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirov</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="90"/>
@@ -7256,7 +7597,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_NEOSPIDER_TANK.js" line="51"/>
         <source>Neo Spider Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Neo Spinnenpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_NEOSPIDER_TANK.js" line="59"/>
@@ -7269,7 +7610,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_REPAIR_TANK.js" line="47"/>
         <source>Repair Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Reperaturpanzer</translation>
     </message>
 </context>
 <context>
@@ -7859,7 +8200,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="3"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="3"/>
@@ -7869,7 +8210,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="4"/>
         <source>Superpower</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spezialgabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="4"/>
@@ -7879,7 +8220,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="5"/>
         <source>Tagpower</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Doppelgabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_powers.js" line="5"/>
@@ -8272,22 +8613,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
-        <source>Win the given amount of games.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
         <source>The best!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
-        <source>Loose the given amount of games.</source>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>Win the given amount of games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
         <source>Biggest Looser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Loose the given amount of games.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8296,7 +8637,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/general/action.js" line="17"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8304,12 +8645,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="8"/>
         <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert die Gabe deines ersten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="18"/>
         <source>Power of CO 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gabe von KO 1</translation>
     </message>
 </context>
 <context>
@@ -8317,12 +8658,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="8"/>
         <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert die Gabe deines zweiten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="18"/>
         <source>Power of CO 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Gabe von KO 2</translation>
     </message>
 </context>
 <context>
@@ -8330,7 +8671,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="8"/>
         <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert die Spezial Gabe deines ersten KO. Lies die KO-Spezial Gabe für mehr Information.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="18"/>
@@ -8343,7 +8684,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="8"/>
         <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert die Gabe deines ersten KO. Lies die KO-Gabe für mehr Information.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="18"/>
@@ -8356,7 +8697,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="8"/>
         <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert die Spezialgabe beider KO. Lies die KO-Spezial Gaben für mehr Information. Dies wird ebenfalls die Doppelgabensynergie hinzufügen.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="9"/>
@@ -8366,7 +8707,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="19"/>
         <source>Tagpower</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Doppelgabe</translation>
     </message>
 </context>
 <context>
@@ -8374,17 +8715,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="8"/>
         <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehligt einer Black Hole Fabrik eine Einheit am ersten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="9"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="19"/>
         <source>Black Hole Factory Door 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Black Hole Fabrik Tür 1</translation>
     </message>
 </context>
 <context>
@@ -8392,17 +8733,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="8"/>
         <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehligt einer Black Hole Fabrik eine Einheit am zweiten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="9"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="19"/>
         <source>Black Hole Factory Door 2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Black Hole Fabrik Tür 2</translation>
     </message>
 </context>
 <context>
@@ -8410,17 +8751,17 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="8"/>
         <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehligt einer Black Hole Fabrik eine Einheit am dritten Tor zu produzieren. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="9"/>
         <source>The unit is able to move immediatly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Einheit ist fähig direkt zu agieren.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="19"/>
         <source>Black Hole Factory Door 3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Black Hole Fabrik Tür 3</translation>
     </message>
 </context>
 <context>
@@ -8428,12 +8769,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="8"/>
         <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehlt einen TTP einen Hangar auf einer Ebene zu bauen welcher dazu verwendet werden kann Lufteinheiten mit Rationen zu versorgen. Der Hangar reduziert die Materialmenge des TTP um 1.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="18"/>
         <source>Build Airport</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flughafen bauen</translation>
     </message>
 </context>
 <context>
@@ -8446,7 +8787,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="18"/>
         <source>Build Harbour</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hafen bauen</translation>
     </message>
 </context>
 <context>
@@ -8454,7 +8795,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="8"/>
         <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehlt einen Flugzeugträger ein Bordflugzeug zu bauen welches in der nächsten Runde eingesetzt werden kann.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="18"/>
@@ -8467,7 +8808,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="8"/>
         <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehlt einen Minigeschützturm oder Schwarze Kanone eine einzelne Einheit anzugreifen um somit Schaden zu verursachen.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="18"/>
@@ -8485,7 +8826,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_capture.js" line="18"/>
         <source>Capture</source>
-        <translation type="unfinished"></translation>
+        <translation>Erobern</translation>
     </message>
 </context>
 <context>
@@ -8498,7 +8839,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="18"/>
         <source>CO 1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">KO 1</translation>
     </message>
 </context>
 <context>
@@ -8511,7 +8852,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="18"/>
         <source>CO 2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">KO 2</translation>
     </message>
 </context>
 <context>
@@ -8532,7 +8873,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="8"/>
         <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Befehlt einen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="18"/>
@@ -8545,12 +8886,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_explode.js" line="8"/>
         <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zerstört die momentane Einheit in einer großen Explosion. Die Explosion erteilt Schaden auf alle Einheiten die sich drum herum befinden.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_explode.js" line="18"/>
         <source>Explode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Explodieren</translation>
     </message>
 </context>
 <context>
@@ -8563,7 +8904,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_fire.js" line="18"/>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuer</translation>
     </message>
 </context>
 <context>
@@ -8576,7 +8917,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_flare.js" line="18"/>
         <source>Flare</source>
-        <translation type="unfinished"></translation>
+        <translation>Leuchtpanzer</translation>
     </message>
 </context>
 <context>
@@ -8597,7 +8938,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_join.js" line="8"/>
         <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kombiniert verletzte Einheiten des selben Einheitentyps mit der momentanen Einheit. Dies hat zur Folge das folgende Attribute mit der Einheit kombiniert werden: Munition, Rationen, TP und der höchste Rang. </translation>
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_join.js" line="9"/>
@@ -8607,7 +8948,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_join.js" line="19"/>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Einen</translation>
     </message>
 </context>
 <context>
@@ -8633,7 +8974,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_load.js" line="18"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Einladen</translation>
     </message>
 </context>
 <context>
@@ -8646,7 +8987,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_missile.js" line="18"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -8659,7 +9000,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_next_player.js" line="18"/>
         <source>Next Player</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nächster Spieler</translation>
     </message>
 </context>
 <context>
@@ -8695,7 +9036,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
         <source>Stealth</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tarnen</translation>
     </message>
 </context>
 <context>
@@ -8708,7 +9049,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportall_ration.js" line="18"/>
         <source>Ration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ration</translation>
     </message>
 </context>
 <context>
@@ -8721,7 +9062,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_freerepair.js" line="18"/>
         <source>Repair</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reparieren</translation>
     </message>
 </context>
 <context>
@@ -8734,7 +9075,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_iron_shield.js" line="18"/>
         <source>Iron Shield</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eiserner Schild</translation>
     </message>
 </context>
 <context>
@@ -8747,7 +9088,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_supportsingle_repair.js" line="18"/>
         <source>Repair</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reparieren</translation>
     </message>
 </context>
 <context>
@@ -8773,7 +9114,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_unload.js" line="18"/>
         <source>Unload</source>
-        <translation type="unfinished"></translation>
+        <translation>Entladen</translation>
     </message>
 </context>
 <context>
@@ -8786,7 +9127,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_unstealth.js" line="18"/>
         <source>Unstealth</source>
-        <translation type="unfinished"></translation>
+        <translation>Enttarnen</translation>
     </message>
 </context>
 <context>
@@ -8799,7 +9140,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/action_wait.js" line="18"/>
         <source>Wait</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten</translation>
     </message>
 </context>
 <context>
@@ -8807,7 +9148,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="39"/>
         <source>Aircraft Carrier</source>
-        <translation type="unfinished"></translation>
+        <translation>Flugzeuigträger</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="106"/>
@@ -8832,7 +9173,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="110"/>
         <source>Waterplanes</source>
-        <translation type="unfinished"></translation>
+        <translation>Wasserflugzeuge</translation>
     </message>
 </context>
 <context>
@@ -8840,12 +9181,28 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/building/airport.js" line="26"/>
         <source>Airport</source>
-        <translation type="unfinished"></translation>
+        <translation>Flughafen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/airport.js" line="52"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air&lt;/div&gt;&lt;r&gt; units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once captured can be used for </source>
+        <translation type="obsolete">Einmal eingeommen kann dies verwendet werden für </translation>
+    </message>
+    <message>
+        <source> of </source>
+        <translation type="obsolete"> von </translation>
+    </message>
+    <message>
+        <source>air</source>
+        <translation type="vanished">Luft</translation>
+    </message>
+    <message>
+        <source> units.</source>
+        <translation type="vanished"> Einheiten.</translation>
     </message>
 </context>
 <context>
@@ -8853,7 +9210,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/antitankcannon.js" line="50"/>
         <source>Anti Tank Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Panzerabwehrkanone</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/antitankcannon.js" line="55"/>
@@ -8866,12 +9223,16 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/apc.js" line="42"/>
         <source>APC</source>
-        <translation type="unfinished"></translation>
+        <translation>TTP</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/apc.js" line="74"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Carries X 1&lt;/div&gt;&lt;r&gt; infantry unit, &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt; supplies &lt;/div&gt;&lt;r&gt; units and &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;builds &lt;/div&gt;&lt;r&gt; Airports and Ports.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>builds </source>
+        <translation type="vanished">baut </translation>
     </message>
 </context>
 <context>
@@ -8879,7 +9240,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/artillery.js" line="48"/>
         <source>Artillery</source>
-        <translation type="unfinished"></translation>
+        <translation>Artillerie</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/artillery.js" line="53"/>
@@ -8892,7 +9253,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/artillerycraft.js" line="48"/>
         <source>Artillerycraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Artilleriecraft</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/artillerycraft.js" line="53"/>
@@ -8905,7 +9266,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/general/basegamescript.js" line="11"/>
         <source>No additional Victory Conditions are active.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine zusätzlichen Siegbedingungen sind aktiv.</translation>
     </message>
 </context>
 <context>
@@ -8913,7 +9274,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/battleship.js" line="37"/>
         <source>Battleship</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlachtschiff</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/battleship.js" line="95"/>
@@ -8926,7 +9287,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="35"/>
         <source>Black Boat</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarzes Boot</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="104"/>
@@ -8939,7 +9300,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/black_bomb.js" line="38"/>
         <source>Black Bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarze Bombe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/black_bomb.js" line="107"/>
@@ -8967,7 +9328,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/blackhole.js" line="20"/>
         <source>Black Hole</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8985,7 +9346,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/bluemoon.js" line="19"/>
         <source>Blue Moon</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9003,7 +9364,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/wiki/boltguard.js" line="19"/>
         <source>Bolt Guard</source>
-        <translation type="unfinished"></translation>
+        <translation>Bolt Guard</translation>
     </message>
 </context>
 <context>
@@ -9011,7 +9372,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/bomber.js" line="38"/>
         <source>Bomber</source>
-        <translation type="unfinished"></translation>
+        <translation>Bomber</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/bomber.js" line="101"/>
@@ -9024,7 +9385,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/general/building.js" line="169"/>
         <source>REPAIR</source>
-        <translation type="unfinished"></translation>
+        <translation>REPARIEREN</translation>
     </message>
 </context>
 <context>
@@ -9032,21 +9393,20 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/units/cannonboat.js" line="37"/>
         <source>Cannonboat</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanonenboot</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/cannonboat.js" line="101"/>
         <source>&lt;r&gt;Naval Unit. Attacks naval units. Can place &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Watermines&lt;/div&gt;&lt;r&gt; on sea tiles.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Watermines</source>
+        <translation type="vanished">Wasserminen</translation>
+    </message>
 </context>
 <context>
     <name>co_adam</name>
-    <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="304"/>
-        <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="308"/>
         <source>Vectors</source>
@@ -9060,6 +9420,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="316"/>
         <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="304"/>
+        <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9303,7 +9668,7 @@ Units gain %0% firepower and defence.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="234"/>
         <source>Adder</source>
-        <translation type="unfinished"></translation>
+        <translation>Adder</translation>
     </message>
 </context>
 <context>
@@ -9690,19 +10055,6 @@ Reaf costs are always 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="224"/>
-        <source>
-
-CO Zone Effect: 
-Hovercrafts gain %0% firepower boost.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
-        <source>Hovercraft units are strengthened, they gain one extra movement and get cheaper.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="234"/>
         <source>Fluid Dynamics</source>
         <translation type="unfinished"></translation>
@@ -9715,6 +10067,19 @@ Hovercrafts gain %0% firepower boost.</source>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="242"/>
         <source>Photon Discharge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
+        <source>Hovercraft units are strengthened, they gain one extra movement and get cheaper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="224"/>
+        <source>
+
+CO Zone Effect: 
+Hovercrafts gain %0% firepower boost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9911,16 +10276,11 @@ Units gain %0% firepower and defence.</source>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="255"/>
         <source>Andy</source>
-        <translation type="unfinished"></translation>
+        <translation>Andy</translation>
     </message>
 </context>
 <context>
     <name>co_beast</name>
-    <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="175"/>
-        <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="179"/>
         <source>Looting, Robbing and Killing</source>
@@ -9944,14 +10304,6 @@ No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="192"/>
-        <source>
-
-CO Zone Effect: 
-Units gain %0% firepower when attacking. His Units take 1 Damage after attacking.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="198"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
@@ -9959,6 +10311,19 @@ Units gain %0% firepower when attacking. His Units take 1 Damage after attacking
     <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="202"/>
         <source>Dopping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="175"/>
+        <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="192"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower when attacking. His Units take 1 Damage after attacking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10277,14 +10642,6 @@ Units loose firepower by %0% and defense by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
-        <source>
-
-CO Zone Effect: 
-Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
         <source>All his units gain five Hp and get a offense and defense buff.</source>
         <translation type="unfinished"></translation>
@@ -10315,19 +10672,32 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
+        <source>Interesting. Very interesting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
+        <source>Argh I&apos;m useless as well? Impossible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="257"/>
         <source>You and your ethnics make you weak. Watch the power of science...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="258"/>
         <location filename="../resources/scripts/cos/co_caulder.js" line="264"/>
         <source>I am simply curious.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
-        <source>Interesting. Very interesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10338,11 +10708,6 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="268"/>
         <source>Only a failed experiment nothing to worry about!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
-        <source>Argh I&apos;m useless as well? Impossible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10361,12 +10726,12 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="146"/>
         <source>Olaf and Grit</source>
-        <translation type="unfinished"></translation>
+        <translation>Olaf und Kid</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="150"/>
         <source>Black Hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Black Hole</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="154"/>
@@ -10466,7 +10831,7 @@ Units have only %2% weaker firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="201"/>
         <source>Colin</source>
-        <translation type="unfinished"></translation>
+        <translation>Colin</translation>
     </message>
 </context>
 <context>
@@ -10857,7 +11222,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_ac.js" line="92"/>
         <source>Amber Corona</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Amber Corona</translation>
     </message>
 </context>
 <context>
@@ -10896,7 +11261,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_bd.js" line="93"/>
         <source>Brown Desert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Brown Desert</translation>
     </message>
 </context>
 <context>
@@ -10945,7 +11310,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_bg.js" line="95"/>
         <source>Bolt Guard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bolt Guard</translation>
     </message>
 </context>
 <context>
@@ -10999,7 +11364,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_bh.js" line="96"/>
         <source>Black Hole</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Black Hole</translation>
     </message>
 </context>
 <context>
@@ -11048,7 +11413,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_bm.js" line="95"/>
         <source>Blue Moon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blue Moon</translation>
     </message>
 </context>
 <context>
@@ -11156,7 +11521,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_ge.js" line="105"/>
         <source>Green Earth</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Green Earth</translation>
     </message>
 </context>
 <context>
@@ -11303,7 +11668,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_os.js" line="94"/>
         <source>Orange Star</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Orange Star</translation>
     </message>
 </context>
 <context>
@@ -11430,7 +11795,7 @@ Air units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_empty_yc.js" line="94"/>
         <source>Yellow Comet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yellow Comet</translation>
     </message>
 </context>
 <context>
@@ -11486,23 +11851,23 @@ Units have increased firepower and luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="253"/>
-        <source>Shocker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="257"/>
         <source>Error: Overcharged. Initiate safety mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
-        <source>Power surge detected.</source>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="259"/>
+        <source>Overload! Release energy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="259"/>
-        <source>Overload! Release energy!</source>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="253"/>
+        <source>Shocker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
+        <source>Power surge detected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11661,16 +12026,11 @@ Units have even more luck and misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_flak.js" line="233"/>
         <source>Flak</source>
-        <translation type="unfinished"></translation>
+        <translation>Helmut</translation>
     </message>
 </context>
 <context>
     <name>co_forsythe</name>
-    <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="150"/>
-        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="154"/>
         <source>Honor</source>
@@ -11679,11 +12039,6 @@ Units have even more luck and misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="158"/>
         <source>Killers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="162"/>
-        <source>He has a large CO-Zone which boosts both offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11702,13 +12057,23 @@ Units have 20% offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="171"/>
-        <source>Increases offensive and defensive bonus.</source>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="175"/>
+        <source>Power of Honor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="175"/>
-        <source>Power of Honor</source>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="150"/>
+        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="162"/>
+        <source>He has a large CO-Zone which boosts both offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="171"/>
+        <source>Increases offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11995,7 +12360,7 @@ Units have more offensive and defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="231"/>
         <source>Power</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gabe</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="235"/>
@@ -12324,7 +12689,7 @@ Indirect units  have an offensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="270"/>
         <source>Grit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kid</translation>
     </message>
 </context>
 <context>
@@ -12442,7 +12807,7 @@ Units have more firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hachi.js" line="191"/>
         <source>Hachi</source>
-        <translation type="unfinished"></translation>
+        <translation>Hachi</translation>
     </message>
 </context>
 <context>
@@ -12581,11 +12946,6 @@ Units have more firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="209"/>
-        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="213"/>
         <source>
 Global Effect: 
@@ -12618,6 +12978,11 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="230"/>
         <source>Great Counterstrike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="209"/>
+        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13264,11 +13629,6 @@ Units are way stronger when engaging stronger units</source>
 <context>
     <name>co_jugger</name>
     <message>
-        <location filename="../resources/scripts/cos/co_jugger.js" line="175"/>
-        <source>A robot-like commander in the Bolt Guard army. No one knows his true identity!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="179"/>
         <source>Energy</source>
         <translation type="unfinished"></translation>
@@ -13276,6 +13636,11 @@ Units are way stronger when engaging stronger units</source>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="183"/>
         <source>Static electricity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="175"/>
+        <source>A robot-like commander in the Bolt Guard army. No one knows his true identity!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13653,13 +14018,13 @@ Units on buildings have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
-        <source>Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.</source>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="262"/>
+        <source>Urban Blight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="262"/>
-        <source>Urban Blight</source>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
+        <source>Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14422,11 +14787,6 @@ Unit Ranks are way more effective.</source>
 <context>
     <name>co_melanthe</name>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
-        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="249"/>
         <source>Botany</source>
         <translation type="unfinished"></translation>
@@ -14442,10 +14802,20 @@ Unit Ranks are way more effective.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="270"/>
+        <source>Synthetic Seedlings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="261"/>
         <source>
 Global Effect: 
 No bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
+        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14459,11 +14829,6 @@ Units gain an additional firepower on natural terrain and increased terrain defe
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="266"/>
         <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="270"/>
-        <source>Synthetic Seedlings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14547,7 +14912,7 @@ Units gain an additional firepower on natural terrain and increased terrain defe
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="200"/>
         <source>Victory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sieg</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="204"/>
@@ -14904,11 +15269,6 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
 <context>
     <name>co_napoleon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="225"/>
-        <source>The current second commander of the Metal Army. Believes Metal Army&apos;s ingenuity gives it a right to control the world.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="229"/>
         <source>Sudoku</source>
         <translation type="unfinished"></translation>
@@ -14919,11 +15279,6 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="237"/>
-        <source>Units have high defensive capabilities.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="241"/>
         <source>
 Special Unit:
@@ -14931,6 +15286,16 @@ Iron Shield Generator
 
 Global Effect: 
 No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="225"/>
+        <source>The current second commander of the Metal Army. Believes Metal Army&apos;s ingenuity gives it a right to control the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="237"/>
+        <source>Units have high defensive capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15716,7 +16081,7 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="16"/>
         <source>A random CO will appear.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein zufälliger KO wird erscheinen.</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="20"/>
@@ -15757,7 +16122,7 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufall</translation>
     </message>
 </context>
 <context>
@@ -15770,7 +16135,7 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="242"/>
         <source>Yellow Comet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yellow Comet</translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="246"/>
@@ -16026,14 +16391,6 @@ Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="244"/>
-        <source>
-
-CO Zone Effect: 
-Units gain defense and have reduced firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="248"/>
         <source>Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.</source>
         <translation type="unfinished"></translation>
@@ -16059,33 +16416,13 @@ Units gain defense and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
-        <source>...Sturm is coming...you have no chance...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="266"/>
         <source>Order analyzed! Destroy enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="267"/>
-        <source>Nobody can kill a Robot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="268"/>
-        <source>This is a war of a new time!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="269"/>
         <source>Humans beware the power of machines coming to your country.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
-        <source>..........</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16109,6 +16446,34 @@ Units gain defense and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="244"/>
+        <source>
+
+CO Zone Effect: 
+Units gain defense and have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
+        <source>...Sturm is coming...you have no chance...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="267"/>
+        <source>Nobody can kill a Robot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="268"/>
+        <source>This is a war of a new time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
+        <source>..........</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="284"/>
         <source>Robo-Sturm</source>
         <translation type="unfinished"></translation>
@@ -16116,11 +16481,6 @@ Units gain defense and have reduced firepower.</source>
 </context>
 <context>
     <name>co_sabaki</name>
-    <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="183"/>
-        <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="187"/>
         <source>Spare parts</source>
@@ -16162,6 +16522,11 @@ Units have lifesteal.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="208"/>
         <source>Speed Salvage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="183"/>
+        <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17177,11 +17542,6 @@ Units have increased firepower and defense.</source>
 <context>
     <name>co_tabitha</name>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="146"/>
-        <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="150"/>
         <source>Breakfast in bed</source>
         <translation type="unfinished"></translation>
@@ -17189,6 +17549,11 @@ Units have increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="154"/>
         <source>Stupid weak people</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="146"/>
+        <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17320,13 +17685,13 @@ Air Units have 50% increased firepower and 30% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="224"/>
-        <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="228"/>
+        <source>Sonic Boom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="228"/>
-        <source>Sonic Boom</source>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="224"/>
+        <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18071,6 +18436,13 @@ Units have increased firepower.</source>
 <context>
     <name>co_yukio</name>
     <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="236"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
         <translation type="unfinished"></translation>
@@ -18088,21 +18460,6 @@ Units have increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="248"/>
         <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
-        <source>
-Global Effect: 
-None.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
-        <source>
-
-CO Zone Effect: 
-Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18166,11 +18523,6 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
-        <source>Give me all your money and your lifes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="290"/>
         <source>Even with this loss I made profit...</source>
         <translation type="unfinished"></translation>
@@ -18178,6 +18530,19 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="291"/>
         <source>I lost but I got your money to build a new army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
+        <source>Give me all your money and your lifes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18189,11 +18554,6 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
 <context>
     <name>co_zandra</name>
     <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="209"/>
-        <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="213"/>
         <source>Coconuts</source>
         <translation type="unfinished"></translation>
@@ -18201,6 +18561,11 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="217"/>
         <source>Seafood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="209"/>
+        <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18309,7 +18674,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/cruiser.js" line="37"/>
         <source>Cruiser</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreuzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/cruiser.js" line="104"/>
@@ -18342,7 +18707,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/darkmatter.js" line="21"/>
         <source>Dark Matter</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18350,7 +18715,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/destroyer.js" line="39"/>
         <source>Destroyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Zerstörer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/destroyer.js" line="97"/>
@@ -18363,7 +18728,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/duster.js" line="34"/>
         <source>Duster</source>
-        <translation type="unfinished"></translation>
+        <translation>Flieger</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/duster.js" line="98"/>
@@ -18376,12 +18741,32 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/factory.js" line="20"/>
         <source>Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Fabrik</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/factory.js" line="54"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once captured can be used for </source>
+        <translation type="vanished">Einmal eingeommen kann dies verwendet werden für </translation>
+    </message>
+    <message>
+        <source>production and resupplying </source>
+        <translation type="vanished">produziert und versorgt </translation>
+    </message>
+    <message>
+        <source>of </source>
+        <translation type="vanished">von </translation>
+    </message>
+    <message>
+        <source>ground </source>
+        <translation type="vanished">Boden </translation>
+    </message>
+    <message>
+        <source>units.</source>
+        <translation type="vanished">Einheiten.</translation>
     </message>
 </context>
 <context>
@@ -18389,7 +18774,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/fighter.js" line="38"/>
         <source>Fighter</source>
-        <translation type="unfinished"></translation>
+        <translation>Jäger</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/fighter.js" line="98"/>
@@ -18402,7 +18787,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/flak.js" line="47"/>
         <source>Anti Air</source>
-        <translation type="unfinished"></translation>
+        <translation>Flak</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/flak.js" line="56"/>
@@ -18415,7 +18800,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/flare.js" line="47"/>
         <source>Flare</source>
-        <translation type="unfinished"></translation>
+        <translation>Leuchtpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/flare.js" line="61"/>
@@ -18438,7 +18823,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/greenearth.js" line="19"/>
         <source>Green Earth</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18446,12 +18831,20 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/harbour.js" line="25"/>
         <source>Harbour</source>
-        <translation type="unfinished"></translation>
+        <translation>Hafen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/harbour.js" line="51"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once captured can be used for </source>
+        <translation type="obsolete">Einmal eingeommen kann dies verwendet werden für </translation>
+    </message>
+    <message>
+        <source>production and resupplying </source>
+        <translation type="obsolete">produziert und versorgt </translation>
     </message>
 </context>
 <context>
@@ -18459,7 +18852,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/heavy_hovercraft.js" line="47"/>
         <source>Heavy Hovercraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Heavy Hovercraft</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/heavy_hovercraft.js" line="56"/>
@@ -18472,7 +18865,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/heavy_tank.js" line="47"/>
         <source>Heavy Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Kampfpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/heavy_tank.js" line="56"/>
@@ -18485,7 +18878,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/hoellium.js" line="43"/>
         <source>Oozium</source>
-        <translation type="unfinished"></translation>
+        <translation>Höllium</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/hoellium.js" line="58"/>
@@ -18498,7 +18891,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/hovercraft.js" line="47"/>
         <source>Hovercraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Hovercraft</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/hovercraft.js" line="55"/>
@@ -18511,7 +18904,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/hoverflak.js" line="47"/>
         <source>Hover Anti Air</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoverflak</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/hoverflak.js" line="56"/>
@@ -18524,12 +18917,24 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/hq.js" line="26"/>
         <source>HQ</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/hq.js" line="89"/>
         <source>&lt;div c=&apos;#00ff00&apos;&gt;Battle ends &lt;/div&gt;&lt;r&gt;when an army&apos;s last HQ is captured. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Battle ends </source>
+        <translation type="vanished">Kampf endet </translation>
+    </message>
+    <message>
+        <source>Ground </source>
+        <translation type="vanished">Boden</translation>
+    </message>
+    <message>
+        <source>units can </source>
+        <translation type="vanished">Einheiten können </translation>
     </message>
 </context>
 <context>
@@ -18537,12 +18942,28 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/infantry.js" line="79"/>
         <source>Infantry</source>
-        <translation type="unfinished"></translation>
+        <translation>Infantrie</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/infantry.js" line="88"/>
         <source>&lt;r&gt;Cheapest unit. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capture </source>
+        <translation type="obsolete">einnehmen </translation>
+    </message>
+    <message>
+        <source> bases. </source>
+        <translation type="obsolete"> . </translation>
+    </message>
+    <message>
+        <source>Vision +3 </source>
+        <translation type="obsolete">Sicht +3 </translation>
+    </message>
+    <message>
+        <source> when on mountains.</source>
+        <translation type="obsolete">wenn auf Bergen.</translation>
     </message>
 </context>
 <context>
@@ -18550,7 +18971,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="38"/>
         <source>Battle Copter</source>
-        <translation type="unfinished"></translation>
+        <translation>K-Heli</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="100"/>
@@ -18563,12 +18984,32 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/labor.js" line="25"/>
         <source>Labor</source>
-        <translation type="unfinished"></translation>
+        <translation>Labor</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/labor.js" line="40"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production&lt;/div&gt;&lt;r&gt; of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;oozium&lt;/div&gt;&lt;r&gt;units.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once captured can be used for </source>
+        <translation type="obsolete">Einmal eingeommen kann dies verwendet werden für </translation>
+    </message>
+    <message>
+        <source>production</source>
+        <translation type="vanished">produziert</translation>
+    </message>
+    <message>
+        <source> of </source>
+        <translation type="obsolete"> von </translation>
+    </message>
+    <message>
+        <source>oozium</source>
+        <translation type="vanished">Höllium</translation>
+    </message>
+    <message>
+        <source>units.</source>
+        <translation type="vanished">Einheiten.</translation>
     </message>
 </context>
 <context>
@@ -18576,7 +19017,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/lander.js" line="35"/>
         <source>Lander</source>
-        <translation type="unfinished"></translation>
+        <translation>Landeboot</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/lander.js" line="99"/>
@@ -18589,7 +19030,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/light_tank.js" line="47"/>
         <source>Light Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Jagdpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/light_tank.js" line="55"/>
@@ -18602,12 +19043,28 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/mech.js" line="80"/>
         <source>Mech</source>
-        <translation type="unfinished"></translation>
+        <translation>Mech</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/mech.js" line="89"/>
         <source>&lt;r&gt;Attack power high. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capture </source>
+        <translation type="obsolete">einnehmen </translation>
+    </message>
+    <message>
+        <source> bases. </source>
+        <translation type="obsolete"> . </translation>
+    </message>
+    <message>
+        <source>Vision +3 </source>
+        <translation type="obsolete">Sicht +3 </translation>
+    </message>
+    <message>
+        <source> when on mountains.</source>
+        <translation type="obsolete">wenn auf Bergen.</translation>
     </message>
 </context>
 <context>
@@ -18615,7 +19072,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/megatank.js" line="47"/>
         <source>Megatank</source>
-        <translation type="unfinished"></translation>
+        <translation>Megapanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/megatank.js" line="55"/>
@@ -18648,7 +19105,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/metallarmy.js" line="21"/>
         <source>Metall Army</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18656,12 +19113,12 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/mine.js" line="24"/>
         <source>Mine</source>
-        <translation type="unfinished"></translation>
+        <translation>Mine</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/mine.js" line="29"/>
         <source>Ore mine. Once captured produces a lot of funds, but can&apos;t repair units.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzmiene. Einmal eingenommen produziert diese eine Menge Fonds, kann jedoch keine Einheiten reparieren.</translation>
     </message>
 </context>
 <context>
@@ -18669,7 +19126,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/missile.js" line="47"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Missile</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/missile.js" line="51"/>
@@ -18682,12 +19139,16 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/motorbike.js" line="42"/>
         <source>Motorbike</source>
-        <translation type="unfinished"></translation>
+        <translation>Motorrad</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/motorbike.js" line="62"/>
         <source>&lt;r&gt;Infantry unit. High mobility. Able to &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capture </source>
+        <translation type="obsolete">einnehmen </translation>
     </message>
 </context>
 <context>
@@ -18695,7 +19156,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_air.js" line="5"/>
         <source>Air</source>
-        <translation type="unfinished"></translation>
+        <translation>Luft</translation>
     </message>
 </context>
 <context>
@@ -18703,7 +19164,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_boat.js" line="5"/>
         <source>Boat</source>
-        <translation type="unfinished"></translation>
+        <translation>Boot</translation>
     </message>
 </context>
 <context>
@@ -18711,7 +19172,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_crawler.js" line="5"/>
         <source>Crawler</source>
-        <translation type="unfinished"></translation>
+        <translation>Krabbler</translation>
     </message>
 </context>
 <context>
@@ -18719,7 +19180,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_feet.js" line="5"/>
         <source>Feet</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuß</translation>
     </message>
 </context>
 <context>
@@ -18727,7 +19188,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_hoellium.js" line="5"/>
         <source>Oozium</source>
-        <translation type="unfinished"></translation>
+        <translation>Höllium</translation>
     </message>
 </context>
 <context>
@@ -18735,7 +19196,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_hovercraft.js" line="5"/>
         <source>Hovercraft</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18743,7 +19204,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_mech.js" line="5"/>
         <source>Mech</source>
-        <translation type="unfinished"></translation>
+        <translation>Mech</translation>
     </message>
 </context>
 <context>
@@ -18751,7 +19212,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_piperunner.js" line="5"/>
         <source>Piperunner</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18759,7 +19220,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_ship.js" line="5"/>
         <source>Ship</source>
-        <translation type="unfinished"></translation>
+        <translation>Schiff</translation>
     </message>
 </context>
 <context>
@@ -18767,7 +19228,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_tank.js" line="5"/>
         <source>Tank</source>
-        <translation type="unfinished"></translation>
+        <translation>Ketten</translation>
     </message>
 </context>
 <context>
@@ -18775,7 +19236,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_tire_a.js" line="5"/>
         <source>Tire A</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad A</translation>
     </message>
 </context>
 <context>
@@ -18783,7 +19244,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/movementtables/move_tire_b.js" line="5"/>
         <source>Tire B</source>
-        <translation type="unfinished"></translation>
+        <translation>Rad B</translation>
     </message>
 </context>
 <context>
@@ -18791,7 +19252,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/general/movementtable.js" line="6"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18799,7 +19260,8 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/neotank.js" line="47"/>
         <source>Neotank</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Titani</translatorcomment>
+        <translation>Titanpanzer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/neotank.js" line="56"/>
@@ -18812,7 +19274,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/oilrig.js" line="36"/>
         <source>Oil Rig</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölplatform</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/oilrig.js" line="41"/>
@@ -18835,7 +19297,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/orangestar.js" line="19"/>
         <source>Orange Star</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -18843,7 +19305,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/piperunner.js" line="47"/>
         <source>Piperunner</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/piperunner.js" line="56"/>
@@ -18856,12 +19318,24 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/pipestation.js" line="34"/>
         <source>Pipestation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pipestation</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/pipestation.js" line="38"/>
         <source>&lt;r&gt;Once captured can be used for &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;production and resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;pipe &lt;/div&gt;&lt;r&gt;units. Produces also more funds.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once captured can be used for </source>
+        <translation type="obsolete">Einmal eingeommen kann dies verwendet werden für </translation>
+    </message>
+    <message>
+        <source>production and resupplying </source>
+        <translation type="obsolete">produziert und versorgt </translation>
+    </message>
+    <message>
+        <source>of </source>
+        <translation type="obsolete">von </translation>
     </message>
 </context>
 <context>
@@ -18869,7 +19343,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/terrain/plains.js" line="14"/>
         <source>Plains</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ebene</translation>
     </message>
     <message>
         <location filename="../resources/scripts/terrain/plains.js" line="76"/>
@@ -18882,7 +19356,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/radar.js" line="30"/>
         <source>Radar</source>
-        <translation type="unfinished"></translation>
+        <translation>Radar</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/radar.js" line="35"/>
@@ -18895,7 +19369,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/recon.js" line="47"/>
         <source>Recon</source>
-        <translation type="unfinished"></translation>
+        <translation>Späher</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/recon.js" line="56"/>
@@ -18908,7 +19382,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/rocketthrower.js" line="37"/>
         <source>Rocketthrower</source>
-        <translation type="unfinished"></translation>
+        <translation>Racketenwerfer</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/rocketthrower.js" line="56"/>
@@ -18921,7 +19395,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/silo.js" line="24"/>
         <source>Silo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/silo.js" line="29"/>
@@ -18934,7 +19408,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/silo_rocket.js" line="24"/>
         <source>Silo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/silo_rocket.js" line="29"/>
@@ -18947,12 +19421,32 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/sniper.js" line="80"/>
         <source>Sniper</source>
-        <translation type="unfinished"></translation>
+        <translation>Scharfschütze</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/sniper.js" line="85"/>
         <source>&lt;r&gt;Indirect infantry unit exceptionly strong against other infantry units. Can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;capture &lt;/div&gt;&lt;r&gt; bases. &lt;/&gt;&lt;div c=&apos;#00ff00&apos;&gt;Vision +3 &lt;/div&gt;&lt;r&gt; when on mountains.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect infantry unit exceptionly strong against other infantry units. Can </source>
+        <translation type="vanished">Indirekte Infanterieeinheit welche stark gegen andere Infanteristen ist. Kann Basen </translation>
+    </message>
+    <message>
+        <source>capture </source>
+        <translation type="vanished">einnehmen </translation>
+    </message>
+    <message>
+        <source> bases. </source>
+        <translation type="vanished"> . </translation>
+    </message>
+    <message>
+        <source>Vision +3 </source>
+        <translation type="vanished">Sicht +3 </translation>
+    </message>
+    <message>
+        <source> when on mountains.</source>
+        <translation type="vanished">wenn auf Bergen.</translation>
     </message>
 </context>
 <context>
@@ -18960,7 +19454,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/stealthbomber.js" line="38"/>
         <source>Stealthbomber</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarnkappenbomber</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/stealthbomber.js" line="110"/>
@@ -18973,7 +19467,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/submarine.js" line="37"/>
         <source>Submarine</source>
-        <translation type="unfinished"></translation>
+        <translation>U-Boot</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/submarine.js" line="104"/>
@@ -18986,7 +19480,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/t_heli.js" line="38"/>
         <source>Transport Copter</source>
-        <translation type="unfinished"></translation>
+        <translation>T-Heli</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/t_heli.js" line="105"/>
@@ -18999,12 +19493,16 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/temporary_airport.js" line="26"/>
         <source>Temporary Airport</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporärer Flughafen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/temporary_airport.js" line="59"/>
         <source>&lt;r&gt;Airport made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;air &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>of </source>
+        <translation type="obsolete">von </translation>
     </message>
 </context>
 <context>
@@ -19012,12 +19510,16 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/temporary_harbour.js" line="25"/>
         <source>Temporary Harbour</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporärer Hafen</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/temporary_harbour.js" line="57"/>
         <source>&lt;r&gt;Harbour made by APC. &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;Resupplying &lt;/div&gt;&lt;r&gt;of &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;naval &lt;/div&gt;&lt;r&gt;units is possible.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>of </source>
+        <translation type="obsolete">von </translation>
     </message>
 </context>
 <context>
@@ -19025,27 +19527,27 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="22"/>
         <source>Sea</source>
-        <translation type="unfinished"></translation>
+        <translation>See</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="23"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="24"/>
         <source>Desert</source>
-        <translation type="unfinished"></translation>
+        <translation>Wüste</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="25"/>
         <source>Snow</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnee</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/terrain.js" line="33"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
@@ -19053,7 +19555,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/tower.js" line="35"/>
         <source>Tower</source>
-        <translation type="unfinished"></translation>
+        <translation>Turm</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/tower.js" line="40"/>
@@ -19066,12 +19568,20 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/town.js" line="29"/>
         <source>Town</source>
-        <translation type="unfinished"></translation>
+        <translation>Stadt</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/town.js" line="34"/>
         <source>&lt;r&gt;Populated city. Once captured &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;ground &lt;/div&gt;&lt;r&gt;units can &lt;/r&gt;&lt;div c=&apos;#00ff00&apos;&gt;resupply&lt;/div&gt;&lt;r&gt;.&lt;/r&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ground </source>
+        <translation type="obsolete">Boden </translation>
+    </message>
+    <message>
+        <source>units can </source>
+        <translation type="obsolete">Einheiten können </translation>
     </message>
 </context>
 <context>
@@ -19079,7 +19589,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="38"/>
         <source>Transportplane</source>
-        <translation type="unfinished"></translation>
+        <translation>Transportflugzeug</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="109"/>
@@ -19092,27 +19602,27 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/general/unit.js" line="231"/>
         <source>Air</source>
-        <translation type="unfinished"></translation>
+        <translation>Luft</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unit.js" line="233"/>
         <source>Naval</source>
-        <translation type="unfinished"></translation>
+        <translation>See</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unit.js" line="235"/>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Boden</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unit.js" line="237"/>
         <source>Infantry</source>
-        <translation type="unfinished"></translation>
+        <translation>Infanterie</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unit.js" line="239"/>
         <source>Hovercraft</source>
-        <translation type="unfinished"></translation>
+        <translation>Hovercraft</translation>
     </message>
 </context>
 <context>
@@ -19120,32 +19630,32 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
         <source>Soldier</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldat</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
         <source>Experienced</source>
-        <translation type="unfinished"></translation>
+        <translation>Erfahren</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
         <source>Veteran</source>
-        <translation type="unfinished"></translation>
+        <translation>Veteran</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
         <source>Elite</source>
-        <translation type="unfinished"></translation>
+        <translation>Elite</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="55"/>
         <source>CO 1</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 1</translation>
     </message>
     <message>
         <location filename="../resources/scripts/general/unitrankingsystem.js" line="59"/>
         <source>CO 2</source>
-        <translation type="unfinished"></translation>
+        <translation>KO 2</translation>
     </message>
 </context>
 <context>
@@ -19181,7 +19691,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="23"/>
         <source>Team Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Teamzähler</translation>
     </message>
 </context>
 <context>
@@ -19194,7 +19704,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="9"/>
         <source>Co Units lost</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlorene KO Einheiten</translation>
     </message>
 </context>
 <context>
@@ -19217,7 +19727,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="22"/>
         <source>Team Counter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Teamzähler</translation>
     </message>
 </context>
 <context>
@@ -19230,7 +19740,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="9"/>
         <source>No HQ&apos;s</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine HQ&apos;s</translation>
     </message>
 </context>
 <context>
@@ -19243,7 +19753,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="9"/>
         <source>No Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Einheiten</translation>
     </message>
 </context>
 <context>
@@ -19261,12 +19771,12 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="18"/>
         <source>Turn Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rundenlimit</translation>
     </message>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="22"/>
         <source>Winner Team</source>
-        <translation type="unfinished"></translation>
+        <translation>Siegerteam</translation>
     </message>
 </context>
 <context>
@@ -19274,7 +19784,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/watermine.js" line="41"/>
         <source>Watermine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wassermine</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/watermine.js" line="148"/>
@@ -19287,7 +19797,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="38"/>
         <source>Waterplane</source>
-        <translation type="unfinished"></translation>
+        <translation>Wasserflugzeug</translation>
     </message>
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="100"/>
@@ -19300,7 +19810,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_a_air_gun.js" line="15"/>
         <source>Anti Air Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Flak</translation>
     </message>
 </context>
 <context>
@@ -19308,7 +19818,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_a_tank_cannon.js" line="5"/>
         <source>Anti Tank Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Panzerabwehrkanone</translation>
     </message>
 </context>
 <context>
@@ -19316,7 +19826,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_air_to_air_missile.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19324,7 +19834,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_air_to_ground_missile.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19332,7 +19842,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_airplane_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19340,7 +19850,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_air_missile.js" line="5"/>
         <source>Anti Air Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>AA-Rakete</translation>
     </message>
 </context>
 <context>
@@ -19348,7 +19858,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_ship_cannon.js" line="5"/>
         <source>Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19356,7 +19866,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_ship_cruiser_missile.js" line="5"/>
         <source>Ship Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19364,7 +19874,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_ship_missile.js" line="5"/>
         <source>Ship Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19372,7 +19882,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_battleship_cannon.js" line="5"/>
         <source>Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19380,7 +19890,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_bazooka.js" line="5"/>
         <source>Bazooka</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazooka</translation>
     </message>
 </context>
 <context>
@@ -19388,7 +19898,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_bomb.js" line="5"/>
         <source>Bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>Bombe</translation>
     </message>
 </context>
 <context>
@@ -19396,7 +19906,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_cannon.js" line="5"/>
         <source>Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19404,7 +19914,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_carrier_anti_air_missile.js" line="5"/>
         <source>Anti Air Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>AA-Rakete</translation>
     </message>
 </context>
 <context>
@@ -19412,7 +19922,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
         <source>Anti Air Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Flak</translation>
     </message>
 </context>
 <context>
@@ -19420,7 +19930,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_flare_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19428,7 +19938,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19436,7 +19946,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19444,7 +19954,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_tank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19452,7 +19962,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_heavy_tank_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19460,7 +19970,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_hovercraft_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19468,7 +19978,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_hovercraft_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19476,7 +19986,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_hovervulcan_cannon.js" line="5"/>
         <source>Vulcan Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Flak</translation>
     </message>
 </context>
 <context>
@@ -19484,7 +19994,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_infantry_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19492,7 +20002,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_k_heli_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19500,7 +20010,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_light_tank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19508,7 +20018,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_light_tank_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19516,7 +20026,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_mech_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19524,7 +20034,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_megatank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19532,7 +20042,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_megatank_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19540,7 +20050,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_motorbike_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19548,7 +20058,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_neotank_gun.js" line="5"/>
         <source>Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanone</translation>
     </message>
 </context>
 <context>
@@ -19556,7 +20066,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_neotank_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19564,7 +20074,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_piperunner_missile.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19572,7 +20082,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_recon_mg.js" line="5"/>
         <source>MG</source>
-        <translation type="unfinished"></translation>
+        <translation>MG</translation>
     </message>
 </context>
 <context>
@@ -19580,7 +20090,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_rocket_missile.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19588,7 +20098,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_sniper.js" line="5"/>
         <source>Sniper Rifle</source>
-        <translation type="unfinished"></translation>
+        <translation>Scharfschützengewehr</translation>
     </message>
 </context>
 <context>
@@ -19596,7 +20106,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_stealthrocket.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19604,7 +20114,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_torpedo.js" line="5"/>
         <source>Torpedo</source>
-        <translation type="unfinished"></translation>
+        <translation>Torpedo</translation>
     </message>
 </context>
 <context>
@@ -19612,7 +20122,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_vulcan_cannon.js" line="5"/>
         <source>Vulcan Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Flak</translation>
     </message>
 </context>
 <context>
@@ -19620,7 +20130,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/weapons/weapon_waterplane_missile.js" line="5"/>
         <source>Missile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rakete</translation>
     </message>
 </context>
 <context>
@@ -19628,7 +20138,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_1sun.js" line="6"/>
         <source>Sun</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonne</translation>
     </message>
 </context>
 <context>
@@ -19636,7 +20146,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_rain.js" line="6"/>
         <source>Rain</source>
-        <translation type="unfinished"></translation>
+        <translation>Regen</translation>
     </message>
 </context>
 <context>
@@ -19644,7 +20154,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_sandstorm.js" line="6"/>
         <source>Sandstorm</source>
-        <translation type="unfinished"></translation>
+        <translation>Sandsturm</translation>
     </message>
 </context>
 <context>
@@ -19652,7 +20162,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
         <source>Snow</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnee</translation>
     </message>
 </context>
 <context>
@@ -19670,7 +20180,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/wiki/yellowcomet.js" line="19"/>
         <source>Yellow Comet</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -19678,12 +20188,12 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="38"/>
         <source>Ruins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruine</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="43"/>
         <source>Destroyed Black Hole Building.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zerstörtes Black Hole Gebäude</translation>
     </message>
 </context>
 <context>
@@ -19691,7 +20201,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="25"/>
         <source>Black Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarzes Geschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="96"/>
@@ -19704,7 +20214,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="30"/>
         <source>Black Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarzes Geschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="97"/>
@@ -19717,7 +20227,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="29"/>
         <source>Black Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarzes Geschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="96"/>
@@ -19730,7 +20240,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="29"/>
         <source>Black Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarzes Geschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="96"/>
@@ -19743,7 +20253,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zblackhole_factory.js" line="31"/>
         <source>Black Hole Factory</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwarze Fabrik</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zblackhole_factory.js" line="61"/>
@@ -19756,7 +20266,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zcrystall.js" line="37"/>
         <source>Crystall</source>
-        <translation type="unfinished"></translation>
+        <translation>Kristall</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zcrystall.js" line="61"/>
@@ -19769,7 +20279,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zdeathray_E.js" line="37"/>
         <source>Death Ray</source>
-        <translation type="unfinished"></translation>
+        <translation>Schocklaser</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_E.js" line="126"/>
@@ -19782,7 +20292,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zdeathray_N.js" line="37"/>
         <source>Death Ray</source>
-        <translation type="unfinished"></translation>
+        <translation>Schocklaser</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_N.js" line="125"/>
@@ -19795,7 +20305,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zdeathray_S.js" line="37"/>
         <source>Death Ray</source>
-        <translation type="unfinished"></translation>
+        <translation>Schocklaser</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_S.js" line="121"/>
@@ -19808,7 +20318,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zdeathray_W.js" line="37"/>
         <source>Death Ray</source>
-        <translation type="unfinished"></translation>
+        <translation>Schocklaser</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_W.js" line="124"/>
@@ -19821,7 +20331,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zfortress.js" line="27"/>
         <source>Fortress</source>
-        <translation type="unfinished"></translation>
+        <translation>Festung</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zfortress.js" line="49"/>
@@ -19834,7 +20344,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zgate_e_w.js" line="20"/>
         <source>Gate</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zgate_e_w.js" line="40"/>
@@ -19847,7 +20357,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zgate_n_s.js" line="21"/>
         <source>Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Tor</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zgate_n_s.js" line="41"/>
@@ -19860,7 +20370,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zlaser.js" line="37"/>
         <source>Laser</source>
-        <translation type="unfinished"></translation>
+        <translation>Laser</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zlaser.js" line="70"/>
@@ -19873,7 +20383,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zminicannon_E.js" line="33"/>
         <source>Mini Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Minigeschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zminicannon_E.js" line="67"/>
@@ -19886,7 +20396,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zminicannon_N.js" line="37"/>
         <source>Mini Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Minigeschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zminicannon_N.js" line="66"/>
@@ -19899,7 +20409,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zminicannon_S.js" line="37"/>
         <source>Mini Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Minigeschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zminicannon_S.js" line="66"/>
@@ -19912,7 +20422,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zminicannon_W.js" line="37"/>
         <source>Mini Cannon</source>
-        <translation type="unfinished"></translation>
+        <translation>Minigeschütz</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zminicannon_W.js" line="66"/>
@@ -19925,7 +20435,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zmonolith.js" line="33"/>
         <source>Black Obelisk</source>
-        <translation type="unfinished"></translation>
+        <translation>Monolith</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zmonolith.js" line="90"/>
@@ -19938,7 +20448,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zomega_base.js" line="27"/>
         <source>Omega Base</source>
-        <translation type="unfinished"></translation>
+        <translation>Omegabasis</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zomega_base.js" line="49"/>
@@ -19951,7 +20461,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/ztalon_gun.js" line="41"/>
         <source>Talon Gun</source>
-        <translation type="unfinished"></translation>
+        <translation>Talonkanone</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/ztalon_gun.js" line="89"/>
@@ -19964,7 +20474,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="38"/>
         <source>Ruins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruine</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="42"/>
@@ -19977,7 +20487,7 @@ Units have increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/building/zvolcan.js" line="37"/>
         <source>Volcan</source>
-        <translation type="unfinished"></translation>
+        <translation>Vulkan</translation>
     </message>
     <message>
         <location filename="../resources/scripts/building/zvolcan.js" line="115"/>

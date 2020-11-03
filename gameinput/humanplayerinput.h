@@ -188,7 +188,8 @@ private:
 
     spHumanPlayerInputMenu m_CurrentMenu{nullptr};
 
-    QPoint m_lastMapView{std::numeric_limits<qint32>::min(), std::numeric_limits<qint32>::min()};
+    QPoint m_lastMapView{std::numeric_limits<qint32>::min(),
+                std::numeric_limits<qint32>::min()};
 };
 
 #endif // HUMANPLAYERINPUT_H
