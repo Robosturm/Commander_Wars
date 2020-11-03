@@ -51,6 +51,7 @@ void HeavyAi::process()
 
 void HeavyAi::setupTurn()
 {
+    bool startOfTurn = (m_pUnits.get() == nullptr);
     if (m_pUnits.get() == nullptr)
     {
         m_pUnits = m_pPlayer->getUnits();
@@ -62,6 +63,10 @@ void HeavyAi::setupTurn()
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
         initUnits(m_pEnemyUnits.get(), m_enemyUnits);
+    }
+    if (startOfTurn)
+    {
+
     }
 
     qint32 cost = 0;

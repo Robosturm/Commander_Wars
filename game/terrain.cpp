@@ -179,11 +179,7 @@ void Terrain::syncAnimation()
         while (pTween.get() != nullptr)
         {
             pTween->reset();
-            pTween->init(pTween->getDuration(), pTween->getLoops());
-            // remove it
-            m_pTerrainSprite->removeTween(pTween);
-            // restart it
-            m_pTerrainSprite->addTween(pTween);
+            pTween->start(*m_pTerrainSprite);
             pTween = pTween->getNextSibling();
         }
     }

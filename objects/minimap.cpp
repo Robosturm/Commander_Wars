@@ -206,6 +206,16 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                     m_Items[item].unit = pSprite;
                                 }
                             }
+                            else
+                            {
+                                oxygine::spTween pTween = m_Items[item].unit->getFirstTween();
+                                while (pTween.get() != nullptr)
+                                {
+                                    pTween->reset();
+                                    pTween->start(*m_Items[item].unit);
+                                    pTween = pTween->getNextSibling();
+                                }
+                            }
                         }
                     }
                     if (removeUnit)

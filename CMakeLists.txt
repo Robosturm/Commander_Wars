@@ -355,6 +355,7 @@ set(${PROJECT_NAME}_SRCS
         ai/proxyai.cpp
         ai/normalai.cpp
         ai/heavyai.cpp
+        ai/influencefrontmap.cpp
 
         # multiplayer
         multiplayer/lobbymenu.cpp

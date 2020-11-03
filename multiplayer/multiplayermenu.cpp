@@ -1185,7 +1185,7 @@ void Multiplayermenu::countdown()
             {
                 pMap->getGameScript()->gameStart();
             }
-            pMap->updateSprites();
+            pMap->updateSprites(-1, -1, false, true);
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));

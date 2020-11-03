@@ -518,7 +518,7 @@ public slots:
      * @param xInput around given coordinates -1 whole map
      * @param yInput around given coordinates -1 whole map
      */
-    void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false);
+    void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false);
     /**
      * @brief getField changes the coordinates into the given direction
      * @param x x-coordinates

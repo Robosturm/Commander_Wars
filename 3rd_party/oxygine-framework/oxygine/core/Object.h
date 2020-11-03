@@ -2,7 +2,7 @@
 #include "../oxygine-include.h"
 #include "ref_counter.h"
 #include <qstring.h>
-#include <QObject>
+#include <qmutex.h>
 
 namespace oxygine
 {
@@ -20,6 +20,7 @@ namespace oxygine
 
     protected:
         QString __name;
+        QMutex m_Locked;
     };
 
 

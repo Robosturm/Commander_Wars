@@ -891,15 +891,14 @@ namespace oxygine
         Q_ASSERT(actor);
         if (actor)
         {
-            oxygine::GameWindow* pWindow = oxygine::GameWindow::getWindow();
-            pWindow->suspendThread2();
             Q_ASSERT(actor->_parent == this);
             if (actor->_parent == this)
             {
+                m_Locked.lock();
                 setParent(actor.get(), nullptr);
                 _children.remove(actor);
+                m_Locked.unlock();
             }
-            pWindow->continueThread2();
         }
     }
 
@@ -927,6 +926,7 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
+        m_Locked.lock();
         spTween tween = _tweens._first;
         while (tween)
         {
@@ -958,6 +958,7 @@ namespace oxygine
             }
             actor = next;
         }
+        m_Locked.unlock();
     }
 
     void Actor::update(const UpdateState& parentUS)
@@ -1109,7 +1110,9 @@ namespace oxygine
 
     void Actor::render(const RenderState& parentRS)
     {
+        m_Locked.lock();
         _rdelegate->render(this, parentRS);
+        m_Locked.unlock();
     }
 
     RectF Actor::getDestRect() const

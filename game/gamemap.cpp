@@ -409,16 +409,27 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
-void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
+void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool showLoadingScreen)
 {
     Console::print("Update Sprites x=" + QString::number(xInput) + " y=" + QString::number(yInput), Console::eDEBUG);
+
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->show();
+        pLoadingScreen->setProgress("Loading Map Sprites", 0);
+    }
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites
-        qint32 heigth = getMapHeight();
-        qint32 width = getMapWidth();
         for (qint32 y = 0; y < heigth; y++)
         {
+            if (showLoadingScreen)
+            {
+                pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 0 + 50 * y / heigth);
+            }
             for (qint32 x = 0; x < width; x++)
             {
                 fields[y][x]->loadSprites();
@@ -457,21 +468,31 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor)
             }
         }
     }
-    qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();
-    
+
     Console::print("synchronizing animations", Console::eDEBUG);
     for (qint32 y = 0; y < heigth; y++)
     {
+        if (showLoadingScreen)
+        {
+            pLoadingScreen->setProgress(tr("Synchronizing Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 50 + 40 * y / heigth);
+        }
         for (qint32 x = 0; x < width; x++)
         {
             fields[y][x]->syncAnimation();
         }
     }
     
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->setProgress(tr("Loading weather for snowy times"), 95);
+    }
     if (m_Rules.get() != nullptr)
     {
         m_Rules->createWeatherSprites();
+    }
+    if (showLoadingScreen)
+    {
+        pLoadingScreen->hide();
     }
 }
 
