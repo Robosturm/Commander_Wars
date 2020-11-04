@@ -205,6 +205,21 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             }
         }
     }
+    syncMarkedFields();
+}
+
+void HumanPlayerInput::syncMarkedFields()
+{
+    for (auto & field : m_Fields)
+    {
+        oxygine::spTween pTween = field->getFirstTween();
+        while (pTween.get() != nullptr)
+        {
+            pTween->reset();
+            pTween->start(*field);
+            pTween = pTween->getNextSibling();
+        }
+    }
 }
 
 void HumanPlayerInput::cleanUpInput()
@@ -271,6 +286,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
             m_pPlayer == nullptr)
         {
+            Console::print("humanplayer input leftClick()", Console::eDEBUG);
             if (GameAnimationFactory::getAnimationCount() > 0)
             {
                 // do nothing
@@ -440,8 +456,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 }
 
 void HumanPlayerInput::markedFieldSelected(QPoint point)
-{
-    
+{    
     m_pGameAction->writeDataInt32(point.x());
     m_pGameAction->writeDataInt32(point.y());
     clearMarkedFields();
@@ -518,6 +533,7 @@ void HumanPlayerInput::getNextStepData()
             {
                 createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldMap);
             }
+            syncMarkedFields();
             m_pMarkedFieldData = pData;
             spCursorData pCursordata = m_pGameAction->getStepCursor();
             pMenu->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
@@ -612,6 +628,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
+    Console::print("Selecting unit", Console::eDEBUG);
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     spGameMap pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
@@ -712,6 +729,7 @@ oxygine::spSprite HumanPlayerInput::createMarkedFieldActor(QPoint point, QColor 
 
 void HumanPlayerInput::createMarkedMoveFields()
 {
+    Console::print("createMarkedMoveFields()", Console::eDEBUG);
     clearMarkedFields();
     if (m_pUnitPathFindingSystem.get() != nullptr)
     {
@@ -728,6 +746,7 @@ void HumanPlayerInput::createMarkedMoveFields()
                 createMarkedField(points[i], QColor(0, 128, 255, 255), Terrain::DrawPriority::MarkedField);
             }
         }
+        syncMarkedFields();
     }
 }
 
@@ -1165,6 +1184,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
             }
         }
     }
+    syncMarkedFields();
 }
 
 void HumanPlayerInput::nextMarkedField()

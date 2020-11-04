@@ -1253,16 +1253,19 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
                     if (pMap->onMap(target.x(), target.y()))
                     {
                         qint32 currentScore = getFlareTargetScore(targets[i], target, pUnfogCircle);
-                        if (score < currentScore)
+                        if (currentScore > 0)
                         {
-                            score = currentScore;
-                            flareTarget  = target;
-                            moveTargetField  = targets[i];
-                        }
-                        else if (score == currentScore && Mainapp::randInt(0, 10) > 5)
-                        {
-                            flareTarget  = target;
-                            moveTargetField  = targets[i];
+                            if (score < currentScore)
+                            {
+                                score = currentScore;
+                                flareTarget  = target;
+                                moveTargetField  = targets[i];
+                            }
+                            else if (score == currentScore && Mainapp::randInt(0, 10) > 5)
+                            {
+                                flareTarget  = target;
+                                moveTargetField  = targets[i];
+                            }
                         }
                     }
                 }
@@ -1543,13 +1546,13 @@ bool CoreAI::needsRefuel(Unit *pUnit)
         return true;
     }
     if (pUnit->getMaxAmmo1() > 0 &&
-        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 3.0f &&
+        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 4.0f &&
         !pUnit->getWeapon1ID().isEmpty())
     {
         return true;
     }
     if (pUnit->getMaxAmmo2() > 0 &&
-        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 3.0f &&
+        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 4.0f &&
         !pUnit->getWeapon2ID().isEmpty())
     {
         return true;

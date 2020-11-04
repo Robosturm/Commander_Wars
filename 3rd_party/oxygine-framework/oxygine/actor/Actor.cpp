@@ -1161,6 +1161,7 @@ namespace oxygine
 
     void Actor::removeTween(spTween v)
     {
+        m_Locked.lock();
         Q_ASSERT(v);
         if (!v)
         {
@@ -1172,6 +1173,7 @@ namespace oxygine
             v->setClient(nullptr);
             _tweens.remove(v);
         }
+        m_Locked.unlock();
     }
 
     void Actor::removeTweens(bool callComplete)

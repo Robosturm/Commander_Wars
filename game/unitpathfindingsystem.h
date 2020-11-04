@@ -14,6 +14,7 @@ class UnitPathFindingSystem : public PathFindingSystem
 public:
     explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
 
+    void continueExploring(qint32 movePoints);
     /**
      * @brief getRemainingCost
      * @param x
@@ -80,7 +81,14 @@ public:
      * @param fast
      */
     void setFast(bool fast);
-
+    /**
+     * @brief getCostInfo
+     * @return
+     */
+    QMap<QString, qint32>& getCostInfo()
+    {
+        return m_costInfo;
+    }
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};

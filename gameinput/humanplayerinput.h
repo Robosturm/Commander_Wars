@@ -156,6 +156,7 @@ public slots:
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
     void autoEndTurn();
+    void syncMarkedFields();
 protected:
     void nextMarkedField();
     void previousMarkedField();

@@ -305,6 +305,7 @@ bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
 
 void GameMap::deleteMap()
 {
+    Console::print("deleteMap()", Console::eDEBUG);
     if (m_pInstance.get() != nullptr)
     {
         m_pInstance->detach();
@@ -314,6 +315,7 @@ void GameMap::deleteMap()
 
 GameMap::~GameMap()
 {
+    Console::print("desctructing map.", Console::eDEBUG);
     // remove us from the interpreter again
     if (GameMap::getInstance() == nullptr)
     {
