@@ -476,6 +476,7 @@ void OptionMenue::showSettings()
     connect(pLanguageMenu.get(), &DropDownmenu::sigItemChanged, pApp,
             [=](qint32 item)
     {
+        Console::print("Marking restart cause language changed.", Console::eDEBUG);
         Settings::setLanguage(languages[item]);
         restartNeeded = true;
         emit sigReloadSettings();
@@ -550,6 +551,7 @@ void OptionMenue::showSettings()
         {
             if (value != Settings::getUsername())
             {
+                Console::print("Marking restart cause user changed.", Console::eDEBUG);
                 restartNeeded = true;
             }
             Settings::setUsername(value);
@@ -601,6 +603,7 @@ void OptionMenue::showSettings()
     pCheckbox->setChecked(Settings::getServer());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
+        Console::print("Marking restart cause server settings changed.", Console::eDEBUG);
         Settings::setServer(value);
         restartNeeded = true;
     });
@@ -821,6 +824,7 @@ void OptionMenue::selectMods(qint32 item)
     {
         Settings::addMod(addMod);
     }
+    Console::print("Marking restart cause mods changed.", Console::eDEBUG);
     restartNeeded = true;
     showMods();
     
@@ -828,5 +832,6 @@ void OptionMenue::selectMods(qint32 item)
 
 void OptionMenue::restart()
 {
+    Console::print("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
     QCoreApplication::exit(1);
 }

@@ -1,4 +1,5 @@
-#include "focusableobject.h"
+#include "objects/base/focusableobject.h"
+#include "coreengine/console.h"
 
 FocusableObject* FocusableObject::m_focusedObject = nullptr;
 bool FocusableObject::m_registeredAtStage = false;
@@ -35,6 +36,7 @@ void FocusableObject::looseFocus()
 {
     if (m_focusedObject != nullptr)
     {
+        Console::print("Focus lost for object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         emit m_focusedObject->sigFocusedLost();
         m_focusedObject = nullptr;
@@ -45,6 +47,7 @@ void FocusableObject::looseFocusInternal()
 {
     if (m_focusedObject != nullptr)
     {
+        Console::print("Loosing focus forced by object", Console::eDEBUG);
         m_focusedObject->m_focused = false;
         m_focusedObject = nullptr;
     }
@@ -54,6 +57,7 @@ void FocusableObject::focusedInternal()
 {
     if (m_focusedObject != this && !m_subComponent)
     {
+        Console::print("Focused object changed", Console::eDEBUG);
         looseFocus();
         m_focusedObject = this;
         m_focusedObject->m_focused = true;

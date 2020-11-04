@@ -4131,12 +4131,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="487"/>
+        <location filename="../menue/optionmenue.cpp" line="488"/>
         <source>Auto Saving Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="517"/>
+        <location filename="../menue/optionmenue.cpp" line="518"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4145,17 +4145,17 @@ This is immediatly applied.</source>
         <translation type="vanished">Autospeichern: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="491"/>
+        <location filename="../menue/optionmenue.cpp" line="492"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="503"/>
+        <location filename="../menue/optionmenue.cpp" line="504"/>
         <source>Auto Saving Cycle: </source>
         <translation>Autom. speichern Zyklus: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="507"/>
+        <location filename="../menue/optionmenue.cpp" line="508"/>
         <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4164,97 +4164,97 @@ This is immediatly applied.</source>
         <translation type="vanished">Spielaufnahme: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="521"/>
+        <location filename="../menue/optionmenue.cpp" line="522"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="530"/>
+        <location filename="../menue/optionmenue.cpp" line="531"/>
         <source>Network Settings</source>
         <translation>Netzwerkeinstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="537"/>
+        <location filename="../menue/optionmenue.cpp" line="538"/>
         <source>Username: </source>
         <translation>Benutzername: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="541"/>
+        <location filename="../menue/optionmenue.cpp" line="542"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="564"/>
+        <location filename="../menue/optionmenue.cpp" line="566"/>
         <source>Server Adress: </source>
         <translation>Serveradresse: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="568"/>
+        <location filename="../menue/optionmenue.cpp" line="570"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="580"/>
+        <location filename="../menue/optionmenue.cpp" line="582"/>
         <source>Lobby port: </source>
         <translation>Lobby Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="584"/>
+        <location filename="../menue/optionmenue.cpp" line="586"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="596"/>
+        <location filename="../menue/optionmenue.cpp" line="598"/>
         <source>Server: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="600"/>
+        <location filename="../menue/optionmenue.cpp" line="602"/>
         <source>Enables this game as global server.</source>
         <translation>Aktiviert dieses Spiel als globalen Server.</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="613"/>
+        <location filename="../menue/optionmenue.cpp" line="616"/>
         <source>Game port: </source>
         <translation>Spiele Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="617"/>
+        <location filename="../menue/optionmenue.cpp" line="620"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="660"/>
+        <location filename="../menue/optionmenue.cpp" line="663"/>
         <source>Advance Wars Game:</source>
         <translation>Advance Wars Spiel:</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="662"/>
+        <location filename="../menue/optionmenue.cpp" line="665"/>
         <source>Unkown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="663"/>
+        <location filename="../menue/optionmenue.cpp" line="666"/>
         <source>Commander Wars</source>
         <translation>Commander Wars</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="664"/>
+        <location filename="../menue/optionmenue.cpp" line="667"/>
         <source>Advance Wars DS</source>
         <translation>Advance Wars DS</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="665"/>
+        <location filename="../menue/optionmenue.cpp" line="668"/>
         <source>Advance Wars DC</source>
         <translation>Advance Wars DC</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="667"/>
+        <location filename="../menue/optionmenue.cpp" line="670"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="753"/>
+        <location filename="../menue/optionmenue.cpp" line="756"/>
         <source>
 Version: </source>
         <translation>
