@@ -23,6 +23,7 @@ signals:
 
 public slots:
     void keyInput(oxygine::KeyEvent event);
+    virtual void focusedLost() override;
 protected:
     void setKeycode(Qt::Key code);
 private:

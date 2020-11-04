@@ -1,14 +1,14 @@
 #ifndef H_SCROLLBAR_H
 #define H_SCROLLBAR_H
 
-#include <QObject>
+#include "objects/base/tooltip.h"
 #include <QElapsedTimer>
 #include "oxygine-framework.h"
 
 class H_Scrollbar;
 typedef oxygine::intrusive_ptr<H_Scrollbar> spH_Scrollbar;
 
-class H_Scrollbar : public QObject, public oxygine::Actor
+class H_Scrollbar : public Tooltip
 {
     Q_OBJECT
 public:

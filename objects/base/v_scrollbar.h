@@ -59,6 +59,7 @@ signals:
     void sigEndEditValue(float value);
 public slots:
     void changeScrollValue(float value);
+    virtual void focusedLost() override;
 private:
     void scroll(oxygine::Event* pEvent);
 private:

@@ -131,17 +131,11 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_slider->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event* event)
+    addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         if (m_enabled)
         {
-            event->stopPropagation();
-            bool emitSignal = getSliding();
-            setSliding(false);
-            if (emitSignal)
-            {
-                emit sigEndEditValue(m_Scrollvalue);
-            }
+            setSliding(getSliding());
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* event)
@@ -151,6 +145,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             event->stopPropagation();
             setSliding(true);
             emit sigStartEditValue();
+            emit sigFocused();
         }
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* event)
@@ -163,6 +158,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
                 setSliding(false);
                 emit sigEndEditValue(m_Scrollvalue);
             }
+            emit sigFocusedLost();
         }
     });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
@@ -174,6 +170,16 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     });
 
     connect(this, &V_Scrollbar::sigChangeScrollValue, this, &V_Scrollbar::changeScrollValue, Qt::QueuedConnection);
+}
+
+void V_Scrollbar::focusedLost()
+{
+    bool emitSignal = getSliding();
+    setSliding(false);
+    if (emitSignal)
+    {
+        emit sigEndEditValue(m_Scrollvalue);
+    }
 }
 
 void V_Scrollbar::scroll(oxygine::Event* pEvent)

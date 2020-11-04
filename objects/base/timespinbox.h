@@ -41,6 +41,7 @@ signals:
     void sigValueChanged(qint32 value);
 public slots:
     void KeyInput(oxygine::KeyEvent event);
+    virtual void focusedLost() override;
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the new value
@@ -52,8 +53,11 @@ protected:
      * @param value
      */
     void setValue(qint32 value);
+    /**
+     * @brief focused
+     */
+    virtual void focused() override;
 private:
-    bool m_focused{false};
     oxygine::spBox9Sprite m_pSpinBox;
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;

@@ -44,41 +44,28 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     pClipActor->setX(10);
     pClipActor->setY(5);
 
-
-
     this->addChild(m_Textbox);
-    this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* event)
     {
-        m_focused = !m_focused;
-        if (m_focused)
-        {
-            Tooltip::disableTooltip();
-            curmsgpos = m_Text.size();
-        }
-        else
-        {
-            Tooltip::enableTooltip();
-        }
-    });
-    this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
-    {
-        // not the best solution
-        // but for the start the easiest one :)
-        if (m_focused)
-        {
-            m_focused = false;
-            emit sigTextChanged(m_Text);
-        }
-        else
-        {
-            m_focused = false;
-        }
-        Tooltip::enableTooltip();
+        event->stopPropagation();
+        emit sigFocused();
     });
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
     connect(pMainapp, &Mainapp::sigKeyDown, this, &Textbox::KeyInput, Qt::QueuedConnection);
+}
+
+void Textbox::focusedLost()
+{
+    emit sigTextChanged(m_Text);
+    Tooltip::enableTooltip();
+}
+
+void Textbox::focused()
+{
+    Tooltip::disableTooltip();
+    curmsgpos = m_Text.size();
 }
 
 void Textbox::setCurrentText(QString text)
@@ -215,7 +202,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                 case Qt::Key_Enter:
                 case Qt::Key_Return:
                 {
-                    m_focused = false;
+                    looseFocusInternal();
                     Tooltip::setEnabled(true);
                     emit sigTextChanged(m_Text);
                     emit sigEnterPressed(m_Text);
@@ -255,7 +242,3 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
     }
 }
 
-bool Textbox::getFocused() const
-{
-    return m_focused;
-}

@@ -111,27 +111,7 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 
     this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_focused = !m_focused;
-        if (m_focused)
-        {
-            curmsgpos = m_Text.size();
-        }
-    });
-    this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
-    {
-        // not the best solution
-        // but for the start the easiest one :)
-        if (m_focused)
-        {
-            m_focused = false;
-            qint32 value = checkInput();
-            emit sigValueChanged(value);
-        }
-        else
-        {
-            m_focused = false;
-        }
-
+        emit sigFocused();
     });
     toggle.start();
 
@@ -139,17 +119,25 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     setCurrentValue(0);
 }
 
+void TimeSpinBox::focused()
+{
+    curmsgpos = m_Text.size();
+}
+
+void TimeSpinBox::focusedLost()
+{
+    qint32 value = checkInput();
+    emit sigValueChanged(value);
+}
 
 void TimeSpinBox::setEnabled(bool value)
-{
-    
+{    
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
     m_pSpinBox->setEnabled(value);
-    m_focused = false;
-    
+    m_focused = false;    
 }
 
 void TimeSpinBox::setCurrentValue(qint32 value)
@@ -324,7 +312,7 @@ void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
                 case Qt::Key_Enter:
                 case Qt::Key_Return:
                {
-                    m_focused = false;
+                    looseFocusInternal();
                     qint32 value = checkInput();
                     emit sigValueChanged(value);
                     break;

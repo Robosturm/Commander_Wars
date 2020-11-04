@@ -104,7 +104,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        setSliding(false);
+        setSliding(getSliding());
     });
     m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {

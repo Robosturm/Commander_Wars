@@ -33,6 +33,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
         scrollHeigth = (itemcount + 1) * 40;
     }
     m_Panel = new Panel(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
+    m_Panel->setSubComponent(true);
     m_Panel->setVisible(false);
     this->addChild(m_Panel);
     m_pArrowDown = new oxygine::Button();
@@ -56,16 +57,18 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
         }
         else
         {
+            emit sigFocused();
             emit sigShowDropDown();
         }
-    });
-    this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
-    {
-        emit sigHideDropDown();
     });
     connect(this, &DropDownmenuBase::sigItemChangedInternal, this, &DropDownmenuBase::itemChanged, Qt::QueuedConnection);
     connect(this, &DropDownmenuBase::sigShowDropDown, this, &DropDownmenuBase::showDropDown, Qt::QueuedConnection);
     connect(this, &DropDownmenuBase::sigHideDropDown, this, &DropDownmenuBase::hideDropDown, Qt::QueuedConnection);
+}
+
+void DropDownmenuBase::focusedLost()
+{
+    emit sigHideDropDown();
 }
 
 void DropDownmenuBase::showDropDown()
@@ -165,8 +168,8 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     {
         m_currentItem = id;
         pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(1));
-        emit sigHideDropDown();
         emit sigItemChangedInternal(m_currentItem);
+        emit sigHideDropDown();
     });
     return pBox->getSize();
 }

@@ -37,7 +37,6 @@ namespace oxygine
 
     Actor::~Actor()
     {
-        //printf("Actor::~Actor %s\n", getName().c_str());
         removeTweens();
         removeChildren();
     }

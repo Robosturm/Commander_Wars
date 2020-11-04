@@ -7,7 +7,6 @@
 #include <qguiapplication.h>
 
 Tooltip::Tooltip()
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -146,13 +145,18 @@ void Tooltip::disableTooltip()
 }
 
 void Tooltip::hideTooltip()
-{
-    
+{    
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
         m_Tooltip = nullptr;
         stopTooltiptimer();
     }
-    
+}
+
+void Tooltip::looseFocusInternal()
+{
+    FocusableObject::looseFocusInternal();
+    stopTooltiptimer();
+    hideTooltip();
 }

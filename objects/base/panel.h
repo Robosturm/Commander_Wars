@@ -35,6 +35,8 @@ public:
     {
         return m_VScrollbar.get();
     }
+    bool getSubComponent() const;
+    void setSubComponent(bool subComponent);
 signals:
 
 public slots:

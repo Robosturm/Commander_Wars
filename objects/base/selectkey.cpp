@@ -24,14 +24,16 @@ SelectKey::SelectKey(Qt::Key code)
         }
         pText->setTooltipText("");
         active = true;
-    });
-    addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event * )->void
-    {
-        setKeycode(currentCode);
+        emit sigFocused();
     });
     addChild(m_Button);
     setKeycode(code);
     connect(pApp, &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
+}
+
+void SelectKey::focusedLost()
+{
+    setKeycode(currentCode);
 }
 
 void SelectKey::keyInput(oxygine::KeyEvent event)
@@ -193,5 +195,5 @@ void SelectKey::setKeycode(Qt::Key code)
     {
         setKeycode(currentCode);
     }
-    
+    looseFocusInternal();
 }

@@ -21,22 +21,16 @@ Topbar::Topbar(qint32 x, qint32 width)
     m_pSpriteBox->setPosition(x, 0);
     m_pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    this->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
-    {
-        for (qint32 i = 0; i < m_Items.size(); i++)
-        {
-            for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
-            {
-                m_Items.at(i)->at(i2)->setVisible(false);
-            }
-        }
-    });
     setSize(width, 80);
 }
 
-void Topbar::hide()
+void Topbar::focusedLost()
 {
-    
+    hide();
+}
+
+void Topbar::hide()
+{    
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
         for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
@@ -49,8 +43,6 @@ void Topbar::hide()
 
 void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip)
 {
-    
-
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
 
@@ -145,6 +137,7 @@ void Topbar::addGroup(QString text)
         {
             m_Items.at(groupID)->at(i)->setVisible(true);
         }
+        emit sigFocused();
     });
     m_Buttons.append(pButton);
     m_Items.append(new QVector<oxygine::spBox9Sprite>());

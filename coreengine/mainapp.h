@@ -198,6 +198,10 @@ public slots:
      * @return
      */
     static void setImageSize(qint32 value);
+    /**
+     * @brief onActiveChanged
+     */
+    void onActiveChanged();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);

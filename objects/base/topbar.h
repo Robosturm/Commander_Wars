@@ -1,14 +1,14 @@
 #ifndef TOPBAR_H
 #define TOPBAR_H
 
-#include <QObject>
+#include "objects/base/focusableobject.h"
 #include <QVector>
 #include "oxygine-framework.h"
 
 class Topbar;
 typedef oxygine::intrusive_ptr<Topbar> spTopbar;
 
-class Topbar : public QObject, public oxygine::Actor
+class Topbar : public FocusableObject
 {
     Q_OBJECT
 public:
@@ -37,6 +37,7 @@ signals:
      */
     void sigItemClicked(QString itemID);
 public slots:
+    virtual void focusedLost() override;
 private:
     QVector<QVector<oxygine::spBox9Sprite>*> m_Items;
     QVector<oxygine::spButton> m_Buttons;    

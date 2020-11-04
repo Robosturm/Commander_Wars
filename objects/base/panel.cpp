@@ -69,10 +69,17 @@ void Panel::scrolledY(float value)
     {
         m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
     }
-
     hideItems();
+}
 
-    
+bool Panel::getSubComponent() const
+{
+    return m_HScrollbar->getSubComponent();
+}
+void Panel::setSubComponent(bool subComponent)
+{
+    m_HScrollbar->setSubComponent(subComponent);
+    m_VScrollbar->setSubComponent(subComponent);
 }
 
 void Panel::hideItems()

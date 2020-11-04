@@ -26,27 +26,6 @@ namespace oxygine
         static GameWindow*  getWindow();
         bool isReady2Render();
         /**
-         * @brief suspendThread suspends rendering
-         */
-        inline void suspendThread()
-        {
-//            Q_ASSERT(isWorker());
-//            m_lockCounter++;
-//            m_Mutex.lock();
-        }
-
-        inline void suspendThread2()
-        {
-            Q_ASSERT(isWorker());
-            m_Mutex.lock();
-        }
-        inline void continueThread2()
-        {
-            Q_ASSERT(isWorker());
-            m_Mutex.unlock();
-        }
-
-        /**
          * @brief quitGame quits this game
          */
         void quitGame()
@@ -95,7 +74,6 @@ namespace oxygine
         spEventDispatcher _dispatcher;
 
         bool m_quit{false};
-        QMutex m_Mutex;
         QBasicTimer m_Timer;
 
         static GameWindow* _window;

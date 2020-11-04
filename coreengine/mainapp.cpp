@@ -61,6 +61,7 @@ Mainapp::Mainapp()
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
+    connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
 }
 
@@ -627,5 +628,13 @@ void Mainapp::loadArgs(const QStringList & args)
     if (args.contains("-slaveServer"))
     {
         Settings::setSlaveServerName(args[args.indexOf("-slaveServer") + 1]);
+    }
+}
+
+void Mainapp::onActiveChanged()
+{
+    if (!isActive())
+    {
+        FocusableObject::looseFocus();
     }
 }

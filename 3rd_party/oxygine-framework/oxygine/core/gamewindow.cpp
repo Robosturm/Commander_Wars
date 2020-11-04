@@ -209,7 +209,6 @@ namespace oxygine
 
     void GameWindow::resizeGL(int w, int h)
     {
-        QMutexLocker lock(&m_Mutex);
         qDebug("core::restore()");
         IVideoDriver::instance->restore();
         STDRenderer::restore();

@@ -49,6 +49,7 @@ public:
 signals:
     void sigValueChanged(qreal value);
 public slots:
+    virtual void focusedLost() override;
     void KeyInput(oxygine::KeyEvent event);
 protected:
     /**
@@ -61,8 +62,8 @@ protected:
      * @param value
      */
     void setValue(qreal value);
+    virtual void focused() override;
 private:
-    bool m_focused{false};
     oxygine::spBox9Sprite m_pSpinBox;
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;

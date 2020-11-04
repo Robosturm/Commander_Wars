@@ -35,15 +35,17 @@ public:
      * @param text
      */
     void setCurrentText(QString text);
-    bool getFocused() const;
 
 signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);
 public slots:
     void KeyInput(oxygine::KeyEvent event);
+    virtual void focusedLost() override;
 protected:
-    bool m_focused{false};
+    virtual void focused() override;
+protected:
+
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
     QString m_Text;

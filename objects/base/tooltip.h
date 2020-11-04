@@ -4,12 +4,12 @@
 #include <QObject>
 #include <QTimer>
 
-#include "oxygine-framework.h"
+#include "objects/base/focusableobject.h"
 
 class Tooltip;
 typedef oxygine::intrusive_ptr<Tooltip> spTooltip;
 
-class Tooltip : public QObject, public oxygine::Sprite
+class Tooltip : public FocusableObject
 {
     Q_OBJECT
 public:
@@ -30,6 +30,8 @@ public slots:
     void hideTooltip();
     void disableTooltip();
     void enableTooltip();
+protected:
+    virtual void looseFocusInternal() override;
 protected:
     oxygine::spActor m_Tooltip;
 private:

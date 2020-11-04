@@ -40,6 +40,8 @@ public:
      * @param width
      */
     virtual void setWidth(float width) override;
+public slots:
+    virtual void focusedLost() override {}
 protected:
     oxygine::spTextField _textField;
     oxygine::spClipRectActor _clipRect;

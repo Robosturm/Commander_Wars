@@ -183,6 +183,7 @@ set(${PROJECT_NAME}_SRCS
         objects/base/colorselector.cpp
         objects/base/dropdownmenusprite.cpp
         objects/base/tooltip.cpp
+        objects/base/focusableobject.cpp
         objects/base/tableview.cpp
         # objects dialogs
         objects/dialogs/colorselectiondialog.cpp

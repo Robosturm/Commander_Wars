@@ -776,7 +776,6 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
-    
     m_Topbar->hide();
     xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
 

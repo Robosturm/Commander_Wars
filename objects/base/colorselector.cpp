@@ -7,6 +7,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/base/label.h"
+#include "objects/base/focusableobject.h"
 
 ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     : m_CurrentColor(color),
@@ -90,6 +91,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             qint32 green = pTouchEvent->localPosition.y / (pixelSize);
             emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
         }
+        FocusableObject::looseFocus();
     });
     m_ColorDialog->setPosition(0, 0);
     addChild(m_ColorDialog);
@@ -142,6 +144,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
             emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
         }
+        FocusableObject::looseFocus();
     });
 
     m_Cursor2 = new oxygine::Sprite();

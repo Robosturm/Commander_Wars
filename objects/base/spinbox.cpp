@@ -112,44 +112,32 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 
     this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_focused = !m_focused;
-        if (m_focused)
-        {
-            curmsgpos = m_Text.size();
-        }
-    });
-    this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
-    {
-        // not the best solution
-        // but for the start the easiest one :)
-        if (m_focused)
-        {
-            m_focused = false;
-            qreal value = checkInput();
-            emit sigValueChanged(value);
-        }
-        else
-        {
-            m_focused = false;
-        }
-
+        emit sigFocused();
     });
     toggle.start();
 
     connect(pApp, &Mainapp::sigKeyDown, this, &SpinBox::SpinBox::KeyInput, Qt::QueuedConnection);
 }
 
+void SpinBox::focused()
+{
+    curmsgpos = m_Text.size();
+}
+
+void SpinBox::focusedLost()
+{
+    qreal value = checkInput();
+    emit sigValueChanged(value);
+}
 
 void SpinBox::setEnabled(bool value)
-{
-    
+{    
     oxygine::Actor::setEnabled(value);
     m_pArrowDown->setEnabled(value);
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
     m_pSpinBox->setEnabled(value);
-    m_focused = false;
-    
+    m_focused = false;    
 }
 
 void SpinBox::setCurrentValue(qreal value)
@@ -384,7 +372,7 @@ void SpinBox::KeyInput(oxygine::KeyEvent event)
                 case Qt::Key_Enter:
                 case Qt::Key_Return:
                 {
-                    m_focused = false;
+                    looseFocusInternal();
                     qreal value = checkInput();
                     emit sigValueChanged(value);
                     break;
