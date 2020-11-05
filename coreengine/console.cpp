@@ -8,6 +8,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"
@@ -315,7 +316,7 @@ void Console::logActions(bool log)
 void Console::createfunnymessage(qint32 message){
     if (message < 0)
     {
-        message = Mainapp::randIntBase(0,327);
+        message = GlobalUtils::randIntBase(0,327);
     }
     QString printmessage;
     switch(message)

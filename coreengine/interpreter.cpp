@@ -1,6 +1,7 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/userdata.h"
 #include "resource_management/fontmanager.h"
@@ -43,7 +44,7 @@ void Interpreter::init()
     setOutputWarningsToStandardError(false);
     setIncubationController(nullptr);
 
-    QJSValue globals = newQObject(pApp);
+    QJSValue globals = newQObject(GlobalUtils::getInstance());
     globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());
     globalObject().setProperty("audio", audio);

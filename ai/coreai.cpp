@@ -2,7 +2,6 @@
 
 #include "ai/targetedunitpathfindingsystem.h"
 
-#include "coreengine/mainapp.h"
 
 #include "game/gameanimationfactory.h"
 
@@ -19,7 +18,10 @@
 #include "game/co.h"
 
 #include "menue/gamemenue.h"
+
+#include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -434,7 +436,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
-    spQmlVectorPoint pTargetFields = Mainapp::getCircle(firerange, firerange);
+    spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(firerange, firerange);
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
         Unit* pEnemy = pEnemyUnits->at(i2);
@@ -875,7 +877,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                                 ((pMap->getTerrain(x, y)->getUnit() == nullptr) ||
                                  (pMap->getTerrain(x, y)->getUnit() == pUnit)))
                             {
-                                qint32 dist = Mainapp::getDistance(loadingUnitPos, QPoint(x, y));
+                                qint32 dist = GlobalUtils::getDistance(loadingUnitPos, QPoint(x, y));
                                 if (dist < distance)
                                 {
                                     found = true;
@@ -950,7 +952,7 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEne
 
 void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
 {
-    spQmlVectorPoint unitFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
     spGameMap pMap = GameMap::getInstance();
     for (const auto& action : actions)
     {
@@ -1030,7 +1032,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnem
         if (pUnit->isAttackable(pEnemy, true))
         {
             qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
-            spQmlVectorPoint pTargetFields = Mainapp::getCircle(firerange, firerange);
+            spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(firerange, firerange);
             for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
             {
                 qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
@@ -1164,7 +1166,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
         loadedUnitIslandIdx.append(getIslandIndex(pLoadedUnit));
         checkedIslands.append(QVector<qint32>());
     }
-    spQmlVectorPoint pUnloadArea = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint pUnloadArea = GlobalUtils::getCircle(1, 1);
     // check for enemis
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
@@ -1235,8 +1237,8 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
     moveTargetField  = QPoint(-1, -1);
     if (pAction->canBePerformed())
     {
-        spQmlVectorPoint pUnfogCircle = Mainapp::getCircle(0, m_flareInfo.unfogRange);
-        spQmlVectorPoint pTargetCircle = Mainapp::getCircle(m_flareInfo.minRange, m_flareInfo.maxRange);
+        spQmlVectorPoint pUnfogCircle = GlobalUtils::getCircle(0, m_flareInfo.unfogRange);
+        spQmlVectorPoint pTargetCircle = GlobalUtils::getCircle(m_flareInfo.minRange, m_flareInfo.maxRange);
         pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
         spGameMap pMap = GameMap::getInstance();
         QVector<QPoint> targets = pPfs->getAllNodePoints();
@@ -1261,7 +1263,7 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
                                 flareTarget  = target;
                                 moveTargetField  = targets[i];
                             }
-                            else if (score == currentScore && Mainapp::randInt(0, 10) > 5)
+                            else if (score == currentScore && GlobalUtils::randInt(0, 10) > 5)
                             {
                                 flareTarget  = target;
                                 moveTargetField  = targets[i];
@@ -1311,7 +1313,7 @@ qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flare
     if (score > 0)
     {
         // the farther away from the flare the better it is usually
-        score += Mainapp::getDistance(moveTarget, flareTarget) * pUnfogCircle->size() * 3;
+        score += GlobalUtils::getDistance(moveTarget, flareTarget) * pUnfogCircle->size() * 3;
     }
     else
     {
@@ -1382,7 +1384,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
     }
     if (capturUnits.size() > 0)
     {
-        spQmlVectorPoint pUnloadArea = Mainapp::getCircle(1, 1);
+        spQmlVectorPoint pUnloadArea = GlobalUtils::getCircle(1, 1);
         GameAction testAction;
         testAction.setTargetUnit(capturUnits[0]);
         // store has moved
@@ -1437,7 +1439,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* 
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
-    spQmlVectorPoint pTargetFields = Mainapp::getCircle(firerange, firerange);
+    spQmlVectorPoint pTargetFields = GlobalUtils::getCircle(firerange, firerange);
     for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
     {
         Building* pBuilding = pEnemyBuildings->at(i);
@@ -1752,7 +1754,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                                     }
                                     if (index < 0)
                                     {
-                                        target = points->at(Mainapp::randIntBase(0, points->size() -1));
+                                        target = points->at(GlobalUtils::randIntBase(0, points->size() -1));
                                     }
                                     else
                                     {
@@ -1780,7 +1782,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                                                 enable.removeAt(i);
                                             }
                                         }
-                                        qint32 selection = Mainapp::randIntBase(0, items.size() - 1);
+                                        qint32 selection = GlobalUtils::randIntBase(0, items.size() - 1);
                                         addMenuItemData(pAction, items[selection], pData->getCostList()[selection]);
                                     }
                                 }

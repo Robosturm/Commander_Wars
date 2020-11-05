@@ -6,6 +6,7 @@
 #include "menue/victorymenue.h"
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 #include "ai/proxyai.h"
 
 #include "gameinput/humanplayerinput.h"
@@ -121,7 +122,6 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
 {
     if (service == NetworkInterface::NetworkSerives::Multiplayer)
     {
-        Mainapp* pApp = Mainapp::getInstance();
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
@@ -164,8 +164,8 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::STARTGAME;
                     quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
-                    pApp->seed(seed);
-                    pApp->setUseSeed(true);
+                    GlobalUtils::seed(seed);
+                    GlobalUtils::setUseSeed(true);
                     sendStream << seed;
                     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                     emit sigGameStarted();
@@ -178,8 +178,8 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
             {
                 quint32 seed = 0;
                 stream >> seed;
-                pApp->seed(seed);
-                pApp->setUseSeed(true);
+                GlobalUtils::seed(seed);
+                GlobalUtils::setUseSeed(true);
                 emit sigGameStarted();
             }
         }
@@ -671,8 +671,8 @@ void GameMenue::performAction(spGameAction pGameAction)
             // record action if required
             m_ReplayRecorder.recordAction(pGameAction);
             // perform action
-            Mainapp::seed(pGameAction->getSeed());
-            Mainapp::setUseSeed(true);
+            GlobalUtils::seed(pGameAction->getSeed());
+            GlobalUtils::setUseSeed(true);
             if (pMoveUnit != nullptr)
             {
                 pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
@@ -952,7 +952,7 @@ void GameMenue::actionPerformed()
             }
             else
             {
-                Mainapp::setUseSeed(false);
+                GlobalUtils::setUseSeed(false);
                 if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
                 {
                     pMap->getGameRules()->resumeRoundTime();
@@ -1396,7 +1396,7 @@ void GameMenue::startGame()
         spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
         if (m_pNetworkInterface.get() != nullptr)
         {
-            pAction->setSeed(pApp->getSeed());
+            pAction->setSeed(GlobalUtils::getSeed());
         }
         performAction(pAction);
     }

@@ -3,6 +3,7 @@
 #include "qtextstream.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 const QString GameScript::scriptName = "gameScript";
 

@@ -18,6 +18,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/globalutils.h"
 
 #include "gameinput/markedfielddata.h"
 
@@ -164,7 +165,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             qint32 maxRange = pUnit->getMaxRange(pUnit->getPosition());
             qint32 minRange = pUnit->getMinRange(pUnit->getPosition());
-            spQmlVectorPoint pPoints = Mainapp::getCircle(minRange, maxRange);
+            spQmlVectorPoint pPoints = GlobalUtils::getCircle(minRange, maxRange);
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
@@ -1133,7 +1134,7 @@ void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
                         qint32 currentMaxDistance = distance;
                         currentMaxDistance += pUnit->getMovementpoints(unitPositionpUnit);
                         currentMaxDistance += pUnit->getMaxRange(unitPositionpUnit);
-                        if (Mainapp::getDistance(unitPositionpUnit, position) <= currentMaxDistance)
+                        if (GlobalUtils::getDistance(unitPositionpUnit, position) <= currentMaxDistance)
                         {
                             if(all || pUnit->getBaseMaxRange() > 1)
                             {
@@ -1166,7 +1167,7 @@ void HumanPlayerInput::showUnitAttackFields(Unit* pUnit, QVector<QPoint> & usedF
     spGameMap pMap = GameMap::getInstance();
     qint32 maxRange = pUnit->getMaxRange(position);
     qint32 minRange = pUnit->getMinRange(position);
-    spQmlVectorPoint pPoints = Mainapp::getCircle(minRange, maxRange);
+    spQmlVectorPoint pPoints = GlobalUtils::getCircle(minRange, maxRange);
     for (qint32 i = 0; i < points.size(); i++)
     {
         if (canMoveAndFire ||

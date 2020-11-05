@@ -5,6 +5,7 @@
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/gamemanager.h"
 
@@ -214,14 +215,14 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
     // dummy impl for standing units
     m_pAttackerAnimation = new BattleAnimationSprite(pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
-                                                                               Mainapp::roundUp(atkStartHp));
+                                                                               GlobalUtils::roundUp(atkStartHp));
     setSpritePosition(m_pAttackerAnimation, pAtkUnit, pDefUnit);
     m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
     setSpritePosition(m_pAttackerAnimation, pAtkUnit, pDefUnit);
 
     addChild(m_pAttackerAnimation);
     m_pDefenderAnimation = new BattleAnimationSprite(pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
-                                                                               Mainapp::roundUp(defStartHp));
+                                                                               GlobalUtils::roundUp(defStartHp));
     if (!m_pAttackerAnimation->hasMoveInAnimation())
     {
         // skip move in
@@ -402,7 +403,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             qint32 count = m_pDefenderAnimation->getAnimationUnitCount();
             if (m_pDefenderAnimation->hasDyingAnimation() &&
-                m_pDefenderAnimation->getUnitCount(count, Mainapp::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, Mainapp::roundUp(m_defStartHp)))
+                m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defStartHp)))
             {
                 loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_defEndHp, m_DefWeapon);
                 break;
@@ -414,7 +415,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::DefenderFire:
         {
-            m_pDefenderAnimation->setHpRounded(Mainapp::roundUp(m_defEndHp));
+            m_pDefenderAnimation->setHpRounded(GlobalUtils::roundUp(m_defEndHp));
             m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             if (m_DefenderDamage >= 0)
             {
@@ -441,7 +442,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             qint32 count = m_pAttackerAnimation->getAnimationUnitCount();
             if (m_pAttackerAnimation->hasDyingAnimation() &&
-                m_pAttackerAnimation->getUnitCount(count, Mainapp::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, Mainapp::roundUp(m_atkStartHp)))
+                m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkStartHp)))
             {
                 loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_atkEndHp, m_AtkWeapon);
                 break;
@@ -453,7 +454,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterBattle:
         {
-            m_pAttackerAnimation->setHpRounded(Mainapp::roundUp(m_atkEndHp));
+            m_pAttackerAnimation->setHpRounded(GlobalUtils::roundUp(m_atkEndHp));
             m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             setSpritePosition(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
             battleTimer.start(500 / Settings::getBattleAnimationSpeed());
@@ -548,7 +549,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
 
     // buffer hp
     qint32 curHp = pSprite->getHpRounded();
-    pSprite->setHpRounded(Mainapp::roundUp(enemyHp));
+    pSprite->setHpRounded(GlobalUtils::roundUp(enemyHp));
     pSprite->setMaxUnitCount(pAttackerSprite->getMaxUnitCount());
     pSprite->loadAnimation(BattleAnimationSprite::impactAnimation, pUnit2, pUnit1, weapon, false);
     setSpritePosition(pSprite, pUnit1, pUnit2);

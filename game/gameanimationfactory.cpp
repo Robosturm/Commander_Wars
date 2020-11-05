@@ -21,6 +21,7 @@
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 GameAnimationFactory* GameAnimationFactory::m_pInstance = nullptr;
 QVector<spGameAnimation> GameAnimationFactory::m_Animations;
@@ -164,8 +165,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
     if (pDefUnit != nullptr)
     {
         // log this attack to our battle log
-        qint32 atkDamage = Mainapp::roundUp(defStartHp) - Mainapp::roundUp(defEndHp);
-        qint32 defDamage = Mainapp::roundUp(atkStartHp) - Mainapp::roundUp(atkEndHp);
+        qint32 atkDamage = GlobalUtils::roundUp(defStartHp) - GlobalUtils::roundUp(defEndHp);
+        qint32 defDamage = GlobalUtils::roundUp(atkStartHp) - GlobalUtils::roundUp(atkEndHp);
         spGameMap pMap = GameMap::getInstance();
         pMap->getGameRecorder()->logAttack(pMap->getCurrentDay(),
                                            atkDamage, pAtkTerrain->getX(), pAtkTerrain->getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),

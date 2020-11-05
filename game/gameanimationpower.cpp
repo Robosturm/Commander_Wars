@@ -9,6 +9,7 @@
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 #include "coreengine/tweentogglevisibility.h"
 #include "coreengine/tweenwait.h"
 #include "coreengine/audiothread.h"
@@ -156,7 +157,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         }
         xPos += size;
         textField->setVisible(false);
-        if (Mainapp::isEven(i))
+        if (GlobalUtils::isEven(i))
         {
             textField->setY(Settings::getHeight());
         }

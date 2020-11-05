@@ -63,6 +63,27 @@ public:
         }
         return array;
     }
+    /**
+     * @brief storeList
+     * @param file
+     * @param items
+     * @param folder
+     */
+    static void storeList(QString file, QStringList items, QString folder);
+    /**
+     * @brief readList
+     * @param file
+     * @return
+     */
+    static std::tuple<QString, QStringList> readList(QString file);
+    /**
+     * @brief readList
+     * @param file
+     * @param folder
+     * @return
+     */
+    static std::tuple<QString, QStringList> readList(QString file, QString folder);
+
 signals:
 
 private:

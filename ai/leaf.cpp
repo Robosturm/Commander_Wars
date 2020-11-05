@@ -3,6 +3,7 @@
 #include "decisiontree.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 Leaf::Leaf(QVector<QVector<float>>& trainingData)
     : m_AnswersChances(DecisionTree::countClassItems(trainingData))
@@ -25,7 +26,7 @@ float Leaf::getDecision(QVector<float>&)
 {
     if (m_Answers.size() > 1)
     {
-        qint32 chance = Mainapp::randIntBase(1, totalChance);
+        qint32 chance = GlobalUtils::randIntBase(1, totalChance);
         qint32 lowThreshold = 1;
         for (qint32 i = 0; i < m_AnswersChances.size(); i++)
         {

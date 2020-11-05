@@ -10,6 +10,7 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/ui/copowermeter.h"
+#include "game/unit.h"
 
 class COInfoActor;
 typedef oxygine::intrusive_ptr<COInfoActor> spCOInfoActor;

@@ -49,7 +49,7 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     {
         m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_Box->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {

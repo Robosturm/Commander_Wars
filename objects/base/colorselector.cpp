@@ -81,8 +81,30 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     connect(this, &ColorSelector::sigSelecetedColorChanged, this, &ColorSelector::selecetedColorChanged);
 
     m_ColorDialog = new oxygine::Actor();
-    m_ColorDialog->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
+        m_boxUpdating = true;
+        FocusableObject::looseFocus();
+    });
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
+    {
+        if (m_boxUpdating)
+        {
+            pEvent->stopPropagation();
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
+            {
+                qint32 red = pTouchEvent->localPosition.x / (pixelSize);
+                qint32 green = pTouchEvent->localPosition.y / (pixelSize);
+                emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
+            }
+            FocusableObject::looseFocus();
+        }
+    });
+    m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
+    {
+        m_boxUpdating = false;
         pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
@@ -135,8 +157,28 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
         bar->addChild(pSprite);
     }
-    bar->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
+        m_barUpdating = true;
+    });
+    bar->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
+    {
+        if (m_barUpdating)
+        {
+            pEvent->stopPropagation();
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
+            {
+                qint32 blue = pTouchEvent->localPosition.y / (pixelSize);
+                emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
+            }
+            FocusableObject::looseFocus();
+        }
+    });
+    bar->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
+    {
+        m_barUpdating = false;
         pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)

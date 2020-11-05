@@ -1,6 +1,7 @@
 #include "playerrecord.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 PlayerRecord::PlayerRecord()
     : QObject()

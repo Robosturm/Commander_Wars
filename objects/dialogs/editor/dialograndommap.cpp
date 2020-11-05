@@ -1,6 +1,7 @@
 #include "dialograndommap.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -145,7 +146,7 @@ DialogRandomMap::DialogRandomMap()
     m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
     m_Seed->setTooltipText(tr("The seed to generate the new map. Same map settings with the same seed generate the same map."));
     m_Seed->setPosition(text->getX() + width, text->getY());
-    m_Seed->setCurrentValue(Mainapp::randInt(0, std::numeric_limits<qint32>::max() - 1));
+    m_Seed->setCurrentValue(GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 1));
     m_pPanel->addItem(m_Seed);
 
     // Label

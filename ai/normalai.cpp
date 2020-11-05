@@ -1,6 +1,7 @@
 #include "normalai.h"
 
 #include "coreengine/qmlvector.h"
+#include "coreengine/globalutils.h"
 
 #include "game/player.h"
 #include "game/unit.h"
@@ -683,7 +684,7 @@ bool NormalAi::moveToUnloadArea(spGameAction pAction, Unit* pUnit, QmlVectorUnit
                                 addMenuItemData(pAction, actions[0], costs);
                                 unloaded = true;
                                 spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                                qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
+                                qint32 field = GlobalUtils::randIntBase(0, pFields->getPoints()->size() - 1);
                                 addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                             }
                         }
@@ -836,7 +837,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits
                     (ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage ||
                      lockedUnit))
                 {
-                    qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+                    qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
                     QVector3D target = ret[selection];
                     CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                                  static_cast<qint32>(target.y())));
@@ -897,7 +898,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits
                         if (pAction->canBePerformed())
                         {
                             spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                            QPoint point = pData->getPoints()->at(Mainapp::randIntBase(0, pData->getPoints()->size() - 1));
+                            QPoint point = pData->getPoints()->at(GlobalUtils::randIntBase(0, pData->getPoints()->size() - 1));
                             CoreAI::addSelectedFieldData(pAction, point);
                             emit performAction(pAction);
                             return true;
@@ -915,7 +916,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, QmlVectorUnit* pUnits
                     getBestAttacksFromField(pUnit, pAction, ret, moveTargets);
                     if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
                     {
-                        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+                        qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
                         QVector3D target = ret[selection];
                         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                                      static_cast<qint32>(target.y())));
@@ -955,7 +956,7 @@ bool NormalAi::suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem&
     CoreAI::getBestTarget(pUnit, pAction, &turnPfs, ret, moveTargetFields);
     if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() * minSuicideDamage)
     {
-        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+        qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QVector<QPoint> path = turnPfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
                                                static_cast<qint32>(moveTargetFields[selection].y()));
@@ -998,7 +999,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUni
             {
                 allFieldsEqual = false;
             }
-            qint32 distance = Mainapp::getDistance(target, targets[i]);
+            qint32 distance = GlobalUtils::getDistance(target, targets[i]);
             if (currentDamage < leastDamageField)
             {
                 ret = targets[i];
@@ -1114,8 +1115,8 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
     {
         qint32 restCapture = 20 - capturePoints;
         qint32 currentHp = pUnit->getHpRounded();
-        qint32 newHp = Mainapp::roundUp(newLife);
-        qint32 remainingDays = Mainapp::roundUp(restCapture / static_cast<float>(currentHp));
+        qint32 newHp = GlobalUtils::roundUp(newLife);
+        qint32 remainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(currentHp));
         if (newHp <= 0)
         {
             if (remainingDays > 0)
@@ -1129,7 +1130,7 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
         }
         else
         {
-            qint32 newRemainingDays = Mainapp::roundUp(restCapture / static_cast<float>(newHp));
+            qint32 newRemainingDays = GlobalUtils::roundUp(restCapture / static_cast<float>(newHp));
             if (remainingDays > newRemainingDays)
             {
                 ret = 0.8f;
@@ -1184,7 +1185,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
             qint32 minFireRange = pNextEnemy->getMinRange(enemyPos);
             qint32 maxFireRange = pNextEnemy->getMaxRange(enemyPos);
             qint32 moveRange = 0;
-            qint32 distance = Mainapp::getDistance(newPosition, enemyPos);
+            qint32 distance = GlobalUtils::getDistance(newPosition, enemyPos);
             bool canMoveAndFire = pNextEnemy->canMoveAndFire(enemyPos);
             if (canMoveAndFire)
             {
@@ -1206,7 +1207,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                     damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, enemyPos, pUnit, 0, newPosition, ignoreOutOfVisionRange);
                     for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                     {
-                        distance = Mainapp::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), enemyPos);
+                        distance = GlobalUtils::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), enemyPos);
                         if (distance >= minFireRange && distance <= maxFireRange &&
                             pNextEnemy->isAttackable(pUnits->at(i3), true))
                         {
@@ -1229,7 +1230,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                 {
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
-                        distance = Mainapp::getDistance(newPosition, targets[i2]);
+                        distance = GlobalUtils::getDistance(newPosition, targets[i2]);
                         if (distance >= minFireRange && distance <= maxFireRange &&
                             (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
                              (targets[i2].x() == pNextEnemy->getX() && targets[i2].y() == pNextEnemy->getY())))
@@ -1242,7 +1243,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                     {
                         for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                         {
-                            distance = Mainapp::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), targets[i2]);
+                            distance = GlobalUtils::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), targets[i2]);
                             if (distance >= minFireRange && distance <= maxFireRange &&
                                 (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
                                  pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit()->getOwner()->isAlly(m_pPlayer)) &&
@@ -1303,7 +1304,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, Q
         Building* pBuilding = pEnemyBuildings->at(i);
         counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding);
     }
-    spQmlVectorPoint pCircle = Mainapp::getCircle(1, 2);
+    spQmlVectorPoint pCircle = GlobalUtils::getCircle(1, 2);
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pCircle->size(); i++)
     {
@@ -1582,7 +1583,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     {
         variance = 10.0f;
     }
-    spQmlVectorPoint pFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint pFields = GlobalUtils::getCircle(1, 1);
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);
@@ -1745,7 +1746,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
 
     if (buildingIdx.size() > 0)
     {
-        qint32 item = Mainapp::randIntBase(0, buildingIdx.size() - 1);
+        qint32 item = GlobalUtils::randIntBase(0, buildingIdx.size() - 1);
         Building* pBuilding = pBuildings->at(buildingIdx[item]);
         pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
         if (transporters[item])
@@ -1780,7 +1781,7 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
         {
             if (dummy.isAttackable(pEnemyUnit, true))
             {
-                qint32 distance = Mainapp::getDistance(pos, pEnemyUnit->getPosition());
+                qint32 distance = GlobalUtils::getDistance(pos, pEnemyUnit->getPosition());
                 if (minDistance > distance)
                 {
                     minDistance = distance;
@@ -1799,7 +1800,7 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
                 if (pBuilding->isCaptureOrMissileBuilding(missileTarget) &&
                     pBuilding->getTerrain()->getUnit() == nullptr)
                 {
-                    qint32 distance = Mainapp::getDistance(pos, pBuilding->getPosition());
+                    qint32 distance = GlobalUtils::getDistance(pos, pBuilding->getPosition());
                     if (minDistance > distance)
                     {
                         minDistance = distance;
@@ -1836,7 +1837,7 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
         {
             Unit* pEnemyUnit = pEnemyUnits->at(i3);
             QPoint enemyPosition = pEnemyUnit->getPosition();
-            float distance = Mainapp::getDistance(position, enemyPosition);
+            float distance = GlobalUtils::getDistance(position, enemyPosition);
             if (distance / myMovepoints <= counter &&
                 distance / myMovepoints >= (counter - 1))
             {
@@ -2079,7 +2080,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            qint32 distance = Mainapp::getDistance(position, pUnits->at(i)->getPosition());
+            qint32 distance = GlobalUtils::getDistance(position, pUnits->at(i)->getPosition());
             if (distance / movement <= counter * maxDayDistance &&
                 distance / movement >= (counter - 1) * maxDayDistance)
             {
@@ -2171,7 +2172,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
 
 bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
-    spQmlVectorPoint pUnloadArea = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint pUnloadArea = GlobalUtils::getCircle(1, 1);
     // check for enemis
     qint32 loadedUnitIslandIdx = getIslandIndex(pLoadedUnit);
     qint32 unitIslandIdx = getIslandIndex(pUnit);
@@ -2309,7 +2310,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
 
     if (data[ReachDistance] > 0 && data[Movementpoints] > 0)
     {
-        score += 10.0f / Mainapp::roundUp(data[ReachDistance] / data[Movementpoints]);
+        score += 10.0f / GlobalUtils::roundUp(data[ReachDistance] / data[Movementpoints]);
     }
     return score;
 }

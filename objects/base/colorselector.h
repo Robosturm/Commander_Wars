@@ -38,6 +38,8 @@ private:
     oxygine::spSprite m_Cursor1;
     oxygine::spSprite m_Cursor2;
     qint32 pixelSize;
+    bool m_barUpdating{false};
+    bool m_boxUpdating{false};
 };
 
 #endif // COLORSELECTOR_H

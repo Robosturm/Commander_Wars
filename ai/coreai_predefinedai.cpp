@@ -1,6 +1,7 @@
 #include "ai/coreai.h"
 
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "game/unitpathfindingsystem.h"
 
@@ -92,7 +93,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     Console::print("moveBlackBombs()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> enemyTargets;
-    spQmlVectorPoint enemyFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint enemyFields = GlobalUtils::getCircle(1, 1);
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
         Unit* pUnit = pEnemyUnits->at(i);
@@ -117,7 +118,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             {
                 UnitPathFindingSystem turnPfs(pUnit);
                 turnPfs.explore();
-                spQmlVectorPoint pPoints = Mainapp::getCircle(1, 3);
+                spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 3);
                 QVector<QPoint> targets = turnPfs.getAllNodePoints();
                 qint32 maxDamage = 0;
                 QVector<QPoint> bestTargets;
@@ -140,7 +141,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 }
                 if (bestTargets.size() > 0 && maxDamage > 0)
                 {
-                    QPoint target = bestTargets[Mainapp::randIntBase(0, bestTargets.size() - 1)];
+                    QPoint target = bestTargets[GlobalUtils::randIntBase(0, bestTargets.size() - 1)];
                     QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     addSelectedFieldData(pAction, target);
@@ -174,7 +175,7 @@ bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporte
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
     QVector<QPoint> unitPos;
-    spQmlVectorPoint unitFields = Mainapp::getCircle(1, 1);
+    spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -311,7 +312,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
     getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (ret.size() > 0)
     {
-        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+        qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
@@ -348,7 +349,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
     }
     if (ret.size() > 0 && ret[0].z() >= minDamage)
     {
-        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+        qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QPoint point = pAction->getTarget();
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
@@ -414,7 +415,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPa
     bool performed = false;
     if (ret.size() > 0)
     {
-        qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+        qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
         QVector3D target = ret[selection];
         QPoint point = pAction->getTarget();
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||

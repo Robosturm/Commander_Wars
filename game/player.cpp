@@ -3,6 +3,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
 
 #include "gameinput/basegameinputif.h"
@@ -111,7 +112,7 @@ void Player::loadCOMusic()
         playerCOs[0].get() == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        qint32 count = pApp->randIntBase(0, 1);
+        qint32 count = GlobalUtils::randIntBase(0, 1);
         pApp->getAudioThread()->addMusic("resources/music/cos/no_co" + QString::number(count) + ".mp3", 4726, 58364);
     }
 }
@@ -409,7 +410,7 @@ bool Player::getFlipUnitSprites() const
     {
         if (pMap->getGameRules()->getTeamFacingUnits())
         {
-            return !Mainapp::isEven(team);
+            return !GlobalUtils::isEven(team);
         }
         else
         {
@@ -417,7 +418,7 @@ bool Player::getFlipUnitSprites() const
             {
                 if (pMap->getPlayer(i) == this)
                 {
-                    return !Mainapp::isEven(i);
+                    return !GlobalUtils::isEven(i);
                 }
             }
         }
@@ -911,7 +912,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     }
                     else
                     {
-                        pPoints = Mainapp::getCircle(0, visionRange);
+                        pPoints = GlobalUtils::getCircle(0, visionRange);
                     }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
@@ -947,7 +948,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                         }
                         else
                         {
-                            pPoints = Mainapp::getCircle(0, visionRange);
+                            pPoints = GlobalUtils::getCircle(0, visionRange);
                         }
                         for (qint32 i = 0; i < pPoints->size(); i++)
                         {
@@ -987,7 +988,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     }
                     else
                     {
-                        pPoints = Mainapp::getCircle(0, visionRange);
+                        pPoints = GlobalUtils::getCircle(0, visionRange);
                     }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
@@ -1332,7 +1333,7 @@ void Player::setCO(QString coId, quint8 idx)
 QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    spQmlVectorPoint pPoints = Mainapp::getCircle(0, radius);
+    spQmlVectorPoint pPoints = GlobalUtils::getCircle(0, radius);
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1356,7 +1357,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
 
     if (targets.size() >= 0)
     {
-        return targets[Mainapp::randInt(0, targets.size() - 1)];
+        return targets[GlobalUtils::randInt(0, targets.size() - 1)];
     }
     else
     {
@@ -1367,7 +1368,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
 QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highestDamage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     spGameMap pMap = GameMap::getInstance();
-    spQmlVectorPoint pPoints = Mainapp::getCircle(0, radius);
+    spQmlVectorPoint pPoints = GlobalUtils::getCircle(0, radius);
     highestDamage = -1;
     QVector<QPoint> targets;
 
@@ -1391,7 +1392,7 @@ QPoint Player::getSiloRockettarget(qint32 radius, qint32 damage, qint32 & highes
 
     if (targets.size() >= 0)
     {
-        return targets[Mainapp::randInt(0, targets.size() - 1)];
+        return targets[GlobalUtils::randInt(0, targets.size() - 1)];
     }
     else
     {

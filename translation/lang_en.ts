@@ -795,7 +795,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="299"/>
+        <location filename="../game/co.cpp" line="300"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1783,147 +1783,147 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="41"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="42"/>
         <source>Generator:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="45"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="46"/>
         <source>Selects the generator script used to generate the random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="49"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="50"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="63"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="64"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="67"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="68"/>
         <source>Selects the name of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="76"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="77"/>
         <source>Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="80"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="81"/>
         <source>Selects the author of the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="89"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="90"/>
         <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="93"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="94"/>
         <source>Selects the description for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="102"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="103"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="106"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="107"/>
         <source>Selects the width for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="115"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="116"/>
         <source>Heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="119"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="120"/>
         <source>Selects the heigth for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="128"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="129"/>
         <source>Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="132"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="133"/>
         <source>Selects the amount of players for the new map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="142"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="143"/>
         <source>Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="146"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="147"/>
         <source>The seed to generate the new map. Same map settings with the same seed generate the same map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="155"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="156"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="159"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="160"/>
         <source>If selected roads are created between the HQ&apos;s of the players.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="168"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="169"/>
         <source>Base Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="173"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="174"/>
         <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="181"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="182"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="187"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="188"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="193"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="194"/>
         <source>Owner Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="200"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="201"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="231"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="232"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="329"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="330"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="334"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="335"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="338"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="339"/>
         <source>The percent distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1931,12 +1931,12 @@ This is immediatly applied.</source>
 <context>
     <name>DialogRandomMap::DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="294"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="295"/>
         <source>The percent distribution between the different terrains when a terrain is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="311"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="312"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2465,16 +2465,16 @@ This is immediatly applied.</source>
 <context>
     <name>GameMap</name>
     <message>
-        <location filename="../mapsupport/randomMap.cpp" line="64"/>
-        <location filename="../mapsupport/randomMap.cpp" line="98"/>
-        <location filename="../mapsupport/randomMap.cpp" line="522"/>
-        <location filename="../mapsupport/randomMap.cpp" line="594"/>
-        <location filename="../mapsupport/randomMap.cpp" line="598"/>
+        <location filename="../mapsupport/randomMap.cpp" line="65"/>
+        <location filename="../mapsupport/randomMap.cpp" line="99"/>
+        <location filename="../mapsupport/randomMap.cpp" line="523"/>
+        <location filename="../mapsupport/randomMap.cpp" line="595"/>
+        <location filename="../mapsupport/randomMap.cpp" line="599"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1034"/>
+        <location filename="../game/gamemap.cpp" line="1035"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2499,8 +2499,8 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="433"/>
-        <location filename="../game/gamemap.cpp" line="1056"/>
+        <location filename="../game/gamemap.cpp" line="434"/>
+        <location filename="../game/gamemap.cpp" line="1057"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2512,39 +2512,39 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="433"/>
-        <location filename="../game/gamemap.cpp" line="479"/>
-        <location filename="../game/gamemap.cpp" line="1056"/>
+        <location filename="../game/gamemap.cpp" line="434"/>
+        <location filename="../game/gamemap.cpp" line="480"/>
+        <location filename="../game/gamemap.cpp" line="1057"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="479"/>
+        <location filename="../game/gamemap.cpp" line="480"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="489"/>
+        <location filename="../game/gamemap.cpp" line="490"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1083"/>
+        <location filename="../game/gamemap.cpp" line="1084"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1093"/>
+        <location filename="../game/gamemap.cpp" line="1094"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1101"/>
+        <location filename="../game/gamemap.cpp" line="1102"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1113"/>
+        <location filename="../game/gamemap.cpp" line="1114"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2552,7 +2552,7 @@ This is immediatly applied.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="82"/>
+        <location filename="../menue/gamemenue.cpp" line="83"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2650,7 +2650,7 @@ This is immediatly applied.</source>
 <context>
     <name>GameScript</name>
     <message>
-        <location filename="../game/gamescript.cpp" line="84"/>
+        <location filename="../game/gamescript.cpp" line="85"/>
         <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3441,18 +3441,18 @@ This is immediatly applied.</source>
 <context>
     <name>Mainapp</name>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="569"/>
+        <location filename="../coreengine/mainapp.cpp" line="292"/>
         <source>Whoops Sturm crashed a meteor into the PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="575"/>
+        <location filename="../coreengine/mainapp.cpp" line="298"/>
         <source>Please use the details or the crashlog to report a bug at 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/mainapp.cpp" line="577"/>
+        <location filename="../coreengine/mainapp.cpp" line="300"/>
         <source>
  The game will be terminated sadly. :(</source>
         <translation type="unfinished"></translation>
@@ -3698,49 +3698,49 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="109"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="110"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="80"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="92"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1095"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="81"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="93"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1096"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="98"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="134"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="135"/>
         <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="135"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="136"/>
         <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="144"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="145"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="533"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="534"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="989"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="990"/>
         <source>Launching game on server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="1091"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="1092"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4039,27 +4039,27 @@ Version: </source>
 <context>
     <name>PerkSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="28"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="30"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="93"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="95"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="102"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="104"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="129"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="131"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="168"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="170"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

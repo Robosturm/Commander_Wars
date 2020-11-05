@@ -18,6 +18,8 @@
 
 #include "ai/islandmap.h"
 
+#include "coreengine/globalutils.h"
+
 const qint32 VeryEasyAI::minSiloDamage = 4000;
 
 VeryEasyAI::VeryEasyAI()
@@ -309,7 +311,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
         }
         if (ret.size() > 0 && ret[0].z() >= minDamage)
         {
-            qint32 selection = Mainapp::randIntBase(0, ret.size() - 1);
+            qint32 selection = GlobalUtils::randIntBase(0, ret.size() - 1);
             QVector3D target = ret[selection];
             QPoint point = pAction->getTarget();
             if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
@@ -532,7 +534,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
                             addMenuItemData(pAction, actions[0], costs);
                         }
                         spMarkedFieldData pFields = pAction->getMarkedFieldStepData();
-                        qint32 field = Mainapp::randIntBase(0, pFields->getPoints()->size() - 1);
+                        qint32 field = GlobalUtils::randIntBase(0, pFields->getPoints()->size() - 1);
                         addSelectedFieldData(pAction, pFields->getPoints()->at(field));
                     }
                     else
@@ -595,7 +597,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
                     if (pAction->canBePerformed())
                     {
                         spMarkedFieldData pData = pAction->getMarkedFieldStepData();
-                        QPoint point = pData->getPoints()->at(Mainapp::randIntBase(0, pData->getPoints()->size() - 1));
+                        QPoint point = pData->getPoints()->at(GlobalUtils::randIntBase(0, pData->getPoints()->size() - 1));
                         CoreAI::addSelectedFieldData(pAction, point);
                         emit performAction(pAction);
                         return true;

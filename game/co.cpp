@@ -2,6 +2,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "game/unit.h"
 
@@ -1246,7 +1247,7 @@ GameAnimationDialog* CO::createPowerSentence()
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
     QStringList sentences = pInterpreter->doFunction(coID, "getPowerSentences", args).toVariant().toStringList();
-    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
     GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, coID, GameEnums::COMood_Normal, m_Owner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
@@ -1264,7 +1265,7 @@ QString CO::getDefeatSentence()
     QString sentence = "";
     if (sentences.size() > 0)
     {
-        sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+        sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
     }
     return sentence;
 }
@@ -1279,7 +1280,7 @@ QString CO::getVictorySentence()
     QString sentence = "";
     if (sentences.size() > 0)
     {
-        sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+        sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
     }
     return sentence;
 }

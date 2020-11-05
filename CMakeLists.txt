@@ -263,6 +263,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/userdata.cpp
         coreengine/crashreporter.cpp
         coreengine/filesupport.cpp
+        coreengine/globalutils.cpp
         # tweens
         coreengine/tweentogglevisibility.cpp
         coreengine/tweenwait.cpp

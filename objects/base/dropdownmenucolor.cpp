@@ -24,8 +24,11 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     pAnim = pObjectManager->getResAnim("dropdownmenucolor");
     m_Colorfield = new oxygine::Sprite();
     m_Colorfield->setResAnim(pAnim);
-    m_Colorfield->addClickListener([=](oxygine::Event*)
+    m_Colorfield->addClickListener([=](oxygine::Event* event)
     {
+        event->stopPropagation();
+        looseFocusInternal();
+        emit sigHideDropDown();
         emit sigShowColorDialog();
     });
     connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);

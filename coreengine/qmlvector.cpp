@@ -1,6 +1,7 @@
 #include "qmlvector.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "ai/coreai.h"
 
@@ -25,7 +26,7 @@ void QmlVectorUnit::randomize()
     QVector<spUnit> randVector;
     while (m_Vector.size() > 0)
     {
-        qint32 value = Mainapp::randInt(0, m_Vector.size() - 1);
+        qint32 value = GlobalUtils::randInt(0, m_Vector.size() - 1);
         randVector.push_back(m_Vector[value]);
         m_Vector.removeAt(value);
     }
@@ -132,7 +133,7 @@ void QmlVectorBuilding::randomize()
     QVector<spBuilding> randVector;
     while (m_Vector.size() > 0)
     {
-        qint32 value = Mainapp::randInt(0, m_Vector.size() - 1);
+        qint32 value = GlobalUtils::randInt(0, m_Vector.size() - 1);
         randVector.push_back(m_Vector[value]);
         m_Vector.removeAt(value);
     }

@@ -9,6 +9,7 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
+#include "coreengine/globalutils.h"
 
 #include "multiplayer/lobbymenu.h"
 #include "menue/gamemenue.h"
@@ -811,8 +812,8 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
-    Mainapp::seed(seed);
-    Mainapp::setUseSeed(true);
+    GlobalUtils::seed(seed);
+    GlobalUtils::setUseSeed(true);
 
     if (!m_saveGame)
     {
@@ -1179,8 +1180,8 @@ void Multiplayermenu::countdown()
                 Console::print("AI on server for player " + QString::number(i) + " is " + QString::number(pMap->getPlayer(i)->getBaseGameInput()->getAiType()), Console::eDEBUG);
                 pMap->getPlayer(i)->serializeObject(stream);
             }
-            Mainapp::seed(seed);
-            Mainapp::setUseSeed(true);
+            GlobalUtils::seed(seed);
+            GlobalUtils::setUseSeed(true);
             if (!m_saveGame)
             {
                 pMap->getGameScript()->gameStart();

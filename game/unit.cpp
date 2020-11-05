@@ -15,6 +15,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gameaction.h"
 
@@ -1738,7 +1739,7 @@ float Unit::getHp() const
 
 qint32 Unit::getHpRounded() const
 {
-    return Mainapp::roundUp(hp);
+    return GlobalUtils::roundUp(hp);
 }
 
 void Unit::setHp(const float &value)
@@ -1807,7 +1808,7 @@ bool Unit::getPerfectHpView(Player* pPlayer)
 
 void Unit::updateIcons(Player* pPlayer)
 {
-    qint32 hpValue = Mainapp::roundUp(hp);
+    qint32 hpValue = GlobalUtils::roundUp(hp);
     // unload the icons
     unloadIcon("1");
     unloadIcon("2");
@@ -2169,7 +2170,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
             }
             else
             {
-                pCircle = Mainapp::getCircle(0, visionRange);
+                pCircle = GlobalUtils::getCircle(0, visionRange);
             }
             for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
             {
@@ -2729,7 +2730,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         if (getHidden() ||
             hasTerrainHide(pPlayer))
         {
-            spQmlVectorPoint pPoints = Mainapp::getCircle(1, 1);
+            spQmlVectorPoint pPoints = GlobalUtils::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 QPoint point = pPoints->at(i);

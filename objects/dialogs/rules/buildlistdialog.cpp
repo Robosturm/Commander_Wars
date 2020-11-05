@@ -2,7 +2,7 @@
 
 #include "qdiriterator.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -81,7 +81,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Mainapp::readList(file);
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
         items.append(std::get<0>(data));
     }
 
@@ -224,7 +224,7 @@ void BuildListDialog::setBuildlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Mainapp::readList(file + ".bl", "data/unitbannlist/");
+        auto fileData = Filesupport::readList(file + ".bl", "data/unitbannlist/");
         data = std::get<1>(fileData);
     }
     for (qint32 i = 0; i < m_UnitList.size(); i++)
@@ -251,8 +251,6 @@ void BuildListDialog::showSaveBannlist()
 }
 
 void BuildListDialog::saveBannlist(QString filename)
-{
-    
-    Mainapp::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
-    
+{    
+    Filesupport::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
 }

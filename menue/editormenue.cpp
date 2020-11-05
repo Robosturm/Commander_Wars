@@ -7,7 +7,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
-
+#include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
 
 #include "menue/mainwindow.h"
@@ -1618,7 +1618,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
         {
             if (p2.x() > 0)
             {
-                spQmlVectorPoint pPoints = Mainapp::getCircle(p2.x(), p2.x());
+                spQmlVectorPoint pPoints = GlobalUtils::getCircle(p2.x(), p2.x());
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {

@@ -1,6 +1,7 @@
 #include "specialevent.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 SpecialEvent::SpecialEvent()
 {

@@ -172,7 +172,7 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
             // calc text field position based on curmsgpos
             qint32 xPos = 0;
             qint32 fontWidth = m_Textfield->getTextRect().getWidth() / m_Text.size();
-            qint32 boxSize = (m_Textbox->getWidth() - 40 - fontWidth);
+            qint32 boxSize = (m_Textbox->getWidth() - 5 - fontWidth);
             xPos = -fontWidth * curmsgpos + boxSize / 2;
             if (xPos > 0)
             {

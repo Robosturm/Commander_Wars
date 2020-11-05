@@ -1,8 +1,11 @@
 #include "mainserver.h"
 
+#include "qbuffer.h"
+
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/interpreter.h"
 
 #include "multiplayer/networkcommands.h"
 

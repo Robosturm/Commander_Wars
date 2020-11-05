@@ -2,7 +2,7 @@
 
 #include "qdiriterator.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -79,7 +79,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Mainapp::readList(file);
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
         items.append(std::get<0>(data));
     }
     m_PredefinedLists = new DropDownmenu(260, items);
@@ -277,7 +277,7 @@ void COBannListDialog::setCOBannlist(qint32 item)
     else
     {
         QString file = m_PredefinedLists->getCurrentItemText();
-        auto fileData = Mainapp::readList(file + ".bl", "data/cobannlist/");
+        auto fileData = Filesupport::readList(file + ".bl", "data/cobannlist/");
         data = std::get<1>(fileData);
     }
 
@@ -307,6 +307,6 @@ void COBannListDialog::showSaveBannlist()
 void COBannListDialog::saveBannlist(QString filename)
 {
     
-    Mainapp::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
+    Filesupport::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
     
 }

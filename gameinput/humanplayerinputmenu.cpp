@@ -10,6 +10,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/gamemanager.h"
 
@@ -220,7 +221,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::FocusedObjects));
     this->setHeight(maxY + bottomHeigth);
-    this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
+    this->setWidth(width * GlobalUtils::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
 }
 
 qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)

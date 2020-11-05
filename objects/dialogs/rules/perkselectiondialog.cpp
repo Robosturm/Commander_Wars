@@ -6,6 +6,8 @@
 #include "objects/base/dropdownmenu.h"
 #include "objects/dialogs/dialogtextinput.h"
 
+#include "coreengine/filesupport.h"
+
 PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, bool banning)
     : m_pPlayer(pPlayer)
 {
@@ -117,7 +119,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         {
             dirIter.next();
             QString file = dirIter.fileInfo().absoluteFilePath();
-            std::tuple<QString, QStringList> data = Mainapp::readList(file);
+            std::tuple<QString, QStringList> data = Filesupport::readList(file);
             items.append(std::get<0>(data));
         }
         m_PredefinedLists = new DropDownmenu(260, items);
@@ -140,7 +142,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
 void PerkSelectionDialog::setPerkBannlist(qint32)
 {
     QString file = m_PredefinedLists->getCurrentItemText();
-    auto fileData = Mainapp::readList(file + ".bl", "data/perkbannlist/");
+    auto fileData = Filesupport::readList(file + ".bl", "data/perkbannlist/");
     m_pPerkSelection->setPerks(std::get<1>(fileData));
 }
 
@@ -174,6 +176,6 @@ void PerkSelectionDialog::showSavePerklist()
 void PerkSelectionDialog::savePerklist(QString filename)
 {
     
-    Mainapp::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");
+    Filesupport::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");
     
 }

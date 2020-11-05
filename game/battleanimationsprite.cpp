@@ -1,13 +1,11 @@
 #include "battleanimationsprite.h"
 
 #include "coreengine/mainapp.h"
-
 #include "coreengine/tweentogglevisibility.h"
-
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "resource_management/battleanimationmanager.h"
-
 
 #include "game/player.h"
 
@@ -254,12 +252,12 @@ void BattleAnimationSprite::loadSpriteV2(QString spriteID, GameEnums::Recoloring
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
 {
-    return Mainapp::roundUp(hpRounded / 10.0f * maxUnitCount);
+    return GlobalUtils::roundUp(hpRounded / 10.0f * maxUnitCount);
 }
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount, qint32 hp)
 {
-    return Mainapp::roundUp(hp / 10.0f * maxUnitCount);
+    return GlobalUtils::roundUp(hp / 10.0f * maxUnitCount);
 }
 
 void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,

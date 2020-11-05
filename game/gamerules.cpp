@@ -1,6 +1,7 @@
 #include "gamerules.h"
 
 #include "coreengine/interpreter.h"
+#include "coreengine/globalutils.h"
 
 #include "game/gamemap.h"
 
@@ -336,7 +337,7 @@ void GameRules::startOfTurn(bool newDay)
                 {
                     totalWeatherChances += m_WeatherChances[i];
                 }
-                qint32 erg = Mainapp::randInt(0, totalWeatherChances - 1);
+                qint32 erg = GlobalUtils::randInt(0, totalWeatherChances - 1);
                 totalWeatherChances = 0;
                 for (qint32 i = 0; i < m_WeatherChances.size(); i++)
                 {

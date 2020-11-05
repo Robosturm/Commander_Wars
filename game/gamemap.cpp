@@ -4,6 +4,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
 
 #include "ai/coreai.h"
 
@@ -204,7 +205,7 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
             m_LineSightEvaluated.append(current);
             if (onMap(current.x(), current.y()))
             {
-                qint32 distance = Mainapp::getDistance(QPoint(current.x(), current.y()), pos);
+                qint32 distance = GlobalUtils::getDistance(QPoint(current.x(), current.y()), pos);
                 if (distance >= minVisionRange && distance <= maxVisionRange)
                 {
                     QPoint nextPos(current.x() - x, current.y() - y);
@@ -1769,7 +1770,7 @@ void GameMap::initPlayersAndSelectCOs()
             while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") ||
                    (singleCO && usedCOs.contains(pPlayer->getCO(0)->getCoID())))
             {
-                pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 0);
+                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
                 count++;
                 if (count > 2000 * bannList.size())
                 {
@@ -1797,7 +1798,7 @@ void GameMap::initPlayersAndSelectCOs()
                    (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")) ||
                    (singleCO && usedCOs.contains(pPlayer->getCO(1)->getCoID())))
             {
-                pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 1);
+                pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
                 if (count > 2000 * bannList.size())
                 {
                     Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);

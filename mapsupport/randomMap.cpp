@@ -3,6 +3,7 @@
 #include <limits>
 
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "QRandomGenerator"
 
@@ -44,7 +45,7 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
     qint32 startSeed = seed;
     if (seed < 0)
     {
-        startSeed = Mainapp::randInt(0, std::numeric_limits<qint32>::max());
+        startSeed = GlobalUtils::randInt(0, std::numeric_limits<qint32>::max());
 
     }
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -134,7 +135,7 @@ void GameMap::randomMapPlaceTerain(QString terrainID, qint32 width, qint32 heigt
             {
                 groupSize = 10;
             }
-            qint32 high = Mainapp::roundUp(groupSize / divider);
+            qint32 high = GlobalUtils::roundUp(groupSize / divider);
             if (high > 1)
             {
                 groupSize = randInt.bounded(1, high);
@@ -613,9 +614,9 @@ void GameMap::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID,
     qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
     qint32 maximumBuildingTry = 1000;
     // number of factorys at start
-    qint32 count = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * chance / static_cast<float>(players.size())) * players.size());
+    qint32 count = static_cast<qint32>(GlobalUtils::roundUp(static_cast<float>(buildings) * chance / static_cast<float>(players.size())) * players.size());
     qint32 innerBase = players.size() * 2;
-    qint32 playerBuldings = static_cast<qint32>(Mainapp::roundUp(count * startBaseSize / static_cast<float>(players.size())) * players.size());
+    qint32 playerBuldings = static_cast<qint32>(GlobalUtils::roundUp(count * startBaseSize / static_cast<float>(players.size())) * players.size());
 
     QVector<qint32> ownerBuildings;
     for (qint32 i = 0; i < ownedBaseSize.size(); i++)

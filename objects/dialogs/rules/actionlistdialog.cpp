@@ -2,7 +2,7 @@
 
 #include "qdiriterator.h"
 
-#include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 
 #include "resource_management/objectmanager.h"
 
@@ -76,7 +76,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Mainapp::readList(file);
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
         items.append(std::get<0>(data));
     }
 
@@ -191,7 +191,7 @@ void ActionListDialog::setBuildlist(qint32)
 {
     QStringList data;
     QString file = m_PredefinedLists->getCurrentItemText();
-    auto fileData = Mainapp::readList(file + ".bl", "data/actionbannlist/");
+    auto fileData = Filesupport::readList(file + ".bl", "data/actionbannlist/");
     data = std::get<1>(fileData);
     m_CurrentActionList = data;
 }
@@ -206,8 +206,6 @@ void ActionListDialog::showSaveBannlist()
 }
 
 void ActionListDialog::saveBannlist(QString filename)
-{
-    
-    Mainapp::storeList(filename, m_CurrentActionList, "data/actionbannlist/");
-    
+{    
+    Filesupport::storeList(filename, m_CurrentActionList, "data/actionbannlist/");
 }

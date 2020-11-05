@@ -5,6 +5,7 @@
 #include "weaponmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "game/unit.h"
 
 #include "modding/csvtableimporter.h"
 

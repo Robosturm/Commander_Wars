@@ -1,6 +1,4 @@
 #include "mainapp.h"
-#include <QRandomGenerator>
-
 #include "game/player.h"
 #include "game/co.h"
 
@@ -36,17 +34,13 @@
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
 
-#include "game/gamemap.h"
 
 Mainapp* Mainapp::m_pMainapp;
-QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
 bool Mainapp::m_slave{false};
-bool Mainapp::m_useSeed{false};
-quint32 Mainapp::m_seed = 0;
 QMutex Mainapp::crashMutex;
 
 Mainapp::Mainapp()
@@ -56,8 +50,7 @@ Mainapp::Mainapp()
     pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
-    quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
-    randGenerator.seed(seedValue);
+
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
@@ -86,221 +79,6 @@ bool Mainapp::isWorker()
 Mainapp* Mainapp::getInstance()
 {
     return m_pMainapp;
-}
-
-void Mainapp::seed(quint32 seed)
-{
-    m_seed = seed;
-    randGenerator.seed(seed);
-    Console::print("Seeding with " + QString::number(m_seed), Console::eDEBUG);
-}
-
-quint32 Mainapp::getSeed()
-{
-    return m_seed;
-}
-
-qint32 Mainapp::randInt(qint32 low, qint32 high)
-{
-    if (high <= low)
-    {
-        return low;
-    }
-    if (m_useSeed)
-    {
-        return randGenerator.bounded(low, high + 1);
-    }
-    else
-    {
-        return randIntBase(low, high);
-    }
-}
-
-
-qint32 Mainapp::randIntBase(qint32 low, qint32 high)
-{
-    if (high <= low)
-    {
-        return low;
-    }
-    return QRandomGenerator::global()->bounded(low, high + 1);
-}
-
-qint32 Mainapp::roundUp(float value)
-{
-    qint32 roundDown = static_cast<qint32>(value);
-    // little cheat
-    if (static_cast<float>(roundDown) == value)
-    {
-        return roundDown;
-    }
-    else
-    {
-        if (value > 0)
-        {
-            return roundDown + 1;
-        }
-        else
-        {
-            return roundDown;
-        }
-    }
-}
-
-qint32 Mainapp::roundDown(float value)
-{
-    qint32 roundDown = static_cast<qint32>(value);
-    return roundDown;
-}
-
-QmlVectorPoint* Mainapp::getCircle(qint32 min, qint32 max)
-{
-    QmlVectorPoint* ret = new QmlVectorPoint();
-    qint32 x2 = 0;
-    qint32 y2 = 0;
-
-        for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
-        {
-            x2 = -currentRadius;
-            y2 = 0;
-            if (currentRadius == 0)
-            {
-                ret->append(QPoint(0, 0));
-            }
-            else
-            {
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 += 1;
-                    y2 += 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 += 1;
-                    y2 -= 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 -= 1;
-                    y2 -= 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 -= 1;
-                    y2 += 1;
-                    ret->append(QPoint(x2, y2));
-                }
-            }
-        }
-    return ret;
-}
-
-QmlVectorPoint* Mainapp::getShotFields(qint32 min, qint32 max, qint32 xDirection, qint32 yDirection)
-{
-    QmlVectorPoint* ret = new QmlVectorPoint();
-    for (qint32 i = min; i <= max; i++)
-    {
-        if (xDirection > 0)
-        {
-            for (qint32 y = -i + 1; y < i; y++)
-            {
-                ret->append(QPoint(i, y));
-            }
-        }
-        else if (xDirection < 0)
-        {
-            for (qint32 y = -i + 1; y < i; y++)
-            {
-                ret->append(QPoint(-i, y));
-            }
-        }
-
-        if (yDirection > 0)
-        {
-            for (qint32 x = -i + 1; x < i; x++)
-            {
-                ret->append(QPoint(x, i));
-            }
-        }
-        else if (yDirection < 0)
-        {
-            for (qint32 x = -i + 1; x < i; x++)
-            {
-                ret->append(QPoint(x, -i));
-            }
-        }
-    }
-    return ret;
-}
-
-void Mainapp::setImageSize(qint32 value)
-{
-    GameMap::setImagesize(value);
-}
-
-qint32 Mainapp::getDistance(QPoint p1, QPoint p2)
-{
-    return qAbs(p1.x() - p2.x()) + qAbs(p1.y() - p2.y());
-}
-
-QmlVectorPoint* Mainapp::getEmptyPointArray()
-{
-    return new QmlVectorPoint();
-}
-
-bool Mainapp::isEven(qint32 value)
-{
-    float val = value/2.0f;
-    qint32 val2 = value/2;
-    if(val == val2)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-void Mainapp::storeList(QString file, QStringList items, QString folder)
-{
-    QDir dir(folder);
-    dir.mkpath(".");
-    QFile dataFile(folder + file + ".bl");
-    dataFile.open(QIODevice::WriteOnly);
-    QDataStream stream(&dataFile);
-    stream << file;
-    stream << static_cast<qint32>(items.size());
-    for (qint32 i = 0; i < items.size(); i++)
-    {
-        stream << items[i];
-    }
-}
-
-std::tuple<QString, QStringList> Mainapp::readList(QString file, QString folder)
-{
-    return readList(folder + file);
-}
-
-std::tuple<QString, QStringList> Mainapp::readList(QString file)
-{
-    QFile dataFile(file);
-    dataFile.open(QIODevice::ReadOnly);
-    QDataStream stream(&dataFile);
-    std::tuple<QString, QStringList> ret;
-    stream >> std::get<0>(ret);
-    qint32 size = 0;
-    stream >> size;
-    for (qint32 i = 0; i < size; i++)
-    {
-        QString name;
-        stream >> name;
-        std::get<1>(ret).append(name);
-    }
-    return ret;
 }
 
 void Mainapp::loadRessources()
@@ -505,61 +283,6 @@ void Mainapp::setSlave(bool slave)
     m_slave = slave;
 }
 
-bool Mainapp::getUseSeed()
-{
-    return m_useSeed;
-}
-
-void Mainapp::setUseSeed(bool useSeed)
-{
-    m_useSeed = useSeed;
-}
-
-void Mainapp::createTrainingData()
-{
-    QFile file("data.txt");
-    file.open(QIODevice::WriteOnly);
-    QTextStream stream(&file);
-    for (qint32 i = 0; i < 800; i++)
-    {
-        stream << QRandomGenerator::global()->bounded(4.0) << " ";
-        stream << QRandomGenerator::global()->bounded(0.4) << " ";
-        qint32 chance = QRandomGenerator::global()->bounded(0, 100);
-        if (chance < 40)
-        {
-            stream << 1 << " ";
-            stream << 0 << " ";
-            stream << 0 << " ";
-        }
-        else if (chance < 80)
-        {
-            stream << 0 << " ";
-            stream << 1 << " ";
-            stream << 0 << " ";
-        }
-        else
-        {
-            if (chance < 95)
-            {
-                stream << 0 << " ";
-                stream << 1 << " ";
-                stream << 1 << " ";
-            }
-            else
-            {
-                stream << 1 << " ";
-                stream << 0 << " ";
-                stream << 1 << " ";
-            }
-        }
-        stream << QRandomGenerator::global()->bounded(2.0) << " ";
-        stream << QRandomGenerator::global()->bounded(2.0) << " ";
-        stream << QRandomGenerator::global()->bounded(0, 2) << " ";
-        stream << QRandomGenerator::global()->bounded(20, 100) << " ";
-        stream << "\n";
-    }
-}
-
 void Mainapp::showCrashReport(QString log)
 {
     static qint32 counter = 0;
@@ -595,11 +318,6 @@ void Mainapp::showCrashReport(QString log)
         crashMutex.lock();
         crashMutex.unlock();
     }
-}
-
-QStringList Mainapp::getActiveMods()
-{
-    return Settings::getMods();
 }
 
 void Mainapp::loadArgs(const QStringList & args)
