@@ -13,8 +13,6 @@ class UnitPathFindingSystem : public PathFindingSystem
     Q_OBJECT
 public:
     explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
-
-    void continueExploring(qint32 movePoints);
     /**
      * @brief getRemainingCost
      * @param x

@@ -5,7 +5,7 @@
 #include "resource_management/fontmanager.h"
 
 Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
-    : V_Scrollbar (width, (width) * 100 / 10),
+    : V_Scrollbar (width - 90, (width - 90) * 100 / 10),
       m_minValue(minValue),
       m_maxValue(maxValue),
       m_Unit(unit)
@@ -14,52 +14,61 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     this->moveToThread(pApp->getWorkerthread());
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
-    m_Textfield = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont24();
-    style.color = FontManager::getFontColor();
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    m_Textfield->setStyle(style);
-    m_CurrentValue = minValue;
-    m_Textfield->setHtmlText((QString::number(minValue)  + " " + m_Unit));
-    addChild(m_Textfield);
-    m_Textfield->setX(getWidth() + 10);
+    m_spinBox = new SpinBox(150, minValue, maxValue);
+    m_spinBox->setUnit(" " + unit);
+    addChild(m_spinBox);
+    m_spinBox->setX(getWidth() + 15);
     connect(this, &Slider::V_Scrollbar::sigScrollValueChanged, this, &Slider::slotSliderValueChanged, Qt::QueuedConnection);
+    connect(m_spinBox.get(), &SpinBox::sigValueChanged, this, &Slider::slotSpinBoxValueChanged, Qt::QueuedConnection);
 }
 
 void Slider::slotSliderValueChanged(float value)
-{
-    
-    m_CurrentValue = (m_maxValue - m_minValue) * value + m_minValue;
-    m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit));
-    emit sliderValueChanged(m_CurrentValue);
-    
+{    
+    m_spinBox->setCurrentValue((m_maxValue - m_minValue) * value + m_minValue);
+    emit sliderValueChanged(static_cast<qint32>(m_spinBox->getCurrentValue()));
 }
 
 qint32 Slider::getCurrentValue() const
 {
-    return m_CurrentValue;
+    return static_cast<qint32>(m_spinBox->getCurrentValue());
 }
 
-void Slider::setCurrentValue(const qint32 &CurrentValue)
+void Slider::slotSpinBoxValueChanged(qreal currentValuevalue)
 {
-    
-    m_CurrentValue = CurrentValue;
-    if (m_CurrentValue < m_minValue)
+    qint32 value = static_cast<qint32>(currentValuevalue);
+    if (value < m_minValue)
     {
-        m_CurrentValue = m_minValue;
+        value = m_minValue;
     }
-    else if (m_CurrentValue > m_maxValue)
+    else if (value > m_maxValue)
     {
-        m_CurrentValue = m_maxValue;
+        value = m_maxValue;
     }
     else
     {
         // all fine do nothing
     }
-    m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit));
-    float scrollValue = static_cast<float>(m_CurrentValue - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);
-    
+    emit sliderValueChanged(static_cast<qint32>(scrollValue));
+}
+
+void Slider::setCurrentValue(const qint32 &CurrentValue)
+{    
+    qint32 value = CurrentValue;
+    if (value < m_minValue)
+    {
+        value = m_minValue;
+    }
+    else if (value > m_maxValue)
+    {
+        value = m_maxValue;
+    }
+    else
+    {
+        // all fine do nothing
+    }
+    m_spinBox->setCurrentValue(value);
+    float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
+    V_Scrollbar::setScrollvalue(scrollValue);    
 }

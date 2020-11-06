@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "ai/coreai.h"
+#include "ai/influencefrontmap.h"
 #include "game/unitpathfindingsystem.h"
 
 class HeavyAi : public CoreAI
@@ -15,6 +16,7 @@ public:
     {
         Unit* m_pUnit;
         spUnitPathFindingSystem m_pPfs;
+        qint32 m_movepoints{0};
         float m_virtualDamage{0.0f};
     };
     explicit HeavyAi();
@@ -23,6 +25,9 @@ public slots:
     virtual void process() override;
 
     void toggleAiPause();
+
+    void showFrontMap();
+    void hideFrontMap();
 protected:
 
 private:
@@ -34,6 +39,7 @@ private:
     QVector<UnitData> m_enemyUnits;
     QVector<UnitData> m_ownUnits;
     QVector<QPoint> m_updatePoints;
+    InfluenceFrontMap m_InfluenceFrontMap;
 
     spQmlVectorUnit m_pUnits = nullptr;
     spQmlVectorUnit m_pEnemyUnits = nullptr;

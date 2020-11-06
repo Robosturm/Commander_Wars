@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "objects/base/v_scrollbar.h"
+#include "objects/base/spinbox.h"
 
 class Slider;
 typedef oxygine::intrusive_ptr<Slider> spSlider;
@@ -21,11 +22,12 @@ signals:
     void sliderValueChanged(qint32 value);
 public slots:
     void slotSliderValueChanged(float value);
+private slots:
+    void slotSpinBoxValueChanged(qreal currentValuevalue);
 private:
-    oxygine::spTextField m_Textfield;
+    spSpinBox m_spinBox;
     qint32 m_minValue{0};
     qint32 m_maxValue{0};
-    qint32 m_CurrentValue{0};
     QString m_Unit;
 };
 

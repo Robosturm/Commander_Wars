@@ -127,6 +127,7 @@ void TimeSpinBox::focused()
 void TimeSpinBox::focusedLost()
 {
     qint32 value = checkInput();
+    m_Textfield->setX(0);
     emit sigValueChanged(value);
 }
 
@@ -178,9 +179,9 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
             {
                 xPos = 0;
             }
-            else if ((m_Text.size() - curmsgpos + 3) * fontWidth < boxSize)
+            else if ((m_Text.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
-                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
                 if (xPos > 0)
                 {
                     xPos = 0;

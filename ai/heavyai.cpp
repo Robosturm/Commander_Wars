@@ -18,10 +18,21 @@ void HeavyAi::toggleAiPause()
     m_pause = !m_pause;
 }
 
+void HeavyAi::showFrontMap()
+{
+    m_InfluenceFrontMap.show();
+}
+
+void HeavyAi::hideFrontMap()
+{
+    m_InfluenceFrontMap.hide();
+}
+
 void HeavyAi::process()
 {
     spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
     pBuildings->randomize();
+    setupTurn();
     if (m_pause)
     {
         m_timer.start(1000);
@@ -30,13 +41,14 @@ void HeavyAi::process()
     if (useBuilding(pBuildings.get())){}
     else
     {
-        setupTurn();
+
 
 
         turnMode = GameEnums::AiTurnMode_EndOfDay;
         if (useCOPower(m_pUnits.get(), m_pEnemyUnits.get()))
         {
             turnMode = GameEnums::AiTurnMode_DuringDay;
+            usedTransportSystem = false;
         }
         else
         {
@@ -66,7 +78,16 @@ void HeavyAi::setupTurn()
     }
     if (startOfTurn)
     {
-
+        // create influence map at the start of the turn
+        m_InfluenceFrontMap.reset();
+        for (auto & unit : m_ownUnits)
+        {
+            m_InfluenceFrontMap.addUnitInfluence(unit.m_pUnit, unit.m_pPfs.get(), unit.m_movepoints);
+        }
+        for (auto & unit : m_enemyUnits)
+        {
+            m_InfluenceFrontMap.addUnitInfluence(unit.m_pUnit, unit.m_pPfs.get(), unit.m_movepoints);
+        }
     }
 
     qint32 cost = 0;
@@ -82,6 +103,8 @@ void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
         UnitData data;
         data.m_pUnit = pUnits->at(i);
         data.m_pPfs = new UnitPathFindingSystem(pUnits->at(i));
+        data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
+        data.m_pPfs->setMovepoints(data.m_movepoints * 2);
         data.m_pPfs->explore();
         units.append(data);
     }

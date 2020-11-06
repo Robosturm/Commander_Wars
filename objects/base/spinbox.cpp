@@ -124,9 +124,20 @@ void SpinBox::focused()
     curmsgpos = m_Text.size();
 }
 
+QString SpinBox::getUnit() const
+{
+    return m_unit;
+}
+
+void SpinBox::setUnit(const QString &unit)
+{
+    m_unit = unit;
+}
+
 void SpinBox::focusedLost()
 {
     qreal value = checkInput();
+    m_Textfield->setX(0);
     emit sigValueChanged(value);
 }
 
@@ -165,7 +176,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setHtmlText(drawText);
+        m_Textfield->setHtmlText(drawText + m_unit);
 
         if (m_Text.size() > 0)
         {
@@ -178,9 +189,9 @@ void SpinBox::update(const oxygine::UpdateState& us)
             {
                 xPos = 0;
             }
-            else if ((m_Text.size() - curmsgpos + 3) * fontWidth < boxSize)
+            else if ((m_Text.size() - curmsgpos + 1) * fontWidth < boxSize)
             {
-                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 3;
+                xPos = m_Textbox->getWidth() - m_Textfield->getTextRect().getWidth() - fontWidth * 1;
                 if (xPos > 0)
                 {
                     xPos = 0;
@@ -207,7 +218,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
             checkInput();
         }
         QString drawText = m_Text;
-        m_Textfield->setHtmlText(drawText);
+        m_Textfield->setHtmlText(drawText + m_unit);
     }
     oxygine::Actor::update(us);
 }
@@ -280,7 +291,7 @@ void SpinBox::setValue(qreal value)
             }
         }
     }
-    m_Textfield->setHtmlText(m_Text);
+    m_Textfield->setHtmlText(m_Text + m_unit);
     
 }
 

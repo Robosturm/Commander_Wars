@@ -4534,6 +4534,11 @@ Version: </translation>
         <translation>Normal Def.</translation>
     </message>
     <message>
+        <location filename="../objects/playerselection.cpp" line="327"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/playerselection.cpp" line="693"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>

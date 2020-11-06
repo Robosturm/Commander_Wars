@@ -46,6 +46,9 @@ public:
     void setInfinityValue(qreal InfinityValue);
 
     virtual void setEnabled(bool value) override;
+    QString getUnit() const;
+    void setUnit(const QString &unit);
+
 signals:
     void sigValueChanged(qreal value);
 public slots:
@@ -70,6 +73,7 @@ private:
     oxygine::spButton m_pArrowDown;
     oxygine::spButton m_pArrowUp;
     QString m_Text;
+    QString m_unit;
     QElapsedTimer toggle;
     qint32 curmsgpos{0};
     qreal m_InfinityValue{-1.0};
