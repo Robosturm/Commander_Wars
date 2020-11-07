@@ -17,18 +17,19 @@ class QmlVectorPoint;
 class InfluenceFrontMap : public QObject
 {
     Q_OBJECT
+public:
     struct InfluenceInfo
     {
         InfluenceInfo(GameMap* pMap);
-        QVector<qint32> playerValues;
+        void reset();
         void updateOwner();
+        QVector<qint32> playerValues;
         qint32 highestInfluence{0};
         QVector<qint32> owners;
         QStringList frontMovetype;
         QVector<qint32> frontOwners;
         bool frontLineCreated{false};
     };
-public:
     explicit InfluenceFrontMap(const QVector<spIslandMap> & islands);
     virtual ~InfluenceFrontMap() = default;
     void addBuildingInfluence();
@@ -49,6 +50,11 @@ public:
     void hide();
 
     void reset();
+
+    const InfluenceInfo & getInfluenceInfo(qint32 x, qint32 y)
+    {
+        return m_InfluenceMap[x][y];
+    }
 private:
     /**
      * @brief getIslandFromUnitId

@@ -138,6 +138,19 @@ void InfluenceFrontMap::InfluenceInfo::updateOwner()
     highestInfluence = highestValue;
 }
 
+void InfluenceFrontMap::InfluenceInfo::reset()
+{
+    for (auto & value : playerValues)
+    {
+        value = 0;
+    }
+    highestInfluence = 0;
+    owners.clear();
+    frontMovetype.clear();
+    frontOwners.clear();
+    frontLineCreated = false;
+}
+
 void InfluenceFrontMap::reset()
 {
     Console::print("InfluenceFrontMap::reset()", Console::eDEBUG);
@@ -147,7 +160,7 @@ void InfluenceFrontMap::reset()
     {
         for (qint32 y = 0; y < m_InfluenceMap[x].size(); ++y)
         {
-            m_InfluenceMap[x][y] = InfluenceInfo(pMap.get());
+            m_InfluenceMap[x][y].reset();
         }
     }
 }
