@@ -21,6 +21,17 @@ qint32 UnitSpriteManager::getUnitType(qint32 i)
     return static_cast<qint32>(GameEnums::UnitType_Ground);
 }
 
+QString UnitSpriteManager::getMovementType(QString id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMovementType";
+    QJSValue ret = pInterpreter->doFunction(id, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
 
 qint32 UnitSpriteManager::getUnitType(QString id)
 {

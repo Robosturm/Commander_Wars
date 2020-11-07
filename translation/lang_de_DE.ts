@@ -7397,7 +7397,7 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
 <context>
     <name>UnitSpriteManager</name>
     <message>
-        <location filename="../resource_management/unitspritemanager.cpp" line="85"/>
+        <location filename="../resource_management/unitspritemanager.cpp" line="96"/>
         <source>Ground</source>
         <translation type="unfinished">Boden</translation>
     </message>

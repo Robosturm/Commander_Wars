@@ -7056,7 +7056,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>UnitSpriteManager</name>
     <message>
-        <location filename="../resource_management/unitspritemanager.cpp" line="85"/>
+        <location filename="../resource_management/unitspritemanager.cpp" line="96"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>

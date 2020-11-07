@@ -1635,16 +1635,7 @@ bool CoreAI::onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, q
 
 bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1)
 {
-    if (m_IslandMaps[islandIdx]->getIsland(x, y) ==
-        m_IslandMaps[islandIdx]->getIsland(x1, y1))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-    return false;
+    return m_IslandMaps[islandIdx]->sameIsland(x, y, x1, y1);
 }
 
 qint32 CoreAI::getIsland(Unit* pUnit)

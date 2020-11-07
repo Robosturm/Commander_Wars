@@ -23,7 +23,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
 
     for (qint32 x = 0; x < width; x++)
     {
-        m_Islands.append(QVector<qint32>(heigth, -1));
+        m_Islands.append(QVector<qint32>(heigth, UNKNOWN));
     }
     spUnit pUnit = new Unit(unitID, pOwner, false);
     pUnit->setIgnoreUnitCollision(true);

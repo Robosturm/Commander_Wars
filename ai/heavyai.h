@@ -27,11 +27,13 @@ public slots:
     void toggleAiPause();
 
     void showFrontMap();
+    void showFrontLines();
     void hideFrontMap();
 protected:
 
 private:
     void setupTurn();
+    void createIslandMaps();
     void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units);

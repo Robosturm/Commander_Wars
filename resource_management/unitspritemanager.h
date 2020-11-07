@@ -22,6 +22,12 @@ public:
      */
     qint32 getUnitType(QString id);
     /**
+     * @brief getMovementType
+     * @param id
+     * @return
+     */
+    QString getMovementType(QString id);
+    /**
      * @brief getUnitsSorted
      * @return
      */

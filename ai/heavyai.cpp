@@ -1,13 +1,17 @@
 #include "heavyai.h"
 
 #include "coreengine/qmlvector.h"
+#include "coreengine/console.h"
 
 #include "game/player.h"
+
+#include "resource_management/unitspritemanager.h"
 
 const qint32 HeavyAi::minSiloDamage = 7000;
 
 HeavyAi::HeavyAi()
-    : CoreAI(GameEnums::AiTypes_Heavy)
+    : CoreAI(GameEnums::AiTypes_Heavy),
+      m_InfluenceFrontMap(m_IslandMaps)
 {
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
@@ -21,6 +25,11 @@ void HeavyAi::toggleAiPause()
 void HeavyAi::showFrontMap()
 {
     m_InfluenceFrontMap.show();
+}
+
+void HeavyAi::showFrontLines()
+{
+    m_InfluenceFrontMap.showFrontlines();
 }
 
 void HeavyAi::hideFrontMap()
@@ -41,9 +50,6 @@ void HeavyAi::process()
     if (useBuilding(pBuildings.get())){}
     else
     {
-
-
-
         turnMode = GameEnums::AiTurnMode_EndOfDay;
         if (useCOPower(m_pUnits.get(), m_pEnemyUnits.get()))
         {
@@ -78,8 +84,12 @@ void HeavyAi::setupTurn()
     }
     if (startOfTurn)
     {
+        Console::print("HeavyAi initial start of turn calculation", Console::eDEBUG);
+        createIslandMaps();
+
         // create influence map at the start of the turn
         m_InfluenceFrontMap.reset();
+        m_InfluenceFrontMap.addBuildingInfluence();
         for (auto & unit : m_ownUnits)
         {
             m_InfluenceFrontMap.addUnitInfluence(unit.m_pUnit, unit.m_pPfs.get(), unit.m_movepoints);
@@ -88,11 +98,25 @@ void HeavyAi::setupTurn()
         {
             m_InfluenceFrontMap.addUnitInfluence(unit.m_pUnit, unit.m_pPfs.get(), unit.m_movepoints);
         }
+        m_InfluenceFrontMap.updateOwners();
+        m_InfluenceFrontMap.findFrontLines();
+        Console::print("HeavyAi front lines created", Console::eDEBUG);
     }
 
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
     m_missileTarget = (cost >= minSiloDamage);
+}
+
+void HeavyAi::createIslandMaps()
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    qint32 unitCount = pUnitSpriteManager->getCount();
+    for (qint32 i = 0; i < unitCount; i++)
+    {
+        QString unitId = pUnitSpriteManager->getID(i);
+        createIslandMap(pUnitSpriteManager->getMovementType(unitId), unitId);
+    }
 }
 
 void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
