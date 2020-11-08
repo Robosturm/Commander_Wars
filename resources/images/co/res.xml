@@ -115,6 +115,8 @@
 		<image file="ac/co_isabella+face.png" cols = "3" />
 		<image file="ac/co_davis+face.png" cols = "3" />
 		<image file="ac/co_davis+info.png" />
+		<image file="ac/co_officier_ac+face.png" cols = "3" />		
+		<image file="ac/co_officier_ac+info.png" />	
 		
 		<!-- OS -->
 		<image file="os/co_andy+nrm.png" />
@@ -224,11 +226,13 @@
 		<image file="bd/co_adam+face.png" cols = "3" />		
 		<image file="bd/co_adam+alt+nrm.png" />
 		<image file="bd/co_adam+alt+info.png" />
-		<image file="bd/co_adam+alt+face.png" cols = "3" />
-		
+		<image file="bd/co_adam+alt+face.png" cols = "3" />		
 		<image file="bd/co_artemis+nrm.png" />
 		<image file="bd/co_artemis+info.png" />
 		<image file="bd/co_artemis+face.png" cols = "3" />
+		<image file="bd/co_officier_bd+face.png" cols = "3" />		
+		<image file="bd/co_officier_bd+info.png" />	
+		
 		<!-- dm -->
 		<image file="dm/co_graves+nrm.png" />
 		<image file="dm/co_graves+info.png" />
@@ -278,6 +282,10 @@
 		<set scale_factor = "0.65" />	
 		<image file="dm/co_beast+nrm.png" />
 		<set scale_factor = "1.0" />	
+		<image file="dm/co_officier_dm+face.png" cols = "3" />		
+		<image file="dm/co_officier_dm+info.png" />	
+		<image file="dm/co_fanatic+face.png" cols = "3" />		
+		<image file="dm/co_fanatic+info.png" />	
 		
 		
 		<!-- GE -->
@@ -418,6 +426,8 @@
 		<image file="ti/co_carrie+nrm.png" />
 		<image file="ti/co_carrie+info.png" />
 		<image file="ti/co_carrie+face.png" cols = "3" />
+		<image file="ti/co_officier_ti+face.png" cols = "3" />		
+		<image file="ti/co_officier_ti+info.png" />	
 		
 		<!-- YC -->
 		<image file="yc/co_kanbei+nrm.png" />

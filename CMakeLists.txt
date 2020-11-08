@@ -358,6 +358,7 @@ set(${PROJECT_NAME}_SRCS
         ai/normalai.cpp
         ai/heavyai.cpp
         ai/influencefrontmap.cpp
+        ai/heavyaiactionscorecalculator.cpp
 
         # multiplayer
         multiplayer/lobbymenu.cpp

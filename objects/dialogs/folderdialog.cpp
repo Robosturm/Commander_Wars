@@ -10,6 +10,7 @@
 FolderDialog::FolderDialog(QString startFolder)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
@@ -104,9 +105,8 @@ FolderDialog::FolderDialog(QString startFolder)
     });
     connect(this, &FolderDialog::sigShowFolder, this, &FolderDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
-
-    Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, &Mainapp::sigKeyDown, this, &FolderDialog::KeyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &FolderDialog::KeyInput, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 FolderDialog::~FolderDialog()
@@ -115,7 +115,8 @@ FolderDialog::~FolderDialog()
 
 void FolderDialog::showFolder(QString folder)
 {
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -202,7 +203,7 @@ void FolderDialog::showFolder(QString folder)
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
-    
+    pApp->continueRendering();
 }
 
 void FolderDialog::deleteItem()
@@ -221,7 +222,7 @@ void FolderDialog::KeyInput(oxygine::KeyEvent event)
     // for debugging
     Qt::Key cur = event.getKey();
     if (!m_CurrentFolder->getFocused() &&
-         m_focused)
+        m_focused)
     {
         switch(cur)
         {

@@ -11,6 +11,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     : m_preview(preview)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
@@ -132,9 +133,8 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     });
     connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
-
-    Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &FileDialog::KeyInput, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 FileDialog::~FileDialog()
@@ -158,7 +158,8 @@ void FileDialog::setPreview(bool preview)
 
 void FileDialog::showFolder(QString folder)
 {
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -263,7 +264,7 @@ void FileDialog::showFolder(QString folder)
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
-    
+    pApp->continueRendering();
 }
 
 void FileDialog::update(const oxygine::UpdateState& us)

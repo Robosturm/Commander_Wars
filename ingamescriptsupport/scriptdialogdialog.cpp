@@ -75,7 +75,8 @@ void ScriptDialogDialog::addItem()
 
 void ScriptDialogDialog::updateDialog()
 {
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     m_Panel->clearContent();
     qint32 count = m_Event->getDialogSize();
     qint32 panelWidth = Settings::getWidth();
@@ -118,13 +119,18 @@ void ScriptDialogDialog::updateDialog()
         {
             ids.append(pCOSpriteManager->getID(i));
         }
-        ids.append("co_beast");
+        // todo make moddable
         ids.append("co_davis");
+        ids.append("co_fanatic");
         ids.append("co_officier_os");
         ids.append("co_officier_bm");
         ids.append("co_officier_ge");
         ids.append("co_officier_yc");
         ids.append("co_officier_bh");
+        ids.append("co_officier_ac");
+        ids.append("co_officier_bd");
+        ids.append("co_officier_ti");
+        ids.append("co_officier_dm");
 
         auto creator = [=](QString id)
         {
@@ -190,10 +196,9 @@ void ScriptDialogDialog::updateDialog()
             emit sigShowChangeBackground();
         });
     }
-    m_Panel->setContentHeigth(count * 40 + 20);
+    m_Panel->setContentHeigth(count * 40 + 80);
     m_Panel->setContentWidth(panelWidth);
-    
-
+    pApp->continueRendering();
 }
 
 void ScriptDialogDialog::removeLast()
@@ -217,7 +222,7 @@ void ScriptDialogDialog::showChangeBackground()
         folder = file.path();
         fileName = file.fileName();
     }
-    spFileDialog pFileDialog = new FileDialog(folder, QVector<QString>(1, "*.png"), fileName);
+    spFileDialog pFileDialog = new FileDialog(folder, QVector<QString>(1, "*.png"), fileName, true);
     addChild(pFileDialog);
     connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
     

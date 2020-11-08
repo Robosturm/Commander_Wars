@@ -20,24 +20,28 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
     connect(&finishTimer, &QTimer::timeout, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
-
     m_BackgroundSprite = new oxygine::Sprite();
+    m_BackgroundSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_BackgroundSprite);
+
+    setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
     m_TextMask = new oxygine::Sprite();
     m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextMask->setResAnim(pAnim);
+    m_BackgroundSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
     m_TextBackground = new oxygine::Sprite();
     m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
+    m_TextBackground->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
+    m_TextBackground->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_TextBackground);
 
     oxygine::TextStyle style = FontManager::getMainFont48();
@@ -60,6 +64,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_COSprite = new oxygine::Sprite();
     m_COSprite->setScale(2);
     m_COSprite->setY(6);
+    m_COSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_COSprite);
 
     setPositionTop(false);
@@ -203,7 +208,6 @@ void GameAnimationDialog::updateShownText()
     }
 }
 
-
 bool GameAnimationDialog::onFinished()
 {
     if (writePosition >= m_Text.size())
@@ -283,6 +287,7 @@ void GameAnimationDialog::_loadBackground()
         pAnim->init(m_BackgroundFile, 1, 1, 1.0f);
         m_BackgroundAnim = pAnim;
         m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
+        // m_BackgroundSprite->setPosition(-1, -1);
         m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
         m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
     }

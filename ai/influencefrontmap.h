@@ -51,7 +51,7 @@ public:
 
     void reset();
 
-    const InfluenceInfo & getInfluenceInfo(qint32 x, qint32 y)
+    const InfluenceInfo & getInfluenceInfo(qint32 x, qint32 y) const
     {
         return m_InfluenceMap[x][y];
     }

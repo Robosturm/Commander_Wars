@@ -100,15 +100,19 @@ namespace oxygine
     void GameWindow::paintGL()
     {
         updateData();
-        oxygine::getStage()->update();
-        if (beginRendering())
+        if (m_pauseMutex.tryLock())
         {
-            QColor clearColor(181, 255, 32, 255);
-            QSize size = oxygine::GameWindow::getWindow()->size();
-            oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
-            // Render all actors inside the stage. Actor::render will also be called for all its children
-            oxygine::getStage()->render(clearColor, viewport);
-            swapDisplayBuffers();
+            oxygine::getStage()->update();
+            if (beginRendering())
+            {
+                QColor clearColor(181, 255, 32, 255);
+                QSize size = oxygine::GameWindow::getWindow()->size();
+                oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
+                // Render all actors inside the stage. Actor::render will also be called for all its children
+                oxygine::getStage()->render(clearColor, viewport);
+                swapDisplayBuffers();
+            }
+            m_pauseMutex.unlock();
         }
         // check for termination
         if (m_quit)

@@ -27,8 +27,8 @@ namespace oxygine
         _textRect(0, 0, 0, 0),
         _rtscale(1.0f)
     {
-        _flags |= flag_rebuild;
         _style.font = _defaultFont;
+        setText("");
     }
 
     TextField::~TextField()
@@ -42,63 +42,58 @@ namespace oxygine
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
 
-    void TextField::needRebuild()
-    {
-        _flags |= flag_rebuild;
-    }
-
     void TextField::setVAlign(TextStyle::VerticalAlign align)
     {
         _style.vAlign = align;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setMultiline(bool multiline)
     {
         _style.multiline = multiline;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setBreakLongWords(bool val)
     {
         _style.breakLongWords = val;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setLinesOffset(int offset)
     {
         _style.linesOffset = offset;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setBaselineScale(float s)
     {
         _style.baselineScale = s;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setKerning(int kerning)
     {
         _style.kerning = kerning;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setFontSize(int size)
     {
         _style.fontSize = size;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setStyleColor(const QColor& color)
     {
         _style.color = color;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setOptions(size_t opt)
     {
         _style.options = opt;
-        needRebuild();
+        rebuildText();
     }
 
     const ResFont* TextField::getFont() const
@@ -110,21 +105,23 @@ namespace oxygine
     {
         _style.font = font;
         if (!_style.font)
+        {
             _style.font = _defaultFont;
-        needRebuild();
+        }
+        rebuildText();
     }
 
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
     {
         _style.hAlign = align;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setAlign(TextStyle::VerticalAlign vAlign, TextStyle::HorizontalAlign hAlign)
     {
         _style.vAlign = vAlign;
         _style.hAlign = hAlign;
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::setStyle(const TextStyle& st)
@@ -135,44 +132,47 @@ namespace oxygine
         _style = st;
 
         if (st.hAlign == TextStyle::HALIGN_DEFAULT)
+        {
             _style.hAlign = halign;
-
+        }
         if (st.vAlign == TextStyle::VALIGN_DEFAULT)
+        {
             _style.vAlign = valign;
+        }
 
         if (st.fontSize == 0)
+        {
             _style.fontSize = size;
+        }
 
         if (!_style.font)
+        {
             _style.font = _defaultFont;
-
-        needRebuild();
+        }
+        rebuildText();
     }
 
     void TextField::sizeChanged(const Vector2&)
     {
-        needRebuild();
+        rebuildText();
     }
 
     void TextField::matChanged()
     {
-        qWarning("not optimal");
-        if (_flags & flag_rebuild)
-            return;
-
         if (!_root)
+        {
             return;
-
+        }
         _root->updateMaterial(*_mat.get());
     }
 
     void TextField::setText(QString str)
     {
-        _flags &= ~flag_html;
+        m_htmlText = false;
         if (_text != str)
         {
             _text = str;
-            needRebuild();
+            rebuildText();
         }
     }
 
@@ -184,11 +184,11 @@ namespace oxygine
 
     void TextField::setHtmlText(QString str)
     {
-        _flags |= flag_html;
+        m_htmlText = true;
         if (_text != str)
         {
             _text = str;
-            needRebuild();
+            rebuildText();
         }
     }
 
@@ -269,42 +269,40 @@ namespace oxygine
 
         globalScale = qAbs(globalScale);
 
-        float scale = 1.0f;
-        const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
-
-        if ((_flags & flag_rebuild || _rtscale != scale) && font)
-        {
-            _rtscale = scale;
-            //_realFontSize = fontSize;
-            _root = nullptr;
-
-            _flags &= ~flag_rebuild;
-
-            if (_flags & flag_html)
-            {
-                text::TextBuilder b;
-                _root = b.parse(_text);
-            }
-            else
-            {
-                _root = new text::TextNode(_text);
-            }
-
-            text::Aligner rd(_style, _mat, font, scale, getSize());
-            rd.begin();
-            _root->resize(rd);
-            rd.end();
-
-            _root->finalPass(rd);
-            rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
-
-            _textRect = rd.bounds;
-
-            Event ev(EVENT_REBUILD);
-            dispatchEvent(&ev);
-        }
-
         return _root.get();
+    }
+
+    void TextField::rebuildText()
+    {
+        float scale = 1.0f;
+        if (_style.font != nullptr)
+        {
+            const Font* font = _style.font->getClosestFont(scale, _style.fontSize, scale);
+            if (font)
+            {
+                m_Locked.lock();
+                _rtscale = scale;
+                //_realFontSize = fontSize;
+                _root = nullptr;
+                if (m_htmlText)
+                {
+                    text::TextBuilder b;
+                    _root = b.parse(_text);
+                }
+                else
+                {
+                    _root = new text::TextNode(_text);
+                }
+                text::Aligner rd(_style, _mat, font, scale, getSize());
+                rd.begin();
+                _root->resize(rd);
+                rd.end();
+                _root->finalPass(rd);
+                rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
+                _textRect = rd.bounds;
+                m_Locked.unlock();
+            }
+        }
     }
 
     void TextField::doRender(RenderState const& rs)

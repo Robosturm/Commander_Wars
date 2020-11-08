@@ -20,6 +20,7 @@ Achievementmenu::Achievementmenu()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Achievement Menue", Console::eDEBUG);
 
@@ -29,7 +30,7 @@ Achievementmenu::Achievementmenu()
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
     sprite->setResAnim(pBackground);
-    sprite->setPosition(-1, -1);
+    sprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     // background should be last to draw
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
     sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
@@ -101,6 +102,7 @@ Achievementmenu::Achievementmenu()
     addChild(pTextfield);
 
     searchChanged("");
+    pApp->continueRendering();
 }
 
 void Achievementmenu::exitMenue()

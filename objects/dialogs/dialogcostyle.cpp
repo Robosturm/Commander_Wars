@@ -19,6 +19,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
       m_currentCOID(coid)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -134,6 +135,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
         }
     }
     m_update = true;
+    pApp->continueRendering();
 }
 
 void DialogCOStyle::selecetedColorChanged(QColor color)

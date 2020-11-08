@@ -77,6 +77,7 @@ void PlayerInfo::updateData()
                 pAnim = pGameManager->getResAnim("2co");
             }
             pSprite->setResAnim(pAnim);
+            pSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
             pSprite->setColorTable(pPlayer->getColorTableAnim());
             pSprite->setY(yPos);
             pSprite->setFlippedX(m_flippedX);

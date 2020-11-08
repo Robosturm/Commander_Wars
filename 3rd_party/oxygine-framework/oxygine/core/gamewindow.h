@@ -42,6 +42,31 @@ namespace oxygine
          * @return
          */
         static bool isEvenScale(qint32 width1, qint32 width2);
+        /**
+         * @brief pauseRendering
+         */
+        void pauseRendering()
+        {
+            Q_ASSERT(isWorker());
+            if (m_pausedCounter == 0)
+            {
+                m_pauseMutex.lock();
+            }
+            ++m_pausedCounter;
+        }
+        /**
+         * @brief continueRendering
+         */
+        void continueRendering()
+        {
+            Q_ASSERT(isWorker());
+            --m_pausedCounter;
+            if (m_pausedCounter == 0)
+            {
+                m_pauseMutex.unlock();
+            }
+        }
+
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
 
@@ -51,7 +76,6 @@ namespace oxygine
         void sigMouseMoveEvent(qint32 x, qint32 y);
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
-
     protected:
         virtual void initializeGL() override;
         virtual void registerResourceTypes();
@@ -75,6 +99,9 @@ namespace oxygine
 
         bool m_quit{false};
         QBasicTimer m_Timer;
+
+        QMutex m_pauseMutex;
+        qint32 m_pausedCounter{0};
 
         static GameWindow* _window;
     };

@@ -678,27 +678,27 @@
 <context>
     <name>Achievementmenu</name>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="43"/>
+        <location filename="../menue/achievementmenu.cpp" line="44"/>
         <source>Exit</source>
         <translation type="unfinished">Verlassen</translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="63"/>
+        <location filename="../menue/achievementmenu.cpp" line="64"/>
         <source>Search: </source>
         <translation type="unfinished">Suche: </translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="67"/>
+        <location filename="../menue/achievementmenu.cpp" line="68"/>
         <source>Text that will be searched for in the title of each wikipage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="71"/>
+        <location filename="../menue/achievementmenu.cpp" line="72"/>
         <source>Search</source>
         <translation type="unfinished">Suche</translation>
     </message>
     <message>
-        <location filename="../menue/achievementmenu.cpp" line="99"/>
+        <location filename="../menue/achievementmenu.cpp" line="100"/>
         <source>Achievement Progress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1514,23 +1514,23 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="37"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="38"/>
         <source>Apply</source>
         <translation>Annehmen</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="50"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="51"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="114"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="115"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="180"/>
-        <location filename="../objects/dialogs/dialogcostyle.cpp" line="194"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="182"/>
+        <location filename="../objects/dialogs/dialogcostyle.cpp" line="196"/>
         <source>CO Style </source>
         <translation>KO Style </translation>
     </message>
@@ -2473,17 +2473,17 @@ This is immediatly applied.</source>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="43"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="44"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="81"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="82"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/filedialog.cpp" line="311"/>
+        <location filename="../objects/dialogs/filedialog.cpp" line="312"/>
         <source>Do you want to delete the item </source>
         <translation>Möchtest du diese Items löschen </translation>
     </message>
@@ -2491,17 +2491,17 @@ This is immediatly applied.</source>
 <context>
     <name>FolderDialog</name>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="38"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="52"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="53"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/folderdialog.cpp" line="233"/>
+        <location filename="../objects/dialogs/folderdialog.cpp" line="234"/>
         <source>Do you want to delete the folder </source>
         <translation>Möchtest du diesen Ordner löschen </translation>
     </message>
@@ -5671,44 +5671,44 @@ Version: </translation>
         <translation>entferne letztes</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
         <source>The text the CO should talk.</source>
         <translation>Der Text den der KO sprechen soll.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Happy</source>
         <translation>Glücklich</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Sad</source>
         <translation>Traurig</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation>Die KO Stimmung / Icon das wärend des Dialogs verwendet wird.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="157"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation>Die ID des KO&apos;s der sprechen soll.
 Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="175"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="181"/>
         <source>The background color of the dialog.</source>
         <translation>Die Hintergrundfarbe des Dialogs.</translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="184"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="190"/>
         <source>Background</source>
         <translation>Hintergrund</translation>
     </message>

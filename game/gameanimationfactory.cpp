@@ -117,15 +117,11 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
 {
     
     GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
-    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pAnim->setDialog(text);
     pAnim->setCO(coid, mood);
     pAnim->setColor(color);
-    spGameMenue pGameMenue = GameMenue::getInstance();
-    if (pGameMenue.get() != nullptr)
-    {
-        pGameMenue->addChild(pAnim);
-    }
+    oxygine::getStage()->addChild(pAnim);
     m_Animations.append(pAnim);
     
     return pAnim;

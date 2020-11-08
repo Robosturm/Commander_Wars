@@ -13,9 +13,6 @@ namespace oxygine
     public:
         static void setDefaultFont(ResFont*);
         static ResFont* getDefaultFont();
-
-        enum {EVENT_REBUILD = sysEventID('T', 'F', 'r') };
-
         TextField();
         ~TextField();
 
@@ -86,11 +83,6 @@ namespace oxygine
 
         text::Node* getRootNode(float scale);
     protected:
-        enum
-        {
-            flag_html = flag_last << 1,
-            flag_rebuild = flag_last << 2,
-        };
         QString  _text;
         TextStyle _style;
 
@@ -98,10 +90,9 @@ namespace oxygine
         Rect _textRect;
         float _rtscale;
         int _realFontSize;
-
-
-        void needRebuild();
+        bool m_htmlText = false;
         void sizeChanged(const Vector2& size) override;
         void matChanged() override;
+        void rebuildText();
     };
 }
