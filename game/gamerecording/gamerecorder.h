@@ -119,7 +119,13 @@ public:
      * @param score
      * @return
      */
-    Rang getRank(qint32 score);
+    static Rang getRank(qint32 score);
+    /**
+     * @brief getRankAnim
+     * @param rang
+     * @return
+     */
+    static oxygine::ResAnim* getRankAnim(GameRecorder::Rang rang);
 
     DayToDayRecord* getDayRecord(qint32 index)
     {

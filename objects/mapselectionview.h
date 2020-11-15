@@ -63,6 +63,12 @@ public slots:
     void loadCurrentMap();
     void updateMapData();
 private:
+    /**
+     * @brief loadMapVictoryInfo
+     */
+    void loadMapVictoryInfo();
+
+private:
     spCampaign m_CurrentCampaign;
     /**
       * @brief m_currentMapFile stores the current map info
@@ -75,6 +81,7 @@ private:
     oxygine::spTextField m_MapName;
     oxygine::spTextField m_MapAuthor;
     oxygine::spTextField m_MapDescription;
+    oxygine::spActor m_pVictoryInfo;
     spMinimap m_pMinimap;
     spPanel m_MinimapPanel;
     QVector<spBuilding> m_BuildingCountSprites;

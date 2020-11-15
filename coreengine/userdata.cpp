@@ -7,6 +7,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 #include "objects/achievementbanner.h"
 
 Userdata* Userdata::m_pInstance = nullptr;
@@ -179,6 +180,72 @@ QVector<Userdata::Achievement>* Userdata::getAchievements()
     return &m_achievements;
 }
 
+void Userdata::addVictoryForMap(QString mapPath, QString co1, QString co2, qint32 score)
+{
+    bool found = false;
+    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    {
+        if (mapPath == m_mapVictoryInfo[i].mapPath)
+        {
+            qint32 insertPos = -1;
+            if (m_mapVictoryInfo[i].co1.size() >= MAX_VICTORY_INFO_PER_MAP)
+            {
+                for (qint32 i2 = 0; i2 < score; ++i2)
+                {
+                    if (m_mapVictoryInfo[i].score[i2] <= score)
+                    {
+                        insertPos = i2;
+                        m_mapVictoryInfo[i].co1.removeLast();
+                        m_mapVictoryInfo[i].co2.removeLast();
+                        m_mapVictoryInfo[i].score.removeLast();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                insertPos = m_mapVictoryInfo[i].score.length();
+                for (qint32 i2 = 0; i2 < m_mapVictoryInfo[i].score.length(); ++i2)
+                {
+                    if (m_mapVictoryInfo[i].score[i2] <= score)
+                    {
+                        insertPos = i2;
+                        break;
+                    }
+                }
+            }
+            if (insertPos >= 0)
+            {
+                m_mapVictoryInfo[i].co1.insert(insertPos, co1);
+                m_mapVictoryInfo[i].co2.insert(insertPos, co2);
+                m_mapVictoryInfo[i].score.insert(insertPos, score);
+            }
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        qint32 i = m_mapVictoryInfo.length();
+        m_mapVictoryInfo.append(MapVictoryInfo());
+        m_mapVictoryInfo[i].mapPath = mapPath;
+        m_mapVictoryInfo[i].co1.append(co1);
+        m_mapVictoryInfo[i].co2.append(co2);
+        m_mapVictoryInfo[i].score.append(score);
+    }
+}
+
+const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
+{
+    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    {
+        if (mapPath == m_mapVictoryInfo[i].mapPath)
+        {
+            return &m_mapVictoryInfo[i];
+        }
+    }
+    return nullptr;
+}
+
 void Userdata::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -201,6 +268,14 @@ void Userdata::serializeObject(QDataStream& pStream) const
     {
         pStream << m_achievements[i].id;
         pStream << m_achievements[i].progress;
+    }
+    pStream << static_cast<qint32>(m_mapVictoryInfo.size());
+    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    {
+        pStream << m_mapVictoryInfo[i].mapPath;
+        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].co1);
+        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].co2);
+        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].score);
     }
 }
 
@@ -257,6 +332,18 @@ void Userdata::deserializeObject(QDataStream& pStream)
             m_achievements.append(Achievement());
             pStream >> m_achievements[i].id;
             pStream >> m_achievements[i].progress;
+        }
+    }
+    if (version > 4)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            m_mapVictoryInfo.append(MapVictoryInfo());
+            pStream >> m_mapVictoryInfo[i].mapPath;
+            m_mapVictoryInfo[i].co1 = Filesupport::readVectorList<QString, QList>(pStream);
+            m_mapVictoryInfo[i].co2 = Filesupport::readVectorList<QString, QList>(pStream);
+            m_mapVictoryInfo[i].score = Filesupport::readVectorList<qint32, QVector>(pStream);
         }
     }
 }

@@ -271,7 +271,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 8;
+        return 9;
     }
     /**
      * @brief clearMap
@@ -326,6 +326,9 @@ public:
      * @brief registerMapAtInterpreter
      */
     void registerMapAtInterpreter();
+    QString getMapPath() const;
+    void setMapPath(const QString &mapPath);
+
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -734,6 +737,7 @@ private:
     QString m_mapName;
     QString m_mapAuthor;
     QString m_mapDescription;
+    QString m_mapPath;
     QVector<QVector<spTerrain>> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;

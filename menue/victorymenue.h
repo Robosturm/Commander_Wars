@@ -67,6 +67,10 @@ protected:
      * @return
      */
     qint32 getStepTime();
+    /**
+     * @brief AddScoreToUserdata
+     */
+    void AddScoreToUserdata();
 private:
     GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**

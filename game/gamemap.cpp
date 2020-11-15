@@ -519,6 +519,16 @@ void GameMap::killDeadUnits()
     
 }
 
+QString GameMap::getMapPath() const
+{
+    return m_mapPath;
+}
+
+void GameMap::setMapPath(const QString &mapPath)
+{
+    m_mapPath = mapPath;
+}
+
 void GameMap::setImagesize(const qint32 &imagesize)
 {
     m_imagesize = imagesize;
@@ -982,6 +992,7 @@ void GameMap::serializeObject(QDataStream& pStream) const
     {
         pStream << false;
     }
+    pStream << m_mapPath;
 }
 
 void GameMap::readMapHeader(QDataStream& pStream,
@@ -1122,6 +1133,10 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
                 m_Campaign = new Campaign();
                 m_Campaign->deserializeObject(pStream);
             }
+        }
+        if (version > 8)
+        {
+            pStream >> m_mapPath;
         }
     }
     if (showLoadingScreen)

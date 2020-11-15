@@ -20,6 +20,7 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/userdata.h"
 
 VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     : QObject(),
@@ -414,7 +415,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                     m_VictoryTexts[i][3]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][3]);
                 }
-            }            
+            }
         }
         m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
     }
@@ -425,8 +426,8 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit sigFinishCurrentGraph();
-           pTouchEvent->stopPropagation();
+            emit sigFinishCurrentGraph();
+            pTouchEvent->stopPropagation();
         }
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
@@ -436,6 +437,10 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         // despawn slave process on finish
         Console::print("Closing slave cause the game is finished.", Console::eDEBUG);
         QCoreApplication::exit(0);
+    }
+    else
+    {
+        AddScoreToUserdata();
     }
 }
 
@@ -457,7 +462,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         for (qint32 i = 0; i < m_YGraphItems.size(); i++)
         {
             m_YGraphItems[i]->setHtmlText(QString::number(static_cast<qint32>(m_GraphMaxValues[static_cast<qint32>(m_CurrentGraphMode)]
-                                                      * (1.0f - i / static_cast<float>(m_YGraphItems.size())))));
+                                                          * (1.0f - i / static_cast<float>(m_YGraphItems.size())))));
         }
 
         switch (m_CurrentGraphMode)
@@ -633,23 +638,23 @@ void VictoryMenue::updateGraph()
         {
             drawGraphStep(progress);
             m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
-//            if (m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)] >= pMap->getCurrentDay())
-//            {
-//                // auto skip to next mode
-//                m_CurrentGraphMode = static_cast<GraphModes>(static_cast<qint32>(m_CurrentGraphMode) + 1);
-//                if (m_CurrentGraphMode == GraphModes::Max)
-//                {
-//                    if (pMap->getWinnerTeam() >= 0)
-//                    {
-//                        m_CurrentGraphMode = GraphModes::VictoryRanking;
-//                    }
-//                    else
-//                    {
-//                        m_CurrentGraphMode = GraphModes::PlayerStrength;
-//                    }
-//                }
-//                showGraph(m_CurrentGraphMode);
-//            }
+            //            if (m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)] >= pMap->getCurrentDay())
+            //            {
+            //                // auto skip to next mode
+            //                m_CurrentGraphMode = static_cast<GraphModes>(static_cast<qint32>(m_CurrentGraphMode) + 1);
+            //                if (m_CurrentGraphMode == GraphModes::Max)
+            //                {
+            //                    if (pMap->getWinnerTeam() >= 0)
+            //                    {
+            //                        m_CurrentGraphMode = GraphModes::VictoryRanking;
+            //                    }
+            //                    else
+            //                    {
+            //                        m_CurrentGraphMode = GraphModes::PlayerStrength;
+            //                    }
+            //                }
+            //                showGraph(m_CurrentGraphMode);
+            //            }
         }
     }
     else
@@ -672,37 +677,10 @@ void VictoryMenue::updateGraph()
                 // show CO-Rank
                 for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
                 {
-                    oxygine::ResAnim* pAnim;
+                    oxygine::ResAnim* pAnim = nullptr;
                     qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
                     GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
-                    switch (rang)
-                    {
-                        case GameRecorder::Rang::S:
-                        {
-                            pAnim = GameManager::getInstance()->getResAnim("s_rang");
-                            break;
-                        }
-                        case GameRecorder::Rang::A:
-                        {
-                            pAnim = GameManager::getInstance()->getResAnim("a_rang");
-                            break;
-                        }
-                        case GameRecorder::Rang::B:
-                        {
-                            pAnim = GameManager::getInstance()->getResAnim("b_rang");
-                            break;
-                        }
-                        case GameRecorder::Rang::C:
-                        {
-                            pAnim = GameManager::getInstance()->getResAnim("c_rang");
-                            break;
-                        }
-                        case GameRecorder::Rang::D:
-                        {
-                            pAnim = GameManager::getInstance()->getResAnim("d_rang");
-                            break;
-                        }
-                    }
+
 
                     oxygine::spSprite pRankSprite = new oxygine::Sprite();
                     pRankSprite->setResAnim(pAnim);
@@ -882,4 +860,45 @@ qint32 VictoryMenue::getStepTime()
         stepTime = 50;
     }
     return stepTime;
+}
+
+void VictoryMenue::AddScoreToUserdata()
+{
+    spGameMap pMap = GameMap::getInstance();
+    QString path = pMap->getMapPath();
+    if (!path.isEmpty() && pMap->getWinnerTeam() >= 0)
+    {
+        qint32 playerCount = pMap->getPlayerCount();
+        qint32 bestPlayer = -1;
+        qint32 bestScore = -1;
+        for (qint32 i = 0; i < playerCount; ++i)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes::AiTypes_Human &&
+                pPlayer->getTeam() == pMap->getWinnerTeam())
+            {
+                qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
+                if (bestScore < score)
+                {
+                    bestScore = score;
+                    bestPlayer = i;
+                }
+            }
+        }
+        if (bestPlayer >= 0)
+        {
+            Player* pPlayer = pMap->getPlayer(bestPlayer);
+            QString co1;
+            QString co2;
+            if (pPlayer->getCO(0) != nullptr)
+            {
+                co1 = pPlayer->getCO(0)->getCoID();
+            }
+            if (pPlayer->getCO(1) != nullptr)
+            {
+                co2 = pPlayer->getCO(1)->getCoID();
+            }
+            Userdata::getInstance()->addVictoryForMap(path, co1, co2, bestScore);
+        }
+    }
 }

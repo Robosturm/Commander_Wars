@@ -2474,7 +2474,7 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1035"/>
+        <location filename="../game/gamemap.cpp" line="1046"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2500,7 +2500,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../game/gamemap.cpp" line="434"/>
-        <location filename="../game/gamemap.cpp" line="1057"/>
+        <location filename="../game/gamemap.cpp" line="1068"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2514,7 +2514,7 @@ This is immediatly applied.</source>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
         <location filename="../game/gamemap.cpp" line="434"/>
         <location filename="../game/gamemap.cpp" line="480"/>
-        <location filename="../game/gamemap.cpp" line="1057"/>
+        <location filename="../game/gamemap.cpp" line="1068"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2529,22 +2529,22 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1084"/>
+        <location filename="../game/gamemap.cpp" line="1095"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1094"/>
+        <location filename="../game/gamemap.cpp" line="1105"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1102"/>
+        <location filename="../game/gamemap.cpp" line="1113"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1114"/>
+        <location filename="../game/gamemap.cpp" line="1125"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3680,17 +3680,17 @@ This is immediatly applied.</source>
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="61"/>
+        <location filename="../objects/mapselectionview.cpp" line="72"/>
         <source>Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="71"/>
+        <location filename="../objects/mapselectionview.cpp" line="83"/>
         <source>Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="81"/>
+        <location filename="../objects/mapselectionview.cpp" line="94"/>
         <source>Description </source>
         <translation type="unfinished"></translation>
     </message>
@@ -7064,72 +7064,72 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="94"/>
+        <location filename="../menue/victorymenue.cpp" line="95"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="180"/>
-        <location filename="../menue/victorymenue.cpp" line="467"/>
+        <location filename="../menue/victorymenue.cpp" line="181"/>
+        <location filename="../menue/victorymenue.cpp" line="472"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="189"/>
-        <location filename="../menue/victorymenue.cpp" line="472"/>
+        <location filename="../menue/victorymenue.cpp" line="190"/>
+        <location filename="../menue/victorymenue.cpp" line="477"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="198"/>
-        <location filename="../menue/victorymenue.cpp" line="477"/>
+        <location filename="../menue/victorymenue.cpp" line="199"/>
+        <location filename="../menue/victorymenue.cpp" line="482"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="207"/>
-        <location filename="../menue/victorymenue.cpp" line="482"/>
+        <location filename="../menue/victorymenue.cpp" line="208"/>
+        <location filename="../menue/victorymenue.cpp" line="487"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="216"/>
-        <location filename="../menue/victorymenue.cpp" line="487"/>
+        <location filename="../menue/victorymenue.cpp" line="217"/>
+        <location filename="../menue/victorymenue.cpp" line="492"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="227"/>
+        <location filename="../menue/victorymenue.cpp" line="228"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="258"/>
+        <location filename="../menue/victorymenue.cpp" line="259"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="293"/>
+        <location filename="../menue/victorymenue.cpp" line="294"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="298"/>
+        <location filename="../menue/victorymenue.cpp" line="299"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="303"/>
+        <location filename="../menue/victorymenue.cpp" line="304"/>
         <source>Tech.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="308"/>
+        <location filename="../menue/victorymenue.cpp" line="309"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="537"/>
+        <location filename="../menue/victorymenue.cpp" line="542"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

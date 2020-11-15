@@ -5,10 +5,13 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/userdata.h"
 
 #include "game/gamemap.h"
+#include "game/gamerecording/gamerecorder.h"
 
 MapSelectionView::MapSelectionView()
     : QObject()
@@ -55,38 +58,50 @@ MapSelectionView::MapSelectionView()
                           QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     this->addChild(m_MapInfo);
+
+    qint32 y = 10;
+    m_pVictoryInfo = new oxygine::Actor();
+    m_pVictoryInfo->setPosition(10, y);
+    m_MapInfo->addItem(m_pVictoryInfo);
+    loadMapVictoryInfo();
+    y += 55 * Userdata::MAX_VICTORY_INFO_PER_MAP;
+
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 10);
+    pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Name: "));
     m_MapInfo->addItem(pTextfield);
     m_MapName = new oxygine::TextField();
     m_MapName->setStyle(style);
-    m_MapName->setPosition(150, 10);
+    m_MapName->setPosition(150, y);
     m_MapInfo->addItem(m_MapName);
+    y += 40;
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 50);
+    pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Author: "));
     m_MapInfo->addItem(pTextfield);
     m_MapAuthor = new oxygine::TextField();
     m_MapAuthor->setStyle(style);
-    m_MapAuthor->setPosition(150, 50);
+    m_MapAuthor->setPosition(150, y);
     m_MapInfo->addItem(m_MapAuthor);
+    y += 40;
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 90);
+    pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Description "));
     m_MapInfo->addItem(pTextfield);
+    y += 40;
 
     style.multiline = true;
     m_MapDescription = new oxygine::TextField();
     m_MapDescription->setStyle(style);
     m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 80);
-    m_MapDescription->setPosition(10, 130);
+    m_MapDescription->setPosition(10, y);
     m_MapInfo->addItem(m_MapDescription);
+    y += 40;
 
     // building count
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
@@ -198,6 +213,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap = nullptr;
         }
         m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast);
+        m_pCurrentMap->setMapPath(info.absoluteFilePath().replace(QCoreApplication::applicationDirPath(), ""));
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapPanel->addItem(m_pMinimap);
@@ -207,7 +223,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
         m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
         m_currentMapFile = info;
-
+        loadMapVictoryInfo();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         qint32 pos = 0;
         for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
@@ -240,6 +256,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         if (m_pCurrentMap != nullptr)
         {
             m_pCurrentMap->deleteMap();
+            m_currentMapFile = QFileInfo();
             m_pCurrentMap = nullptr;
         }
         m_pMinimap->updateMinimap(nullptr);
@@ -261,6 +278,72 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     m_MapInfo->setContentWidth(maxWidth + 30);
     m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
 
+}
+
+void MapSelectionView::loadMapVictoryInfo()
+{
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    m_pVictoryInfo->removeChildren();
+    qint32 posY = 0;
+    for (qint32 i = 0; i < Userdata::MAX_VICTORY_INFO_PER_MAP; ++i)
+    {
+        oxygine::spTextField pText = new oxygine::TextField();
+        pText->setHtmlText(QString::number(i + 1) + ".");
+        pText->setPosition(10, posY + 10);
+        pText->setStyle(style);
+        m_pVictoryInfo->addChild(pText);
+        if (m_pCurrentMap != nullptr)
+        {
+            auto info = Userdata::getInstance()->getVictoryForMap(m_pCurrentMap->getMapPath());
+            if (info != nullptr && i < info->co1.size())
+            {
+                QString co1 = info->co1[i];
+                QString co2 = info->co2[i];
+                qint32 score = info->score[i];
+                oxygine::ResAnim* pAnim = nullptr;
+                COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+                oxygine::spSprite pSprite = new oxygine::Sprite();
+                pSprite->setPosition(110, posY + 10);
+                auto rank = GameRecorder::getRank(score);
+                pAnim = GameRecorder::getRankAnim(rank);
+                pSprite->setResAnim(pAnim);
+                m_pVictoryInfo->addChild(pSprite);
+                pSprite = new oxygine::Sprite();
+                if (!co1.isEmpty())
+                {
+                    pAnim = pCOSpriteManager->getResAnim(co1 + "+info");
+                }
+                else
+                {
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                }
+                pSprite->setResAnim(pAnim);
+                pSprite->setScale(2.0f);
+                pSprite->setPosition(150, posY);
+                m_pVictoryInfo->addChild(pSprite);
+                if (!co2.isEmpty())
+                {
+                    pAnim = pCOSpriteManager->getResAnim(co2 + "+info");
+                }
+                else
+                {
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                }
+                pSprite = new oxygine::Sprite();
+                pSprite->setScale(2.0f);
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(150, posY + pAnim->getHeight() * 2.0f);
+                m_pVictoryInfo->addChild(pSprite);
+                pText->setHtmlText(QString::number(i + 1) + ". " + QString::number(score));
+            }
+        }
+        posY += 55;
+    }
 }
 
 void MapSelectionView::updateMapData()

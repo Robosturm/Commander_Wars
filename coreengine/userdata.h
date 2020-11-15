@@ -26,6 +26,15 @@ public:
         bool loaded{false};
     };
 
+    static constexpr qint32 MAX_VICTORY_INFO_PER_MAP = 5;
+    struct MapVictoryInfo
+    {
+        QString mapPath;
+        QStringList co1;
+        QStringList co2;
+        QVector<qint32> score;
+    };
+
     static Userdata* getInstance();
     void changeUser();
     void storeUser();
@@ -45,7 +54,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief addCOStyle
@@ -71,6 +80,20 @@ public:
      * @return
      */
     QVector<Achievement>* getAchievements();
+    /**
+     * @brief addVictoryForMap
+     * @param mapPath
+     * @param co1
+     * @param co2
+     * @param score
+     */
+    void addVictoryForMap(QString mapPath, QString co1, QString co2, qint32 score);
+    /**
+     * @brief getVictoryForMap
+     * @param mapPath
+     * @return
+     */
+    const MapVictoryInfo * getVictoryForMap(QString mapPath);
 signals:
 
 public slots:
@@ -111,6 +134,7 @@ private:
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<Achievement> m_achievements;
+    QVector<MapVictoryInfo> m_mapVictoryInfo;
 };
 
 #endif // USERDATA_H

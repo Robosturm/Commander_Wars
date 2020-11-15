@@ -8,6 +8,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "resource_management/gamemanager.h"
+
 GameRecorder::GameRecorder()
     : QObject()
 {
@@ -454,4 +456,38 @@ GameRecorder::Rang GameRecorder::getRank(qint32 score)
     {
         return GameRecorder::Rang::D;
     }
+}
+
+oxygine::ResAnim* GameRecorder::getRankAnim(GameRecorder::Rang rang)
+{
+    oxygine::ResAnim* pAnim = nullptr;
+    switch (rang)
+    {
+        case GameRecorder::Rang::S:
+        {
+            pAnim = GameManager::getInstance()->getResAnim("s_rang");
+            break;
+        }
+        case GameRecorder::Rang::A:
+        {
+            pAnim = GameManager::getInstance()->getResAnim("a_rang");
+            break;
+        }
+        case GameRecorder::Rang::B:
+        {
+            pAnim = GameManager::getInstance()->getResAnim("b_rang");
+            break;
+        }
+        case GameRecorder::Rang::C:
+        {
+            pAnim = GameManager::getInstance()->getResAnim("c_rang");
+            break;
+        }
+        case GameRecorder::Rang::D:
+        {
+            pAnim = GameManager::getInstance()->getResAnim("d_rang");
+            break;
+        }
+    }
+    return pAnim;
 }
