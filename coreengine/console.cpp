@@ -1330,7 +1330,7 @@ void Console::KeyInput(oxygine::KeyEvent event)
                 {
                     QString text = QGuiApplication::clipboard()->text();
                     curmsg = curmsg.insert(curmsgpos, text);
-                    curmsgpos = text.size();
+                    curmsgpos += text.size();
                     break;
                 }
                 case Qt::Key_C:

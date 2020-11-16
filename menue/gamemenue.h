@@ -26,6 +26,13 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
+    enum class  AnimationSkipMode
+    {
+        None,
+        All,
+        Battle
+    };
+
     explicit GameMenue(bool saveGame, spNetworkInterface pNetworkInterface);
     explicit GameMenue(QString map, bool saveGame);
     explicit GameMenue();
@@ -64,6 +71,11 @@ public:
      * @return
      */
     qint64 getSyncCounter() const;
+    /**
+     * @brief getSkipMode
+     * @return
+     */
+    AnimationSkipMode getSkipMode();
 signals:
     void sigActionPerformed();
     void sigGameStarted();

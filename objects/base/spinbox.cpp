@@ -122,6 +122,11 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 void SpinBox::focused()
 {
     curmsgpos = m_Text.size();
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->show();
+    }
 }
 
 QString SpinBox::getUnit() const
@@ -139,6 +144,11 @@ void SpinBox::focusedLost()
     qreal value = checkInput();
     m_Textfield->setX(0);
     emit sigValueChanged(value);
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
 }
 
 void SpinBox::setEnabled(bool value)

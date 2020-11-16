@@ -295,7 +295,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 
 bool GameAnimation::onFinished(bool skipping)
 {    
-    m_skipping = skipping;
+    m_skipping |= skipping;
     Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
@@ -309,7 +309,7 @@ bool GameAnimation::onFinished(bool skipping)
         args1 << obj1;
         pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
     }
-    GameAnimationFactory::removeAnimation(this, skipping);
+    GameAnimationFactory::removeAnimation(this, m_skipping);
     return true;
 }
 

@@ -26,6 +26,7 @@ public slots:
     virtual void focusedLost() override;
 protected:
     void setKeycode(Qt::Key code);
+    virtual void focused() override;
 private:
     oxygine::spButton m_Button;
     Qt::Key currentCode{Qt::Key_Space};

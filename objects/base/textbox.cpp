@@ -60,12 +60,22 @@ void Textbox::focusedLost()
 {
     emit sigTextChanged(m_Text);
     Tooltip::enableTooltip();
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
 }
 
 void Textbox::focused()
 {
     Tooltip::disableTooltip();
     curmsgpos = m_Text.size();
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->show();
+    }
 }
 
 void Textbox::setCurrentText(QString text)

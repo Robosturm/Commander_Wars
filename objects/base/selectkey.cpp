@@ -7,6 +7,8 @@
 
 #include "objects/base/label.h"
 
+#include <qguiapplication.h>
+
 SelectKey::SelectKey(Qt::Key code)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -34,6 +36,20 @@ SelectKey::SelectKey(Qt::Key code)
 void SelectKey::focusedLost()
 {
     setKeycode(currentCode);
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
+}
+
+void SelectKey::focused()
+{
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->show();
+    }
 }
 
 void SelectKey::keyInput(oxygine::KeyEvent event)

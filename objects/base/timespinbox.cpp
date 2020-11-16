@@ -122,6 +122,11 @@ TimeSpinBox::TimeSpinBox(qint32 width)
 void TimeSpinBox::focused()
 {
     curmsgpos = m_Text.size();
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->show();
+    }
 }
 
 void TimeSpinBox::focusedLost()
@@ -129,6 +134,11 @@ void TimeSpinBox::focusedLost()
     qint32 value = checkInput();
     m_Textfield->setX(0);
     emit sigValueChanged(value);
+    auto virtualKeyboard = QGuiApplication::inputMethod();
+    if (virtualKeyboard != nullptr)
+    {
+        virtualKeyboard->hide();
+    }
 }
 
 void TimeSpinBox::setEnabled(bool value)
