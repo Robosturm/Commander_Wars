@@ -26,7 +26,7 @@ signals:
 public slots:
     void nextDialogStep();
     void keyInput(oxygine::KeyEvent event);
-    virtual bool onFinished() override;
+    virtual bool onFinished(bool skipping) override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game
      * @param value

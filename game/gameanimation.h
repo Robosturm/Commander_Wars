@@ -40,7 +40,7 @@ public:
     virtual void stop();
 
 signals:
-    void sigFinished();
+    void sigFinished(bool skipping);
 public slots:
     /**
      * @brief setRotation sets the rotation of this animation
@@ -125,7 +125,7 @@ public slots:
     /**
      * @brief onFinished called when the animation is finished
      */
-    virtual bool onFinished();
+    virtual bool onFinished(bool skipping);
     /**
      * @brief setEndOfAnimationCall calls a java script function when the animation is finished. Note: no parameters can be used to call the function
      * @param postActionObject java script object that will be used
@@ -266,29 +266,9 @@ public slots:
      */
     virtual void setVisible(bool vis) override;
 protected:
-    virtual void update(const oxygine::UpdateState& us) override;
-    quint32 m_frameTime{1};
-    bool m_stopped{false};
-    bool finishQueued{false};
-    bool m_SoundStarted{false};
+    void emitFinished();
+
 private:
-
-    QVector<GameAnimation*> m_QueuedAnimations;
-    GameAnimation* m_previousAnimation{nullptr};
-    QString jsPostActionObject{""};
-    QString jsPostActionFunction{""};
-
-    QString m_soundFile;
-    QString m_soundFolder;
-    qint32 m_loops;
-
-    /**
-     * @brief animation data needed to perform this action
-     */
-    QBuffer buffer;
-    QDataStream actionData{&buffer};
-
-    QVector<SpriteData> sprites;
     /**
      * @brief loadSpriteAnim
      * @param pAnim
@@ -323,6 +303,33 @@ private:
      * @param pGameAnimation
      */
     void removeQueuedAnimation(GameAnimation* pGameAnimation);
+
+protected:
+    virtual void update(const oxygine::UpdateState& us) override;
+    quint32 m_frameTime{1};
+    bool m_stopped{false};
+    bool finishQueued{false};
+    bool m_SoundStarted{false};
+    bool m_skipping{false};
+private:
+
+    QVector<GameAnimation*> m_QueuedAnimations;
+    GameAnimation* m_previousAnimation{nullptr};
+    QString jsPostActionObject{""};
+    QString jsPostActionFunction{""};
+
+    QString m_soundFile;
+    QString m_soundFolder;
+    qint32 m_loops;
+
+    /**
+     * @brief animation data needed to perform this action
+     */
+    QBuffer buffer;
+    QDataStream actionData{&buffer};
+
+    QVector<SpriteData> sprites;
+
 };
 
 #endif // GAMEANIMATION_H

@@ -21,7 +21,7 @@ signals:
     void sigRightClick();
 public slots:
     void rightClick();
-    virtual bool onFinished() override;
+    virtual bool onFinished(bool skipping) override;
 private:
     QTimer endTimer;
     bool m_permanent;

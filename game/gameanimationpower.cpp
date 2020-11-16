@@ -178,7 +178,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         time = static_cast<qint32>(m_frameTime) * 30;
     }
     endTimer.setInterval(time);
-    connect(&endTimer, &QTimer::timeout, this, &GameAnimationPower::onFinished, Qt::QueuedConnection);
+    connect(&endTimer, &QTimer::timeout, [=]()
+    {
+        emitFinished();
+    });
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);

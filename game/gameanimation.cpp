@@ -137,7 +137,7 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
     addSprite3(spriteID, offsetX, offsetY, QColor(255, 255, 255), sleepAfterFinish, scaleX, scaleY, delay, 0, loops);
 }
 
-void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 frames)
+void GameAnimation::addSpriteAnimTable(QString spriteID, float offsetX, float offsetY, Player* pPlayer, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
@@ -204,7 +204,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
         finishQueued = true;
         queuedAnim->setDoneCallback([=](oxygine::Event *)->void
         {
-            emit sigFinished();
+            emitFinished();
         });
 
     }
@@ -239,7 +239,7 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
         finishQueued = true;
         queuedAnim->setDoneCallback([=](oxygine::Event *)->void
         {
-            emit sigFinished();
+            emitFinished();
         });
 
     }
@@ -270,7 +270,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
         finishQueued = true;
         queuedAnim->setDoneCallback([=](oxygine::Event *)->void
         {
-            emit sigFinished();
+            emitFinished();
         });
 
     }
@@ -293,8 +293,9 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     return pTextfield->getTextRect().getWidth() * scale * 16.0f / 72.0f;
 }
 
-bool GameAnimation::onFinished()
+bool GameAnimation::onFinished(bool skipping)
 {    
+    m_skipping = skipping;
     Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
@@ -308,8 +309,7 @@ bool GameAnimation::onFinished()
         args1 << obj1;
         pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
     }
-    GameAnimationFactory::removeAnimation(this);
-    
+    GameAnimationFactory::removeAnimation(this, skipping);
     return true;
 }
 
@@ -358,7 +358,7 @@ void GameAnimation::addTweenWait(qint32 duration)
         finishQueued = true;
         tween1->setDoneCallback([=](oxygine::Event *)->void
         {
-            emit sigFinished();
+            emitFinished();
         });
     }
 }
@@ -367,4 +367,12 @@ void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString post
 {
     jsPostActionObject = postActionObject;
     jsPostActionFunction = postActionFunction;
+}
+
+void GameAnimation::emitFinished()
+{
+    if (!m_skipping)
+    {
+        emit sigFinished(m_skipping);
+    }
 }

@@ -619,7 +619,7 @@ void GameMenue::performAction(spGameAction pGameAction)
                             QPoint currentPoint = trapPath[0];
                             QPoint previousPoint = trapPath[1];
                             moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
-                                                                          previousPoint.x(), previousPoint.y());
+                                                                   previousPoint.x(), previousPoint.y());
                             if (isTrap("isStillATrap", pGameAction, pMoveUnit, currentPoint, previousPoint, moveCost))
                             {
                                 trapPathCost -= moveCost;
@@ -757,13 +757,10 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
 
 void GameMenue::skipAnimations()
 {
-    
+    Console::print("skipping Animations", Console::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     spGameMap pMap = GameMap::getInstance();
-    if (GameAnimationFactory::getAnimationCount() == 0)
-    {
-        GameAnimationFactory::getInstance()->removeAnimation(nullptr);
-    }
-    else
+    if (GameAnimationFactory::getAnimationCount() > 0)
     {
         qint32 skipAnimations = 0;
         GameEnums::AnimationMode animMode = Settings::getShowAnimations();
@@ -887,14 +884,14 @@ void GameMenue::skipAnimations()
                         // skip animation if it's not a battle animation we want
                         if (!battleActive)
                         {
-                            if (!pAnimation->onFinished())
+                            if (!pAnimation->onFinished(true))
                             {
                                 i++;
                             }
                         }
                     }
                     // skip other animations
-                    else if (!pAnimation->onFinished())
+                    else if (!pAnimation->onFinished(true))
                     {
                         i++;
                     }
@@ -902,7 +899,9 @@ void GameMenue::skipAnimations()
             }
         }
     }
-    
+    Console::print("GameMenue -> emitting animationsFinished()", Console::eDEBUG);
+    emit GameAnimationFactory::getInstance()->animationsFinished();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMenue::finishActionPerformed()
@@ -957,6 +956,7 @@ void GameMenue::actionPerformed()
                 {
                     pMap->getGameRules()->resumeRoundTime();
                 }
+                Console::print("emitting sigActionPerformed()", Console::eDEBUG);
                 emit sigActionPerformed();
             }
         }
@@ -1413,6 +1413,7 @@ void GameMenue::startGame()
              m_pNetworkInterface->getIsServer()) &&
             !gameStarted)
         {
+            Console::print("emitting sigActionPerformed()", Console::eDEBUG);
             emit sigActionPerformed();
         }
     }

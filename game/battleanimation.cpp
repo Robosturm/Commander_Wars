@@ -352,7 +352,7 @@ void BattleAnimation::stop()
     battleTimer.stop();
 }
 
-bool BattleAnimation::onFinished()
+bool BattleAnimation::onFinished(bool skipping)
 {
     if (m_pAttackerAnimation.get() != nullptr)
     {
@@ -362,7 +362,7 @@ bool BattleAnimation::onFinished()
     {
         m_pDefenderAnimation->stopSound();
     }
-    return GameAnimation::onFinished();
+    return GameAnimation::onFinished(skipping);
 }
 
 void BattleAnimation::nextAnimatinStep()
@@ -469,7 +469,7 @@ void BattleAnimation::nextAnimatinStep()
     
     if (currentState >= AnimationProgress::Finished)
     {
-        onFinished();
+        onFinished(false);
     }
 }
 

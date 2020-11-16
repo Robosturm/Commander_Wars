@@ -184,7 +184,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
                     finishQueued = true;
                     tween5->addDoneCallback([=](oxygine::Event *)->void
                     {
-                        emit sigFinished();
+                        emitFinished();
                     });
                 }
             }
@@ -195,7 +195,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
                     finishQueued = true;
                     tween3->addDoneCallback([=](oxygine::Event *)->void
                     {
-                        emit sigFinished();
+                        emitFinished();
                     });
                 }
             }

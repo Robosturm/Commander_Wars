@@ -21,7 +21,10 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
-    connect(&finishTimer, &QTimer::timeout, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
+    connect(&finishTimer, &QTimer::timeout, [=]()
+    {
+        emitFinished();
+    });
     m_BackgroundSprite = new oxygine::Sprite();
     m_BackgroundSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_BackgroundSprite);
@@ -85,7 +88,10 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
         }
         pTouchEvent->stopPropagation();
     });
-    connect(this, &GameAnimationDialog::sigRightClick, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
+    connect(this, &GameAnimationDialog::sigRightClick, [=]()
+    {
+        emitFinished();
+    });
     connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::nextDialogStep, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
 }
@@ -116,7 +122,7 @@ void GameAnimationDialog::nextDialogStep()
     {
         if (writePosition >= m_Text.size())
         {
-            onFinished();
+            onFinished(false);
         }
         else
         {
@@ -208,11 +214,11 @@ void GameAnimationDialog::updateShownText()
     }
 }
 
-bool GameAnimationDialog::onFinished()
+bool GameAnimationDialog::onFinished(bool skipping)
 {
     if (writePosition >= m_Text.size())
     {
-        return GameAnimation::onFinished();
+        return GameAnimation::onFinished(skipping);
     }
     else
     {

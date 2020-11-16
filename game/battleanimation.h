@@ -40,7 +40,7 @@ public:
     /**
      * @brief onFinished called when the animation is finished
      */
-    virtual bool onFinished() override;
+    virtual bool onFinished(bool skipping) override;
 
 public slots:
     /**

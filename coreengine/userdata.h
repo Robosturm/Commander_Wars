@@ -6,6 +6,7 @@
 #include <qimage.h>
 
 #include <qvector.h>
+#include <qmap.h>
 
 
 #include "coreengine/fileserializable.h"
@@ -14,6 +15,9 @@ class Userdata : public QObject, public FileSerializable
 {
     Q_OBJECT
 public:
+    /**
+     * @brief The Achievement struct
+     */
     struct Achievement
     {
         QString id;
@@ -27,12 +31,22 @@ public:
     };
 
     static constexpr qint32 MAX_VICTORY_INFO_PER_MAP = 5;
+    /**
+     * @brief The MapVictoryInfo struct
+     */
     struct MapVictoryInfo
     {
-        QString mapPath;
         QStringList co1;
         QStringList co2;
         QVector<qint32> score;
+    };
+
+    struct ShopItem
+    {
+        QString name;
+        qint32 price;
+        bool buyable;
+        bool bought;
     };
 
     static Userdata* getInstance();
@@ -134,7 +148,8 @@ private:
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<Achievement> m_achievements;
-    QVector<MapVictoryInfo> m_mapVictoryInfo;
+    QMap<QString, MapVictoryInfo> m_mapVictoryInfo;
+    QMap<QString, ShopItem> m_shopItems;
 };
 
 #endif // USERDATA_H

@@ -98,7 +98,10 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     {
         endTimer.setSingleShot(true);
         endTimer.setInterval(1000 / Settings::getAnimationSpeed());
-        connect(&endTimer, &QTimer::timeout, this, &GameAnimationNextDay::onFinished, Qt::QueuedConnection);
+        connect(&endTimer, &QTimer::timeout, [=]()
+        {
+            emitFinished();
+        });
         endTimer.start();
         addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
         {
@@ -175,7 +178,7 @@ void GameAnimationNextDay::restart()
     }
 }
 
-bool GameAnimationNextDay::onFinished()
+bool GameAnimationNextDay::onFinished(bool skipping)
 {
     bool ret = true;
     if (!m_permanent)
@@ -185,7 +188,7 @@ bool GameAnimationNextDay::onFinished()
         {
             pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
         }
-        ret = GameAnimation::onFinished();
+        ret = GameAnimation::onFinished(skipping);
         
     }
     return ret;

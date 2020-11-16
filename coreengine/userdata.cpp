@@ -182,66 +182,56 @@ QVector<Userdata::Achievement>* Userdata::getAchievements()
 
 void Userdata::addVictoryForMap(QString mapPath, QString co1, QString co2, qint32 score)
 {
-    bool found = false;
-    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    if (m_mapVictoryInfo.contains(mapPath))
     {
-        if (mapPath == m_mapVictoryInfo[i].mapPath)
+        auto item = m_mapVictoryInfo.find(mapPath);
+        qint32 insertPos = -1;
+        if (item->co1.size() >= MAX_VICTORY_INFO_PER_MAP)
         {
-            qint32 insertPos = -1;
-            if (m_mapVictoryInfo[i].co1.size() >= MAX_VICTORY_INFO_PER_MAP)
+            for (qint32 i2 = 0; i2 < score; ++i2)
             {
-                for (qint32 i2 = 0; i2 < score; ++i2)
+                if (item->score[i2] <= score)
                 {
-                    if (m_mapVictoryInfo[i].score[i2] <= score)
-                    {
-                        insertPos = i2;
-                        m_mapVictoryInfo[i].co1.removeLast();
-                        m_mapVictoryInfo[i].co2.removeLast();
-                        m_mapVictoryInfo[i].score.removeLast();
-                        break;
-                    }
+                    insertPos = i2;
+                    item->co1.removeLast();
+                    item->co2.removeLast();
+                    item->score.removeLast();
                 }
             }
-            else
+        }
+        else
+        {
+            insertPos = item->score.length();
+            for (qint32 i2 = 0; i2 < item->score.length(); ++i2)
             {
-                insertPos = m_mapVictoryInfo[i].score.length();
-                for (qint32 i2 = 0; i2 < m_mapVictoryInfo[i].score.length(); ++i2)
+                if (item->score[i2] <= score)
                 {
-                    if (m_mapVictoryInfo[i].score[i2] <= score)
-                    {
-                        insertPos = i2;
-                        break;
-                    }
+                    insertPos = i2;
                 }
             }
-            if (insertPos >= 0)
-            {
-                m_mapVictoryInfo[i].co1.insert(insertPos, co1);
-                m_mapVictoryInfo[i].co2.insert(insertPos, co2);
-                m_mapVictoryInfo[i].score.insert(insertPos, score);
-            }
-            found = true;
+        }
+        if (insertPos >= 0)
+        {
+            item->co1.insert(insertPos, co1);
+            item->co2.insert(insertPos, co2);
+            item->score.insert(insertPos, score);
         }
     }
-    if (!found)
+    else
     {
-        qint32 i = m_mapVictoryInfo.length();
-        m_mapVictoryInfo.append(MapVictoryInfo());
-        m_mapVictoryInfo[i].mapPath = mapPath;
-        m_mapVictoryInfo[i].co1.append(co1);
-        m_mapVictoryInfo[i].co2.append(co2);
-        m_mapVictoryInfo[i].score.append(score);
+        MapVictoryInfo info;
+        info.co1.append(co1);
+        info.co2.append(co2);
+        info.score.append(score);
+        m_mapVictoryInfo.insert(mapPath, info);
     }
 }
 
 const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
 {
-    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    if (m_mapVictoryInfo.contains(mapPath))
     {
-        if (mapPath == m_mapVictoryInfo[i].mapPath)
-        {
-            return &m_mapVictoryInfo[i];
-        }
+        return &m_mapVictoryInfo[mapPath];
     }
     return nullptr;
 }
@@ -270,12 +260,25 @@ void Userdata::serializeObject(QDataStream& pStream) const
         pStream << m_achievements[i].progress;
     }
     pStream << static_cast<qint32>(m_mapVictoryInfo.size());
-    for (qint32 i = 0; i < m_mapVictoryInfo.size(); i++)
+    auto keys = m_mapVictoryInfo.keys();
+    for (auto key : keys)
     {
-        pStream << m_mapVictoryInfo[i].mapPath;
-        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].co1);
-        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].co2);
-        Filesupport::writeVectorList(pStream, m_mapVictoryInfo[i].score);
+        auto & item = m_mapVictoryInfo[key];
+        pStream << key;
+        Filesupport::writeVectorList(pStream, item.co1);
+        Filesupport::writeVectorList(pStream, item.co2);
+        Filesupport::writeVectorList(pStream, item.score);
+    }
+    pStream << static_cast<qint32>(m_shopItems.size());
+    keys = m_mapVictoryInfo.keys();
+    for (auto key : keys)
+    {
+        auto & item = m_shopItems[key];
+        pStream << key;
+        pStream << item.name;
+        pStream << item.price;
+        pStream << item.buyable;
+        pStream << item.bought;
     }
 }
 
@@ -339,11 +342,25 @@ void Userdata::deserializeObject(QDataStream& pStream)
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
-            m_mapVictoryInfo.append(MapVictoryInfo());
-            pStream >> m_mapVictoryInfo[i].mapPath;
-            m_mapVictoryInfo[i].co1 = Filesupport::readVectorList<QString, QList>(pStream);
-            m_mapVictoryInfo[i].co2 = Filesupport::readVectorList<QString, QList>(pStream);
-            m_mapVictoryInfo[i].score = Filesupport::readVectorList<qint32, QVector>(pStream);
+            QString key;
+            MapVictoryInfo item;
+            pStream >> key;
+            item.co1 = Filesupport::readVectorList<QString, QList>(pStream);
+            item.co2 = Filesupport::readVectorList<QString, QList>(pStream);
+            item.score = Filesupport::readVectorList<qint32, QVector>(pStream);
+            m_mapVictoryInfo.insert(key, item);
+        }
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString key;
+            ShopItem item;
+            pStream >> key;
+            pStream >> item.name;
+            pStream >> item.price;
+            pStream >> item.buyable;
+            pStream >> item.bought;
+            m_shopItems.insert(key, item);
         }
     }
 }

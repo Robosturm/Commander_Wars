@@ -44,6 +44,7 @@ ReplayMenu::ReplayMenu(QString filename)
         _HumanInput = new HumanPlayerInput();
         _HumanInput->init();
         gameStarted = true;
+        Console::print("emitting sigActionPerformed()", Console::eDEBUG);
         emit sigActionPerformed();
     }
     else
@@ -353,6 +354,7 @@ void ReplayMenu::swapPlay()
         if (_paused)
         {
             _paused = false;
+            Console::print("emitting sigActionPerformed()", Console::eDEBUG);
             emit sigActionPerformed();
         }
     }

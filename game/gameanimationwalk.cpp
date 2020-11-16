@@ -25,7 +25,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
     m_frameTime = static_cast<quint32>(GameMap::frameTime / Settings::getWalkAnimationSpeed());
 }
 
-bool GameAnimationWalk::onFinished()
+bool GameAnimationWalk::onFinished(bool skipping)
 {    
     Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
     Mainapp::getInstance()->getAudioThread()->stopAllSounds();
@@ -33,7 +33,7 @@ bool GameAnimationWalk::onFinished()
     {
         m_pUnit->setUnitVisible(true);
     }
-    bool ret = GameAnimation::onFinished();
+    bool ret = GameAnimation::onFinished(skipping);
     
     return ret;
 }
@@ -170,7 +170,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                         finishQueued = true;
                         queueMoving->addDoneCallback([=](oxygine::Event *)->void
                         {
-                            emit sigFinished();
+                            emitFinished();
                         });
                     }
                 }
@@ -184,7 +184,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                 finishQueued = true;
                 queueMoving->addDoneCallback([=](oxygine::Event *)->void
                 {
-                    emit sigFinished();
+                    emitFinished();
                 });
             }
         }
@@ -207,6 +207,6 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
     else
     {
         Console::print("Unable to load unit walk sprite: " + spriteID, Console::eERROR);
-        emit sigFinished();
+        emitFinished();
     }
 }

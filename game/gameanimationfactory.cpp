@@ -239,7 +239,7 @@ GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
     return nullptr;
 }
 
-void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
+void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
 {
     
     qint32 i = 0;
@@ -256,8 +256,9 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
              i++;
         }
     }
-    if (m_Animations.size() == 0)
+    if (m_Animations.size() == 0 && !skipping)
     {
+        Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
     
@@ -276,12 +277,12 @@ void GameAnimationFactory::clearAllAnimations()
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    
+    Console::print("GameAnimationFactory::finishAllAnimations()", Console::eDEBUG);
     qint32 i = 0;
     while (i < m_Animations.size())
     {
         spGameAnimation spAnimation = m_Animations[i];
-        if (!spAnimation->onFinished())
+        if (!spAnimation->onFinished(true))
         {
             i++;
         }

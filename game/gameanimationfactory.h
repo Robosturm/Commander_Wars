@@ -118,7 +118,7 @@ public slots:
      * @brief removeAnimation deletes the given animation
      * @param pAnimation pointer of the animation
      */
-    static void removeAnimation(GameAnimation* pAnimation);
+    static void removeAnimation(GameAnimation* pAnimation, bool skipping = false);
     /**
      * @brief removeAllAnimations removes all animations and calls onFinished of them
      */

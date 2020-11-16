@@ -541,6 +541,7 @@ void GameMap::removePlayer(qint32 index)
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
 {
+    Console::print("spawning Unit", Console::eDEBUG);
     if (owner != nullptr)
     {
         qint32 heigth = getMapHeight();
