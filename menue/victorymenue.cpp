@@ -680,8 +680,7 @@ void VictoryMenue::updateGraph()
                     oxygine::ResAnim* pAnim = nullptr;
                     qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
                     GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
-
-
+                    pAnim = pMap->getGameRecorder()->getRankAnim(rang);
                     oxygine::spSprite pRankSprite = new oxygine::Sprite();
                     pRankSprite->setResAnim(pAnim);
                     pRankSprite->setScale(1.5f);

@@ -1265,20 +1265,27 @@ QmlVectorBuilding* Player::getBuildings()
 
 void Player::updateVisualCORange()
 {
-    if (playerCOs[0].get() != nullptr)
+    if (playerCOs[0].get() != nullptr &&
+        playerCOs[0]->getCOUnit() != nullptr)
     {
-        if (playerCOs[0]->getCOUnit() != nullptr &&
-            playerCOs[0]->getPowerMode() == GameEnums::PowerMode_Off)
+        if (playerCOs[0]->getPowerMode() == GameEnums::PowerMode_Off)
         {
             playerCOs[0]->getCOUnit()->createCORange(playerCOs[0]->getCORange());
         }
+        else
+        {
+            playerCOs[0]->getCOUnit()->createCORange(-1);
+        }
     }
-    if (playerCOs[1].get() != nullptr)
+    if (playerCOs[1].get() != nullptr && playerCOs[1]->getCOUnit() != nullptr)
     {
-        if (playerCOs[1]->getCOUnit() != nullptr &&
-            playerCOs[1]->getPowerMode() == GameEnums::PowerMode_Off)
+        if (playerCOs[1]->getPowerMode() == GameEnums::PowerMode_Off)
         {
             playerCOs[1]->getCOUnit()->createCORange(playerCOs[1]->getCORange());
+        }
+        else
+        {
+            playerCOs[1]->getCOUnit()->createCORange(-1);
         }
     }
 }

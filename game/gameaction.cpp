@@ -104,7 +104,7 @@ void GameAction::printAction()
 {
     Console::print("Performing Action " + m_actionID, Console::eINFO);
     Console::print("Target X " + QString::number(m_target.x()) +
-                   "Target Y " + QString::number(m_target.y()), Console::eINFO);
+                   " Target Y " + QString::number(m_target.y()), Console::eINFO);
     Console::print("Costs " + QString::number(costs), Console::eINFO);
     Console::print("Seed " + QString::number(_seed), Console::eINFO);
     Unit* pUnit = getTargetUnit();
@@ -120,7 +120,7 @@ void GameAction::printAction()
     if (m_Movepath.size() > 0)
     {
         Console::print("Moving to X " + QString::number(m_Movepath[0].x()) +
-                "Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
+                " Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
     QString data;
     QByteArray bytes = buffer.data();

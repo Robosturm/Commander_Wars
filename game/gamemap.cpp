@@ -570,7 +570,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
         qint32 unitCount = pPlayer->getUnitCount();
         if (unitLimit > 0 && unitCount >= unitLimit)
         {
-            Console::print("Didn't spawn unit " + unitID, Console::eDEBUG);
+            Console::print("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
             return nullptr;
         }
         spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
@@ -667,7 +667,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             }
         }
     }
-    Console::print("Didn't spawn unit " + unitID, Console::eDEBUG);
+    Console::print("Didn't spawn unit " + unitID + " didn't find an empty field", Console::eDEBUG);
     return nullptr;
 }
 
