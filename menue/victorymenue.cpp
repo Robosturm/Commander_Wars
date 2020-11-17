@@ -638,23 +638,6 @@ void VictoryMenue::updateGraph()
         {
             drawGraphStep(progress);
             m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
-            //            if (m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)] >= pMap->getCurrentDay())
-            //            {
-            //                // auto skip to next mode
-            //                m_CurrentGraphMode = static_cast<GraphModes>(static_cast<qint32>(m_CurrentGraphMode) + 1);
-            //                if (m_CurrentGraphMode == GraphModes::Max)
-            //                {
-            //                    if (pMap->getWinnerTeam() >= 0)
-            //                    {
-            //                        m_CurrentGraphMode = GraphModes::VictoryRanking;
-            //                    }
-            //                    else
-            //                    {
-            //                        m_CurrentGraphMode = GraphModes::PlayerStrength;
-            //                    }
-            //                }
-            //                showGraph(m_CurrentGraphMode);
-            //            }
         }
     }
     else

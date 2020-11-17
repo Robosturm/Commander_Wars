@@ -27,6 +27,8 @@
 #include <QProcess>
 
 #include <qguiapplication.h>
+#include <qapplication.h>
+#include <qdesktopwidget.h>
 #include <qscreen.h>
 
 OptionMenue::OptionMenue()
@@ -183,8 +185,6 @@ void OptionMenue::showSettings()
     style.multiline = false;
 
     qint32 y = 10;
-
-
     // cache all supported display modes
     // we're cheating here little bit since qt offers no way to get the screen resolutions from the hardware driver
     QVector<QSize> supportedSizes = {QSize(15360, 8640),
@@ -285,25 +285,18 @@ void OptionMenue::showSettings()
                                      QSize(960 ,  640 )};
     QScreen *screen = QGuiApplication::primaryScreen();
     QSize  screenSize = screen->availableSize ();
-    if (Settings::getFullscreen())
+    supportedSizes.push_front(screenSize);
+    qint32 count = 0;
+    while  (count < supportedSizes.size())
     {
-        supportedSizes.clear();
-        supportedSizes.append(screenSize);
-    }
-    else
-    {
-        qint32 count = 0;
-        while  (count < supportedSizes.size())
+        if (supportedSizes[count].width() <= screenSize.width() &&
+            supportedSizes[count].height() <= screenSize.height())
         {
-            if (supportedSizes[count].width() <= screenSize.width() &&
-                supportedSizes[count].height() <= screenSize.height())
-            {
-                count++;
-            }
-            else
-            {
-                supportedSizes.removeAt(count);
-            }
+            count++;
+        }
+        else
+        {
+            supportedSizes.removeAt(count);
         }
     }
     QVector<QString> displaySizes;

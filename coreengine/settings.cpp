@@ -7,9 +7,8 @@
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
-
 #include <qguiapplication.h>
-
+#include <qscreen.h>
 #include "qlocale.h"
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";
@@ -626,32 +625,35 @@ void Settings::loadSettings()
 
     // Resolution
     settings.beginGroup("Resolution");
-    m_x           = settings.value("x",50).toInt(&ok);
-    if(!ok){
+    m_x = settings.value("x", 0).toInt(&ok);
+    if(!ok)
+    {
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " x";
         Console::print(error, Console::eERROR);
-        m_x = 50;
+        m_x = 0;
     }
-    m_y           = settings.value("y",50).toInt(&ok);
-    if(!ok){
+    m_y  = settings.value("y", 0).toInt(&ok);
+    if(!ok)
+    {
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " y";
         Console::print(error, Console::eERROR);
-        m_y = 50;
+        m_y = 0;
     }
-    m_width       = settings.value("width", 1152).toInt(&ok);
+    QSize size = QGuiApplication::primaryScreen()->availableSize();
+    m_width       = settings.value("width", size.width()).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " width";
         Console::print(error, Console::eERROR);
-        m_width = 1152;
+        m_width = size.width();
     }
-    m_height      = settings.value("height", 864).toInt(&ok);
+    m_height      = settings.value("height", size.height()).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " heigth";
         Console::print(error, Console::eERROR);
-        m_height = 864;
+        m_height = size.height();
     }
     m_borderless  = settings.value("borderless", false).toBool();
-    m_fullscreen  = settings.value("fullscreen", false).toBool();
+    m_fullscreen  = settings.value("fullscreen", true).toBool();
     m_record  = settings.value("recordgames", false).toBool();
     settings.endGroup();
 
