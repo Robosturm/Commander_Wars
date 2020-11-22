@@ -74,7 +74,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(m_pColorSelector);
     connect(m_pColorSelector.get(), &ColorSelector::sigSelecetedColorChanged, this, &DialogCOStyle::selecetedColorChanged, Qt::QueuedConnection);
 
-    QSize size(Settings::getWidth() - m_pColorSelector->getWidth() - 50, heigth);
+    QSize size(Settings::getWidth() - m_pColorSelector->getWidth() - 75, heigth);
     m_pCOPanel = new Panel(true, size, size);
     m_pCOPanel->setPosition(Settings::getWidth() - size.width() - 30, 30);
     m_pSpriteBox->addChild(m_pCOPanel);
@@ -261,7 +261,8 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setSize(scale * pAnim->getWidth() + 20, scale * pAnim->getHeight() + 40);
-    pBox->setPosition(pBox->getWidth() * m_pCOSprites.size() + 10, 10);
+    pBox->setPosition(m_boxWidth, 10);
+    m_boxWidth += pBox->getWidth() + 10;
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pCOPanel->addItem(pBox);
     // add some event handling :)

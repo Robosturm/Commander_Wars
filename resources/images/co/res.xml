@@ -163,6 +163,23 @@
 		<image file="os/co_rachel+alt+face.png" cols = "3" />		
 		<image file="os/co_officier_os+face.png" cols = "3" />		
 		<image file="os/co_officier_os+info.png" />	
+		<set scale_factor = "1.625f" />	
+		<image file="os/co_nell+alt2+nrm.png" />
+		<image file="os/co_nell+alt3+nrm.png" />
+		<image file="os/co_sami+alt2+nrm.png" />
+		<image file="os/co_max+alt2+nrm.png" />
+		<image file="os/co_andy+alt2+nrm.png" />
+		<set scale_factor = "1.0f" />	
+		<image file="os/co_nell+alt2+info.png" />
+		<image file="os/co_nell+alt2+face.png" cols = "3" />	
+		<image file="os/co_nell+alt3+info.png" />
+		<image file="os/co_nell+alt3+face.png" cols = "3" />	
+		<image file="os/co_sami+alt2+info.png" />
+		<image file="os/co_sami+alt2+face.png" cols = "3" />	
+		<image file="os/co_max+alt2+info.png" />
+		<image file="os/co_max+alt2+face.png" cols = "3" />	
+		<image file="os/co_andy+alt2+info.png" />
+		<image file="os/co_andy+alt2+face.png" cols = "3" />			
 		
 		<!-- BM -->
 		<image file="bm/co_colin+nrm.png" />
@@ -196,8 +213,22 @@
 		<image file="bm/co_alexander+alt+info.png" />
 		<image file="bm/co_alexander+alt+face.png" cols = "3" />
 		<image file="bm/co_officier_bm+face.png" cols = "3" />
-		<image file="bm/co_officier_bm+info.png" />
-			
+		<image file="bm/co_officier_bm+info.png" />			
+		<set scale_factor = "1.625f" />	
+		<image file="bm/co_olaf+alt2+nrm.png" />
+		<image file="bm/co_olaf+alt3+nrm.png" />
+		<image file="bm/co_grit+alt2+nrm.png" />
+		<image file="bm/co_grit+alt3+nrm.png" />
+		<set scale_factor = "1.0f" />
+		<image file="bm/co_olaf+alt2+info.png" />
+		<image file="bm/co_olaf+alt2+face.png" cols = "3" />	
+		<image file="bm/co_olaf+alt3+info.png" />
+		<image file="bm/co_olaf+alt3+face.png" cols = "3" />	
+		<image file="bm/co_grit+alt2+info.png" />
+		<image file="bm/co_grit+alt2+face.png" cols = "3" />	
+		<image file="bm/co_grit+alt3+info.png" />
+		<image file="bm/co_grit+alt3+face.png" cols = "3" />			
+		
 		<!-- BD -->
 		<image file="bd/co_tempest+nrm.png" />
 		<image file="bd/co_tempest+info.png" />
@@ -327,6 +358,17 @@
 		<image file="ge/co_javier+alt+face.png" cols = "3" />		
 		<image file="ge/co_officier_ge+face.png" cols = "3" />		
 		<image file="ge/co_officier_ge+info.png" />		
+		<set scale_factor = "1.625f" />	
+		<image file="ge/co_drake+alt2+nrm.png" />
+		<image file="ge/co_drake+alt3+nrm.png" />
+		<image file="ge/co_eagle+alt2+nrm.png" />
+		<set scale_factor = "1.0f" />
+		<image file="ge/co_drake+alt2+info.png" />
+		<image file="ge/co_drake+alt2+face.png" cols = "3" />	
+		<image file="ge/co_drake+alt3+info.png" />
+		<image file="ge/co_drake+alt3+face.png" cols = "3" />	
+		<image file="ge/co_eagle+alt2+info.png" />
+		<image file="ge/co_eagle+alt2+face.png" cols = "3" />
 		
 		<!-- gs -->
 		<image file="gs/co_meiyo+nrm.png" />
@@ -462,7 +504,21 @@
 		<image file="yc/co_rattigan+alt+face.png" cols = "3" />		
 		<image file="yc/co_officier_yc+face.png" cols = "3" />
 		<image file="yc/co_officier_yc+info.png" />
-				
+		<set scale_factor = "1.625f" />
+		<image file="yc/co_kanbei+alt2+nrm.png" />
+		<image file="yc/co_kanbei+alt3+nrm.png" />
+		<image file="yc/co_sonja+alt2+nrm.png" />
+		<image file="yc/co_sonja+alt3+nrm.png" />
+		<set scale_factor = "1.0f" />	
+		<image file="yc/co_kanbei+alt2+info.png" />
+		<image file="yc/co_kanbei+alt2+face.png" cols = "3" />	
+		<image file="yc/co_kanbei+alt3+info.png" />
+		<image file="yc/co_kanbei+alt3+face.png" cols = "3" />	
+		<image file="yc/co_sonja+alt2+info.png" />
+		<image file="yc/co_sonja+alt2+face.png" cols = "3" />	
+		<image file="yc/co_sonja+alt3+info.png" />
+		<image file="yc/co_sonja+alt3+face.png" cols = "3" />	
+		
 		<!-- BH -->
 		<image file="bh/co_sturm+nrm.png" />
 		<image file="bh/co_sturm+info.png" />
