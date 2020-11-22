@@ -103,6 +103,28 @@ void CoreAI::init()
     }
 }
 
+void CoreAI::loadIni(QString file)
+{
+    m_files.append(file);
+    QStringList searchFiles;
+    if (!file.isEmpty())
+    {
+        searchFiles.append("resources/aidata/" + file);
+        // make sure to overwrite existing js stuff
+        for (qint32 i = 0; i < Settings::getMods().size(); i++)
+        {
+            searchFiles.append(Settings::getMods().at(i) + "/aidata/" + file);
+        }
+    }
+    for (qint32 i = 0; i < searchFiles.size(); i++)
+    {
+        if (QFile::exists(searchFiles[i]))
+        {
+            readIni(searchFiles[i]);
+        }
+    }
+}
+
 void CoreAI::nextAction()
 {
     // check if it's our turn
@@ -160,7 +182,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
-        if (pUnit->getHpRounded() < 10)
+        if (pUnit->getHpRounded() < Unit::MAX_UNIT_HP)
         {
             repairUnits++;
         }
@@ -276,7 +298,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
                     {
                         damage = pBuilding->getHp();
                     }
-                    counterDamage = damage / 10 * pUnit->getUnitCosts();
+                    counterDamage = damage / Unit::MAX_UNIT_HP * pUnit->getUnitCosts();
                 }
             }
         }
@@ -408,13 +430,13 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
                 {
                     if (ret.size() == 0)
                     {
-                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue));
                         QPoint point = pAction->getActionTarget();
                         moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                     }
-                    else if (ret[0].z() == static_cast<float>(damage.x()) * buildingValue)
+                    else if (ret[0].z() == static_cast<float>(damage.x()) * m_buildingValue)
                     {
-                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue));
                         QPoint point = pAction->getActionTarget();
                         moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                     }
@@ -422,7 +444,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
                     {
                         ret.clear();
                         moveTargetFields.clear();
-                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue));
                         QPoint point = pAction->getActionTarget();
                         moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                     }
@@ -507,7 +529,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
             {
                 if (isAttackOnTerrainAllowed(pTerrain))
                 {
-                    ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue, damage.x()));
+                    ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * m_buildingValue, damage.x()));
                     QPoint point = pAction->getActionTarget();
                     moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
@@ -530,20 +552,20 @@ bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
 
 QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
 {
-    float atkDamage = static_cast<float>(damage.x()) / 10.0f;
+    float atkDamage = static_cast<float>(damage.x()) / Unit::MAX_UNIT_HP;
     if (atkDamage > pDef->getHp())
     {
         atkDamage = pDef->getHp();
     }
-    float fundsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
+    float fundsDamage = pDef->getUnitCosts() * atkDamage / Unit::MAX_UNIT_HP;
     if (damage.width() >= 0.0)
     {
-        atkDamage = static_cast<float>(damage.width()) / 10.0f;
+        atkDamage = static_cast<float>(damage.width()) / Unit::MAX_UNIT_HP;
         if (atkDamage > pAtk->getHp())
         {
             atkDamage = pAtk->getHp();
         }
-        fundsDamage -= pAtk->getUnitCosts() * atkDamage / 10.0f * ownUnitValue;
+        fundsDamage -= pAtk->getUnitCosts() * atkDamage / Unit::MAX_UNIT_HP * m_ownUnitValue;
     }
     return QPointF(atkDamage, fundsDamage);
 }
@@ -1543,18 +1565,18 @@ void CoreAI::rebuildIsland(QmlVectorUnit* pUnits)
 bool CoreAI::needsRefuel(Unit *pUnit)
 {
     if (pUnit->getMaxFuel() > 0 &&
-        pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
+        pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
     {
         return true;
     }
     if (pUnit->getMaxAmmo1() > 0 &&
-        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 4.0f &&
+        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < m_ammoResupply &&
         !pUnit->getWeapon1ID().isEmpty())
     {
         return true;
     }
     if (pUnit->getMaxAmmo2() > 0 &&
-        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 4.0f &&
+        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < m_ammoResupply &&
         !pUnit->getWeapon2ID().isEmpty())
     {
         return true;
@@ -1816,6 +1838,11 @@ void CoreAI::serializeObject(QDataStream& stream) const
             stream << std::get<1>(m_MoveCostMap[x][y]);
         }
     }
+    stream << m_files.size();
+    for (qint32 i = 0; i < m_files.size(); i++)
+    {
+        stream << m_files[i];
+    }
 }
 void CoreAI::deserializeObject(QDataStream& stream)
 {
@@ -1853,6 +1880,18 @@ void CoreAI::deserializeObject(QDataStream& stream)
                 stream >> std::get<0>(m_MoveCostMap[x][y]);
                 stream >> std::get<1>(m_MoveCostMap[x][y]);
             }
+        }
+    }
+    if (version > 4)
+    {
+        m_files.clear();
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString list;
+            stream >> list;
+            loadIni(list);
         }
     }
 }

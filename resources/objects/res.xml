@@ -53,7 +53,6 @@
 		<image file="codialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>			
 		<image file="semidialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>	
 		<image file="filedialogitems.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>	
-		<image file="dropdownmenucolor.png"/>
 		<!-- map selection -->
 		<image file="mapSelectionTop.png" guideX1="4" guideX2="295" guideY1="6" guideY2="9"/>
 		<image file="mapSelectionItem.png" guideX1="4" guideX2="290" guideY1="1" guideY2="18"/>
@@ -66,10 +65,6 @@
 		<image file="co_cursor.png"/>
 		<!-- ingame stuff -->
 		<image file="barforeground.png"/>
-	</atlas>
-	
-	<atlas clamp2edge="false" > 
-		<image file="line.png" trim="false" extend="false" border="0" />
-	</atlas>
+	</atlas>	
 </resources>
 

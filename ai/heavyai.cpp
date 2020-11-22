@@ -17,6 +17,11 @@ HeavyAi::HeavyAi()
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
 }
 
+void HeavyAi::readIni(QString name)
+{
+
+}
+
 void HeavyAi::toggleAiPause()
 {
     m_pause = !m_pause;
@@ -74,13 +79,13 @@ void HeavyAi::setupTurn()
     {
         m_pUnits = m_pPlayer->getUnits();
         m_pUnits->sortShortestMovementRange(true);
-        initUnits(m_pUnits.get(), m_ownUnits);
+        initUnits(m_pUnits.get(), m_ownUnits, false);
     }
     if (m_pEnemyUnits.get() == nullptr)
     {
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
-        initUnits(m_pEnemyUnits.get(), m_enemyUnits);
+        initUnits(m_pEnemyUnits.get(), m_enemyUnits, true);
     }
     if (startOfTurn)
     {
@@ -119,7 +124,7 @@ void HeavyAi::createIslandMaps()
     }
 }
 
-void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
+void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits)
 {
     units.clear();
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -129,6 +134,7 @@ void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
         data.m_pPfs = new UnitPathFindingSystem(pUnits->at(i));
         data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
         data.m_pPfs->setMovepoints(data.m_movepoints * 2);
+        data.m_pPfs->setIgnoreEnemies(enemyUnits);
         data.m_pPfs->explore();
         units.append(data);
     }
@@ -136,12 +142,12 @@ void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units)
 
 void HeavyAi::updateUnits()
 {
-    updateUnits(m_ownUnits);
-    updateUnits(m_enemyUnits);
+    updateUnits(m_ownUnits, false);
+    updateUnits(m_enemyUnits, true);
     m_updatePoints.clear();
 }
 
-void HeavyAi::updateUnits(QVector<UnitData> & units)
+void HeavyAi::updateUnits(QVector<UnitData> & units, bool enemyUnits)
 {
     QVector<qint32> updated;
     for (qint32 i = 0; i < m_updatePoints.size(); i++)
@@ -158,6 +164,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units)
                         units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->getX(), units[i2].m_pUnit->getY())) + 2)
                     {
                         units[i2].m_pPfs = new UnitPathFindingSystem(units[i2].m_pUnit);
+                        units[i2].m_pPfs->setIgnoreEnemies(enemyUnits);
                         units[i2].m_pPfs->explore();
                     }
                     updated.push_back(i2);

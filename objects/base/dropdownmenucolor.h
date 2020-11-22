@@ -49,7 +49,7 @@ public slots:
 protected:
     void addDropDownColor(QColor color, qint32 id);
 private:
-    oxygine::spSprite m_Colorfield;
+    oxygine::spColorRectSprite m_Colorfield;
     QVector<QColor> m_ItemColors;
     QColor m_currentColor;
 };

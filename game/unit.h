@@ -23,6 +23,7 @@ class Unit : public QObject, public oxygine::Sprite, public FileSerializable
     Q_OBJECT
 public:
     static const float animationSpeed;
+    static constexpr float MAX_UNIT_HP = 10.0f;
 
     enum class Priorities
     {
@@ -884,7 +885,7 @@ private:
      */
     Terrain* m_pTerrain{nullptr};
     // basic data of this unit
-    float hp{10};
+    float hp{Unit::MAX_UNIT_HP};
     qint32 ammo1{-1};
     qint32 maxAmmo1{-1};
     QString weapon1ID;

@@ -22,6 +22,11 @@ public slots:
      * @brief process
      */
     virtual void process() override;
+    /**
+     * @brief readIni
+     * @param name
+     */
+    virtual void readIni(QString name) override;
 protected:
     /**
      * @brief performActionSteps
@@ -111,7 +116,11 @@ private:
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
     bool rebuildIslandMaps{true};
-    static const qint32 minSiloDamage;
+    qint32 m_minSiloDamage{4000};
+    qint32 m_minDamage{-500};
+    float m_ownUnitDamageDivider{4};
+    qint32 m_minAllBuildingFunds{8000};
+    qint32 m_maxTreeDecisionTries{10};
 };
 
 #endif // VERYEASYAI_H

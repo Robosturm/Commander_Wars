@@ -21,6 +21,7 @@
 spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
+    pTerrain->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
     pTerrain->setSize(GameMap::getImageSize(), GameMap::getImageSize());
     if (terrainID != "")
     {

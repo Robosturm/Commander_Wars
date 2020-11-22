@@ -74,7 +74,7 @@ namespace oxygine
         AnimationFrame _frame;
         oxygine::spResAnim m_colorTable;
 
-        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f)};
+        oxygine::RectF m_DestRecModifier{oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f)};
 
         bool invertFlipX{false};
     };

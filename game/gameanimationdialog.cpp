@@ -26,25 +26,19 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
         emitFinished();
     });
     m_BackgroundSprite = new oxygine::Sprite();
-    m_BackgroundSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_BackgroundSprite);
-
-    setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
     m_TextMask = new oxygine::Sprite();
     m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextMask->setResAnim(pAnim);
-    m_BackgroundSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
     m_TextBackground = new oxygine::Sprite();
     m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
-    m_TextBackground->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
-    m_TextBackground->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_TextBackground);
 
     oxygine::TextStyle style = FontManager::getMainFont48();
@@ -67,7 +61,6 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_COSprite = new oxygine::Sprite();
     m_COSprite->setScale(2);
     m_COSprite->setY(6);
-    m_COSprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     addChild(m_COSprite);
 
     setPositionTop(false);

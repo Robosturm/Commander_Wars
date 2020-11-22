@@ -43,7 +43,6 @@ Mainwindow::Mainwindow()
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
     sprite->setResAnim(pBackground);
-    sprite->setDestRecModifier(oxygine::RectF(0, 0, 0, 0));
     // background should be last to draw
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
     sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());

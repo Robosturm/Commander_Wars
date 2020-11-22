@@ -401,7 +401,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     perfectHpVision = pUnit->getPerfectHpView(pGamemenu->getCurrentViewPlayer());
                     float count = pUnit->getHp();
                     qint32 hpRounded = pUnit->getHpRounded();
-                    float countMax = 10.0f;
+                    float countMax = Unit::MAX_UNIT_HP;
                     pTextfield = new Label(width);
                     pTextfield->setStyle(smallStyle);
                     if (HpHidden)
@@ -412,7 +412,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     {
                         if (perfectHpVision)
                         {
-                            pTextfield->setHtmlText((tr("HP: ") + QString::number(count * 10, 'f', 0) + "/100"));
+                            pTextfield->setHtmlText((tr("HP: ") + QString::number(count * Unit::MAX_UNIT_HP, 'f', 0) + "/100"));
                         }
                         else
                         {
@@ -619,7 +619,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - spriteWidth - 10, 120);
                     if (HpHidden)
                     {
-                        pBattleAnimationSprite->setHpRounded(10);
+                        pBattleAnimationSprite->setHpRounded(Unit::MAX_UNIT_HP);
                         pBattleAnimationSprite->loadAnimation(BattleAnimationSprite::standingAnimation);
                     }
                     pBattleAnimationSprite->setPriority(3);

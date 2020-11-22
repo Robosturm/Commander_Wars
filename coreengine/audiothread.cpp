@@ -27,8 +27,6 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopAllSounds,    this, &AudioThread::SlotStopAllSounds, Qt::QueuedConnection);
     connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::QueuedConnection);
-
-
 }
 
 AudioThread::~AudioThread()

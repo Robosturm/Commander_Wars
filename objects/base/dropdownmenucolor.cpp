@@ -19,11 +19,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
-
-    pAnim = pObjectManager->getResAnim("dropdownmenucolor");
-    m_Colorfield = new oxygine::Sprite();
-    m_Colorfield->setResAnim(pAnim);
+    m_Colorfield = new oxygine::ColorRectSprite();
     m_Colorfield->addClickListener([=](oxygine::Event* event)
     {
         event->stopPropagation();
@@ -32,10 +28,8 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
         emit sigShowColorDialog();
     });
     connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);
-    m_Colorfield->setWidth(pAnim->getWidth());
-    m_Colorfield->setHeight(pAnim->getHeight());
-    m_Colorfield->setScaleX((m_Box->getWidth() - 20 - 45) / pAnim->getWidth());
-    m_Colorfield->setScaleY((m_Box->getHeight() - 20) / pAnim->getHeight());
+    m_Colorfield->setWidth(m_Box->getWidth() - 20 - 45);
+    m_Colorfield->setHeight(m_Box->getHeight() - 20);
     m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
     m_Colorfield->setDisableColor(QColor(0, 0, 0, 0));
     m_Colorfield->setY(10);

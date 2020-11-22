@@ -38,12 +38,16 @@ public:
         Max,
     };
 
-    explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f,
-                      float spamingFunds = 7500);
+    explicit NormalAi(QString configurationFile);
 signals:
 
 public slots:
     virtual void process() override;
+    /**
+     * @brief readIni
+     * @param name
+     */
+    virtual void readIni(QString name) override;
 protected:
     static constexpr float maxDayDistance = 6.0f;;
 
@@ -296,17 +300,64 @@ private:
      */
     QVector<std::tuple<float, QString, qint32, qint32>> m_TransporterScores;
 
-    static const float notAttackableDamage;
-    static const float midDamage;
-    static const float highDamage;
-    static const float directIndirectRatio;
-    static const qint32 minSiloDamage;
+    float m_notAttackableDamage{25.0f};
+    float m_midDamage{55.0f};
+    float m_highDamage{65.0f};
+    float m_directIndirectRatio{1.75f};
+    qint32 m_minSiloDamage{7000};
+    float m_minMovementDamage{0.3f};
+    float m_minAttackFunds{0.0f};
+    float m_minSuicideDamage{0.75f};
+    float m_spamingFunds{7500};
+    qint32 m_coUnitValue{1000};
+    float m_minCoUnitScore{5000.0f};
+    float m_coUnitRankReduction{1000.0f};
+    float m_coUnitScoreMultiplier{1.1f};
+    qint32 m_minCoUnitCount{5};
+    qint32 m_minUnitHealth{3};
+    qint32 m_maxUnitHealth{7};
+    float m_lockedUnitHp{4};
+    float m_noMoveAttackHp{3.5f};
+    float m_ownIndirectAttackValue{2.0f};
+    float m_enemyKillBonus{2.0f};
+    float m_enemyIndirectBonus{3.0f};
+    float m_antiCaptureHqBonus{50.0f};
+    float m_antiCaptureBonus{21.0f};
+    float m_antiCaptureBonusScoreReduction{6.0f};
+    float m_antiCaptureBonusScoreDivider{2.0f};
+    float m_enemyCounterDamageMultiplier{10.0f};
+    float m_watermineDamage{4.0f};
+    float m_enemyUnitCountDamageReductionMultiplier{0.5f};
+    float m_fundsPerBuildingFactorA{2.5f};
+    float m_fundsPerBuildingFactorB{1.65f};
+    float m_ownUnitEnemyUnitRatioAverager{10};
+    float m_maxDayScoreVariancer{10};
+    float m_directIndirectUnitBonusFactor{1.2f};
 
-    float minMovementDamage;
-    float minAttackFunds;
-    float minSuicideDamage;
-    float m_spamingFunds;
-
+    float m_maxBuildingTargetFindLoops{5};
+    float m_scoringCutOffDamageHigh{100};
+    float m_scoringCutOffDamageLow{7.5f};
+    float m_smoothingValue{3};
+    float m_maxDistanceMultiplier{1.5f};
+    float m_sameIslandBonusInRangeDays{2};
+    float m_sameIslandOutOfDayMalusFactor{0.2f};
+    float m_highDamageBonus{2};
+    float m_midDamageBonus{1.5f};
+    float m_lowDamageBonus{1};
+    float m_veryLowDamageBonus{0.5f};
+    float m_transportBonus{0.125f};
+    float m_currentlyNotAttackableBonus{0.5};
+    float m_differentIslandBonusInRangeDays{1};
+    float m_differentIslandOutOfDayMalusFactor{0.33f};
+    float m_noTransporterBonus{70};
+    float m_transporterToRequiredPlaceFactor{3};
+    float m_minFlyingTransportScoreForBonus{15};
+    float m_flyingTransporterBonus{15};
+    float m_smallTransporterBonus{30};
+    float m_unitToSmallTransporterRatio{5};
+    float m_additionalLoadingUnitBonus{5};
+    qint32 m_indirectUnitAttackCountMalus{4};
+    float m_minAttackCountBonus{5};
 };
 
 #endif // NORMALAI_H

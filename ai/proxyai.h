@@ -48,7 +48,11 @@ public:
 public slots:
     virtual void nextAction() override;
     void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
-
+    /**
+     * @brief readIni
+     * @param name
+     */
+    virtual void readIni(QString name) override;
 protected:
 
 private:

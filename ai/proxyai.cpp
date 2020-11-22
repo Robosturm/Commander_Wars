@@ -20,6 +20,10 @@ void ProxyAi::init()
     CoreAI::init();
 }
 
+void ProxyAi::readIni(QString)
+{
+}
+
 void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
 {
     connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, Qt::QueuedConnection);

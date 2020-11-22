@@ -70,7 +70,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
                 if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
                     (!pUnit->isStealthed(m_pPlayer)))
                 {
-                    if (!m_pUnit->getIgnoreUnitCollision())
+                    if (!m_pUnit->getIgnoreUnitCollision() && !m_ignoreEnemies)
                     {
                         movecosts[index][direction] = -1;
                         return movecosts[index][direction];
@@ -278,6 +278,16 @@ bool UnitPathFindingSystem::getFast() const
 void UnitPathFindingSystem::setFast(bool fast)
 {
     m_fast = fast;
+}
+
+bool UnitPathFindingSystem::getIgnoreEnemies() const
+{
+    return m_ignoreEnemies;
+}
+
+void UnitPathFindingSystem::setIgnoreEnemies(bool ignoreEnemies)
+{
+    m_ignoreEnemies = ignoreEnemies;
 }
 
 void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)

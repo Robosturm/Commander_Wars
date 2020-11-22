@@ -724,7 +724,7 @@ bool Unit::canMoveOver(qint32 x, qint32 y)
 
 qint32 Unit::getUnitValue()
 {
-    return static_cast<qint32>(getCosts() * hp / 10.0f);
+    return static_cast<qint32>(getCosts() * hp / Unit::MAX_UNIT_HP);
 }
 
 bool Unit::canBeRepaired(QPoint position)
@@ -1745,9 +1745,9 @@ qint32 Unit::getHpRounded() const
 void Unit::setHp(const float &value)
 {
     hp = value;
-    if (hp > 10)
+    if (hp > MAX_UNIT_HP)
     {
-        hp = 10.0f;
+        hp = MAX_UNIT_HP;
     }
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
@@ -1824,7 +1824,7 @@ void Unit::updateIcons(Player* pPlayer)
     unloadIcon("transport+hidden");
     if (!getHpHidden(pPlayer))
     {
-        if ((hpValue < 10) && (hpValue > 0))
+        if ((hpValue < Unit::MAX_UNIT_HP) && (hpValue > 0))
         {
             loadIcon(QString::number(hpValue), 0, GameMap::getImageSize() / 2);
         }

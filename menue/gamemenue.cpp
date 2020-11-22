@@ -757,13 +757,14 @@ void GameMenue::centerMapOnAction(GameAction* pGameAction)
 
 void GameMenue::skipAnimations()
 {
+    AnimationSkipMode skipAnimations = getSkipMode();
     Console::print("skipping Animations", Console::eDEBUG);
     Mainapp::getInstance()->pauseRendering();
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         spGameMap pMap = GameMap::getInstance();
         GameEnums::AnimationMode animMode = Settings::getShowAnimations();
-        AnimationSkipMode skipAnimations = getSkipMode();
+
         // skip all animations
         if (skipAnimations == AnimationSkipMode::All)
         {
@@ -846,8 +847,11 @@ void GameMenue::skipAnimations()
             }
         }
     }
-    Console::print("GameMenue -> emitting animationsFinished()", Console::eDEBUG);
-    emit GameAnimationFactory::getInstance()->animationsFinished();
+    if (GameAnimationFactory::getAnimationCount() == 0)
+    {
+        Console::print("GameMenue -> emitting animationsFinished()", Console::eDEBUG);
+        emit GameAnimationFactory::getInstance()->animationsFinished();
+    }
     Mainapp::getInstance()->continueRendering();
 }
 

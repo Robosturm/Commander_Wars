@@ -189,7 +189,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
     // create health bar
     m_HealthBar0 = new oxygine::ColorRectSprite();
-    m_HealthBar0->setSize(spriteWidth * atkStartHp / 10.0f, 9);
+    m_HealthBar0->setSize(spriteWidth * atkStartHp / Unit::MAX_UNIT_HP, 9);
     if (getIsLeft(pAtkUnit, pDefUnit))
     {
         m_HealthBar0->setPosition(31, 25);
@@ -201,7 +201,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     addChild(m_HealthBar0);
     m_HealthBar1 = new oxygine::ColorRectSprite();
-    m_HealthBar1->setSize(spriteWidth * defStartHp / 10.0f, 9);
+    m_HealthBar1->setSize(spriteWidth * defStartHp / Unit::MAX_UNIT_HP, 9);
     if (getIsLeft(pDefUnit, pAtkUnit))
     {
         m_HealthBar1->setPosition(31, 25);
@@ -322,7 +322,7 @@ void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
 
 QColor BattleAnimation::getHealthBarColor(float hp)
 {
-    float divider = hp / 10.0f;
+    float divider = hp / Unit::MAX_UNIT_HP;
     if (divider > 2.0f / 3.0f)
     {
         return QColor(0, 255, 0, 255);
@@ -520,7 +520,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
     oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / 10.0f), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / Unit::MAX_UNIT_HP), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
     // add impact image
     oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));

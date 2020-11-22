@@ -19,8 +19,7 @@
 #include "ai/islandmap.h"
 
 #include "coreengine/globalutils.h"
-
-const qint32 VeryEasyAI::minSiloDamage = 4000;
+#include <QSettings>
 
 VeryEasyAI::VeryEasyAI()
     : CoreAI(GameEnums::AiTypes_VeryEasy),
@@ -32,9 +31,63 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    loadIni("very_easy/very_easy.ini");
+}
 
-    buildingValue = 1.0f;
-    ownUnitValue = 1.0f;
+void VeryEasyAI::readIni(QString name)
+{
+    if (QFile::exists(name))
+    {
+        QSettings settings(name, QSettings::IniFormat);
+        settings.beginGroup("general");
+        bool ok = false;
+        m_ownUnitValue = settings.value("OwnUnitValue", 1.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_ownUnitValue = 1.0f;
+        }
+        m_buildingValue = settings.value("BuildingValue", 1.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_buildingValue = 1.0f;
+        }
+        m_minDamage = settings.value("MinDamage", -500).toInt(&ok);
+        if(!ok)
+        {
+            m_minDamage = -500;
+        }
+        m_minSiloDamage = settings.value("MinSiloDamage", 4000).toInt(&ok);
+        if(!ok)
+        {
+            m_minSiloDamage = 4000;
+        }
+        m_ownUnitDamageDivider = settings.value("OwnUnitDamageDivider", 4).toFloat(&ok);
+        if(!ok || m_ownUnitDamageDivider < 0.0f)
+        {
+            m_ownUnitDamageDivider = 4;
+        }
+        m_minAllBuildingFunds = settings.value("MinAllBuildingFunds", 8000).toInt(&ok);
+        if(!ok)
+        {
+            m_minAllBuildingFunds = 8000;
+        }
+        m_maxTreeDecisionTries = settings.value("MaxTreeDecisionTries", 10).toInt(&ok);
+        if(!ok)
+        {
+            m_maxTreeDecisionTries = 8000;
+        }
+        m_fuelResupply = settings.value("FuelResupply", 0.33f).toFloat(&ok);
+        if(!ok)
+        {
+            m_fuelResupply = 0.33f;
+        }
+        m_ammoResupply = settings.value("AmmoResupply", 0.25f).toFloat(&ok);
+        if(!ok)
+        {
+            m_ammoResupply = 0.25f;
+        }
+        settings.endGroup();
+    }
 }
 
 void VeryEasyAI::process()
@@ -51,7 +104,7 @@ void VeryEasyAI::process()
 
     qint32 cost = 0;
     m_pPlayer->getSiloRockettarget(2, 3, cost);
-    m_missileTarget = (cost >= minSiloDamage);
+    m_missileTarget = (cost >= m_minSiloDamage);
     // create island maps at the start of turn
     if (rebuildIslandMaps)
     {
@@ -184,7 +237,7 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
 {
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
-    bool fireSilos = (cost >= minSiloDamage);
+    bool fireSilos = (cost >= m_minSiloDamage);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -304,10 +357,10 @@ bool VeryEasyAI::attack(Unit* pUnit)
         QVector<QVector3D> ret;
         QVector<QVector3D> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-        float minDamage = -pUnit->getUnitValue() / 4.0f;
-        if (minDamage > - 500.0f)
+        float minDamage = -pUnit->getUnitValue() / m_ownUnitDamageDivider;
+        if (minDamage > m_minDamage)
         {
-            minDamage = -500.0f;
+            minDamage = m_minDamage;
         }
         if (ret.size() > 0 && ret[0].z() >= minDamage)
         {
@@ -378,13 +431,13 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             {
                 if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
                     (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()) ||
-                    (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f))
+                    (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply))
                 {
                     appendRepairTargets(pUnit, pBuildings, targets);
                 }
             }
             // force resupply when low on fuel
-            else if (static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
+            else if (static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < m_fuelResupply)
             {
                 targets.clear();
                 appendRepairTargets(pUnit, pBuildings, targets);
@@ -559,7 +612,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
         {
             QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
             pAction->setMovepath(path, turnPfs.getCosts(path));
-            for (const auto action : actions)
+            for (const auto & action : actions)
             {
                 if (action.startsWith(ACTION_SUPPORTALL))
                 {
@@ -589,7 +642,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
                     return true;
                 }
             }
-            for (const auto action : actions)
+            for (const auto & action : actions)
             {
                 if (action.startsWith(ACTION_PLACE))
                 {
@@ -670,9 +723,9 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
     data.append(transporterUnits);
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i2 = 0; i2 < 10; i2++)
+    for (qint32 i2 = 0; i2 < m_maxTreeDecisionTries; i2++)
     {
-        if (i2 == 0 || m_pPlayer->getFunds() >= 8000)
+        if (i2 == 0 || m_pPlayer->getFunds() >= m_minAllBuildingFunds)
         {
             for (qint32 i = 0; i < pBuildings->size(); i++)
             {

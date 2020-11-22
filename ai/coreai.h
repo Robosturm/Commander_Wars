@@ -108,7 +108,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 4;
+        return 5;
     }
 signals:
     /**
@@ -121,6 +121,16 @@ public slots:
      * @brief process
      */
     virtual void process() = 0;
+    /**
+     * @brief loadIni
+     * @param file
+     */
+    void loadIni(QString file);
+    /**
+     * @brief readIni
+     * @param name
+     */
+    virtual void readIni(QString name) = 0;
     /**
      * @brief useCOPower
      * @param pUnits
@@ -451,12 +461,14 @@ protected:
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
-    float buildingValue{1.0f};
-    float ownUnitValue{1.0f};
+    float m_buildingValue{1.0f};
+    float m_ownUnitValue{1.0f};
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps aiStep;
     bool usedTransportSystem{false};
     bool m_missileTarget{false};
+    float m_fuelResupply{0.33f};
+    float m_ammoResupply{0.25f};
 private:
     bool finish{false};
     struct FlareInfo
@@ -466,7 +478,7 @@ private:
         qint32 unfogRange{0};
     };
     FlareInfo m_flareInfo;
-
+    QStringList m_files;
 };
 
 #endif // COREAI_H

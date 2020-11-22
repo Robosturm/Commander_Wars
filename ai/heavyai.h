@@ -22,7 +22,15 @@ public:
     explicit HeavyAi();
     virtual ~HeavyAi() = default;
 public slots:
+    /**
+     * @brief process
+     */
     virtual void process() override;
+    /**
+     * @brief readIni
+     * @param name
+     */
+    virtual void readIni(QString name) override;
 
     void toggleAiPause();
 
@@ -34,9 +42,9 @@ protected:
 private:
     void setupTurn();
     void createIslandMaps();
-    void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units);
+    void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits);
     void updateUnits();
-    void updateUnits(QVector<UnitData> & units);
+    void updateUnits(QVector<UnitData> & units, bool enemyUnits);
 private:
     QVector<UnitData> m_enemyUnits;
     QVector<UnitData> m_ownUnits;
