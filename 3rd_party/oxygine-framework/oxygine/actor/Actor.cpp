@@ -492,7 +492,9 @@ namespace oxygine
     void Actor::setScale(const Vector2& scale)
     {
         if (_scale == scale)
+        {
             return;
+        }
         _scale = scale;
         markTranformDirty();
         _flags &= ~flag_fastTransform;

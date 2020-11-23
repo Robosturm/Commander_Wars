@@ -335,7 +335,7 @@ private:
     float m_directIndirectUnitBonusFactor{1.2f};
 
     float m_maxBuildingTargetFindLoops{5};
-    float m_scoringCutOffDamageHigh{100};
+    float m_scoringCutOffDamageHigh{Unit::DAMAGE_100};
     float m_scoringCutOffDamageLow{7.5f};
     float m_smoothingValue{3};
     float m_maxDistanceMultiplier{1.5f};
@@ -358,6 +358,28 @@ private:
     float m_additionalLoadingUnitBonus{5};
     qint32 m_indirectUnitAttackCountMalus{4};
     float m_minAttackCountBonus{5};
+    float m_lowIndirectUnitBonus{0.3f};
+    float m_lowIndirectMalus{0.5f};
+    float m_highIndirectMalus{0.6f};
+    float m_lowDirectUnitBonus{0.35f};
+    float m_lowDirectMalus{0.3f};
+    float m_highDirectMalus{0.6f};
+    float m_minUnitCountForDamageBonus{3};
+    float m_minInfantryCount{5};
+    float m_currentlyNotAttackableScoreBonus{30};
+    float m_coUnitBuffBonus{17};
+    float m_nearEnemyBonus{10};
+    float m_lowOwnBuildingEnemyBuildingRatio{1.25f};
+    float m_lowInfantryRatio{0.4f};
+    float m_buildingBonusMultiplier{0.75f};
+    float m_lowIncomeInfantryBonusMultiplier{50};
+    float m_movementpointBonus{0.33f};
+    float m_damageToUnitCostRatioBonus{20};
+    float m_superiorityRatio{2.5f};
+    float m_cheapUnitRatio{0.9f};
+    float m_cheapUnitBonusMultiplier{40};
+    float m_normalUnitBonusMultiplier{10};
+    float m_expensiveUnitBonusMultiplier{5};
 };
 
 #endif // NORMALAI_H

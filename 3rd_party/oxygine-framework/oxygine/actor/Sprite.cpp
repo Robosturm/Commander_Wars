@@ -269,33 +269,15 @@ namespace oxygine
 
         const Diffuse& df = _frame.getDiffuse();
         if (df.base  != _mat->_base ||
-                df.alpha != _mat->_alpha)
+            df.alpha != _mat->_alpha)
         {
             spSTDMaterial mat = _mat->clone();
 
             mat->_base  = df.base;
             mat->_alpha = df.alpha;
-
-            mat->_flags = df.flags;
-            /*
-
-            if (df.premultiplied)
-                mat->_flags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
-            else
-                mat->_flags |= UberShaderProgram::ALPHA_PREMULTIPLY;
-
-            if (df.alpha)
-                mat->_flags |= UberShaderProgram::SEPARATE_ALPHA;
-            else
-                mat->_flags &= ~UberShaderProgram::SEPARATE_ALPHA;
-                */
-
-
+            mat->_flags = df.flags;           
             _mat = mc().cache(*mat.get());
         }
-
-
-
         animFrameChanged(_frame);
     }
 
@@ -309,14 +291,22 @@ namespace oxygine
         Actor::sizeChanged(size);
         const Vector2& sz = _frame.getSize();
         if (sz.x != 0)
+        {
             _localScale.x = size.x / sz.x;
+        }
         else
+        {
             _localScale.x = 1.0f;
+        }
 
         if (sz.y != 0)
+        {
             _localScale.y = size.y / sz.y;
+        }
         else
+        {
             _localScale.y = 1.0f;
+        }
     }
 
     oxygine::RectF Sprite::getDestRecModifier() const

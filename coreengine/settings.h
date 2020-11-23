@@ -43,10 +43,11 @@ public:
     static void setSlaveServerName(const QString &slaveServerName);
 
     static GameEnums::COInfoPosition getCoInfoPosition();
-    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
-
-
+    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);    
 public slots:
+
+    static Qt::Key getKey_screenshot();
+    static void setKey_screenshot(const Qt::Key &key_screenshot);
 
     static GameEnums::AutoFocusing getAutoFocusing();
     static void setAutoFocusing(const GameEnums::AutoFocusing &autoFocusing);
@@ -368,6 +369,7 @@ private:
 
     static Qt::Key m_key_escape;
     static Qt::Key m_key_console;
+    static Qt::Key m_key_screenshot;
     static Qt::Key m_key_up;
     static Qt::Key m_key_down;
     static Qt::Key m_key_right;

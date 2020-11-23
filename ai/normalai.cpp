@@ -234,10 +234,10 @@ void NormalAi::readIni(QString name)
         {
             m_maxBuildingTargetFindLoops = 5;
         }
-        m_scoringCutOffDamageHigh = settings.value("ScoringCutOffDamageHigh", 100).toFloat(&ok);
+        m_scoringCutOffDamageHigh = settings.value("ScoringCutOffDamageHigh", Unit::DAMAGE_100).toFloat(&ok);
         if(!ok)
         {
-            m_scoringCutOffDamageHigh = 100;
+            m_scoringCutOffDamageHigh = Unit::DAMAGE_100;
         }
         m_scoringCutOffDamageLow = settings.value("ScoringCutOffDamageLow", 7.5f).toFloat(&ok);
         if(!ok)
@@ -343,7 +343,6 @@ void NormalAi::readIni(QString name)
         {
             m_additionalLoadingUnitBonus = 5;
         }
-
         m_indirectUnitAttackCountMalus = settings.value("IndirectUnitAttackCountMalus", 4).toInt(&ok);
         if(!ok)
         {
@@ -353,6 +352,108 @@ void NormalAi::readIni(QString name)
         if(!ok)
         {
             m_minAttackCountBonus = 5;
+        }
+        m_lowIndirectUnitBonus = settings.value("LowIndirectUnitBonus", 0.3f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowIndirectUnitBonus = 0.3f;
+        }
+        m_lowIndirectMalus = settings.value("LowIndirectMalus", 0.5f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowIndirectMalus = 0.5f;
+        }
+        m_highIndirectMalus = settings.value("HighIndirectMalus", 0.6f).toFloat(&ok);
+        if(!ok)
+        {
+            m_highIndirectMalus = 0.6f;
+        }
+        m_lowDirectUnitBonus = settings.value("LowDirectUnitBonus", 0.35f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowDirectUnitBonus = 0.35f;
+        }
+        m_lowDirectMalus = settings.value("LowDirectMalus", 0.3f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowDirectMalus = 0.3f;
+        }
+        m_highDirectMalus = settings.value("HighDirectMalus", 0.6f).toFloat(&ok);
+        if(!ok)
+        {
+            m_highDirectMalus = 0.6f;
+        }
+
+        m_minUnitCountForDamageBonus = settings.value("MinUnitCountForDamageBonus", 3).toFloat(&ok);
+        if(!ok)
+        {
+            m_minUnitCountForDamageBonus = 3;
+        }
+        m_currentlyNotAttackableScoreBonus = settings.value("CurrentlyNotAttackableScoreBonus", 30).toFloat(&ok);
+        if(!ok)
+        {
+            m_currentlyNotAttackableScoreBonus = 30;
+        }
+        m_coUnitBuffBonus = settings.value("CoUnitBuffBonus", 17).toFloat(&ok);
+        if(!ok)
+        {
+            m_coUnitBuffBonus = 17;
+        }
+        m_nearEnemyBonus = settings.value("NearEnemyBonus", 10).toFloat(&ok);
+        if(!ok)
+        {
+            m_nearEnemyBonus = 10;
+        }
+        m_movementpointBonus = settings.value("MovementpointBonus", 0.33f).toFloat(&ok);
+        if(!ok)
+        {
+            m_movementpointBonus = 0.33f;
+        }
+        m_damageToUnitCostRatioBonus = settings.value("DamageToUnitCostRatioBonus", 20).toFloat(&ok);
+        if(!ok)
+        {
+            m_damageToUnitCostRatioBonus = 20;
+        }
+        m_superiorityRatio = settings.value("SuperiorityRatio", 2.5f).toFloat(&ok);
+        if(!ok)
+        {
+            m_superiorityRatio = 2.5f;
+        }
+        m_cheapUnitRatio = settings.value("CheapUnitRatio", 0.9f).toFloat(&ok);
+        if(!ok)
+        {
+            m_cheapUnitRatio = 0.9f;
+        }
+        m_cheapUnitBonusMultiplier = settings.value("CheapUnitBonusMultiplier", 40).toFloat(&ok);
+        if(!ok)
+        {
+            m_cheapUnitBonusMultiplier = 40;
+        }
+        m_normalUnitBonusMultiplier = settings.value("NormalUnitBonusMultiplier", 10).toFloat(&ok);
+        if(!ok)
+        {
+            m_normalUnitBonusMultiplier = 10;
+        }
+        m_damageToUnitCostRatioBonus = settings.value("ExpensiveUnitBonusMultiplier", 5).toFloat(&ok);
+        if(!ok)
+        {
+            m_damageToUnitCostRatioBonus = 5;
+        }
+
+        m_lowOwnBuildingEnemyBuildingRatio = settings.value("LowOwnBuildingEnemyBuildingRatio", 1.25f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowOwnBuildingEnemyBuildingRatio = 1.25f;
+        }
+        m_lowInfantryRatio = settings.value("LowInfantryRatio", 0.4f).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowInfantryRatio = 0.4f;
+        }
+        m_lowIncomeInfantryBonusMultiplier = settings.value("LowIncomeInfantryBonusMultiplier", 50).toFloat(&ok);
+        if(!ok)
+        {
+            m_lowIncomeInfantryBonusMultiplier = 50;
         }
         settings.endGroup();
     }
@@ -2219,7 +2320,7 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                             mult += 1.0f;
                         }
                         resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
-                                    counterDmg / 100.0f * pEnemyUnit->getUnitValue();
+                                    counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue();
                     }
                     else
                     {
@@ -2229,7 +2330,7 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                             mult = m_maxDistanceMultiplier;
                         }
                         resDamage = dmg / (pEnemyUnit->getHp() * Unit::MAX_UNIT_HP) * pEnemyUnit->getUnitValue() * bonusFactor -
-                                    counterDmg / 100.0f * pEnemyUnit->getUnitValue() * mult;
+                                    counterDmg / Unit::DAMAGE_100 * pEnemyUnit->getUnitValue() * mult;
                     }
                     if (resDamage > pEnemyUnit->getUnitValue())
                     {
@@ -2361,8 +2462,8 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                 float factor = 1 / static_cast<float>(i);
                 if (value < factor)
                 {
-                    notAttackableCount /= factor;
-                    damage /= factor;
+                    notAttackableCount *= factor;
+                    damage *= factor;
                     break;
                 }
             }
@@ -2558,15 +2659,15 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         // indirect unit
         if (data[DirectUnitRatio] > m_directIndirectRatio)
         {
-            score += 3 * (data[DirectUnitRatio] - m_directIndirectRatio) / 0.1f;
+            score += m_lowIndirectUnitBonus * (data[DirectUnitRatio] - m_directIndirectRatio);
         }
         else if (data[DirectUnitRatio] < m_directIndirectRatio / 2)
         {
-            score -= 6 * (m_directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+            score -= m_highIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
         }
         else if (data[DirectUnitRatio] < m_directIndirectRatio)
         {
-            score -= 5 * (m_directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+            score -= m_lowIndirectMalus * (m_directIndirectRatio - data[DirectUnitRatio]);
         }
     }
     else if (data[DirectUnit] == 1.0f)
@@ -2574,60 +2675,60 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         // direct unit
         if (data[DirectUnitRatio] < m_directIndirectRatio)
         {
-            score += 3.5f * (m_directIndirectRatio - data[DirectUnitRatio]) / 0.1f;
+            score += m_lowDirectUnitBonus * (m_directIndirectRatio - data[DirectUnitRatio]);
         }
         else if (data[DirectUnitRatio] > m_directIndirectRatio * 2)
         {
-            score -= 6 * (data[DirectUnitRatio] - m_directIndirectRatio) / 0.1f;
+            score -= m_highDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
         }
         else if (data[DirectUnitRatio] > m_directIndirectRatio)
         {
-            score -= 3 * (data[DirectUnitRatio] - m_directIndirectRatio) / 0.1f;
+            score -= m_lowDirectMalus * (data[DirectUnitRatio] - m_directIndirectRatio);
         }
     }
-    if (data[UnitCount] > 3)
+    if (data[UnitCount] > m_minUnitCountForDamageBonus)
     {
         // apply damage bonus
-        score += data[DamageData] / 100.0f;
+        score += data[DamageData] / Unit::DAMAGE_100;
     }
     // infantry bonus
     if (data[InfantryUnit] == 1.0f)
     {
-        if (data[InfantryCount] < 6 && data[BuildingEnemyRatio] < 1.25f)
+        if (data[InfantryCount] <= m_minInfantryCount && data[BuildingEnemyRatio] < m_lowOwnBuildingEnemyBuildingRatio)
         {
-            score += (5 - data[InfantryCount]) * 5 + (1.25f - data[BuildingEnemyRatio]) / 0.02f;
+            score += (m_minInfantryCount - data[InfantryCount]) * m_minInfantryCount + (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_lowIncomeInfantryBonusMultiplier;
         }
-        else if (data[InfantryUnitRatio] < 0.4f)
+        else if (data[InfantryUnitRatio] < m_lowInfantryRatio)
         {
-            score += (1.25f - data[BuildingEnemyRatio]) / 0.15f * 4;
+            score += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
         }
         else
         {
-            score += (1.0f - data[BuildingEnemyRatio]) / 0.15f * 4;
+            score += (m_lowOwnBuildingEnemyBuildingRatio - data[BuildingEnemyRatio]) * m_buildingBonusMultiplier;
         }
-        if (data[InfantryCount] >= 6)
+        if (data[InfantryCount] >= m_minInfantryCount)
         {
             score -= data[InfantryCount];
         }
     }
     score += calcCostScore(data);
     // apply movement bonus
-    score += data[Movementpoints] * 0.33f;
-    if (data[UnitCount] > 3)
+    score += data[Movementpoints] * m_movementpointBonus;
+    if (data[UnitCount] > m_minUnitCountForDamageBonus)
     {
         // apply not attackable unit bonus
-        score += data[NotAttackableCount] * 30.0f;
+        score += data[NotAttackableCount] * m_currentlyNotAttackableScoreBonus;
     }
     if (data[UnitCost] > 0)
     {
-        score += data[DamageData] * 20 / data[UnitCost];
+        score += data[DamageData] * m_damageToUnitCostRatioBonus / data[UnitCost];
     }
     // apply co buff bonus
-    score += data[COBonus] * 17;
+    score += data[COBonus] * m_coUnitBuffBonus;
 
     if (data[ReachDistance] > 0 && data[Movementpoints] > 0)
     {
-        score += 10.0f / GlobalUtils::roundUp(data[ReachDistance] / data[Movementpoints]);
+        score += m_nearEnemyBonus / GlobalUtils::roundUp(data[ReachDistance] / data[Movementpoints]);
     }
     return score;
 }
@@ -2636,17 +2737,17 @@ float NormalAi::calcCostScore(QVector<float>& data)
 {
     float score = 0;
     // funds bonus;
-    if (data[FundsFactoryRatio] > 2.5f + data[UnitEnemyRatio])
+    if (data[FundsFactoryRatio] > m_superiorityRatio + data[UnitEnemyRatio])
     {
-        score -= (data[FundsFactoryRatio] - 2.5f + data[UnitEnemyRatio]) * 5;
+        score -= (data[FundsFactoryRatio] - m_superiorityRatio + data[UnitEnemyRatio]) * m_expensiveUnitBonusMultiplier;
     }
-    else if (data[FundsFactoryRatio] < 0.8f)
+    else if (data[FundsFactoryRatio] < m_cheapUnitRatio)
     {
-        score += (0.9f - data[FundsFactoryRatio]) / 0.05f * 2;
+        score += (m_cheapUnitRatio - data[FundsFactoryRatio]) * m_cheapUnitBonusMultiplier;
     }
     else
     {
-        score += (2.5f + data[UnitEnemyRatio] - data[FundsFactoryRatio]) / 0.10f;
+        score += (m_superiorityRatio + data[UnitEnemyRatio] - data[FundsFactoryRatio]) * m_normalUnitBonusMultiplier;
     }
     return score;
 }

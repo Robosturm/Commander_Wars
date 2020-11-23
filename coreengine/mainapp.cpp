@@ -148,6 +148,28 @@ void Mainapp::applyFilter(quint32 filter)
     WikiDatabase::getInstance()->setLinearFilter(filter);
 }
 
+void Mainapp::doScreenshot()
+{
+    auto* currentScreen = screen();
+    if (currentScreen != nullptr)
+    {
+        auto picture = currentScreen->grabWindow(winId());
+        qint32 i = 0;
+        QDir dir("screenshots/");
+        dir.mkpath(".");
+        while (i < std::numeric_limits<qint32>::max())
+        {
+            QString filename = "screenshots/screenshot+" + QString::number(i) + ".png";
+            if (!QFile::exists(filename))
+            {
+                picture.save(filename);
+                break;
+            }
+            ++i;
+        }
+    }
+}
+
 void Mainapp::changeScreenMode(qint32 mode)
 {
     hide();
@@ -240,6 +262,10 @@ void Mainapp::keyPressEvent(QKeyEvent *event)
         if (cur == Settings::getKeyConsole())
         {
             Console::getInstance()->toggleView();
+        }
+        else if (cur == Settings::getKey_screenshot())
+        {
+            doScreenshot();
         }
         else
         {

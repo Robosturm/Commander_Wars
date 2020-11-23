@@ -118,6 +118,10 @@ public slots:
      * @brief onActiveChanged
      */
     void onActiveChanged();
+    /**
+     * @brief doScreenshot
+     */
+    void doScreenshot();
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);

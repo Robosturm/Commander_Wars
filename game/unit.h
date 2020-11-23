@@ -24,6 +24,7 @@ class Unit : public QObject, public oxygine::Sprite, public FileSerializable
 public:
     static const float animationSpeed;
     static constexpr float MAX_UNIT_HP = 10.0f;
+    static constexpr float DAMAGE_100 = 100.0f;
 
     enum class Priorities
     {

@@ -195,11 +195,19 @@ void BaseGameInputIF::centerCameraOnAction(GameAction* pAction)
         {
             if (pAction != nullptr)
             {
-                GameMenue::getInstance()->centerMapOnAction(pAction);
+                spGameMenue pMenu = GameMenue::getInstance();
+                if (pMenu.get() != nullptr)
+                {
+                    pMenu->centerMapOnAction(pAction);
+                }
             }
             else
             {
-                GameMap::getInstance()->centerOnPlayer(m_pPlayer);
+                spGameMap pMap =  GameMap::getInstance();
+                if (pMap.get() != nullptr)
+                {
+                    pMap->centerOnPlayer(m_pPlayer);
+                }
             }
         }
     }

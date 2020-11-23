@@ -731,6 +731,18 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Screenshot: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_screenshot());
+    pSelectKey->setTooltipText(tr("Key for taking an screensho."));
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, Settings::getInstance(), &Settings::setKey_screenshot, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
     m_pOptions->setContentHeigth(20 + y);
     
 }

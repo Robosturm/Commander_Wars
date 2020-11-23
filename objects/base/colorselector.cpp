@@ -30,13 +30,13 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         barWidth = pixelSize;
     }
     setHeight(pixelSize * 256 + 20 + 40);
-    if (pixelSize * 256 + barWidth + 30 > space * 3)
+    if (pixelSize * 256 + barWidth + 30 > space * 3 + 30)
     {
         setWidth(pixelSize * 256 + barWidth + 30);
     }
     else
     {
-        setWidth(space * 3);
+        setWidth(space * 3 + 30);
     }
     spLabel pLabel = new Label(space);
     pLabel->setStyle(style);

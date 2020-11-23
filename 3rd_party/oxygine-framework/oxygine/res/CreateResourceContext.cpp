@@ -100,6 +100,7 @@ namespace oxygine
                 _scaleFactor = node.nodeValue().toFloat(&ok);
                 if (!ok)
                 {
+                    handleErrorPolicy(error_policy::ep_show_error, "invalid scale factor found in xml");
                     _scaleFactor = 1.0f;
                 }
             }

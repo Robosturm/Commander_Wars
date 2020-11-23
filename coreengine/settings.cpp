@@ -21,6 +21,7 @@ bool Settings::m_borderless       = false;
 bool Settings::m_fullscreen       = false;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
+Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
 Qt::Key Settings::m_key_up                          = Qt::Key_W;
 Qt::Key Settings::m_key_down                        = Qt::Key_S;
 Qt::Key Settings::m_key_right                       = Qt::Key_D;
@@ -127,6 +128,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+Qt::Key Settings::getKey_screenshot()
+{
+    return m_key_screenshot;
+}
+
+void Settings::setKey_screenshot(const Qt::Key &key_screenshot)
+{
+    m_key_screenshot = key_screenshot;
 }
 
 GameEnums::AutoFocusing Settings::getAutoFocusing()
@@ -670,6 +681,12 @@ void Settings::loadSettings()
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_console";
         Console::print(error, Console::eERROR);
         m_key_console = Qt::Key_F1;
+    }    
+    m_key_screenshot      = static_cast<Qt::Key>(settings.value("key_screenshot", Qt::Key_F5).toInt(&ok));
+    if(!ok){
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_screenshot";
+        Console::print(error, Console::eERROR);
+        m_key_screenshot = Qt::Key_F5;
     }
     m_key_up = static_cast<Qt::Key>(settings.value("key_up", Qt::Key_W).toInt(&ok));
     if(!ok)
@@ -1185,6 +1202,7 @@ void Settings::saveSettings()
         settings.beginGroup("Keys");
         settings.setValue("key_escape",                     m_key_escape);
         settings.setValue("key_console",                    m_key_console);
+        settings.setValue("key_screenshot",                 m_key_screenshot);
         settings.setValue("key_up",                         m_key_up);
         settings.setValue("key_down",                       m_key_down);
         settings.setValue("key_right",                      m_key_right);
