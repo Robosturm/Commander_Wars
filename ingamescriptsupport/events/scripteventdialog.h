@@ -9,6 +9,22 @@
 
 #include "game/GameEnums.h"
 
+#include "oxygine-framework.h"
+
+class DialogEntry;
+typedef oxygine::intrusive_ptr<DialogEntry> spDialogEntry;
+
+class DialogEntry : public QObject, public oxygine::ref_counter
+{
+    Q_OBJECT
+public:
+    QString text;
+    QString coid;
+    GameEnums::COMood mood{GameEnums::COMood_Normal};
+    QColor color;
+    QString background;
+};
+
 class ScriptEventDialog;
 typedef oxygine::intrusive_ptr<ScriptEventDialog> spScriptEventDialog;
 
@@ -19,15 +35,6 @@ public:
     static const QString ScriptEventDialogItem;
     static const QString m_CurrentPlayerCO0;
     static const QString m_CurrentPlayerCO1;
-
-    struct Dialog
-    {
-        QString text;
-        QString coid;
-        GameEnums::COMood mood{GameEnums::COMood_Normal};
-        QColor color;
-        QString background;
-    };
 
     ScriptEventDialog();
     /**
@@ -59,7 +66,7 @@ public:
      * @param index
      * @return
      */
-    Dialog* getDialog(qint32 index);
+    spDialogEntry getDialog(qint32 index);
     /**
      * @brief getDialog
      * @param index
@@ -87,7 +94,7 @@ public:
         return 1;
     }
 private:
-    QVector<Dialog> m_Dialog;
+    QVector<spDialogEntry> m_Dialog;
 };
 
 #endif // SCRIPTEVENTDIALOG_H

@@ -11,6 +11,7 @@
 #include "objects/dialogs/filedialog.h"
 #include "objects/base/dropdownmenusprite.h"
 #include "qfileinfo.h"
+#include "qimage.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : QObject(),
@@ -70,7 +71,18 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
 void ScriptDialogDialog::addItem()
 {
     m_Event->addDialog("", "CO_ANDY", GameEnums::COMood_Normal, Qt::red);
-    updateDialog();
+    qint32 panelWidth = getPanelWidth();
+    addActorItem(m_Event->getDialogSize() - 1, panelWidth);
+}
+
+qint32 ScriptDialogDialog::getPanelWidth()
+{
+    qint32 panelWidth = Settings::getWidth();
+    if (panelWidth < 1000)
+    {
+        panelWidth = 1000;
+    }
+    return panelWidth;
 }
 
 void ScriptDialogDialog::updateDialog()
@@ -79,126 +91,135 @@ void ScriptDialogDialog::updateDialog()
     pApp->pauseRendering();
     m_Panel->clearContent();
     qint32 count = m_Event->getDialogSize();
-    qint32 panelWidth = Settings::getWidth();
-    if (panelWidth < 1000)
-    {
-        panelWidth = 1000;
-    }
-
+    qint32 panelWidth = getPanelWidth();
     for (qint32 i = 0; i < count; i++)
     {
-        ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(i);
-        qint32 y = i * 40;
-        qint32 boxWidth = panelWidth - 800;
-        qint32 posX = panelWidth - 800;
-        spTextbox pTextbox = new Textbox(boxWidth);
-        pTextbox->setTooltipText(tr("The text the CO should talk."));
-        pTextbox->setPosition(0, y);
-        pTextbox->setCurrentText(pDialog->text);
-        m_Panel->addItem(pTextbox);
-        connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString text)
-        {
-            pDialog->text = text;
-        });
-        QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
-        spDropDownmenu moodMenu = new DropDownmenu(150, moods);
-        moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
-        moodMenu->setPosition(posX, y);
-        moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
-        m_Panel->addItem(moodMenu);
-        connect(moodMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
-        {
-            pDialog->mood = static_cast<GameEnums::COMood>(item);
-        });
-
-        QVector<QString> ids;
-        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
-        ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
-        for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
-        {
-            ids.append(pCOSpriteManager->getID(i));
-        }
-        // todo make moddable
-        ids.append("co_davis");
-        ids.append("co_fanatic");
-        ids.append("co_officier_os");
-        ids.append("co_officier_bm");
-        ids.append("co_officier_ge");
-        ids.append("co_officier_yc");
-        ids.append("co_officier_bh");
-        ids.append("co_officier_ac");
-        ids.append("co_officier_bd");
-        ids.append("co_officier_ti");
-        ids.append("co_officier_dm");
-
-        auto creator = [=](QString id)
-        {
-            oxygine::ResAnim* pAnim = nullptr;
-            if (id == ScriptEventDialog::m_CurrentPlayerCO0)
-            {
-                pAnim = COSpriteManager::getInstance()->getResAnim("co_0+info");
-            }
-            else if (id == ScriptEventDialog::m_CurrentPlayerCO1)
-            {
-                pAnim = COSpriteManager::getInstance()->getResAnim("co_1+info");
-            }
-            else
-            {
-                pAnim = COSpriteManager::getInstance()->getResAnim(id + "+info");
-            }
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pAnim);
-            pSprite->setSize(pAnim->getSize());
-            return pSprite;
-        };
-
-        spDropDownmenuSprite coidsMenu = new DropDownmenuSprite(150, ids, creator);
-        coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
-        coidsMenu->setPosition(posX + 150, y);
-        coidsMenu->setCurrentItem(pDialog->coid);
-        m_Panel->addItem(coidsMenu);
-        connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
-        {
-            pDialog->coid = coidsMenu->getCurrentItemText();
-        });
-
-        Interpreter* pInterpreter = Interpreter::getInstance();
-        QString function = "getDefaultPlayerColors";
-        QJSValueList args;
-        QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
-        qint32 colorCount = ret.toInt();
-        QVector<QColor> playerColors;
-        for (qint32 i = 0; i < colorCount; i++)
-        {
-            QString function = "getDefaultColor";
-            QJSValueList args;
-            args << i;
-            ret = pInterpreter->doFunction("PLAYER", function, args);
-            playerColors.append(QColor(ret.toString()));
-        }
-        spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors);
-        colors->setTooltipText(tr("The background color of the dialog."));
-        colors->setPosition(posX + 350, y);
-        colors->setCurrentItem(pDialog->color);
-        m_Panel->addItem(colors);
-        connect(colors.get(), &DropDownmenuColor::sigItemChanged, [=](QColor color)
-        {
-            pDialog->color = color;
-        });
-
-        oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("Background"), 200);
-        pBackgroundTextbox->setPosition(posX + 465, y);
-        m_Panel->addItem(pBackgroundTextbox);
-        pBackgroundTextbox->addClickListener([=](oxygine::Event*)
-        {
-            dialogIndex = i;
-            emit sigShowChangeBackground();
-        });
+        addActorItem(i, panelWidth);
     }
     m_Panel->setContentHeigth(count * 40 + 80);
     m_Panel->setContentWidth(panelWidth);
     pApp->continueRendering();
+}
+
+void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
+{
+    oxygine::spActor pActor = new oxygine::Actor();
+    spDialogEntry pDialog = m_Event->getDialog(i);
+    qint32 y = i * 40;
+    qint32 boxWidth = panelWidth - 800;
+    qint32 posX = panelWidth - 800;
+    spTextbox pTextbox = new Textbox(boxWidth);
+    pTextbox->setTooltipText(tr("The text the CO should talk."));
+    pTextbox->setPosition(0, y);
+    pTextbox->setCurrentText(pDialog->text);
+    pActor->addChild(pTextbox);
+    connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString text)
+    {
+        pDialog->text = text;
+    });
+    QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
+    spDropDownmenu moodMenu = new DropDownmenu(150, moods);
+    moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
+    moodMenu->setPosition(posX, y);
+    moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
+    pActor->addChild(moodMenu);
+    connect(moodMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    {
+        pDialog->mood = static_cast<GameEnums::COMood>(item);
+    });
+
+    QVector<QString> ids;
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
+    ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
+    for (qint32 i = 0; i < pCOSpriteManager->getCount(); i++)
+    {
+        ids.append(pCOSpriteManager->getID(i));
+    }
+    // todo make moddable
+    ids.append("co_davis");
+    ids.append("co_fanatic");
+    ids.append("co_officier_os");
+    ids.append("co_officier_bm");
+    ids.append("co_officier_ge");
+    ids.append("co_officier_yc");
+    ids.append("co_officier_bh");
+    ids.append("co_officier_ac");
+    ids.append("co_officier_bd");
+    ids.append("co_officier_ti");
+    ids.append("co_officier_dm");
+
+    auto creator = [=](QString id)
+    {
+        oxygine::ResAnim* pAnim = nullptr;
+        if (id == ScriptEventDialog::m_CurrentPlayerCO0)
+        {
+            pAnim = COSpriteManager::getInstance()->getResAnim("co_0+info");
+        }
+        else if (id == ScriptEventDialog::m_CurrentPlayerCO1)
+        {
+            pAnim = COSpriteManager::getInstance()->getResAnim("co_1+info");
+        }
+        else
+        {
+            pAnim = COSpriteManager::getInstance()->getResAnim(id + "+info");
+        }
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        pSprite->setSize(pAnim->getSize());
+        return pSprite;
+    };
+
+    spDropDownmenuSprite coidsMenu = new DropDownmenuSprite(150, ids, creator);
+    coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
+    coidsMenu->setPosition(posX + 150, y);
+    coidsMenu->setCurrentItem(pDialog->coid);
+    pActor->addChild(coidsMenu);
+    connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
+    {
+        pDialog->coid = coidsMenu->getCurrentItemText();
+    });
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function = "getDefaultPlayerColors";
+    QJSValueList args;
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
+    qint32 colorCount = ret.toInt();
+    QVector<QColor> playerColors;
+    for (qint32 i = 0; i < colorCount; i++)
+    {
+        QString function = "getDefaultColor";
+        QJSValueList args;
+        args << i;
+        ret = pInterpreter->doFunction("PLAYER", function, args);
+        playerColors.append(QColor(ret.toString()));
+    }
+    spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors);
+    colors->setTooltipText(tr("The background color of the dialog."));
+    colors->setPosition(posX + 300, y);
+    colors->setCurrentItem(pDialog->color);
+    pActor->addChild(colors);
+    connect(colors.get(), &DropDownmenuColor::sigItemChanged, [=](QColor color)
+    {
+        pDialog->color = color;
+    });
+
+    oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("Background"), 200);
+    pBackgroundTextbox->setPosition(posX + 420, y);
+    pActor->addChild(pBackgroundTextbox);
+    pBackgroundTextbox->addClickListener([=](oxygine::Event*)
+    {
+        dialogIndex = i;
+        emit sigShowChangeBackground();
+    });
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    pSprite->setPosition(posX + 630, y + 5);
+    pActor->addChild(pSprite);
+    m_backgrounds.append(pSprite);
+    m_backgroundAnims.append(oxygine::spResAnim());
+    m_Panel->addItem(pActor);
+    m_dialogItems.append(pActor);
+    loadBackground(pDialog->background, i);
 }
 
 void ScriptDialogDialog::removeLast()
@@ -206,14 +227,17 @@ void ScriptDialogDialog::removeLast()
     if (m_Event->getDialogSize() > 0)
     {
         m_Event->removeDialog(m_Event->getDialogSize() - 1);
-        updateDialog();
+        m_dialogItems[m_dialogItems.size() - 1]->detach();
+        m_dialogItems.removeLast();
+        m_backgrounds.removeLast();
+        m_backgroundAnims.removeLast();
     }
 }
 
 void ScriptDialogDialog::showChangeBackground()
 {
     
-    ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(dialogIndex);
+    spDialogEntry pDialog = m_Event->getDialog(dialogIndex);
     QFileInfo file(pDialog->background);
     QString folder = "maps/";
     QString fileName = "";
@@ -231,14 +255,36 @@ void ScriptDialogDialog::showChangeBackground()
 void ScriptDialogDialog::setCurrentDialogBackground(QString file)
 {
     QFileInfo fileInfo(file);
-    ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(dialogIndex);
+    spDialogEntry pDialog = m_Event->getDialog(dialogIndex);
     if (fileInfo.exists() && fileInfo.isFile())
     {
-        pDialog->background = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+        QString filename = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+        pDialog->background = filename;
+        loadBackground(filename, dialogIndex);
     }
     else
     {
         pDialog->background = "";
+        loadBackground("", dialogIndex);
     }
     dialogIndex = -1;
+}
+
+void ScriptDialogDialog::loadBackground(QString filename, qint32 index)
+{
+    if (!filename.isEmpty())
+    {
+        QImage image(filename);
+        oxygine::spResAnim pAnim = new oxygine::SingleResAnim();
+        m_backgroundAnims[index] = pAnim;
+        Mainapp::getInstance()->loadResAnim(pAnim, image);
+        m_backgrounds[index]->setResAnim(pAnim.get());
+        m_backgrounds[index]->setScaleX(60.0f / pAnim->getWidth());
+        m_backgrounds[index]->setScaleY(30.0f / pAnim->getHeight());
+    }
+    else
+    {
+        m_backgrounds[index]->setResAnim(nullptr);
+        m_backgroundAnims[index] = nullptr;
+    }
 }

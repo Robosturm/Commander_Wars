@@ -17,11 +17,11 @@ ScriptEventDialog::ScriptEventDialog()
 
 void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood mood, QColor color)
 {
-    Dialog dialog;
-    dialog.text = text;
-    dialog.coid = coid;
-    dialog.mood = mood;
-    dialog.color = color;
+    spDialogEntry dialog = new DialogEntry();
+    dialog->text = text;
+    dialog->coid = coid;
+    dialog->mood = mood;
+    dialog->color = color;
     m_Dialog.append(dialog);
 }
 
@@ -40,11 +40,11 @@ void ScriptEventDialog::removeDialog(qint32 index)
     }
 }
 
-ScriptEventDialog::Dialog* ScriptEventDialog::getDialog(qint32 index)
+spDialogEntry ScriptEventDialog::getDialog(qint32 index)
 {
     if (index >= 0 && index < m_Dialog.size())
     {
-        return &m_Dialog[index];
+        return m_Dialog[index];
     }
     return nullptr;
 }
@@ -81,25 +81,25 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
 
             if (items.size() >= 4)
             {
-                Dialog dialog;
-                dialog.text = items[0];
-                dialog.coid = items[1];
+                spDialogEntry dialog = new DialogEntry();
+                dialog->text = items[0];
+                dialog->coid = items[1];
                 if (items[2] == "Sad")
                 {
-                    dialog.mood = GameEnums::COMood_Sad;
+                    dialog->mood = GameEnums::COMood_Sad;
                 }
                 else if (items[2] == "Normal")
                 {
-                    dialog.mood = GameEnums::COMood_Normal;
+                    dialog->mood = GameEnums::COMood_Normal;
                 }
                 else if (items[2] == "Happy")
                 {
-                    dialog.mood = GameEnums::COMood_Happy;
+                    dialog->mood = GameEnums::COMood_Happy;
                 }
-                dialog.color = items[3];
+                dialog->color = items[3];
                 if (version > 0 && items.size() >= 5)
                 {
-                    dialog.background = items[4];
+                    dialog->background = items[4];
                 }
                 m_Dialog.append(dialog);
             }
@@ -113,16 +113,16 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
     for (qint32 i = 0; i < m_Dialog.size(); i++)
     {
         rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"";
-        rStream <<  m_Dialog[i].text;
-        if (m_Dialog[i].coid.contains("."))
+        rStream <<  m_Dialog[i]->text;
+        if (m_Dialog[i]->coid.contains("."))
         {
-            rStream << "\"), " << m_Dialog[i].coid << ", GameEnums.COMood_";
+            rStream << "\"), " << m_Dialog[i]->coid << ", GameEnums.COMood_";
         }
         else
         {
-            rStream << "\"), \"" << m_Dialog[i].coid << "\", GameEnums.COMood_";
+            rStream << "\"), \"" << m_Dialog[i]->coid << "\", GameEnums.COMood_";
         }
-        switch (m_Dialog[i].mood)
+        switch (m_Dialog[i]->mood)
         {
             case GameEnums::COMood_Sad:
             {
@@ -140,8 +140,8 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
                 break;
             }
         }
-        rStream << ", \"" << m_Dialog[i].color.name() << "\"); ";
-        rStream << "dialog" << QString::number(i) << ".loadBackground(\"" << m_Dialog[i].background << "\"); ";
+        rStream << ", \"" << m_Dialog[i]->color.name() << "\"); ";
+        rStream << "dialog" << QString::number(i) << ".loadBackground(\"" << m_Dialog[i]->background << "\"); ";
         rStream << "// " << QString::number(getVersion()) << " " << ScriptEventDialogItem << "\n";
     }
     for (qint32 i = 0; i < m_Dialog.size() - 1; i++)
