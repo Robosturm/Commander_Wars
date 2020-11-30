@@ -910,6 +910,15 @@ void Unit::loadUnit(Unit* pUnit)
     }
 }
 
+void Unit::loadSpawnedUnit(QString unitId)
+{
+    spUnit pUnit = new Unit(unitId, m_pOwner, true);
+    if (canTransportUnit(pUnit.get()))
+    {
+        loadUnit(pUnit.get());
+    }
+}
+
 Unit* Unit::spawnUnit(QString unitID)
 {
     spGameMap pMap = GameMap::getInstance();

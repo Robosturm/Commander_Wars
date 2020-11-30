@@ -567,6 +567,11 @@ public slots:
      */
     void loadUnit(Unit* pUnit);
     /**
+     * @brief loadUnit adds a unit to the transport list
+     * @param pUnit
+     */
+    void loadSpawnedUnit(QString unitId);
+    /**
      * @brief getLoadedUnit
      * @param index
      */
