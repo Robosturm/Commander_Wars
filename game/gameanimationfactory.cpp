@@ -158,17 +158,17 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
 {
     
     GameAnimation* pRet = nullptr;
-    if (pDefUnit != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pDefUnit != nullptr && pMap.get() != nullptr)
     {
         // log this attack to our battle log
         qint32 atkDamage = GlobalUtils::roundUp(defStartHp) - GlobalUtils::roundUp(defEndHp);
         qint32 defDamage = GlobalUtils::roundUp(atkStartHp) - GlobalUtils::roundUp(atkEndHp);
-        spGameMap pMap = GameMap::getInstance();
+
         pMap->getGameRecorder()->logAttack(pMap->getCurrentDay(),
                                            atkDamage, pAtkTerrain->getX(), pAtkTerrain->getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),
                                            defDamage, pDefTerrain->getX(), pDefTerrain->getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID(), (defEndHp <= 0),
                                            pDefUnit->getOwner()->getFieldVisible(pAtkTerrain->getX(), pAtkTerrain->getY()));
-
         if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
         {
             pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,

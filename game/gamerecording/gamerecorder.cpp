@@ -236,17 +236,19 @@ void GameRecorder::setMapTime(const qint32 &mapTime)
 
 void GameRecorder::updatePlayerData(qint32 player)
 {
-    if (m_Record.size() > 0)
+    spGameMap pMap = GameMap::getInstance();
+    if (m_Record.size() > 0 && pMap.get() != nullptr)
     {
-        m_Record[m_Record.size() - 1]->addPlayerRecord(player, GameMap::getInstance()->getCurrentDay());
+        m_Record[m_Record.size() - 1]->addPlayerRecord(player, pMap->getCurrentDay());
     }
 }
 
 void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialEvents event)
 {
-    if (m_Record.size() > 0)
+    spGameMap pMap = GameMap::getInstance();
+    if (m_Record.size() > 0 && pMap.get() != nullptr)
     {
-        m_Record[m_Record.size() - 1]->addSpecialEvent(player, GameMap::getInstance()->getCurrentDay(), event);
+        m_Record[m_Record.size() - 1]->addSpecialEvent(player, pMap->getCurrentDay(), event);
     }
 }
 
@@ -288,148 +290,151 @@ QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 winnerTeam = pMap->getWinnerTeam();
     qint32 score = 0;
-    qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
-    // calc speed points
-    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight());
-    if (m_mapTime > 0)
+    if (pMap.get() != nullptr)
     {
-        mapTime = m_mapTime;
-    }
-    if (pMap->getCurrentDay() < mapTime)
-    {
-        scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
-    }
-    else
-    {
-        scorePoints.setX(100 - ((pMap->getCurrentDay() - mapTime) * 100 / (3 * mapTime)));
-    }
-    if (scorePoints.x() < 0)
-    {
-        scorePoints.setX(0);
-    }
-    Player* pPlayer = pMap->getPlayer(player);
-    if (pPlayer->getTeam() != winnerTeam && winnerTeam >= 0)
-    {
-        qint32 lostDay = 0;
-        for (qint32 i = 0; i < m_Record.size(); i++)
+        qint32 winnerTeam = pMap->getWinnerTeam();
+        qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
+        // calc speed points
+        qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight());
+        if (m_mapTime > 0)
         {
-            if (i == m_Record.size() - 1)
-            {
-                lostDay = pMap->getCurrentDay();
-            }
-            else if (m_Record[i]->getPlayerRecord(player)->getUnits() == -1)
-            {
-                lostDay = i - 1;
-                break;
-            }
+            mapTime = m_mapTime;
         }
-        scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / pMap->getCurrentDay()));
-    }
-    // Force
-    qint32 power = (damageDealt[player] + (destroyedUnits[player] * 140));
-    if (attackNumbers[player] > 0)
-    {
-       power /= attackNumbers[player];
-    }
-    else
-    {
-        power = 0;
-    }
-    if (power >= 100)
-    {
-        scorePoints.setY(scorePoints.y() + power);
-    }
-    else if (power > 50)
-    {
-        scorePoints.setY(scorePoints.y() + (2 * power) - 100);
-    }
-    else
-    {
-        scorePoints.setY(scorePoints.y() + power);
-    }
-    if (scorePoints.y() < 0)
-    {
-        scorePoints.setY(0);
-    }
+        if (pMap->getCurrentDay() < mapTime)
+        {
+            scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
+        }
+        else
+        {
+            scorePoints.setX(100 - ((pMap->getCurrentDay() - mapTime) * 100 / (3 * mapTime)));
+        }
+        if (scorePoints.x() < 0)
+        {
+            scorePoints.setX(0);
+        }
+        Player* pPlayer = pMap->getPlayer(player);
+        if (pPlayer->getTeam() != winnerTeam && winnerTeam >= 0)
+        {
+            qint32 lostDay = 0;
+            for (qint32 i = 0; i < m_Record.size(); i++)
+            {
+                if (i == m_Record.size() - 1)
+                {
+                    lostDay = pMap->getCurrentDay();
+                }
+                else if (m_Record[i]->getPlayerRecord(player)->getUnits() == -1)
+                {
+                    lostDay = i - 1;
+                    break;
+                }
+            }
+            scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / pMap->getCurrentDay()));
+        }
+        // Force
+        qint32 power = (damageDealt[player] + (destroyedUnits[player] * 140));
+        if (attackNumbers[player] > 0)
+        {
+            power /= attackNumbers[player];
+        }
+        else
+        {
+            power = 0;
+        }
+        if (power >= 100)
+        {
+            scorePoints.setY(scorePoints.y() + power);
+        }
+        else if (power > 50)
+        {
+            scorePoints.setY(scorePoints.y() + (2 * power) - 100);
+        }
+        else
+        {
+            scorePoints.setY(scorePoints.y() + power);
+        }
+        if (scorePoints.y() < 0)
+        {
+            scorePoints.setY(0);
+        }
 
-    // technique
-    quint32 deployLimit = static_cast<quint32>(mapSize / 9);
-    if (m_deployLimit > 0)
-    {
-        deployLimit = m_deployLimit;
-    }
-    float techScore1 = 0;
-    float techScore2 = 0;
-    float techScore3 = 0;
-    if (lostUnits[player] > 0)
-    {
-        techScore1 = (destroyedUnits[player] / static_cast<float>(lostUnits[player])) * 0.75f;
-    }
-    else
-    {
-        techScore1 = 2.0f;
-    }
-    if (techScore1 > 2.0f)
-    {
-        techScore1 = 2.0f;
-    }
-    quint32 deployed = deployedUnits[player];
-    quint32 startUnits = static_cast<quint32>(m_Record[0]->getPlayerRecord(player)->getUnits());
-    if (m_Record.size() > 0 &&
-        startUnits > 0)
-    {
-        deployed += startUnits;
-    }
-    if (deployed > 0)
-    {
-        techScore2 = (1.0f - (lostUnits[player] / static_cast<float>(deployed))) * 2.0f;
-    }
-    else
-    {
-        techScore2 = 2.0f;
-    }
-    if (techScore2 > 2.0f)
-    {
-        techScore2 = 2.0f;
-    }
-    else if (techScore2 < 0)
-    {
-        techScore2 = 0;
-    }
-    if (deployedUnits[player] > 0)
-    {
-        techScore3 = deployLimit / static_cast<float>(deployedUnits[player]);
-    }
-    else
-    {
-        techScore3 = 2.0f;
-    }
-    if (techScore3 > 2.0f)
-    {
-        techScore3 = 2.0f;
-    }
+        // technique
+        quint32 deployLimit = static_cast<quint32>(mapSize / 9);
+        if (m_deployLimit > 0)
+        {
+            deployLimit = m_deployLimit;
+        }
+        float techScore1 = 0;
+        float techScore2 = 0;
+        float techScore3 = 0;
+        if (lostUnits[player] > 0)
+        {
+            techScore1 = (destroyedUnits[player] / static_cast<float>(lostUnits[player])) * 0.75f;
+        }
+        else
+        {
+            techScore1 = 2.0f;
+        }
+        if (techScore1 > 2.0f)
+        {
+            techScore1 = 2.0f;
+        }
+        quint32 deployed = deployedUnits[player];
+        quint32 startUnits = static_cast<quint32>(m_Record[0]->getPlayerRecord(player)->getUnits());
+        if (m_Record.size() > 0 &&
+            startUnits > 0)
+        {
+            deployed += startUnits;
+        }
+        if (deployed > 0)
+        {
+            techScore2 = (1.0f - (lostUnits[player] / static_cast<float>(deployed))) * 2.0f;
+        }
+        else
+        {
+            techScore2 = 2.0f;
+        }
+        if (techScore2 > 2.0f)
+        {
+            techScore2 = 2.0f;
+        }
+        else if (techScore2 < 0)
+        {
+            techScore2 = 0;
+        }
+        if (deployedUnits[player] > 0)
+        {
+            techScore3 = deployLimit / static_cast<float>(deployedUnits[player]);
+        }
+        else
+        {
+            techScore3 = 2.0f;
+        }
+        if (techScore3 > 2.0f)
+        {
+            techScore3 = 2.0f;
+        }
 
-    scorePoints.setZ((techScore1 + techScore2 + techScore3)  * 100 / 3);
-    if (scorePoints.z() < 0)
-    {
-        scorePoints.setZ(0);
+        scorePoints.setZ((techScore1 + techScore2 + techScore3)  * 100 / 3);
+        if (scorePoints.z() < 0)
+        {
+            scorePoints.setZ(0);
+        }
+        // cap score points
+        if (scorePoints.x() > 150)
+        {
+            scorePoints.setX(150);
+        }
+        if (scorePoints.y() > 150)
+        {
+            scorePoints.setY(150);
+        }
+        if (scorePoints.z() > 150)
+        {
+            scorePoints.setZ(150);
+        }
+        score = scorePoints.x() + scorePoints.y() + scorePoints.z();
     }
-    // cap score points
-    if (scorePoints.x() > 150)
-    {
-        scorePoints.setX(150);
-    }
-    if (scorePoints.y() > 150)
-    {
-        scorePoints.setY(150);
-    }
-    if (scorePoints.z() > 150)
-    {
-        scorePoints.setZ(150);
-    }
-    score = scorePoints.x() + scorePoints.y() + scorePoints.z();
     return getRank(score);
 }
 

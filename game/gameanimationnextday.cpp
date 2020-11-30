@@ -85,7 +85,11 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
     oxygine::spTextField textField = new oxygine::TextField();
-    textField->setHtmlText((QString("Day ") + QString::number(GameMap::getInstance()->getCurrentDay())));
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        textField->setHtmlText((QString("Day ") + QString::number(pMap->getCurrentDay())));
+    }
     textField->setPosition(10, Settings::getHeight() / 2 - textField->getTextRect().getHeight() / 2);
     if (pCO != nullptr)
     {

@@ -853,6 +853,20 @@ void Player::setIsDefeated(bool value)
 
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView)
 {
+    addVisionFieldInternal(x, y,duration, directView);
+    spGameMap pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (isAlly(pPlayer))
+        {
+            pPlayer->addVisionFieldInternal(x, y, duration - 1, directView);
+        }
+    }
+}
+
+void Player::addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView)
+{
     std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Clear;
     if (duration > std::get<1>(m_FogVisionFields[x][y]))
     {

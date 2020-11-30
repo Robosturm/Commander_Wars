@@ -91,7 +91,7 @@ private:
     bool playing{false};
     QBuffer _dailyBuffer;
     QDataStream _dailyStream{&_dailyBuffer};
-    qint32 _currentDay{0};
+    qint32 m_currentDay{0};
 };
 
 #endif // REPLAYRECORDER_H

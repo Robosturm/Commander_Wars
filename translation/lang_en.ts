@@ -10280,79 +10280,79 @@ Units gain %0% firepower when attacking units with equal or less health.</source
 <context>
     <name>co_caulder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="223"/>
         <source>Head of IDS - the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="227"/>
         <source>Unrestricted experiments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="231"/>
         <source>Ethics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="235"/>
         <source>His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 HP each turn inside his CO-Zone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
         <source>
 Global Effect: 
 Units loose firepower by %0% and defense by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="246"/>
         <source>All his units gain five Hp and get a offense and defense buff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="250"/>
         <source>Mass Regeneration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="254"/>
         <source>All his units heal to full and gain a massive offense and defense buff.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="258"/>
         <source>Perfect Healing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
         <source>Ahhh watch this experiment. I wonder what it does...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="263"/>
         <source>March my clones, march and kill them all.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
         <source>Interesting. Very interesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="276"/>
         <source>Argh I&apos;m useless as well? Impossible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="264"/>
         <source>You and your ethnics make you weak. Watch the power of science...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="240"/>
         <source>
 
 CO Zone Effect: 
@@ -10360,23 +10360,23 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="258"/>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="271"/>
         <source>I am simply curious.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="270"/>
         <source>Quite satisfactory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="275"/>
         <source>Only a failed experiment nothing to worry about!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="280"/>
         <source>Caulder</source>
         <translation type="unfinished"></translation>
     </message>

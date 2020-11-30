@@ -489,6 +489,7 @@ private:
     bool colorToTable(QColor baseColor);
     void createTable(QColor baseColor);
     qint32 getAverageCost();
+    void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
 private:
     qint32 funds{0};
     float fundsModifier{1.0f};
