@@ -64,7 +64,7 @@ void GameAction::reset()
     inputStep = 0;
     m_MultiTurnPath.clear();
     buffer.close();
-    buffer.open(QIODevice::ReadWrite);
+    buffer.open(QIODevice::ReadWrite | QIODevice::Truncate);
 }
 
 qint64 GameAction::getSyncCounter() const
