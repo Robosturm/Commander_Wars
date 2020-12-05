@@ -236,5 +236,9 @@ var BUILDING =
     getVisionHide : function(building)
     {
         return false;
-    }
+    },
+
+    onCaptured : function(building)
+    {
+    },
 };

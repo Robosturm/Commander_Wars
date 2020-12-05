@@ -111,6 +111,7 @@ var Constructor = function()
 
         if (captured)
         {
+            Global[building.getBuildingID()].onCaptured(building);
             if (building.getBuildingID() === "HQ")
             {
                 map.getGameRecorder().addSpecialEvent(ACTION_CAPTURE.postAnimationUnit.getOwner().getPlayerID(),

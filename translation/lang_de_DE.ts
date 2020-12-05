@@ -200,7 +200,7 @@
         <translation>Erobern</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="145"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="146"/>
         <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
         <translation type="unfinished"></translation>
     </message>

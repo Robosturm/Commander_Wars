@@ -582,7 +582,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
             divider = 0.0f;
             pTextfield->setHtmlText(tr("Ammo 1: -/-"));
         }
-        addColorbar(divider, posX, posY, Qt::yellow);
+        addColorbar(divider, posX, posY, QColor(255, 150, 0));
         pTextfield->setPosition(posX + 5, posY);
         m_pCursorInfoBox->addChild(pTextfield);
 
@@ -798,17 +798,17 @@ void IngameInfoBar::createTerrainInfo(qint32 x, qint32 y)
     }
     if (pBuilding.get() != nullptr)
     {
-        constexpr float maxCapturepoints = 20;
-        float resistance = maxCapturepoints;
+        constexpr qint32 maxCapturepoints = 20;
+        qint32 resistance = maxCapturepoints;
         if (pUnit.get() != nullptr)
         {
             resistance = maxCapturepoints - pUnit->getCapturePoints();
         }
-        addColorbar(resistance / maxCapturepoints, posX, posY, Qt::cyan);
+        addColorbar(static_cast<float>(resistance) / static_cast<float>(maxCapturepoints), posX, posY, Qt::cyan);
         pTextfield = new Label(pAnim->getWidth() - 10);
         pTextfield->setPosition(posX + 5, posY);
         pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20)));
+        pTextfield->setHtmlText((tr("Resistance: ") + QString::number(resistance)));
         m_pCursorInfoBox->addChild(pTextfield);
         barAdded = true;
     }
