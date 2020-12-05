@@ -64,8 +64,10 @@ namespace oxygine
             r->getDriver()->setUniform("add_color", vec);
         }
         float brightnessColor = GameWindow::getWindow()->getBrightness();
+        float gamma = GameWindow::getWindow()->getGamma();
         Vector4 brightness = Vector4(brightnessColor, brightnessColor, brightnessColor, 0);
         r->getDriver()->setUniform("brightness_color", brightness);
+        r->getDriver()->setUniform("gamma", gamma);
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, _table);
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);

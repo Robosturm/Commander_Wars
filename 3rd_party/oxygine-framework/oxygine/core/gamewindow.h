@@ -67,6 +67,7 @@ namespace oxygine
             }
         }
 
+
     signals:
         void sigLoadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
 
@@ -85,6 +86,16 @@ namespace oxygine
          * @param brightness
          */
         void setBrightness(float brightness);
+        /**
+         * @brief getGamma
+         * @return
+         */
+        float getGamma() const;
+        /**
+         * @brief setGamma
+         * @param gamma
+         */
+        void setGamma(float gamma);
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
     protected:
@@ -116,6 +127,7 @@ namespace oxygine
 
         static GameWindow* _window;
         float m_brightness{0.0f};
+        float m_gamma{1.0f};
     };
 }
 

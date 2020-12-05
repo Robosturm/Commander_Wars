@@ -163,6 +163,16 @@ namespace oxygine
         //sleep(1000/50);
     }
 
+    float GameWindow::getGamma() const
+    {
+        return m_gamma;
+    }
+
+    void GameWindow::setGamma(float gamma)
+    {
+        m_gamma = gamma;
+    }
+
     float GameWindow::getBrightness() const
     {
         return m_brightness;

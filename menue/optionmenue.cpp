@@ -356,13 +356,30 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, -50, 50);
-    pSlider->setTooltipText(tr("Selects the global volume for the game"));
+    pSlider->setTooltipText(tr("Selects the brightness for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getBrightness());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
         Settings::setBrightness(-value);
         pApp->setBrightness(-value);
+    });
+    m_pOptions->addItem(pSlider);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Gamma: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 160, "");
+    pSlider->setTooltipText(tr("Selects the gamma factor for the game"));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getGamma() * 30.0f);
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setGamma(value / 30.0f);
+        pApp->setGamma(value / 30.0f);
     });
     m_pOptions->addItem(pSlider);
     y += 40;

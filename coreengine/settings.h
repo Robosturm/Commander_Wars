@@ -43,7 +43,11 @@ public:
     static void setSlaveServerName(const QString &slaveServerName);
 
 
+
 public slots:
+
+    static float getGamma();
+    static void setGamma(float gamma);
 
     static GameEnums::COInfoPosition getCoInfoPosition();
     static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
@@ -369,6 +373,7 @@ private:
     static qint32 m_width;
     static qint32 m_height;
     static float m_brightness;
+    static float m_gamma;
 
     static bool m_borderless;
     static bool m_fullscreen;

@@ -161,6 +161,7 @@ int main(int argc, char* argv[])
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
     window.setBrightness(Settings::getBrightness());
+    window.setGamma(Settings::getGamma());
     window.setPosition(Settings::getX(), Settings::getY());
     qint32 returncode = app.exec();
     Settings::setX(window.x());
