@@ -4135,66 +4135,72 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="355"/>
+        <source>Brightness: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="372"/>
         <source>Sprite Aliasing: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="359"/>
+        <location filename="../menue/optionmenue.cpp" line="376"/>
         <source>If checked ingame sprites will be aliased smoother.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="380"/>
+        <location filename="../menue/optionmenue.cpp" line="397"/>
         <source>Audio Settings</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="386"/>
+        <location filename="../menue/optionmenue.cpp" line="403"/>
         <source>Global Volume: </source>
         <translation>Globale Lautst.: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="390"/>
+        <location filename="../menue/optionmenue.cpp" line="359"/>
+        <location filename="../menue/optionmenue.cpp" line="407"/>
         <source>Selects the global volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="403"/>
+        <location filename="../menue/optionmenue.cpp" line="420"/>
         <source>Music Volume: </source>
         <translation>Musiklautsträrke: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="407"/>
+        <location filename="../menue/optionmenue.cpp" line="424"/>
         <source>Selects the music volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="420"/>
+        <location filename="../menue/optionmenue.cpp" line="437"/>
         <source>Sound Volume: </source>
         <translation>Sound: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="424"/>
+        <location filename="../menue/optionmenue.cpp" line="441"/>
         <source>Selects the sound volume for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="436"/>
+        <location filename="../menue/optionmenue.cpp" line="453"/>
         <source>Language: </source>
         <translation>Sprache: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="464"/>
+        <location filename="../menue/optionmenue.cpp" line="481"/>
         <source>Selects the language for the game. Note: Not everything may be translated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="480"/>
+        <location filename="../menue/optionmenue.cpp" line="497"/>
         <source>Auto Saving Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="510"/>
+        <location filename="../menue/optionmenue.cpp" line="527"/>
         <source>Record Games: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4203,17 +4209,17 @@ This is immediatly applied.</source>
         <translation type="vanished">Autospeichern: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="484"/>
+        <location filename="../menue/optionmenue.cpp" line="501"/>
         <source>Selects the auto saving cycle in hours:minutes:seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="496"/>
+        <location filename="../menue/optionmenue.cpp" line="513"/>
         <source>Auto Saving Cycle: </source>
         <translation>Autom. speichern Zyklus: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="500"/>
+        <location filename="../menue/optionmenue.cpp" line="517"/>
         <source>Selects the amount of auto save games that get cycled through while auto saving. A value 0 disables this feature.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4222,97 +4228,97 @@ This is immediatly applied.</source>
         <translation type="vanished">Spielaufnahme: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="514"/>
+        <location filename="../menue/optionmenue.cpp" line="531"/>
         <source>If checked games will be recorded and you can rewatch them in the replay section.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="523"/>
+        <location filename="../menue/optionmenue.cpp" line="540"/>
         <source>Network Settings</source>
         <translation>Netzwerkeinstellungen</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="530"/>
+        <location filename="../menue/optionmenue.cpp" line="547"/>
         <source>Username: </source>
         <translation>Benutzername: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="534"/>
+        <location filename="../menue/optionmenue.cpp" line="551"/>
         <source>Selects your username shown at various places of the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="558"/>
+        <location filename="../menue/optionmenue.cpp" line="575"/>
         <source>Server Adress: </source>
         <translation>Serveradresse: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="562"/>
+        <location filename="../menue/optionmenue.cpp" line="579"/>
         <source>Selects the game server you wan&apos;t to connect to when playing a multiplayer game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="574"/>
+        <location filename="../menue/optionmenue.cpp" line="591"/>
         <source>Lobby port: </source>
         <translation>Lobby Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="578"/>
+        <location filename="../menue/optionmenue.cpp" line="595"/>
         <source>Selects the chat port for used to chat with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="590"/>
+        <location filename="../menue/optionmenue.cpp" line="607"/>
         <source>Server: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="594"/>
+        <location filename="../menue/optionmenue.cpp" line="611"/>
         <source>Enables this game as global server.</source>
         <translation>Aktiviert dieses Spiel als globalen Server.</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="608"/>
+        <location filename="../menue/optionmenue.cpp" line="625"/>
         <source>Game port: </source>
         <translation>Spiele Port: </translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="612"/>
+        <location filename="../menue/optionmenue.cpp" line="629"/>
         <source>Selects the game port for used to play the game with the server</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="655"/>
+        <location filename="../menue/optionmenue.cpp" line="672"/>
         <source>Advance Wars Game:</source>
         <translation>Advance Wars Spiel:</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="657"/>
+        <location filename="../menue/optionmenue.cpp" line="674"/>
         <source>Unkown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="658"/>
+        <location filename="../menue/optionmenue.cpp" line="675"/>
         <source>Commander Wars</source>
         <translation>Commander Wars</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="659"/>
+        <location filename="../menue/optionmenue.cpp" line="676"/>
         <source>Advance Wars DS</source>
         <translation>Advance Wars DS</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="660"/>
+        <location filename="../menue/optionmenue.cpp" line="677"/>
         <source>Advance Wars DC</source>
         <translation>Advance Wars DC</translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="662"/>
+        <location filename="../menue/optionmenue.cpp" line="679"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="748"/>
+        <location filename="../menue/optionmenue.cpp" line="765"/>
         <source>
 Version: </source>
         <translation>
@@ -6705,144 +6711,146 @@ Hinweis: KO 1 und KO 2 repräsentieren den KO des momentanen Spielers.</translat
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="631"/>
         <location filename="../coreengine/settings.cpp" line="642"/>
-        <location filename="../coreengine/settings.cpp" line="649"/>
-        <location filename="../coreengine/settings.cpp" line="656"/>
-        <location filename="../coreengine/settings.cpp" line="662"/>
-        <location filename="../coreengine/settings.cpp" line="675"/>
+        <location filename="../coreengine/settings.cpp" line="653"/>
+        <location filename="../coreengine/settings.cpp" line="660"/>
+        <location filename="../coreengine/settings.cpp" line="667"/>
+        <location filename="../coreengine/settings.cpp" line="673"/>
         <location filename="../coreengine/settings.cpp" line="681"/>
-        <location filename="../coreengine/settings.cpp" line="687"/>
-        <location filename="../coreengine/settings.cpp" line="694"/>
+        <location filename="../coreengine/settings.cpp" line="695"/>
         <location filename="../coreengine/settings.cpp" line="701"/>
-        <location filename="../coreengine/settings.cpp" line="708"/>
-        <location filename="../coreengine/settings.cpp" line="715"/>
-        <location filename="../coreengine/settings.cpp" line="722"/>
-        <location filename="../coreengine/settings.cpp" line="729"/>
-        <location filename="../coreengine/settings.cpp" line="736"/>
-        <location filename="../coreengine/settings.cpp" line="743"/>
-        <location filename="../coreengine/settings.cpp" line="750"/>
-        <location filename="../coreengine/settings.cpp" line="757"/>
-        <location filename="../coreengine/settings.cpp" line="764"/>
-        <location filename="../coreengine/settings.cpp" line="771"/>
-        <location filename="../coreengine/settings.cpp" line="778"/>
-        <location filename="../coreengine/settings.cpp" line="785"/>
-        <location filename="../coreengine/settings.cpp" line="792"/>
-        <location filename="../coreengine/settings.cpp" line="799"/>
-        <location filename="../coreengine/settings.cpp" line="806"/>
-        <location filename="../coreengine/settings.cpp" line="813"/>
-        <location filename="../coreengine/settings.cpp" line="820"/>
-        <location filename="../coreengine/settings.cpp" line="828"/>
-        <location filename="../coreengine/settings.cpp" line="836"/>
-        <location filename="../coreengine/settings.cpp" line="843"/>
-        <location filename="../coreengine/settings.cpp" line="850"/>
-        <location filename="../coreengine/settings.cpp" line="857"/>
-        <location filename="../coreengine/settings.cpp" line="864"/>
-        <location filename="../coreengine/settings.cpp" line="871"/>
-        <location filename="../coreengine/settings.cpp" line="878"/>
-        <location filename="../coreengine/settings.cpp" line="885"/>
-        <location filename="../coreengine/settings.cpp" line="892"/>
-        <location filename="../coreengine/settings.cpp" line="899"/>
-        <location filename="../coreengine/settings.cpp" line="906"/>
-        <location filename="../coreengine/settings.cpp" line="913"/>
-        <location filename="../coreengine/settings.cpp" line="920"/>
-        <location filename="../coreengine/settings.cpp" line="927"/>
-        <location filename="../coreengine/settings.cpp" line="934"/>
-        <location filename="../coreengine/settings.cpp" line="941"/>
-        <location filename="../coreengine/settings.cpp" line="948"/>
-        <location filename="../coreengine/settings.cpp" line="955"/>
-        <location filename="../coreengine/settings.cpp" line="964"/>
-        <location filename="../coreengine/settings.cpp" line="972"/>
-        <location filename="../coreengine/settings.cpp" line="980"/>
-        <location filename="../coreengine/settings.cpp" line="988"/>
-        <location filename="../coreengine/settings.cpp" line="996"/>
-        <location filename="../coreengine/settings.cpp" line="1004"/>
-        <location filename="../coreengine/settings.cpp" line="1012"/>
-        <location filename="../coreengine/settings.cpp" line="1023"/>
-        <location filename="../coreengine/settings.cpp" line="1030"/>
-        <location filename="../coreengine/settings.cpp" line="1037"/>
-        <location filename="../coreengine/settings.cpp" line="1048"/>
-        <location filename="../coreengine/settings.cpp" line="1055"/>
-        <location filename="../coreengine/settings.cpp" line="1062"/>
-        <location filename="../coreengine/settings.cpp" line="1069"/>
-        <location filename="../coreengine/settings.cpp" line="1076"/>
-        <location filename="../coreengine/settings.cpp" line="1084"/>
-        <location filename="../coreengine/settings.cpp" line="1091"/>
-        <location filename="../coreengine/settings.cpp" line="1099"/>
-        <location filename="../coreengine/settings.cpp" line="1106"/>
-        <location filename="../coreengine/settings.cpp" line="1121"/>
-        <location filename="../coreengine/settings.cpp" line="1128"/>
+        <location filename="../coreengine/settings.cpp" line="707"/>
+        <location filename="../coreengine/settings.cpp" line="714"/>
+        <location filename="../coreengine/settings.cpp" line="721"/>
+        <location filename="../coreengine/settings.cpp" line="728"/>
+        <location filename="../coreengine/settings.cpp" line="735"/>
+        <location filename="../coreengine/settings.cpp" line="742"/>
+        <location filename="../coreengine/settings.cpp" line="749"/>
+        <location filename="../coreengine/settings.cpp" line="756"/>
+        <location filename="../coreengine/settings.cpp" line="763"/>
+        <location filename="../coreengine/settings.cpp" line="770"/>
+        <location filename="../coreengine/settings.cpp" line="777"/>
+        <location filename="../coreengine/settings.cpp" line="784"/>
+        <location filename="../coreengine/settings.cpp" line="791"/>
+        <location filename="../coreengine/settings.cpp" line="798"/>
+        <location filename="../coreengine/settings.cpp" line="805"/>
+        <location filename="../coreengine/settings.cpp" line="812"/>
+        <location filename="../coreengine/settings.cpp" line="819"/>
+        <location filename="../coreengine/settings.cpp" line="826"/>
+        <location filename="../coreengine/settings.cpp" line="833"/>
+        <location filename="../coreengine/settings.cpp" line="840"/>
+        <location filename="../coreengine/settings.cpp" line="848"/>
+        <location filename="../coreengine/settings.cpp" line="856"/>
+        <location filename="../coreengine/settings.cpp" line="863"/>
+        <location filename="../coreengine/settings.cpp" line="870"/>
+        <location filename="../coreengine/settings.cpp" line="877"/>
+        <location filename="../coreengine/settings.cpp" line="884"/>
+        <location filename="../coreengine/settings.cpp" line="891"/>
+        <location filename="../coreengine/settings.cpp" line="898"/>
+        <location filename="../coreengine/settings.cpp" line="905"/>
+        <location filename="../coreengine/settings.cpp" line="912"/>
+        <location filename="../coreengine/settings.cpp" line="919"/>
+        <location filename="../coreengine/settings.cpp" line="926"/>
+        <location filename="../coreengine/settings.cpp" line="933"/>
+        <location filename="../coreengine/settings.cpp" line="940"/>
+        <location filename="../coreengine/settings.cpp" line="947"/>
+        <location filename="../coreengine/settings.cpp" line="954"/>
+        <location filename="../coreengine/settings.cpp" line="961"/>
+        <location filename="../coreengine/settings.cpp" line="968"/>
+        <location filename="../coreengine/settings.cpp" line="975"/>
+        <location filename="../coreengine/settings.cpp" line="984"/>
+        <location filename="../coreengine/settings.cpp" line="992"/>
+        <location filename="../coreengine/settings.cpp" line="1000"/>
+        <location filename="../coreengine/settings.cpp" line="1008"/>
+        <location filename="../coreengine/settings.cpp" line="1016"/>
+        <location filename="../coreengine/settings.cpp" line="1024"/>
+        <location filename="../coreengine/settings.cpp" line="1032"/>
+        <location filename="../coreengine/settings.cpp" line="1043"/>
+        <location filename="../coreengine/settings.cpp" line="1050"/>
+        <location filename="../coreengine/settings.cpp" line="1057"/>
+        <location filename="../coreengine/settings.cpp" line="1068"/>
+        <location filename="../coreengine/settings.cpp" line="1075"/>
+        <location filename="../coreengine/settings.cpp" line="1082"/>
+        <location filename="../coreengine/settings.cpp" line="1089"/>
+        <location filename="../coreengine/settings.cpp" line="1096"/>
+        <location filename="../coreengine/settings.cpp" line="1104"/>
+        <location filename="../coreengine/settings.cpp" line="1111"/>
+        <location filename="../coreengine/settings.cpp" line="1119"/>
+        <location filename="../coreengine/settings.cpp" line="1126"/>
+        <location filename="../coreengine/settings.cpp" line="1141"/>
+        <location filename="../coreengine/settings.cpp" line="1148"/>
         <source>Error in the Ini File: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="631"/>
         <location filename="../coreengine/settings.cpp" line="642"/>
-        <location filename="../coreengine/settings.cpp" line="649"/>
-        <location filename="../coreengine/settings.cpp" line="656"/>
-        <location filename="../coreengine/settings.cpp" line="662"/>
-        <location filename="../coreengine/settings.cpp" line="675"/>
+        <location filename="../coreengine/settings.cpp" line="653"/>
+        <location filename="../coreengine/settings.cpp" line="660"/>
+        <location filename="../coreengine/settings.cpp" line="667"/>
+        <location filename="../coreengine/settings.cpp" line="673"/>
         <location filename="../coreengine/settings.cpp" line="681"/>
-        <location filename="../coreengine/settings.cpp" line="687"/>
-        <location filename="../coreengine/settings.cpp" line="694"/>
+        <location filename="../coreengine/settings.cpp" line="695"/>
         <location filename="../coreengine/settings.cpp" line="701"/>
-        <location filename="../coreengine/settings.cpp" line="708"/>
-        <location filename="../coreengine/settings.cpp" line="715"/>
-        <location filename="../coreengine/settings.cpp" line="722"/>
-        <location filename="../coreengine/settings.cpp" line="729"/>
-        <location filename="../coreengine/settings.cpp" line="736"/>
-        <location filename="../coreengine/settings.cpp" line="743"/>
-        <location filename="../coreengine/settings.cpp" line="750"/>
-        <location filename="../coreengine/settings.cpp" line="757"/>
-        <location filename="../coreengine/settings.cpp" line="764"/>
-        <location filename="../coreengine/settings.cpp" line="771"/>
-        <location filename="../coreengine/settings.cpp" line="778"/>
-        <location filename="../coreengine/settings.cpp" line="785"/>
-        <location filename="../coreengine/settings.cpp" line="792"/>
-        <location filename="../coreengine/settings.cpp" line="799"/>
-        <location filename="../coreengine/settings.cpp" line="806"/>
-        <location filename="../coreengine/settings.cpp" line="813"/>
-        <location filename="../coreengine/settings.cpp" line="820"/>
-        <location filename="../coreengine/settings.cpp" line="828"/>
-        <location filename="../coreengine/settings.cpp" line="836"/>
-        <location filename="../coreengine/settings.cpp" line="843"/>
-        <location filename="../coreengine/settings.cpp" line="850"/>
-        <location filename="../coreengine/settings.cpp" line="857"/>
-        <location filename="../coreengine/settings.cpp" line="864"/>
-        <location filename="../coreengine/settings.cpp" line="871"/>
-        <location filename="../coreengine/settings.cpp" line="878"/>
-        <location filename="../coreengine/settings.cpp" line="885"/>
-        <location filename="../coreengine/settings.cpp" line="892"/>
-        <location filename="../coreengine/settings.cpp" line="899"/>
-        <location filename="../coreengine/settings.cpp" line="906"/>
-        <location filename="../coreengine/settings.cpp" line="913"/>
-        <location filename="../coreengine/settings.cpp" line="920"/>
-        <location filename="../coreengine/settings.cpp" line="927"/>
-        <location filename="../coreengine/settings.cpp" line="934"/>
-        <location filename="../coreengine/settings.cpp" line="941"/>
-        <location filename="../coreengine/settings.cpp" line="948"/>
-        <location filename="../coreengine/settings.cpp" line="955"/>
-        <location filename="../coreengine/settings.cpp" line="964"/>
-        <location filename="../coreengine/settings.cpp" line="972"/>
-        <location filename="../coreengine/settings.cpp" line="980"/>
-        <location filename="../coreengine/settings.cpp" line="988"/>
-        <location filename="../coreengine/settings.cpp" line="996"/>
-        <location filename="../coreengine/settings.cpp" line="1004"/>
-        <location filename="../coreengine/settings.cpp" line="1012"/>
-        <location filename="../coreengine/settings.cpp" line="1023"/>
-        <location filename="../coreengine/settings.cpp" line="1030"/>
-        <location filename="../coreengine/settings.cpp" line="1037"/>
-        <location filename="../coreengine/settings.cpp" line="1048"/>
-        <location filename="../coreengine/settings.cpp" line="1055"/>
-        <location filename="../coreengine/settings.cpp" line="1062"/>
-        <location filename="../coreengine/settings.cpp" line="1069"/>
-        <location filename="../coreengine/settings.cpp" line="1076"/>
-        <location filename="../coreengine/settings.cpp" line="1084"/>
-        <location filename="../coreengine/settings.cpp" line="1091"/>
-        <location filename="../coreengine/settings.cpp" line="1099"/>
-        <location filename="../coreengine/settings.cpp" line="1106"/>
-        <location filename="../coreengine/settings.cpp" line="1121"/>
-        <location filename="../coreengine/settings.cpp" line="1128"/>
+        <location filename="../coreengine/settings.cpp" line="707"/>
+        <location filename="../coreengine/settings.cpp" line="714"/>
+        <location filename="../coreengine/settings.cpp" line="721"/>
+        <location filename="../coreengine/settings.cpp" line="728"/>
+        <location filename="../coreengine/settings.cpp" line="735"/>
+        <location filename="../coreengine/settings.cpp" line="742"/>
+        <location filename="../coreengine/settings.cpp" line="749"/>
+        <location filename="../coreengine/settings.cpp" line="756"/>
+        <location filename="../coreengine/settings.cpp" line="763"/>
+        <location filename="../coreengine/settings.cpp" line="770"/>
+        <location filename="../coreengine/settings.cpp" line="777"/>
+        <location filename="../coreengine/settings.cpp" line="784"/>
+        <location filename="../coreengine/settings.cpp" line="791"/>
+        <location filename="../coreengine/settings.cpp" line="798"/>
+        <location filename="../coreengine/settings.cpp" line="805"/>
+        <location filename="../coreengine/settings.cpp" line="812"/>
+        <location filename="../coreengine/settings.cpp" line="819"/>
+        <location filename="../coreengine/settings.cpp" line="826"/>
+        <location filename="../coreengine/settings.cpp" line="833"/>
+        <location filename="../coreengine/settings.cpp" line="840"/>
+        <location filename="../coreengine/settings.cpp" line="848"/>
+        <location filename="../coreengine/settings.cpp" line="856"/>
+        <location filename="../coreengine/settings.cpp" line="863"/>
+        <location filename="../coreengine/settings.cpp" line="870"/>
+        <location filename="../coreengine/settings.cpp" line="877"/>
+        <location filename="../coreengine/settings.cpp" line="884"/>
+        <location filename="../coreengine/settings.cpp" line="891"/>
+        <location filename="../coreengine/settings.cpp" line="898"/>
+        <location filename="../coreengine/settings.cpp" line="905"/>
+        <location filename="../coreengine/settings.cpp" line="912"/>
+        <location filename="../coreengine/settings.cpp" line="919"/>
+        <location filename="../coreengine/settings.cpp" line="926"/>
+        <location filename="../coreengine/settings.cpp" line="933"/>
+        <location filename="../coreengine/settings.cpp" line="940"/>
+        <location filename="../coreengine/settings.cpp" line="947"/>
+        <location filename="../coreengine/settings.cpp" line="954"/>
+        <location filename="../coreengine/settings.cpp" line="961"/>
+        <location filename="../coreengine/settings.cpp" line="968"/>
+        <location filename="../coreengine/settings.cpp" line="975"/>
+        <location filename="../coreengine/settings.cpp" line="984"/>
+        <location filename="../coreengine/settings.cpp" line="992"/>
+        <location filename="../coreengine/settings.cpp" line="1000"/>
+        <location filename="../coreengine/settings.cpp" line="1008"/>
+        <location filename="../coreengine/settings.cpp" line="1016"/>
+        <location filename="../coreengine/settings.cpp" line="1024"/>
+        <location filename="../coreengine/settings.cpp" line="1032"/>
+        <location filename="../coreengine/settings.cpp" line="1043"/>
+        <location filename="../coreengine/settings.cpp" line="1050"/>
+        <location filename="../coreengine/settings.cpp" line="1057"/>
+        <location filename="../coreengine/settings.cpp" line="1068"/>
+        <location filename="../coreengine/settings.cpp" line="1075"/>
+        <location filename="../coreengine/settings.cpp" line="1082"/>
+        <location filename="../coreengine/settings.cpp" line="1089"/>
+        <location filename="../coreengine/settings.cpp" line="1096"/>
+        <location filename="../coreengine/settings.cpp" line="1104"/>
+        <location filename="../coreengine/settings.cpp" line="1111"/>
+        <location filename="../coreengine/settings.cpp" line="1119"/>
+        <location filename="../coreengine/settings.cpp" line="1126"/>
+        <location filename="../coreengine/settings.cpp" line="1141"/>
+        <location filename="../coreengine/settings.cpp" line="1148"/>
         <source>Setting:</source>
         <translation></translation>
     </message>

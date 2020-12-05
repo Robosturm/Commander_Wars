@@ -3,6 +3,7 @@
 #include "STDRenderer.h"
 #include "core/UberShaderProgram.h"
 #include "core/oxygine.h"
+#include "core/gamewindow.h"
 
 namespace oxygine
 {
@@ -62,6 +63,9 @@ namespace oxygine
             Vector4 vec = Vector4(_addColor.redF(), _addColor.greenF(), _addColor.blueF(), _addColor.alphaF());
             r->getDriver()->setUniform("add_color", vec);
         }
+        float brightnessColor = GameWindow::getWindow()->getBrightness();
+        Vector4 brightness = Vector4(brightnessColor, brightnessColor, brightnessColor, 0);
+        r->getDriver()->setUniform("brightness_color", brightness);
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, _table);
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);

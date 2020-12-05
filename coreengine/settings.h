@@ -42,9 +42,14 @@ public:
     static QString getSlaveServerName();
     static void setSlaveServerName(const QString &slaveServerName);
 
-    static GameEnums::COInfoPosition getCoInfoPosition();
-    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);    
+
 public slots:
+
+    static GameEnums::COInfoPosition getCoInfoPosition();
+    static void setCoInfoPosition(const GameEnums::COInfoPosition &value);
+
+    static float getBrightness();
+    static void setBrightness(float brightness);
 
     static Qt::Key getKey_screenshot();
     static void setKey_screenshot(const Qt::Key &key_screenshot);
@@ -363,6 +368,7 @@ private:
     static qint32 m_y;
     static qint32 m_width;
     static qint32 m_height;
+    static float m_brightness;
 
     static bool m_borderless;
     static bool m_fullscreen;

@@ -443,6 +443,8 @@ add_custom_target(gamescripts SOURCES ${GameScripts})
 FILE(GLOB_RECURSE CampaignScripts "maps/*.jsm")
 add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 
+FILE(GLOB_RECURSE ShaderScripts "system/*.glsl")
+add_custom_target(shaders SOURCES ${ShaderScripts})
 # create translation here :)
 set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
 # created translation files

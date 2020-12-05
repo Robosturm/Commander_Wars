@@ -17,8 +17,9 @@ qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
 qint32 Settings::m_width             = 1024;
 qint32 Settings::m_height            = 800;
-bool Settings::m_borderless       = false;
-bool Settings::m_fullscreen       = false;
+bool Settings::m_borderless         = false;
+bool Settings::m_fullscreen         = false;
+float Settings::m_brightness        = 0.0f;
 Qt::Key Settings::m_key_escape                      = Qt::Key_Escape;
 Qt::Key Settings::m_key_console                     = Qt::Key_F1;
 Qt::Key Settings::m_key_screenshot                  = Qt::Key_F5;
@@ -128,6 +129,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+float Settings::getBrightness()
+{
+    return m_brightness;
+}
+
+void Settings::setBrightness(float brightness)
+{
+    m_brightness = brightness;
 }
 
 Qt::Key Settings::getKey_screenshot()
@@ -663,6 +674,15 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_height = size.height();
     }
+
+    m_brightness      = settings.value("brightness", 0.0f).toFloat(&ok);
+    if(!ok || m_brightness > 50.0f || m_brightness < -50.0f)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " brightness";
+        Console::print(error, Console::eERROR);
+        m_brightness = 0.0f;
+    }
+
     m_borderless  = settings.value("borderless", false).toBool();
     m_fullscreen  = settings.value("fullscreen", true).toBool();
     m_record  = settings.value("recordgames", false).toBool();
@@ -1197,6 +1217,7 @@ void Settings::saveSettings()
         settings.setValue("borderless",                 m_borderless);
         settings.setValue("fullscreen",                 m_fullscreen);
         settings.setValue("recordgames",                m_record);
+        settings.setValue("brightness",                 m_brightness);
         settings.endGroup();
 
         settings.beginGroup("Keys");

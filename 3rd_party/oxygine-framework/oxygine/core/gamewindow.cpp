@@ -163,6 +163,16 @@ namespace oxygine
         //sleep(1000/50);
     }
 
+    float GameWindow::getBrightness() const
+    {
+        return m_brightness;
+    }
+
+    void GameWindow::setBrightness(float brightness)
+    {
+        m_brightness = brightness / 100.0f;
+    }
+
     void GameWindow::registerResourceTypes()
     {
         Resources::registerResourceType(ResAtlas::create, "atlas");

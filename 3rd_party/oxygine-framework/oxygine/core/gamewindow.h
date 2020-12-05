@@ -74,6 +74,17 @@ namespace oxygine
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
         void sigMouseMoveEvent(qint32 x, qint32 y);
+    public slots:
+        /**
+         * @brief getBrightness
+         * @return
+         */
+        float getBrightness() const;
+        /**
+         * @brief setBrightness
+         * @param brightness
+         */
+        void setBrightness(float brightness);
     protected slots:
         void loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image);
     protected:
@@ -104,6 +115,7 @@ namespace oxygine
         qint32 m_pausedCounter{0};
 
         static GameWindow* _window;
+        float m_brightness{0.0f};
     };
 }
 

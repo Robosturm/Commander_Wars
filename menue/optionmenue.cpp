@@ -352,6 +352,23 @@ void OptionMenue::showSettings()
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Brightness: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, -50, 50);
+    pSlider->setTooltipText(tr("Selects the global volume for the game"));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getBrightness());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setBrightness(-value);
+        pApp->setBrightness(-value);
+    });
+    m_pOptions->addItem(pSlider);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sprite Aliasing: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -386,7 +403,7 @@ void OptionMenue::showSettings()
     pTextfield->setHtmlText(tr("Global Volume: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spSlider pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
     pSlider->setTooltipText(tr("Selects the global volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(Settings::getTotalVolume());
