@@ -916,6 +916,46 @@ GameMenue::AnimationSkipMode GameMenue::getSkipMode()
     return skipAnimations;
 }
 
+void GameMenue::autoScroll()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (QGuiApplication::focusWindow() == pApp &&
+        m_Focused &&
+        Settings::getAutoScrolling())
+    {
+        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap.get() != nullptr)
+        {
+            qint32 moveX = 0;
+            qint32 moveY = 0;
+            QPoint bottomRightUi = QPoint(135, 220);
+            if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() &&
+                (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() - 50) &&
+                (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
+                curPos.y() > Settings::getHeight() - bottomRightUi.y())
+            {
+
+                moveX = -GameMap::getImageSize() * pMap->getZoom();
+            }
+            if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height() - bottomRightUi.y()) &&
+                (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - autoScrollBorder.height() - bottomRightUi.y()) &&
+                curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x())
+            {
+                moveY = -GameMap::getImageSize() * pMap->getZoom();
+            }
+            if (moveX != 0 || moveY != 0)
+            {
+                MoveMap(moveX , moveY);
+            }
+            else
+            {
+                InGameMenue::autoScroll();
+            }
+        }
+    }
+}
+
 void GameMenue::finishActionPerformed()
 {
     

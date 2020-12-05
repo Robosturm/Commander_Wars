@@ -76,6 +76,10 @@ public:
      * @return
      */
     AnimationSkipMode getSkipMode();
+    /**
+     * @brief autoScroll
+     */
+    virtual void autoScroll() override;
 signals:
     void sigActionPerformed();
     void sigGameStarted();
