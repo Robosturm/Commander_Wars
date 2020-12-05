@@ -30,6 +30,10 @@ public slots:
     void updateMinimap();
     void updatePlayerInfo();
     void updateCursorInfo(qint32 x, qint32 y);
+    void updateDetailedView(qint32 x, qint32 y);
+    void createUnitInfo(qint32 x, qint32 y);
+    void createTerrainInfo(qint32 x, qint32 y);
+    void addColorbar(float divider, qint32 posX, qint32 posY, QColor color);
 private:
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_pMinimapSlider;

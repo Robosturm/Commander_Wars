@@ -3236,126 +3236,118 @@ This is immediatly applied.</source>
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="222"/>
-        <source>Day: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="233"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="237"/>
-        <source>Buildings: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="249"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="253"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="259"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="266"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="270"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="281"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="280"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="302"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="288"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="315"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="358"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="409"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="415"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="419"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="535"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="541"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="545"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="794"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="460"/>
-        <source>Ammo1: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="476"/>
-        <source>Ammo1: -/-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="492"/>
-        <source>Ammo2: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="508"/>
-        <source>Ammo2: -/-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="525"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="558"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="542"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="564"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="689"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="734"/>
-        <source>Owner: Player </source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="577"/>
+        <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="698"/>
-        <source>Owner: Neutral</source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="583"/>
+        <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="707"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="716"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="595"/>
+        <source>Ammo 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="600"/>
+        <source>Ammo 2: -/-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="625"/>
+        <source>Weapon 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="639"/>
+        <source>Weapon 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="652"/>
+        <source>Move:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="664"/>
+        <source>Movepoints:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="676"/>
+        <source>Vision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="811"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="743"/>
-        <source>Weapon 1: </source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="824"/>
+        <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="754"/>
-        <source>Weapon 2: </source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="616"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
+        <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="763"/>
-        <source>Move: </source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="224"/>
+        <source>Day:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="771"/>
-        <source>Movepoints: </source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="238"/>
+        <source>Buildings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="779"/>
-        <source>Vision: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="791"/>
-        <source>Loaded Units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="809"/>
-        <source>Loaded Units: ?</source>
+        <location filename="../game/ui/ingameinfobar.cpp" line="611"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="833"/>
+        <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
