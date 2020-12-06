@@ -73,25 +73,27 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                     m_Items.append(MinimapFieldInfo());
                 }
                 if (pPlayer->getFieldVisibleType(x, y) == GameEnums::VisionType_Shrouded &&
-                    pMap->getGameRules()->getFogMode() == GameEnums::Fog_OfShroud &&
-                    m_Items[item].terrainId != "||SHROUDED||")
+                    pMap->getGameRules()->getFogMode() == GameEnums::Fog_OfShroud)
                 {
-                    oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
-                    pSprite->setColor(Qt::black);
-                    pSprite->setPosition(x * ImageSize, y * ImageSize);
-                    pSprite->setSize(ImageSize, ImageSize);
-                    addChild(pSprite);
-                    if (m_Items[item].background.get())
+                    if (m_Items[item].terrainId != "||SHROUDED||")
                     {
-                        m_Items[item].background->detach();
-                    }
-                    m_Items[item].background = pSprite;
-                    m_Items[item].terrainId = "||SHROUDED||";
-                    if (m_Items[item].unit.get())
-                    {
-                        m_Items[item].unit->detach();
-                        m_Items[item].unitId = "";
-                        m_Items[item].unitPlayer = -1;
+                        oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
+                        pSprite->setColor(Qt::black);
+                        pSprite->setPosition(x * ImageSize, y * ImageSize);
+                        pSprite->setSize(ImageSize, ImageSize);
+                        addChild(pSprite);
+                        if (m_Items[item].background.get())
+                        {
+                            m_Items[item].background->detach();
+                        }
+                        m_Items[item].background = pSprite;
+                        m_Items[item].terrainId = "||SHROUDED||";
+                        if (m_Items[item].unit.get())
+                        {
+                            m_Items[item].unit->detach();
+                            m_Items[item].unitId = "";
+                            m_Items[item].unitPlayer = -1;
+                        }
                     }
                 }
                 else
