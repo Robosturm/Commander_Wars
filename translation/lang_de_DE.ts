@@ -385,12 +385,12 @@
         <translation>Einen</translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="114"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="112"/>
         <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
         <translation>Kombiniert verletzte Einheiten des selben Einheitentyps mit der momentanen Einheit. Dies hat zur Folge das folgende Attribute mit der Einheit kombiniert werden: Munition, Rationen, TP und der höchste Rang. </translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="115"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="113"/>
         <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -831,7 +831,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="303"/>
+        <location filename="../game/co.cpp" line="302"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>

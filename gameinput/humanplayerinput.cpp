@@ -73,6 +73,8 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
     {
         return;
     }
+    bool isViewPlayer = (GameMap::getInstance()->getCurrentViewPlayer() == m_pPlayer);
+
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
         m_pPlayer == nullptr)
     {
@@ -122,10 +124,17 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
-                showAttackableFields(x, y);
-                
+                showAttackableFields(x, y);                
             }
         }
+    }
+    else if (!isViewPlayer)
+    {
+        cancelActionInput();
+    }
+    else
+    {
+        // do nothing
     }
 }
 
@@ -284,6 +293,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             return;
         }
+        bool isViewPlayer = (GameMap::getInstance()->getCurrentViewPlayer() == m_pPlayer);
         if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer ||
             m_pPlayer == nullptr)
         {
@@ -453,6 +463,30 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             }
             
         }
+        else if (isViewPlayer)
+        {
+            // prepare action
+            m_pGameAction = new GameAction();
+            m_pGameAction->setTarget(QPoint(x, y));
+            QStringList actions = getViewplayerActionList();
+            QStringList possibleActions;
+            for (qint32 i = 0; i < actions.size(); i++)
+            {
+                if (m_pGameAction->canBePerformed(actions[i], true))
+                {
+                    possibleActions.append(actions[i]);
+                }
+            }
+            if (possibleActions.size() > 0)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                createActionMenu(possibleActions, x, y);
+            }
+        }
+        else
+        {
+            // do nothing
+        }
     }
 }
 
@@ -574,7 +608,21 @@ void HumanPlayerInput::finishAction()
             pUnit->setMultiTurnPath(QVector<QPoint>());
         }
     }
-    emit performAction(m_pGameAction);
+
+    spGameMap pMap = GameMap::getInstance();
+    bool isViewPlayer = (pMap->getCurrentViewPlayer() == m_pPlayer);
+    if (pMap->getCurrentPlayer() == m_pPlayer)
+    {
+        emit performAction(m_pGameAction);
+    }
+    else if (isViewPlayer)
+    {
+
+    }
+    else
+    {
+        // do nothing
+    }
     m_pGameAction = nullptr;
     cleanUpInput();
 }
@@ -953,7 +1001,21 @@ QStringList HumanPlayerInput::getEmptyActionList()
     }
     else
     {
-        return QStringList();
+        return value.toVariant().toStringList();
+    }
+}
+
+QStringList HumanPlayerInput::getViewplayerActionList()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue value = pInterpreter->doFunction("ACTION", "getViewplayerActionList");
+    if (value.isString())
+    {
+        return value.toString().split(",");
+    }
+    else
+    {
+        return value.toVariant().toStringList();
     }
 }
 

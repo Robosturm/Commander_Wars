@@ -55,7 +55,6 @@ var Constructor = function()
     };
     this.performPostAnimation = function(postAnimation)
     {
-        // todo join units
         var ammo1 = ACTION_JOIN.postAnimationUnit.getAmmo1() + ACTION_JOIN.postAnimationTargetUnit.getAmmo1();
         var maxValue = ACTION_JOIN.postAnimationUnit.getMaxAmmo1();
         if (ammo1 > maxValue)
@@ -85,25 +84,24 @@ var Constructor = function()
         if (ACTION_JOIN.postAnimationUnit.getUnitRank() > ACTION_JOIN.postAnimationTargetUnit.getUnitRank() &&
             ACTION_JOIN.postAnimationUnit.getUnitRank() >= GameEnums.UnitRank_None &&
             ACTION_JOIN.postAnimationTargetUnit.getUnitRank() >= GameEnums.UnitRank_None)
-        {
+        {           
             ACTION_JOIN.postAnimationTargetUnit.setUnitRank(ACTION_JOIN.postAnimationUnit.getUnitRank());
         }
         ACTION_JOIN.postAnimationTargetUnit.setAmmo1(ammo1);
         ACTION_JOIN.postAnimationTargetUnit.setAmmo2(ammo2);
         ACTION_JOIN.postAnimationTargetUnit.setFuel(fuel);
         ACTION_JOIN.postAnimationTargetUnit.setHp(hp);
+        var unitRank = ACTION_JOIN.postAnimationUnit.getUnitRank();
+        ACTION_JOIN.postAnimationUnit.removeUnit(false);
         // handle co unit creation here
-        if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO0)
+        if (unitRank === GameEnums.UnitRank_CO0)
         {
-            ACTION_JOIN.postAnimationUnit.getOwner().getCO(0).setCOUnit(null, false);
-            ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(0);
+            ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(0, true);
         }
-        else if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO1)
+        else if (unitRank === GameEnums.UnitRank_CO1)
         {
-            ACTION_JOIN.postAnimationUnit.getOwner().getCO(1).setCOUnit(null, false);
-            ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(1);
+            ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(1, true);
         }
-        ACTION_JOIN.postAnimationUnit.removeUnit();
         // disable unit commandments for this turn
         ACTION_JOIN.postAnimationTargetUnit.setHasMoved(true);
         ACTION_JOIN.postAnimationTargetUnit = null;

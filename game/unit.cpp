@@ -1378,11 +1378,11 @@ void Unit::setUnitVisible(bool value)
     setVisible(value);
 }
 
-void Unit::makeCOUnit(quint8 co)
+void Unit::makeCOUnit(quint8 co, bool force)
 {
     CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr &&
-        pCO->getCOUnit() == nullptr)
+        (pCO->getCOUnit() == nullptr || force))
     {
         pCO->setCOUnit(this);
         if (co == 0)
@@ -2230,14 +2230,14 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
 }
 
 void Unit::removeUnit(bool killed)
-{
-    
+{    
     if (killed)
     {
         if (m_UnitRank == GameEnums::UnitRank_CO0)
         {
             CO* pCO = m_pOwner->getCO(0);
-            if (pCO != nullptr)
+            if (pCO != nullptr &&
+                (pCO->getCOUnit() == this))
             {
                 pCO->setCOUnit(nullptr);
             }
@@ -2245,7 +2245,8 @@ void Unit::removeUnit(bool killed)
         else if (m_UnitRank == GameEnums::UnitRank_CO1)
         {
             CO* pCO = m_pOwner->getCO(1);
-            if (pCO != nullptr)
+            if (pCO != nullptr &&
+                (pCO->getCOUnit() == this))
             {
                 pCO->setCOUnit(nullptr);
             }

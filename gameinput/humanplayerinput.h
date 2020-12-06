@@ -155,6 +155,7 @@ public slots:
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
+    QStringList getViewplayerActionList();
     void autoEndTurn();
     void syncMarkedFields();
 protected:

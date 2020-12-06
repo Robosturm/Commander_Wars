@@ -379,7 +379,7 @@ public slots:
      * @param pUnit
      * @return
      */
-    void setCOUnit(Unit* pUnit, bool destroyed = true);
+    void setCOUnit(Unit* pUnit);
     /**
      * @brief getActionModifierList
      * @param pUnit

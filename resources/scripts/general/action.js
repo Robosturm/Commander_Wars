@@ -44,6 +44,11 @@ var ACTION =
                "ACTION_OPTIONS,ACTION_EXITGAME,ACTION_SAVEGAME,ACTION_NEXT_PLAYER,ACTION_SWAP_COS";
     },
 
+    getViewplayerActionList : function()
+    {
+        return ["ACTION_INFO", "ACTION_OPTIONS"];
+    },
+
     getStepInputType : function(action)
     {
         // supported types are MENU and FIELD

@@ -129,7 +129,7 @@ DialogVictoryConditions::DialogVictoryConditions()
         y += 40;
         oxygine::spButton pButton = pObjectManager->createButton(tr("Keep Track"), 150);
         pButton->setPosition(10, y);
-        pPanel->addChild(pButton);
+        pPanel->addItem(pButton);
         pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowPopup(pVictoryRule->getRuleID());

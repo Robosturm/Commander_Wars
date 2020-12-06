@@ -31,6 +31,7 @@ VictoryRulePopup::~VictoryRulePopup()
 void VictoryRulePopup::updateInfo()
 {
     spGameMap pMap = GameMap::getInstance();
+    clearContent();
     if (pMap.get() != nullptr)
     {
         GameRules* pRules = pMap->getGameRules();

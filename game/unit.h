@@ -712,7 +712,7 @@ public slots:
      * @brief makeCOUnit
      * @param co
      */
-    void makeCOUnit(quint8 co);
+    void makeCOUnit(quint8 co, bool force = false);
     /**
      * @brief createCORange
      */

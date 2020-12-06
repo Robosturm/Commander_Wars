@@ -63,13 +63,12 @@ float CO::getUnitBuildValue(QString unitID)
     return ergValue;
 }
 
-void CO::setCOUnit(Unit* pUnit, bool destroyed)
+void CO::setCOUnit(Unit* pUnit)
 {
     spGameMenue pMenu = GameMenue::getInstance();
     if ((pUnit == nullptr) &&
         (m_pCOUnit != nullptr) &&
-        (pMenu.get() != nullptr) &&
-        destroyed)
+        (pMenu.get() != nullptr))
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
