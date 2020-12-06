@@ -1,5 +1,6 @@
 #include "dialogvictoryconditions.h"
 
+#include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
 
@@ -8,6 +9,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/base/panel.h"
+#include "objects/dialogs/ingame/victoryrulepopup.h"
 
 #include "game/gamemap.h"
 #include "game/gamerules.h"
@@ -125,6 +127,25 @@ DialogVictoryConditions::DialogVictoryConditions()
             }
         }
         y += 40;
+        oxygine::spButton pButton = pObjectManager->createButton(tr("Keep Track"), 150);
+        pButton->setPosition(10, y);
+        pPanel->addChild(pButton);
+        pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigShowPopup(pVictoryRule->getRuleID());
+        });
+
+        y += 40;
     }
     pPanel->setContentHeigth(y + 40);
+    connect(this, &DialogVictoryConditions::sigShowPopup, this, &DialogVictoryConditions::showPopup, Qt::QueuedConnection);
+}
+
+void DialogVictoryConditions::showPopup(QString rule)
+{
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
+    {
+        pMenu->addChild(new VictoryRulePopup(rule, 180, 250));
+    }
 }

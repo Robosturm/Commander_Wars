@@ -20,8 +20,9 @@ public:
 
 signals:
     void sigFinished();
-public slots:
-
+    void sigShowPopup(QString rule);
+protected slots:
+    void showPopup(QString rule);
 private:
     oxygine::spButton m_OkButton;
 };

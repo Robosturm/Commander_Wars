@@ -16,6 +16,8 @@
 
 #include "game/gamerecording/replayrecorder.h"
 
+#include "objects/base/closeablepopup.h"
+
 class GameMenue;
 typedef oxygine::intrusive_ptr<GameMenue> spGameMenue;
 

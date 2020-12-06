@@ -2040,19 +2040,24 @@ This is immediatly applied.</source>
 <context>
     <name>DialogVictoryConditions</name>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="36"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="38"/>
         <source>Ok</source>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="68"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="70"/>
         <source>Victory Info</source>
         <translation>Sieg Info</translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="107"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="109"/>
         <source>Player </source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="130"/>
+        <source>Keep Track</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

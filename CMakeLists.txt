@@ -213,6 +213,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogs/ingame/dialogvictoryconditions.cpp
         objects/dialogs/ingame/dialogattacklog.cpp
         objects/dialogs/ingame/dialogunitinfo.cpp
+        objects/dialogs/ingame/victoryrulepopup.cpp
 
         #modding
         modding/csvtableimporter.cpp
