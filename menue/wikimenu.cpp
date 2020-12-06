@@ -17,6 +17,7 @@ Wikimenu::Wikimenu()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Wiki Menue", Console::eDEBUG);
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -92,6 +93,7 @@ Wikimenu::Wikimenu()
     y += 50;
 
     connect(this, &Wikimenu::sigShowWikipage, this, &Wikimenu::showWikipage, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 

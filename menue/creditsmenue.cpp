@@ -17,6 +17,7 @@ CreditsMenue::CreditsMenue()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Credits Menue", Console::eDEBUG);
 
@@ -116,6 +117,7 @@ CreditsMenue::CreditsMenue()
     }
     m_creditsHeigth = y;
     speedTimer.start();
+    pApp->continueRendering();
 }
 
 void CreditsMenue::doUpdate(const oxygine::UpdateState&)

@@ -44,12 +44,14 @@ void DayToDayRecord::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_SpecialEvents.clear();
     for (qint32 i = 0; i < size; i++)
     {
         m_SpecialEvents.append(new SpecialEvent());
         m_SpecialEvents[i]->deserializeObject(pStream);
     }
     pStream >> size;
+    m_PlayerRecords.clear();
     for (qint32 i = 0; i < size; i++)
     {
         m_PlayerRecords.append(new PlayerRecord());

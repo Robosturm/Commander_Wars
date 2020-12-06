@@ -84,6 +84,7 @@ void Leaf::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_AnswersChances.clear();
     for (qint32 i = 0; i < size; i++)
     {
         qint32 item = 0;
@@ -92,6 +93,7 @@ void Leaf::deserializeObject(QDataStream& pStream)
     }
     size = 0;
     pStream >> size;
+    m_Answers.clear();
     for (qint32 i = 0; i < size; i++)
     {
         float item = 0;

@@ -34,6 +34,7 @@
 OptionMenue::OptionMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Option Menue", Console::eDEBUG);
 
@@ -117,6 +118,7 @@ OptionMenue::OptionMenue()
 
     addChild(m_ModSelector);
     showSettings();
+    pApp->continueRendering();
 }
 
 OptionMenue::~OptionMenue()

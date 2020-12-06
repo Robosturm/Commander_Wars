@@ -33,6 +33,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
 
     Console::print("Entering Map Selection Menue", Console::eDEBUG);
@@ -160,6 +161,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
+    pApp->continueRendering();
 }
 
 MapSelectionMapsMenue::~MapSelectionMapsMenue()

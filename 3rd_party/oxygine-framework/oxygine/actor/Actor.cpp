@@ -294,10 +294,13 @@ namespace oxygine
         if (touchEvent)
         {
             if (!(_flags & flag_visible))
+            {
                 return;
-
+            }
             if (getAlpha() == 0 && !(_flags & flag_clickableWithZeroAlpha))
+            {
                 return;
+            }
         }
 
         Vector2 originalLocalPos;
@@ -322,7 +325,9 @@ namespace oxygine
         {
             spActor prev = actor->_prev;
             if (!touchEvent || (_flags & flag_touchChildrenEnabled))
+            {
                 actor->handleEvent(event);
+            }
             //if (event->target)
             //  break;
             actor = prev;

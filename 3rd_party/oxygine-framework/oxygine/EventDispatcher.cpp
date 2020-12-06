@@ -100,16 +100,13 @@ namespace oxygine
             return;
         }
 
-        size_t size = _listeners.size();
-
-        for (size_t i = 0; i != size; ++i)
+        for (auto & listener : _listeners)
         {
-            listener& ls = _listeners[i];
-            if (ls.type == event->type)
+            if (listener.type == event->type)
             {
                 event->currentTarget = this;
-                event->listenerID = ls.id;
-                ls.cb(event);
+                event->listenerID = listener.id;
+                listener.cb(event);
                 if (event->stopsImmediatePropagation)
                 {
                     break;

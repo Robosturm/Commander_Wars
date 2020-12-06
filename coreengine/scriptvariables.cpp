@@ -28,6 +28,7 @@ void ScriptVariables::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_Variables.clear();
     for (qint32 i = 0; i < size; i++)
     {
         ScriptVariable* pVar = new ScriptVariable();

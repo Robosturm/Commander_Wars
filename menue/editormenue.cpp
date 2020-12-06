@@ -47,9 +47,9 @@ EditorMenue* EditorMenue::m_pInstance = nullptr;
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20)
 {
+    Mainapp* pApp = Mainapp::getInstance();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
-    Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
@@ -169,6 +169,7 @@ EditorMenue::EditorMenue()
     m_autosaveTimer.setSingleShot(false);
     connect(&m_autosaveTimer, &QTimer::timeout, this, &EditorMenue::autosave, Qt::QueuedConnection);
     m_autosaveTimer.start(60 * 1000);
+    pApp->continueRendering();
 }
 
 EditorMenue::~EditorMenue()

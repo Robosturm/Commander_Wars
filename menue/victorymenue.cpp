@@ -27,6 +27,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
       m_pNetworkInterface(pNetworkInterface)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Victory Menue", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
@@ -430,7 +431,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         }
     });
     connect(this, &VictoryMenue::sigFinishCurrentGraph, this, &VictoryMenue::finishGraph, Qt::QueuedConnection);
-
+    pApp->continueRendering();
     if (Mainapp::getSlave())
     {
         // despawn slave process on finish

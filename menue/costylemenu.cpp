@@ -21,6 +21,7 @@ COStyleMenu::COStyleMenu()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
 
     Console::print("Entering Main Menue", Console::eDEBUG);
@@ -61,6 +62,7 @@ COStyleMenu::COStyleMenu()
     pCOSelection->colorChanged(QColor(248, 88, 0));
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
+    pApp->continueRendering();
 }
 
 void COStyleMenu::exitMenue()

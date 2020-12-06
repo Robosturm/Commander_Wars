@@ -76,11 +76,6 @@ bool Mainapp::isWorker()
            QThread::currentThread() == pMainThread;
 }
 
-Mainapp* Mainapp::getInstance()
-{
-    return m_pMainapp;
-}
-
 void Mainapp::loadRessources()
 {
     // load ressources by creating the singletons
@@ -350,7 +345,20 @@ void Mainapp::loadArgs(const QStringList & args)
 {
     if (args.contains("-mods"))
     {
-        Settings::setActiveMods(args[args.indexOf("-mods") + 1].split(","));
+        QStringList modList = args[args.indexOf("-mods") + 1].split(",");
+        qint32 i= 0;
+        while (i < modList.size())
+        {
+            if (modList[i].isEmpty())
+            {
+                modList.removeAt(i);
+            }
+            else
+            {
+                 ++i;
+            }
+        }
+        Settings::setActiveMods(modList);
     }
     if (args.contains("-slave"))
     {

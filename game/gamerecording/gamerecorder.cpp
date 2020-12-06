@@ -63,12 +63,18 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_Record.clear();
     for (qint32 i = 0; i < size; i++)
     {
         m_Record.append(new DayToDayRecord());
         m_Record[i]->deserializeObject(pStream);
     }
     pStream >> size;
+    destroyedUnits.clear();
+    lostUnits.clear();
+    damageDealt.clear();
+    attackNumbers.clear();
+    deployedUnits.clear();
     for (qint32 i = 0; i < size; i++)
     {
         if (version > 1)
@@ -105,6 +111,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
         pStream >> m_mapTime;
         pStream >> m_deployLimit;
     }
+    m_Attackreports.clear();
     if (version > 3)
     {
         qint32 size = 0;

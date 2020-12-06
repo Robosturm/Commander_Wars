@@ -308,8 +308,8 @@ void GameRules::startOfTurn(bool newDay)
     spGameMap pMap = GameMap::getInstance();
     if (newDay && m_WeatherDays.size() > 0)
     {
-        // remove last day weather
         m_WeatherDays.removeAt(0);
+        Console::print("New Day removing current weather. Currently predicting for " + QString::number(m_WeatherDays.size()), Console::eDEBUG);
     }
     // todo maybe make this changeable some day
     const qint32 predictionSize = 4;
@@ -330,6 +330,7 @@ void GameRules::startOfTurn(bool newDay)
         // increase weather prediction till enough data is avaiable
         while(m_WeatherDays.size() < predictionSize)
         {
+            Console::print("Adding new weather for weather prediction.", Console::eDEBUG);
             if (m_randomWeather)
             {
                 qint32 totalWeatherChances = 0;
@@ -471,9 +472,9 @@ void GameRules::setCurrentWeather(qint32 weatherId)
     }
     
 }
+
 void GameRules::createWeatherSprites()
-{
-    
+{    
     Console::print("creating weather Sprites", Console::eDEBUG);
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
@@ -555,8 +556,7 @@ void GameRules::setFogMode(const GameEnums::Fog &FogMode)
 
 void GameRules::createFogVision()
 {
-    
-
+    Console::print("Creating fog vision.", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -1054,6 +1054,8 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_VictoryRules.removeAt(ruleItem);
         }
     }
+    m_Weathers.clear();
+    m_WeatherChances.clear();
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
@@ -1063,24 +1065,33 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> chance;
         if (pGameRuleManager->existsWeather(pWeather->getWeatherId()))
         {
-            for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
+            if (m_Weathers.size() > 0)
             {
+                for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
+                {
 
-                if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
-                {
-                    m_Weathers[i2] = pWeather;
-                    m_WeatherChances[i2] = chance;
-                    break;
+                    if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
+                    {
+                        m_Weathers[i2] = pWeather;
+                        m_WeatherChances[i2] = chance;
+                        break;
+                    }
+                    else if (i2 == m_Weathers.size() - 1)
+                    {
+                        m_Weathers.append(pWeather);
+                        m_WeatherChances.append(chance);
+                    }
                 }
-                else if (i2 == m_Weathers.size() - 1)
-                {
-                    m_Weathers.append(pWeather);
-                    m_WeatherChances.append(chance);
-                }
+            }
+            else
+            {
+                m_Weathers.append(pWeather);
+                m_WeatherChances.append(chance);
             }
         }
     }
     qint32 weatherDuration = 0;
+    m_WeatherDays.clear();
     if (version > 4)
     {
         qint32 size = 0;
@@ -1100,7 +1111,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     }
     else
     {
-
         pStream >> weatherDuration;
     }
     pStream >> m_CurrentWeather;
@@ -1236,6 +1246,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
         m_allowedActions = GameManager::getInstance()->getLoadedRessources();
     }
+    m_GameRules.clear();
     if (version > 14)
     {
         pStream >> size;

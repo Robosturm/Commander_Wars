@@ -21,6 +21,7 @@ void DecisionQuestion::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_Questions.clear();
     for (qint32 i = 0; i < size; i++)
     {
         m_Questions.append(new Question());

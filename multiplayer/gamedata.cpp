@@ -33,7 +33,8 @@ void GameData::deserializeObject(QDataStream& pStream)
     pStream >> password;
     qint32 size = 0;
     pStream >> size;
-    for (int i = 0; i < size; ++i)
+    modData.clear();
+    for (qint32 i = 0; i < size; ++i)
     {
         QString value;
         pStream >> value;

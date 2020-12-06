@@ -42,6 +42,7 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
     m_pQuestion->deserializeObject(pStream);
     qint32 size = 0;
     pStream >> size;
+    m_pNodes.clear();
     for (qint32 i = 0; i < size; i++)
     {
         bool isNode = false;

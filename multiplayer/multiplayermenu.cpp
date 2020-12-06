@@ -930,6 +930,7 @@ void Multiplayermenu::slotButtonBack()
             m_Chat->detach();
             m_Chat = nullptr;
         }
+        disconnectNetwork();
         MapSelectionMapsMenue::slotButtonBack();
         if (m_saveGame)
         {

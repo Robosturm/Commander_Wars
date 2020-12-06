@@ -15,6 +15,7 @@
 InGameMenue::InGameMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_MapMover = new MapMover(this);
@@ -27,6 +28,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_MapMover = new MapMover(this);

@@ -1673,6 +1673,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             m_pBaseGameInput = new HumanPlayerInput();
             m_pBaseGameInput->setPlayer(this);
         }
+        m_FogVisionFields.clear();
         if (version > 5)
         {
             qint32 width = 0;

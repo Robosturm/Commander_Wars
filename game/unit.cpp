@@ -2961,6 +2961,12 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> value;
         m_ModdingFlags = static_cast<ModdingFlags>(value);
     }
+    m_MultiTurnPath.clear();
+    m_OffensiveBonus.clear();
+    m_DefensiveBonus.clear();
+    m_VisionBonus.clear();
+    m_MovementBonus.clear();
+    m_FirerangeBonus.clear();
     if (version > 9)
     {
         qint32 size = 0;
@@ -3022,6 +3028,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     {
         pStream >> m_customName;
     }
+    m_AiMovePath.clear();
     if (version > 15)
     {
         qint32 size = 0;

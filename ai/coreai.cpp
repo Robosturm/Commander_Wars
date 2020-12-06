@@ -1856,6 +1856,7 @@ void CoreAI::deserializeObject(QDataStream& stream)
     {
         qint32 size = 0;
         stream >> size;
+        m_BuildingChanceModifier.clear();
         for (qint32 i = 0; i < size; i++)
         {
             QString unitID;
@@ -1869,6 +1870,7 @@ void CoreAI::deserializeObject(QDataStream& stream)
     {
         qint32 size = 0;
         stream >> size;
+        m_MoveCostMap.clear();
         for (qint32 x = 0; x < size; x++)
         {
             qint32 ysize = 0;

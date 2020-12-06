@@ -31,7 +31,7 @@ public:
         m_pGameServer = nullptr;
     }    
 signals:
-
+    void sigRemoveGame(NetworkGame* pGame);
 public slots:
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
     /**
@@ -47,6 +47,8 @@ public slots:
      * @param socketId
      */
     void playerJoined(qint64 socketId);
+private slots:
+    void removeGame(NetworkGame* pGame);
 private:
     void spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArray& data);
     bool validHostRequest(QStringList mods);

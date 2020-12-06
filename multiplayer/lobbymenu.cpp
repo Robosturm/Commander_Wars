@@ -142,7 +142,8 @@ void LobbyMenu::hostLocal()
 
 void LobbyMenu::hostServer()
 {
-    if (m_pTCPClient.get() != nullptr)
+    if (m_pTCPClient.get() != nullptr &&
+        m_pTCPClient->getIsConnected())
     {
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);

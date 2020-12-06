@@ -40,20 +40,22 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             m_pArrowRigth->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         }
     });
-    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
             speedCounter = 0;
             emit sigStartEditValue();
         }
     });
-    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowRigth->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -80,20 +82,22 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         }
     });
-    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
             speedCounter = 0;
             emit sigStartEditValue();
         }
     });
-    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
+            pEvent->stopPropagation();
             m_scroll = 0;
             emit sigEndEditValue(m_Scrollvalue);
         }
@@ -186,6 +190,7 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
 {
     if (m_sliding)
     {
+        pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {

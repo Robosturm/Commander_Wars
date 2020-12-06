@@ -34,6 +34,7 @@
 Mainwindow::Mainwindow()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
 
     Console::print("Entering Main Menue", Console::eDEBUG);
@@ -218,6 +219,7 @@ Mainwindow::Mainwindow()
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
+    pApp->continueRendering();
 }
 
 void Mainwindow::changeUsername(QString name)

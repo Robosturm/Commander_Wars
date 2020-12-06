@@ -289,6 +289,7 @@ void Userdata::deserializeObject(QDataStream& pStream)
     pStream >> version;
     qint32 size = 0;
     pStream >> size;
+    m_customCOStyles.clear();
     for (qint32 i = 0; i < size; i++)
     {
         QString coid;
@@ -330,6 +331,7 @@ void Userdata::deserializeObject(QDataStream& pStream)
     if (version > 3)
     {
         pStream >> size;
+        m_achievements.clear();
         for (qint32 i = 0; i < size; i++)
         {
             m_achievements.append(Achievement());
@@ -340,6 +342,7 @@ void Userdata::deserializeObject(QDataStream& pStream)
     if (version > 4)
     {
         pStream >> size;
+        m_mapVictoryInfo.clear();
         for (qint32 i = 0; i < size; i++)
         {
             QString key;
@@ -351,6 +354,7 @@ void Userdata::deserializeObject(QDataStream& pStream)
             m_mapVictoryInfo.insert(key, item);
         }
         pStream >> size;
+        m_shopItems.clear();
         for (qint32 i = 0; i < size; i++)
         {
             QString key;

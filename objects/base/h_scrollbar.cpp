@@ -36,14 +36,16 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     {
         m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_scroll = 1;
         m_Scrollspeed = 1.0f;
         speedCounter = 0;
     });
-    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_scroll = 0;
     });
     m_pBox->addChild(m_pArrowDown);
@@ -62,14 +64,16 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     {
         pArrowUp->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_scroll = -1;
         m_Scrollspeed = 1.0f;
         speedCounter = 0;
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         m_scroll = 0;
     });
     m_pBox->addChild(pArrowUp);
@@ -106,12 +110,14 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     {
         setSliding(getSliding());
     });
-    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         setSliding(true);
     });
-    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_slider->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
+        pEvent->stopPropagation();
         setSliding(false);
     });
     m_pBox->addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event* pEvent)
@@ -125,6 +131,7 @@ void H_Scrollbar::scroll(oxygine::Event* pEvent)
 {
     if (m_sliding)
     {
+        pEvent->stopPropagation();
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {

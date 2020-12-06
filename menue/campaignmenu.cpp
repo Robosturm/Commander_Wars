@@ -23,6 +23,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
       m_Multiplayer(multiplayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Campaign Menue", Console::eDEBUG);
 
@@ -78,6 +79,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
     std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
     m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));
+    pApp->continueRendering();
 }
 
 void CampaignMenu::exitMenue()

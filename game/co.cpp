@@ -63,10 +63,13 @@ float CO::getUnitBuildValue(QString unitID)
     return ergValue;
 }
 
-void CO::setCOUnit(Unit* pUnit)
+void CO::setCOUnit(Unit* pUnit, bool destroyed)
 {
     spGameMenue pMenu = GameMenue::getInstance();
-    if (pUnit == nullptr && m_pCOUnit != nullptr && pMenu.get() != nullptr)
+    if ((pUnit == nullptr) &&
+        (m_pCOUnit != nullptr) &&
+        (pMenu.get() != nullptr) &&
+        destroyed)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "onCOUnitLost";
@@ -1526,6 +1529,7 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     {
         qint32 size = 0;
         pStream >> size;
+        m_perkList.clear();
         for (qint32 i = 0; i < size; i++)
         {
             QString perk;

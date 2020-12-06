@@ -48,7 +48,10 @@ public:
     explicit Mainapp();
     virtual ~Mainapp();
 
-    static Mainapp* getInstance();
+    static inline Mainapp* getInstance()
+    {
+        return m_pMainapp;
+    }
 
     inline AudioThread* getAudioThread()
     {

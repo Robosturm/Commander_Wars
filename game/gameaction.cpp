@@ -454,6 +454,7 @@ void GameAction::deserializeObject(QDataStream& stream)
     stream >> m_target;
     qint32 size = 0;
     stream >> size;
+    m_Movepath.clear();
     for (qint32 i = 0; i < size; i++)
     {
         QPoint point;
@@ -475,8 +476,9 @@ void GameAction::deserializeObject(QDataStream& stream)
     stream >> _seed;
     if (version > 1)
     {
-        qint32 size = m_MultiTurnPath.size();
+        qint32 size = 0;
         stream >> size;
+        m_MultiTurnPath.clear();
         for (qint32 i = 0; i < size; i++)
         {
             QPoint point;

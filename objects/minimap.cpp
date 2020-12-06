@@ -61,6 +61,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
             pPlayer = pGamemenu->getCurrentViewPlayer();
         }
 
+        Mainapp::getInstance()->pauseRendering();
         GameManager* pGameManager = GameManager::getInstance();
         for (qint32 x = 0; x < width; x++)
         {
@@ -230,6 +231,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                 }
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
 
 }

@@ -185,6 +185,7 @@ set(${PROJECT_NAME}_SRCS
         objects/base/tooltip.cpp
         objects/base/focusableobject.cpp
         objects/base/tableview.cpp
+        objects/base/closeablepopup.cpp
         # objects dialogs
         objects/dialogs/colorselectiondialog.cpp
         objects/dialogs/dialogconnecting.cpp

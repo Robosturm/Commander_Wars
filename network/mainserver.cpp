@@ -32,6 +32,7 @@ MainServer::MainServer()
     m_pGameServer = new TCPServer();
     connect(m_pGameServer, &TCPServer::recieveData, this, &MainServer::recieveData, Qt::QueuedConnection);
     connect(m_pGameServer, &TCPServer::sigConnected, this, &MainServer::playerJoined, Qt::QueuedConnection);
+    connect(this, &MainServer::sigRemoveGame, this, &MainServer::removeGame, Qt::QueuedConnection);
     connect(&m_updateTimer, &QTimer::timeout, this, &MainServer::sendGameDataUpdate, Qt::QueuedConnection);
     emit m_pGameServer->sig_connect("", Settings::getServerPort());
 }
@@ -74,7 +75,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     QString slave;
     stream >> slave;
     Console::print("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
-    for (const auto game : m_games)
+    for (const auto & game : m_games)
     {
         if (game->game.getServerName() == slave)
         {
@@ -180,7 +181,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     qint32 sizePos = buffer.pos();
     out << sizePos;
     qint32 count = 0;
-    for (const auto game : m_games)
+    for (const auto & game : m_games)
     {
         if (!game->game.getData().getLaunched() &&
             game->game.getSlaveRunning())
@@ -207,18 +208,28 @@ void MainServer::closeGame(NetworkGame* pGame)
             delete m_games[i]->process;
             connect(&m_games[i]->m_runner, &QThread::finished, [=]()
             {
-                for (qint32 i2 = 0; i2 < m_games.size(); i2++)
-                {
-                    if (&m_games[i2]->game == pGame)
-                    {
-                        Console::print("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
-                        m_games.removeAt(i2);
-                        break;
-                    }
-                }
+                emit sigRemoveGame(pGame);
             });
             m_games[i]->m_runner.quit();
             m_updateGameData = true;
+            break;
+        }
+    }
+}
+
+void MainServer::removeGame(NetworkGame* pGame)
+{
+
+    for (qint32 i2 = 0; i2 < m_games.size(); i2++)
+    {
+        if (&m_games[i2]->game == pGame)
+        {
+            while (m_games[i2]->m_runner.isRunning())
+            {
+                QThread::msleep(1);
+            }
+            Console::print("Game has been despawned " + pGame->getServerName(), Console::eDEBUG);
+            m_games.removeAt(i2);
             break;
         }
     }

@@ -92,16 +92,18 @@ var Constructor = function()
         ACTION_JOIN.postAnimationTargetUnit.setAmmo2(ammo2);
         ACTION_JOIN.postAnimationTargetUnit.setFuel(fuel);
         ACTION_JOIN.postAnimationTargetUnit.setHp(hp);
-        ACTION_JOIN.postAnimationUnit.removeUnit();
         // handle co unit creation here
         if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO0)
         {
+            ACTION_JOIN.postAnimationUnit.getOwner().getCO(0).setCOUnit(null, false);
             ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(0);
         }
         else if (ACTION_JOIN.postAnimationUnit.getUnitRank() === GameEnums.UnitRank_CO1)
         {
+            ACTION_JOIN.postAnimationUnit.getOwner().getCO(1).setCOUnit(null, false);
             ACTION_JOIN.postAnimationTargetUnit.makeCOUnit(1);
         }
+        ACTION_JOIN.postAnimationUnit.removeUnit();
         // disable unit commandments for this turn
         ACTION_JOIN.postAnimationTargetUnit.setHasMoved(true);
         ACTION_JOIN.postAnimationTargetUnit = null;

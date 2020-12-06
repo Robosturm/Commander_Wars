@@ -95,6 +95,8 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     {
         startGame();
     }
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->continueRendering();
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
@@ -109,6 +111,8 @@ GameMenue::GameMenue(QString map, bool saveGame)
     loadHandling();
     loadGameMenue();
     loadUIButtons();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->continueRendering();
 }
 
 GameMenue::GameMenue()
@@ -116,6 +120,8 @@ GameMenue::GameMenue()
 {
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->continueRendering();
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)

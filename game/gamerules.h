@@ -264,7 +264,7 @@ public slots:
      */
     inline Weather* getCurrentWeather()
     {
-        if (m_CurrentWeather >= 0)
+        if (m_CurrentWeather >= 0 && m_CurrentWeather < m_Weathers.size())
         {
             return m_Weathers[m_CurrentWeather].get();
         }
