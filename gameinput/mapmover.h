@@ -27,6 +27,7 @@ public slots:
 private:
     InGameMenue* m_pOwner{nullptr};
     QTimer scrollTimer;
+    qint64 m_lastUpdateTimestamp{0};
 };
 
 #endif // MAPMOVER_H
