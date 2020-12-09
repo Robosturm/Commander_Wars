@@ -63,7 +63,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 16;
+        return 17;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -471,7 +471,9 @@ private:
     DayToDayScreen m_DayToDayScreen{DayToDayScreen::Default};
     qint32 m_maxPerkCount{4};
     bool m_teamFacingUnits{false};
+    bool m_perkBannlistEdited{false};
     QStringList m_allowedPerks;
+    bool m_actionBannlistEdited{false};
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
 

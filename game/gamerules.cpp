@@ -859,6 +859,7 @@ QStringList GameRules::getAllowedActions() const
 void GameRules::setAllowedActions(const QStringList &allowedActions)
 {
     m_allowedActions = allowedActions;
+    m_actionBannlistEdited = true;
 }
 
 QStringList GameRules::getAllowedPerks() const
@@ -869,6 +870,7 @@ QStringList GameRules::getAllowedPerks() const
 void GameRules::setAllowedPerks(const QStringList &allowedPerks)
 {
     m_allowedPerks = allowedPerks;
+    m_perkBannlistEdited = true;
 }
 
 bool GameRules::getTeamFacingUnits() const
@@ -1012,7 +1014,9 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_maxPerkCount;
     pStream << m_singleRandomCO;
     pStream << m_teamFacingUnits;
+    pStream << m_perkBannlistEdited;
     Filesupport::writeVectorList(pStream, m_allowedPerks);
+    pStream << m_actionBannlistEdited;
     Filesupport::writeVectorList(pStream, m_allowedActions);
     pStream << m_powerGainSpeed;
 
@@ -1054,8 +1058,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_VictoryRules.removeAt(ruleItem);
         }
     }
-    m_Weathers.clear();
-    m_WeatherChances.clear();
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
@@ -1237,8 +1239,26 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     }
     if (version > 13)
     {
-        m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
-        m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+        if (version > 16)
+        {
+            pStream >> m_perkBannlistEdited;
+            m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
+            if (!m_perkBannlistEdited)
+            {
+                m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
+            }
+            pStream >> m_actionBannlistEdited;
+            m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+            if (!m_actionBannlistEdited)
+            {
+                m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+            }
+        }
+        else
+        {
+            m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
+            m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+        }
         pStream >> m_powerGainSpeed;
     }
     else
