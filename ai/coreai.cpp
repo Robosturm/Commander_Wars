@@ -1257,15 +1257,17 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
 {
     flareTarget  = QPoint(-1, -1);
     moveTargetField  = QPoint(-1, -1);
-    if (pAction->canBePerformed())
+    spQmlVectorPoint pUnfogCircle = GlobalUtils::getCircle(0, m_flareInfo.unfogRange);
+    spQmlVectorPoint pTargetCircle = GlobalUtils::getCircle(m_flareInfo.minRange, m_flareInfo.maxRange);
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
+    spGameMap pMap = GameMap::getInstance();
+    QVector<QPoint> targets = pPfs->getAllNodePoints();
+    qint32 score = std::numeric_limits<qint32>::min();
+    for (qint32 i = 0; i < targets.size(); i++)
     {
-        spQmlVectorPoint pUnfogCircle = GlobalUtils::getCircle(0, m_flareInfo.unfogRange);
-        spQmlVectorPoint pTargetCircle = GlobalUtils::getCircle(m_flareInfo.minRange, m_flareInfo.maxRange);
-        pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
-        spGameMap pMap = GameMap::getInstance();
-        QVector<QPoint> targets = pPfs->getAllNodePoints();
-        qint32 score = std::numeric_limits<qint32>::min();
-        for (qint32 i = 0; i < targets.size(); i++)
+        QVector<QPoint> path = pPfs->getPath(targets[i].x(), targets[i].y());
+        pAction->setMovepath(path, pPfs->getCosts(path));
+        if (pAction->canBePerformed())
         {
             Unit* pFieldUnit = pMap->getTerrain(targets[i].x(), targets[i].y())->getUnit();
             if (pFieldUnit == nullptr ||
@@ -1295,12 +1297,11 @@ void CoreAI::getBestFlareTarget(Unit* pUnit, spGameAction pAction, UnitPathFindi
                 }
             }
         }
-        if (score > 0)
-        {
-            Console::print("Found flare target with score: " + QString::number(score), Console::eDEBUG);
-        }
     }
-
+    if (score > 0)
+    {
+        Console::print("Found flare target with score: " + QString::number(score), Console::eDEBUG);
+    }
 }
 
 qint32 CoreAI::getFlareTargetScore(const QPoint& moveTarget, const QPoint& flareTarget, const spQmlVectorPoint& pUnfogCircle)

@@ -326,8 +326,8 @@
 <context>
     <name>ACTION_INFO</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
-        <source>CO Info</source>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="10"/>
+        <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -336,8 +336,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="10"/>
-        <source>Info</source>
+        <location filename="../resources/scripts/actions/ACTION_INFO.js" line="62"/>
+        <source>CO Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -693,13 +693,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="117"/>
-        <source>Action List</source>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
-        <source>Save</source>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="117"/>
+        <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2116,23 +2116,13 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
-        <source>Flip Map Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
-        <source>Rotate Map X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
-        <source>Rotate Map Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Flips the map at the x-axis. Flipping the left half of the map. The right half of the map is changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="81"/>
+        <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2142,7 +2132,17 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="82"/>
+        <source>Rotate Map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="82"/>
         <source>Flips and rotates the map at the x-axis. Using the left half of the map. The right half of the map is changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="83"/>
+        <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2470,20 +2470,6 @@ This is immediatly applied.</source>
 <context>
     <name>GameMap</name>
     <message>
-        <location filename="../mapsupport/randomMap.cpp" line="65"/>
-        <location filename="../mapsupport/randomMap.cpp" line="99"/>
-        <location filename="../mapsupport/randomMap.cpp" line="523"/>
-        <location filename="../mapsupport/randomMap.cpp" line="595"/>
-        <location filename="../mapsupport/randomMap.cpp" line="599"/>
-        <source>Generating </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/gamemap.cpp" line="1047"/>
-        <source>Loading Players</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="34"/>
         <source>Reading Map File</source>
         <translation type="unfinished"></translation>
@@ -2499,14 +2485,17 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <source>Importing Map Row </source>
+        <location filename="../game/gamemap.cpp" line="434"/>
+        <location filename="../game/gamemap.cpp" line="480"/>
+        <location filename="../game/gamemap.cpp" line="1069"/>
+        <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="434"/>
-        <location filename="../game/gamemap.cpp" line="1069"/>
-        <source>Loading Map Row </source>
+        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <source>Importing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2515,12 +2504,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
-        <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
+        <location filename="../mapsupport/randomMap.cpp" line="65"/>
+        <location filename="../mapsupport/randomMap.cpp" line="99"/>
+        <location filename="../mapsupport/randomMap.cpp" line="523"/>
+        <location filename="../mapsupport/randomMap.cpp" line="595"/>
+        <location filename="../mapsupport/randomMap.cpp" line="599"/>
+        <source>Generating </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../game/gamemap.cpp" line="434"/>
-        <location filename="../game/gamemap.cpp" line="480"/>
         <location filename="../game/gamemap.cpp" line="1069"/>
-        <source> of </source>
+        <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2531,6 +2526,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/gamemap.cpp" line="490"/>
         <source>Loading weather for snowy times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="1047"/>
+        <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3150,8 +3150,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="656"/>
+        <source>Key to select Place Terrain in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="664"/>
         <source>Key Place Unit: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="668"/>
+        <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3160,8 +3170,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="680"/>
+        <source>Key to select Place Building in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="688"/>
         <source>Key Next Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="692"/>
+        <source>Key to select the next player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3170,13 +3190,28 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="704"/>
+        <source>Key to select the previous player in the editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="712"/>
         <source>Key Next Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="716"/>
+        <source>Key to select the next editor item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="724"/>
         <source>Key Previous Item: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="728"/>
+        <source>Key to select the previous editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3187,41 +3222,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="740"/>
         <source>Key for taking an screensho.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="656"/>
-        <source>Key to select Place Terrain in the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="668"/>
-        <source>Key to select Place Unit in the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="680"/>
-        <source>Key to select Place Building in the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="692"/>
-        <source>Key to select the next player in the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="704"/>
-        <source>Key to select the previous player in the editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="716"/>
-        <source>Key to select the next editor item</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="728"/>
-        <source>Key to select the previous editor item</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3240,6 +3240,16 @@ This is immediatly applied.</source>
 </context>
 <context>
     <name>IngameInfoBar</name>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="224"/>
+        <source>Day:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="238"/>
+        <source>Buildings:</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="259"/>
         <source>Units: </source>
@@ -3299,6 +3309,18 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="611"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="833"/>
+        <source>Owner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/ui/ingameinfobar.cpp" line="616"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
+        <source>Player </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="625"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
@@ -3331,28 +3353,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="824"/>
         <source>Neutral</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="616"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
-        <source>Player </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="224"/>
-        <source>Day:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="238"/>
-        <source>Buildings:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="611"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="833"/>
-        <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3705,11 +3705,6 @@ This is immediatly applied.</source>
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="110"/>
-        <source>Load Savegame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="81"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="93"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="1097"/>
@@ -3719,6 +3714,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="99"/>
         <source>Connecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="110"/>
+        <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3815,6 +3815,26 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/optionmenue.cpp" line="357"/>
+        <source>Brightness: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="361"/>
+        <source>Selects the brightness for the game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="374"/>
+        <source>Gamma: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="378"/>
+        <source>Selects the gamma factor for the game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/optionmenue.cpp" line="391"/>
         <source>Sprite Aliasing: </source>
         <translation type="unfinished"></translation>
@@ -3837,26 +3857,6 @@ This is immediatly applied.</source>
     <message>
         <location filename="../menue/optionmenue.cpp" line="426"/>
         <source>Selects the global volume for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="357"/>
-        <source>Brightness: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="361"/>
-        <source>Selects the brightness for the game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="374"/>
-        <source>Gamma: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="378"/>
-        <source>Selects the gamma factor for the game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4162,6 +4162,12 @@ Version: </source>
 <context>
     <name>PlayerSelection</name>
     <message>
+        <location filename="../objects/playerselection.cpp" line="103"/>
+        <location filename="../objects/playerselection.cpp" line="327"/>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
@@ -4267,17 +4273,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="693"/>
-        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="103"/>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/playerselection.cpp" line="334"/>
         <location filename="../objects/playerselection.cpp" line="341"/>
         <location filename="../objects/playerselection.cpp" line="345"/>
@@ -4312,6 +4307,11 @@ Version: </source>
     <message>
         <location filename="../objects/playerselection.cpp" line="668"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="693"/>
+        <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4562,6 +4562,11 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="141"/>
+        <source>Environment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="156"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
@@ -4612,20 +4617,15 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/ruleselection.cpp" line="226"/>
+        <source>CO Banlist: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/ruleselection.cpp" line="229"/>
         <location filename="../objects/ruleselection.cpp" line="244"/>
         <location filename="../objects/ruleselection.cpp" line="259"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="141"/>
-        <source>Environment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/ruleselection.cpp" line="226"/>
-        <source>CO Banlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6090,6 +6090,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
+        <source>Owner: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="29"/>
         <source>X Position of the Building</source>
         <translation type="unfinished"></translation>
@@ -6107,11 +6112,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="41"/>
         <source>Y: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnbuilding.cpp" line="15"/>
-        <source>Owner: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8323,22 +8323,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
-        <source>Win the given amount of games.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
         <source>The best!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
-        <source>Loose the given amount of games.</source>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="94"/>
+        <source>Win the given amount of games.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
         <source>Biggest Looser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/achievements/achievement_victory.js" line="95"/>
+        <source>Loose the given amount of games.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9094,6 +9094,11 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>co_adam</name>
     <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="304"/>
+        <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="308"/>
         <source>Vectors</source>
         <translation type="unfinished"></translation>
@@ -9106,11 +9111,6 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="316"/>
         <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="304"/>
-        <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9741,6 +9741,19 @@ Reaf costs are always 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="224"/>
+        <source>
+
+CO Zone Effect: 
+Hovercrafts gain %0% firepower boost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
+        <source>Hovercraft units are strengthened, they gain one extra movement and get cheaper.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="234"/>
         <source>Fluid Dynamics</source>
         <translation type="unfinished"></translation>
@@ -9753,19 +9766,6 @@ Reaf costs are always 1.</source>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="242"/>
         <source>Photon Discharge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
-        <source>Hovercraft units are strengthened, they gain one extra movement and get cheaper.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="224"/>
-        <source>
-
-CO Zone Effect: 
-Hovercrafts gain %0% firepower boost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9968,6 +9968,11 @@ Units gain %0% firepower and defence.</source>
 <context>
     <name>co_beast</name>
     <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="175"/>
+        <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="179"/>
         <source>Looting, Robbing and Killing</source>
         <translation type="unfinished"></translation>
@@ -9990,6 +9995,14 @@ No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_beast.js" line="192"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %0% firepower when attacking. His Units take 1 Damage after attacking.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="198"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
@@ -9997,19 +10010,6 @@ No bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_beast.js" line="202"/>
         <source>Dopping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="175"/>
-        <source>A bandit working for Caulder. Ignores all laws and orders and loots, robs and kills everything he wants.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_beast.js" line="192"/>
-        <source>
-
-CO Zone Effect: 
-Units gain %0% firepower when attacking. His Units take 1 Damage after attacking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10328,6 +10328,14 @@ Units loose firepower by %0% and defense by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
+        <source>
+
+CO Zone Effect: 
+Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
         <source>All his units gain five Hp and get a offense and defense buff.</source>
         <translation type="unfinished"></translation>
@@ -10358,32 +10366,19 @@ Units loose firepower by %0% and defense by %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
-        <source>Interesting. Very interesting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
-        <source>Argh I&apos;m useless as well? Impossible!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="257"/>
         <source>You and your ethnics make you weak. Watch the power of science...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
-        <source>
-
-CO Zone Effect: 
-Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="258"/>
         <location filename="../resources/scripts/cos/co_caulder.js" line="264"/>
         <source>I am simply curious.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="262"/>
+        <source>Interesting. Very interesting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10394,6 +10389,11 @@ Units gain %1% firepower and %1% defense. They also heal %2HP each turn..</sourc
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="268"/>
         <source>Only a failed experiment nothing to worry about!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="269"/>
+        <source>Argh I&apos;m useless as well? Impossible!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11537,23 +11537,23 @@ Units have increased firepower and luck.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="257"/>
-        <source>Error: Overcharged. Initiate safety mode.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="259"/>
-        <source>Overload! Release energy!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="253"/>
         <source>Shocker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="257"/>
+        <source>Error: Overcharged. Initiate safety mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
         <source>Power surge detected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="259"/>
+        <source>Overload! Release energy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11718,6 +11718,11 @@ Units have even more luck and misfortune</source>
 <context>
     <name>co_forsythe</name>
     <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="150"/>
+        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="154"/>
         <source>Honor</source>
         <translation type="unfinished"></translation>
@@ -11725,6 +11730,11 @@ Units have even more luck and misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="158"/>
         <source>Killers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="162"/>
+        <source>He has a large CO-Zone which boosts both offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11743,23 +11753,13 @@ Units have 20% offensive and defensive bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="175"/>
-        <source>Power of Honor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="150"/>
-        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free, to live in peace.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_forsythe.js" line="162"/>
-        <source>He has a large CO-Zone which boosts both offensive and defensive bonus.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="171"/>
         <source>Increases offensive and defensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="175"/>
+        <source>Power of Honor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12632,6 +12632,11 @@ Units have more firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="209"/>
+        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="213"/>
         <source>
 Global Effect: 
@@ -12664,11 +12669,6 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="230"/>
         <source>Great Counterstrike</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="209"/>
-        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13315,6 +13315,11 @@ Units are way stronger when engaging stronger units</source>
 <context>
     <name>co_jugger</name>
     <message>
+        <location filename="../resources/scripts/cos/co_jugger.js" line="175"/>
+        <source>A robot-like commander in the Bolt Guard army. No one knows his true identity!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="179"/>
         <source>Energy</source>
         <translation type="unfinished"></translation>
@@ -13322,11 +13327,6 @@ Units are way stronger when engaging stronger units</source>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="183"/>
         <source>Static electricity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_jugger.js" line="175"/>
-        <source>A robot-like commander in the Bolt Guard army. No one knows his true identity!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13704,13 +13704,13 @@ Units on buildings have increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="262"/>
-        <source>Urban Blight</source>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
+        <source>Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
-        <source>Inflicts three HP of damage to enemy units on properties and increases firepower of all units on a property.</source>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="262"/>
+        <source>Urban Blight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14473,6 +14473,11 @@ Unit Ranks are way more effective.</source>
 <context>
     <name>co_melanthe</name>
     <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
+        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="249"/>
         <source>Botany</source>
         <translation type="unfinished"></translation>
@@ -14488,20 +14493,10 @@ Unit Ranks are way more effective.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="270"/>
-        <source>Synthetic Seedlings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="261"/>
         <source>
 Global Effect: 
 No bonus.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
-        <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be a superior life forms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14515,6 +14510,11 @@ Units gain an additional firepower on natural terrain and increased terrain defe
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="266"/>
         <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="270"/>
+        <source>Synthetic Seedlings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14955,6 +14955,11 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
 <context>
     <name>co_napoleon</name>
     <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="225"/>
+        <source>The current second commander of the Metal Army. Believes Metal Army&apos;s ingenuity gives it a right to control the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="229"/>
         <source>Sudoku</source>
         <translation type="unfinished"></translation>
@@ -14965,6 +14970,11 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="237"/>
+        <source>Units have high defensive capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="241"/>
         <source>
 Special Unit:
@@ -14972,16 +14982,6 @@ Iron Shield Generator
 
 Global Effect: 
 No Effects.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="225"/>
-        <source>The current second commander of the Metal Army. Believes Metal Army&apos;s ingenuity gives it a right to control the world.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="237"/>
-        <source>Units have high defensive capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16077,6 +16077,14 @@ Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="244"/>
+        <source>
+
+CO Zone Effect: 
+Units gain defense and have reduced firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="248"/>
         <source>Enemy loses half of their ammo, his troops can move 1 point more and their defense rises.</source>
         <translation type="unfinished"></translation>
@@ -16102,13 +16110,33 @@ Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
+        <source>...Sturm is coming...you have no chance...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="266"/>
         <source>Order analyzed! Destroy enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="267"/>
+        <source>Nobody can kill a Robot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="268"/>
+        <source>This is a war of a new time!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="269"/>
         <source>Humans beware the power of machines coming to your country.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
+        <source>..........</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16132,34 +16160,6 @@ Units gain 1 additional movement point and have reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="244"/>
-        <source>
-
-CO Zone Effect: 
-Units gain defense and have reduced firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="265"/>
-        <source>...Sturm is coming...you have no chance...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="267"/>
-        <source>Nobody can kill a Robot.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="268"/>
-        <source>This is a war of a new time!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_robosturm.js" line="273"/>
-        <source>..........</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="284"/>
         <source>Robo-Sturm</source>
         <translation type="unfinished"></translation>
@@ -16167,6 +16167,11 @@ Units gain defense and have reduced firepower.</source>
 </context>
 <context>
     <name>co_sabaki</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_sabaki.js" line="183"/>
+        <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="187"/>
         <source>Spare parts</source>
@@ -16208,11 +16213,6 @@ Units have lifesteal.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="208"/>
         <source>Speed Salvage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sabaki.js" line="183"/>
-        <source>A former Yellow Comet CO that started a rebellion, when she saw the state of Amber Corona. An expert at salvaging parts and field repairs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17228,6 +17228,11 @@ Units have increased firepower and defense.</source>
 <context>
     <name>co_tabitha</name>
     <message>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="146"/>
+        <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="150"/>
         <source>Breakfast in bed</source>
         <translation type="unfinished"></translation>
@@ -17235,11 +17240,6 @@ Units have increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="154"/>
         <source>Stupid weak people</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="146"/>
-        <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremely cruel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17371,13 +17371,13 @@ Air Units have 50% increased firepower and 30% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="228"/>
-        <source>Sonic Boom</source>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="224"/>
+        <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tasha.js" line="224"/>
-        <source>Air units have higher firepower, defense and all units can move 1 space farther.</source>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="228"/>
+        <source>Sonic Boom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18122,13 +18122,6 @@ Units have increased firepower.</source>
 <context>
     <name>co_yukio</name>
     <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
-        <source>
-Global Effect: 
-None.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="236"/>
         <source>Dark founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
         <translation type="unfinished"></translation>
@@ -18146,6 +18139,21 @@ None.</source>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="248"/>
         <source>As the leader of dark matter his troops have special armor and armor piercing weapons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
+        <source>
+Global Effect: 
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
+        <source>
+
+CO Zone Effect: 
+Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18209,6 +18217,11 @@ None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
+        <source>Give me all your money and your lifes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="290"/>
         <source>Even with this loss I made profit...</source>
         <translation type="unfinished"></translation>
@@ -18216,19 +18229,6 @@ None.</source>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="291"/>
         <source>I lost but I got your money to build a new army.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="286"/>
-        <source>Give me all your money and your lifes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
-        <source>
-
-CO Zone Effect: 
-Damage against his troops is reduced. Troops deal true damage if the base damage is at least %0%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18240,6 +18240,11 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
 <context>
     <name>co_zandra</name>
     <message>
+        <location filename="../resources/scripts/cos/co_zandra.js" line="209"/>
+        <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="213"/>
         <source>Coconuts</source>
         <translation type="unfinished"></translation>
@@ -18247,11 +18252,6 @@ Damage against his troops is reduced. Troops deal true damage if the base damage
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="217"/>
         <source>Seafood</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_zandra.js" line="209"/>
-        <source>A youthful Co that will protect her village at all costs. She is skilled in dealing with sandstorms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

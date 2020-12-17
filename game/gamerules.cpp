@@ -1245,13 +1245,13 @@ void GameRules::deserializer(QDataStream& pStream, bool)
             m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
             if (!m_perkBannlistEdited)
             {
-                m_allowedPerks = Filesupport::readVectorList<QString, QList>(pStream);
+                m_allowedPerks = COPerkManager::getInstance()->getLoadedRessources();
             }
             pStream >> m_actionBannlistEdited;
             m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
             if (!m_actionBannlistEdited)
             {
-                m_allowedActions = Filesupport::readVectorList<QString, QList>(pStream);
+                m_allowedActions = GameManager::getInstance()->getLoadedRessources();
             }
         }
         else

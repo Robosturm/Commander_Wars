@@ -694,7 +694,7 @@ void Settings::loadSettings()
         m_brightness = 0.0f;
     }
     m_gamma      = settings.value("gamma", 1.0f).toFloat(&ok);
-    if(!ok || m_brightness > 0.0f || m_brightness < 50.0f)
+    if(!ok || m_gamma <= 0.0f || m_gamma > 50.0f)
     {
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " gamma";
         Console::print(error, Console::eERROR);

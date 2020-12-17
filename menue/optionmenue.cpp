@@ -813,6 +813,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awdc_powergain");
             removeList.append("mods/awdc_weather");
             removeList.append("mods/awdc_terrain");
+            removeList.append("mods/awdc_flare");
             break;
         }
         case 2:
@@ -827,6 +828,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awdc_powergain");
             removeList.append("mods/awdc_weather");
             removeList.append("mods/awdc_terrain");
+            removeList.append("mods/awdc_flare");
             break;
         }
         case 3:
@@ -841,6 +843,7 @@ void OptionMenue::selectMods(qint32 item)
             addList.append("mods/awdc_powergain");
             addList.append("mods/awdc_weather");
             addList.append("mods/awdc_terrain");
+            addList.append("mods/awdc_flare");
             break;
         }
     }
