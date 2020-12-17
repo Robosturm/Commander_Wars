@@ -14,10 +14,8 @@
 #include "objects/minimap.h"
 
 #include "game/campaign.h"
-
+#include "game/gamemap.h"
 #include "game/building.h"
-
-class GameMap;
 
 class MapSelectionView;
 typedef oxygine::intrusive_ptr<MapSelectionView> spMapSelectionView;
@@ -34,7 +32,7 @@ public:
     }
     inline GameMap* getCurrentMap()
     {
-        return m_pCurrentMap;
+        return m_pCurrentMap.get();
     }
     inline void setCurrentMap(GameMap* pMap)
     {
@@ -74,7 +72,7 @@ private:
       * @brief m_currentMapFile stores the current map info
       */
     QFileInfo m_currentMapFile;
-    GameMap* m_pCurrentMap{nullptr};
+    spGameMap m_pCurrentMap{nullptr};
     // map selection
     spMapSelection m_pMapSelection;
     spPanel m_MapInfo;

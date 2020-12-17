@@ -207,7 +207,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
          info.fileName().endsWith(".msav")))
     {
         m_MinimapPanel->clearContent();
-        if (m_pCurrentMap != nullptr)
+        if (m_pCurrentMap.get() != nullptr)
         {
             m_pCurrentMap->deleteMap();
             m_pCurrentMap = nullptr;
@@ -253,7 +253,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
     else if (info.isFile() && info.fileName().endsWith(".jsm"))
     {
         m_MinimapPanel->clearContent();
-        if (m_pCurrentMap != nullptr)
+        if (m_pCurrentMap.get() != nullptr)
         {
             m_pCurrentMap->deleteMap();
             m_currentMapFile = QFileInfo();
@@ -297,7 +297,7 @@ void MapSelectionView::loadMapVictoryInfo()
         pText->setPosition(10, posY + 10);
         pText->setStyle(style);
         m_pVictoryInfo->addChild(pText);
-        if (m_pCurrentMap != nullptr)
+        if (m_pCurrentMap.get() != nullptr)
         {
             auto info = Userdata::getInstance()->getVictoryForMap(m_pCurrentMap->getMapPath());
             if (info != nullptr && i < info->co1.size())

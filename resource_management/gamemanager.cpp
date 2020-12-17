@@ -39,8 +39,9 @@ oxygine::spSprite GameManager::getIcon(QString icon)
         {
             spGameMap pMap = GameMap::getInstance();
             spPlayer pPlayer;
-            if (pMap.get() == nullptr &&
-                pMap->getCurrentPlayer() != nullptr)
+            if (pMap.get() == nullptr ||
+                pMap->getCurrentPlayer() == nullptr ||
+                pMap->getCurrentPlayer()->getColorTableAnim().get() == nullptr)
             {
                 pPlayer = new Player();
                 pPlayer->init();
@@ -49,7 +50,8 @@ oxygine::spSprite GameManager::getIcon(QString icon)
             {
                 pPlayer = pMap->getCurrentPlayer();
             }
-            return new Unit(icon, pPlayer.get(), false);
+            oxygine::spSprite ret = new Unit(icon, pPlayer.get(), false);
+            return ret;
         }
         else if (pBuildingSpriteManager->exists(icon))
         {

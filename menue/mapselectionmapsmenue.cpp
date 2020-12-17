@@ -409,7 +409,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             float startBaseSize)
 {
     
-    GameMap* pGameMap = new GameMap(width, heigth, playerCount);
+    spGameMap pGameMap = new GameMap(width, heigth, playerCount);
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f);
@@ -421,7 +421,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::RANDOMMAPIDENTIFIER);
-    m_pMapSelectionView->setCurrentMap(pGameMap);
+    m_pMapSelectionView->setCurrentMap(pGameMap.get());
     emit buttonNext();
     
 }
