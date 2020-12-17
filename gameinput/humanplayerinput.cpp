@@ -124,11 +124,11 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction.get() == nullptr)
             {
-                showAttackableFields(x, y);                
+                showAttackableFields(x, y);
             }
         }
     }
-    else if (!isViewPlayer)
+    else if (isViewPlayer)
     {
         cancelActionInput();
     }
@@ -587,7 +587,7 @@ void HumanPlayerInput::getNextStepData()
 void HumanPlayerInput::finishAction()
 {
     Unit* pUnit = m_pGameAction->getTargetUnit();
-    if (pUnit != nullptr)
+    if (pUnit != nullptr && m_pUnitPathFindingSystem.get() != nullptr)
     {
         qint32 movepoints = pUnit->getMovementpoints(m_pGameAction->getTarget());
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
@@ -617,7 +617,11 @@ void HumanPlayerInput::finishAction()
     }
     else if (isViewPlayer)
     {
-
+        if (m_pGameAction->getIsLocal())
+        {
+            m_pGameAction->perform();
+        }
+        m_pGameAction = nullptr;
     }
     else
     {

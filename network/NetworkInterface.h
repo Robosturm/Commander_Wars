@@ -3,13 +3,12 @@
 
 #include <QObject>
 #include <QThread>
-#include <QNetworkConfigurationManager>
-#include <QNetworkSession>
 #include <QVector>
 #include <QAbstractSocket>
 #include <QTcpSocket>
 #include <QLocalSocket>
 #include <QSemaphore>
+#include <QNetworkInterface>
 
 #include "oxygine-framework.h"
 

@@ -1,8 +1,12 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.16.0)
 project (Commander_Wars)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# set tool chain info
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
@@ -14,17 +18,16 @@ message("Module Path: ${CMAKE_PREFIX_PATH}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
 
-
-find_package(Qt5Core REQUIRED)
+find_package(Qt5 COMPONENTS Core REQUIRED)
 # Qt5LinguistTools
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5Qml REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Xml REQUIRED)
-find_package(OpenGL REQUIRED)
+find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
+find_package(Qt5 COMPONENTS Qml REQUIRED)
+find_package(Qt5 COMPONENTS Network REQUIRED)
+find_package(Qt5 COMPONENTS Gui REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Xml REQUIRED)
+find_package(Qt5 COMPONENTS Multimedia REQUIRED)
+find_package(Qt5 COMPONENTS OpenGL REQUIRED)
 
 # build dependend defines
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -53,15 +56,13 @@ message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
 message ("CXX System: ${CMAKE_SYSTEM_NAME}")
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
-    #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 endif()
-# Commander Wars requires C++17 for if constexpr in closures
-set(CMAKE_CXX_FLAGS "-std=c++1z ${CMAKE_CXX_FLAGS}")
 
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
 ###################################################################################
+# setup include dirs
 set(OXYGINE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/oxygine-framework)
 include_directories(${OXYGINE_ROOT})
 
@@ -143,7 +144,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
 # end oxygine stuff -> qoxygine
 ###################################################################################
 
-# source list we start slow here with the main cpp
+# source list of commander wars specific files
 set(${PROJECT_NAME}_SRCS
         main.cpp
 
@@ -454,7 +455,6 @@ set(TS_FILES
     translation/lang_de_DE.ts
     translation/lang_en.ts
 )
-
 # adds the translations and a target for it
 qt5_create_translation(
         QM_FILES
@@ -479,19 +479,19 @@ if (WIN32) #disable console mode for VC++
 endif(WIN32)
 
 
+# link libraries
 
-qt5_use_modules(${PROJECT_NAME}
-    Core
-    LinguistTools
-    Qml
-    Multimedia
-    Network
-    Gui
-    Widgets
-    Xml    
+set(QT_LIBRARIES
+    Qt5::Core
+    Qt5::Qml
+    Qt5::Network
+    Qt5::Gui
+    Qt5::Widgets
+    Qt5::Xml
+    Qt5::Multimedia
+    Qt5::OpenGL
 )
 
-# link libraries
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(
         ${PROJECT_NAME}
@@ -515,7 +515,6 @@ set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
 get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
-#find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 
 message(${QT_BIN_DIR})
 
@@ -587,6 +586,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     )
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling")
 endif()
+
 
 # install  folders
 install(DIRECTORY system DESTINATION ".")

@@ -40,9 +40,12 @@ bool CoreAI::moveFlares(QmlVectorUnit* pUnits)
                 {
                     QVector<QPoint> path = turnPfs.getPath(moveTarget.x(), moveTarget.y());
                     pAction->setMovepath(path, turnPfs.getCosts(path));
-                    addSelectedFieldData(pAction, flareTarget);
-                    emit performAction(pAction);
-                    return true;
+                    if (pAction->canBePerformed())
+                    {
+                        addSelectedFieldData(pAction, flareTarget);
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
             }
         }

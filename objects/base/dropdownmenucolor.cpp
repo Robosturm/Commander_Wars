@@ -18,7 +18,6 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_Colorfield = new oxygine::ColorRectSprite();
     m_Colorfield->addClickListener([=](oxygine::Event* event)
     {

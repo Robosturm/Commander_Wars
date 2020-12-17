@@ -1,11 +1,11 @@
 #ifndef AUDIOTHREAD_H
 #define AUDIOTHREAD_H
 
-#include <QMediaPlayer>
 #include <QObject>
 
 #include <QVector>
 #include <QSoundEffect>
+#include <QMediaPlayer>
 #include "qtimer.h"
 
 class QMediaPlaylist;
