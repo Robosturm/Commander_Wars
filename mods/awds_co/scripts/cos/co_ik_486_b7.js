@@ -7,18 +7,36 @@ CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 0;
+            if (attacker.getBaseMaxRange() === 1 &&
+                    atkPosX === attacker.getX() &&
+                    atkPosY === attacker.getY() &&
+                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 10;
+            }
         case GameEnums.PowerMode_Power:
-            return 0;
+            if (attacker.getBaseMaxRange() === 1 &&
+                    atkPosX === attacker.getX() &&
+                    atkPosY === attacker.getY() &&
+                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return 10;
+            }
         default:
             if (attacker.getBaseMaxRange() === 1 &&
                     atkPosX === attacker.getX() &&
-                    atkPosY === attacker.getY())
+                    atkPosY === attacker.getY() &&
+                    Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
             {
-                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                {
-                    return -10;
-                }
+                return -10;
             }
             break;
         }

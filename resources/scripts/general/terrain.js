@@ -186,4 +186,22 @@ var TERRAIN =
         // array of sprites that can be selected as fix sprites for this terrain
         return [];
     },
+
+    startOfTurn : function(terrain)
+    {
+        // needs to be enable by calling setHasStartOfTurn(true) in the js function init
+    },
+
+    // additional offensive bonus for a unit on this field
+    getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+    //  additional deffensive bonus for a unit on this field
+    getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
 };

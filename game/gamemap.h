@@ -646,6 +646,15 @@ public slots:
      */
     void startOfTurn(Player* pPlayer);
     /**
+     * @brief startOfTurnNeutral
+     */
+    void startOfTurnNeutral();
+    /**
+     * @brief startOfTurnPlayer
+     * @param pPlayer
+     */
+    void startOfTurnPlayer(Player* pPlayer);
+    /**
      * @brief centerOnPlayer
      * @param pPlayer
      */

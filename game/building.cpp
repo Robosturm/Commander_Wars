@@ -642,6 +642,55 @@ qint32 Building::getVisionBonus()
     }
 }
 
+qint32 Building::getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getOffensiveFieldBonus";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    qint32 ergValue = 0;
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    if (erg.isNumber())
+    {
+        ergValue += erg.toInt();
+    }
+    return ergValue;
+}
+
+qint32 Building::getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getDeffensiveFieldBonus";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    qint32 ergValue = 0;
+    QJSValue erg = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    if (erg.isNumber())
+    {
+        ergValue += erg.toInt();
+    }
+    return ergValue;
+}
 qint32 Building::getBuildingWidth()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

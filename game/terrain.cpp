@@ -62,6 +62,16 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
 }
 
+bool Terrain::getHasStartOfTurn() const
+{
+    return m_hasStartOfTurn;
+}
+
+void Terrain::setHasStartOfTurn(bool hasStartOfTurn)
+{
+    m_hasStartOfTurn = hasStartOfTurn;
+}
+
 QString Terrain::getTerrainDescription() const
 {
     return m_terrainDescription;
@@ -904,19 +914,6 @@ QStringList Terrain::getTerrainSprites()
     return erg.toVariant().toStringList();
 }
 
-void Terrain::registerStartOfDay(QString functionName)
-{
-    m_pStartDayCallback = new JsCallback<Terrain>(this, terrainID, functionName);
-}
-
-void Terrain::startOfDay()
-{
-    if (m_pStartDayCallback.get() != nullptr)
-    {
-        m_pStartDayCallback->call();
-    }
-}
-
 QString Terrain::getTerrainID() const
 {
     return terrainID;
@@ -1029,6 +1026,69 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     }
 }
 
+void Terrain::startOfTurn()
+{
+    if (m_hasStartOfTurn)
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "startOfTurn";
+        QJSValueList args1;
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args1 << obj1;
+        pInterpreter->doFunction(terrainID, function1, args1);
+    }
+}
+
+qint32 Terrain::getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getOffensiveFieldBonus";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    qint32 ergValue = 0;
+    QJSValue erg = pInterpreter->doFunction(terrainID, function1, args1);
+    if (erg.isNumber())
+    {
+        ergValue += erg.toInt();
+    }
+    return ergValue;
+}
+
+qint32 Terrain::getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getDeffensiveFieldBonus";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    qint32 ergValue = 0;
+    QJSValue erg = pInterpreter->doFunction(terrainID, function1, args1);
+    if (erg.isNumber())
+    {
+        ergValue += erg.toInt();
+    }
+    return ergValue;
+}
+
 void Terrain::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -1075,6 +1135,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
 
     pStream << terrainName;
     pStream << m_terrainDescription;
+    pStream << m_hasStartOfTurn;
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1178,6 +1239,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     {
         pStream >> terrainName;
         pStream >> m_terrainDescription;
+    }
+    if (version > 5)
+    {
+         pStream >> m_hasStartOfTurn;
     }
 }
 

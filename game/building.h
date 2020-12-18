@@ -278,6 +278,26 @@ public slots:
      */
     qint32 getOffensiveBonus();
     /**
+     * @brief getOffensiveFieldBonus
+     * @param pAttacker
+     * @param atkPosition
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    /**
+     * @brief getDeffensiveFieldBonus
+     * @param pAttacker
+     * @param atkPosition
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
      * @brief getDefensiveBonus
      * @return
      */

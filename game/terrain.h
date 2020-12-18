@@ -90,7 +90,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief update
@@ -128,7 +128,42 @@ public:
      * @return
      */
     bool isValid();
+
 public slots:
+    /**
+     * @brief getOffensiveBonus
+     * @param pAttacker
+     * @param atkPosition
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    /**
+     * @brief getDeffensiveBonus
+     * @param pAttacker
+     * @param atkPosition
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
+     * @brief startOfTurn
+     */
+    void startOfTurn();
+    /**
+     * @brief getHasStartOfTurn
+     * @return
+     */
+    bool getHasStartOfTurn() const;
+    /**
+     * @brief setHasStartOfTurn
+     * @param hasStartOfTurn
+     */
+    void setHasStartOfTurn(bool hasStartOfTurn);
     /**
      * @brief getTerrainDescription
      * @return
@@ -347,15 +382,6 @@ public slots:
      * @return
      */
     QStringList getTerrainSprites();
-    /**
-     * @brief registerStartOfDay
-     * @param functionName
-     */
-    void registerStartOfDay(QString functionName);
-    /**
-     * @brief startOfDay
-     */
-    void startOfDay();
 protected:
     /**
      * @brief createBuildingDownStream
@@ -428,6 +454,8 @@ private:
       */
     qint32 hp{-1};
     qint32 m_VisionHigh{0};
+
+    bool m_hasStartOfTurn{false};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
 };

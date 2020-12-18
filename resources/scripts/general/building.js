@@ -22,7 +22,18 @@ var BUILDING =
     {
         return 0;
     },
-
+    // additional offensive bonus for a unit on this field
+    getOffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+    //  additional deffensive bonus for a unit on this field
+    getDeffensiveFieldBonus : function(co, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
     getBuildingWidth : function()
     {
         // one field width default for most buildings

@@ -1060,7 +1060,18 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     {
         bonus += pCO1->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
-
+    if (m_pTerrain != nullptr)
+    {
+        Building* pBuilding = m_pTerrain->getBuilding();
+        if (pBuilding != nullptr)
+        {
+            bonus += pBuilding->getOffensiveFieldBonus(this, position, pDefender, defPosition, isDefender);
+        }
+        else
+        {
+            bonus += m_pTerrain->getOffensiveFieldBonus(this, position, pDefender, defPosition, isDefender);
+        }
+    }
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
@@ -1283,6 +1294,18 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     if (useTerrainDefense())
     {
         bonus += getTerrainDefense() * 10;
+    }
+    if (m_pTerrain != nullptr)
+    {
+        Building* pBuilding = m_pTerrain->getBuilding();
+        if (pBuilding != nullptr)
+        {
+            bonus += pBuilding->getDeffensiveFieldBonus(pAttacker, atkPosition, this, position, isDefender);
+        }
+        else
+        {
+            bonus += m_pTerrain->getDeffensiveFieldBonus(pAttacker, atkPosition, this, position, isDefender);
+        }
     }
     if (!m_pOwner->getWeatherImmune())
     {

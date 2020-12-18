@@ -1026,7 +1026,7 @@ void GameMap::readMapHeader(QDataStream& pStream,
 
 void GameMap::deserializer(QDataStream& pStream, bool fast)
 {
-    clearMap();    
+    clearMap();
     spLoadingScreen pLoadingScreen = LoadingScreen::getInstance();
     // restore map header
     qint32 version = 0;
@@ -1458,6 +1458,64 @@ void GameMap::startOfTurn(Player* pPlayer)
     {
         pPlayer->startOfTurn();
         pPlayer->getBaseGameInput()->centerCameraOnAction(nullptr);
+        startOfTurnPlayer(pPlayer);
+    }
+    else
+    {
+        startOfTurnNeutral();
+    }
+}
+
+void GameMap::startOfTurnNeutral()
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spTerrain pTerrain = fields[y][x];
+            pTerrain->startOfTurn();
+            spBuilding pBuilding = pTerrain->getSpBuilding();
+            if (pBuilding.get() != nullptr &&
+                pBuilding->getOwner() == nullptr &&
+                (pBuilding->getX() == x &&
+                 pBuilding->getY() == y))
+            {
+                pBuilding->startOfTurn();
+            }
+        }
+    }
+}
+
+void GameMap::startOfTurnPlayer(Player* pPlayer)
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields[y][x]->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->removeShineTween();
+                    pUnit->startOfTurn();
+                }
+                pUnit->updateIcons(getCurrentViewPlayer());
+            }
+            spBuilding pBuilding = fields[y][x]->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer &&
+                    (pBuilding->getX() == x && pBuilding->getY() == y))
+                {
+                    pBuilding->startOfTurn();
+                }
+            }
+        }
     }
 }
 
@@ -1477,14 +1535,11 @@ void GameMap::centerOnPlayer(Player* pPlayer)
             {
                 if (pUnit->getOwner() == pPlayer)
                 {
-                    pUnit->removeShineTween();
-                    pUnit->startOfTurn();
                     if (unitWarp.x() <  0)
                     {
                         unitWarp = QPoint(x, y);
                     }
                 }
-                pUnit->updateIcons(getCurrentViewPlayer());
             }
             spBuilding pBuilding = fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr)
@@ -1492,8 +1547,6 @@ void GameMap::centerOnPlayer(Player* pPlayer)
                 if (pBuilding->getOwner() == pPlayer &&
                     (pBuilding->getX() == x && pBuilding->getY() == y))
                 {
-
-                    pBuilding->startOfTurn();
                     if (pBuilding->getBuildingID() == "HQ" &&
                         hqWarp.x() < 0)
                     {
@@ -1505,10 +1558,6 @@ void GameMap::centerOnPlayer(Player* pPlayer)
                     }
                 }
 
-            }
-            if (pPlayer == nullptr)
-            {
-                fields[y][x]->startOfDay();
             }
         }
     }
