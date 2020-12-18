@@ -9092,6 +9092,124 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>co_adam</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="307"/>
+        <source>A researcher-turned commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="311"/>
+        <source>Vectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="315"/>
+        <source>Percent Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="319"/>
+        <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="323"/>
+        <source>
+Global Effect: 
+Units have increased firepower but lose additional firepower for lost HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="324"/>
+        <source>
+
+CO Zone Effect: 
+Units gain additional firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a defense boost for one turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="328"/>
+        <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="332"/>
+        <source>Decimation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="336"/>
+        <source>Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit he didn&apos;t used yet gets an powerup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="340"/>
+        <source>Cartesian Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="344"/>
+        <source>Get a hobby? This is my hobby!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
+        <source>Woo! Watch out for shrapnel!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="346"/>
+        <source>Precision pays off!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="347"/>
+        <source>As my troops approach their limit...you become insignificant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="348"/>
+        <source>Prepare to have your strategy debunked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="349"/>
+        <source>I&apos;ll blind you with science!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="353"/>
+        <source>Call it bad luck, if you must.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="354"/>
+        <source>Who said math had no applications in real life?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="355"/>
+        <source>Ha! The revenge of the nerds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="359"/>
+        <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="360"/>
+        <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="364"/>
+        <source>Adam</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_adder</name>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="169"/>
@@ -12493,6 +12611,124 @@ Units have more firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="235"/>
         <source>Hawke</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_ik_486_b7</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="220"/>
+        <source>One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="224"/>
+        <source>Fortresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="228"/>
+        <source>Conquering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="232"/>
+        <source>His direct units can do indirect attacks when they don&apos;t move. However they lose a fraction of firepower when doing so.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="236"/>
+        <source>
+Global Effect: 
+No Effects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="237"/>
+        <source>
+
+CO Zone Effect: 
+Direct Units gain an additional firerange when they don&apos;t move. However firepower is reduced by doing so. Normal attacks are stronger.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="241"/>
+        <source>The defense of his direct units raises and the firerange is increased by 1 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="245"/>
+        <source>Wall of Defense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="249"/>
+        <source>The defense of his direct units raises extremly and the firerange is increased by 2 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="253"/>
+        <source>Great Counterstrike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="257"/>
+        <source>Direct attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="258"/>
+        <source>Function attacking not found use function defending instead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="259"/>
+        <source>My fortress is unbeatable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="260"/>
+        <source>Make ready to defend yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="261"/>
+        <source>You are to near to my defence position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="262"/>
+        <source>Go to the shortage other their.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="266"/>
+        <source>Fools don&apos;t attack my fortress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="267"/>
+        <source>Robots rule the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="268"/>
+        <source>Do function &apos;Be Happy&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="272"/>
+        <source>You have destroyed my fortress?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="273"/>
+        <source>Tilt! Tilt! Selfdestruction...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="277"/>
+        <source>IK-486-B7</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
