@@ -93,18 +93,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/bh_power.mp3", 1091 , 49930);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/bh_superpower.mp3", 3161 , 37731);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/ik-486-b7.mp3", 8310, 95764);
+            break;
         }
     };
 
@@ -117,30 +117,30 @@ var Constructor = function()
         return "MA";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
-        if (attacker.getBaseMaxRange() === 1 &&
-            atkPosX === attacker.getX() &&
-            atkPosY === attacker.getY())
+        switch (co.getPowerMode())
         {
-            switch (co.getPowerMode())
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 0;
+        case GameEnums.PowerMode_Power:
+            return 0;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 0;
-            case GameEnums.PowerMode_Power:
-                return 0;
-            default:
-                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                 {
-                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                     {
-                         return -10;
-                     }
-                     return 10;
-                 }
-                break;
+                if (attacker.getBaseMaxRange() === 1 &&
+                        atkPosX === attacker.getX() &&
+                        atkPosY === attacker.getY())
+                {
+                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                    {
+                        return -10;
+                    }
+                }
+                return 10;
             }
+            break;
         }
         return 0;
     };
@@ -148,8 +148,8 @@ var Constructor = function()
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
         if (unit.getBaseMaxRange() === 1 &&
-            posX === unit.getX() &&
-            posY === unit.getY())
+                posX === unit.getX() &&
+                posY === unit.getY())
         {
             switch (co.getPowerMode())
             {
@@ -169,90 +169,96 @@ var Constructor = function()
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender)
     {
-        if (defender.getBaseMaxRange() === 1)
+        switch (co.getPowerMode())
         {
-            switch (co.getPowerMode())
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (defender.getBaseMaxRange() === 1)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
                 return 50;
-            case GameEnums.PowerMode_Power:
-                return 30;
-            default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                {
-                    return 10;
-                }
-                break;
             }
+            break;
+        case GameEnums.PowerMode_Power:
+            if (defender.getBaseMaxRange() === 1)
+            {
+                return 30;
+            }
+            break;
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return 10;
+            }
+            break;
         }
-        return 0;
-    };
+    }
+    return 0;
+};
 
-    // CO - Intel
-    this.getBio = function(co)
-    {
-        return qsTr("One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.");
-    };
-    this.getHits = function(co)
-    {
-        return qsTr("Fortresses");
-    };
-    this.getMiss = function(co)
-    {
-        return qsTr("Conquering");
-    };
-    this.getCODescription = function(co)
-    {
-        return qsTr("His direct units can do indirect attacks when they don't move. However they lose a fraction of firepower when doing so.");
-    };
-    this.getLongCODescription = function()
-    {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by doing so. Normal attacks are stronger.");
-    };
-    this.getPowerDescription = function(co)
-    {
-        return qsTr("The defense of his direct units raises and the firerange is increased by 1 when they don't move.");
-    };
-    this.getPowerName = function(co)
-    {
-        return qsTr("Wall of Defense");
-    };
-    this.getSuperPowerDescription = function(co)
-    {
-        return qsTr("The defense of his direct units raises extremly and the firerange is increased by 2 when they don't move.");
-    };
-    this.getSuperPowerName = function(co)
-    {
-        return qsTr("Great Counterstrike");
-    };
-    this.getPowerSentences = function(co)
-    {
-        return [qsTr("Direct attack!"),
-                qsTr("Function attacking not found use function defending instead!"),
-                qsTr("My fortress is unbeatable."),
-                qsTr("Make ready to defend yourself!"),
-                qsTr("You are to near to my defence position."),
-                qsTr("Go to the shortage other their.")];
-    };
-    this.getVictorySentences = function(co)
-    {
-        return [qsTr("Fools don't attack my fortress."),
-                qsTr("Robots rule the world."),
-                qsTr("Do function 'Be Happy'")];
-    };
-    this.getDefeatSentences = function(co)
-    {
-        return [qsTr("You have destroyed my fortress?"),
-                qsTr("Tilt! Tilt! Selfdestruction...")];
-    };
-    this.getName = function()
-    {
-        return qsTr("IK-486-B7");
-    };
+// CO - Intel
+this.getBio = function(co)
+{
+    return qsTr("One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.");
+};
+this.getHits = function(co)
+{
+    return qsTr("Fortresses");
+};
+this.getMiss = function(co)
+{
+    return qsTr("Conquering");
+};
+this.getCODescription = function(co)
+{
+    return qsTr("His direct units can do indirect attacks when they don't move. However they lose a fraction of firepower when doing so.");
+};
+this.getLongCODescription = function()
+{
+    return qsTr("\nGlobal Effect: \nNo Effects.") +
+            qsTr("\n\nCO Zone Effect: \nDirect Units gain an additional firerange when they don't move. However firepower is reduced by doing so. Normal attacks are stronger.");
+};
+this.getPowerDescription = function(co)
+{
+    return qsTr("The defense of his direct units raises and the firerange is increased by 1 when they don't move.");
+};
+this.getPowerName = function(co)
+{
+    return qsTr("Wall of Defense");
+};
+this.getSuperPowerDescription = function(co)
+{
+    return qsTr("The defense of his direct units raises extremly and the firerange is increased by 2 when they don't move.");
+};
+this.getSuperPowerName = function(co)
+{
+    return qsTr("Great Counterstrike");
+};
+this.getPowerSentences = function(co)
+{
+    return [qsTr("Direct attack!"),
+            qsTr("Function attacking not found use function defending instead!"),
+            qsTr("My fortress is unbeatable."),
+            qsTr("Make ready to defend yourself!"),
+            qsTr("You are to near to my defence position."),
+            qsTr("Go to the shortage other their.")];
+};
+this.getVictorySentences = function(co)
+{
+    return [qsTr("Fools don't attack my fortress."),
+            qsTr("Robots rule the world."),
+            qsTr("Do function 'Be Happy'")];
+};
+this.getDefeatSentences = function(co)
+{
+    return [qsTr("You have destroyed my fortress?"),
+            qsTr("Tilt! Tilt! Selfdestruction...")];
+};
+this.getName = function()
+{
+    return qsTr("IK-486-B7");
+};
 }
 
 Constructor.prototype = CO;
