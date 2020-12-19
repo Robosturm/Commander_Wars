@@ -307,6 +307,10 @@ public slots:
     static float getBattleAnimationSpeed();
     static void setBattleAnimationSpeed(const quint32 &value);
 
+    static float getDialogAnimationSpeedValue();
+    static float getDialogAnimationSpeed();
+    static void setDialogAnimationSpeed(const quint32 &value);
+
     static Qt::Key getKey_up();
     static void setKey_up(const Qt::Key &key_up);
 
@@ -453,6 +457,7 @@ private:
     static quint32 animationSpeed;
     static quint32 walkAnimationSpeed;
     static quint32 battleAnimationSpeed;
+    static quint32 dialogAnimationSpeed;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;

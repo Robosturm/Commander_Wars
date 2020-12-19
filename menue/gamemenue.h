@@ -262,6 +262,8 @@ protected:
     void connectMap();
     void keyInputAll(Qt::Key cur);
     QString getSaveFileEnding();
+    void skipAllAnimations();
+    void skipExceptBattle();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;

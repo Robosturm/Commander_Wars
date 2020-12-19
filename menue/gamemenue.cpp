@@ -16,6 +16,7 @@
 #include "game/unitpathfindingsystem.h"
 
 #include "game/battleanimation.h"
+#include "game/gameanimationdialog.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -769,88 +770,15 @@ void GameMenue::skipAnimations()
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         spGameMap pMap = GameMap::getInstance();
-        GameEnums::AnimationMode animMode = Settings::getShowAnimations();
-
-        // skip all animations
+       // skip all animations
         if (skipAnimations == AnimationSkipMode::All)
         {
-            while (GameAnimationFactory::getAnimationCount() > 0)
-            {
-                GameAnimationFactory::finishAllAnimations();
-            }
+            skipAllAnimations();
         }
         // only show battle animations
         else if (skipAnimations == AnimationSkipMode::Battle)
         {
-            bool battleActive = false;
-            // skip all none selected battle animations
-            while (GameAnimationFactory::getAnimationCount() > 0 && !battleActive)
-            {
-                qint32 i = 0;
-                while (i < GameAnimationFactory::getAnimationCount())
-                {
-                    GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
-                    BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
-                    if (pBattleAnimation != nullptr)
-                    {
-                        Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
-                        Unit* pDefUnit = pBattleAnimation->getDefUnit();
-                        if (animMode == GameEnums::AnimationMode_OnlyBattleAll)
-                        {
-                            battleActive = true;
-                            i++;
-                        }
-                        else if (animMode == GameEnums::AnimationMode_OnlyBattleOwn)
-                        {
-                            // only show animation if at least one player is a human
-                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
-                                (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human))
-                            {
-                                battleActive = true;
-                                i++;
-                            }
-                        }
-                        else if (animMode == GameEnums::AnimationMode_OnlyBattleAlly)
-                        {
-                            Player* pPlayer2 = pMap->getCurrentViewPlayer();
-                            // only show animation if at least one player is an ally
-                            if (pPlayer2->isAlly(pAtkUnit->getOwner()) ||
-                                (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
-                            {
-                                battleActive = true;
-                                i++;
-                            }
-                        }
-                        else if (animMode == GameEnums::AnimationMode_OnlyBattleEnemy)
-                        {
-                            Player* pPlayer2 = pMap->getCurrentViewPlayer();
-                            // only show animation if none of the players is human and all units are enemies of the current view player
-                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human) &&
-                                pDefUnit != nullptr &&
-                                pDefUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human &&
-                                pPlayer2->isEnemy(pAtkUnit->getOwner()) &&
-                                pPlayer2->isEnemy(pDefUnit->getOwner()))
-                            {
-                                battleActive = true;
-                                i++;
-                            }
-                        }
-                        // skip animation if it's not a battle animation we want
-                        if (!battleActive)
-                        {
-                            if (!pAnimation->onFinished(true))
-                            {
-                                i++;
-                            }
-                        }
-                    }
-                    // skip other animations
-                    else if (!pAnimation->onFinished(true))
-                    {
-                        i++;
-                    }
-                }
-            }
+            skipExceptBattle();
         }
     }
     if (GameAnimationFactory::getAnimationCount() == 0)
@@ -859,6 +787,100 @@ void GameMenue::skipAnimations()
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
     Mainapp::getInstance()->continueRendering();
+}
+
+void GameMenue::skipAllAnimations()
+{
+    qint32 i = 0;
+    while (i < GameAnimationFactory::getAnimationCount())
+    {
+        GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
+        GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
+        if (pDialogAnimation == nullptr)
+        {
+            while (!pAnimation->onFinished(true));
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+void GameMenue::skipExceptBattle()
+{
+    GameEnums::AnimationMode animMode = Settings::getShowAnimations();
+    spGameMap pMap = GameMap::getInstance();
+    qint32 i = 0;
+    while (i < GameAnimationFactory::getAnimationCount())
+    {
+        bool battleActive = false;
+        GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
+        GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
+        if (pDialogAnimation == nullptr)
+        {
+            BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
+            if (pBattleAnimation != nullptr)
+            {
+                Unit* pAtkUnit = pBattleAnimation->getAtkUnit();
+                Unit* pDefUnit = pBattleAnimation->getDefUnit();
+                if (animMode == GameEnums::AnimationMode_OnlyBattleAll)
+                {
+                    battleActive = true;
+                    i++;
+                }
+                else if (animMode == GameEnums::AnimationMode_OnlyBattleOwn)
+                {
+                    // only show animation if at least one player is a human
+                    if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
+                        (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human))
+                    {
+                        battleActive = true;
+                        i++;
+                    }
+                }
+                else if (animMode == GameEnums::AnimationMode_OnlyBattleAlly)
+                {
+                    Player* pPlayer2 = pMap->getCurrentViewPlayer();
+                    // only show animation if at least one player is an ally
+                    if (pPlayer2->isAlly(pAtkUnit->getOwner()) ||
+                        (pDefUnit != nullptr && pPlayer2->isAlly(pDefUnit->getOwner())))
+                    {
+                        battleActive = true;
+                        i++;
+                    }
+                }
+                else if (animMode == GameEnums::AnimationMode_OnlyBattleEnemy)
+                {
+                    Player* pPlayer2 = pMap->getCurrentViewPlayer();
+                    // only show animation if none of the players is human and all units are enemies of the current view player
+                    if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human) &&
+                        pDefUnit != nullptr &&
+                        pDefUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human &&
+                        pPlayer2->isEnemy(pAtkUnit->getOwner()) &&
+                        pPlayer2->isEnemy(pDefUnit->getOwner()))
+                    {
+                        battleActive = true;
+                        i++;
+                    }
+                }
+                // skip animation if it's not a battle animation we want
+                if (!battleActive)
+                {
+                    while (!pAnimation->onFinished(true));
+                }
+            }
+            // skip other animations
+            else
+            {
+                while (!pAnimation->onFinished(true));
+            }
+        }
+        else
+        {
+            i++;
+        }
+    }
 }
 
 GameMenue::AnimationSkipMode GameMenue::getSkipMode()
@@ -937,8 +959,8 @@ void GameMenue::autoScroll()
             qint32 moveY = 0;
             QPoint bottomRightUi = QPoint(135, 220);
             if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() &&
-                (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() - 50) &&
-                (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
+                 (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() - 50) &&
+                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
                 curPos.y() > Settings::getHeight() - bottomRightUi.y())
             {
 

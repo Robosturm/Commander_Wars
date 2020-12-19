@@ -416,5 +416,20 @@ var CO =
     {
         return 0.0;
     },
+
+    getAddtionalCoFaces : function()
+    {
+        return ["co_davis",
+                "co_fanatic",
+                "co_officier_os",
+                "co_officier_bm",
+                "co_officier_ge",
+                "co_officier_yc",
+                "co_officier_bh",
+                "co_officier_ac",
+                "co_officier_bd",
+                "co_officier_ti",
+                "co_officier_dm",];
+    },
 }
 

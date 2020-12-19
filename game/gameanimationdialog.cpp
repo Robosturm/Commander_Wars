@@ -15,7 +15,7 @@
 
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     : GameAnimation (frameTime),
-      textSpeed(100 / Settings::getAnimationSpeed())
+      textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

@@ -93,6 +93,7 @@ GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAni
 quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::walkAnimationSpeed = 20;
+quint32 Settings::dialogAnimationSpeed = 1;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
@@ -1116,13 +1117,20 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         walkAnimationSpeed = 20u;
     }
+    dialogAnimationSpeed = settings.value("DialogAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || dialogAnimationSpeed <= 0 ||  dialogAnimationSpeed > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " DialogAnimationSpeed";
+        Console::print(error, Console::eERROR);
+        dialogAnimationSpeed = 1u;
+    }
 
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
     if(!ok || multiTurnCounter <= 0 || multiTurnCounter > 10u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MultiTurnCounter";
         Console::print(error, Console::eERROR);
-        battleAnimationSpeed = 4u;
+        multiTurnCounter = 4u;
     }
     m_MenuItemCount = settings.value("MenuItemCount", 11).toInt(&ok);
     if(!ok || m_MenuItemCount <= 10 || m_MenuItemCount >= (m_height - GameMap::getImageSize() * 2) / GameMap::getImageSize())
@@ -1304,6 +1312,7 @@ void Settings::saveSettings()
         settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
+        settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(dialogAnimationSpeed));
         settings.setValue("AnimationSpeed",                 animationSpeed);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
@@ -1444,6 +1453,26 @@ void Settings::setBattleAnimationSpeed(const quint32 &value)
 {
     battleAnimationSpeed = value;
 }
+
+float Settings::getDialogAnimationSpeedValue()
+{
+    return dialogAnimationSpeed;
+}
+
+float Settings::getDialogAnimationSpeed()
+{
+    if (battleAnimationSpeed <= 100)
+    {
+        return 100.0f / (101.0f - dialogAnimationSpeed);
+    }
+    return 100;
+}
+
+void Settings::setDialogAnimationSpeed(const quint32 &value)
+{
+    dialogAnimationSpeed = value;
+}
+
 Qt::Key Settings::getKey_up()
 {
     return m_key_up;

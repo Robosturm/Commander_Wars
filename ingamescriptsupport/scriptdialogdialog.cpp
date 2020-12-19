@@ -136,18 +136,19 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     {
         ids.append(pCOSpriteManager->getID(i));
     }
-    // todo make moddable
-    ids.append("co_davis");
-    ids.append("co_fanatic");
-    ids.append("co_officier_os");
-    ids.append("co_officier_bm");
-    ids.append("co_officier_ge");
-    ids.append("co_officier_yc");
-    ids.append("co_officier_bh");
-    ids.append("co_officier_ac");
-    ids.append("co_officier_bd");
-    ids.append("co_officier_ti");
-    ids.append("co_officier_dm");
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function = "getAddtionalCoFaces";
+    QJSValue ret = pInterpreter->doFunction("CO", function);
+    auto additionalFaces = ret.toVariant().toStringList();
+    for (auto face : ret.toVariant().toStringList())
+    {
+        oxygine::ResAnim* pAnim = nullptr;
+        pAnim = COSpriteManager::getInstance()->getResAnim(face + "+info");
+        if (pAnim != nullptr)
+        {
+            ids.append(face);
+        }
+    }
 
     auto creator = [=](QString id)
     {
@@ -180,10 +181,9 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         pDialog->coid = coidsMenu->getCurrentItemText();
     });
 
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QString function = "getDefaultPlayerColors";
+    function = "getDefaultPlayerColors";
     QJSValueList args;
-    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
+    ret = pInterpreter->doFunction("PLAYER", function, args);
     qint32 colorCount = ret.toInt();
     QVector<QColor> playerColors;
     for (qint32 i = 0; i < colorCount; i++)

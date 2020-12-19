@@ -123,6 +123,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Dialog Speed: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pDialogAnimationSpeed = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
+    pDialogAnimationSpeed->setTooltipText(tr("Selects the speed at which dialog animations are played."));
+    pDialogAnimationSpeed->setPosition(sliderOffset - 130, y);
+    pDialogAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getDialogAnimationSpeedValue()));
+    m_pOptions->addItem(pDialogAnimationSpeed);
+    connect(pDialogAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setDialogAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Multi Turn Plantime: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
