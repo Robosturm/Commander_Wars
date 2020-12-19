@@ -30,6 +30,28 @@
 		<image file="atkRange.png" />
 		<image file="moveRange.png" />
 
+		<!-- general co images -->
+		<image file="co_civilian1+info.png" />
+		<image file="co_civilian1+face.png" cols = "3" />
+		<image file="co_civilian2+info.png" />
+		<image file="co_civilian2+face.png" cols = "3" />
+		<image file="co_civilian3+info.png" />
+		<image file="co_civilian3+face.png" cols = "3" />
+		<image file="co_civilian4+info.png" />
+		<image file="co_civilian4+face.png" cols = "3" />
+		<image file="co_civilian5+info.png" />
+		<image file="co_civilian5+face.png" cols = "3" />
+		<image file="co_civilian6+info.png" />
+		<image file="co_civilian6+face.png" cols = "3" />
+		<image file="co_civilian7+info.png" />
+		<image file="co_civilian7+face.png" cols = "3" />
+		<image file="co_civilian8+info.png" />
+		<image file="co_civilian8+face.png" cols = "3" />
+		<image file="co_cyrus+info.png" />
+		<image file="co_cyrus+face.png" cols = "3" />
+		<image file="co_major+info.png" />
+		<image file="co_major+face.png" cols = "3" />
+		
 		<!-- empty co images -->
 		<image file="os/co_empty_os+nrm.png" />
 		<image file="os/co_empty_os+info.png" />
