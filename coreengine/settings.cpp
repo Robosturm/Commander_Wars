@@ -94,6 +94,7 @@ quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::walkAnimationSpeed = 20;
 quint32 Settings::dialogAnimationSpeed = 1;
+bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
@@ -131,6 +132,16 @@ Settings* Settings::getInstance()
 Settings::Settings()
 {
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getDialogAnimation()
+{
+    return m_dialogAnimation;
+}
+
+void Settings::setDialogAnimation(bool dialogAnimation)
+{
+    m_dialogAnimation = dialogAnimation;
 }
 
 float Settings::getGamma()
@@ -1081,6 +1092,7 @@ void Settings::loadSettings()
 
     settings.endGroup();
 
+    // game
     settings.beginGroup("Game");
     showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
     if (!ok || showAnimations < GameEnums::AnimationMode_None || showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
@@ -1154,7 +1166,7 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         m_showCoCount = 0;
     }
-
+    m_dialogAnimation = settings.value("DialogAnimation", true).toBool();
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
@@ -1328,7 +1340,7 @@ void Settings::saveSettings()
         settings.setValue("AutoCamera",                     m_autoCamera);
         settings.setValue("ShowIngameCoordinates",          m_showIngameCoordinates);
         settings.setValue("AutoFocusing",                   m_autoFocusing);
-
+        settings.setValue("DialogAnimation",                m_dialogAnimation);
 
         settings.endGroup();
 

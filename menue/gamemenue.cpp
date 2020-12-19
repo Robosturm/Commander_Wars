@@ -792,11 +792,12 @@ void GameMenue::skipAnimations()
 void GameMenue::skipAllAnimations()
 {
     qint32 i = 0;
+    bool dialogEnabled = Settings::getDialogAnimation();
     while (i < GameAnimationFactory::getAnimationCount())
     {
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
         GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-        if (pDialogAnimation == nullptr)
+        if (pDialogAnimation == nullptr || !dialogEnabled)
         {
             while (!pAnimation->onFinished(true));
         }
@@ -812,12 +813,13 @@ void GameMenue::skipExceptBattle()
     GameEnums::AnimationMode animMode = Settings::getShowAnimations();
     spGameMap pMap = GameMap::getInstance();
     qint32 i = 0;
+    bool dialogEnabled = Settings::getDialogAnimation();
     while (i < GameAnimationFactory::getAnimationCount())
     {
         bool battleActive = false;
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
         GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-        if (pDialogAnimation == nullptr)
+        if (pDialogAnimation == nullptr || !dialogEnabled)
         {
             BattleAnimation* pBattleAnimation = dynamic_cast<BattleAnimation*>(pAnimation);
             if (pBattleAnimation != nullptr)

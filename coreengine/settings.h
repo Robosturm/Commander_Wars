@@ -46,6 +46,9 @@ public:
 
 public slots:
 
+    static bool getDialogAnimation();
+    static void setDialogAnimation(bool dialogAnimation);
+
     static float getGamma();
     static void setGamma(float gamma);
 
@@ -458,6 +461,7 @@ private:
     static quint32 walkAnimationSpeed;
     static quint32 battleAnimationSpeed;
     static quint32 dialogAnimationSpeed;
+    static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;

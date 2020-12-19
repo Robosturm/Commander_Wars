@@ -2587,67 +2587,67 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1225"/>
+        <location filename="../menue/gamemenue.cpp" line="1227"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1247"/>
+        <location filename="../menue/gamemenue.cpp" line="1249"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1257"/>
+        <location filename="../menue/gamemenue.cpp" line="1259"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1610"/>
+        <location filename="../menue/gamemenue.cpp" line="1612"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1627"/>
+        <location filename="../menue/gamemenue.cpp" line="1629"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1655"/>
+        <location filename="../menue/gamemenue.cpp" line="1657"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2744,493 +2744,513 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="78"/>
+        <source>Dialogs: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="81"/>
+        <source>off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="81"/>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="83"/>
+        <source>Selects if the dialogs are shown or not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="95"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="82"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="99"/>
         <source>Selects the speed at which animations are played. Except battle and walking animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="94"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="111"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="98"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="115"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="110"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="127"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="114"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="131"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="126"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="143"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="130"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="147"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="142"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="159"/>
         <source>Multi Turn Plantime: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="146"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="163"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="158"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="175"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="162"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="179"/>
         <source>If active the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="174"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="191"/>
         <source>Menu Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="178"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="195"/>
         <source>Amount of items per row for ingame menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="190"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="207"/>
         <source>Shown Players: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="195"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="212"/>
         <source>Selects the amount of players shown in game on the sidebar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="204"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="221"/>
         <source>Show PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="208"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="225"/>
         <source>If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="220"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="237"/>
         <source>Animated Markers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="224"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="241"/>
         <source>If active the currently selectable fiedls get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="236"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="253"/>
         <source>CO Info Position: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="239"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="256"/>
         <source>Flipping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="239"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="256"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="239"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="256"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="243"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="260"/>
         <source>Select where the CO Info is shown. Where Flipping positions it at the opposite side of the cursor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="253"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="270"/>
         <source>Auto Scrolling: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="257"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="274"/>
         <source>If active the map is scrolled automatically while the cursor is at the screen borders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="269"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="286"/>
         <source>Show Coordinates: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="273"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="290"/>
         <source>If active the map coordinates are shown during a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="285"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="302"/>
         <source>Auto Camera: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="289"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="306"/>
         <source>If active the map is centered on the unit action during other player turns. If the field is visible to the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="301"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
         <source>Auto Camare Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="304"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="321"/>
         <source>Last Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="304"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="321"/>
         <source>Owned HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="308"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="325"/>
         <source>Select where the game starts during a human player phase, when auto focusing is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="318"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="335"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="325"/>
-        <source>Key Up: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="329"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="334"/>
-        <source>Key for moving the cursor up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="342"/>
-        <source>Key Left: </source>
+        <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="346"/>
         <location filename="../objects/gameplayandkeys.cpp" line="351"/>
-        <source>Key for moving the cursor left.</source>
+        <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="359"/>
-        <source>Key Down: </source>
+        <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="363"/>
         <location filename="../objects/gameplayandkeys.cpp" line="368"/>
-        <source>Key for moving the cursor down.</source>
+        <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="376"/>
-        <source>Key Right: </source>
+        <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="380"/>
         <location filename="../objects/gameplayandkeys.cpp" line="385"/>
-        <source>Key for moving the cursor right.</source>
+        <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="393"/>
-        <source>Key Confirm: </source>
+        <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="397"/>
         <location filename="../objects/gameplayandkeys.cpp" line="402"/>
-        <source>Key for confirming any action or input in the game.</source>
+        <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="410"/>
-        <source>Key Cancel: </source>
+        <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="414"/>
         <location filename="../objects/gameplayandkeys.cpp" line="419"/>
-        <source>Key for canceling any action or input in the game.</source>
+        <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="427"/>
-        <source>Key Next: </source>
+        <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="431"/>
         <location filename="../objects/gameplayandkeys.cpp" line="436"/>
-        <source>Key for moving the cursor to the next possible field unit etc.</source>
+        <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="444"/>
-        <source>Key Previous: </source>
+        <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="448"/>
         <location filename="../objects/gameplayandkeys.cpp" line="453"/>
-        <source>Key for moving the cursor to the previous possible field unit etc.</source>
+        <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="461"/>
-        <source>Key Quicksave 1: </source>
+        <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="465"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="470"/>
+        <source>Key for moving the cursor to the previous possible field unit etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="478"/>
+        <source>Key Quicksave 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="482"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="473"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="490"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="477"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="494"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="485"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="502"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="489"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="506"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="497"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="514"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="501"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="518"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="509"/>
-        <source>Key Information: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="513"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="518"/>
-        <source>Key to show information about the current field, action, unit at any time in the game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/gameplayandkeys.cpp" line="526"/>
-        <source>Key Move Map Up: </source>
+        <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="530"/>
         <location filename="../objects/gameplayandkeys.cpp" line="535"/>
-        <source>Key to move the map a field up.</source>
+        <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="543"/>
-        <source>Key Move Map Left: </source>
+        <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="547"/>
         <location filename="../objects/gameplayandkeys.cpp" line="552"/>
-        <source>Key to move the map a field left.</source>
+        <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="560"/>
-        <source>Key Move Map Down: </source>
+        <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="564"/>
         <location filename="../objects/gameplayandkeys.cpp" line="569"/>
-        <source>Key to move the map a field down.</source>
+        <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="577"/>
-        <source>Key Move Map Right: </source>
+        <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="581"/>
         <location filename="../objects/gameplayandkeys.cpp" line="586"/>
-        <source>Key to move the map a field right.</source>
+        <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="594"/>
-        <source>Key Zoom In: </source>
+        <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="598"/>
         <location filename="../objects/gameplayandkeys.cpp" line="603"/>
-        <source>Key to zoom into the map.</source>
+        <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="611"/>
-        <source>Key Zoom Out: </source>
+        <source>Key Zoom In: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="615"/>
         <location filename="../objects/gameplayandkeys.cpp" line="620"/>
-        <source>Key to zoom out of the map.</source>
+        <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="628"/>
-        <source>Key Show Indirects: </source>
+        <source>Key Zoom Out: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="632"/>
         <location filename="../objects/gameplayandkeys.cpp" line="637"/>
-        <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
+        <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="645"/>
-        <source>Key Show all: </source>
+        <source>Key Show Indirects: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="649"/>
         <location filename="../objects/gameplayandkeys.cpp" line="654"/>
-        <source>Key to show where all enemy units can attack near the selected unit.</source>
+        <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="662"/>
+        <source>Key Show all: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="666"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="671"/>
+        <source>Key to show where all enemy units can attack near the selected unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="679"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="668"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="685"/>
         <source>Key Place Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="672"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="689"/>
         <source>Key to select Place Terrain in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="680"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="697"/>
         <source>Key Place Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="684"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="701"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="692"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="709"/>
         <source>Key Place Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="696"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="713"/>
         <source>Key to select Place Building in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="704"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="721"/>
         <source>Key Next Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="708"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="725"/>
         <source>Key to select the next player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="716"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="733"/>
         <source>Key Previous Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="720"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="737"/>
         <source>Key to select the previous player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="728"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="745"/>
         <source>Key Next Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="732"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="749"/>
         <source>Key to select the next editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="740"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="757"/>
         <source>Key Previous Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="744"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="761"/>
         <source>Key to select the previous editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="752"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="769"/>
         <source>Screenshot: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="756"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="773"/>
         <source>Key for taking an screensho.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6348,150 +6368,150 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="654"/>
         <location filename="../coreengine/settings.cpp" line="665"/>
-        <location filename="../coreengine/settings.cpp" line="672"/>
-        <location filename="../coreengine/settings.cpp" line="679"/>
-        <location filename="../coreengine/settings.cpp" line="685"/>
-        <location filename="../coreengine/settings.cpp" line="693"/>
-        <location filename="../coreengine/settings.cpp" line="700"/>
-        <location filename="../coreengine/settings.cpp" line="715"/>
-        <location filename="../coreengine/settings.cpp" line="721"/>
-        <location filename="../coreengine/settings.cpp" line="727"/>
-        <location filename="../coreengine/settings.cpp" line="734"/>
-        <location filename="../coreengine/settings.cpp" line="741"/>
-        <location filename="../coreengine/settings.cpp" line="748"/>
-        <location filename="../coreengine/settings.cpp" line="755"/>
-        <location filename="../coreengine/settings.cpp" line="762"/>
-        <location filename="../coreengine/settings.cpp" line="769"/>
-        <location filename="../coreengine/settings.cpp" line="776"/>
-        <location filename="../coreengine/settings.cpp" line="783"/>
-        <location filename="../coreengine/settings.cpp" line="790"/>
-        <location filename="../coreengine/settings.cpp" line="797"/>
-        <location filename="../coreengine/settings.cpp" line="804"/>
-        <location filename="../coreengine/settings.cpp" line="811"/>
-        <location filename="../coreengine/settings.cpp" line="818"/>
-        <location filename="../coreengine/settings.cpp" line="825"/>
-        <location filename="../coreengine/settings.cpp" line="832"/>
-        <location filename="../coreengine/settings.cpp" line="839"/>
-        <location filename="../coreengine/settings.cpp" line="846"/>
-        <location filename="../coreengine/settings.cpp" line="853"/>
-        <location filename="../coreengine/settings.cpp" line="860"/>
-        <location filename="../coreengine/settings.cpp" line="868"/>
-        <location filename="../coreengine/settings.cpp" line="876"/>
-        <location filename="../coreengine/settings.cpp" line="883"/>
-        <location filename="../coreengine/settings.cpp" line="890"/>
-        <location filename="../coreengine/settings.cpp" line="897"/>
-        <location filename="../coreengine/settings.cpp" line="904"/>
-        <location filename="../coreengine/settings.cpp" line="911"/>
-        <location filename="../coreengine/settings.cpp" line="918"/>
-        <location filename="../coreengine/settings.cpp" line="925"/>
-        <location filename="../coreengine/settings.cpp" line="932"/>
-        <location filename="../coreengine/settings.cpp" line="939"/>
-        <location filename="../coreengine/settings.cpp" line="946"/>
-        <location filename="../coreengine/settings.cpp" line="953"/>
-        <location filename="../coreengine/settings.cpp" line="960"/>
-        <location filename="../coreengine/settings.cpp" line="967"/>
-        <location filename="../coreengine/settings.cpp" line="974"/>
-        <location filename="../coreengine/settings.cpp" line="981"/>
-        <location filename="../coreengine/settings.cpp" line="988"/>
-        <location filename="../coreengine/settings.cpp" line="995"/>
-        <location filename="../coreengine/settings.cpp" line="1004"/>
-        <location filename="../coreengine/settings.cpp" line="1012"/>
-        <location filename="../coreengine/settings.cpp" line="1020"/>
-        <location filename="../coreengine/settings.cpp" line="1028"/>
-        <location filename="../coreengine/settings.cpp" line="1036"/>
-        <location filename="../coreengine/settings.cpp" line="1044"/>
-        <location filename="../coreengine/settings.cpp" line="1052"/>
+        <location filename="../coreengine/settings.cpp" line="676"/>
+        <location filename="../coreengine/settings.cpp" line="683"/>
+        <location filename="../coreengine/settings.cpp" line="690"/>
+        <location filename="../coreengine/settings.cpp" line="696"/>
+        <location filename="../coreengine/settings.cpp" line="704"/>
+        <location filename="../coreengine/settings.cpp" line="711"/>
+        <location filename="../coreengine/settings.cpp" line="726"/>
+        <location filename="../coreengine/settings.cpp" line="732"/>
+        <location filename="../coreengine/settings.cpp" line="738"/>
+        <location filename="../coreengine/settings.cpp" line="745"/>
+        <location filename="../coreengine/settings.cpp" line="752"/>
+        <location filename="../coreengine/settings.cpp" line="759"/>
+        <location filename="../coreengine/settings.cpp" line="766"/>
+        <location filename="../coreengine/settings.cpp" line="773"/>
+        <location filename="../coreengine/settings.cpp" line="780"/>
+        <location filename="../coreengine/settings.cpp" line="787"/>
+        <location filename="../coreengine/settings.cpp" line="794"/>
+        <location filename="../coreengine/settings.cpp" line="801"/>
+        <location filename="../coreengine/settings.cpp" line="808"/>
+        <location filename="../coreengine/settings.cpp" line="815"/>
+        <location filename="../coreengine/settings.cpp" line="822"/>
+        <location filename="../coreengine/settings.cpp" line="829"/>
+        <location filename="../coreengine/settings.cpp" line="836"/>
+        <location filename="../coreengine/settings.cpp" line="843"/>
+        <location filename="../coreengine/settings.cpp" line="850"/>
+        <location filename="../coreengine/settings.cpp" line="857"/>
+        <location filename="../coreengine/settings.cpp" line="864"/>
+        <location filename="../coreengine/settings.cpp" line="871"/>
+        <location filename="../coreengine/settings.cpp" line="879"/>
+        <location filename="../coreengine/settings.cpp" line="887"/>
+        <location filename="../coreengine/settings.cpp" line="894"/>
+        <location filename="../coreengine/settings.cpp" line="901"/>
+        <location filename="../coreengine/settings.cpp" line="908"/>
+        <location filename="../coreengine/settings.cpp" line="915"/>
+        <location filename="../coreengine/settings.cpp" line="922"/>
+        <location filename="../coreengine/settings.cpp" line="929"/>
+        <location filename="../coreengine/settings.cpp" line="936"/>
+        <location filename="../coreengine/settings.cpp" line="943"/>
+        <location filename="../coreengine/settings.cpp" line="950"/>
+        <location filename="../coreengine/settings.cpp" line="957"/>
+        <location filename="../coreengine/settings.cpp" line="964"/>
+        <location filename="../coreengine/settings.cpp" line="971"/>
+        <location filename="../coreengine/settings.cpp" line="978"/>
+        <location filename="../coreengine/settings.cpp" line="985"/>
+        <location filename="../coreengine/settings.cpp" line="992"/>
+        <location filename="../coreengine/settings.cpp" line="999"/>
+        <location filename="../coreengine/settings.cpp" line="1006"/>
+        <location filename="../coreengine/settings.cpp" line="1015"/>
+        <location filename="../coreengine/settings.cpp" line="1023"/>
+        <location filename="../coreengine/settings.cpp" line="1031"/>
+        <location filename="../coreengine/settings.cpp" line="1039"/>
+        <location filename="../coreengine/settings.cpp" line="1047"/>
+        <location filename="../coreengine/settings.cpp" line="1055"/>
         <location filename="../coreengine/settings.cpp" line="1063"/>
-        <location filename="../coreengine/settings.cpp" line="1070"/>
-        <location filename="../coreengine/settings.cpp" line="1077"/>
+        <location filename="../coreengine/settings.cpp" line="1074"/>
+        <location filename="../coreengine/settings.cpp" line="1081"/>
         <location filename="../coreengine/settings.cpp" line="1088"/>
-        <location filename="../coreengine/settings.cpp" line="1095"/>
-        <location filename="../coreengine/settings.cpp" line="1102"/>
-        <location filename="../coreengine/settings.cpp" line="1109"/>
-        <location filename="../coreengine/settings.cpp" line="1116"/>
-        <location filename="../coreengine/settings.cpp" line="1123"/>
-        <location filename="../coreengine/settings.cpp" line="1131"/>
-        <location filename="../coreengine/settings.cpp" line="1138"/>
-        <location filename="../coreengine/settings.cpp" line="1146"/>
-        <location filename="../coreengine/settings.cpp" line="1153"/>
-        <location filename="../coreengine/settings.cpp" line="1168"/>
-        <location filename="../coreengine/settings.cpp" line="1175"/>
+        <location filename="../coreengine/settings.cpp" line="1100"/>
+        <location filename="../coreengine/settings.cpp" line="1107"/>
+        <location filename="../coreengine/settings.cpp" line="1114"/>
+        <location filename="../coreengine/settings.cpp" line="1121"/>
+        <location filename="../coreengine/settings.cpp" line="1128"/>
+        <location filename="../coreengine/settings.cpp" line="1135"/>
+        <location filename="../coreengine/settings.cpp" line="1143"/>
+        <location filename="../coreengine/settings.cpp" line="1150"/>
+        <location filename="../coreengine/settings.cpp" line="1158"/>
+        <location filename="../coreengine/settings.cpp" line="1165"/>
+        <location filename="../coreengine/settings.cpp" line="1180"/>
+        <location filename="../coreengine/settings.cpp" line="1187"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="654"/>
         <location filename="../coreengine/settings.cpp" line="665"/>
-        <location filename="../coreengine/settings.cpp" line="672"/>
-        <location filename="../coreengine/settings.cpp" line="679"/>
-        <location filename="../coreengine/settings.cpp" line="685"/>
-        <location filename="../coreengine/settings.cpp" line="693"/>
-        <location filename="../coreengine/settings.cpp" line="700"/>
-        <location filename="../coreengine/settings.cpp" line="715"/>
-        <location filename="../coreengine/settings.cpp" line="721"/>
-        <location filename="../coreengine/settings.cpp" line="727"/>
-        <location filename="../coreengine/settings.cpp" line="734"/>
-        <location filename="../coreengine/settings.cpp" line="741"/>
-        <location filename="../coreengine/settings.cpp" line="748"/>
-        <location filename="../coreengine/settings.cpp" line="755"/>
-        <location filename="../coreengine/settings.cpp" line="762"/>
-        <location filename="../coreengine/settings.cpp" line="769"/>
-        <location filename="../coreengine/settings.cpp" line="776"/>
-        <location filename="../coreengine/settings.cpp" line="783"/>
-        <location filename="../coreengine/settings.cpp" line="790"/>
-        <location filename="../coreengine/settings.cpp" line="797"/>
-        <location filename="../coreengine/settings.cpp" line="804"/>
-        <location filename="../coreengine/settings.cpp" line="811"/>
-        <location filename="../coreengine/settings.cpp" line="818"/>
-        <location filename="../coreengine/settings.cpp" line="825"/>
-        <location filename="../coreengine/settings.cpp" line="832"/>
-        <location filename="../coreengine/settings.cpp" line="839"/>
-        <location filename="../coreengine/settings.cpp" line="846"/>
-        <location filename="../coreengine/settings.cpp" line="853"/>
-        <location filename="../coreengine/settings.cpp" line="860"/>
-        <location filename="../coreengine/settings.cpp" line="868"/>
-        <location filename="../coreengine/settings.cpp" line="876"/>
-        <location filename="../coreengine/settings.cpp" line="883"/>
-        <location filename="../coreengine/settings.cpp" line="890"/>
-        <location filename="../coreengine/settings.cpp" line="897"/>
-        <location filename="../coreengine/settings.cpp" line="904"/>
-        <location filename="../coreengine/settings.cpp" line="911"/>
-        <location filename="../coreengine/settings.cpp" line="918"/>
-        <location filename="../coreengine/settings.cpp" line="925"/>
-        <location filename="../coreengine/settings.cpp" line="932"/>
-        <location filename="../coreengine/settings.cpp" line="939"/>
-        <location filename="../coreengine/settings.cpp" line="946"/>
-        <location filename="../coreengine/settings.cpp" line="953"/>
-        <location filename="../coreengine/settings.cpp" line="960"/>
-        <location filename="../coreengine/settings.cpp" line="967"/>
-        <location filename="../coreengine/settings.cpp" line="974"/>
-        <location filename="../coreengine/settings.cpp" line="981"/>
-        <location filename="../coreengine/settings.cpp" line="988"/>
-        <location filename="../coreengine/settings.cpp" line="995"/>
-        <location filename="../coreengine/settings.cpp" line="1004"/>
-        <location filename="../coreengine/settings.cpp" line="1012"/>
-        <location filename="../coreengine/settings.cpp" line="1020"/>
-        <location filename="../coreengine/settings.cpp" line="1028"/>
-        <location filename="../coreengine/settings.cpp" line="1036"/>
-        <location filename="../coreengine/settings.cpp" line="1044"/>
-        <location filename="../coreengine/settings.cpp" line="1052"/>
+        <location filename="../coreengine/settings.cpp" line="676"/>
+        <location filename="../coreengine/settings.cpp" line="683"/>
+        <location filename="../coreengine/settings.cpp" line="690"/>
+        <location filename="../coreengine/settings.cpp" line="696"/>
+        <location filename="../coreengine/settings.cpp" line="704"/>
+        <location filename="../coreengine/settings.cpp" line="711"/>
+        <location filename="../coreengine/settings.cpp" line="726"/>
+        <location filename="../coreengine/settings.cpp" line="732"/>
+        <location filename="../coreengine/settings.cpp" line="738"/>
+        <location filename="../coreengine/settings.cpp" line="745"/>
+        <location filename="../coreengine/settings.cpp" line="752"/>
+        <location filename="../coreengine/settings.cpp" line="759"/>
+        <location filename="../coreengine/settings.cpp" line="766"/>
+        <location filename="../coreengine/settings.cpp" line="773"/>
+        <location filename="../coreengine/settings.cpp" line="780"/>
+        <location filename="../coreengine/settings.cpp" line="787"/>
+        <location filename="../coreengine/settings.cpp" line="794"/>
+        <location filename="../coreengine/settings.cpp" line="801"/>
+        <location filename="../coreengine/settings.cpp" line="808"/>
+        <location filename="../coreengine/settings.cpp" line="815"/>
+        <location filename="../coreengine/settings.cpp" line="822"/>
+        <location filename="../coreengine/settings.cpp" line="829"/>
+        <location filename="../coreengine/settings.cpp" line="836"/>
+        <location filename="../coreengine/settings.cpp" line="843"/>
+        <location filename="../coreengine/settings.cpp" line="850"/>
+        <location filename="../coreengine/settings.cpp" line="857"/>
+        <location filename="../coreengine/settings.cpp" line="864"/>
+        <location filename="../coreengine/settings.cpp" line="871"/>
+        <location filename="../coreengine/settings.cpp" line="879"/>
+        <location filename="../coreengine/settings.cpp" line="887"/>
+        <location filename="../coreengine/settings.cpp" line="894"/>
+        <location filename="../coreengine/settings.cpp" line="901"/>
+        <location filename="../coreengine/settings.cpp" line="908"/>
+        <location filename="../coreengine/settings.cpp" line="915"/>
+        <location filename="../coreengine/settings.cpp" line="922"/>
+        <location filename="../coreengine/settings.cpp" line="929"/>
+        <location filename="../coreengine/settings.cpp" line="936"/>
+        <location filename="../coreengine/settings.cpp" line="943"/>
+        <location filename="../coreengine/settings.cpp" line="950"/>
+        <location filename="../coreengine/settings.cpp" line="957"/>
+        <location filename="../coreengine/settings.cpp" line="964"/>
+        <location filename="../coreengine/settings.cpp" line="971"/>
+        <location filename="../coreengine/settings.cpp" line="978"/>
+        <location filename="../coreengine/settings.cpp" line="985"/>
+        <location filename="../coreengine/settings.cpp" line="992"/>
+        <location filename="../coreengine/settings.cpp" line="999"/>
+        <location filename="../coreengine/settings.cpp" line="1006"/>
+        <location filename="../coreengine/settings.cpp" line="1015"/>
+        <location filename="../coreengine/settings.cpp" line="1023"/>
+        <location filename="../coreengine/settings.cpp" line="1031"/>
+        <location filename="../coreengine/settings.cpp" line="1039"/>
+        <location filename="../coreengine/settings.cpp" line="1047"/>
+        <location filename="../coreengine/settings.cpp" line="1055"/>
         <location filename="../coreengine/settings.cpp" line="1063"/>
-        <location filename="../coreengine/settings.cpp" line="1070"/>
-        <location filename="../coreengine/settings.cpp" line="1077"/>
+        <location filename="../coreengine/settings.cpp" line="1074"/>
+        <location filename="../coreengine/settings.cpp" line="1081"/>
         <location filename="../coreengine/settings.cpp" line="1088"/>
-        <location filename="../coreengine/settings.cpp" line="1095"/>
-        <location filename="../coreengine/settings.cpp" line="1102"/>
-        <location filename="../coreengine/settings.cpp" line="1109"/>
-        <location filename="../coreengine/settings.cpp" line="1116"/>
-        <location filename="../coreengine/settings.cpp" line="1123"/>
-        <location filename="../coreengine/settings.cpp" line="1131"/>
-        <location filename="../coreengine/settings.cpp" line="1138"/>
-        <location filename="../coreengine/settings.cpp" line="1146"/>
-        <location filename="../coreengine/settings.cpp" line="1153"/>
-        <location filename="../coreengine/settings.cpp" line="1168"/>
-        <location filename="../coreengine/settings.cpp" line="1175"/>
+        <location filename="../coreengine/settings.cpp" line="1100"/>
+        <location filename="../coreengine/settings.cpp" line="1107"/>
+        <location filename="../coreengine/settings.cpp" line="1114"/>
+        <location filename="../coreengine/settings.cpp" line="1121"/>
+        <location filename="../coreengine/settings.cpp" line="1128"/>
+        <location filename="../coreengine/settings.cpp" line="1135"/>
+        <location filename="../coreengine/settings.cpp" line="1143"/>
+        <location filename="../coreengine/settings.cpp" line="1150"/>
+        <location filename="../coreengine/settings.cpp" line="1158"/>
+        <location filename="../coreengine/settings.cpp" line="1165"/>
+        <location filename="../coreengine/settings.cpp" line="1180"/>
+        <location filename="../coreengine/settings.cpp" line="1187"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>

@@ -75,6 +75,23 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Dialogs: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("off"), tr("on")};
+    spDropDownmenu pDialogAnimationMode = new DropDownmenu(450, items);
+    pDialogAnimationMode->setTooltipText(tr("Selects if the dialogs are shown or not."));
+    pDialogAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getDialogAnimation()));
+    pDialogAnimationMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pDialogAnimationMode);
+    connect(pDialogAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        Settings::setDialogAnimation(value);
+    });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
