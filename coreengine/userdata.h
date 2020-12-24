@@ -138,6 +138,11 @@ public slots:
      * @return
      */
     bool achieved(QString id);
+    /**
+     * @brief getActiveCoStyle
+     * @param coid
+     */
+    void getActiveCoStyle(QString coid);
 private:
     void showAchieved();
 

@@ -144,6 +144,18 @@ bool Userdata::achieved(QString id)
     return false;
 }
 
+QString Userdata::getActiveCoStyle(QString coid)
+{
+    for (const auto & style : m_customCOStyles)
+    {
+        if (coid == std::get<0>(style))
+        {
+            return std::get<1>(style);
+        }
+    }
+    return "";
+}
+
 void Userdata::addAchievement(QString id, qint32 targetValue, QString name, QString description, QString icon, bool hide)
 {
     bool found = false;
