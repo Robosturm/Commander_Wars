@@ -73,6 +73,7 @@ void ScriptDialogDialog::addItem()
     m_Event->addDialog("", "CO_ANDY", GameEnums::COMood_Normal, Qt::red);
     qint32 panelWidth = getPanelWidth();
     addActorItem(m_Event->getDialogSize() - 1, panelWidth);
+    m_Panel->setContentHeigth(m_Event->getDialogSize() * 40 + 80);
 }
 
 qint32 ScriptDialogDialog::getPanelWidth()
@@ -231,6 +232,7 @@ void ScriptDialogDialog::removeLast()
         m_dialogItems.removeLast();
         m_backgrounds.removeLast();
         m_backgroundAnims.removeLast();
+        m_Panel->setContentHeigth(m_Event->getDialogSize() * 40 + 80);
     }
 }
 

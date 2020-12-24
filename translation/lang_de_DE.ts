@@ -5397,43 +5397,43 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="113"/>
         <source>The text the CO should talk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="121"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="121"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="121"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="123"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="175"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="176"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="198"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="199"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="207"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="208"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>

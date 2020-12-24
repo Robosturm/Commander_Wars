@@ -142,7 +142,7 @@ public slots:
      * @brief getActiveCoStyle
      * @param coid
      */
-    void getActiveCoStyle(QString coid);
+    QString getActiveCoStyle(QString coid);
 private:
     void showAchieved();
 
