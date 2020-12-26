@@ -146,6 +146,8 @@ void DialogVictoryConditions::showPopup(QString rule)
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
     {
-        pMenu->addChild(new VictoryRulePopup(rule, 180, 250));
+        spVictoryRulePopup pPopup = new VictoryRulePopup(rule, 180, 250);
+        pPopup->setY(Settings::getHeight() - pPopup->getHeight());
+        pMenu->addChild(pPopup);
     }
 }

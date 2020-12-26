@@ -70,6 +70,13 @@ public slots:
      * @return
      */
     static void setImageSize(qint32 value);
+    /**
+     * @brief getFiles
+     * @param folder
+     * @param filter
+     * @return
+     */
+    static QStringList getFiles(QString folder, QStringList filter);
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;

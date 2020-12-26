@@ -3,6 +3,8 @@
 #include "game/gamemap.h"
 #include "coreengine/console.h"
 #include "coreengine/interpreter.h"
+#include <QFileInfo>
+#include <QDirIterator>
 
 GlobalUtils GlobalUtils::m_pInstace = GlobalUtils();
 
@@ -203,4 +205,21 @@ bool GlobalUtils::getUseSeed()
 void GlobalUtils::setUseSeed(bool useSeed)
 {
     m_useSeed = useSeed;
+}
+
+QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
+{
+    QStringList ret;
+    QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        file.replace(QCoreApplication::applicationDirPath() + "/", "");
+        file.replace(QCoreApplication::applicationDirPath(), "");
+        file.replace(folder + "/", "");
+        file.replace(folder, "");
+        ret.append(file);
+    }
+    return ret;
 }
