@@ -51,6 +51,8 @@
 		<image file="co_cyrus+face.png" cols = "3" />
 		<image file="co_major+info.png" />
 		<image file="co_major+face.png" cols = "3" />
+		<image file="co_dr_morris+info.png" />
+		<image file="co_dr_morris+face.png" cols = "3" />		
 		
 		<!-- empty co images -->
 		<image file="os/co_empty_os+nrm.png" />

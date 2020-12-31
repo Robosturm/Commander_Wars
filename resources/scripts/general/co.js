@@ -422,6 +422,7 @@ var CO =
         return ["co_davis",
                 "co_fanatic",
                 "co_cyrus",
+                "co_dr_morris",
                 "co_major",
                 "co_civilian1",
                 "co_civilian2",

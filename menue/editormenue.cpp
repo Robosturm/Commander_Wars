@@ -264,7 +264,9 @@ void EditorMenue::editorUndo()
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
             spGameMap pMap = GameMap::getInstance();
-            pMap->updateSprites();
+            Mainapp::getInstance()->pauseRendering();
+            pMap->updateSprites();            
+            Mainapp::getInstance()->continueRendering();
             m_EditorSelection->createPlayerSelection();
         }
     }
@@ -285,7 +287,9 @@ void EditorMenue::editorRedo()
         GameMap::getInstance()->deserializeObject(stream);
         file.close();
         spGameMap pMap = GameMap::getInstance();
+        Mainapp::getInstance()->pauseRendering();
         pMap->updateSprites();
+        Mainapp::getInstance()->continueRendering();
         m_EditorSelection->createPlayerSelection();
     }
 }
@@ -612,20 +616,22 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
     pGameMap->setMapName(mapName);
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);
+    Mainapp::getInstance()->pauseRendering();
     pGameMap->updateSprites();
+    Mainapp::getInstance()->continueRendering();
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     
 }
 
 void EditorMenue::playersChanged()
-{
-    
+{    
     m_EditorSelection->createPlayerSelection();
     spGameMap pMap = GameMap::getInstance();
+    Mainapp::getInstance()->pauseRendering();
     pMap->updateSprites();
-    setFocused(true);
-    
+    Mainapp::getInstance()->continueRendering();
+    setFocused(true);    
 }
 
 void EditorMenue::rulesChanged()
@@ -1355,8 +1361,6 @@ void EditorMenue::saveMap(QString filename)
 
 void EditorMenue::loadMap(QString filename)
 {
-    
-
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -1369,9 +1373,11 @@ void EditorMenue::loadMap(QString filename)
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
             spGameMap pMap = GameMap::getInstance();
+            Mainapp::getInstance()->pauseRendering();
             pMap->updateSprites(-1, -1, true);
             pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
             m_EditorSelection->createPlayerSelection();
+            Mainapp::getInstance()->continueRendering();
         }
     }
     setFocused(true);
@@ -1380,8 +1386,6 @@ void EditorMenue::loadMap(QString filename)
 
 void EditorMenue::importAWDCAw4Map(QString filename)
 {
-    
-
     if (filename.endsWith(".aw4"))
     {
         QFile file(filename);
@@ -1393,13 +1397,10 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         }
     }
     setFocused(true);
-    
 }
 
 void EditorMenue::importAWByWeb(QString filename)
 {
-    
-
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1410,14 +1411,11 @@ void EditorMenue::importAWByWeb(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);
-    
+    setFocused(true);    
 }
 
 void EditorMenue::importAWDSAwsMap(QString filename)
 {
-    
-
     if (filename.endsWith(".aws"))
     {
         QFile file(filename);
@@ -1428,26 +1426,20 @@ void EditorMenue::importAWDSAwsMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);
-    
+    setFocused(true);    
 }
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
 {
-    
-
     if (filename.endsWith(".aws"))
     {
         GameMap::getInstance()->exportAWDSMap(filename);
     }
-    setFocused(true);
-    
+    setFocused(true);    
 }
 
 void EditorMenue::importCoWTxTMap(QString filename)
 {
-    
-
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -1458,8 +1450,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);
-    
+    setFocused(true);    
 }
 
 void EditorMenue::newMap(QString mapName, QString author, QString description, QString scriptFile,
@@ -1485,8 +1476,7 @@ void EditorMenue::newMap(QString mapName, QString author, QString description, Q
 void EditorMenue::changeMap(QString mapName, QString author, QString description, QString scriptFile,
                             qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
                             qint32 turnLimit, quint32 buildLimit)
-{
-    
+{    
     createTempFile();
     spGameMap pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
@@ -1497,8 +1487,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     pMap->getGameRecorder()->setDeployLimit(buildLimit);
     pMap->getGameRecorder()->setMapTime(turnLimit);
     m_EditorSelection->createPlayerSelection();
-    setFocused(true);
-    
+    setFocused(true);    
 }
 
 void EditorMenue::selectionChanged()
