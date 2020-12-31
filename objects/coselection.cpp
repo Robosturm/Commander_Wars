@@ -62,7 +62,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
         }
     }
 
-    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  53 * scale + 22), QSize(m_Armies.size() * 25 * scale+ 20, 53 * scale + 22));
+    m_ArmyBannerPanel = new Panel(true, QSize(maxSize.width(),  75 * scale + 22), QSize(m_Armies.size() * 20 * scale + 40, 53 * scale + 22));
     addChild(m_ArmyBannerPanel);
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {

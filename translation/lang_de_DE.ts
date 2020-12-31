@@ -4298,11 +4298,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <source>Heavy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/playerselection.cpp" line="334"/>
         <location filename="../objects/playerselection.cpp" line="341"/>
         <location filename="../objects/playerselection.cpp" line="345"/>
