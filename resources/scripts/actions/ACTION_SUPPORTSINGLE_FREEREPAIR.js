@@ -105,7 +105,7 @@ var Constructor = function()
     this.performPostAnimation = function(postAnimation)
     {
         var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
-        var refillMaterial = (typeof refillRule === 'undefined'); // an existing rule equals it's set
+        var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
         var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_FREEREPAIR.postAnimationTargetY);

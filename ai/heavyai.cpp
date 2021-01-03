@@ -2,6 +2,7 @@
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/console.h"
+#include "coreengine/globalutils.h"
 
 #include "game/player.h"
 
@@ -46,7 +47,7 @@ void HeavyAi::process()
 {
     spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
     pBuildings->randomize();
-    setupTurn();
+    setupTurn(pBuildings);
     if (m_pause)
     {
         m_timer.start(1000);
@@ -72,7 +73,7 @@ void HeavyAi::process()
     }
 }
 
-void HeavyAi::setupTurn()
+void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
 {
     bool startOfTurn = (m_pUnits.get() == nullptr);
     if (m_pUnits.get() == nullptr)
@@ -106,6 +107,7 @@ void HeavyAi::setupTurn()
         m_InfluenceFrontMap.updateOwners();
         m_InfluenceFrontMap.findFrontLines();
         Console::print("HeavyAi front lines created", Console::eDEBUG);
+        findHqThreads(buildings);
     }
 
     qint32 cost = 0;
@@ -177,4 +179,55 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, bool enemyUnits)
             }
         }
     }
+}
+
+void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
+{
+    Console::print("Searching for HQ Threads", Console::eDEBUG);
+    QVector<QPoint> hqPositions;
+    for (qint32 i = 0; i < buildings->size(); ++i)
+    {
+        const auto * pBuilding = buildings->at(i);
+        if (pBuilding->getBuildingID() == "HQ")
+        {
+            hqPositions.append(QPoint(pBuilding->getX(), pBuilding->getY()));
+        }
+    }
+    for (const auto & enemy : m_enemyUnits)
+    {
+        if (isCaptureTransporterOrCanCapture(enemy.m_pUnit))
+        {
+            constexpr qint32 dayDistance = 3;
+            QPoint pos = enemy.m_pUnit->getMapPosition();
+            qint32 movePoints = enemy.m_pUnit->getMovementpoints(enemy.m_pUnit->getMapPosition());
+            for (const auto & hqPos : hqPositions)
+            {
+                if (GlobalUtils::getDistance(pos, hqPos) <= dayDistance * movePoints)
+                {
+
+                }
+            }
+        }
+    }
+}
+
+bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
+{
+    bool canCapture = false;
+    if (pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
+    {
+        canCapture = true;
+    }
+    else if (pUnit->getLoadedUnitCount() > 0)
+    {
+        for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); ++i)
+        {
+            if (isCaptureTransporterOrCanCapture(pUnit->getLoadedUnit(i)))
+            {
+                canCapture = true;
+                break;
+            }
+        }
+    }
+    return canCapture;
 }

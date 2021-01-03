@@ -938,7 +938,7 @@ Unit* Unit::spawnUnit(QString unitID)
     return nullptr;
 }
 
-Unit* Unit::getLoadedUnit(qint32 index)
+Unit* Unit::getLoadedUnit(qint32 index) const
 {
     if ((index >= 0) && (index < m_TransportUnits.size()))
     {
@@ -992,7 +992,7 @@ void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
     }
 }
 
-qint32 Unit::getLoadedUnitCount()
+qint32 Unit::getLoadedUnitCount() const
 {
     return m_TransportUnits.size();
 }

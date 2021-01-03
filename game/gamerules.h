@@ -240,6 +240,7 @@ public slots:
 
     void addGameRule(QString rule);
     GameRule* getGameRule(QString rule);
+    void removeGameRule(QString rule);
     /**
      * @brief addWeather
      * @param weatherId

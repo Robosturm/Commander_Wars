@@ -12,12 +12,19 @@ class HeavyAi : public CoreAI
 {
     Q_OBJECT
 public:
+    enum class ThreadLevel
+    {
+        Normal,
+        High,
+        Hq
+    };
     struct UnitData
     {
         Unit* m_pUnit;
         spUnitPathFindingSystem m_pPfs;
         qint32 m_movepoints{0};
         float m_virtualDamage{0.0f};
+        ThreadLevel m_threadLevel{ThreadLevel::Normal};
     };
     explicit HeavyAi();
     virtual ~HeavyAi() = default;
@@ -40,11 +47,13 @@ public slots:
 protected:
 
 private:
-    void setupTurn();
+    void setupTurn(const spQmlVectorBuilding & buildings);
     void createIslandMaps();
     void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units, bool enemyUnits);
+    void findHqThreads(const spQmlVectorBuilding & buildings);
+    bool isCaptureTransporterOrCanCapture(Unit* pUnit);
 private:
     QVector<UnitData> m_enemyUnits;
     QVector<UnitData> m_ownUnits;

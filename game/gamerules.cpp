@@ -104,6 +104,18 @@ void GameRules::addGameRule(spGameRule rule)
     }
 }
 
+void GameRules::removeGameRule(QString rule)
+{
+    for (qint32 i = 0; i < m_GameRules.size(); i++)
+    {
+        if (m_GameRules[i]->getRuleID() == rule)
+        {
+            m_GameRules.removeAt(i);
+            break;
+        }
+    }
+}
+
 void GameRules::addVictoryRule(QString rule)
 {
     bool found = false;

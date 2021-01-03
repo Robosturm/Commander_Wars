@@ -203,7 +203,7 @@ public slots:
      * @brief getBuildingID
      * @return the string if of this building
      */
-    inline QString getBuildingID()
+    inline QString getBuildingID() const
     {
         return m_BuildingID;
     }

@@ -87,7 +87,7 @@ var Constructor = function()
     this.giveRation = function(unit)
     {
         var refillRule = map.getGameRules().getGameRule("GAMERULE_REFILL_MATERIAL");
-        var refillMaterial = (typeof refillRule === 'undefined'); // an existing rule equals it's set
+        var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
         var x = unit.getX() + 1;
         var y = unit.getY();
         var animation = null;

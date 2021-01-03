@@ -474,6 +474,14 @@ public slots:
      */
     qint32 getY() const;
     /**
+     * @brief getMapPosition
+     * @return
+     */
+    inline QPoint getMapPosition() const
+    {
+        return  QPoint(getX(), getY());
+    }
+    /**
      * @brief getPosition the unit position as qpoint
      * @return
      */
@@ -575,7 +583,7 @@ public slots:
      * @brief getLoadedUnit
      * @param index
      */
-    Unit* getLoadedUnit(qint32 index);
+    Unit* getLoadedUnit(qint32 index) const;
     /**
      * @brief unloadUnit removes a unit from the transport list
      * @param index
@@ -591,7 +599,7 @@ public slots:
      * @brief getLoadedUnitCount
      * @return number of units loaded by this unit
      */
-    qint32 getLoadedUnitCount();
+    qint32 getLoadedUnitCount() const;
     /**
      * @brief getTransportUnits
      * @return
