@@ -27,7 +27,7 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
     for (qint32 i = 0; i < m_Targets.size(); i++)
     {
         qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(m_Targets[i].x()) - x) +
-                      qAbs(static_cast<qint32>(m_Targets[i].y()) - y) * m_Targets[i].z()) +
+                      qAbs(static_cast<qint32>(m_Targets[i].y()) - y)) * m_Targets[i].z() +
                       static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (m_Targets[i].z() - 1.0));
 
         if (cost < minCost)

@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include <QFile>
+
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 
@@ -25,8 +27,10 @@
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogtextinput.h"
+#include "objects/dialogs/folderdialog.h"
 
-#include <QFile>
+#include "coreengine/globalutils.h"
+#include "objects/loadingscreen.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -64,7 +68,7 @@ Mainwindow::Mainwindow()
         pButtonLastSaveGame->attachTo(this);
         pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {
-            emit this->sigLastSaveGame();
+            emit sigLastSaveGame();
         });
         connect(this, &Mainwindow::sigLastSaveGame, this, &Mainwindow::lastSaveGame, Qt::QueuedConnection);
         btnI++;
@@ -76,7 +80,7 @@ Mainwindow::Mainwindow()
     pButtonSingleplayer->attachTo(this);
     pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit this->sigEnterSingleplayer();
+        emit sigEnterSingleplayer();
     });
     connect(this, &Mainwindow::sigEnterSingleplayer, this, &Mainwindow::enterSingleplayer, Qt::QueuedConnection);
     btnI++;
@@ -87,7 +91,7 @@ Mainwindow::Mainwindow()
     pButtonMultiplayer->attachTo(this);
     pButtonMultiplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit this->sigEnterMultiplayer();
+        emit sigEnterMultiplayer();
     });
     connect(this, &Mainwindow::sigEnterMultiplayer, this, &Mainwindow::enterMultiplayer, Qt::QueuedConnection);
     btnI++;
@@ -197,7 +201,7 @@ Mainwindow::Mainwindow()
     setButtonPosition(pQuit, btnI);
     pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit this->sigQuit();
+        emit sigQuit();
     });
     connect(this, &Mainwindow::sigQuit, this, &Mainwindow::quitGame, Qt::QueuedConnection);
     btnI++;
@@ -219,7 +223,59 @@ Mainwindow::Mainwindow()
     pTextfield->setHtmlText(Mainapp::getGameVersion());
     pTextfield->setPosition(Settings::getWidth() - 10 - pTextfield->getTextRect().getWidth(), Settings::getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
+
+    // import
+    oxygine::spButton pImport = ObjectManager::createButton(tr("Import"), buttonWidth, tr("Imports all data from an other Commander Wars release to the current release."));
+    pImport->attachTo(this);
+    pImport->setPosition(10, Settings::getHeight() - 10 - pImport->getHeight());
+    pImport->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigImport();
+    });
+    connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
+    btnI++;
+
     pApp->continueRendering();
+}
+
+void Mainwindow::import()
+{
+    QString path = QCoreApplication::applicationDirPath();
+    spFolderDialog folderDialog = new FolderDialog(path);
+    addChild(folderDialog);
+    connect(folderDialog.get(), &FolderDialog::sigFolderSelected, this, &Mainwindow::importFromDirectory, Qt::QueuedConnection);
+}
+
+void Mainwindow::importFromDirectory(QString folder)
+{
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    pLoadingScreen->show();
+    QStringList filter;
+    filter << "*.*";
+    pLoadingScreen->setProgress("Importing data", 0);
+    GlobalUtils::importFilesFromDirectory(folder + "/data", "data", filter, false);
+    pLoadingScreen->setProgress("Importing maps", 20);
+    GlobalUtils::importFilesFromDirectory(folder + "/maps", "maps", filter, false);
+    pLoadingScreen->setProgress("Importing mods", 40);
+    QStringList modExcludes;
+    modExcludes << "aw_styled_icons" << "aw_unloading" << "aw2_damage_formula" << "aw2_image"
+                << "awdc_co" << "awdc_flare" << "awdc_powergain" << "awdc_terrain"
+                << "awdc_unit" << "awdc_unit_image" << "awdc_weather" << "awds_co"
+                << "awds_unit" << "awds_weather" << "cow_debuff_perks" << "cow_resell"
+                << "cow_transfer" << "cow_triangle_weapons" << "map_creator";
+
+    GlobalUtils::importFilesFromDirectory(folder + "/mods", "mods", filter, false, modExcludes);
+    pLoadingScreen->setProgress("Importing custom terrain images", 60);
+    GlobalUtils::importFilesFromDirectory(folder + "/customTerrainImages", "customTerrainImages", filter, false);
+    pLoadingScreen->setProgress("Importing ini file", 80);
+    filter.clear();
+    filter << "*.ini";
+    GlobalUtils::importFilesFromDirectory(folder + "/", "", filter, false);
+    pLoadingScreen->setProgress("Importing userdata", 90);
+    filter.clear();
+    filter << "*.dat";
+    GlobalUtils::importFilesFromDirectory(folder + "/", "", filter, false);
+    pLoadingScreen->hide();
 }
 
 void Mainwindow::changeUsername(QString name)

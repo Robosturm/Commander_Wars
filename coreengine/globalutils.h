@@ -77,6 +77,14 @@ public slots:
      * @return
      */
     static QStringList getFiles(QString folder, QStringList filter);
+    /**
+     * @brief importFilesFromDirectory
+     * @param folder
+     * @param targetDirectory
+     * @param filter
+     * @param replace
+     */
+    static void importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders = QStringList());
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;

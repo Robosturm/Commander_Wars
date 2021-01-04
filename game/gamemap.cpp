@@ -1,5 +1,3 @@
-#include <QFile>
-
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
@@ -34,6 +32,8 @@
 
 #include "objects/loadingscreen.h"
 
+#include <QFile>
+
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
@@ -41,8 +41,6 @@ static constexpr qint32 loadingScreenSize = 900;
 qint32 GameMap::m_imagesize = 24;
 
 spGameMap GameMap::m_pInstance = nullptr;
-
-
 
 qint32 GameMap::getFrameTime()
 {

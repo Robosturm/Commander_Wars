@@ -90,42 +90,42 @@ QmlVectorPoint* GlobalUtils::getCircle(qint32 min, qint32 max)
     qint32 x2 = 0;
     qint32 y2 = 0;
 
-        for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
+    for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
+    {
+        x2 = -currentRadius;
+        y2 = 0;
+        if (currentRadius == 0)
         {
-            x2 = -currentRadius;
-            y2 = 0;
-            if (currentRadius == 0)
+            ret->append(QPoint(0, 0));
+        }
+        else
+        {
+            for (qint32 i = 0; i < currentRadius; i++)
             {
-                ret->append(QPoint(0, 0));
+                x2 += 1;
+                y2 += 1;
+                ret->append(QPoint(x2, y2));
             }
-            else
+            for (qint32 i = 0; i < currentRadius; i++)
             {
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 += 1;
-                    y2 += 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 += 1;
-                    y2 -= 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 -= 1;
-                    y2 -= 1;
-                    ret->append(QPoint(x2, y2));
-                }
-                for (qint32 i = 0; i < currentRadius; i++)
-                {
-                    x2 -= 1;
-                    y2 += 1;
-                    ret->append(QPoint(x2, y2));
-                }
+                x2 += 1;
+                y2 -= 1;
+                ret->append(QPoint(x2, y2));
+            }
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 -= 1;
+                y2 -= 1;
+                ret->append(QPoint(x2, y2));
+            }
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 -= 1;
+                y2 += 1;
+                ret->append(QPoint(x2, y2));
             }
         }
+    }
     return ret;
 }
 
@@ -222,4 +222,35 @@ QStringList GlobalUtils::getFiles(QString folder, QStringList filter)
         ret.append(file);
     }
     return ret;
+}
+
+void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders)
+{
+    QStringList ret;
+    QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        bool exclude = false;
+        for (const auto & exlucePath : excludeFolders)
+        {
+            if (file.contains("/" + exlucePath + "/"))
+            {
+                exclude = true;
+                break;
+            }
+        }
+        if (!exclude)
+        {
+            file.replace(folder + "/", "");
+            file.replace(folder, "");
+            bool exists = QFile::exists(QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
+            if (replace || !exists)
+            {
+                QFile::remove(QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
+                QFile::copy(dirIter.fileInfo().absoluteFilePath(), QCoreApplication::applicationDirPath() + "/" + targetDirectory + "/" + file);
+            }
+        }
+    }
 }

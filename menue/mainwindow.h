@@ -23,6 +23,7 @@ signals:
     void sigEnterCOStyleMenu();
     void sigEnterLoadCampaign();
     void sigEnterAchievementmenue();
+    void sigImport();
 public slots:
     void enterSingleplayer();
     void enterEditor();
@@ -42,6 +43,8 @@ public slots:
     void enterLoadCampaign();
     void loadCampaign(QString filename);
     void enterAchievementmenue();
+    void import();
+    void importFromDirectory(QString file);
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 

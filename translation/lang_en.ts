@@ -2487,9 +2487,9 @@ This is immediatly applied.</source>
     <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="62"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="76"/>
-        <location filename="../game/gamemap.cpp" line="434"/>
-        <location filename="../game/gamemap.cpp" line="480"/>
-        <location filename="../game/gamemap.cpp" line="1069"/>
+        <location filename="../game/gamemap.cpp" line="432"/>
+        <location filename="../game/gamemap.cpp" line="478"/>
+        <location filename="../game/gamemap.cpp" line="1067"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2513,43 +2513,43 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="434"/>
-        <location filename="../game/gamemap.cpp" line="1069"/>
+        <location filename="../game/gamemap.cpp" line="432"/>
+        <location filename="../game/gamemap.cpp" line="1067"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="480"/>
+        <location filename="../game/gamemap.cpp" line="478"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="490"/>
+        <location filename="../game/gamemap.cpp" line="488"/>
         <source>Loading weather for snowy times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1047"/>
+        <location filename="../game/gamemap.cpp" line="1045"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1096"/>
+        <location filename="../game/gamemap.cpp" line="1094"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1106"/>
+        <location filename="../game/gamemap.cpp" line="1104"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1114"/>
+        <location filename="../game/gamemap.cpp" line="1112"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1126"/>
+        <location filename="../game/gamemap.cpp" line="1124"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3498,73 +3498,83 @@ This is immediatly applied.</source>
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="62"/>
+        <location filename="../menue/mainwindow.cpp" line="66"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="74"/>
+        <location filename="../menue/mainwindow.cpp" line="78"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="85"/>
+        <location filename="../menue/mainwindow.cpp" line="89"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="96"/>
+        <location filename="../menue/mainwindow.cpp" line="100"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="107"/>
+        <location filename="../menue/mainwindow.cpp" line="111"/>
         <source>Load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="118"/>
+        <location filename="../menue/mainwindow.cpp" line="122"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="129"/>
+        <location filename="../menue/mainwindow.cpp" line="133"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="140"/>
+        <location filename="../menue/mainwindow.cpp" line="144"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="151"/>
+        <location filename="../menue/mainwindow.cpp" line="155"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="162"/>
+        <location filename="../menue/mainwindow.cpp" line="166"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="173"/>
+        <location filename="../menue/mainwindow.cpp" line="177"/>
         <source>Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="184"/>
+        <location filename="../menue/mainwindow.cpp" line="188"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="195"/>
+        <location filename="../menue/mainwindow.cpp" line="199"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="207"/>
+        <location filename="../menue/mainwindow.cpp" line="211"/>
         <source>Select Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="228"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="228"/>
+        <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

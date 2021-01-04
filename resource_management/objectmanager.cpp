@@ -12,7 +12,7 @@ ObjectManager::ObjectManager()
     loadRessources("/cursor/res.xml");
 }
 
-oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
+oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QString tooltip)
 {
     oxygine::spButton pButton = new oxygine::Button();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button"));
@@ -41,6 +41,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     {
         textField->setX(5);
     }
+    textField->setTooltipText(tooltip);
     pButton->setSize(width, 40);
     oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
     clipRect->setSize(pButton->getSize());
