@@ -263,14 +263,14 @@ void Mainwindow::importFromDirectory(QString folder)
                 << "awdc_unit" << "awdc_unit_image" << "awdc_weather" << "awds_co"
                 << "awds_unit" << "awds_weather" << "cow_debuff_perks" << "cow_resell"
                 << "cow_transfer" << "cow_triangle_weapons" << "map_creator";
-
     GlobalUtils::importFilesFromDirectory(folder + "/mods", "mods", filter, false, modExcludes);
     pLoadingScreen->setProgress("Importing custom terrain images", 60);
     GlobalUtils::importFilesFromDirectory(folder + "/customTerrainImages", "customTerrainImages", filter, false);
     pLoadingScreen->setProgress("Importing ini file", 80);
     filter.clear();
-    filter << "*.ini";
-    GlobalUtils::importFilesFromDirectory(folder + "/", "", filter, false);
+    filter << "Commander_Wars.ini";
+    GlobalUtils::importFilesFromDirectory(folder + "/", "", filter, true);
+    Settings::loadSettings();
     pLoadingScreen->setProgress("Importing userdata", 90);
     filter.clear();
     filter << "*.dat";

@@ -627,53 +627,54 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
 }
 
 void VictoryMenue::updateGraph()
-{
-    
+{    
     spGameMap pMap = GameMap::getInstance();
-    if (m_CurrentGraphMode < GraphModes::Max)
+    if (pMap.get() != nullptr)
     {
-        // make sure we have some graph data to be added :)
-        qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
-        if (progress < pMap->getCurrentDay())
+        if (m_CurrentGraphMode < GraphModes::Max)
         {
-            drawGraphStep(progress);
-            m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
-        }
-    }
-    else
-    {
-        if (progress < 100)
-        {
-            progress += 2;
-            // update values
-            for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
+            // make sure we have some graph data to be added :)
+            qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
+            if (progress < pMap->getCurrentDay())
             {
-                m_VictoryTexts[i][0]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)));
-                m_VictoryTexts[i][1]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)));
-                m_VictoryTexts[i][2]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)));
-                float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
-                m_VictoryTexts[i][3]->setHtmlText(QString::number(static_cast<qint32>(sum * progress / 100)));
+                drawGraphStep(progress);
+                m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)]++;
             }
-            if (progress >= 100)
+        }
+        else
+        {
+            if (progress < 100)
             {
-                progress = 100;
-                // show CO-Rank
+                progress += 2;
+                // update values
                 for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
                 {
-                    oxygine::ResAnim* pAnim = nullptr;
-                    qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
-                    GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
-                    pAnim = pMap->getGameRecorder()->getRankAnim(rang);
-                    oxygine::spSprite pRankSprite = new oxygine::Sprite();
-                    pRankSprite->setResAnim(pAnim);
-                    pRankSprite->setScale(1.5f);
-                    pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 120, m_VictoryTexts[i][0]->getY());
-                    m_VictoryPanel->addItem(pRankSprite);
+                    m_VictoryTexts[i][0]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)));
+                    m_VictoryTexts[i][1]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)));
+                    m_VictoryTexts[i][2]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)));
+                    float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
+                    m_VictoryTexts[i][3]->setHtmlText(QString::number(static_cast<qint32>(sum * progress / 100)));
+                }
+                if (progress >= 100)
+                {
+                    progress = 100;
+                    // show CO-Rank
+                    for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
+                    {
+                        oxygine::ResAnim* pAnim = nullptr;
+                        qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
+                        GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
+                        pAnim = pMap->getGameRecorder()->getRankAnim(rang);
+                        oxygine::spSprite pRankSprite = new oxygine::Sprite();
+                        pRankSprite->setResAnim(pAnim);
+                        pRankSprite->setScale(1.5f);
+                        pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 120, m_VictoryTexts[i][0]->getY());
+                        m_VictoryPanel->addItem(pRankSprite);
+                    }
                 }
             }
         }
     }
-    
 }
 
 void VictoryMenue::finishGraph()
