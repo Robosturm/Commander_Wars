@@ -25,6 +25,7 @@ public:
         qint32 m_movepoints{0};
         float m_virtualDamage{0.0f};
         ThreadLevel m_threadLevel{ThreadLevel::Normal};
+        QPoint m_hqThread;
     };
     explicit HeavyAi();
     virtual ~HeavyAi() = default;

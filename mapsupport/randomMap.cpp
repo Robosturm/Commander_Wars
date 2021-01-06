@@ -62,7 +62,7 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
     {
 
         QString terrainID = std::get<0>(terrains[i]);
-        pLoadingScreen->setProgress(tr("Generating ") + terrainID, progress * 100 / maxSteps);
+        pLoadingScreen->setProgress(QObject::tr("Generating ") + terrainID, progress * 100 / maxSteps);
         progress++;
         if (terrainID == "Buildings")
         {
@@ -520,7 +520,7 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
     spUnit pUnit = new Unit("INFANTRY", players[0].get(), false);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
-    LoadingScreen::getInstance()->setWorktext(tr("Generating ") + "HQ's");
+    LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
     for (qint32 i = 0; i < players.size(); i++)
     {
         QPoint position;

@@ -81,7 +81,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
             m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
-        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"), 1000 * 60 * 5);
+        spDialogConnecting pDialogConnecting = new DialogConnecting(QObject::tr("Waiting for Players"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -281,7 +281,7 @@ void GameMenue::disconnected(quint64 socketID)
         if (showDisconnect)
         {
             gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(QObject::tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
             addChild(pDialogMessageBox);
         }
         if (Mainapp::getSlave())
@@ -394,7 +394,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, Settings::getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
-    oxygine::spButton saveGame = pObjectManager->createButton(tr("Save"), 130);
+    oxygine::spButton saveGame = pObjectManager->createButton(QObject::tr("Save"), 130);
     saveGame->setPosition(8, 4);
     saveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -402,7 +402,7 @@ void GameMenue::loadUIButtons()
     });
     pButtonBox->addChild(saveGame);
 
-    oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit"), 130);
+    oxygine::spButton exitGame = pObjectManager->createButton(QObject::tr("Exit"), 130);
     exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -584,7 +584,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             m_syncCounter + 1 != pGameAction->getSyncCounter())
         {
             gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
+            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(QObject::tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
             addChild(pDialogMessageBox);
         }
         else
@@ -1224,7 +1224,14 @@ void GameMenue::showGameInfo()
     
     m_Focused = false;
     Console::print("showGameInfo()", Console::eDEBUG);
-    QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Killed"), tr("Army Value"), tr("Income"), tr("Funds"), tr("Bases")};
+    QStringList header = {QObject::tr("Player"),
+                          QObject::tr("Produced"),
+                          QObject::tr("Lost"),
+                          QObject::tr("Killed"),
+                          QObject::tr("Army Value"),
+                          QObject::tr("Income"),
+                          QObject::tr("Funds"),
+                          QObject::tr("Bases")};
     QVector<QStringList> data;
     spGameMap pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
@@ -1609,7 +1616,7 @@ void GameMenue::showExitGame()
     
     Console::print("showExitGame()", Console::eDEBUG);
     m_Focused = false;
-    spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the current game?"), true);
+    spDialogMessageBox pExit = new DialogMessageBox(QObject::tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
     {
@@ -1626,7 +1633,7 @@ void GameMenue::showSurrenderGame()
     {
         Console::print("showSurrenderGame()", Console::eDEBUG);
         m_Focused = false;
-        spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
+        spDialogMessageBox pSurrender = new DialogMessageBox(QObject::tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
         connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
         {
@@ -1654,7 +1661,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     if (pUnit.get() != nullptr)
     {
         Console::print("showNicknameUnit()", Console::eDEBUG);
-        spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Nickname for the Unit:"), true, pUnit->getName());
+        spDialogTextInput pDialogTextInput = new DialogTextInput(QObject::tr("Nickname for the Unit:"), true, pUnit->getName());
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
         {
             emit sigNicknameUnit(x, y, value);

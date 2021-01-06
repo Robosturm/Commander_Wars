@@ -31,7 +31,7 @@ void GameMap::importAWByWebMap(QString file)
         data.open(QFile::ReadOnly);
         QTextStream stream(&data);
         QVector<QVector<quint32>> mapIDs;
-        pLoadingScreen->setProgress(tr("Reading Map File"), 5);
+        pLoadingScreen->setProgress(QObject::tr("Reading Map File"), 5);
         while (!stream.atEnd())
         {
             QStringList ids = stream.readLine().split(",");

@@ -324,7 +324,7 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Closed")}; // tr("Heavy"), // heavy ai disabled cause it's not finished
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Heavy"), tr("Closed")}; //  // heavy ai disabled cause it's not finished
     QVector<QString> aiList = defaultAiList;
     if (m_pCampaign.get() != nullptr)
     {

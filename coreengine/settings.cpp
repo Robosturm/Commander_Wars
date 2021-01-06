@@ -662,7 +662,7 @@ void Settings::loadSettings()
     setLanguage(settings.value("language","en").toString());
     m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
     if(!ok){
-        QString error = tr("Error in the Ini File: ") + "[General] " + tr("Setting:") + " MouseSensitivity";
+        QString error = QObject::tr("Error in the Ini File: ") + "[General] " + QObject::tr("Setting:") + " MouseSensitivity";
         Console::print(error, Console::eERROR);
         m_mouseSensitivity = -0.75f;
     }
@@ -673,27 +673,27 @@ void Settings::loadSettings()
     m_x = settings.value("x", 0).toInt(&ok);
     if(!ok)
     {
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " x";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " x";
         Console::print(error, Console::eERROR);
         m_x = 0;
     }
     m_y  = settings.value("y", 0).toInt(&ok);
     if(!ok)
     {
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " y";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " y";
         Console::print(error, Console::eERROR);
         m_y = 0;
     }
     QSize size = QGuiApplication::primaryScreen()->availableSize();
     m_width       = settings.value("width", size.width()).toInt(&ok);
     if(!ok){
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " width";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " width";
         Console::print(error, Console::eERROR);
         m_width = size.width();
     }
     m_height      = settings.value("height", size.height()).toInt(&ok);
     if(!ok){
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " heigth";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " heigth";
         Console::print(error, Console::eERROR);
         m_height = size.height();
     }
@@ -701,14 +701,14 @@ void Settings::loadSettings()
     m_brightness      = settings.value("brightness", 0.0f).toFloat(&ok);
     if(!ok || m_brightness > 50.0f || m_brightness < -50.0f)
     {
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " brightness";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " brightness";
         Console::print(error, Console::eERROR);
         m_brightness = 0.0f;
     }
     m_gamma      = settings.value("gamma", 1.0f).toFloat(&ok);
     if(!ok || m_gamma <= 0.0f || m_gamma > 50.0f)
     {
-        QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " gamma";
+        QString error = QObject::tr("Error in the Ini File: ") + "[Resolution] " + QObject::tr("Setting:") + " gamma";
         Console::print(error, Console::eERROR);
         m_gamma = 1.0f;
     }

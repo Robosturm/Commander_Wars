@@ -292,7 +292,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
             }
         }
         m_TerrainChances = new Multislider(terrainStrings, Settings::getWidth() - 150, terrainChances);
-        m_TerrainChances->setTooltipText(tr("The percent distribution between the different terrains when a terrain is placed."));
+        m_TerrainChances->setTooltipText(QObject::tr("The percent distribution between the different terrains when a terrain is placed."));
         m_TerrainChances->setPosition(30, m_TerrainChanceLabel->getY() + 40);
         m_pPanel->addItem(m_TerrainChances);
 

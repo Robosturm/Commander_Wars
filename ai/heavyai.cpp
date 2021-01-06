@@ -3,7 +3,7 @@
 #include "coreengine/qmlvector.h"
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
-
+#include "ai/targetedunitpathfindingsystem.h"
 #include "game/player.h"
 
 #include "resource_management/unitspritemanager.h"
@@ -184,16 +184,16 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, bool enemyUnits)
 void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
 {
     Console::print("Searching for HQ Threads", Console::eDEBUG);
-    QVector<QPoint> hqPositions;
+    QVector<QVector3D> hqPositions;
     for (qint32 i = 0; i < buildings->size(); ++i)
     {
         const auto * pBuilding = buildings->at(i);
         if (pBuilding->getBuildingID() == "HQ")
         {
-            hqPositions.append(QPoint(pBuilding->getX(), pBuilding->getY()));
+            hqPositions.append(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
         }
     }
-    for (const auto & enemy : m_enemyUnits)
+    for (auto & enemy : m_enemyUnits)
     {
         if (isCaptureTransporterOrCanCapture(enemy.m_pUnit))
         {
@@ -202,9 +202,21 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
             qint32 movePoints = enemy.m_pUnit->getMovementpoints(enemy.m_pUnit->getMapPosition());
             for (const auto & hqPos : hqPositions)
             {
-                if (GlobalUtils::getDistance(pos, hqPos) <= dayDistance * movePoints)
+                if (GlobalUtils::getDistance(pos, QPoint(hqPos.x(), hqPos.y())) <= dayDistance * movePoints)
                 {
-
+                    TargetedUnitPathFindingSystem pfs = TargetedUnitPathFindingSystem(enemy.m_pUnit, hqPositions, &m_MoveCostMap);
+                    pfs.setIgnoreEnemies(true);
+                    pfs.setMovepoints(movePoints * dayDistance);
+                    pfs.setAbortOnCostExceed(true);
+                    pfs.setFast(true);
+                    pfs.setUseBasecosts(true);
+                    pfs.explore();
+                    QPoint targetFields = pfs.getReachableTargetField(movePoints * 3);
+                    if (targetFields.x() >= 0)
+                    {
+                        enemy.m_threadLevel = ThreadLevel::Hq;
+                        enemy.m_hqThread = targetFields;
+                    }
                 }
             }
         }

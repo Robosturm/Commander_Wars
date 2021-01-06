@@ -429,7 +429,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
         {
             if (showLoadingScreen)
             {
-                pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 0 + 50 * y / heigth);
+                pLoadingScreen->setProgress(QObject::tr("Loading Map Row ") + QString::number(y) + QObject::tr(" of ") + QString::number(heigth), 0 + 50 * y / heigth);
             }
             for (qint32 x = 0; x < width; x++)
             {
@@ -1042,7 +1042,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
     if (showLoadingScreen)
     {
-        pLoadingScreen->setProgress(tr("Loading Players"), 5);
+        pLoadingScreen->setProgress(QObject::tr("Loading Players"), 5);
     }
     for (qint32 i = 0; i < playerCount; i++)
     {

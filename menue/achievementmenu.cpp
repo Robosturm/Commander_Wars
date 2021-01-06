@@ -40,7 +40,7 @@ Achievementmenu::Achievementmenu()
     pApp->getAudioThread()->playRandom();
 
 
-    oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
+    oxygine::spButton pButtonExit = ObjectManager::createButton(QObject::tr("Exit"));
     pButtonExit->attachTo(this);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
