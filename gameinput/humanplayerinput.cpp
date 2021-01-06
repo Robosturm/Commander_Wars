@@ -81,7 +81,10 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
             GameAnimationFactory::finishAllAnimations();
-            
+            if (GameAnimationFactory::getAnimationCount() == 0)
+            {
+                emit GameAnimationFactory::getInstance()->animationsFinished();
+            }
         }
         else if (m_pGameAction.get() != nullptr)
         {

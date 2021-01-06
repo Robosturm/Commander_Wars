@@ -260,8 +260,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
     {
         Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
-    }
-    
+    }    
 }
 
 void GameAnimationFactory::clearAllAnimations()
@@ -282,11 +281,9 @@ void GameAnimationFactory::finishAllAnimations()
     while (i < m_Animations.size())
     {
         spGameAnimation spAnimation = m_Animations[i];
-
         if (!spAnimation->onFinished(true))
         {
             i++;
         }
-    }
-    
+    }    
 }
