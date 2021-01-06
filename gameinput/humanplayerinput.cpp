@@ -140,7 +140,12 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 
 void HumanPlayerInput::cancelActionInput()
 {
-    Unit* pUnit = m_pGameAction->getTargetUnit();
+
+    Unit* pUnit = nullptr;
+    if (m_pGameAction.get() != nullptr)
+    {
+        pUnit = m_pGameAction->getTargetUnit();
+    }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
     {

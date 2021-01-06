@@ -21,22 +21,24 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(Unit* pUnit, QVecto
     }
 }
 
-qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32)
+qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
     qint32 minCost = -1;
-    for (qint32 i = 0; i < m_Targets.size(); i++)
+    if (!m_abortOnCostExceed || currentCost <= m_Movepoints)
     {
-        qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(m_Targets[i].x()) - x) +
-                      qAbs(static_cast<qint32>(m_Targets[i].y()) - y)) * m_Targets[i].z() +
-                      static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (m_Targets[i].z() - 1.0));
-
-        if (cost < minCost)
+        for (qint32 i = 0; i < m_Targets.size(); i++)
         {
-            minCost = cost;
-        }
-        else if (minCost < 0)
-        {
-            minCost = cost;
+            qint32 cost = static_cast<qint32>(qAbs(static_cast<qint32>(m_Targets[i].x()) - x) +
+                                              qAbs(static_cast<qint32>(m_Targets[i].y()) - y)) * m_Targets[i].z() +
+                          static_cast<qint32>(m_pUnit->getBaseMovementPoints() * (m_Targets[i].z() - 1.0));
+            if (cost < minCost)
+            {
+                minCost = cost;
+            }
+            else if (minCost < 0)
+            {
+                minCost = cost;
+            }
         }
     }
     return minCost;
@@ -44,7 +46,32 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
 
 qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
-    qint32 costs = UnitPathFindingSystem::getCosts(index, x, y, curX, curY);
+    qint32 costs = -1;
+    if (m_useBasecosts)
+    {
+        spGameMap pMap = GameMap::getInstance();
+        if (pMap.get() != nullptr && pMap->onMap(x, y))
+        {
+            qint32 direction = getMoveDirection(curX, curY, x, y);
+            QString id = pMap->getTerrain(curX, curY)->getID() + pMap->getTerrain(x, y)->getID() + "Base";
+            bool found = m_costInfo.contains(id);
+            if (found)
+            {
+                costs = m_costInfo[id];
+                movecosts[index][direction] = costs;
+            }
+            else
+            {
+                costs = m_pUnit->getBaseMovementCosts(x, y, curX, curY);
+                m_costInfo.insert(id, costs);
+                movecosts[index][direction] = costs;
+            }
+        }
+    }
+    else
+    {
+        costs = UnitPathFindingSystem::getCosts(index, x, y, curX, curY);
+    }
     if (costs < 0) // not crossable
     {
         return -1;
@@ -66,6 +93,26 @@ qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y,
     return costs;
 }
 
+bool TargetedUnitPathFindingSystem::getUseBasecosts() const
+{
+    return m_useBasecosts;
+}
+
+void TargetedUnitPathFindingSystem::setUseBasecosts(bool useBasecosts)
+{
+    m_useBasecosts = useBasecosts;
+}
+
+bool TargetedUnitPathFindingSystem::getAbortOnCostExceed() const
+{
+    return m_abortOnCostExceed;
+}
+
+void TargetedUnitPathFindingSystem::setAbortOnCostExceed(bool abortOnCostExceed)
+{
+    m_abortOnCostExceed = abortOnCostExceed;
+}
+
 QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
 {
     if (m_FinishNode >= 0)
@@ -75,7 +122,7 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
         qint32 curX = m_FinishNodeX;
         qint32 curY = m_FinishNodeY;
         while (((curX != m_StartPoint.x() || curY != m_StartPoint.y()) &&
-               (cost > movepoints)) ||
+                (cost > movepoints)) ||
                (path.size() > 1 && UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY, path[1].x(), path[1].y()) == 0))
         {
             path.removeFirst();

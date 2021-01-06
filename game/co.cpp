@@ -737,6 +737,7 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
 
 void CO::activatePower()
 {
+    ++m_powerUsed;
     m_PowerMode = GameEnums::PowerMode_Power;
     powerFilled -= powerStars;
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -758,6 +759,7 @@ void CO::activatePower()
 
 void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 {
+    ++m_powerUsed;
     m_PowerMode = powerMode;
     powerFilled = 0;
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1224,12 +1226,12 @@ void CO::removePerk(QString perk)
 
 qint32 CO::getPowerUsed() const
 {
-    return powerUsed;
+    return m_powerUsed;
 }
 
 void CO::setPowerUsed(const qint32 &value)
 {
-    powerUsed = value;
+    m_powerUsed = value;
 }
 
 void CO::loadCOMusic()
@@ -1480,7 +1482,7 @@ void CO::serializeObject(QDataStream& pStream) const
     pStream << powerFilled;
     pStream << static_cast<qint32>(m_PowerMode);
     m_Variables.serializeObject(pStream);
-    pStream << powerUsed;
+    pStream << m_powerUsed;
     pStream << static_cast<qint32>(m_perkList.size());
     for (const auto & perk : m_perkList)
     {
@@ -1521,7 +1523,7 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 2)
     {
-        pStream >> powerUsed;
+        pStream >> m_powerUsed;
     }
     m_perkList.clear();
     if (version > 3)

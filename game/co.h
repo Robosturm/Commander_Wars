@@ -576,7 +576,7 @@ private:
     Unit* m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
-    qint32 powerUsed{0};
+    qint32 m_powerUsed{0};
     bool m_powerCharging{false};
 
     QStringList m_perkList;
