@@ -390,7 +390,7 @@ public slots:
      * @param uniqueID the unit it should transport
      * @return the found unit
      */
-    Unit* getUnit(Unit* pUnit, qint32 uniqueID);
+    Unit* getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID);
     /**
      * @brief getGameScript
      * @return

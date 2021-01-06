@@ -1,0 +1,3 @@
+name=Cooperation Mod
+description=This mod enables cooperation between players for transporting, repairing and supporting units. This means unit can be repaired, transported or supported by allied units and buildings.  Created by Chopper385 and XnKradst
+version=1.0.0

@@ -1612,7 +1612,7 @@ Unit* GameMap::getUnit(qint32 uniqueID)
                 }
                 else if (pUnit->getLoadedUnitCount() > 0)
                 {
-                    pUnit = getUnit(pUnit, uniqueID);
+                    pUnit = getUnitFromTansportUnit(pUnit, uniqueID);
                     if (pUnit != nullptr)
                     {
                         return pUnit;
@@ -1624,7 +1624,7 @@ Unit* GameMap::getUnit(qint32 uniqueID)
     return nullptr;
 }
 
-Unit* GameMap::getUnit(Unit* pUnit, qint32 uniqueID)
+Unit* GameMap::getUnitFromTansportUnit(Unit* pUnit, qint32 uniqueID)
 {
     if (pUnit != nullptr)
     {
@@ -1637,7 +1637,7 @@ Unit* GameMap::getUnit(Unit* pUnit, qint32 uniqueID)
             }
             else
             {
-                Unit* pUnit2 = getUnit(pLoadedUnit, uniqueID);
+                Unit* pUnit2 = getUnitFromTansportUnit(pLoadedUnit, uniqueID);
                 if (pUnit2 != nullptr)
                 {
                     return pUnit2;
