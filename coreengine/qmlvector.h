@@ -2,18 +2,14 @@
 #define QMLVECTOR_H
 
 #include <QPoint>
-
 #include <QObject>
-
 #include <QVector>
 
-#include "game/unit.h"
-
-#include "game/building.h"
-
-#include "game/terrain.h"
-
 #include "oxygine-framework.h"
+
+#include "game/unit.h"
+#include "game/building.h"
+#include "game/terrain.h"
 
 class QmlVectorPoint;
 typedef oxygine::intrusive_ptr<QmlVectorPoint> spQmlVectorPoint;

@@ -2,6 +2,7 @@
 #define TCPSERVER_H
 
 #include <QVector>
+
 #include "network/NetworkInterface.h"
 #include "network/tcpclient.h"
 #include "network/rxtask.h"

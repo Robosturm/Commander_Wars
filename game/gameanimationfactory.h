@@ -2,11 +2,9 @@
 #define GAMEANIMATIONFACTORY_H
 
 #include <QObject>
-
 #include <QVector>
 
 #include "game/gamemap.h"
-
 #include "game/gameanimation.h"
 
 class GameAnimationWalk;
@@ -16,7 +14,6 @@ class GameAnimationPower;
 class GameAnimationNextDay;
 class GameAction;
 class CO;
-
 
 class GameAnimationFactory : public QObject
 {

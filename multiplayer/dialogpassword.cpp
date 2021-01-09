@@ -1,9 +1,8 @@
-#include "dialogpassword.h"
+#include "multiplayer/dialogpassword.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 DialogPassword::DialogPassword(QString text, bool showCancel, QString startInput)

@@ -1,21 +1,14 @@
-#include "gameanimation.h"
-
+#include "game/gameanimation.h"
 #include "game/gameanimationfactory.h"
 
 #include "resource_management/gameanimationmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/console.h"
-
 #include "coreengine/mainapp.h"
-
 #include "coreengine/interpreter.h"
-
 #include "coreengine/tweenwait.h"
-
 #include "coreengine/settings.h"
-
 #include "coreengine/audiothread.h"
 
 GameAnimation::GameAnimation(quint32 frameTime)

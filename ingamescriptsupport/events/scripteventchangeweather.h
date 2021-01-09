@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTCHANGEWEATHER_H
 #define SCRIPTEVENTCHANGEWEATHER_H
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeWeather : public ScriptEvent
 {

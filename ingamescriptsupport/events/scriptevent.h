@@ -2,10 +2,10 @@
 #define SCRIPTEVENT_H
 
 #include <QObject>
-
-#include "qtextstream.h"
-
+#include <QTextStream>
 #include "oxygine-framework.h"
+
+#include "coreengine/LUPDATE_MACROS.h"
 
 class ScriptEvent;
 typedef oxygine::intrusive_ptr<ScriptEvent> spScriptEvent;
@@ -38,7 +38,7 @@ public:
     static const QString EventPlaySound;
 
 
-    enum class EventType
+    ENUM_CLASS EventType
     {
         dialog,
         spawnUnit,

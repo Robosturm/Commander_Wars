@@ -1,4 +1,8 @@
-#include "lobbymenu.h"
+#include "multiplayer/lobbymenu.h"
+#include "multiplayer/networkcommands.h"
+#include "multiplayer/dialogpassword.h"
+#include "multiplayer/dialogpasswordandadress.h"
+#include "multiplayer/multiplayermenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -7,8 +11,6 @@
 
 #include "menue/mainwindow.h"
 
-#include "multiplayer/multiplayermenu.h"
-
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
@@ -16,9 +18,6 @@
 
 #include "network/mainserver.h"
 
-#include "multiplayer/networkcommands.h"
-#include "multiplayer/dialogpassword.h"
-#include "multiplayer/dialogpasswordandadress.h"
 
 LobbyMenu::LobbyMenu()
     : QObject()

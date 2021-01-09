@@ -2,17 +2,13 @@
 #define CAMPAIGNMENU_H
 
 #include <QObject>
-
 #include "oxygine-framework.h"
-
-#include "objects/mapselection.h"
 
 #include "game/campaign.h"
 
 #include "objects/minimap.h"
-
+#include "objects/mapselection.h"
 #include "objects/mapselectionview.h"
-
 #include "objects/base/panel.h"
 
 class CampaignMenu : public QObject, public oxygine::Actor

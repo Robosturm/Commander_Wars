@@ -4,8 +4,9 @@
 #include <QObject>
 #include <QList>
 #include <QMutex>
+
 #include "game/gameaction.h"
-#include "coreai.h"
+#include "ai/coreai.h"
 #include "coreengine/mainapp.h"
 
 #include "network/NetworkInterface.h"

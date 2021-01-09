@@ -1,4 +1,4 @@
-#include "scriptconditioncheckvariable.h"
+#include "ingamescriptsupport/conditions/scriptconditioncheckvariable.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"

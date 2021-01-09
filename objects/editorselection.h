@@ -11,6 +11,8 @@
 #include "game/player.h"
 #include "game/unit.h"
 
+#include "coreengine/LUPDATE_MACROS.h"
+
 class EditorSelection;
 typedef oxygine::intrusive_ptr<EditorSelection> spEditorSelection;
 
@@ -21,7 +23,7 @@ public:
     /**
      * @brief The EditorMode enum describes what we want to place at the moment
      */
-    enum class EditorMode
+    ENUM_CLASS EditorMode
     {
         All = -1,
         Terrain = 0,
@@ -31,7 +33,7 @@ public:
     /**
      * @brief The PlacementSize enum describes how terrain is placed
      */
-    enum class PlacementSize
+    ENUM_CLASS PlacementSize
     {
         Small = 0,
         Medium,

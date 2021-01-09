@@ -1,4 +1,4 @@
-#include "specialevent.h"
+#include "game/gamerecording/specialevent.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

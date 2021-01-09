@@ -1,4 +1,4 @@
-#include "playerrecord.h"
+#include "game/gamerecording/playerrecord.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

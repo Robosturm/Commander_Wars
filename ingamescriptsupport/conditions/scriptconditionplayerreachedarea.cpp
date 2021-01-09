@@ -1,4 +1,4 @@
-#include "scriptconditionplayerreachedarea.h"
+#include "ingamescriptsupport/conditions/scriptconditionplayerreachedarea.h"
 
 #include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
@@ -9,7 +9,6 @@
 #include "resource_management/objectmanager.h"
 
 #include "objects/base/spinbox.h"
-
 #include "objects/base/label.h"
 
 ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea()

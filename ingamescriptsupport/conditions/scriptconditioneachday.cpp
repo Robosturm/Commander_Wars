@@ -1,4 +1,4 @@
-#include "scriptconditioneachday.h"
+#include "ingamescriptsupport/conditions/scriptconditioneachday.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"

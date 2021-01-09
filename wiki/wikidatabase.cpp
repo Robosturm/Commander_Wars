@@ -1,4 +1,9 @@
-#include "wikidatabase.h"
+#include "qfile.h"
+#include "qdiriterator.h"
+
+#include "wiki/wikidatabase.h"
+#include "wiki/fieldinfo.h"
+#include "wiki/defaultwikipage.h"
 
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -18,13 +23,6 @@
 #include "game/gamemap.h"
 
 #include "objects/coinfoactor.h"
-
-#include "wiki/fieldinfo.h"
-#include "wiki/defaultwikipage.h"
-
-#include "qfile.h"
-
-#include "qdiriterator.h"
 
 #include "coreengine/interpreter.h"
 

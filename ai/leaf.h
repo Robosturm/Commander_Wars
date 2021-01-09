@@ -1,11 +1,10 @@
 #ifndef AI_LEAF
 #define AI_LEAF
 
-#include "decisionnode.h"
+#include <QObject>
+#include <QString>
 
-#include "QObject"
-#include "qstring.h"
-
+#include "ai/decisionnode.h"
 #include "coreengine/fileserializable.h"
 
 class Leaf : public DecisionNode

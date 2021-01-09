@@ -1,4 +1,4 @@
-#include "scripteventchangeweather.h"
+#include "ingamescriptsupport/events/scripteventchangeweather.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -8,11 +8,9 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"
-
 #include "objects/base/label.h"
 
 #include "game/gamemap.h"
-
 #include "game/weather.h"
 
 ScriptEventChangeWeather::ScriptEventChangeWeather()

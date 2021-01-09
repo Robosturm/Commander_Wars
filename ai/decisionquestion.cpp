@@ -1,4 +1,4 @@
-#include "decisionquestion.h"
+#include "ai/decisionquestion.h"
 
 void DecisionQuestion::appendQuestion(spQuestion pQuestions)
 {

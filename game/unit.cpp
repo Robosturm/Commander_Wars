@@ -1,32 +1,23 @@
-#include "unit.h"
-
 #include <QColor>
-
-#include "game/player.h"
-
 #include "resource_management/unitspritemanager.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/weaponmanager.h"
-
 #include "resource_management/movementtablemanager.h"
-
-#include "game/gamemap.h"
 
 #include "coreengine/console.h"
 #include "coreengine/globalutils.h"
 
+#include "game/gamemap.h"
 #include "game/gameaction.h"
-
 #include "game/co.h"
 #include "game/createoutline.h"
 #include "game/building.h"
+#include "game/player.h"
+#include "game/unit.h"
 
 #include "menue/editormenue.h"
 
 #include "coreengine/tweentogglevisibility.h"
-
 #include "coreengine/tweenaddcolorall.h"
 
 const float Unit::animationSpeed = 1.5f;

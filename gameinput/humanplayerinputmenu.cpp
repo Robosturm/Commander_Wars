@@ -1,24 +1,21 @@
-#include "humanplayerinputmenu.h"
+#include "gameinput/humanplayerinputmenu.h"
 
 #include "game/gamemap.h"
-
 #include "game/unit.h"
+#include "game/cursor.h"
+
 #include "wiki/fieldinfo.h"
+#include "wiki/wikidatabase.h"
 
 #include "menue/gamemenue.h"
-#include "game/cursor.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/unitspritemanager.h"
-
-#include "wiki/wikidatabase.h"
 
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                            QVector<qint32> costList, QVector<bool> enabledList)

@@ -1,4 +1,4 @@
-#include "copowermeter.h"
+#include "game/ui/copowermeter.h"
 
 #include "game/gamemap.h"
 #include "resource_management/gamemanager.h"

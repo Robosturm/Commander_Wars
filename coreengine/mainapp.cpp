@@ -1,19 +1,12 @@
-#include "mainapp.h"
-#include "game/player.h"
-#include "game/co.h"
-
-#include "wiki/wikidatabase.h"
-
-#include "coreengine/userdata.h"
-
 #include "qfile.h"
 #include "qguiapplication.h"
 #include "qscreen.h"
 #include "qdir.h"
-
 #include "qmessagebox.h"
 #include "qthread.h"
 
+#include "coreengine/userdata.h"
+#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
@@ -33,7 +26,7 @@
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
-
+#include "wiki/wikidatabase.h"
 
 Mainapp* Mainapp::m_pMainapp;
 QThread Mainapp::m_Workerthread;

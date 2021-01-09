@@ -2,7 +2,6 @@
 #define LOCALCLIENT_H
 
 #include "network/NetworkInterface.h"
-
 #include "network/rxtask.h"
 #include "network/txtask.h"
 

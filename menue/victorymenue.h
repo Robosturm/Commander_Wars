@@ -12,11 +12,13 @@
 #include "objects/base/checkbox.h"
 #include "network/NetworkInterface.h"
 
+#include "coreengine/LUPDATE_MACROS.h"
+
 class VictoryMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    enum class GraphModes
+    ENUM_CLASS GraphModes
     {
         Funds,
         Income,

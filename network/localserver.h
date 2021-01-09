@@ -3,9 +3,9 @@
 
 #include <QLocalServer>
 #include <QVector>
+
 #include "network/rxtask.h"
 #include "network/txtask.h"
-
 #include "network/NetworkInterface.h"
 
 /**

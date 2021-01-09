@@ -1,7 +1,6 @@
-#include "markedfielddata.h"
+#include "gameinput/markedfielddata.h"
 
 #include "coreengine/interpreter.h"
-
 #include "coreengine/mainapp.h"
 
 MarkedFieldData::MarkedFieldData()

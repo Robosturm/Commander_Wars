@@ -1,10 +1,9 @@
 #include <QMutexLocker>
 
-#include "replaymenu.h"
+#include "menue/replaymenu.h"
+#include "menue/mainwindow.h"
 
 #include "game/gameanimationfactory.h"
-
-#include "menue/mainwindow.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/dropdownmenu.h"
@@ -12,6 +11,7 @@
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+
 #include "ingamescriptsupport/genericbox.h"
 
 ReplayMenu::ReplayMenu(QString filename)

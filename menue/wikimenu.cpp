@@ -1,5 +1,4 @@
-#include "wikimenu.h"
-
+#include "menue/wikimenu.h"
 #include "menue/mainwindow.h"
 
 #include "resource_management/backgroundmanager.h"

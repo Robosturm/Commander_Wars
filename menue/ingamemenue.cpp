@@ -1,3 +1,6 @@
+#include <qcursor.h>
+#include <qguiapplication.h>
+
 #include "menue/ingamemenue.h"
 
 #include "coreengine/mainapp.h"
@@ -6,11 +9,6 @@
 #include "resource_management/backgroundmanager.h"
 
 #include "game/gamemap.h"
-
-#include "qcursor.h"
-
-#include <qguiapplication.h>
-
 
 InGameMenue::InGameMenue()
 {

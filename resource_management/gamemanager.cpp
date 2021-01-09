@@ -1,7 +1,7 @@
-#include "gamemanager.h"
-
+#include "resource_management/gamemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/buildingspritemanager.h"
+
 #include "game/gamemap.h"
 #include "game/unit.h"
 

@@ -1,15 +1,18 @@
-#include "replayrecorder.h"
+#include <QByteArray>
+#include <QDateTime>
+
+#include "game/gamerecording/replayrecorder.h"
+
+#include "game/gamemap.h"
+#include "game/gameaction.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
-#include "game/gamemap.h"
-#include "game/gameaction.h"
-#include "gameinput/basegameinputif.h"
 #include "coreengine/filesupport.h"
 #include "coreengine/console.h"
 
-#include <QByteArray>
-#include <QDateTime>
+#include "gameinput/basegameinputif.h"
+
 
 ReplayRecorder::ReplayRecorder()
     : QObject()

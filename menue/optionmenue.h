@@ -2,13 +2,10 @@
 #define OPTIONMENUE_H
 
 #include <QObject>
-
-#include <qvector.h>
-
+#include <QVector>
 #include "oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/gameplayandkeys.h"
 
 class OptionMenue : public QObject, public oxygine::Actor

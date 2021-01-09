@@ -1,10 +1,10 @@
 #include <QFileInfo>
-
 #include <QDirIterator>
 
-#include "weaponmanager.h"
+#include "resource_management/weaponmanager.h"
 
 #include "coreengine/mainapp.h"
+
 #include "game/unit.h"
 
 #include "modding/csvtableimporter.h"

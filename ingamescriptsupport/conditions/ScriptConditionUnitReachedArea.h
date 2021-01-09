@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONUNITREACHEDAREA_H
 #define SCRIPTCONDITIONUNITREACHEDAREA_H
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionUnitReachedArea;
 typedef oxygine::intrusive_ptr<ScriptConditionUnitReachedArea> spScriptConditionUnitReachedArea;

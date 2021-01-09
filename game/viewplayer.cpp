@@ -1,5 +1,4 @@
-#include "viewplayer.h"
-
+#include "game/viewplayer.h"
 #include "game/gamemap.h"
 
 Viewplayer::Viewplayer()

@@ -2,9 +2,9 @@
 #define TxTask_H
 
 #include <QObject>
-
 #include "oxygine-framework.h"
-#include "NetworkInterface.h"
+
+#include "network/NetworkInterface.h"
 
 class QIODevice;
 

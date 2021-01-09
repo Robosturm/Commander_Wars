@@ -1,6 +1,7 @@
-#include "gameaction.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+
+#include "game/gameaction.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/building.h"

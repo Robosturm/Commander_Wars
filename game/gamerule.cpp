@@ -1,4 +1,4 @@
-#include "gamerule.h"
+#include "game/gamerule.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

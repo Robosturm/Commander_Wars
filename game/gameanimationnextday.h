@@ -1,11 +1,10 @@
 #ifndef GAMEANIMATIONNEXTDAY_H
 #define GAMEANIMATIONNEXTDAY_H
 
-#include "game/gameanimation.h"
-
 #include <QTimer>
 
-#include "player.h"
+#include "game/gameanimation.h"
+#include "game/player.h"
 
 class GameAnimationNextDay : public GameAnimation
 {

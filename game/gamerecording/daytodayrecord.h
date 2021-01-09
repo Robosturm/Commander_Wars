@@ -2,15 +2,12 @@
 #define DAYTODAYRECORD_H
 
 #include <QObject>
-
 #include <QVector>
+#include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 
-#include "oxygine-framework.h"
-
 #include "game/gamerecording/playerrecord.h"
-
 #include "game/gamerecording/specialevent.h"
 
 class DayToDayRecord;

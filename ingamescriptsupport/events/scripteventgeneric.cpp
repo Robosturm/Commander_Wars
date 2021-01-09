@@ -1,10 +1,11 @@
-#include "scripteventgeneric.h"
+#include "ingamescriptsupport/events/scripteventgeneric.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
+
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"

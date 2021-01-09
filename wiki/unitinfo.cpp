@@ -1,19 +1,13 @@
-#include "unitinfo.h"
+#include "wiki/unitinfo.h"
+#include "wiki/wikidatabase.h"
 
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/movementtablemanager.h"
-
 #include "resource_management/weaponmanager.h"
-
 #include "resource_management/unitspritemanager.h"
-
 #include "resource_management/terrainmanager.h"
-
 #include "resource_management/buildingspritemanager.h"
-
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/gamemanager.h"
 
 #include "game/terrain.h"
@@ -21,8 +15,6 @@
 #include "game/gamemap.h"
 #include "game/battleanimationsprite.h"
 #include "game/gameaction.h"
-
-#include "wiki/wikidatabase.h"
 
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()

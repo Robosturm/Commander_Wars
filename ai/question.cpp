@@ -1,4 +1,4 @@
-#include "question.h"
+#include "ai/question.h"
 
 Question::Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType)
 	: m_MinValue(value),

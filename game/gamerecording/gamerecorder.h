@@ -8,6 +8,8 @@
 
 #include "oxygine-framework.h"
 
+#include "coreengine/LUPDATE_MACROS.h"
+
 class GameRecorder;
 typedef oxygine::intrusive_ptr<GameRecorder> spGameRecorder;
 
@@ -79,7 +81,7 @@ class GameRecorder : public QObject, public FileSerializable, public oxygine::re
 public:
 
 
-    enum class Rang
+    ENUM_CLASS Rang
     {
         S,
         A,

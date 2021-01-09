@@ -1,18 +1,6 @@
-#include "mainwindow.h"
-
 #include <QFile>
 
-#include "coreengine/mainapp.h"
-#include "coreengine/console.h"
-
-#include "coreengine/audiothread.h"
-
-#include "resource_management/backgroundmanager.h"
-#include "resource_management/fontmanager.h"
-#include "resource_management/objectmanager.h"
-
-#include "game/campaign.h"
-
+#include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 #include "menue/gamemenue.h"
 #include "menue/editormenue.h"
@@ -23,17 +11,26 @@
 #include "menue/costylemenu.h"
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
+
+#include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+#include "coreengine/audiothread.h"
+#include "coreengine/globalutils.h"
+
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
+#include "resource_management/gamemanager.h"
+#include "resource_management/unitspritemanager.h"
+
+#include "game/campaign.h"
+
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/dialogs/filedialog.h"
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/folderdialog.h"
-
-#include "coreengine/globalutils.h"
 #include "objects/loadingscreen.h"
-
-#include "resource_management/gamemanager.h"
-#include "resource_management/unitspritemanager.h"
 
 Mainwindow::Mainwindow()
 {
@@ -262,7 +259,7 @@ void Mainwindow::importFromDirectory(QString folder)
                 << "awdc_co" << "awdc_flare" << "awdc_powergain" << "awdc_terrain"
                 << "awdc_unit" << "awdc_unit_image" << "awdc_weather" << "awds_co"
                 << "awds_unit" << "awds_weather" << "cow_debuff_perks" << "cow_resell"
-                << "cow_transfer" << "cow_triangle_weapons" << "map_creator";
+                << "cow_transfer" << "cow_triangle_weapons" << "map_creator" << "coop_mod";
     GlobalUtils::importFilesFromDirectory(folder + "/mods", "mods", filter, false, modExcludes);
     pLoadingScreen->setProgress("Importing custom terrain images", 60);
     GlobalUtils::importFilesFromDirectory(folder + "/customTerrainImages", "customTerrainImages", filter, false);

@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTSPAWNUNIT_H
 #define SCRIPTEVENTSPAWNUNIT_H
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventSpawnUnit : public ScriptEvent
 {

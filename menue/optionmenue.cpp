@@ -1,3 +1,12 @@
+#include <QDir>
+#include <QFileInfoList>
+#include <QTextStream>
+#include <QProcess>
+#include <QGuiApplication>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QScreen>
+
 #include "menue/optionmenue.h"
 #include "menue/mainwindow.h"
 
@@ -20,16 +29,6 @@
 #include "objects/base/label.h"
 #include "objects/base/timespinbox.h"
 #include "objects/base/checkbox.h"
-
-#include <QDir>
-#include <QFileInfoList>
-#include <QTextStream>
-#include <QProcess>
-
-#include <qguiapplication.h>
-#include <qapplication.h>
-#include <qdesktopwidget.h>
-#include <qscreen.h>
 
 OptionMenue::OptionMenue()
 {
@@ -814,7 +813,8 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awdc_weather");
             removeList.append("mods/awdc_terrain");
             removeList.append("mods/awdc_flare");
-            removeList.append("map_creator");
+            removeList.append("map_creator");            
+            removeList.append("coop_mod");
             break;
         }
         case 2:
@@ -831,6 +831,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awdc_terrain");
             removeList.append("mods/awdc_flare");
             removeList.append("map_creator");
+            removeList.append("coop_mod");
             break;
         }
         case 3:
@@ -841,6 +842,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awds_co");
             removeList.append("mods/awds_weather");
             removeList.append("map_creator");
+            removeList.append("coop_mod");
             addList.append("mods/awdc_co");
             addList.append("mods/awdc_unit");
             addList.append("mods/awdc_powergain");

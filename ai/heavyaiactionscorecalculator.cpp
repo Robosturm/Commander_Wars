@@ -1,4 +1,4 @@
-#include "heavyaiactionscorecalculator.h"
+#include "ai/heavyaiactionscorecalculator.h"
 
 HeavyAiActionScoreCalculator::HeavyAiActionScoreCalculator(const QVector<spIslandMap> & islands,
                                                            const InfluenceFrontMap & influenceFrontMap)

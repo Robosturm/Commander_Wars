@@ -1,4 +1,5 @@
-#include "crashreporter.h"
+#include "coreengine/crashreporter.h"
+#include "coreengine/console.h"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -8,7 +9,6 @@
 #include <QTextStream>
 #include <QStandardPaths>
 
-#include <coreengine/console.h>
 
 #ifdef Q_OS_WIN
 #include <windows.h>

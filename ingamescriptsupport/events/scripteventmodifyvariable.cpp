@@ -1,4 +1,4 @@
-#include "scripteventmodifyvariable.h"
+#include "ingamescriptsupport/events/scripteventmodifyvariable.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"

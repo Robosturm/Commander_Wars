@@ -2,9 +2,8 @@
 #define MAPMOVER_H
 
 #include <QObject>
-#include "qtimer.h"
+#include <QTimer>
 #include "oxygine-framework.h"
-
 
 class InGameMenue;
 

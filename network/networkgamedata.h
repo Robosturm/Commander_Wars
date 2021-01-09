@@ -2,9 +2,9 @@
 #define NETWORKGAMEDATA_H
 
 #include <QObject>
+#include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-#include "oxygine-framework.h"
 
 class NetworkGameData;
 typedef oxygine::intrusive_ptr<NetworkGameData> spNetworkGameData;

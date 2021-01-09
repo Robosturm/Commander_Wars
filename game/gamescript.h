@@ -3,10 +3,10 @@
 
 #include <QObject>
 #include <QVector>
+#include "oxygine-framework.h"
+
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
-
-#include "oxygine-framework.h"
 
 class GameScript;
 typedef oxygine::intrusive_ptr<GameScript> spGameScript;

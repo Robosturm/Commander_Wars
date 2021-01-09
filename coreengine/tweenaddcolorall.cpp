@@ -1,4 +1,4 @@
-#include "tweenaddcolorall.h"
+#include "coreengine/tweenaddcolorall.h"
 
 TweenAddColorAll::TweenAddColorAll(QColor addColor, bool all)
     : m_addColor(addColor),

@@ -2,14 +2,12 @@
 #define SCRIPTEVENTDIALOG_H
 
 #include "QVector"
-
 #include "QColor"
+#include "oxygine-framework.h"
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
 #include "game/GameEnums.h"
-
-#include "oxygine-framework.h"
 
 class DialogEntry;
 typedef oxygine::intrusive_ptr<DialogEntry> spDialogEntry;

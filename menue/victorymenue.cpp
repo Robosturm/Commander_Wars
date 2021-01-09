@@ -1,7 +1,6 @@
 #include <QtMath>
 
-#include "victorymenue.h"
-
+#include "menue/victorymenue.h"
 #include "menue/mainwindow.h"
 #include "menue/campaignmenu.h"
 

@@ -1,4 +1,4 @@
-#include "scripteventchangebuildingowner.h"
+#include "ingamescriptsupport/events/scripteventchangebuildingowner.h"
 
 ScriptEventChangeBuildingOwner::ScriptEventChangeBuildingOwner()
     : ScriptEventGeneric(EventType::ChangeBuildingOwner, ScriptEvent::EventChangeBuildingOwner)

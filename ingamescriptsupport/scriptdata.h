@@ -2,9 +2,7 @@
 #define SCRIPTDATA_H
 
 #include <QObject>
-
-#include "qvector.h"
-
+#include <QVector>
 #include "oxygine-framework.h"
 
 #include "conditions/scriptcondition.h"

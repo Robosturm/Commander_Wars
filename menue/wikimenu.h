@@ -6,7 +6,6 @@
 #include "oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
 #include "objects/base/dropdownmenu.h"
 

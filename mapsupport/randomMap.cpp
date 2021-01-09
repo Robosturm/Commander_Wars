@@ -1,26 +1,17 @@
-#include "game/gamemap.h"
-
 #include <limits>
+#include "QRandomGenerator"
+#include "QVector"
+#include "QPoint"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
-#include "QRandomGenerator"
-
-#include "QVector"
-
-#include "QPoint"
-
+#include "game/gamemap.h"
 #include "game/player.h"
-
 #include "game/building.h"
-
 #include "game/unit.h"
-
 #include "game/terrain.h"
-
 #include "game/co.h"
-
 #include "game/unitpathfindingsystem.h"
 
 #include "resource_management/terrainmanager.h"

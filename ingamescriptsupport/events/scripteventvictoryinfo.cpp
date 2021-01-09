@@ -1,4 +1,4 @@
-#include "scripteventvictoryinfo.h"
+#include "ingamescriptsupport/events/scripteventvictoryinfo.h"
 
 #include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"

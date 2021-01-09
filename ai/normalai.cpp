@@ -1,4 +1,5 @@
-#include "normalai.h"
+#include "QElapsedTimer"
+#include <QSettings>
 
 #include "coreengine/qmlvector.h"
 #include "coreengine/globalutils.h"
@@ -10,11 +11,12 @@
 #include "game/gamemap.h"
 #include "game/building.h"
 #include "game/unitpathfindingsystem.h"
+
+#include "ai/normalai.h"
 #include "ai/targetedunitpathfindingsystem.h"
+
 #include "resource_management/weaponmanager.h"
 
-#include "QElapsedTimer"
-#include <QSettings>
 
 NormalAi::NormalAi(QString configurationFile)
     : CoreAI (GameEnums::AiTypes_Normal)

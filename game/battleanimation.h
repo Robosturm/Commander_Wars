@@ -2,14 +2,13 @@
 #define BATTLEANIMATION_H
 
 #include <QObject>
-
-#include "game/gameanimation.h"
-
-#include "game/GameEnums.h"
-
 #include <QTimer>
 
+#include "game/gameanimation.h"
+#include "game/GameEnums.h"
 #include "game/battleanimationsprite.h"
+
+#include "coreengine/LUPDATE_MACROS.h"
 
 class BattleAnimation : public GameAnimation
 {
@@ -17,7 +16,7 @@ class BattleAnimation : public GameAnimation
 public:
     static constexpr qint32 spriteWidth = 127;
     static constexpr qint32 spriteHeigth = 192;
-    enum class AnimationProgress
+    ENUM_CLASS AnimationProgress
     {
         MoveIn,
         MoveStop,

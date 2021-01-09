@@ -1,25 +1,21 @@
 #include <QFile>
 #include <qdir.h>
-
 #include <qcryptographichash.h>
 
 #include "menue/editormenue.h"
+#include "menue/mainwindow.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/pathfindingsystem.h"
-
-#include "menue/mainwindow.h"
+#include "coreengine/console.h"
 
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-#include "coreengine/console.h"
-
 #include "objects/dialogs/filedialog.h"
-
 #include "objects/dialogs/editor/mapeditdialog.h"
 #include "objects/dialogs/editor/dialogmodifyunit.h"
 #include "objects/dialogs/editor/dialogmodifybuilding.h"
@@ -32,15 +28,13 @@
 #include "objects/base/selectkey.h"
 
 #include "ingamescriptsupport/scripteditor.h"
-
 #include "ingamescriptsupport/campaigneditor.h"
+#include "ingamescriptsupport/genericbox.h"
 
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
 #include "wiki/fieldinfo.h"
-
-#include "ingamescriptsupport/genericbox.h"
 
 EditorMenue* EditorMenue::m_pInstance = nullptr;
 

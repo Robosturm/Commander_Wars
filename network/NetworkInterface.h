@@ -13,6 +13,7 @@
 #include "oxygine-framework.h"
 
 #include "coreengine/console.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class Serializable;
 
@@ -29,7 +30,7 @@ public:
     /**
       * @brief this enum contains all message recievers of the network
       */
-    enum class NetworkSerives
+    ENUM_CLASS NetworkSerives
     {
         None = -1,
         Game,                   /**< used for game stream data */

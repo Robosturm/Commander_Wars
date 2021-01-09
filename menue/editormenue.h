@@ -1,22 +1,22 @@
 #ifndef EDITORMENUE_H
 #define EDITORMENUE_H
 
+#include <QObject>
+#include "oxygine/KeyEvent.h"
+
 #include "menue/ingamemenue.h"
 
-#include <QObject>
-
 #include "objects/editorselection.h"
-
 #include "objects/base/topbar.h"
 #include "objects/base/label.h"
 
-#include "oxygine/KeyEvent.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class EditorMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    enum class EditorModes
+    ENUM_CLASS EditorModes
     {
         PlaceEditorSelection,
         RemoveUnits,
@@ -25,7 +25,7 @@ public:
         CopySelection,
     };
 
-    enum class CursorModes
+    ENUM_CLASS CursorModes
     {
         Rect,
         Circle,

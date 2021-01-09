@@ -2,8 +2,8 @@
 #define GLOBALUTILS_H
 
 #include <QObject>
-#include "coreengine/qmlvector.h"
 #include <QRandomGenerator>
+#include "coreengine/qmlvector.h"
 #include "coreengine/qmlvector.h"
 
 class GlobalUtils : public QObject
@@ -17,6 +17,8 @@ public:
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
     static qint32 randIntBase(qint32 low, qint32 high);
+    static float randFloatBase(float low, float high);
+    static double randDoubleBase(double low, double high);
 public slots:
     /**
      * @brief seed
@@ -29,6 +31,8 @@ public slots:
      */
     static quint32 getSeed();
     static qint32 randInt(qint32 low, qint32 high);
+    static float randFloat(float low, float high);
+    static double randDouble(double low, double high);
     /**
      * @brief roundUp rounds all numbers up. 9.1 -> 10
      * @param value
@@ -85,6 +89,37 @@ public slots:
      * @param replace
      */
     static void importFilesFromDirectory(QString folder, QString targetDirectory, QStringList filter, bool replace, QStringList excludeFolders = QStringList());
+    /**
+     * @brief sigmoid
+     * @param x
+     * @return
+     */
+    static double sigmoid(double x);
+    /**
+     * @brief sigmoid_derivative
+     * @param x
+     * @return
+     */
+    static double sigmoid_derivative(double x);
+    /**
+     * @brief relu
+     * @param x
+     * @return
+     */
+    static double relu(double x);
+    /**
+     * @brief relu_derivative
+     * @param x
+     * @return
+     */
+    static double relu_derivative(double x);
+    /**
+     * @brief distanceVector
+     * @param v1
+     * @param v2
+     * @return
+     */
+    static double distanceVector(const QVector<double>& v1, const QVector<double>& v2);
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;

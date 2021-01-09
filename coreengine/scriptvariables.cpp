@@ -1,7 +1,5 @@
-#include "scriptvariables.h"
-
-#include "interpreter.h"
-
+#include "coreengine/scriptvariables.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 
 ScriptVariables::ScriptVariables()

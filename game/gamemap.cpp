@@ -1,4 +1,4 @@
-#include "game/gamemap.h"
+#include <QFile>
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -16,23 +16,20 @@
 #include "resource_management/gamerulemanager.h"
 
 #include "game/terrain.h"
-
 #include "game/unit.h"
-
-#include "gameinput/humanplayerinput.h"
-
-#include "game/building.h"
-
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimationfactory.h"
 #include "game/gameanimationnextday.h"
+#include "game/building.h"
+#include "game/gamemap.h"
+
+#include "gameinput/humanplayerinput.h"
 
 #include "menue/gamemenue.h"
 
 #include "objects/loadingscreen.h"
 
-#include <QFile>
 
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";

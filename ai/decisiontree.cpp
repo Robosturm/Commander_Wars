@@ -1,15 +1,13 @@
 #include "ai/coreai.h"
-
-#include "decisiontree.h"
-
-#include "leaf.h"
+#include "ai/decisiontree.h"
+#include "ai/leaf.h"
 
 #include "coreengine/console.h"
+#include <coreengine/settings.h>
 
 #include <qcryptographichash.h>
 #include <qfile.h>
 #include <qdatastream.h>
-#include <coreengine/settings.h>
 
 DecisionTree::DecisionTree(spDecisionNode pRootNode)
 	: m_pRootNode(pRootNode)

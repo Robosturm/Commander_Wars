@@ -1,5 +1,4 @@
-#include "objectmanager.h"
-
+#include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/audiothread.h"

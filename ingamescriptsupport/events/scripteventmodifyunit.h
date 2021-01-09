@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTMODIFYUNIT_H
 #define SCRIPTEVENTMODIFYUNIT_H
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyUnit  : public ScriptEvent
 {

@@ -1,4 +1,4 @@
-#include "scripteventspawnbuilding.h"
+#include "ingamescriptsupport/events/scripteventspawnbuilding.h"
 
 #include "resource_management/buildingspritemanager.h"
 

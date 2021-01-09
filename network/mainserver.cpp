@@ -1,6 +1,6 @@
-#include "mainserver.h"
-
 #include "qbuffer.h"
+
+#include "network/mainserver.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/filesupport.h"

@@ -3,7 +3,8 @@
 
 #include <qvector.h>
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
+
 #include "objects/base/textbox.h"
 
 class ScriptEventGeneric : public ScriptEvent

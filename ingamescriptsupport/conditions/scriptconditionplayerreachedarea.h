@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONPLAYERREACHEDAREA_H
 #define SCRIPTCONDITIONPLAYERREACHEDAREA_H
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionPlayerReachedArea;
 typedef oxygine::intrusive_ptr<ScriptConditionPlayerReachedArea> spScriptConditionPlayerReachedArea;

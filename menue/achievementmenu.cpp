@@ -11,6 +11,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "game/gamemap.h"
+
 #include "wiki/wikidatabase.h"
 
 #include "objects/base/label.h"

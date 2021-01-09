@@ -2,7 +2,7 @@
 #define SCRIPTEVENTVICTORYINFO_H
 
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventVictoryInfo : public ScriptEvent
 {

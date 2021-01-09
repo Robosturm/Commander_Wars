@@ -1,4 +1,7 @@
-#include "mapselectionmapsmenue.h"
+#include "menue/mapselectionmapsmenue.h"
+#include "menue/mainwindow.h"
+#include "menue/gamemenue.h"
+#include "menue/campaignmenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -10,24 +13,16 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/cospritemanager.h"
 
-
 #include "game/gamemap.h"
-
 #include "game/campaign.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 #include "objects/dialogs/editor/dialograndommap.h"
 #include "objects/dialogs/filedialog.h"
 
-#include "menue/mainwindow.h"
-#include "menue/gamemenue.h"
-#include "menue/campaignmenu.h"
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
-
 
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : QObject()

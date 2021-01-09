@@ -1,4 +1,4 @@
-#include "weather.h"
+#include "game/weather.h"
 
 #include "coreengine/mainapp.h"
 

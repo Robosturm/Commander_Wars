@@ -1,29 +1,22 @@
-#include "gamerules.h"
-
+#include "coreengine/mainapp.h"
+#include "coreengine/filesupport.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
 
+#include "game/gamerules.h"
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
-
 #include "game/unit.h"
+#include "game/gameanimationfactory.h"
 
 #include "resource_management/cospritemanager.h"
-
 #include "resource_management/gamemanager.h"
 #include "resource_management/gamerulemanager.h"
-
 #include "resource_management/coperkmanager.h"
 #include "resource_management/gamemanager.h"
 
-#include "game/gameanimationfactory.h"
 #include "menue/gamemenue.h"
-
-#include "coreengine/mainapp.h"
-#include "coreengine/filesupport.h"
 
 GameRules::GameRules()
     : QObject()

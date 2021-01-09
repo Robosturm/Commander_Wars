@@ -1,15 +1,13 @@
-#include "game/unitpathfindingsystem.h"
+#include "qvector4d.h"
 
 #include "resource_management/movementtablemanager.h"
-
-#include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 
 #include "game/player.h"
 #include "game/co.h"
-
-#include "qvector4d.h"
+#include "game/gamemap.h"
+#include "game/unitpathfindingsystem.h"
 
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     : PathFindingSystem(pUnit->getX(), pUnit->getY(),

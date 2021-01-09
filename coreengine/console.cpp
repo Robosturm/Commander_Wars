@@ -2,7 +2,9 @@
 #include <QMutexLocker>
 #include <QString>
 #include <QDir>
-#include <QCoreApplication>
+#include <QClipboard>
+#include <QGuiApplication>
+#include <qlogging.h>
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
@@ -18,9 +20,6 @@
 #include "spritingsupport/spritecreator.h"
 
 #include "oxygine/KeyEvent.h"
-#include "qclipboard.h"
-#include "qguiapplication.h"
-#include "qlogging.h"
 
 // values which differ from release to debug build
 #ifdef GAMEDEBUG

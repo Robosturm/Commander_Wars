@@ -1,9 +1,7 @@
-#include "daytodayrecord.h"
+#include "game/gamerecording/daytodayrecord.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 DayToDayRecord::DayToDayRecord()

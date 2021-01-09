@@ -363,6 +363,13 @@ set(${PROJECT_NAME}_SRCS
         ai/influencefrontmap.cpp
         ai/heavyaiactionscorecalculator.cpp
 
+        ai/neuralnetwork/neural/edge.cpp
+        ai/neuralnetwork/neural/layer.cpp
+        ai/neuralnetwork/neural/neuralnetwork.cpp
+        ai/neuralnetwork/neural/neuron.cpp
+        ai/neuralnetwork/dataset/dataset.cpp
+        ai/neuralnetwork/optimizer/optimizer.cpp
+
         # multiplayer
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp

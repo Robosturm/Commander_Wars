@@ -2,18 +2,16 @@
 #define GAMERULES_H
 
 #include <QObject>
+#include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
+#include "coreengine/timer.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/victoryrule.h"
 #include "game/gamerule.h"
 #include "game/weather.h"
-
 #include "game/GameEnums.h"
-
-#include "coreengine/timer.h"
-
-#include "oxygine-framework.h"
 
 #include "multiplayer/password.h"
 
@@ -33,7 +31,7 @@ class GameRules : public QObject, public FileSerializable, public oxygine::ref_c
 {
     Q_OBJECT
 public:
-    enum class DayToDayScreen
+    ENUM_CLASS DayToDayScreen
     {
         Default,
         Permanent

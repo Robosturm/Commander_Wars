@@ -1,21 +1,12 @@
 #include "game/gameanimationfactory.h"
-
 #include "game/gamemap.h"
-
 #include "game/gameanimationwalk.h"
-
 #include "game/gameanimationcapture.h"
-
 #include "game/gameanimationdialog.h"
-
 #include "game/gameanimationpower.h"
-
 #include "game/gameanimationnextday.h"
-
 #include "game/battleanimation.h"
-
 #include "game/unit.h"
-
 #include "game/gameaction.h"
 
 #include "menue/gamemenue.h"

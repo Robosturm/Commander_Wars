@@ -1,9 +1,10 @@
-#include "multiplayermenu.h"
-
 #include "qcryptographichash.h"
-
 #include "qdir.h"
 #include "qdiriterator.h"
+
+#include "multiplayer/multiplayermenu.h"
+#include "multiplayer/lobbymenu.h"
+#include "multiplayer/networkcommands.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -11,7 +12,6 @@
 #include "coreengine/filesupport.h"
 #include "coreengine/globalutils.h"
 
-#include "multiplayer/lobbymenu.h"
 #include "menue/gamemenue.h"
 
 #include "network/tcpclient.h"
@@ -31,9 +31,6 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-
-#include "multiplayer/networkcommands.h"
-
 
 Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
     : MapSelectionMapsMenue(Settings::getHeight() - 380),

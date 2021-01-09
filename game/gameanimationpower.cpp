@@ -1,5 +1,3 @@
-#include "gameanimationpower.h"
-
 #include "objects/rotatingsprite.h"
 
 #include "resource_management/gamemanager.h"
@@ -15,7 +13,7 @@
 #include "coreengine/audiothread.h"
 
 #include "game/gameanimationfactory.h"
-
+#include "game/gameanimationpower.h"
 #include "game/player.h"
 #include "game/co.h"
 

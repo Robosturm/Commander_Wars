@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONSTARTOFTURN_H
 #define SCRIPTCONDITIONSTARTOFTURN_H
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionStartOfTurn;
 typedef oxygine::intrusive_ptr<ScriptConditionStartOfTurn> spScriptConditionStartOfTurn;

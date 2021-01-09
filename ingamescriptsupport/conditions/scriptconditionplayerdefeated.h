@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONPLAYERDEFEATED_H
 #define SCRIPTCONDITIONPLAYERDEFEATED_H
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionPlayerDefeated;
 typedef oxygine::intrusive_ptr<ScriptConditionPlayerDefeated> spScriptConditionPlayerDefeated;

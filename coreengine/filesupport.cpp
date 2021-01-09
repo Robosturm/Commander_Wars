@@ -1,5 +1,4 @@
-#include "filesupport.h"
-
+#include "coreengine/filesupport.h"
 #include "coreengine/settings.h"
 
 #include <QCryptographicHash>

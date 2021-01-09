@@ -1,4 +1,4 @@
-#include "scripteventchangeplayerteam.h"
+#include "ingamescriptsupport/events/scripteventchangeplayerteam.h"
 
 ScriptEventChangePlayerTeam::ScriptEventChangePlayerTeam()
     : ScriptEventGeneric(EventType::ChangePlayerTeam, ScriptEvent::EventChangePlayerTeam)

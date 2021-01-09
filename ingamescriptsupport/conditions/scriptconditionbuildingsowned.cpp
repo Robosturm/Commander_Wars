@@ -1,8 +1,7 @@
-#include "scriptconditionbuildingsowned.h"
+#include "ingamescriptsupport/conditions/scriptconditionbuildingsowned.h"
 
 #include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
-
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"

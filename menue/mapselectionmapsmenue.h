@@ -2,9 +2,7 @@
 #define MAPSELECTIONMAPSMENUE_H
 
 #include <QObject>
-
-#include "QFileInfo"
-
+#include <QFileInfo>
 #include "oxygine-framework.h"
 
 #include "objects/mapselectionview.h"
@@ -19,13 +17,15 @@
 
 #include "game/campaign.h"
 
+#include "coreengine/LUPDATE_MACROS.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    enum class MapSelectionStep
+    ENUM_CLASS MapSelectionStep
     {
         selectMap,
         selectRules,

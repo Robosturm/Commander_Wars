@@ -1,12 +1,10 @@
-#include "campaign.h"
-
 #include "qfile.h"
-
 #include "qtextstream.h"
 
-#include "coreengine/mainapp.h"
-
+#include "game/campaign.h"
 #include "game/gamemap.h"
+
+#include "coreengine/mainapp.h"
 
 const QString Campaign::scriptName = "campaignScript";
 

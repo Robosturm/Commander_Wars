@@ -1,4 +1,4 @@
-#include "coperkmanager.h"
+#include "resource_management/coperkmanager.h"
 
 COPerkManager::COPerkManager()
     : RessourceManagement<COPerkManager>("/images/co_perks/res.xml",

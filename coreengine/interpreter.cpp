@@ -317,4 +317,16 @@ void Interpreter::deleteObject(QString name)
     doString(order);
 }
 
-
+bool Interpreter::exists(QString object, QString function)
+{
+    QJSValue objPointer = globalObject().property(object);
+    if (objPointer.isObject())
+    {
+        QJSValue funcPointer = objPointer.property(function);
+        if (funcPointer.isCallable())
+        {
+            return true;
+        }
+    }
+    return false;
+}

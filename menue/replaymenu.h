@@ -4,7 +4,9 @@
 #include <QMutex>
 
 #include "menue/gamemenue.h"
+
 #include "objects/base/v_scrollbar.h"
+
 #include "gameinput/humanplayerinput.h"
 #include "game/viewplayer.h"
 #include "game/GameEnums.h"

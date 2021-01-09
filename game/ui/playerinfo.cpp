@@ -1,4 +1,4 @@
-#include "playerinfo.h"
+#include "game/ui/playerinfo.h"
 
 #include "game/gamemap.h"
 

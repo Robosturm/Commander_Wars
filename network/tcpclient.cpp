@@ -2,8 +2,9 @@
 
 #include "network/rxtask.h"
 #include "network/txtask.h"
-#include "coreengine/mainapp.h"
 #include "network/tcpclient.h"
+
+#include "coreengine/mainapp.h"
 
 
 TCPClient::TCPClient()

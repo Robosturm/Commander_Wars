@@ -73,7 +73,7 @@ public slots:
     QString getGlobalString(QString var);
     QJSValue getGlobal(QString var);
     void setGlobal(QString var, QJSValue obj);
-
+    bool exists(QString object, QString function);
 
 private:
     explicit Interpreter();    

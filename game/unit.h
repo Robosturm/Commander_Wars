@@ -7,6 +7,7 @@
 
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/GameEnums.h"
 
@@ -26,7 +27,7 @@ public:
     static constexpr float MAX_UNIT_HP = 10.0f;
     static constexpr float DAMAGE_100 = 100.0f;
 
-    enum class Priorities
+    ENUM_CLASS Priorities
     {
         Colored = 0,
         Outline,

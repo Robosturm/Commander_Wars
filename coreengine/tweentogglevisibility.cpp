@@ -1,4 +1,4 @@
-#include "tweentogglevisibility.h"
+#include "coreengine/tweentogglevisibility.h"
 
 #include "oxygine/actor/Sprite.h"
 

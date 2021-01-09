@@ -1,4 +1,4 @@
-#include "scripteventchangecobar.h"
+#include "ingamescriptsupport/events/scripteventchangecobar.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -8,7 +8,6 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"
-
 #include "objects/base/label.h"
 
 ScriptEventChangeCOBar::ScriptEventChangeCOBar()

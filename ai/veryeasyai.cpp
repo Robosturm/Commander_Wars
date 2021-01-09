@@ -1,25 +1,21 @@
-#include "veryeasyai.h"
+#include <QSettings>
+
+#include "ai/veryeasyai.h"
+#include "ai/islandmap.h"
+#include "ai/targetedunitpathfindingsystem.h"
 
 #include "game/gameaction.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 #include "game/building.h"
 #include "game/unit.h"
 #include "game/gamemap.h"
-
 #include "game/unitpathfindingsystem.h"
-
-#include "ai/targetedunitpathfindingsystem.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
 
-#include "ai/islandmap.h"
-
 #include "coreengine/globalutils.h"
-#include <QSettings>
 
 VeryEasyAI::VeryEasyAI()
     : CoreAI(GameEnums::AiTypes_VeryEasy),

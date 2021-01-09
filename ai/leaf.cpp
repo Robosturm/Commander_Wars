@@ -1,6 +1,5 @@
-#include "leaf.h"
-
-#include "decisiontree.h"
+#include "ai/leaf.h"
+#include "ai/decisiontree.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"

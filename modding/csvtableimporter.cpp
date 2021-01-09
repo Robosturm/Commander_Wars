@@ -1,7 +1,8 @@
-#include "csvtableimporter.h"
-
 #include <qfile.h>
 #include <qtextstream.h>
+
+#include "modding/csvtableimporter.h"
+
 #include "coreengine/interpreter.h"
 
 QString CsvTableImporter::ImportCsvTable(QString csvTable, QString jsHeaderString, QString tableName, QStringList& newData)

@@ -1,20 +1,15 @@
-#include "terraininfo.h"
+#include "wiki/terraininfo.h"
+#include "wiki/wikidatabase.h"
 
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/movementtablemanager.h"
-
 #include "resource_management/unitspritemanager.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 #include "ai/coreai.h"
-
-#include "wiki/wikidatabase.h"
 
 TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     : QObject()

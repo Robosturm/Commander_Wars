@@ -1,4 +1,4 @@
-#include "defaultwikipage.h"
+#include "wiki/defaultwikipage.h"
 
 #include "coreengine/interpreter.h"
 

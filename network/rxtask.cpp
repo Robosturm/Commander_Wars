@@ -1,7 +1,6 @@
 #include <QIODevice>
 
 #include "network/rxtask.h"
-
 #include "network/NetworkInterface.h"
 
 RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId)

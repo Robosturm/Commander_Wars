@@ -1,13 +1,12 @@
-#include "gameanimationdialog.h"
+#include "qfile.h"
+
+#include "game/gameanimationdialog.h"
+#include "game/gameanimationfactory.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 
 #include "menue/gamemenue.h"
-
-#include "game/gameanimationfactory.h"
-
-#include "qfile.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"

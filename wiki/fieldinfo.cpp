@@ -1,7 +1,5 @@
-#include "fieldinfo.h"
-
+#include "wiki/fieldinfo.h"
 #include "wiki/terraininfo.h"
-
 #include "wiki/unitinfo.h"
 
 FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)

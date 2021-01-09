@@ -2,7 +2,6 @@
 #define MULTIPLAYERMENU_H
 
 #include "memory.h"
-
 #include <QObject>
 #include <QTimer>
 #include "oxygine-framework.h"
@@ -10,6 +9,7 @@
 #include "objects/base/chat.h"
 
 #include "menue/mapselectionmapsmenue.h"
+
 #include "network/NetworkInterface.h"
 
 #include "multiplayer/password.h"

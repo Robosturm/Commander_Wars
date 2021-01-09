@@ -1,13 +1,10 @@
-#include "victoryrule.h"
-
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 
+#include "game/victoryrule.h"
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 const QString VictoryRule::checkbox = "checkbox";

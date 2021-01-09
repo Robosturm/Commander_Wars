@@ -8,9 +8,10 @@
 #include <QCoreApplication>
 #include "QMutex"
 
-
 #include "oxygine/core/gamewindow.h"
+
 #include "coreengine/settings.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class AudioThread;
 class WorkerThread;
@@ -22,7 +23,7 @@ public:
     /**
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
-    enum class ZOrder
+    ENUM_CLASS ZOrder
     {
         Background = std::numeric_limits<qint32>::min(),
         Map,

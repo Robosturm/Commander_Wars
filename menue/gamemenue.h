@@ -3,20 +3,22 @@
 
 #include <QObject>
 #include <QTimer>
+
 #include <menue/ingamemenue.h>
-#include "game/gameaction.h"
-#include "game/gamemap.h"
-#include "game/ui/playerinfo.h"
-#include "game/ui/ingameinfobar.h"
-#include "objects/base/label.h"
 
 #include "network/NetworkInterface.h"
 
 #include "objects/base/chat.h"
+#include "objects/base/closeablepopup.h"
+#include "objects/base/label.h"
 
 #include "game/gamerecording/replayrecorder.h"
+#include "game/gameaction.h"
+#include "game/gamemap.h"
+#include "game/ui/playerinfo.h"
+#include "game/ui/ingameinfobar.h"
 
-#include "objects/base/closeablepopup.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class GameMenue;
 typedef oxygine::intrusive_ptr<GameMenue> spGameMenue;
@@ -28,7 +30,7 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    enum class  AnimationSkipMode
+    ENUM_CLASS  AnimationSkipMode
     {
         None,
         All,

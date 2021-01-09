@@ -1,9 +1,8 @@
-#include "dialogpasswordandadress.h"
+#include "multiplayer/dialogpasswordandadress.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)

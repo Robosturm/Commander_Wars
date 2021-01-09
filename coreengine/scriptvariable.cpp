@@ -1,9 +1,6 @@
-#include "scriptvariable.h"
-
-#include "interpreter.h"
-
+#include "coreengine/scriptvariable.h"
+#include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
-
 #include "coreengine/filesupport.h"
 
 ScriptVariable::ScriptVariable(QString id)

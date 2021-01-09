@@ -1,7 +1,6 @@
-#include "cursordata.h"
+#include "gameinput/cursordata.h"
 
 #include "coreengine/interpreter.h"
-
 #include "coreengine/mainapp.h"
 
 CursorData::CursorData()

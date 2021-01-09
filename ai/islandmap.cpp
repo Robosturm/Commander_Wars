@@ -1,13 +1,10 @@
-#include "islandmap.h"
+#include "ai/islandmap.h"
 
 #include "coreengine/mainapp.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
-
 #include "game/unitpathfindingsystem.h"
 
 IslandMap::IslandMap(QString unitID, Player* pOwner)

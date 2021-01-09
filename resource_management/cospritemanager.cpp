@@ -1,7 +1,8 @@
 #include <QFileInfo>
-
 #include <QDirIterator>
-#include "cospritemanager.h"
+
+#include "resource_management/cospritemanager.h"
+
 #include "coreengine/mainapp.h"
 
 #include "spritingsupport/spritecreator.h"

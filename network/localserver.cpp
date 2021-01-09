@@ -1,6 +1,6 @@
-#include "localserver.h"
-
 #include <qlocalsocket.h>
+
+#include "network/localserver.h"
 
 #include "coreengine/mainapp.h"
 

@@ -2,10 +2,9 @@
 #define WIKIPAGE_H
 
 #include <QObject>
+#include "oxygine/KeyEvent.h"
 
 #include "objects/base/panel.h"
-
-#include "oxygine/KeyEvent.h"
 
 class Wikipage;
 typedef oxygine::intrusive_ptr<Wikipage> spWikipage;

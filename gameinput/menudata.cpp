@@ -1,4 +1,4 @@
-#include "menudata.h"
+#include "gameinput/menudata.h"
 
 #include "coreengine/console.h"
 
@@ -7,9 +7,7 @@
 #include "resource_management/unitspritemanager.h"
 
 #include "game/gamemap.h"
-
 #include "game/unit.h"
-
 #include "game/player.h"
 #include "game/co.h"
 

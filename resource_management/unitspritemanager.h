@@ -1,8 +1,8 @@
 #ifndef UNITSPRITEMANAGER_H
 #define UNITSPRITEMANAGER_H
 
-
 #include "game/GameEnums.h"
+
 #include "resource_management/RessourceManagement.h"
 
 class UnitSpriteManager : public QObject, public RessourceManagement<UnitSpriteManager>

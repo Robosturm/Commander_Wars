@@ -7,6 +7,7 @@
 #include <QDirIterator>
 #include <QCoreApplication>
 #include "oxygine-framework.h"
+
 #include "coreengine/interpreter.h"
 #include "coreengine/settings.h"
 

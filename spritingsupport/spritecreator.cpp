@@ -1,11 +1,10 @@
-#include "coreengine/console.h"
-
-#include "coreengine/mainapp.h"
-
 #include "qdir.h"
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qdiriterator.h"
+
+#include "coreengine/console.h"
+#include "coreengine/mainapp.h"
 
 #include "spritingsupport/spritecreator.h"
 

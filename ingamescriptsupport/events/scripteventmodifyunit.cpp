@@ -1,4 +1,4 @@
-#include "scripteventmodifyunit.h"
+#include "ingamescriptsupport/events/scripteventmodifyunit.h"
 
 #include "resource_management/fontmanager.h"
 

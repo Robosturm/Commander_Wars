@@ -7,11 +7,10 @@
 #include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-
 #include "coreengine/JsCallback.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/unit.h"
-
 #include "game/building.h"
 
 class Player;
@@ -27,7 +26,7 @@ public:
     /**
      * @brief The DrawPriority enum z-priority for sprites
      */
-    enum class DrawPriority
+    ENUM_CLASS DrawPriority
     {
         MarkedFieldMap,
         Terrain = 0,

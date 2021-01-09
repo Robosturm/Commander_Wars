@@ -1,8 +1,7 @@
 #ifndef SCRIPTCONDITIONUNITDESTROYED_H
 #define SCRIPTCONDITIONUNITDESTROYED_H
 
-#include "scriptcondition.h"
-
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionUnitDestroyed;
 typedef oxygine::intrusive_ptr<ScriptConditionUnitDestroyed> spScriptConditionUnitDestroyed;

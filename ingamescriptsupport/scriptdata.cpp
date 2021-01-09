@@ -1,4 +1,4 @@
-#include "scriptdata.h"
+#include "ingamescriptsupport/scriptdata.h"
 
 const QString ScriptData::victoryInfo = "victoryInfo";
 const QString ScriptData::immediateStart = "immediateStart";

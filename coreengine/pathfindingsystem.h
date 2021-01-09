@@ -6,9 +6,10 @@
 #include <QVector>
 #include <QPoint>
 #include <qlist.h>
-#include "coreengine/qmlvector.h"
-#include "oxygine-framework.h"
 #include "array"
+#include "oxygine-framework.h"
+
+#include "coreengine/qmlvector.h"
 
 class PathFindingSystem : public QObject, public oxygine::ref_counter
 {
@@ -144,7 +145,7 @@ public:
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @return
      */
-    QVector<QPoint> getAllNodePoints();
+    QVector<QPoint> getAllNodePoints(qint32 maxRange = infinite);
 public slots:
     /**
      * @brief isReachable

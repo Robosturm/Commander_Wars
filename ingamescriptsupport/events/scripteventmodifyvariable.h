@@ -2,7 +2,7 @@
 #define SCRIPTEVENTMODIFYVARIABLE_H
 
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyVariable : public ScriptEvent
 {

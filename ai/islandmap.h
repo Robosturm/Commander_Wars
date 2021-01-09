@@ -2,7 +2,6 @@
 #define ISLANDMAP_H
 
 #include <QObject>
-
 #include <QVector>
 
 #include "oxygine-framework.h"

@@ -1,7 +1,11 @@
-#include "campaigneditor.h"
+#include "qdir.h"
+#include "qfile.h"
+#include "objects/base/label.h"
+
+#include "ingamescriptsupport/campaigneditor.h"
+#include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
@@ -9,22 +13,10 @@
 #include "game/gamemap.h"
 
 #include "objects/dialogs/filedialog.h"
-
 #include "objects/dialogs/folderdialog.h"
-
 #include "objects/base/checkbox.h"
-
 #include "objects/base/spinbox.h"
-
 #include "objects/dialogs/dialogmessagebox.h"
-
-#include "ingamescriptsupport/genericbox.h"
-
-#include "qdir.h"
-
-#include "qfile.h"
-
-#include "objects/base/label.h"
 
 const QString CampaignEditor::campaign = "campaign";
 const QString CampaignEditor::campaignName = "campaignName";

@@ -1,20 +1,22 @@
+#include <QFile>
+#include <QTime>
+#include <qguiapplication.h>
+
 #include "menue/gamemenue.h"
-
-#include "game/player.h"
-#include "game/co.h"
-
 #include "menue/victorymenue.h"
+
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/tweenaddcolorall.h"
+
 #include "ai/proxyai.h"
 
 #include "gameinput/humanplayerinput.h"
-
+#include "game/player.h"
+#include "game/co.h"
 #include "game/gameanimationfactory.h"
-
 #include "game/unitpathfindingsystem.h"
-
 #include "game/battleanimation.h"
 #include "game/gameanimationdialog.h"
 
@@ -22,18 +24,19 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/achievementmanager.h"
 
+#include "objects/base/tableview.h"
 #include "objects/dialogs/filedialog.h"
-
 #include "objects/dialogs/ingame/coinfodialog.h"
-
 #include "objects/dialogs/ingame/dialogvictoryconditions.h"
 #include "objects/dialogs/dialogconnecting.h"
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/dialogs/dialogtextinput.h"
-
-#include "coreengine/tweenaddcolorall.h"
+#include "objects/dialogs/ingame/dialogattacklog.h"
+#include "objects/dialogs/ingame/dialogunitinfo.h"
+#include "objects/gameplayandkeys.h"
 
 #include "multiplayer/networkcommands.h"
+
 #include "network/tcpserver.h"
 #include "network/localserver.h"
 
@@ -41,14 +44,6 @@
 
 #include "ingamescriptsupport/genericbox.h"
 
-#include "objects/base/tableview.h"
-#include "objects/dialogs/ingame/dialogattacklog.h"
-#include "objects/dialogs/ingame/dialogunitinfo.h"
-#include "objects/gameplayandkeys.h"
-
-#include <QFile>
-#include <QTime>
-#include <qguiapplication.h>
 
 spGameMenue GameMenue::m_pInstance = nullptr;
 

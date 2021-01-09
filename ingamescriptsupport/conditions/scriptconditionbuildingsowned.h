@@ -2,7 +2,7 @@
 #define SCRIPTCONDITIONBUILDINGSOWNED_H
 
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingsOwned;
 typedef oxygine::intrusive_ptr<ScriptConditionBuildingsOwned> spScriptConditionBuildingsOwned;

@@ -4,15 +4,10 @@
 #include "coreengine/console.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/building.h"
-
 #include "game/unit.h"
-
 #include "game/terrain.h"
-
 #include "game/co.h"
 
 // some local constants to map old cow stuff to this brand new cool version

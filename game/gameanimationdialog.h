@@ -1,13 +1,12 @@
 #ifndef GAMEANIMATIONDIALOG_H
 #define GAMEANIMATIONDIALOG_H
 
-#include "game/gameanimation.h"
-
-#include "game/GameEnums.h"
-
 #include <QTimer>
 #include <QElapsedTimer>
 #include "oxygine/KeyEvent.h"
+
+#include "game/gameanimation.h"
+#include "game/GameEnums.h"
 
 class GameAnimationDialog : public GameAnimation
 {

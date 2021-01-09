@@ -2,7 +2,7 @@
 #define SCRIPTCONDITIONTERRAINDESTROYED_H
 
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionTerrainDestroyed;
 typedef oxygine::intrusive_ptr<ScriptConditionTerrainDestroyed> spScriptConditionTerrainDestroyed;

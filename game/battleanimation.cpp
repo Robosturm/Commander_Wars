@@ -1,21 +1,15 @@
-#include "battleanimation.h"
-
-#include "gamemap.h"
-
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/cospritemanager.h"
 
+#include "game/battleanimation.h"
+#include "game/gamemap.h"
 #include "game/player.h"
-
 #include "game/co.h"
-
-
 
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)

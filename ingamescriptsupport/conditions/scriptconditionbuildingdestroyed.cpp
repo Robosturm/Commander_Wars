@@ -1,8 +1,7 @@
-#include "scriptconditionbuildingdestroyed.h"
+#include "ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.h"
 
 #include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
-
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
@@ -10,7 +9,6 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"
-
 #include "objects/base/label.h"
 
 ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed()

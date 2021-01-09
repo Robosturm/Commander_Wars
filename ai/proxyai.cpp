@@ -1,4 +1,4 @@
-#include "proxyai.h"
+#include "ai/proxyai.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"

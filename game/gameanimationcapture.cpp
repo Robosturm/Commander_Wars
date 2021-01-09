@@ -1,8 +1,7 @@
 #include "game/gameanimationcapture.h"
+#include "game/gamemap.h"
 
 #include "resource_management/gameanimationmanager.h"
-
-#include "game/gamemap.h"
 
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"

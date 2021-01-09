@@ -1,17 +1,14 @@
-#include "humanplayerinput.h"
+#include "gameinput/humanplayerinput.h"
+#include "gameinput/markedfielddata.h"
 
 #include "game/gamemap.h"
-
 #include "game/gameaction.h"
-
 #include "game/terrain.h"
-
 #include "game/building.h"
-
 #include "game/player.h"
 #include "game/co.h"
-
 #include "game/gameanimationfactory.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -19,8 +16,6 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/globalutils.h"
-
-#include "gameinput/markedfielddata.h"
 
 #include "ai/coreai.h"
 

@@ -1,17 +1,16 @@
-#include "creditsmenue.h"
+#include <qfile.h>
+#include <qtextstream.h>
 
+#include "menue/creditsmenue.h"
 #include "menue/mainwindow.h"
-#include "coreengine/console.h"
 
+#include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
-
-#include <qfile.h>
-#include <qtextstream.h>
 
 CreditsMenue::CreditsMenue()
     : QObject()

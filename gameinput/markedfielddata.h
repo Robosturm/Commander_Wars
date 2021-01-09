@@ -2,13 +2,9 @@
 #define MARKEDFIELDDATA_H
 
 #include <QObject>
-
 #include <QVector>
-
 #include <QPoint>
-
 #include <QColor>
-
 #include "oxygine-framework.h"
 
 class MarkedFieldData;

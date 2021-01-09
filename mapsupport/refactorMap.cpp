@@ -1,11 +1,7 @@
 #include "game/gamemap.h"
-
 #include "game/terrain.h"
-
 #include "game/unit.h"
-
 #include "game/building.h"
-
 #include "game/player.h"
 #include "game/co.h"
 

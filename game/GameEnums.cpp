@@ -1,7 +1,6 @@
 #include "game/GameEnums.h"
 
 #include "coreengine/mainapp.h"
-
 #include "coreengine/interpreter.h"
 
 void GameEnums::registerEnums()

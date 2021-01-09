@@ -1,7 +1,6 @@
-#include "scripteventdialog.h"
+#include "ingamescriptsupport/events/scripteventdialog.h"
 
 #include "ingamescriptsupport/scriptdialogdialog.h"
-
 #include "ingamescriptsupport/scripteditor.h"
 
 const QString ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";

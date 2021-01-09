@@ -1,7 +1,6 @@
-#include "scripteditor.h"
+#include "qfile.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
@@ -11,8 +10,7 @@
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "ingamescriptsupport/events/scriptevent.h"
-
-#include "qfile.h"
+#include "ingamescriptsupport/scripteditor.h"
 
 ScriptEditor::ScriptEditor()
     : QObject()

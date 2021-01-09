@@ -1,19 +1,13 @@
-#include "gameanimationnextday.h"
-
 #include "resource_management/gamemanager.h"
-
 #include "resource_management/cospritemanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/objectmanager.h"
 
 #include "coreengine/mainapp.h"
 
+#include "game/gameanimationnextday.h"
 #include "game/co.h"
-
 #include "game/gamemap.h"
-
 #include "game/gameanimationfactory.h"
 
 #include "menue/gamemenue.h"

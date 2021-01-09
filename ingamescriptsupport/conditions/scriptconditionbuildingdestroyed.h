@@ -1,8 +1,7 @@
 #ifndef SCRIPTCONDITIONBUILDINGDESTROYED_H
 #define SCRIPTCONDITIONBUILDINGDESTROYED_H
 
-
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingDestroyed;
 typedef oxygine::intrusive_ptr<ScriptConditionBuildingDestroyed> spScriptConditionBuildingDestroyed;

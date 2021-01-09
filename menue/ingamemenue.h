@@ -6,12 +6,10 @@
 #include <qrect.h>
 #include <QTimer>
 #include <QThread>
-
 #include "oxygine-framework.h"
+#include "oxygine/KeyEvent.h"
 
 #include "game/cursor.h"
-
-#include "oxygine/KeyEvent.h"
 
 #include "gameinput/mapmover.h"
 

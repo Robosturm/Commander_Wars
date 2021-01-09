@@ -1,9 +1,7 @@
-#include "gamerecorder.h"
+#include "game/gamerecording/gamerecorder.h"
 
 #include "game/gamemap.h"
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 #include "coreengine/mainapp.h"

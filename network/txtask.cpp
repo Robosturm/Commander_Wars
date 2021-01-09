@@ -2,6 +2,7 @@
 #include <QDataStream>
 
 #include "coreengine/console.h"
+
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
 

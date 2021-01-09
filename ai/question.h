@@ -3,13 +3,13 @@
 
 #include "QObject"
 #include "QVector"
+#include "QString"
 
 #include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
-#include "qstring.h"
 
 class Question;
 typedef oxygine::intrusive_ptr<Question> spQuestion;

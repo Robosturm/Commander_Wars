@@ -1,18 +1,16 @@
-#include "wikipage.h"
+#include "wiki/wikipage.h"
+#include "wiki/wikidatabase.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
-#include "game/player.h"
-
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/coperkmanager.h"
-#include "wiki/wikidatabase.h"
+
+#include "game/player.h"
 
 Wikipage::Wikipage()
     : QObject()

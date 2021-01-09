@@ -1,17 +1,14 @@
-#include "workerthread.h"
-
+#include <QDirIterator>
 #include "oxygine-framework.h"
 
-#include "mainapp.h"
-
+#include "coreengine/mainapp.h"
+#include "coreengine/workerthread.h"
 #include "coreengine/console.h"
 
 #include "menue/mainwindow.h"
 
 #include "multiplayer/multiplayermenu.h"
 #include "network/localserver.h"
-
-#include <QDirIterator>
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"

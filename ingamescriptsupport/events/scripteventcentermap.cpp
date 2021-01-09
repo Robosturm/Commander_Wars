@@ -1,4 +1,4 @@
-#include "scripteventcentermap.h"
+#include "ingamescriptsupport/events/scripteventcentermap.h"
 
 ScriptEventCenterMap::ScriptEventCenterMap()
     : ScriptEventGeneric(EventType::CenterMap, ScriptEvent::EventCenterMap)

@@ -1,9 +1,9 @@
 #ifndef FONTMANAGER_H
 #define FONTMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
-
 #include <QColor>
+
+#include "resource_management/RessourceManagement.h"
 
 class FontManager : public QObject, public RessourceManagement<FontManager>
 {

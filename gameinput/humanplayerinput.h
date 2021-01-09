@@ -2,21 +2,19 @@
 #define HUMANPLAYERINPUT_H
 
 #include <QVector>
-
 #include <QVector3D>
-
 #include <QPoint>
+#include "oxygine-framework.h"
+#include "oxygine/KeyEvent.h"
 
 #include "gameinput/basegameinputif.h"
+#include "gameinput/humanplayerinputmenu.h"
+
 #include "game/unitpathfindingsystem.h"
 
 #include "menue/gamemenue.h"
 
-#include "oxygine-framework.h"
-
-#include "gameinput/humanplayerinputmenu.h"
-
-#include "oxygine/KeyEvent.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class GameAction;
 class UnitPathFindingSystem;
@@ -29,7 +27,7 @@ class HumanPlayerInput : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    enum class Arrows
+    ENUM_CLASS Arrows
     {
         LeftRight = 0,
         UpDown,

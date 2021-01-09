@@ -2,13 +2,10 @@
 #define HUMANPLAYERINPUTMENU_H
 
 #include <QObject>
-
 #include <QVector>
-
 #include <QStringList>
 
 #include "oxygine-framework.h"
-
 #include "oxygine/KeyEvent.h"
 
 class HumanPlayerInputMenu;

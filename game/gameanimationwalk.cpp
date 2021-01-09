@@ -1,14 +1,11 @@
-#include "gameanimationwalk.h"
-
-#include "game/gamemap.h"
-
 #include "resource_management/unitspritemanager.h"
 
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 
 #include "game/player.h"
-
+#include "game/gameanimationwalk.h"
+#include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/co.h"
 #include "game/gameanimationfactory.h"

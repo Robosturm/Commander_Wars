@@ -1,15 +1,16 @@
-#include "basegameinputif.h"
-
+#include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
 
-#include "humanplayerinput.h"
+#include "gameinput/humanplayerinput.h"
+#include "gameinput/basegameinputif.h"
+
 #include "ai/veryeasyai.h"
 #include "ai/proxyai.h"
 #include "ai/normalai.h"
 #include "ai/heavyai.h"
+
 #include "game/gamemap.h"
 
-#include "coreengine/mainapp.h"
 
 BaseGameInputIF::BaseGameInputIF(GameEnums::AiTypes aiType)
     : m_AiType(aiType)

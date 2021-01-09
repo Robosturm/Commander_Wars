@@ -1,4 +1,4 @@
-#include "ingameinfobar.h"
+#include "game/ui/ingameinfobar.h"
 
 #include "coreengine/mainapp.h"
 

@@ -2,11 +2,8 @@
 #define MENUDATA_H
 
 #include "oxygine-framework.h"
-
 #include <QObject>
-
 #include <QStringList>
-
 #include <QVector>
 
 class Unit;

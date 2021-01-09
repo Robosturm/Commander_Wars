@@ -1,17 +1,17 @@
-#include "scriptdialogdialog.h"
+#include "qfileinfo.h"
+#include "qimage.h"
+
+#include "ingamescriptsupport/scriptdialogdialog.h"
 
 #include "resource_management/objectmanager.h"
-
 #include "resource_management/fontmanager.h"
-
 #include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
 
 #include "objects/dialogs/filedialog.h"
+
 #include "objects/base/dropdownmenusprite.h"
-#include "qfileinfo.h"
-#include "qimage.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : QObject(),

@@ -1,9 +1,7 @@
-#include "terrainfindingsystem.h"
-
+#include "game/terrainfindingsystem.h"
 #include "game/gamemap.h"
 
 #include "coreengine/interpreter.h"
-
 #include "coreengine/mainapp.h"
 
 TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY)

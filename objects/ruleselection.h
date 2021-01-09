@@ -7,6 +7,8 @@
 #include "objects/base/multislider.h"
 #include "objects/base/textbox.h"
 
+#include "coreengine/LUPDATE_MACROS.h"
+
 class RuleSelection;
 typedef oxygine::intrusive_ptr<RuleSelection> spRuleSelection;
 
@@ -14,7 +16,7 @@ class RuleSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    enum class Mode
+    ENUM_CLASS Mode
     {
         Editor,
         Singleplayer,

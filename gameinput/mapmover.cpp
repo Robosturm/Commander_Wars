@@ -1,8 +1,10 @@
-#include "mapmover.h"
-#include "game/gamemap.h"
-#include "menue/ingamemenue.h"
-
 #include "qdatetime.h"
+
+#include "gameinput/mapmover.h"
+
+#include "game/gamemap.h"
+
+#include "menue/ingamemenue.h"
 
 MapMover::MapMover(InGameMenue* pOwner)
     : m_pOwner(pOwner),

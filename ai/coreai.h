@@ -2,7 +2,6 @@
 #define COREAI_H
 
 #include <qtextstream.h>
-
 #include <qvector.h>
 #include <qvector3d.h>
 #include <qvector4d.h>
@@ -11,13 +10,11 @@
 #include "gameinput/basegameinputif.h"
 
 #include "ai/decisionquestion.h"
-
-#include "qvector.h"
 #include "ai/islandmap.h"
-
 #include "ai/decisiontree.h"
 
 #include "coreengine/qmlvector.h"
+#include "coreengine/LUPDATE_MACROS.h"
 
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;
@@ -36,7 +33,7 @@ public:
     /**
      * @brief The AISteps enum
      */
-    enum class AISteps
+    ENUM_CLASS AISteps
     {
         moveUnits = 0,
         moveToTargets,

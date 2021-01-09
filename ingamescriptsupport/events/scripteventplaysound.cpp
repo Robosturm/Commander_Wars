@@ -1,4 +1,4 @@
-#include "scripteventplaysound.h"
+#include "ingamescriptsupport/events/scripteventplaysound.h"
 
 ScriptEventPlaySound::ScriptEventPlaySound()
     : ScriptEventGeneric(EventType::PlayGameSound, ScriptEvent::EventPlaySound)

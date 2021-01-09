@@ -1,10 +1,12 @@
-#include "globalutils.h"
 
-#include "game/gamemap.h"
-#include "coreengine/console.h"
-#include "coreengine/interpreter.h"
 #include <QFileInfo>
 #include <QDirIterator>
+
+#include "coreengine/globalutils.h"
+#include "coreengine/console.h"
+#include "coreengine/interpreter.h"
+
+#include "game/gamemap.h"
 
 GlobalUtils GlobalUtils::m_pInstace = GlobalUtils();
 
@@ -47,6 +49,37 @@ qint32 GlobalUtils::randInt(qint32 low, qint32 high)
     }
 }
 
+float GlobalUtils::randFloat(float low, float high)
+{
+    if (high <= low)
+    {
+        return low;
+    }
+    if (m_useSeed)
+    {
+        return randGenerator.bounded(high + 0.00001f) + low;
+    }
+    else
+    {
+        return randFloatBase(low, high);
+    }
+}
+
+double GlobalUtils::randDouble(double low, double high)
+{
+    if (high <= low)
+    {
+        return low;
+    }
+    if (m_useSeed)
+    {
+        return randGenerator.bounded(high + 0.00001) + low;
+    }
+    else
+    {
+        return randDoubleBase(low, high);
+    }
+}
 
 qint32 GlobalUtils::randIntBase(qint32 low, qint32 high)
 {
@@ -55,6 +88,24 @@ qint32 GlobalUtils::randIntBase(qint32 low, qint32 high)
         return low;
     }
     return QRandomGenerator::global()->bounded(low, high + 1);
+}
+
+float GlobalUtils::randFloatBase(float low, float high)
+{
+    if (high <= low)
+    {
+        return low;
+    }
+    return QRandomGenerator::global()->bounded(high + 0.00001f) + low;
+}
+
+double GlobalUtils::randDoubleBase(double low, double high)
+{
+    if (high <= low)
+    {
+        return low;
+    }
+    return QRandomGenerator::global()->bounded(high + 0.00001) + low;
 }
 
 qint32 GlobalUtils::roundUp(float value)
@@ -253,4 +304,42 @@ void GlobalUtils::importFilesFromDirectory(QString folder, QString targetDirecto
             }
         }
     }
+}
+
+double GlobalUtils::sigmoid(double x)
+{
+    return 1.0 / (1.0 + qExp(-x));
+}
+
+double GlobalUtils::sigmoid_derivative(double x)
+{
+    return GlobalUtils::sigmoid(x) * (1 - GlobalUtils::sigmoid(x));
+}
+
+double GlobalUtils::relu(double x)
+{
+    if (x > 0)
+    {
+        return x;
+    }
+    return 0;
+}
+
+double GlobalUtils::relu_derivative(double x)
+{
+    if (x > 0)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+double GlobalUtils::distanceVector(const QVector<double>& v1, const QVector<double>& v2)
+{
+    double d = 0;
+    for (qint32 i = 0; i < v1.size(); i++)
+    {
+        d += (v1[i] - v2[i])*(v1[i] - v2[i]);
+    }
+    return d;
 }

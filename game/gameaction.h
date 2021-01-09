@@ -6,13 +6,16 @@
 #include <QVector>
 #include <QBuffer>
 #include <QDataStream>
+#include "oxygine-framework.h"
+
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
 #include "gameinput/cursordata.h"
+
+#include "game/unit.h"
+#include "game/building.h"
+
 #include "coreengine/fileserializable.h"
-#include "unit.h"
-#include "building.h"
-#include "oxygine-framework.h"
 
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;

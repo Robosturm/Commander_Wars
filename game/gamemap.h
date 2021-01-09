@@ -2,34 +2,25 @@
 #define GAMEMAP_H
 
 #include <QObject>
-
 #include <QVector>
-
 #include <QRandomGenerator>
+#include "memory"
 
 #include "oxygine/core/ref_counter.h"
 #include "oxygine-framework.h"
 
-#include "memory"
-
 #include "game/terrain.h"
-
 #include "game/cursor.h"
-
-#include "coreengine/fileserializable.h"
-
-#include "coreengine/qmlvector.h"
-
 #include "game/GameEnums.h"
-
 #include "game/gamerules.h"
-
 #include "game/gamerecording/gamerecorder.h"
-
 #include "game/gamescript.h"
 #include "game/campaign.h"
+#include "game/player.h"
 
-#include "player.h"
+#include "coreengine/fileserializable.h"
+#include "coreengine/qmlvector.h"
+
 
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;

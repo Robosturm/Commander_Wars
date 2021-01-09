@@ -1,4 +1,5 @@
 #include "resource_management/achievementmanager.h"
+
 #include "coreengine/interpreter.h"
 
 AchievementManager::AchievementManager()

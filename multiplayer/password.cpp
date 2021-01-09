@@ -1,7 +1,7 @@
+#include "qcryptographichash.h"
+
 #include "multiplayer/password.h"
 #include "coreengine/filesupport.h"
-
-#include "qcryptographichash.h"
 
 Password::Password()
     : QObject()

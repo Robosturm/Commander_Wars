@@ -1,7 +1,7 @@
 #ifndef SCRIPTEVENTMODIFYTERRAIN_H
 #define SCRIPTEVENTMODIFYTERRAIN_H
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventModifyTerrain  : public ScriptEvent
 {

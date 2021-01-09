@@ -1,4 +1,4 @@
-#include "scripteventchangeunitai.h"
+#include "ingamescriptsupport/events/scripteventchangeunitai.h"
 
 ScriptEventChangeUnitAI::ScriptEventChangeUnitAI()
     : ScriptEventGeneric(EventType::ChangeUnitAI, ScriptEvent::EventChangeUnitAI)

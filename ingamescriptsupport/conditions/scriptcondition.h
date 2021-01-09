@@ -2,14 +2,13 @@
 #define SCRIPTCONDITION_H
 
 #include <QObject>
-
 #include <QVector>
-
 #include <QTextStream>
-
 #include "oxygine-framework.h"
 
 #include "ingamescriptsupport/events/scriptevent.h"
+
+#include "coreengine/LUPDATE_MACROS.h"
 
 class ScriptCondition;
 typedef oxygine::intrusive_ptr<ScriptCondition> spScriptCondition;
@@ -21,7 +20,7 @@ class ScriptCondition : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    enum class ConditionType
+    ENUM_CLASS ConditionType
     {
         startOfTurn,
         victory,

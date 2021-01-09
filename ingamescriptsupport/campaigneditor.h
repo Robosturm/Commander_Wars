@@ -2,16 +2,13 @@
 #define CAMPAIGNEDITOR_H
 
 #include <QObject>
-
 #include <QVector>
+#include <QTextStream>
 
 #include "oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
-
-#include "qtextstream.h"
 
 class CampaignEditor;
 typedef oxygine::intrusive_ptr<CampaignEditor> spCampaignEditor;

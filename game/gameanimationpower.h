@@ -1,10 +1,9 @@
 #ifndef GAMEANIMATIONPOWER_H
 #define GAMEANIMATIONPOWER_H
+#include <QTimer>
 
 #include "game/gameanimation.h"
 #include "game/GameEnums.h"
-#include <QTimer>
-
 #include "game/co.h"
 
 class GameAnimationPower : public GameAnimation

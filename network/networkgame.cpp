@@ -1,6 +1,9 @@
-#include "networkgame.h"
+#include "network/networkgame.h"
+
 #include "multiplayer/networkcommands.h"
+
 #include "coreengine/filesupport.h"
+
 #include "game/gamemap.h"
 
 NetworkGame::NetworkGame()

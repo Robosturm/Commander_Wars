@@ -1,4 +1,4 @@
-#include "scripteventmodifyterrain.h"
+#include "ingamescriptsupport/events/scripteventmodifyterrain.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"

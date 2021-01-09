@@ -1,5 +1,8 @@
-#include "scripteventanimation.h"
+#include "qcoreapplication.h"
 
+#include "ingamescriptsupport/events/scripteventanimation.h"
+
+#include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 
 #include "ingamescriptsupport/scripteditor.h"
@@ -11,13 +14,7 @@
 
 #include "objects/base/spinbox.h"
 #include "objects/base/dropdownmenucolor.h"
-
-#include "coreengine/settings.h"
-
 #include "objects/dialogs/filedialog.h"
-
-#include "qcoreapplication.h"
-
 #include "objects/base/label.h"
 
 ScriptEventAnimation::ScriptEventAnimation()

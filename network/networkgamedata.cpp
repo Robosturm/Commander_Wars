@@ -1,4 +1,4 @@
-#include "networkgamedata.h"
+#include "network/networkgamedata.h"
 
 #include "coreengine/filesupport.h"
 

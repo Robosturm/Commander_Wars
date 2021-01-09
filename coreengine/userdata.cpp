@@ -1,13 +1,13 @@
-#include "userdata.h"
-
-#include "resource_management/cospritemanager.h"
-
 #include "qfile.h"
 
+#include "coreengine/userdata.h"
 #include "coreengine/settings.h"
 #include "coreengine/interpreter.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/filesupport.h"
+
+#include "resource_management/cospritemanager.h"
+
 #include "objects/achievementbanner.h"
 
 Userdata* Userdata::m_pInstance = nullptr;

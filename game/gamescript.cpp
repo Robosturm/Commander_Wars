@@ -1,6 +1,7 @@
-#include "gamescript.h"
 #include "qfile.h"
 #include "qtextstream.h"
+
+#include "game/gamescript.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"

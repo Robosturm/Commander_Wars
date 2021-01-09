@@ -4,7 +4,6 @@
 #include <QColor>
 
 #include "game/gameanimation.h"
-
 #include "game/GameEnums.h"
 #include "game/player.h"
 

@@ -5,7 +5,7 @@
 
 #include "oxygine-framework.h"
 
-#include "decisionquestion.h"
+#include "ai/decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 

@@ -1,4 +1,4 @@
-#include "battleanimationsprite.h"
+#include "qcolor.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/tweentogglevisibility.h"
@@ -8,10 +8,8 @@
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/player.h"
-
+#include "game/battleanimationsprite.h"
 #include "game/co.h"
-
-#include "qcolor.h"
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 const QString BattleAnimationSprite::impactAnimation = "loadImpactAnimation";

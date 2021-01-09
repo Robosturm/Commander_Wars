@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventDefeatPlayer : public ScriptEvent
 {

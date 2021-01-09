@@ -7,7 +7,6 @@
 #include "oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
-
 #include "ai/question.h"
 
 class DecisionQuestion;

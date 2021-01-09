@@ -1,20 +1,16 @@
-#include "scripteventchangebuildlist.h"
+#include "ingamescriptsupport/events/scripteventchangebuildlist.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/unitspritemanager.h"
 
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"
-
-#include "resource_management/unitspritemanager.h"
-
 #include "objects/base/dropdownmenu.h"
-
 #include "objects/base/checkbox.h"
-
 #include "objects/base/label.h"
 
 ScriptEventChangeBuildlist::ScriptEventChangeBuildlist()

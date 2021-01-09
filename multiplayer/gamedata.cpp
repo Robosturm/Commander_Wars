@@ -1,4 +1,4 @@
-#include "gamedata.h"
+#include "multiplayer/gamedata.h"
 
 GameData::GameData()
     : QObject()

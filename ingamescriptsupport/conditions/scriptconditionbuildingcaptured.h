@@ -2,7 +2,7 @@
 #define SCRIPTCONDITIONBUILDINGCAPTURED_H
 
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionBuildingCaptured;
 typedef oxygine::intrusive_ptr<ScriptConditionBuildingCaptured> spScriptConditionBuildingCaptured;

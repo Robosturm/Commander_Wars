@@ -1,4 +1,4 @@
-#include "scripteventchangeunitowner.h"
+#include "ingamescriptsupport/events/scripteventchangeunitowner.h"
 
 ScriptEventChangeUnitOwner::ScriptEventChangeUnitOwner()
     : ScriptEventGeneric(EventType::ChangeUnitOwner, ScriptEvent::EventChangeUnitOwner)

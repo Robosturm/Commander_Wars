@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONEACHDAY_H
 #define SCRIPTCONDITIONEACHDAY_H
 
-#include "scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionEachDay;
 typedef oxygine::intrusive_ptr<ScriptConditionEachDay> spScriptConditionEachDay;

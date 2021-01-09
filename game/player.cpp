@@ -1,22 +1,16 @@
-#include "game/player.h"
-
-#include "game/gamemap.h"
-
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/audiothread.h"
 
 #include "gameinput/basegameinputif.h"
-
 #include "gameinput/humanplayerinput.h"
 
 #include "game/building.h"
-
 #include "game/unit.h"
-
 #include "game/co.h"
-
 #include "game/gamerules.h"
+#include "game/player.h"
+#include "game/gamemap.h"
 
 #include "menue/gamemenue.h"
 

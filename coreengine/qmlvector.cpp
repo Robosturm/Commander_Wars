@@ -1,5 +1,4 @@
-#include "qmlvector.h"
-
+#include "coreengine/qmlvector.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 

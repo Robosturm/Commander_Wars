@@ -1,12 +1,11 @@
 #include "qfile.h"
 
-#include "costylemenu.h"
-
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 
 #include "menue/mainwindow.h"
+#include "menue/costylemenu.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/fontmanager.h"
@@ -14,7 +13,6 @@
 #include "resource_management/cospritemanager.h"
 
 #include "objects/coselection.h"
-
 #include "objects/dialogs/dialogcostyle.h"
 
 COStyleMenu::COStyleMenu()

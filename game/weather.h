@@ -2,15 +2,12 @@
 #define WEATHER_H
 
 #include <QObject>
-
 #include "oxygine-framework.h"
 
 #include "coreengine/scriptvariables.h"
-
 #include "coreengine/fileserializable.h"
 
 #include "game/unit.h"
-
 #include "game/terrain.h"
 
 class Weather;

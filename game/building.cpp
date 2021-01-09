@@ -1,20 +1,14 @@
-
-#include "building.h"
-
+#include "game/building.h"
 #include "game/player.h"
-
 #include "game/terrain.h"
-
-#include "coreengine/console.h"
-
 #include "game/gamemap.h"
-
 #include "game/unit.h"
 #include "game/co.h"
 
-#include "resource_management/buildingspritemanager.h"
-
+#include "coreengine/console.h"
 #include "coreengine/qmlvector.h"
+
+#include "resource_management/buildingspritemanager.h"
 
 #include "ai/coreai.h"
 

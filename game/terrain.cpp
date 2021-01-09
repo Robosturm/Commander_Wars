@@ -1,21 +1,15 @@
-#include "terrain.h"
+#include <QFileInfo>
+#include <QFile>
 
 #include "coreengine/console.h"
-
 #include "coreengine/mainapp.h"
 
 #include "resource_management/terrainmanager.h"
 
+#include "game/terrain.h"
 #include "game/gamemap.h"
-
 #include "game/terrainfindingsystem.h"
-
-#include <QFileInfo>
-
-#include <QFile>
-
 #include "game/player.h"
-
 #include "game/co.h"
 
 spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)

@@ -2,9 +2,7 @@
 #define RXTASK_H
 
 #include <QObject>
-
 #include <QDataStream>
-
 #include "oxygine-framework.h"
 
 #include "network/NetworkInterface.h"

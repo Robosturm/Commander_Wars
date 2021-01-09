@@ -6,9 +6,10 @@
 #include <QDataStream>
 #include <QVector>
 #include <QPoint>
-#include "fileserializable.h"
 
 #include "oxygine-framework.h"
+
+#include "coreengine/fileserializable.h"
 
 class ScriptVariable;
 typedef oxygine::intrusive_ptr<ScriptVariable> spScriptVariable;

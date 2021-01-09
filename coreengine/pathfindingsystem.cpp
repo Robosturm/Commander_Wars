@@ -1,12 +1,9 @@
-#include "pathfindingsystem.h"
-
+#include <algorithm>
 #include "QTime"
 
 #include "coreengine/interpreter.h"
-
+#include "coreengine/pathfindingsystem.h"
 #include "coreengine/mainapp.h"
-
-#include <algorithm>
 
 const qint32 PathFindingSystem::infinite = std::numeric_limits<qint32>::max();
 
@@ -217,14 +214,14 @@ QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint3
     return points;
 }
 
-QVector<QPoint> PathFindingSystem::getAllNodePoints()
+QVector<QPoint> PathFindingSystem::getAllNodePoints(qint32 maxRange)
 {
     QVector<QPoint> points;
     for (qint32 x = 0; x < m_width; x++)
     {
         for (qint32 y = 0; y < m_heigth; y++)
         {
-            if (costs[getIndex(x, y)] >= 0 && costs[getIndex(x, y)] < infinite)
+            if (costs[getIndex(x, y)] >= 0 && costs[getIndex(x, y)] < maxRange)
             {
                 points.append(QPoint(x, y));
             }

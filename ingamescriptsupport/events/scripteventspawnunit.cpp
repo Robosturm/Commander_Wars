@@ -1,4 +1,4 @@
-#include "scripteventspawnunit.h"
+#include "ingamescriptsupport/events/scripteventspawnunit.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -9,7 +9,6 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/base/spinbox.h"
-
 #include "objects/base/dropdownmenu.h"
 #include "objects/base/dropdownmenusprite.h"
 #include "objects/base/label.h"

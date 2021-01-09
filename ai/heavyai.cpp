@@ -5,17 +5,25 @@
 #include "coreengine/globalutils.h"
 #include "ai/targetedunitpathfindingsystem.h"
 #include "game/player.h"
+#include "game/gameaction.h"
 
 #include "resource_management/unitspritemanager.h"
 
 const qint32 HeavyAi::minSiloDamage = 7000;
+const QString HeavyAi::heavyAiObject = "HEAVY_AI";
 
 HeavyAi::HeavyAi()
     : CoreAI(GameEnums::AiTypes_Heavy),
+      m_scoreInfos(
+{
+{ACTION_CAPTURE,  std::bind(&HeavyAi::scoreCapture, this, std::placeholders::_1)},
+{ACTION_FIRE,     std::bind(&HeavyAi::scoreFire, this, std::placeholders::_1)},
+          }),
       m_InfluenceFrontMap(m_IslandMaps)
 {
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
+
 }
 
 void HeavyAi::readIni(QString name)
@@ -64,6 +72,10 @@ void HeavyAi::process()
         }
         else
         {
+            for (auto & unit : m_ownUnits)
+            {
+                scoreActions(unit);
+            }
             // end the turn for the player
             turnMode = GameEnums::AiTurnMode_StartOfDay;
             m_pUnits = nullptr;
@@ -214,6 +226,7 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
                     QPoint targetFields = pfs.getReachableTargetField(movePoints * 3);
                     if (targetFields.x() >= 0)
                     {
+                        // todo maybe we need to save more data here
                         enemy.m_threadLevel = ThreadLevel::Hq;
                         enemy.m_hqThread = targetFields;
                     }
@@ -242,4 +255,166 @@ bool HeavyAi::isCaptureTransporterOrCanCapture(Unit* pUnit)
         }
     }
     return canCapture;
+}
+
+void HeavyAi::scoreActions(UnitData & unit)
+{
+    const QVector<QString> forbiddenActions = {ACTION_WAIT};
+    QVector<qint32> bestScore;
+    QVector<spGameAction> bestActions;
+    QStringList actions = unit.m_pUnit->getActionList();
+    qint32 movePoints = unit.m_pUnit->getMovementpoints(unit.m_pUnit->getMapPosition());
+    auto moveTargets = unit.m_pPfs->getAllNodePoints(movePoints);
+    for (const auto & action : actions)
+    {
+        if (!forbiddenActions.contains(action))
+        {
+            spGameAction pAction = nullptr;
+            Interpreter* pInterpreter = Interpreter::getInstance();
+            FunctionType type;
+            qint32 index = -1;
+            if (pInterpreter->exists(heavyAiObject, action))
+            {
+                type = FunctionType::JavaScript;
+            }
+            else
+            {
+                for (qint32 i = 0; i < m_scoreInfos.size(); ++i)
+                {
+                    if (m_scoreInfos[i].m_actionId == action)
+                    {
+                        type = FunctionType::CPlusPlus;
+                        index = i;
+                        break;
+                    }
+                }
+            }
+            for (const auto & target : moveTargets)
+            {
+                QVector<QPoint> path = unit.m_pPfs->getPath(target.x(), target.y());
+                qint32 costs = unit.m_pPfs->getCosts(path);
+                bool mutate = true;
+                QVector<qint32> stepPosition;
+                while (mutate)
+                {
+                    qint32 step = 0;
+                    pAction = new GameAction();
+                    pAction->setActionID(action);
+                    pAction->setMovepath(path, costs);
+                    pAction->setTarget(QPoint(unit.m_pUnit->getX(), unit.m_pUnit->getY()));
+                    if (pAction->canBePerformed())
+                    {
+                        qint32 score = 0;
+                        mutate = mutateAction(pAction, type, index, step, stepPosition, score);
+
+                    }
+                    // stop mutating?
+                    if (stepPosition.size() == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool HeavyAi::mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition, qint32 & score)
+{
+    bool ret = false;
+    if (pAction->isFinalStep())
+    {
+        switch (type)
+        {
+            case FunctionType::JavaScript:
+            {
+                Interpreter* pInterpreter = Interpreter::getInstance();
+                QJSValueList args;
+                QJSValue obj = pInterpreter->newQObject(pAction.get());
+                args << obj;
+                QJSValue erg = pInterpreter->doFunction(HeavyAi::heavyAiObject, pAction->getActionID(), args);
+                if (erg.isNumber())
+                {
+                    score = erg.toInt();
+                }
+                break;
+            }
+            case FunctionType::CPlusPlus:
+            {
+                score = m_scoreInfos[functionIndex].callback(pAction);
+                break;
+            }
+        }
+        ret = true;
+    }
+    else
+    {
+        // reset mutation for following steps
+        for (qint32 i = step + 1; i < stepPosition.size(); ++i)
+        {
+            stepPosition[i] = 0;
+        }
+        QString stepType = pAction->getStepInputType();
+        if (stepType.toUpper() == "MENU")
+        {
+            spMenuData pData = pAction->getMenuStepData();
+            if (pData->validData())
+            {
+                qint32 nextStep = 0;
+                if (step < stepPosition.size())
+                {
+                    nextStep = stepPosition[step] + 1;
+                }
+                else
+                {
+                    stepPosition.append(0);
+                }
+                const auto & enableList = pData->getEnabledList();
+                const auto & costList = pData->getCostList();
+                const auto & actionList = pData->getActionIDs();
+                for (qint32 i = nextStep; i < actionList.size(); ++i)
+                {
+                    if (enableList[i])
+                    {
+                        CoreAI::addMenuItemData(pAction, actionList[i], costList[i]);
+                        stepPosition[step] = i;
+                        ret = mutateAction(pAction, type, functionIndex, step, stepPosition, score);
+                        break;
+                    }
+                }
+            }
+        }
+        else if (stepType.toUpper() == "FIELD")
+        {
+            MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+            QVector<QPoint>* pFields = pData->getPoints();
+            qint32 nextStep = 0;
+            if (step < stepPosition.size())
+            {
+                nextStep = stepPosition[step] + 1;
+            }
+            else
+            {
+                stepPosition.append(0);
+            }
+            for (qint32 i = nextStep; i < pFields->size(); ++i)
+            {
+                CoreAI::addSelectedFieldData(pAction, (*pFields)[i]);
+                stepPosition[step] = i;
+                ret = mutateAction(pAction, type, functionIndex, step, stepPosition, score);
+                break;
+            }
+        }
+    }
+    return ret;
+}
+
+qint32 HeavyAi::scoreCapture(spGameAction action)
+{
+    return 0;
+}
+
+qint32 HeavyAi::scoreFire(spGameAction action)
+{
+    return 0;
 }

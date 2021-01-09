@@ -1,4 +1,4 @@
-#include "unitspritemanager.h"
+#include "resource_management/unitspritemanager.h"
 
 UnitSpriteManager::UnitSpriteManager()
     : RessourceManagement<UnitSpriteManager>("/images/units/res.xml",

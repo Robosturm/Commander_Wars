@@ -1,20 +1,17 @@
-#include "co.h"
-
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 
+#include "game/player.h"
 #include "game/unit.h"
-
-#include "menue/gamemenue.h"
-
+#include "game/co.h"
 #include "game/gameanimationfactory.h"
 #include "game/gameanimationdialog.h"
 #include "game/gameanimationpower.h"
 
-#include "resource_management/cospritemanager.h"
+#include "menue/gamemenue.h"
 
-#include "game/player.h"
+#include "resource_management/cospritemanager.h"
 
 CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
