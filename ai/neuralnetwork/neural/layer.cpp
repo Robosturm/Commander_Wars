@@ -65,6 +65,7 @@ void Layer::trigger()
 
 void Layer::connectComplete(Layer *next)
 {
+    next->setPreviousLayer(this);
     for(auto & n1 : m_neurons)
     {
         for(auto & n2 : next->m_neurons)
@@ -140,6 +141,18 @@ void Layer::randomizeAllWeights(double abs_value)
     }
 }
 
+Neuron* Layer::getNeuron(qint32 id)
+{
+    for(auto & neuron : m_neurons)
+    {
+        if (neuron->getNeuronId() == id)
+        {
+            return neuron.get();
+        }
+    }
+    return nullptr;
+}
+
 QString Layer::toString()
 {
     QString str = "layer: " + QString::number(m_id_layer) + "\n";
@@ -183,3 +196,47 @@ Neuron::ActivationFunction Layer::getActivation() const
 {
     return m_activation;
 }
+
+Layer *Layer::getPreviousLayer() const
+{
+    return m_previousLayer;
+}
+
+void Layer::setPreviousLayer(Layer *previousLayer)
+{
+    m_previousLayer = previousLayer;
+}
+
+void Layer::serializeObject(QDataStream& pStream) const
+{
+    pStream << getVersion();
+    pStream << m_id_layer;
+    pStream << m_type;
+    pStream << m_activation;
+    pStream << m_parameters;
+    pStream << static_cast<qint32>(m_neurons.size());
+    for (const auto & neuron : m_neurons)
+    {
+        neuron->serializeObject(pStream);
+    }
+}
+
+void Layer::deserializeObject(QDataStream& pStream)
+{
+    m_neurons.clear();
+    qint32 version = 0;
+    pStream >> version;
+    pStream >> m_id_layer;
+    pStream >> m_type;
+    pStream >> m_activation;
+    pStream >> m_parameters;
+    qint32 size = 0;
+    pStream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        spNeuron pNeuron = new Neuron(i, this, m_activation, false);
+        pNeuron->deserializeObject(pStream);
+        m_neurons.append(pNeuron);
+    }
+}
+

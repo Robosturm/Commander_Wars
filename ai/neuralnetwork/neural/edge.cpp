@@ -25,9 +25,9 @@ double Edge::weight()
     return m_w;
 }
 
-double* Edge::weightP()
+double Edge::weightP()
 {
-    return &m_w;
+    return m_w;
 }
 
 void Edge::propagate(double neuron_output)
@@ -68,3 +68,18 @@ void Edge::setBackpropagationMemory(double v)
     m_backpropagation_memory = v;
 }
 
+void Edge::serializeObject(QDataStream& pStream) const
+{
+    pStream << getVersion();
+    pStream << m_w;
+    pStream << m_last_shift;
+    pStream << m_backpropagation_memory;
+}
+void Edge::deserializeObject(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    pStream >> m_w;
+    pStream >> m_last_shift;
+    pStream >> m_backpropagation_memory;
+}

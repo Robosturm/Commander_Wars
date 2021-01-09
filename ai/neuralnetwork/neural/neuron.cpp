@@ -110,7 +110,7 @@ void Neuron::setAccumulated(double v)
 
 void Neuron::alterWeights(const QVector<double>& weights)
 {
-    for(qint32 i_edge=0; i_edge < weights.size(); ++i_edge)
+    for(qint32 i_edge = 0; i_edge < weights.size(); ++i_edge)
     {
         m_next[i_edge]->alterWeight(weights[i_edge]);
     }
@@ -208,4 +208,50 @@ QVector<double> Neuron::getBackpropagationShifts(const QVector<double>& target)
 bool Neuron::isBias() const
 {
     return m_is_bias;
+}
+
+void Neuron::serializeObject(QDataStream& pStream) const
+{
+    pStream << getVersion();
+    pStream << m_id_neuron;
+    pStream << m_accumulated;
+    pStream << m_threshold;
+    pStream << m_activation_function;
+    pStream << m_is_bias;
+    pStream << static_cast<qint32>(m_next.size());
+    for (const auto & next : m_next)
+    {
+        pStream << next->neuron()->getNeuronId();
+        next->serializeObject(pStream);
+    }
+}
+
+void Neuron::deserializeObject(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    pStream >> m_id_neuron;
+    pStream >> m_accumulated;
+    pStream >> m_threshold;
+    pStream >> m_activation_function;
+    pStream >> m_is_bias;
+    qint32 size = 0;
+    pStream >> size;
+    for (qint32 i = 0; i < size; ++i)
+    {
+        qint32 id = 0;
+        pStream >> id;
+        Neuron* previous = nullptr;
+        if (m_layer->getPreviousLayer() != nullptr)
+        {
+            previous = m_layer->getPreviousLayer()->getNeuron(id);
+        }
+        spEdge pEdge = new Edge(previous, this, 0);
+        pEdge->deserializeObject(pStream);
+        m_next.append(pEdge);
+        if (previous != nullptr)
+        {
+            previous->addPrevious(pEdge);
+        }
+    }
 }

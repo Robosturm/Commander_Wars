@@ -3913,8 +3913,8 @@ Version: </source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="693"/>
-        <location filename="../main.cpp" line="76"/>
-        <location filename="../main.cpp" line="83"/>
+        <location filename="../main.cpp" line="77"/>
+        <location filename="../main.cpp" line="84"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

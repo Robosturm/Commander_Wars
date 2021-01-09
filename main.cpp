@@ -62,6 +62,7 @@
 
 #include "network/mainserver.h"
 
+#include "ai/neuralnetwork/neural/neuralnetwork.h"
 
 int main(int argc, char* argv[])
 {
@@ -158,6 +159,32 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
     /*************************************************************************************************/
+
+    NeuralNetwork test;
+    test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT)},
+                   {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(2)},});
+    for (qint32 i = 0; i < 5; ++i)
+    {
+        test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD)},
+                       {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(6)},
+                       {Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID)},});
+    }
+    test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT)},
+                   {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(1)},
+                   {Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID)},});
+    test.autogenerate();
+    QFile file("dummy.nn");
+    QDataStream stream(&file);
+    file.open(QIODevice::WriteOnly);
+    test.serializeObject(stream);
+    file.close();
+    NeuralNetwork test2;
+    file.open(QIODevice::ReadOnly);
+    test2.deserializeObject(stream);
+    QString testText = test.toString();
+    QString testText2 = test2.toString();
+    bool equal = testText2 == testText;
+
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
     window.setBrightness(Settings::getBrightness());

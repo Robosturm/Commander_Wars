@@ -6,6 +6,7 @@
 #include "oxygine-framework.h"
 
 #include "ai/neuralnetwork/neural/layer.h"
+#include "ai/neuralnetwork/neural/neuron.h"
 #include "ai/neuralnetwork//dataset/dataset.h"
 
 class NeuralNetwork;
@@ -13,13 +14,31 @@ class Neuron;
 class Layer;
 using spNeuralNetwork = oxygine::intrusive_ptr<NeuralNetwork>;
 
-class NeuralNetwork : public oxygine::ref_counter
+class NeuralNetwork : public oxygine::ref_counter, public FileSerializable
 {
 public:
 
     NeuralNetwork(double maxWeight = 1);
 
     ~NeuralNetwork();
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) const override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const override
+    {
+        return 1;
+    }
 
     void autogenerate(bool randomize = true);
 

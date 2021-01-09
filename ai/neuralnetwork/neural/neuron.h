@@ -5,13 +5,14 @@
 
 #include "ai/neuralnetwork/neural/edge.h"
 #include "oxygine-framework.h"
+#include "coreengine/fileserializable.h"
 
 class Layer;
 
 class Neuron;
 using spNeuron = oxygine::intrusive_ptr<Neuron>;
 
-class Neuron : public oxygine::ref_counter
+class Neuron : public oxygine::ref_counter, public FileSerializable
 {
 public:
 
@@ -69,6 +70,24 @@ public:
     const Layer* getLayer() const
     {
         return m_layer;
+    }
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) const override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const override
+    {
+        return 1;
     }
 private:
     Layer* m_layer = nullptr;

@@ -12,7 +12,7 @@ class Layer;
 
 using spLayer = oxygine::intrusive_ptr<Layer>;
 //Layer of the network
-class Layer : public oxygine::ref_counter
+class Layer : public oxygine::ref_counter, public FileSerializable
 {
 public:
     static const QString LAYER_PARAMETER_SIZE;
@@ -68,8 +68,35 @@ public:
 
     NeuralNetwork* getNet() const { return m_net; }
 
+    Layer *getPreviousLayer() const;
+    void setPreviousLayer(Layer *previousLayer);
+    /**
+     * @brief getNeuron
+     * @param id
+     * @return
+     */
+    Neuron* getNeuron(qint32 id);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) const override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const override
+    {
+        return 1;
+    }
 private:
-    NeuralNetwork* m_net;
+    NeuralNetwork* m_net{nullptr};
+    Layer* m_previousLayer{nullptr};
     qint32 m_id_layer;
     QVector<spNeuron> m_neurons;
     LayerType m_type;

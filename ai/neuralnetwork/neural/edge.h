@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include "oxygine-framework.h"
+#include "coreengine/fileserializable.h"
 
 class NeuralNetwork;
 class Neuron;
@@ -13,10 +14,28 @@ using spNeuron = oxygine::intrusive_ptr<Neuron>;
 using spEdge = oxygine::intrusive_ptr<Edge>;
 
 //Edge between two neurons
-class Edge : public oxygine::ref_counter
+class Edge : public oxygine::ref_counter, public FileSerializable
 {
 public:
     Edge(Neuron* n, Neuron* start, double w );
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) const override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() const override
+    {
+        return 1;
+    }
 
     Neuron* neuron() const;
 
@@ -24,7 +43,7 @@ public:
 
     double weight();
 
-    double* weightP();
+    double weightP();
 
     void propagate(double neuron_output);
 
@@ -45,7 +64,7 @@ private:
     Neuron* m_nb = nullptr;
     double m_w = 0.0;
     double m_last_shift = 0;
-    double m_backpropagation_memory;
+    double m_backpropagation_memory{0};
 
 };
 
