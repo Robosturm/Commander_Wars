@@ -54,6 +54,8 @@ public:
     {
         m_CurrentCampaign = pCampaign;
     }
+    spMapSelection getMapSelection() const;
+
 signals:
 
 public slots:

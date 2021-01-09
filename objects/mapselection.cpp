@@ -172,8 +172,7 @@ MapSelection::~MapSelection()
 }
 
 void MapSelection::setSelection(QString folder, QStringList files)
-{
-    
+{    
     m_itemClicked = false;
     m_currentFolder = folder;
     m_Files = files;
@@ -182,13 +181,16 @@ void MapSelection::setSelection(QString folder, QStringList files)
     {
         currentItem = m_Files[0];
         emit sigStartItemChangeTimer();
-    }
-    
+    }    
+}
+
+void MapSelection::setCurrentItem(QString item)
+{
+    currentItem = item;
 }
 
 void MapSelection::changeFolder(QString folder)
-{
-    
+{    
     m_itemClicked = false;
     QString newFolder = folder;
     if (folder == "")

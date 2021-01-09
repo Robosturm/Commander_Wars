@@ -2,6 +2,8 @@
 #include <QProcess>
 #include <qdir.h>
 #include <qapplication.h>
+#include "qfile.h"
+#include "oxygine/KeyEvent.h"
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
@@ -11,16 +13,18 @@
 
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
-
 #include "coreengine/userdata.h"
-
 #include "coreengine/console.h"
-
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
+#include "coreengine/crashreporter.h"
 
 #include "menue/ingamemenue.h"
 #include "menue/victorymenue.h"
+#include "menue/mainwindow.h"
+#include "menue/victorymenue.h"
+#include "menue/gamemenue.h"
+#include "menue/mapselectionmapsmenue.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -41,24 +45,20 @@
 #include "game/terrainfindingsystem.h"
 #include "game/campaign.h"
 #include "game/gamescript.h"
+#include "game/GameEnums.h"
+
 #include "wiki/wikidatabase.h"
 
 #include "objects/base/textbox.h"
+#include "objects/playerselection.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
 
 #include "ai/heavyai.h"
 
-#include "game/GameEnums.h"
-
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/conditions/scriptcondition.h"
-#include "qfile.h"
-
-#include "oxygine/KeyEvent.h"
-
-#include "coreengine/crashreporter.h"
 
 #include "network/mainserver.h"
 
@@ -158,33 +158,12 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Wikipage>("Wikipage", 1);
     qmlRegisterInterface<HeavyAi>("HeavyAi", 1);
     qmlRegisterInterface<NetworkGame>("NetworkGame", 1);
+    qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
+    qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
+    qmlRegisterInterface<GameMenue>("GameMenue", 1);
+    qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
+    qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);
     /*************************************************************************************************/
-
-    NeuralNetwork test;
-    test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::INPUT)},
-                   {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(2)},});
-    for (qint32 i = 0; i < 5; ++i)
-    {
-        test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::STANDARD)},
-                       {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(6)},
-                       {Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID)},});
-    }
-    test.addLayer({{Layer::LAYER_PARAMETER_TYPE, static_cast<double>(Layer::LayerType::OUTPUT)},
-                   {Layer::LAYER_PARAMETER_SIZE, static_cast<double>(1)},
-                   {Layer::LAYER_PARAMETER_ACTIVATION, static_cast<double>(Neuron::ActivationFunction::SIGMOID)},});
-    test.autogenerate();
-    QFile file("dummy.nn");
-    QDataStream stream(&file);
-    file.open(QIODevice::WriteOnly);
-    test.serializeObject(stream);
-    file.close();
-    NeuralNetwork test2;
-    file.open(QIODevice::ReadOnly);
-    test2.deserializeObject(stream);
-    QString testText = test.toString();
-    QString testText2 = test2.toString();
-    bool equal = testText2 == testText;
-
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
     window.setBrightness(Settings::getBrightness());

@@ -35,19 +35,19 @@ double Neuron::output()
     {
         return 1;
     }
-    if(m_layer->getType() == Layer::LayerType::INPUT)
+    else if(m_layer->getType() == Layer::LayerType::INPUT)
     {
         return outputRaw();
     }
-    if (m_activation_function == ActivationFunction::LINEAR)
+    else if (m_activation_function == ActivationFunction::LINEAR)
     {
         return m_accumulated;
     }
-    if(m_activation_function == ActivationFunction::RELU)
+    else if(m_activation_function == ActivationFunction::RELU)
     {
         return GlobalUtils::relu(m_accumulated);
     }
-    if (m_activation_function == ActivationFunction::SIGMOID)
+    else if (m_activation_function == ActivationFunction::SIGMOID)
     {
         return GlobalUtils::sigmoid(m_accumulated);
     }
@@ -60,11 +60,11 @@ double Neuron::outputDerivative()
     {
         return 1;
     }
-    if (m_activation_function == ActivationFunction::RELU)
+    else if (m_activation_function == ActivationFunction::RELU)
     {
         return GlobalUtils::relu_derivative(output());
     }
-    if (m_activation_function == ActivationFunction::SIGMOID)
+    else if (m_activation_function == ActivationFunction::SIGMOID)
     {
         return GlobalUtils::sigmoid_derivative(outputRaw());
     }

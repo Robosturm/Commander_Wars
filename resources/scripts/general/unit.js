@@ -1,5 +1,5 @@
 var UNIT =
-        {
+{
     getUnitDamageID : function()
     {
         // empty string will be replaced by the actual unit id to find the damage value in the table

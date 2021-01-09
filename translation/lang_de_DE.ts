@@ -2165,11 +2165,6 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1064"/>
-        <source>Loading Map Row </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../game/gamemap.cpp" line="475"/>
         <source>Synchronizing Map Row </source>
         <translation type="unfinished"></translation>
@@ -2177,6 +2172,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../game/gamemap.cpp" line="485"/>
         <source>Loading weather for snowy times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/gamemap.cpp" line="1064"/>
+        <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3892,43 +3892,6 @@ Version: </source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="317"/>
-        <source>Screen Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="325"/>
-        <source>Screen Resolution: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="690"/>
-        <source>Advance Wars Game:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="692"/>
-        <source>Unkown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="693"/>
-        <location filename="../main.cpp" line="77"/>
-        <location filename="../main.cpp" line="84"/>
-        <source>Commander Wars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="694"/>
-        <source>Advance Wars DS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/optionmenue.cpp" line="695"/>
-        <source>Advance Wars DC</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="29"/>
         <source>Reading Map File</source>
         <translation type="unfinished"></translation>
@@ -3981,6 +3944,43 @@ Version: </source>
         <location filename="../menue/optionmenue.cpp" line="56"/>
         <location filename="../menue/gamemenue.cpp" line="400"/>
         <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="317"/>
+        <source>Screen Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="325"/>
+        <source>Screen Resolution: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="690"/>
+        <source>Advance Wars Game:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="692"/>
+        <source>Unkown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="693"/>
+        <location filename="../main.cpp" line="77"/>
+        <location filename="../main.cpp" line="84"/>
+        <source>Commander Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="694"/>
+        <source>Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="695"/>
+        <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

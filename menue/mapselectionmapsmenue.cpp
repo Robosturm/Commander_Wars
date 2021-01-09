@@ -156,6 +156,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         showPlayerSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
+    connect(this, &MapSelectionMapsMenue::sigOnEnter, this, &MapSelectionMapsMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
     pApp->continueRendering();
 }
 
@@ -212,8 +214,7 @@ void MapSelectionMapsMenue::slotButtonBack()
 }
 
 void MapSelectionMapsMenue::slotButtonNext()
-{
-    
+{    
     Console::print("slotButtonNext()", Console::eDEBUG);
     switch (m_MapSelectionStep)
     {
@@ -267,8 +268,7 @@ void MapSelectionMapsMenue::slotButtonNext()
         {
             break;
         }
-    }
-    
+    }    
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
@@ -354,8 +354,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 }
 
 void MapSelectionMapsMenue::startGame()
-{
-    
+{    
     Console::print("Start game", Console::eDEBUG);
     defeatClosedPlayers();
     spGameMap pMap = GameMap::getInstance();
@@ -367,8 +366,7 @@ void MapSelectionMapsMenue::startGame()
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(false, nullptr));
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
@@ -507,4 +505,31 @@ void MapSelectionMapsMenue::saveMap(QString filename)
         file.close();
     }
     
+}
+
+void MapSelectionMapsMenue::selectMap(QString folder, QString filename)
+{
+    QFileInfo info(folder + filename);
+    m_pMapSelectionView->getMapSelection()->changeFolder(folder);
+    m_pMapSelectionView->getMapSelection()->setCurrentItem(filename);
+    m_pMapSelectionView->loadMap(info, true);
+}
+
+PlayerSelection* MapSelectionMapsMenue::getPlayerSelection() const
+{
+    return m_pPlayerSelection.get();
+}
+
+void MapSelectionMapsMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "mapsSelection";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }

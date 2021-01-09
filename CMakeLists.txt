@@ -456,7 +456,9 @@ add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 FILE(GLOB_RECURSE ShaderScripts "system/*.glsl")
 add_custom_target(shaders SOURCES ${ShaderScripts})
 # create translation here :)
-set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
+set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
+message ("Language Update Options: ${LUPDATE_OPTIONS}")
+
 # created translation files
 set(TS_FILES
     translation/lang_de_DE.ts

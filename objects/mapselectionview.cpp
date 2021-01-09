@@ -346,6 +346,11 @@ void MapSelectionView::loadMapVictoryInfo()
     }
 }
 
+spMapSelection MapSelectionView::getMapSelection() const
+{
+    return m_pMapSelection;
+}
+
 void MapSelectionView::updateMapData()
 {
     m_MapName->setHtmlText(m_pCurrentMap->getMapName());

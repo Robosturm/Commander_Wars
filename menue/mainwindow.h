@@ -24,6 +24,7 @@ signals:
     void sigEnterLoadCampaign();
     void sigEnterAchievementmenue();
     void sigImport();
+    void sigOnEnter();
 public slots:
     void enterSingleplayer();
     void enterEditor();
@@ -45,6 +46,7 @@ public slots:
     void enterAchievementmenue();
     void import();
     void importFromDirectory(QString file);
+    void onEnter();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 

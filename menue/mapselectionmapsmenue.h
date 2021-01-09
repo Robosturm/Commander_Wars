@@ -41,6 +41,7 @@ public:
     virtual void showRuleSelection();
     void hidePlayerSelection();
     void showPlayerSelection();
+
 signals:
     void buttonBack();
     void buttonNext();
@@ -49,6 +50,7 @@ signals:
     void sigShowLoadRules();
     void sigShowSaveRules();
     void sigShowSaveMap();
+    void sigOnEnter();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -85,6 +87,10 @@ public slots:
     void saveRules(QString filename);
     void showSaveMap();
     void saveMap(QString filename);
+    void onEnter();
+    void selectMap(QString folder, QString filename);
+    PlayerSelection* getPlayerSelection() const;
+
 protected:
 
     // buttons

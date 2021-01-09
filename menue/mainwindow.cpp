@@ -232,6 +232,8 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigImport, this, &Mainwindow::import, Qt::QueuedConnection);
     btnI++;
 
+    connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
     pApp->continueRendering();
 }
 
@@ -293,11 +295,9 @@ Mainwindow::~Mainwindow()
 }
 
 void Mainwindow::enterSingleplayer()
-{
-    
+{    
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
-    leaveMenue();
-    
+    leaveMenue();    
 }
 
 void Mainwindow::enterMultiplayer()
@@ -468,4 +468,18 @@ void Mainwindow::quitGame()
 {
      Mainapp* pApp = Mainapp::getInstance();
      pApp->quitGame();
+}
+
+void Mainwindow::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "main";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
+    }
 }

@@ -2,7 +2,7 @@
 #define SCRIPTEVENTCHANGEBUILDLIST_H
 
 
-#include "scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptEventChangeBuildlist : public ScriptEvent
 {

@@ -88,6 +88,15 @@ signals:
      */
     void sigDisconnect();
 public slots:
+    // slots for automation
+    /**
+     * @brief selectPlayerAi
+     * @param player
+     * @param eAiType
+     */
+    void selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType);
+
+public slots:
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);

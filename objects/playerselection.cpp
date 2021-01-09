@@ -1036,8 +1036,16 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
         {
             updateCOData(player);
         });
+    }    
+}
+
+void PlayerSelection::selectPlayerAi(qint32 player, GameEnums::AiTypes eAiType)
+{
+    if (player >= 0 && player < m_playerAIs.size())
+    {
+        m_playerAIs[player]->setCurrentItem(static_cast<qint32>(eAiType));
+        selectAI(player);
     }
-    
 }
 
 void PlayerSelection::selectAI(qint32 player)

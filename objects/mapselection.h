@@ -34,6 +34,11 @@ public:
      * @param files
      */
     void setSelection(QString folder, QStringList files);
+    /**
+     * @brief setCurrentItem
+     * @param item
+     */
+    void setCurrentItem(QString item);
 signals:    
     void itemChanged(QString item);
     void changeSelection(qint32 index);
