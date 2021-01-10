@@ -7149,31 +7149,31 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="180"/>
-        <location filename="../menue/victorymenue.cpp" line="471"/>
+        <location filename="../menue/victorymenue.cpp" line="473"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="189"/>
-        <location filename="../menue/victorymenue.cpp" line="476"/>
+        <location filename="../menue/victorymenue.cpp" line="478"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="198"/>
-        <location filename="../menue/victorymenue.cpp" line="481"/>
+        <location filename="../menue/victorymenue.cpp" line="483"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="207"/>
-        <location filename="../menue/victorymenue.cpp" line="486"/>
+        <location filename="../menue/victorymenue.cpp" line="488"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="216"/>
-        <location filename="../menue/victorymenue.cpp" line="491"/>
+        <location filename="../menue/victorymenue.cpp" line="493"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7208,7 +7208,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="541"/>
+        <location filename="../menue/victorymenue.cpp" line="543"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>

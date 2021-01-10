@@ -441,6 +441,8 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     {
         AddScoreToUserdata();
     }
+    connect(this, &VictoryMenue::sigOnEnter, this, &VictoryMenue::onEnter, Qt::QueuedConnection);
+    emit sigOnEnter();
 }
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
@@ -882,5 +884,19 @@ void VictoryMenue::AddScoreToUserdata()
             }
             Userdata::getInstance()->addVictoryForMap(path, co1, co2, bestScore);
         }
+    }
+}
+
+void VictoryMenue::onEnter()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString object = "Init";
+    QString func = "onVictory";
+    if (pInterpreter->exists(object, func))
+    {
+        QJSValueList args;
+        QJSValue value = pInterpreter->newQObject(this);
+        args << value;
+        pInterpreter->doFunction(object, func, args);
     }
 }

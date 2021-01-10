@@ -35,7 +35,7 @@ public:
         ThreadLevel m_threadLevel{ThreadLevel::Normal};
         QPoint m_hqThread;
         spGameAction m_action;
-        qint32 m_score{0};
+        float m_score{0};
     };
     explicit HeavyAi();
     virtual ~HeavyAi() = default;
@@ -65,23 +65,27 @@ private:
     void updateUnits(QVector<UnitData> & units, bool enemyUnits);
     void findHqThreads(const spQmlVectorBuilding & buildings);
     bool isCaptureTransporterOrCanCapture(Unit* pUnit);
-    bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition, qint32 & score);
-
+    bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition, float & score);
+    /**
+     * @brief performAction
+     */
+    bool selectActionToPerform();
     /**
      * @brief scoreCapture
      * @param action
      * @return
      */
-    qint32 scoreCapture(spGameAction action);
+    float scoreCapture(spGameAction action);
     /**
      * @brief scoreFire
      * @param action
      * @return
      */
-    qint32 scoreFire(spGameAction action);
+    float scoreFire(spGameAction action);    
+
 private:
     // function for scoring a function
-    using scoreFunction = std::function<qint32 (spGameAction action)>;
+    using scoreFunction = std::function<float (spGameAction action)>;
     struct ScoreInfo
     {
         QString m_actionId;
@@ -100,6 +104,8 @@ private:
     bool m_pause{false};
 
     static const qint32 minSiloDamage;
+    float m_minActionScore{0.1f};
+    float m_actionScoreVariant{0.05f};
 };
 
 #endif // HEAVYAI_H

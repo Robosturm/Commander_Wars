@@ -44,6 +44,7 @@ signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
     void sigFinishCurrentGraph();
+    void sigOnEnter();
 public slots:
     void exitMenue();
     /**
@@ -59,6 +60,7 @@ public slots:
      * @brief finishGraph
      */
     void finishGraph();
+    void onEnter();
 protected:
     /**
      * @brief drawGraphStep
