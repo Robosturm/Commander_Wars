@@ -82,8 +82,11 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                     QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
                     pAction->setMovepath(path, turnPfs.getCosts(path));
-                    emit performAction(pAction);
-                    return true;
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
             }
         }
@@ -148,8 +151,11 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                     QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                     pAction->setMovepath(path, turnPfs.getCosts(path));
                     addSelectedFieldData(pAction, target);
-                    emit performAction(pAction);
-                    return true;
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
                 else
                 {
@@ -162,8 +168,11 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                         pAction->setActionID(ACTION_WAIT);
                         QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
                         pAction->setMovepath(path, turnPfs.getCosts(path));
-                        emit performAction(pAction);
-                        return true;
+                        if (pAction->canBePerformed())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
                     }
                 }
             }
