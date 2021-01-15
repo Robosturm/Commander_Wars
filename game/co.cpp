@@ -1,6 +1,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
 
 #include "game/player.h"
 #include "game/unit.h"
@@ -12,6 +13,8 @@
 #include "menue/gamemenue.h"
 
 #include "resource_management/cospritemanager.h"
+
+#include "spritingsupport/spritecreator.h"
 
 CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
@@ -1485,6 +1488,20 @@ void CO::serializeObject(QDataStream& pStream) const
     {
         pStream << perk;
     }
+    pStream << static_cast<qint32>(m_customCOStyles.size());
+    for (qint32 i = 0; i < m_customCOStyles.size(); i++)
+    {
+        pStream << std::get<0>(m_customCOStyles[i]);
+        pStream << std::get<1>(m_customCOStyles[i]);
+        qint32 width = static_cast<qint32>(std::get<2>(m_customCOStyles[i]).width());
+        pStream << width;
+        for (qint32 x = 0; x < width; x++)
+        {
+            pStream << std::get<2>(m_customCOStyles[i]).pixel(x, 0);
+            pStream << std::get<3>(m_customCOStyles[i]).pixel(x, 0);
+        }
+        pStream << std::get<4>(m_customCOStyles[i]);
+    }
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -1539,8 +1556,130 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     {
         m_perkList.append(coID);
     }
+    if (version > 4)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        m_customCOStyles.clear();
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString coid;
+            QString file;
+            QImage colorTable;
+            QImage maskTable;
+            bool useColorBox = false;
+            pStream >> coid;
+            pStream >> file;
+            qint32 width = 0;
+            pStream >> width;
+            colorTable = QImage(width, 1, QImage::Format_ARGB32);
+            maskTable = QImage(width, 1, QImage::Format_ARGB32);
+            QRgb rgb;
+            for (qint32 x = 0; x < width; x++)
+            {
+                pStream >> rgb;
+                colorTable.setPixel(x, 0, rgb);
+                pStream >> rgb;
+                maskTable.setPixel(x, 0, rgb);
+            }
+            pStream >> useColorBox;
+            colorTable.convertTo(QImage::Format_ARGB32);
+            maskTable.convertTo(QImage::Format_ARGB32);
+            m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
+            loadResAnim(coid, file, colorTable, maskTable, useColorBox);
+        }
+    }
     if (!fast)
     {
         init();
     }
+}
+
+void CO::setCoStyleFromUserdata()
+{
+    m_customCOStyles.clear();
+    auto * style = Userdata::getInstance()->getCOStyle(coID);
+    QString file;
+    QImage colorTable;
+    QImage maskTable;
+    bool useColorBox = false;
+    if (style != nullptr)
+    {
+        file = std::get<1>(*style);
+        colorTable = std::get<2>(*style);
+        maskTable = std::get<3>(*style);
+        useColorBox = std::get<4>(*style);
+    }
+    else
+    {
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        file = pCOSpriteManager->getResAnim(coID + "+nrm")->getResPath();
+    }
+    loadResAnim(coID, file, colorTable, maskTable, useColorBox);
+    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+}
+
+void CO::setCoStyle(QString file, qint32 style)
+{
+    m_customCOStyles.clear();
+    QImage colorTable;
+    QImage maskTable;
+    QImage baseColorTable;
+    baseColorTable.load(file + "+table.png");
+    bool useColorBox = false;
+    colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+    maskTable = baseColorTable.copy(0, style, baseColorTable.width(), 1);
+    loadResAnim(coID, file, colorTable, maskTable, useColorBox);
+    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+
+}
+
+void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
+{
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    colorTable.convertTo(QImage::Format_ARGB32);
+    maskTable.convertTo(QImage::Format_ARGB32);
+    QString coidLower = coid.toLower();
+    QStringList filenameList = file.split("/");
+    QString filename = filenameList[filenameList.size() - 1];
+    oxygine::spResAnim pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
+    if (pAnim.get() != nullptr)
+    {
+        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        if (pCOAnim.get() != nullptr)
+        {
+            m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
+        }
+    }
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
+    if (pAnim.get() != nullptr)
+    {
+        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        if (pCOAnim.get() != nullptr)
+        {
+            m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info", pCOAnim));
+        }
+    }
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
+    if (pAnim.get() != nullptr)
+    {
+        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        if (pCOAnim.get() != nullptr)
+        {
+            m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
+        }
+    }
+}
+
+oxygine::ResAnim* CO::getResAnim(QString id, oxygine::error_policy ep) const
+{
+    for (qint32 i = 0; i < m_Ressources.size(); i++)
+    {
+        if (id.toLower() == std::get<0>(m_Ressources[i]).toLower())
+        {
+            return std::get<1>(m_Ressources[i]).get();
+        }
+    }
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    return pCOSpriteManager->getResAnim(id, ep);
 }

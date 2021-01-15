@@ -48,20 +48,30 @@ namespace oxygine
         }
         TRet operator()(TArgs... args)
         {
+
             if constexpr(std::is_void<TRet>::value)
             {
-                (*m_callback)(args...);
+                if (created())
+                {
+                    (*m_callback)(args...);
+                }
             }
             else
             {
-                return (*m_callback)(args...);
+                if (created())
+                {
+                    return (*m_callback)(args...);
+                }
+                else
+                {
+                    return TRet();
+                }
             }
-
         }
         bool operator == (const Closure &c) const
         {
             return (this->m_pThis == c.m_pThis) &&
-                   (this->m_callback == c.m_callback);
+                    (this->m_callback == c.m_callback);
         }
         bool isSet()
         {
@@ -71,6 +81,11 @@ namespace oxygine
         {
             return (m_pThis == pOwner);
         }
+        bool created() const
+        {
+            return m_callback.get();
+        }
+
     private:
         void* m_pThis{nullptr};
         std::shared_ptr<std::function<TRet(TArgs...)>> m_callback;

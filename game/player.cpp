@@ -1129,7 +1129,7 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
 
 qint32 Player::getBonusMovementpoints(Unit* pUnit, QPoint position)
 {
-     qint32 movementModifier = 0;
+    qint32 movementModifier = 0;
     CO* pCO = getCO(0);
     if (pCO != nullptr)
     {
@@ -1784,6 +1784,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 13)
     {
-         pStream >> m_playerArmySelected;
+        pStream >> m_playerArmySelected;
     }
+
 }

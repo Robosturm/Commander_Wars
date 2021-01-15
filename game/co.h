@@ -49,7 +49,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 4;
+        return 5;
     }
     void init();
     /**
@@ -58,6 +58,13 @@ public:
      */
     bool isValid();
 
+    /**
+     * @brief getResAnim
+     * @param id
+     * @param ep
+     * @return
+     */
+    oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const;
 
 signals:
 
@@ -564,9 +571,22 @@ public slots:
      * @return
      */
     QString getSuperPowerName();
+
+    /**
+     * @brief setCoStyleFromUserdata
+     */
+    void setCoStyleFromUserdata();
+    /**
+     * @brief setCoStyle
+     * @param file path to the co style relative to the commander wars exe
+     * @param style index in the related predefined styles
+     */
+    void setCoStyle(QString file, qint32 style);
 protected:
     void limitPowerbar(float previousValue);
 
+private:
+    void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 private:
     Player* m_Owner;
     QString coID;
@@ -580,6 +600,9 @@ private:
     bool m_powerCharging{false};
 
     QStringList m_perkList;
+
+    QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
+    QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
 };
 
 #endif // KO_H
