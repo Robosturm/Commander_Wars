@@ -7,7 +7,7 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         if ((unit.getHasMoved() === true) ||
-                (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }
@@ -31,23 +31,25 @@ var Constructor = function()
                         var defUnit = defTerrain.getUnit();
                         if (defUnit !== null)
                         {
-                            if (unit.isAttackable(defUnit))
+                            if (unit.isAttackableFromPosition(defUnit, actionTargetField))
                             {
                                 return true
                             }
                         }
                         if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
                              (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                                (defTerrain.getHp() > 0))
+                             (defTerrain.getHp() > 0))
                         {
-                            if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
+                            if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
+                                unit.canAttackWithWeapon(0, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
                                     return true;
                                 }
                             }
-                            if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
+                            if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
+                                unit.canAttackWithWeapon(1, actionTargetField.x, actionTargetField.y, x, y))
                             {
                                 if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                                 {
@@ -166,6 +168,7 @@ var Constructor = function()
         return damage;
     };
 
+
     this.calcBattleDamage = function(action, x, y, luckMode)
     {
         return ACTION_FIRE.calcBattleDamage2(action.getTargetUnit(),action.getActionTarget(),
@@ -198,16 +201,18 @@ var Constructor = function()
             var baseDamage2 = -1;
             if (defUnit !== null)
             {
-                if (unit.isAttackable(defUnit, ignoreOutOfVisionRange))
+                if (unit.isAttackable(defUnit, ignoreOutOfVisionRange, Qt.point(atkPosX, atkPosY)))
                 {
                     var weaponID = unit.getWeapon1ID();
-                    if (unit.hasAmmo1() && weaponID !== "")
+                    if (unit.hasAmmo1() && weaponID !== "" &&
+                        unit.canAttackWithWeapon(0, atkPosX, atkPosY,x, y))
                     {
                         baseDamage1 = Global[weaponID].getBaseDamage(defUnit);
                         dmg1 = ACTION_FIRE.calcAttackerDamage(unit, weaponID, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
                     weaponID = unit.getWeapon2ID();
-                    if (unit.hasAmmo2() && weaponID)
+                    if (unit.hasAmmo2() && weaponID &&
+                        unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
                     {
                         baseDamage2 = Global[weaponID].getBaseDamage(defUnit);
                         dmg2 = ACTION_FIRE.calcAttackerDamage(unit, weaponID, attackerTakenDamage, actionTargetField ,defUnit, luckMode);
@@ -227,21 +232,23 @@ var Constructor = function()
                         }
                     }
                     if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1 &&
-                            defUnit.isAttackable(unit, true))
+                            defUnit.isAttackable(unit, true, actionTargetField))
                     {
                         var defDamage = -1;
                         var defWeapon = -1;
                         baseDamage1 = -1;
                         baseDamage2 = -1;
                         weaponID = defUnit.getWeapon1ID();
-                        if (defUnit.hasAmmo1() && weaponID !== "")
+                        if (defUnit.hasAmmo1() && weaponID !== "" &&
+                            defUnit.canAttackWithWeapon(0, x, y, atkPosX, atkPosY))
                         {
                             baseDamage1 = Global[weaponID].getBaseDamage(unit);
                             defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x + defenderTakenDamage, luckMode);
                             defWeapon = 0;
                         }
                         weaponID = defUnit.getWeapon2ID();
-                        if (defUnit.hasAmmo2() && weaponID !== "")
+                        if (defUnit.hasAmmo2() && weaponID !== "" &&
+                            defUnit.canAttackWithWeapon(1, x, y, atkPosX, atkPosY))
                         {
                             baseDamage2 = Global[weaponID].getBaseDamage(unit);
                             var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x + defenderTakenDamage, luckMode);
@@ -265,11 +272,13 @@ var Constructor = function()
                      (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                         (defTerrain.getHp() > 0))
                 {
-                    if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
+                    if (unit.hasAmmo1() && unit.getWeapon1ID() !== "" &&
+                        unit.canAttackWithWeapon(0, atkPosX, atkPosY, x, y))
                     {
                         dmg1 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
                     }
-                    if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
+                    if (unit.hasAmmo2() && unit.getWeapon2ID() !== "" &&
+                        unit.canAttackWithWeapon(1, atkPosX, atkPosY, x, y))
                     {
                         dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
                     }

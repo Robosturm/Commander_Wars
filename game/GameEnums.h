@@ -219,6 +219,14 @@ public:
     };
     Q_ENUM(AutoFocusing)
 
+    enum WeaponType
+    {
+        WeaponType_Both,
+        WeaponType_Direct,
+        WeaponType_Indirect,
+    };
+    Q_ENUM(WeaponType)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

@@ -249,4 +249,20 @@ var UNIT =
                 GameEnums.UnitType_Air,
                 GameEnums.UnitType_Naval];
     },
+
+    getTypeOfWeapon1 : function()
+    {
+        // changes for which ranges the ammo can be used
+        // WeaponType_Direct
+        // WeaponType_Indirect
+        return GameEnums.WeaponType_Both;
+    },
+
+    getTypeOfWeapon2 : function()
+    {
+        // changes for which ranges the ammo can be used.
+        // WeaponType_Direct
+        // WeaponType_Indirect
+        return GameEnums.WeaponType_Both;
+    },
 };

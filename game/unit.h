@@ -328,6 +328,7 @@ public slots:
     void setAmmo1(const qint32 &value);
     bool hasAmmo1() const;
     void reduceAmmo1(qint32 value);
+    GameEnums::WeaponType getTypeOfWeapon1();
 
     qint32 getMaxAmmo1() const;
     void setMaxAmmo1(const qint32 &value);
@@ -339,6 +340,7 @@ public slots:
     void setAmmo2(const qint32 &value);
     bool hasAmmo2() const;
     void reduceAmmo2(qint32 value);
+    GameEnums::WeaponType getTypeOfWeapon2();
 
     qint32 getMaxAmmo2() const;
     void setMaxAmmo2(const qint32 &value);
@@ -766,11 +768,28 @@ public slots:
      */
     float getTerrainAnimationMoveSpeed();
     /**
+     * @brief isAttackableFromPosition
+     * @param pDefender
+     * @param unitPos
+     * @return
+     */
+    bool isAttackableFromPosition(Unit* pDefender, QPoint unitPos);
+    /**
      * @brief isAttackable
      * @param pDefender
      * @return
      */
-    bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false);
+    bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false, QPoint unitPos = QPoint(-1, -1));
+    /**
+     * @brief canAttackWithWeapon
+     * @param weaponIndex
+     * @param unitX
+     * @param unitY
+     * @param targetX
+     * @param targetY
+     * @return
+     */
+    bool canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY);
     /**
      * @brief canAttackStealthedUnit
      * @param pDefender

@@ -282,17 +282,17 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="67"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="69"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="303"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="312"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="610"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="619"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>

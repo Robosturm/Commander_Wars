@@ -118,6 +118,10 @@ void GameEnums::registerEnums()
     value.setProperty("AutoFocusing_LastPos", AutoFocusing_LastPos);
     value.setProperty("AutoFocusing_Owned", AutoFocusing_Owned);
 
+    value.setProperty("WeaponType_Both", WeaponType_Both);
+    value.setProperty("WeaponType_Direct", WeaponType_Direct);
+    value.setProperty("WeaponType_Indirect", WeaponType_Indirect);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

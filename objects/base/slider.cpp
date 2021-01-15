@@ -51,7 +51,7 @@ void Slider::slotSpinBoxValueChanged(qreal currentValuevalue)
     }
     float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);
-    emit sliderValueChanged(static_cast<qint32>(scrollValue));
+    emit sliderValueChanged(static_cast<qint32>(value));
 }
 
 void Slider::setCurrentValue(const qint32 &CurrentValue)

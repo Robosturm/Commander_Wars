@@ -795,11 +795,17 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
+bool Unit::isAttackableFromPosition(Unit* pDefender, QPoint unitPos)
+{
+    return isAttackable(pDefender, false, unitPos);
+}
 
-bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
+bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint unitPos)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    if (pDefender != nullptr)
+    spGameMap pMap = GameMap::getInstance();
+    if (pDefender != nullptr &&
+        pMap.get() != nullptr)
     {
         if (m_pOwner->getFieldVisible(pDefender->getX(), pDefender->getY()) || ignoreOutOfVisionRange)
         {
@@ -810,14 +816,16 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
                 {
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
-                        if (hasAmmo1() && !weapon1ID.isEmpty())
+                        if (hasAmmo1() && !weapon1ID.isEmpty() &&
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, unitPos.x(), unitPos.y(), pDefender->getX(), pDefender->getY())))
                         {
                             if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
                             {
                                 return true;
                             }
                         }
-                        if (hasAmmo2() && !weapon2ID.isEmpty())
+                        if (hasAmmo2() && !weapon2ID.isEmpty() &&
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, unitPos.x(), unitPos.y(), pDefender->getX(), pDefender->getY())))
                         {
                             if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
                             {
@@ -830,6 +838,55 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
         }
     }
     return false;
+}
+
+bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, qint32 targetX, qint32 targetY)
+{
+    GameEnums::WeaponType weaponType = GameEnums::WeaponType::WeaponType_Both;
+    if (weaponIndex == 0)
+    {
+        weaponType = getTypeOfWeapon1();
+    }
+    else
+    {
+        weaponType = getTypeOfWeapon2();
+    }
+    if (weaponType == GameEnums::WeaponType::WeaponType_Both)
+    {
+        return true;
+    }
+    else
+    {
+        qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
+        if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
+            (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+GameEnums::WeaponType Unit::getTypeOfWeapon1()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon1");
+    if (erg.isNumber())
+    {
+        return static_cast<GameEnums::WeaponType>(erg.toInt());
+    }
+    return GameEnums::WeaponType::WeaponType_Both;
+}
+
+GameEnums::WeaponType Unit::getTypeOfWeapon2()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, "getTypeOfWeapon2");
+    if (erg.isNumber())
+    {
+        return static_cast<GameEnums::WeaponType>(erg.toInt());
+    }
+    return GameEnums::WeaponType::WeaponType_Both;
 }
 
 bool Unit::canAttackStealthedUnit(Unit* pDefender)
