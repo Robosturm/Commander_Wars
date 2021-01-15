@@ -618,6 +618,9 @@ var Constructor = function()
     {
         return qsTr("Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.");
     };
+
+    // you may implement the following function in a mod to further tweak when a unit can attack with a certain weapon.
+    // extendedCanAttackCheck(unit, weaponIndex, weaponType, unitX, unitY, targetX, targetY)
 }
 
 

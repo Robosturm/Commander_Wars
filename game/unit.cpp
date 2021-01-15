@@ -851,17 +851,39 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
     {
         weaponType = getTypeOfWeapon2();
     }
-    if (weaponType == GameEnums::WeaponType::WeaponType_Both)
+    bool ret = false;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    if (pInterpreter->exists("ACTION_FIRE", "extendedCanAttackCheck"))
     {
-        return true;
-    }
-    else
-    {
-        qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
-        if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
-            (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+        QJSValueList args;
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args << obj1;
+        args << weaponIndex;
+        args << weaponType;
+        args << unitX;
+        args << unitY;
+        args << targetX;
+        args << targetY;
+        QJSValue erg = pInterpreter->doFunction("ACTION_FIRE", "extendedCanAttackCheck", args);
+        if (erg.isBool())
         {
-            return true;
+            ret = erg.toBool();
+        }
+    }
+    if (!ret)
+    {
+        if (weaponType == GameEnums::WeaponType::WeaponType_Both)
+        {
+            ret = true;
+        }
+        else
+        {
+            qint32 distance = GlobalUtils::getDistance(QPoint(unitX, unitY), QPoint(targetX, targetY));
+            if ((weaponType == GameEnums::WeaponType::WeaponType_Direct && distance == 1) ||
+                (weaponType == GameEnums::WeaponType::WeaponType_Indirect && distance > 1))
+            {
+                ret = true;
+            }
         }
     }
     return false;
