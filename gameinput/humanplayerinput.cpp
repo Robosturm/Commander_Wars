@@ -290,7 +290,8 @@ void HumanPlayerInput::clearMarkedFields()
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
     spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
+    if (pMenu.get() != nullptr &&
+        GameAnimationFactory::getAnimationCount() == 0)
     {
         if (!GameMap::getInstance()->onMap(x, y) || !pMenu->getFocused())
         {
@@ -301,11 +302,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             m_pPlayer == nullptr)
         {
             Console::print("humanplayer input leftClick()", Console::eDEBUG);
-            if (GameAnimationFactory::getAnimationCount() > 0)
-            {
-                // do nothing
-            }
-            else if (m_CurrentMenu.get() != nullptr)
+            if (m_CurrentMenu.get() != nullptr)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
                 cancelActionInput();
