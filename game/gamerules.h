@@ -61,7 +61,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 17;
+        return 18;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -84,9 +84,20 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getSingleCo
+     * @return
+     */
+    bool getSingleCo() const;
+    /**
+     * @brief setSingleCo
+     * @param singleCo
+     */
+    void setSingleCo(bool singleCo);
     /**
      * @brief getPassword
      * @return
@@ -473,6 +484,7 @@ private:
     bool m_perkBannlistEdited{false};
     QStringList m_allowedPerks;
     bool m_actionBannlistEdited{false};
+    bool m_singleCo{false};
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
 

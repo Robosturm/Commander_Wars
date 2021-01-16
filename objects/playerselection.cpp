@@ -264,6 +264,11 @@ void PlayerSelection::showPlayerSelection()
     {
         emit sigCOsRandom(1);
     });
+    if (pMap->getGameRules()->getSingleCo())
+    {
+        pButtonAllCOs->setEnabled(false);
+        pButtonCOs2->setEnabled(false);
+    }
 
     if (m_pNetworkInterface.get() != nullptr ||
         m_pCampaign.get() != nullptr)
@@ -454,7 +459,29 @@ void PlayerSelection::showPlayerSelection()
         {
             emit sigShowSelectCO(i, 1);
         });
-
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            (ai > 0 && m_pCampaign.get() != nullptr) ||
+            pMap->getGameRules()->getSingleCo())
+        {
+            spriteCO2->setEnabled(false);
+        }
+        if (pMap->getGameRules()->getSingleCo())
+        {
+            playerCO2Changed("", i);
+        }
+        else if (m_pNetworkInterface.get() == nullptr ||
+            m_pNetworkInterface->getIsServer())
+        {
+            if (pMap->getPlayer(i)->getCO(1) != nullptr)
+            {
+                playerCO2Changed(pMap->getPlayer(i)->getCO(1)->getCoID(), i);
+            }
+            else
+            {
+                playerCO2Changed("", i);
+            }
+        }
 
         oxygine::spButton pIconButton = ObjectManager::createIconButton("perk");
         pIconButton->setPosition(xPositions[itemIndex] + 70, y + 10);
@@ -473,24 +500,7 @@ void PlayerSelection::showPlayerSelection()
         //
         createArmySelection(ai, xPositions, y, itemIndex, i);
 
-        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            saveGame ||
-            (ai > 0 && m_pCampaign.get() != nullptr))
-        {
-            spriteCO2->setEnabled(false);
-        }
-        if (m_pNetworkInterface.get() == nullptr ||
-            m_pNetworkInterface->getIsServer())
-        {
-            if (pMap->getPlayer(i)->getCO(1) != nullptr)
-            {
-                playerCO2Changed(pMap->getPlayer(i)->getCO(1)->getCoID(), i);
-            }
-            else
-            {
-                playerCO2Changed("", i);
-            }
-        }
+
 
         itemIndex++;
         spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);

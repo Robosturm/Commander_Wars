@@ -826,6 +826,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getSingleCo() const
+{
+    return m_singleCo;
+}
+
+void GameRules::setSingleCo(bool singleCo)
+{
+    m_singleCo = singleCo;
+}
+
 QString GameRules::getDescription() const
 {
     return m_description;
@@ -1032,6 +1042,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     }
     pStream << m_description;
     m_password.serializeObject(pStream);
+    pStream << m_singleCo;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1286,4 +1297,5 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> m_description;
         m_password.deserializeObject(pStream);
     }
+    pStream >> m_singleCo;
 }

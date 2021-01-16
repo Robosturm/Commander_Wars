@@ -323,6 +323,19 @@ void RuleSelection::showRuleSelection()
 
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
+    textField->setHtmlText(tr("Single CO's: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked you can only select a single co for a player."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getSingleCo());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setSingleCo, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
     textField->setHtmlText(tr("Unique CO's: "));
     textField->setPosition(30, y);
     addChild(textField);

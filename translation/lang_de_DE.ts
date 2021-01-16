@@ -3729,7 +3729,7 @@ Version: </source>
     <name>PlayerSelection</name>
     <message>
         <location filename="../objects/playerselection.cpp" line="103"/>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3760,14 +3760,14 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
-        <location filename="../objects/playerselection.cpp" line="325"/>
+        <location filename="../objects/playerselection.cpp" line="330"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="203"/>
-        <location filename="../objects/playerselection.cpp" line="307"/>
-        <location filename="../objects/playerselection.cpp" line="649"/>
+        <location filename="../objects/playerselection.cpp" line="312"/>
+        <location filename="../objects/playerselection.cpp" line="659"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3797,86 +3797,86 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="278"/>
+        <location filename="../objects/playerselection.cpp" line="283"/>
         <source>Select with how much funds all player start the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="293"/>
+        <location filename="../objects/playerselection.cpp" line="298"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
-        <location filename="../objects/playerselection.cpp" line="331"/>
-        <location filename="../objects/playerselection.cpp" line="345"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
+        <location filename="../objects/playerselection.cpp" line="336"/>
+        <location filename="../objects/playerselection.cpp" line="350"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="332"/>
         <source>Heavy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="334"/>
-        <location filename="../objects/playerselection.cpp" line="341"/>
-        <location filename="../objects/playerselection.cpp" line="345"/>
+        <location filename="../objects/playerselection.cpp" line="339"/>
+        <location filename="../objects/playerselection.cpp" line="346"/>
+        <location filename="../objects/playerselection.cpp" line="350"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="497"/>
+        <location filename="../objects/playerselection.cpp" line="507"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="515"/>
+        <location filename="../objects/playerselection.cpp" line="525"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="594"/>
+        <location filename="../objects/playerselection.cpp" line="604"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="613"/>
+        <location filename="../objects/playerselection.cpp" line="623"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="632"/>
+        <location filename="../objects/playerselection.cpp" line="642"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="668"/>
+        <location filename="../objects/playerselection.cpp" line="678"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="693"/>
+        <location filename="../objects/playerselection.cpp" line="703"/>
         <source>Selects the army for the player. CO means the army of the first CO is selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4708,166 +4708,176 @@ Version: </source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="326"/>
-        <source>Unique CO&apos;s: </source>
+        <source>Single CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="330"/>
-        <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
+        <source>If checked you can only select a single co for a player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="339"/>
-        <source>CO Specific Units: </source>
+        <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="343"/>
+        <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="352"/>
+        <source>CO Specific Units: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="356"/>
         <source>If unchecked specific CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="351"/>
+        <location filename="../objects/ruleselection.cpp" line="364"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="355"/>
+        <location filename="../objects/ruleselection.cpp" line="368"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="363"/>
+        <location filename="../objects/ruleselection.cpp" line="376"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="366"/>
+        <location filename="../objects/ruleselection.cpp" line="379"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="366"/>
+        <location filename="../objects/ruleselection.cpp" line="379"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="366"/>
+        <location filename="../objects/ruleselection.cpp" line="379"/>
         <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="368"/>
+        <location filename="../objects/ruleselection.cpp" line="381"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="380"/>
+        <location filename="../objects/ruleselection.cpp" line="393"/>
         <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="384"/>
+        <location filename="../objects/ruleselection.cpp" line="397"/>
         <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="393"/>
+        <location filename="../objects/ruleselection.cpp" line="406"/>
         <source>CO Perks: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="397"/>
+        <location filename="../objects/ruleselection.cpp" line="410"/>
         <source>Selects the amount of CO Perks that can be assigned per CO.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="407"/>
+        <location filename="../objects/ruleselection.cpp" line="420"/>
         <source>Building Hidding:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="411"/>
+        <location filename="../objects/ruleselection.cpp" line="424"/>
         <source>If checked most buildings deny vision. E.g. you can hide a unit in a building similar to a forest.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="420"/>
+        <location filename="../objects/ruleselection.cpp" line="433"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="424"/>
+        <location filename="../objects/ruleselection.cpp" line="437"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="434"/>
+        <location filename="../objects/ruleselection.cpp" line="447"/>
         <source>Powergain Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="438"/>
+        <location filename="../objects/ruleselection.cpp" line="451"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="449"/>
+        <location filename="../objects/ruleselection.cpp" line="462"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="453"/>
+        <location filename="../objects/ruleselection.cpp" line="466"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="462"/>
+        <location filename="../objects/ruleselection.cpp" line="475"/>
         <source>Day Screen: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="465"/>
+        <location filename="../objects/ruleselection.cpp" line="478"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="465"/>
+        <location filename="../objects/ruleselection.cpp" line="478"/>
         <source>Permanent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="467"/>
+        <location filename="../objects/ruleselection.cpp" line="480"/>
         <source>Defines if the day to day banner is shown permanent for human or not. Decision is depending of chosen fog of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="479"/>
+        <location filename="../objects/ruleselection.cpp" line="492"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="483"/>
+        <location filename="../objects/ruleselection.cpp" line="496"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="497"/>
+        <location filename="../objects/ruleselection.cpp" line="510"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="500"/>
+        <location filename="../objects/ruleselection.cpp" line="513"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="504"/>
+        <location filename="../objects/ruleselection.cpp" line="517"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="520"/>
+        <location filename="../objects/ruleselection.cpp" line="533"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
