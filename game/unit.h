@@ -410,13 +410,13 @@ public slots:
      * @brief loadSprites loads the given sprite
      * @param spriteID
      */
-    void loadSprite(QString spriteID, bool addPlayerColor);
+    void loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite = true);
     /**
      * @brief loadSpriteV2
      * @param spriteID
      * @param mode
      */
-    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode);
+    void loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipSprite = true);
     /**
      * @brief addShineTween
      */
@@ -732,6 +732,10 @@ public slots:
      * @brief updateSprites reloads all sprites
      */
     void updateSprites(bool editor);
+    /**
+     * @brief resetSprites removes all sprites from the unit which makes it invisible
+     */
+    void resetSprites();
     /**
      * @brief getFuelCostModifier
      * @param pUnit

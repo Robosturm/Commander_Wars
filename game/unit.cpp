@@ -194,19 +194,19 @@ void Unit::removeShineTween()
     }
 }
 
-void Unit::loadSprite(QString spriteID, bool addPlayerColor)
+void Unit::loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite)
 {
     if (addPlayerColor)
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_Mask, flipSprite);
     }
     else
     {
-        loadSpriteV2(spriteID, GameEnums::Recoloring_None);
+        loadSpriteV2(spriteID, GameEnums::Recoloring_None, flipSprite);
     }
 }
 
-void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
+void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipSprite)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
@@ -256,7 +256,7 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
-        if (m_pOwner->getFlipUnitSprites())
+        if (m_pOwner->getFlipUnitSprites() && flipSprite)
         {
             pSprite->setFlippedX(true);
             pWaitSprite->setFlippedX(true);
@@ -324,9 +324,8 @@ qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
     return modifier;
 }
 
-void Unit::updateSprites(bool editor)
+void Unit::resetSprites()
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
         m_pUnitSprites[i]->detach();
@@ -338,6 +337,12 @@ void Unit::updateSprites(bool editor)
     // call the js loader function to do the rest
     m_pUnitSprites.clear();
     m_pUnitWaitSprites.clear();
+}
+
+void Unit::updateSprites(bool editor)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    resetSprites();
     QString function1 = "loadSprites";
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
