@@ -2,6 +2,7 @@
 
 #include "game/gameanimationdialog.h"
 #include "game/gameanimationfactory.h"
+#include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
@@ -249,6 +250,28 @@ void GameAnimationDialog::setCO(QString coid, GameEnums::COMood mood)
     QString resAnim = coid.toLower() + "+face";
     oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
     m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+}
+
+void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood)
+{
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get())
+    {
+        if (player >= 0 && player < pMap->getPlayerCount())
+        {
+            CO* pCo = pMap->getPlayer(player)->getCO(co);
+            if (pCo != nullptr)
+            {
+                QString resAnim = pCo->getCoID().toLower() + "+face";
+                oxygine::ResAnim* pAnim = pCo->getResAnim(resAnim);
+                m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
+            }
+            else
+            {
+                m_COSprite->setResAnim(nullptr);
+            }
+        }
+    }
 }
 
 void GameAnimationDialog::setFinishDelay(qint32 valueMs)

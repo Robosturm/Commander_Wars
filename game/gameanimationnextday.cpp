@@ -47,7 +47,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
-        oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
+        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
         if (pAnim != nullptr)
         {
             m_CO->setResAnim(pAnim);
@@ -61,7 +61,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
-        oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
+        oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
         if (pAnim != nullptr)
         {
             m_CO = new oxygine::Sprite();

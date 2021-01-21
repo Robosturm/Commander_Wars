@@ -280,18 +280,16 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QImage& colorTableImg
     QFileInfo inputInfo(input);
     if (inputInfo.isFile() && inputInfo.exists())
     {
-        createSprite(input, colorTableImg, maskTableImg, useColorBox);
+        QImage img = createSprite(input, colorTableImg, maskTableImg, useColorBox, false);
         oxygine::SingleResAnim* pRet = new oxygine::SingleResAnim();
         pRet->setResPath(input);
-        QImage img("temp.png");
         Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor);
-        QFile::remove("temp.png");
         return pRet;
     }
     return nullptr;
 }
 
-void SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox)
+QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save)
 {
     QImage orgImg(input);
     QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
@@ -302,6 +300,7 @@ void SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage ma
             // color pixel or another one?
             QColor org = orgImg.pixelColor(x, y);
             QColor orgBox = getColorBox(org);
+            bool colorSet = false;
             for (qint32 i = 0; i < colorTableImg.width(); i++)
             {
                 QColor pixel = colorTableImg.pixelColor(i, 0);
@@ -311,11 +310,13 @@ void SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage ma
                     if (boxColor.rgba() == orgBox.rgba())
                     {
                         mainImg.setPixelColor(x, y, getImageColor(maskTableImg.pixelColor(i, 0), org));
+                        colorSet = true;
                         break;
                     }
                     else if (i == colorTableImg.width() - 1)
                     {
                         mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
+                        colorSet = true;
                     }
                 }
                 else
@@ -323,18 +324,28 @@ void SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage ma
                     if (pixel.rgba() == org.rgba())
                     {
                         mainImg.setPixelColor(x, y, maskTableImg.pixelColor(i, 0));
+                        colorSet = true;
                         break;
                     }
                     else if (i == colorTableImg.width() - 1)
                     {
                         mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
+                        colorSet = true;
                     }
                 }
             }
+            if (!colorSet)
+            {
+                mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
+            }
         }
     }
-    QFile::remove("temp.png");
-    mainImg.save("temp.png");
+    if (save)
+    {
+        QFile::remove("temp.png");
+        mainImg.save("temp.png");
+    }
+    return mainImg;
 }
 
 QImage SpriteCreator::createColorTable(QImage& image)

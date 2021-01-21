@@ -483,24 +483,25 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         if (pGameMap != nullptr && pGameMap->onMap(curX, curY))
         {
             QString neighbourID = "";
-            if (useBuildingID)
+            Terrain* pTerrain = pGameMap->getTerrain(curX, curY);
+            if (useBuildingID && pTerrain->getBuilding() != nullptr)
             {
-                neighbourID = pGameMap->getTerrain(curX, curY)->getID();
+                neighbourID = pTerrain->getID();
             }
             else if (useBaseTerrainID)
             {
                 if (recursionCount > 0)
                 {
-                    neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID(recursionCount);
+                    neighbourID = pTerrain->getBaseTerrainIDOfLevel(recursionCount);
                 }
                 else
                 {
-                    neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID();
+                    neighbourID = pTerrain->getBaseTerrainID();
                 }
             }
             else
             {
-                neighbourID = pGameMap->getTerrain(curX, curY)->getTerrainID();
+                neighbourID = pTerrain->getTerrainID();
             }
             if (blacklist)
             {
@@ -1130,6 +1131,7 @@ void Terrain::serializeObject(QDataStream& pStream) const
     pStream << terrainName;
     pStream << m_terrainDescription;
     pStream << m_hasStartOfTurn;
+    m_Variables.serializeObject(pStream);
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1237,6 +1239,10 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     if (version > 5)
     {
          pStream >> m_hasStartOfTurn;
+    }
+    if (version > 6)
+    {
+        m_Variables.deserializeObject(pStream);
     }
 }
 

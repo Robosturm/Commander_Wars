@@ -241,12 +241,12 @@ namespace oxygine
         qDebug("core::restore() done");
     }
 
-    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadSingleResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         pAnim->init(image, columns, rows, scaleFactor);
     }

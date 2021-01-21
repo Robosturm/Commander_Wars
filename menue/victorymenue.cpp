@@ -277,8 +277,6 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         style48.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style48.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style48.multiline = true;
-
-        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         m_VictoryPanel = new Panel(true, QSize(Settings::getWidth() - 10, Settings::getHeight() - 115),
                                    QSize(Settings::getWidth() - 10, Settings::getHeight() - 115));
         m_VictoryPanel->setPosition(5, 5);
@@ -358,7 +356,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                     pCOSprite->setScale(scale);
                     pCOSprite->setPosition(5, 11 + y);
                     QString resAnim = pCO->getCoID().toLower() + "+face";
-                    pAnim = pCOSpriteManager->getResAnim(resAnim);
+                    pAnim = pCO->getResAnim(resAnim);
                     QString sentence = "";
                     if (pAnim != nullptr)
                     {

@@ -9,6 +9,7 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/JsCallback.h"
 #include "coreengine/LUPDATE_MACROS.h"
+#include "coreengine/scriptvariables.h"
 
 #include "game/unit.h"
 #include "game/building.h"
@@ -89,7 +90,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 6;
+        return 7;
     }
     /**
      * @brief update
@@ -129,6 +130,14 @@ public:
     bool isValid();
 
 public slots:
+    /**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
     /**
      * @brief getOffensiveBonus
      * @param pAttacker
@@ -295,12 +304,12 @@ public slots:
      * @param count maximum recursion
      * @return
      */
-    inline QString getBaseTerrainID(qint32 count)
+    inline QString getBaseTerrainIDOfLevel(qint32 count)
     {
         if (m_pBaseTerrain.get() != nullptr &&
            ((count > 0) || (count < 0)))
         {
-            return m_pBaseTerrain->getBaseTerrainID(count - 1);
+            return m_pBaseTerrain->getBaseTerrainIDOfLevel(count - 1);
         }
         else
         {
@@ -453,7 +462,7 @@ private:
       */
     qint32 hp{-1};
     qint32 m_VisionHigh{0};
-
+    ScriptVariables m_Variables;
     bool m_hasStartOfTurn{false};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;

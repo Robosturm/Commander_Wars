@@ -23,8 +23,7 @@ PlayerInfo::PlayerInfo()
 }
 
 void PlayerInfo::updateData()
-{
-    
+{    
     // clean up
     this->removeChildren();
     // recreate the ui
@@ -90,7 +89,7 @@ void PlayerInfo::updateData()
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
             {
-                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower());
+                pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
             }
             else
             {
@@ -126,7 +125,7 @@ void PlayerInfo::updateData()
             if (pPlayer->getCO(1) != nullptr)
             {
                 pCO = pPlayer->getCO(1);
-                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower());
+                pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
                 pSprite = new oxygine::Sprite();
                 pSprite->setResAnim(pAnim);
                 pSprite->setY(yPos + 62);

@@ -1614,9 +1614,13 @@ void CO::setCoStyleFromUserdata()
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         file = pCOSpriteManager->getResAnim(coID + "+nrm")->getResPath();
+        file.replace("+nrm.png", "");
     }
-    loadResAnim(coID, file, colorTable, maskTable, useColorBox);
-    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+    if (coID != "CO_RANDOM")
+    {
+        loadResAnim(coID, file, colorTable, maskTable, useColorBox);
+        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+    }
 }
 
 void CO::setCoStyle(QString file, qint32 style)
@@ -1636,6 +1640,7 @@ void CO::setCoStyle(QString file, qint32 style)
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
+    Console::print("Loading sprites for CO " + coid, Console::eDEBUG);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     colorTable.convertTo(QImage::Format_ARGB32);
     maskTable.convertTo(QImage::Format_ARGB32);
@@ -1643,15 +1648,17 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
     QStringList filenameList = file.split("/");
     QString filename = filenameList[filenameList.size() - 1];
     oxygine::spResAnim pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+face", oxygine::error_policy::ep_ignore_error);
+    oxygine::spResAnim pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
-        oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        pCOAnim = SpriteCreator::createAnim(file + "+face.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
         if (pCOAnim.get() != nullptr)
         {
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face", pCOAnim));
         }
     }
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+info", oxygine::error_policy::ep_ignore_error);
+    pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+info.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -1661,6 +1668,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pAnim = pCOSpriteManager->oxygine::Resources::getResAnim(filename + "+nrm", oxygine::error_policy::ep_ignore_error);
+    pCOAnim = nullptr;
     if (pAnim.get() != nullptr)
     {
         oxygine::spResAnim pCOAnim = SpriteCreator::createAnim(file + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
@@ -1669,6 +1677,7 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
             m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm", pCOAnim));
         }
     }
+    pCOAnim = nullptr;
 }
 
 oxygine::ResAnim* CO::getResAnim(QString id, oxygine::error_policy ep) const

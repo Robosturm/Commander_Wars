@@ -1831,6 +1831,7 @@ void GameMap::initPlayersAndSelectCOs()
                    (singleCO && usedCOs.contains(pPlayer->getCO(0)->getCoID())))
             {
                 pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
+                pPlayer->getCO(0)->setCoStyleFromUserdata();
                 count++;
                 if (count > 2000 * bannList.size())
                 {
@@ -1859,6 +1860,7 @@ void GameMap::initPlayersAndSelectCOs()
                    (singleCO && usedCOs.contains(pPlayer->getCO(1)->getCoID())))
             {
                 pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
+                pPlayer->getCO(1)->setCoStyleFromUserdata();
                 if (count > 2000 * bannList.size())
                 {
                     Console::print("Unable determine random co 0 for player " + QString::number(i) + " setting co to none", Console::eDEBUG);

@@ -144,7 +144,7 @@ void Player::setColor(QColor color, qint32 table)
     {
         createTable(m_Color);
     }
-    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+    Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable);
 }
 
 bool Player::loadTable(qint32 table)
@@ -373,7 +373,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
         {
             if (QFile::exists(path + "neutral.png"))
             {
-                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim, QImage(path + "neutral.png"));
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), QImage(path + "neutral.png"));
                 break;
             }
         }
@@ -1765,7 +1765,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable);
         }
     }
     else
@@ -1779,7 +1779,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         if (!fast)
         {
             Console::print("Loading colortable", Console::eDEBUG);
-            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim, m_colorTable);
+            Mainapp::getInstance()->loadResAnim(m_ColorTableAnim.get(), m_colorTable);
         }
     }
     if (version > 13)

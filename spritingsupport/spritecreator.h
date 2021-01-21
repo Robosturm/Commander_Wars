@@ -72,7 +72,7 @@ public:
      * @param maskTableImg
      * @param useColorBox
      */
-    static void createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox);
+    static QImage createSprite(QString input, QImage& colorTableImg, QImage maskTableImg, bool useColorBox, bool save);
 
     /**
      * @brief createColorTable

@@ -184,8 +184,9 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     if (pCO.get() != nullptr)
     {
         coid = pCO->getCoID();
+        pAnim = pCO->getResAnim((coid + "+nrm"));
     }
-    if (!coid.isEmpty())
+    else if (!coid.isEmpty())
     {
         pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
     }

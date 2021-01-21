@@ -910,6 +910,7 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
             if (pCurrentCO != nullptr)
             {
                 pCurrentCO->setPerkList(perks);
+                pCurrentCO->setCoStyleFromUserdata();
             }
             updateCOData(playerIdx);
         }
@@ -920,17 +921,21 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
 }
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
 {
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
-    if (coid.isEmpty())
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get())
     {
-        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
+        oxygine::ResAnim* pAnim = nullptr;
+        if (coid.isEmpty())
+        {
+            pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
+        }
+        else
+        {
+            pAnim = pCurrentCO->getResAnim((coid + "+info"));
+        }
+        m_playerCO1[playerIdx]->setResAnim(pAnim);
     }
-    else
-    {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info"));
-    }
-    m_playerCO1[playerIdx]->setResAnim(pAnim);
 }
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 {
@@ -955,6 +960,7 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
             if (pCurrentCO != nullptr)
             {
                 pCurrentCO->setPerkList(perks);
+                pCurrentCO->setCoStyleFromUserdata();
             }
             updateCOData(playerIdx);
         }
@@ -965,17 +971,21 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
 }
 void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
 {
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
-    if (coid.isEmpty())
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get())
     {
-        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+        CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
+        oxygine::ResAnim* pAnim = nullptr;
+        if (coid.isEmpty())
+        {
+            pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
+        }
+        else
+        {
+            pAnim = pCurrentCO->getResAnim((coid + "+info"));
+        }
+        m_playerCO2[playerIdx]->setResAnim(pAnim);
     }
-    else
-    {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info"));
-    }
-    m_playerCO2[playerIdx]->setResAnim(pAnim);
 }
 
 void PlayerSelection::updateCOData(qint32 playerIdx)

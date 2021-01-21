@@ -69,7 +69,10 @@ namespace oxygine
             for (int x = 0; x < columns; ++x)
             {
                 HitTestData ht = _frames[i].getHitTestData();
-                ht.data = &_data[reinterpret_cast<size_t>(ht.data)];
+                if (_data.length() > 0)
+                {
+                    ht.data = &_data[reinterpret_cast<size_t>(ht.data)];
+                }
                 _frames[i].setHitTestData(ht);
                 ++i;
             }

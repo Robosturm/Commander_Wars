@@ -81,7 +81,7 @@ IngameInfoBar::IngameInfoBar()
 
 void IngameInfoBar::updatePlayerInfo()
 {
-    
+
     m_pGameInfoBox->removeChildren();
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -98,7 +98,7 @@ void IngameInfoBar::updatePlayerInfo()
             oxygine::ResAnim* pAnim = nullptr;
             if (pCO != nullptr)
             {
-                pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
+                pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
             }
             else
             {
@@ -112,7 +112,7 @@ void IngameInfoBar::updatePlayerInfo()
             pCO = pPlayer->getCO(1);
             if (pCO != nullptr)
             {
-                pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
+                pAnim = pCO->getResAnim((pCO->getCoID() + "+face"));
             }
             else
             {

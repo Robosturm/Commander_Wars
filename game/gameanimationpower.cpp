@@ -67,7 +67,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 
     QString coid = m_pCO->getCoID();
     QString resAnim = coid.toLower() + "+nrm";
-    oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
+    oxygine::ResAnim* pAnim = m_pCO->getResAnim(resAnim);
     oxygine::spSprite m_CO = new oxygine::Sprite();
     if (pAnim != nullptr)
     {
@@ -104,7 +104,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         if (pCO1 != nullptr)
         {
             resAnim = pCO1->getCoID().toLower() + "+nrm";
-            pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
+            pAnim = pCO1->getResAnim(resAnim);
             m_CO = new oxygine::Sprite();
             if (pAnim != nullptr)
             {

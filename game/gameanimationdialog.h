@@ -46,6 +46,13 @@ public slots:
      */
     void setCO(QString coid, GameEnums::COMood mood);
     /**
+     * @brief setPlayerCO
+     * @param player
+     * @param co
+     * @param mood
+     */
+    void setPlayerCO(qint32 player, quint8 co, GameEnums::COMood mood);
+    /**
      * @brief setFinishDelay sets if the dialog disappears automatically if all text was displayed -1 for infinite
      * @param value
      */
