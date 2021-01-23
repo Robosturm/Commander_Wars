@@ -49,7 +49,7 @@ namespace oxygine
         setFormat(newFormat);
 
         _window = this;
-
+        m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
     }
 
@@ -243,7 +243,14 @@ namespace oxygine
 
     void GameWindow::loadResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
-        emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
+        if (QThread::currentThreadId() == m_mainHandle)
+        {
+            loadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
+        }
+        else
+        {
+            emit sigLoadSingleResAnim(pAnim, image, columns, rows, scaleFactor);
+        }
     }
 
     void GameWindow::loadSingleResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)

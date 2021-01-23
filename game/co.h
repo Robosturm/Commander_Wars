@@ -51,6 +51,19 @@ public:
     {
         return 5;
     }
+    /**
+     * @brief writeCoStyleToStream
+     * @param pStream
+     */
+    void writeCoStyleToStream(QDataStream& pStream) const;
+    /**
+     * @brief readCoStyleFromStream
+     * @param pStream
+     */
+    void readCoStyleFromStream(QDataStream& pStream);
+    /**
+     * @brief init
+     */
     void init();
     /**
      * @brief isValid
@@ -582,6 +595,12 @@ public slots:
      * @param style index in the related predefined styles
      */
     void setCoStyle(QString file, qint32 style);
+
+    /**
+     * @brief getActiveCoStyle
+     * @param coid
+     */
+    QString getActiveCoStyle();
 protected:
     void limitPowerbar(float previousValue);
 

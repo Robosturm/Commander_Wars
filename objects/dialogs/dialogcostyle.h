@@ -24,7 +24,6 @@ public:
     virtual ~DialogCOStyle() = default;
 
     void addCOStyle(QString style, bool select);
-    virtual void update(const oxygine::UpdateState& us) override;
 signals:
     void sigFinished();
     void sigCancel();
@@ -34,6 +33,8 @@ public slots:
     void changeCOStyle(qint32 index);
 
     void selecetedColorChanged(QColor color);
+private:
+    void updateSprites();
 private:
     oxygine::spBox9Sprite m_pSpriteBox;
     spColorSelector m_pColorSelector;
@@ -58,7 +59,6 @@ private:
     QImage maskTable;
     qint32 m_CurrentIndex{-1};
     bool useColorBox{false};
-    bool m_update{false};
 
 };
 

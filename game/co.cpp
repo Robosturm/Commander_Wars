@@ -1488,20 +1488,7 @@ void CO::serializeObject(QDataStream& pStream) const
     {
         pStream << perk;
     }
-    pStream << static_cast<qint32>(m_customCOStyles.size());
-    for (qint32 i = 0; i < m_customCOStyles.size(); i++)
-    {
-        pStream << std::get<0>(m_customCOStyles[i]);
-        pStream << std::get<1>(m_customCOStyles[i]);
-        qint32 width = static_cast<qint32>(std::get<2>(m_customCOStyles[i]).width());
-        pStream << width;
-        for (qint32 x = 0; x < width; x++)
-        {
-            pStream << std::get<2>(m_customCOStyles[i]).pixel(x, 0);
-            pStream << std::get<3>(m_customCOStyles[i]).pixel(x, 0);
-        }
-        pStream << std::get<4>(m_customCOStyles[i]);
-    }
+    writeCoStyleToStream(pStream);
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -1558,42 +1545,66 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 4)
     {
-        qint32 size = 0;
-        pStream >> size;
-        m_customCOStyles.clear();
-        for (qint32 i = 0; i < size; i++)
-        {
-            QString coid;
-            QString file;
-            QImage colorTable;
-            QImage maskTable;
-            bool useColorBox = false;
-            pStream >> coid;
-            pStream >> file;
-            qint32 width = 0;
-            pStream >> width;
-            colorTable = QImage(width, 1, QImage::Format_ARGB32);
-            maskTable = QImage(width, 1, QImage::Format_ARGB32);
-            QRgb rgb;
-            for (qint32 x = 0; x < width; x++)
-            {
-                pStream >> rgb;
-                colorTable.setPixel(x, 0, rgb);
-                pStream >> rgb;
-                maskTable.setPixel(x, 0, rgb);
-            }
-            pStream >> useColorBox;
-            colorTable.convertTo(QImage::Format_ARGB32);
-            maskTable.convertTo(QImage::Format_ARGB32);
-            m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
-            loadResAnim(coid, file, colorTable, maskTable, useColorBox);
-        }
+        readCoStyleFromStream(pStream);
     }
     if (!fast)
     {
         init();
     }
 }
+
+void CO::writeCoStyleToStream(QDataStream& pStream) const
+{
+    pStream << static_cast<qint32>(m_customCOStyles.size());
+    for (qint32 i = 0; i < m_customCOStyles.size(); i++)
+    {
+        pStream << std::get<0>(m_customCOStyles[i]);
+        pStream << std::get<1>(m_customCOStyles[i]);
+        qint32 width = static_cast<qint32>(std::get<2>(m_customCOStyles[i]).width());
+        pStream << width;
+        for (qint32 x = 0; x < width; x++)
+        {
+            pStream << std::get<2>(m_customCOStyles[i]).pixel(x, 0);
+            pStream << std::get<3>(m_customCOStyles[i]).pixel(x, 0);
+        }
+        pStream << std::get<4>(m_customCOStyles[i]);
+    }
+}
+
+void CO::readCoStyleFromStream(QDataStream& pStream)
+{
+    qint32 size = 0;
+    pStream >> size;
+    m_customCOStyles.clear();
+    for (qint32 i = 0; i < size; i++)
+    {
+        QString coid;
+        QString file;
+        QImage colorTable;
+        QImage maskTable;
+        bool useColorBox = false;
+        pStream >> coid;
+        pStream >> file;
+        qint32 width = 0;
+        pStream >> width;
+        colorTable = QImage(width, 1, QImage::Format_ARGB32);
+        maskTable = QImage(width, 1, QImage::Format_ARGB32);
+        QRgb rgb;
+        for (qint32 x = 0; x < width; x++)
+        {
+            pStream >> rgb;
+            colorTable.setPixel(x, 0, rgb);
+            pStream >> rgb;
+            maskTable.setPixel(x, 0, rgb);
+        }
+        pStream >> useColorBox;
+        colorTable.convertTo(QImage::Format_ARGB32);
+        maskTable.convertTo(QImage::Format_ARGB32);
+        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
+        loadResAnim(coid, file, colorTable, maskTable, useColorBox);
+    }
+}
+
 
 void CO::setCoStyleFromUserdata()
 {
@@ -1636,6 +1647,15 @@ void CO::setCoStyle(QString file, qint32 style)
     loadResAnim(coID, file, colorTable, maskTable, useColorBox);
     m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
 
+}
+
+QString CO::getActiveCoStyle()
+{
+    if (m_customCOStyles.size() > 0)
+    {
+        return std::get<1>(m_customCOStyles[0]);
+    }
+    return "";
 }
 
 void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)

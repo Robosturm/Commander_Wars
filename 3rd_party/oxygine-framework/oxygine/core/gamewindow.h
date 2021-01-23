@@ -128,6 +128,7 @@ namespace oxygine
         static GameWindow* _window;
         float m_brightness{0.0f};
         float m_gamma{1.0f};
+        Qt::HANDLE m_mainHandle{nullptr};
     };
 }
 

@@ -329,7 +329,7 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Heavy"), tr("Closed")}; //  // heavy ai disabled cause it's not finished
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Closed")}; // tr("Heavy"),  // heavy ai disabled cause it's not finished
     QVector<QString> aiList = defaultAiList;
     if (m_pCampaign.get() != nullptr)
     {
@@ -926,7 +926,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
     {
         CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(0);
         oxygine::ResAnim* pAnim = nullptr;
-        if (coid.isEmpty())
+        if (coid.isEmpty() || pCurrentCO == nullptr)
         {
             pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
         }
@@ -938,8 +938,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
     }
 }
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
-{
-    
+{    
     if (!saveGame)
     {
         spGameMap pMap = GameMap::getInstance();
@@ -976,7 +975,7 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
     {
         CO* pCurrentCO = pMap->getPlayer(playerIdx)->getCO(1);
         oxygine::ResAnim* pAnim = nullptr;
-        if (coid.isEmpty())
+        if (coid.isEmpty() || pCurrentCO == nullptr)
         {
             pAnim = COSpriteManager::getInstance()->getResAnim("no_co+info");
         }
@@ -1008,6 +1007,10 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         }
         sendStream << coid;
         Filesupport::writeVectorList(sendStream, perks);
+        if (pCO != nullptr)
+        {
+            pCO->writeCoStyleToStream(sendStream);
+        }
         pCO = pPlayer->getCO(1);
         coid = "";
         perks.clear();
@@ -1018,6 +1021,10 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         }
         sendStream << coid;
         Filesupport::writeVectorList(sendStream, perks);
+        if (pCO != nullptr)
+        {
+            pCO->writeCoStyleToStream(sendStream);
+        }
         m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
 }
@@ -1519,6 +1526,7 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     if (pCO != nullptr)
     {
         pCO->setPerkList(perks);
+        pCO->readCoStyleFromStream(stream);
     }
     updateCO1Sprite(coid, playerIdx);
     stream >> coid;
@@ -1528,6 +1536,7 @@ void PlayerSelection::recievedCOData(quint64, QDataStream& stream)
     if (pCO != nullptr)
     {
         pCO->setPerkList(perks);
+        pCO->readCoStyleFromStream(stream);
     }
     updateCO2Sprite(coid, playerIdx);
     
