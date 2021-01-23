@@ -841,7 +841,7 @@ void GameMap::zoom(float zoom)
     this->setScale(m_zoom);
 }
 
-void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
+void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain)
 {
     if (onMap(x, y))
     {
@@ -879,12 +879,16 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         {
             pTerrainOld->setBuilding(nullptr);
         }
-        updateTerrain(x, y);
-        if (updateSprites)
-        {
-            this->updateSprites(x, y);
-        }
-        
+    }
+}
+
+void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
+{
+    replaceTerrainOnly(terrainID, x, y, useTerrainAsBaseTerrain);
+    updateTerrain(x, y);
+    if (updateSprites)
+    {
+        this->updateSprites(x, y);
     }
 }
 

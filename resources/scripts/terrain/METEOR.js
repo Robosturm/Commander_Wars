@@ -95,11 +95,11 @@ var Constructor = function()
                 baseID === "SNOW" ||
                 baseID === "DESERT")
             {
-                map.replaceTerrain("PLAINS_PLASMA", field.x, field.y);
+                map.replaceTerrainOnly("PLAINS_PLASMA", field.x, field.y);
             }
             else
             {
-                map.replaceTerrain(baseID, field.x, field.y);
+                map.replaceTerrainOnly(baseID, field.x, field.y);
             }
         }
         var testFields =  globals.getCircle(1, 1);

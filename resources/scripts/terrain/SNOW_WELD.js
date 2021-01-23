@@ -95,7 +95,7 @@ var Constructor = function()
         // called when the terrain is destroyed and replacing of this terrain starts
         var x = terrain.getX();
         var y = terrain.getY();
-        map.replaceTerrain("SNOW_DESTROYEDWELD", x, y);
+        map.replaceTerrainOnly("SNOW_DESTROYEDWELD", x, y);
         map.getTerrain(x, y).loadSprites();
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);

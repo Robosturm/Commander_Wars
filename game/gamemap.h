@@ -573,6 +573,14 @@ public slots:
      */
     void replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
     /**
+     * @brief replaceTerrainOnly
+     * @param terrainID
+     * @param x
+     * @param y
+     * @param useTerrainAsBaseTerrain
+     */
+    void replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain);
+    /**
      * @brief replaceBuilding
      * @param buildingID
      * @param x

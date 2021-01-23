@@ -2143,7 +2143,7 @@ This is immediatly applied.</source>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
         <location filename="../game/gamemap.cpp" line="475"/>
-        <location filename="../game/gamemap.cpp" line="1064"/>
+        <location filename="../game/gamemap.cpp" line="1068"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2175,27 +2175,27 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1064"/>
+        <location filename="../game/gamemap.cpp" line="1068"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1091"/>
+        <location filename="../game/gamemap.cpp" line="1095"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1101"/>
+        <location filename="../game/gamemap.cpp" line="1105"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1109"/>
+        <location filename="../game/gamemap.cpp" line="1113"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1121"/>
+        <location filename="../game/gamemap.cpp" line="1125"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3834,11 +3834,6 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="332"/>
-        <source>Heavy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/playerselection.cpp" line="339"/>
         <location filename="../objects/playerselection.cpp" line="346"/>
         <location filename="../objects/playerselection.cpp" line="350"/>
@@ -3913,7 +3908,7 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1042"/>
+        <location filename="../game/gamemap.cpp" line="1046"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>
