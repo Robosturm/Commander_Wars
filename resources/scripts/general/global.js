@@ -38,6 +38,10 @@ replaceTextArgs = function(text, args)
     return text;
 }
 
+onZoomLevelChanged = function()
+{
+}
+
 Math.random = function()
 {
     console.print("Unsupported call to Math.random. Please use globals.randInt(min, max) instead", 4)

@@ -48,7 +48,7 @@ signals:
 public slots:
     void openScript(QString script, bool setup);
     void loadScript(QString content, QString script);
-    QJSValue doFunction(QString func, QJSValueList& args);
+    QJSValue doFunction(QString func, const QJSValueList& args = QJSValueList());
     QJSValue doFunction(QString obj, QString func, const QJSValueList& args = QJSValueList());
     void cleanMemory();
     /**

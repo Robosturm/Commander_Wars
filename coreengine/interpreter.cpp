@@ -121,7 +121,7 @@ Interpreter::~Interpreter()
 }
 
 
-QJSValue Interpreter::doFunction(QString func, QJSValueList& args)
+QJSValue Interpreter::doFunction(QString func, const QJSValueList& args)
 {
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);

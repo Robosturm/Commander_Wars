@@ -839,6 +839,7 @@ void GameMap::zoom(float zoom)
         // all fine
     }
     this->setScale(m_zoom);
+    Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
 void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain)
