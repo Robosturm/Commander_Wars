@@ -528,7 +528,27 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         else
         {
             // quit game with wrong version
-            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version or other mods loaded leaving the game again."));
+            spDialogMessageBox pDialogMessageBox = nullptr;
+            if (sameMods)
+            {
+                pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version. Leaving the game again."));
+            }
+            else
+            {
+                QString hostMods;
+                for (auto & mod : mods)
+                {
+                    hostMods += mod + ";";
+                }
+                mods = Settings::getMods();
+                QString myMods;
+                for (auto & mod : mods)
+                {
+                    myMods += mod + ";";
+                }
+                pDialogMessageBox = new DialogMessageBox(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
+            }
+
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
             addChild(pDialogMessageBox);
             

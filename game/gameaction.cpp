@@ -132,6 +132,16 @@ void GameAction::printAction()
     Console::print("Data " + data, Console::eINFO);
 }
 
+qint32 GameAction::getPlayer() const
+{
+    return m_player;
+}
+
+void GameAction::setPlayer(qint32 player)
+{
+    m_player = player;
+}
+
 qint64 GameAction::getRoundTimerTime() const
 {
     return m_roundTimerTime;

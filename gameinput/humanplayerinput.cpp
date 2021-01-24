@@ -338,6 +338,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             {
                 // prepare action
                 m_pGameAction = new GameAction();
+                m_pGameAction->setPlayer(m_pPlayer->getPlayerID());
                 m_pGameAction->setTarget(QPoint(x, y));
                 spGameMap pMap = GameMap::getInstance();
                 Unit* pUnit = pMap->getTerrain(x, y)->getUnit();

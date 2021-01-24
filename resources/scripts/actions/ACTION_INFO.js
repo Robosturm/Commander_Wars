@@ -27,15 +27,15 @@ var Constructor = function()
         }
         else if (id === "GAME")
         {
-            map.showGameInfo();
+            map.showGameInfo(action.getPlayer());
         }
         else if (id === "ATTACK")
         {
-            map.showAttackLog();
+            map.showAttackLog(action.getPlayer());
         }
         else if (id === "UNIT")
         {
-            map.showUnitInfo();
+            map.showUnitInfo(action.getPlayer());
         }
     };
     this.isFinalStep = function(action)

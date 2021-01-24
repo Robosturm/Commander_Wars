@@ -1169,26 +1169,24 @@ void GameMenue::victory(qint32 team)
     
 }
 
-void GameMenue::showAttackLog()
-{
-    
+void GameMenue::showAttackLog(qint32 player)
+{    
     m_Focused = false;
-    Console::print("showAttackLog()", Console::eDEBUG);
-    spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getCurrentPlayer());
+    Console::print("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
+    spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getPlayer(player));
     connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
     {
         m_Focused = true;
     });
-    addChild(pAttackLog);
-    
+    addChild(pAttackLog);    
 }
 
-void GameMenue::showUnitInfo()
+void GameMenue::showUnitInfo(qint32 player)
 {
     
     m_Focused = false;
-    Console::print("showUnitInfo()", Console::eDEBUG);
-    spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getCurrentPlayer());
+    Console::print("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
+    spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getPlayer(player));
     connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
     {
         m_Focused = true;
@@ -1214,11 +1212,10 @@ void GameMenue::showOptions()
     
 }
 
-void GameMenue::showGameInfo()
-{
-    
+void GameMenue::showGameInfo(qint32 player)
+{    
     m_Focused = false;
-    Console::print("showGameInfo()", Console::eDEBUG);
+    Console::print("showGameInfo() for player " + QString::number(player), Console::eDEBUG);
     QStringList header = {QObject::tr("Player"),
                           QObject::tr("Produced"),
                           QObject::tr("Lost"),
@@ -1230,7 +1227,7 @@ void GameMenue::showGameInfo()
     QVector<QStringList> data;
     spGameMap pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
-    Player* pViewPlayer = pMap->getCurrentViewPlayer();
+    Player* pViewPlayer = pMap->getPlayer(player);
     if (pViewPlayer != nullptr)
     {
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -1285,8 +1282,7 @@ void GameMenue::showGameInfo()
         {
             m_Focused = true;
         });
-    }
-    
+    }    
 }
 
 void GameMenue::showCOInfo()

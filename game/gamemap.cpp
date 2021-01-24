@@ -1185,19 +1185,19 @@ void GameMap::showCOInfo()
     emit signalShowCOInfo();
 }
 
-void GameMap::showGameInfo()
+void GameMap::showGameInfo(qint32 player)
 {
-    emit sigShowGameInfo();
+    emit sigShowGameInfo(player);
 }
 
-void GameMap::showAttackLog()
+void GameMap::showAttackLog(qint32 player)
 {
-    emit sigShowAttackLog();
+    emit sigShowAttackLog(player);
 }
 
-void GameMap::showUnitInfo()
+void GameMap::showUnitInfo(qint32 player)
 {
-    emit sigShowUnitInfo();
+    emit sigShowUnitInfo(player);
 }
 
 void GameMap::startGame()

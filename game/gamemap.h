@@ -325,9 +325,9 @@ signals:
     void signalSaveGame();
     void signalVictoryInfo();
     void signalShowCOInfo();
-    void sigShowGameInfo();
-    void sigShowAttackLog();
-    void sigShowUnitInfo();
+    void sigShowGameInfo(qint32 player);
+    void sigShowAttackLog(qint32 player);
+    void sigShowUnitInfo(qint32 player);
     void sigQueueAction(spGameAction pAction);
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
@@ -463,15 +463,15 @@ public slots:
     /**
      * @brief showGameInfo
      */
-    void showGameInfo();
+    void showGameInfo(qint32 player);
     /**
      * @brief showAttackLog
      */
-    void showAttackLog();
+    void showAttackLog(qint32 player);
     /**
      * @brief showUnitInfo
      */
-    void showUnitInfo();
+    void showUnitInfo(qint32 player);
     /**
      * @brief getBuildingCount
      * @param buildingID

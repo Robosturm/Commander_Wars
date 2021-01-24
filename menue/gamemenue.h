@@ -159,7 +159,7 @@ public slots:
     /**
      * @brief showGameInfo
      */
-    void showGameInfo();
+    void showGameInfo(qint32 player);
     /**
      * @brief showOptions
      */
@@ -167,11 +167,11 @@ public slots:
     /**
      * @brief showAttackLog
      */
-    void showAttackLog();
+    void showAttackLog(qint32 player);
     /**
      * @brief showAttackLog
      */
-    void showUnitInfo();
+    void showUnitInfo(qint32 player);
     /**
      * @brief saveMap
      * @param file

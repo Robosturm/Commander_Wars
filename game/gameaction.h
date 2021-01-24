@@ -90,9 +90,20 @@ public:
      */
     void setRoundTimerTime(const qint64 &roundTimerTime);
 
+
 signals:
 
 public slots:
+    /**
+     * @brief getPlayer
+     * @return
+     */
+    qint32 getPlayer() const;
+    /**
+     * @brief setPlayer
+     * @param player
+     */
+    void setPlayer(qint32 player);
     /**
      * @brief getSeed
      * @return
@@ -354,6 +365,8 @@ private:
     qint64 m_syncCounter{0};
 
     qint64 m_roundTimerTime{0};
+
+    qint32 m_player{-1};
 };
 
 #endif // GAMEACTION_H
