@@ -227,6 +227,14 @@ public:
     };
     Q_ENUM(WeaponType)
 
+    enum ShopItemType
+    {
+        ShopItemType_CO,
+        ShopItemType_CO_Skin,
+        ShopItemType_Map,
+    };
+    Q_ENUM(ShopItemType)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

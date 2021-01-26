@@ -14,6 +14,7 @@
 
 #include "objects/coselection.h"
 #include "objects/dialogs/dialogcostyle.h"
+#include "coreengine/userdata.h"
 
 COStyleMenu::COStyleMenu()
     : QObject()
@@ -56,7 +57,14 @@ COStyleMenu::COStyleMenu()
     });
     connect(this, &COStyleMenu::sigEditCOStyle, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
 
-    spCOSelection pCOSelection = new COSelection(QSize(Settings::getWidth(), Settings::getHeight() - 100));
+    Userdata* pUserdata = Userdata::getInstance();
+    auto items = pUserdata->getItems(GameEnums::ShopItemType_CO_Skin, false);
+    QStringList bannList = COSpriteManager::getInstance()->getLoadedRessources();
+    for (const auto & item : items)
+    {
+        bannList.removeAll(item.key);
+    }
+    spCOSelection pCOSelection = new COSelection(QSize(Settings::getWidth(), Settings::getHeight() - 100), bannList);
     pCOSelection->colorChanged(QColor(248, 88, 0));
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);

@@ -26,6 +26,7 @@
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
+#include "resource_management/shoploader.h"
 #include "wiki/wikidatabase.h"
 
 Mainapp* Mainapp::m_pMainapp;
@@ -87,6 +88,7 @@ void Mainapp::loadRessources()
     WikiDatabase::getInstance();
     Userdata::getInstance();
     AchievementManager::getInstance();
+    ShopLoader::getInstance();
     applyFilter(Settings::getSpriteFilter());
     // start after ressource loading
     m_AudioWorker.setObjectName("AudioThread");

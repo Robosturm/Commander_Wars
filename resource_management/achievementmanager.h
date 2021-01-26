@@ -8,7 +8,7 @@ class AchievementManager : public QObject, public RessourceManagement<Achievemen
     Q_OBJECT
 public:
     /**
-     * @brief loadAll loads all weapons data
+     * @brief loadAll loads all achievement data
      */
     virtual void loadAll() override;
     /**

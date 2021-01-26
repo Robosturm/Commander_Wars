@@ -28,6 +28,16 @@ Userdata::Userdata()
     changeUser();
 }
 
+qint32 Userdata::getCredtis() const
+{
+    return m_credtis;
+}
+
+void Userdata::setCredtis(const qint32 &credtis)
+{
+    m_credtis = credtis;
+}
+
 void Userdata::storeUser()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -248,6 +258,95 @@ const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
     return nullptr;
 }
 
+QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool buyable, bool bought)
+{
+    QVector<Userdata::ShopItem> ret;
+    for (const auto & item : m_shopItems)
+    {
+        if (item.itemType == type &&
+            item.buyable == buyable &&
+            item.bought == bought)
+        {
+            ret.append(item);
+        }
+    }
+    return ret;
+}
+
+QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool bought)
+{
+    QVector<Userdata::ShopItem> ret;
+    for (const auto & item : m_shopItems)
+    {
+        if (item.itemType == type &&
+            item.bought == bought)
+        {
+            ret.append(item);
+        }
+    }
+    return ret;
+}
+
+void Userdata::addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable)
+{
+    bool found = false;
+    for (const auto & item : m_shopItems)
+    {
+        if (item.itemType == itemType &&
+            item.key == key)
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        ShopItem item;
+        item.key = key;
+        item.name = name;
+        item.price = price;
+        item.buyable = buyable;
+        item.bought = false;
+        item.itemType = itemType;
+        m_shopItems.append(item);
+    }
+}
+
+void Userdata::setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable)
+{
+    for (auto & item : m_shopItems)
+    {
+        if (item.itemType == itemType &&
+            item.key == key)
+        {
+            item.buyable = buyable;
+            break;
+        }
+    }
+}
+
+void Userdata::setShopItemBought(GameEnums::ShopItemType itemType, QString key, bool bought)
+{
+    for (auto & item : m_shopItems)
+    {
+        if (item.itemType == itemType &&
+            item.key == key)
+        {
+            item.bought = bought;
+            break;
+        }
+    }
+}
+
+void Userdata::unlockAllShopItems(bool bought)
+{
+    for (auto & item : m_shopItems)
+    {
+        item.buyable = true;
+        item.bought |= bought;
+    }
+}
+
 void Userdata::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -282,16 +381,16 @@ void Userdata::serializeObject(QDataStream& pStream) const
         Filesupport::writeVectorList(pStream, item.score);
     }
     pStream << static_cast<qint32>(m_shopItems.size());
-    keys = m_mapVictoryInfo.keys();
-    for (auto key : keys)
+    for (auto & item : m_shopItems)
     {
-        auto & item = m_shopItems[key];
-        pStream << key;
+        pStream << item.key;
         pStream << item.name;
         pStream << item.price;
         pStream << item.buyable;
         pStream << item.bought;
+        pStream << static_cast<qint32>(item.itemType);
     }
+    pStream << m_credtis;
 }
 
 void Userdata::deserializeObject(QDataStream& pStream)
@@ -371,12 +470,22 @@ void Userdata::deserializeObject(QDataStream& pStream)
         {
             QString key;
             ShopItem item;
-            pStream >> key;
+            pStream >> item.key;
             pStream >> item.name;
             pStream >> item.price;
             pStream >> item.buyable;
             pStream >> item.bought;
-            m_shopItems.insert(key, item);
+            if (version > 5)
+            {
+                qint32 value = 0;
+                pStream >> value;
+                item.itemType = static_cast<GameEnums::ShopItemType>(value);
+            }
+            m_shopItems.append(item);
         }
+    }
+    if (version > 5)
+    {
+        pStream >> m_credtis;
     }
 }

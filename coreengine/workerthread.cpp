@@ -21,6 +21,7 @@
 #include "resource_management/battleanimationmanager.h"
 #include "resource_management/coperkmanager.h"
 #include "resource_management/achievementmanager.h"
+#include "resource_management/shoploader.h"
 #include "wiki/wikidatabase.h"
 
 
@@ -88,6 +89,8 @@ void WorkerThread::start()
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     pCOPerkManager->loadAll();
     WikiDatabase::getInstance()->load();
+    ShopLoader* pShopLoader = ShopLoader::getInstance();
+    pShopLoader->loadAll();
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();

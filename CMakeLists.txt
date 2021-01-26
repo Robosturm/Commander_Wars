@@ -250,6 +250,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/battleanimationmanager.cpp
         resource_management/coperkmanager.cpp
         resource_management/achievementmanager.cpp
+        resource_management/shoploader.cpp
 
         # core engine
         coreengine/mainapp.cpp

@@ -476,12 +476,13 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             versions.append(version);
         }
         bool sameMods = checkMods(mods, versions);
+        bool differentHash = false;
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
         if (hostRuntime != Filesupport::getRuntimeHash())
         {
-            sameMods = false;
+            differentHash = false;
         }
-        if (version == Mainapp::getGameVersion() && sameMods)
+        if (version == Mainapp::getGameVersion() && sameMods && !differentHash)
         {
             stream >> m_saveGame;
             m_pPlayerSelection->setSaveGame(m_saveGame);
@@ -532,6 +533,10 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             if (sameMods)
             {
                 pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version. Leaving the game again."));
+            }
+            else if (differentHash)
+            {
+                pDialogMessageBox = new DialogMessageBox(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
             }
             else
             {

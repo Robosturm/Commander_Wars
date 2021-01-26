@@ -122,6 +122,11 @@ void GameEnums::registerEnums()
     value.setProperty("WeaponType_Direct", WeaponType_Direct);
     value.setProperty("WeaponType_Indirect", WeaponType_Indirect);
 
+
+    value.setProperty("ShopItemType_CO", ShopItemType_CO);
+    value.setProperty("ShopItemType_CO_Skin", ShopItemType_CO_Skin);
+    value.setProperty("ShopItemType_Map", ShopItemType_Map);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

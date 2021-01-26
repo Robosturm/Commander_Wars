@@ -21,6 +21,7 @@
 #include "multiplayer/networkcommands.h"
 
 #include "coreengine/filesupport.h"
+#include "coreengine/userdata.h"
 
 #include "network/localserver.h"
 
@@ -162,6 +163,16 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     else
     {
         cos = pMap->getGameRules()->getCOBannlist();
+        if (cos.size() == 0)
+        {
+            cos= COSpriteManager::getInstance()->getLoadedRessources();
+        }
+        Userdata* pUserdata = Userdata::getInstance();
+        auto items = pUserdata->getItems(GameEnums::ShopItemType_CO_Skin, false);
+        for (const auto & item : items)
+        {
+            cos.removeAll(item.key);
+        }
         if (cos.size() == 0)
         {
             cos.push_back("");

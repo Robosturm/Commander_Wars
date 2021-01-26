@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/shop/" />
+	<atlas linearFilter="false">
+		
+	</atlas>
+</resources>

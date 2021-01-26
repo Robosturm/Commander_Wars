@@ -10,6 +10,7 @@
 
 
 #include "coreengine/fileserializable.h"
+#include "game/GameEnums.h"
 
 class Userdata : public QObject, public FileSerializable
 {
@@ -43,15 +44,33 @@ public:
 
     struct ShopItem
     {
+        QString key;
+        /**
+         * @brief name in the shop
+         */
         QString name;
+        /**
+         * @brief price in the shop
+         */
         qint32 price;
+        /**
+         * @brief buyable unlocked for the shop
+         */
         bool buyable;
+        /**
+         * @brief bought in the shop and available for the player
+         */
         bool bought;
+        /**
+         * @brief itemType used for filterin and showing item icons
+         */
+        GameEnums::ShopItemType itemType;
     };
 
     static Userdata* getInstance();
     void changeUser();
     void storeUser();
+    void loadShopData();
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -68,7 +87,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief addCOStyle
@@ -108,9 +127,34 @@ public:
      * @return
      */
     const MapVictoryInfo * getVictoryForMap(QString mapPath);
+    /**
+     * @brief getItems
+     * @param type
+     * @param buyable
+     * @param bought
+     * @return
+     */
+    QVector<ShopItem> getItems(GameEnums::ShopItemType type, bool buyable, bool bought);
+    /**
+     * @brief Userdata::getItems
+     * @param type
+     * @param bought
+     * @return
+     */
+    QVector<Userdata::ShopItem> getItems(GameEnums::ShopItemType type, bool bought);
 signals:
 
 public slots:
+    /**
+     * @brief getCredtis
+     * @return
+     */
+    qint32 getCredtis() const;
+    /**
+     * @brief setCredtis
+     * @param credtis
+     */
+    void setCredtis(const qint32 &credtis);
     /**
      * @brief addAchievement
      * @param id
@@ -143,6 +187,34 @@ public slots:
      * @param coid
      */
     QString getActiveCoStyle(QString coid);
+    /**
+     * @brief addShopItem adds an item to the shop list
+     * @param itemType what sort of item it's used to disable the item and for showing an icon in the shop
+     * @param key identifier of the item disabled for a co/skin it's his coid. For a map/campaign it's the path relative to the exe seperated by /
+     * @param name shown in the shop
+     * @param price for the item to be bought
+     * @param buyable if the item is buyable right from the start
+     */
+    void addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable = false);
+    /**
+     * @brief setShopItemBuyable changes if an item can be bought in the shop or not
+     * @param itemType
+     * @param key
+     * @param buyable
+     */
+    void setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable);
+    /**
+     * @brief setShopItemBought changes if the item has been bought already can be used to enabe items by progress in a campaign or map.
+     * @param itemType
+     * @param key
+     * @param bought
+     */
+    void setShopItemBought(GameEnums::ShopItemType itemType, QString key, bool bought);
+    /**
+     * @brief unlockAllShopItems (little cheat for testing and for people who don't wanna grind)
+     * @param bought if true the items get bought as well
+     */
+    void unlockAllShopItems(bool bought);
 private:
     void showAchieved();
 
@@ -154,7 +226,11 @@ private:
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<Achievement> m_achievements;
     QMap<QString, MapVictoryInfo> m_mapVictoryInfo;
-    QMap<QString, ShopItem> m_shopItems;
+    QVector<ShopItem> m_shopItems;
+    /**
+     * @brief m_credtis money available to spend in the shop
+     */
+    qint32 m_credtis;
 };
 
 #endif // USERDATA_H
