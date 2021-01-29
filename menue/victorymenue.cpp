@@ -415,6 +415,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
             }
         }
         m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
+        addShopMoney();
     }
     showGraph(GraphModes::Funds);
 
@@ -441,6 +442,25 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     connect(this, &VictoryMenue::sigOnEnter, this, &VictoryMenue::onEnter, Qt::QueuedConnection);
     emit sigOnEnter();
+}
+
+void VictoryMenue::addShopMoney()
+{
+    spGameMap pMap = GameMap::getInstance();
+    qint32 highestScore = 0;
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        if (pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        {
+            qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
+            if (score > highestScore)
+            {
+                highestScore = score;
+            }
+        }
+    }
+    Userdata* pUserdata = Userdata::getInstance();
+    pUserdata->addCredtis(highestScore);
 }
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)

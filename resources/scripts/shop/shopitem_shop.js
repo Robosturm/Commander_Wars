@@ -1,8 +1,13 @@
 var Constructor = function()
 {
 
-    this.items = [  [GameEnums.ShopItemType_CO_Skin,    "CO_NELL",     "Nell",     800,    true],
-                    [GameEnums.ShopItemType_CO,         "CO_NELL",     "Nell",     800,    true],];
+    this.items = [  [GameEnums.ShopItemType_CO_Skin,    "CO_NELL",                      qsTr("Nell"),     800,    true],
+                    [GameEnums.ShopItemType_CO,         "CO_NELL",                      qsTr("Nell"),     800,    true],
+
+                    // maps and campaigns
+                    [GameEnums.ShopItemType_Map,        "maps/2_player",                qsTr("Test"),     800,    true],
+                    [GameEnums.ShopItemType_Map,        "maps/test.map",                qsTr("Test"),     800,    true],
+                    [GameEnums.ShopItemType_Map,        "maps/war_room.jsm",            qsTr("Test"),     800,    true],];
 
     this.loadShopItems = function()
     {

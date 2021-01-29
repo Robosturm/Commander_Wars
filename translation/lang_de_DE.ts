@@ -19030,6 +19030,22 @@ Units have increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>shopitem_shop</name>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="4"/>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="5"/>
+        <source>Nell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="8"/>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="9"/>
+        <location filename="../resources/scripts/shop/shopitem_shop.js" line="10"/>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>silo</name>
     <message>
         <location filename="../resources/scripts/building/silo.js" line="24"/>

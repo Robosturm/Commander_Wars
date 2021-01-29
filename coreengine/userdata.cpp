@@ -38,6 +38,11 @@ void Userdata::setCredtis(const qint32 &credtis)
     m_credtis = credtis;
 }
 
+void Userdata::addCredtis(const qint32 &credtis)
+{
+    m_credtis += credtis;
+}
+
 void Userdata::storeUser()
 {
     Mainapp* pApp = Mainapp::getInstance();

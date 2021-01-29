@@ -2,6 +2,6 @@
 <resources>
 	<set path = "resources/images/shop/" />
 	<atlas linearFilter="false">
-		
+		<image file="hachi_shop.png" />
 	</atlas>
 </resources>

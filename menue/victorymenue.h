@@ -75,6 +75,10 @@ protected:
      * @brief AddScoreToUserdata
      */
     void AddScoreToUserdata();
+    /**
+     * @brief addShopMoney
+     */
+    void addShopMoney();
 private:
     GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**

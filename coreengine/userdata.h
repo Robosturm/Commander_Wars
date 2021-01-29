@@ -156,6 +156,11 @@ public slots:
      */
     void setCredtis(const qint32 &credtis);
     /**
+     * @brief addCredtis
+     * @param credtis
+     */
+    void addCredtis(const qint32 &credtis);
+    /**
      * @brief addAchievement
      * @param id
      * @param value
