@@ -424,7 +424,12 @@ void SpinBox::KeyInput(oxygine::KeyEvent event)
                     // for the start we don't check for upper or lower key input
                     QString msg = event.getText();
                     m_Text.insert(curmsgpos, msg);
-                    checkInput();
+                    bool ok = false;
+                    msg.toFloat(&ok);
+                    if (!ok)
+                    {
+                        checkInput();
+                    }
                     curmsgpos = m_Text.size();
                 }
             }
