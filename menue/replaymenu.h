@@ -69,25 +69,23 @@ protected:
      */
     void seekToDay(qint32 day);
 private:
-    bool _paused{false};
-    bool _requestPause{false};
-    spV_Scrollbar _progressBar;
-    QMutex _replayMutex{QMutex::RecursionMode::Recursive};
-    oxygine::spButton _playButton;
-    oxygine::spButton _pauseButton;
-    oxygine::spButton _fastForwardButton;
-    oxygine::spButton _configButton;
+    bool m_paused{false};
+    spV_Scrollbar m_progressBar;
+    QMutex m_replayMutex{QMutex::RecursionMode::Recursive};
+    oxygine::spButton m_playButton;
+    oxygine::spButton m_pauseButton;
+    oxygine::spButton m_fastForwardButton;
+    oxygine::spButton m_configButton;
     GameEnums::AnimationMode _StoredShowAnimations = GameEnums::AnimationMode_All;
     spHumanPlayerInput _HumanInput;
     spViewplayer m_Viewplayer;
 
-    GameEnums::AnimationMode _storedAnimMode;
+    GameEnums::AnimationMode m_storedAnimMode;
     GameEnums::BattleAnimationMode _storedBatteAnimMode;
-    quint32 _storedAnimationSpeed = 1;
-    quint32 _storedBattleAnimationSpeed = 1;
+    quint32 m_storedAnimationSpeed = 1;
+    quint32 m_storedBattleAnimationSpeed = 1;
 
-    bool _seekPause{false};
-    bool _seeking{false};
+    bool m_seeking{false};
     oxygine::spActor _seekActor;
     spLabel _seekDayLabel;
 };

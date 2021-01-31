@@ -30,10 +30,10 @@ ReplayMenu::ReplayMenu(QString filename)
     {
         m_Viewplayer = new Viewplayer();
         // store animation modes
-        _storedAnimMode = Settings::getShowAnimations();
+        m_storedAnimMode = Settings::getShowAnimations();
         _storedBatteAnimMode = Settings::getBattleAnimations();
-        _storedAnimationSpeed = Settings::getAnimationSpeedValue();
-        _storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
+        m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
+        m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         spGameMap pMap = GameMap::getInstance();
         pMap->registerMapAtInterpreter();
         oxygine::Actor::addChild(pMap);
@@ -55,10 +55,10 @@ ReplayMenu::ReplayMenu(QString filename)
 
 ReplayMenu::~ReplayMenu()
 {
-    Settings::setShowAnimations(_storedAnimMode);
+    Settings::setShowAnimations(m_storedAnimMode);
     Settings::setBattleAnimations(_storedBatteAnimMode);
-    Settings::setAnimationSpeed(_storedAnimationSpeed);
-    Settings::setBattleAnimationSpeed(_storedBattleAnimationSpeed);
+    Settings::setAnimationSpeed(m_storedAnimationSpeed);
+    Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
 }
 
 void ReplayMenu::showRecordInvalid()
@@ -94,13 +94,8 @@ void ReplayMenu::exitReplay()
 
 void ReplayMenu::nextReplayAction()
 {
-    QMutexLocker locker(&_replayMutex);
-    if (_requestPause)
-    {
-        _paused = true;
-        _requestPause = false;
-    }
-    if (!_paused)
+    QMutexLocker locker(&m_replayMutex);
+    if (!m_paused)
     {
         spGameAction pAction = m_ReplayRecorder.nextAction();
         _HumanInput->cleanUpInput();
@@ -109,16 +104,17 @@ void ReplayMenu::nextReplayAction()
         {
             progress = static_cast<float>(m_ReplayRecorder.getProgess()) / static_cast<float>(m_ReplayRecorder.getRecordSize());
         }
-        _progressBar->setScrollvalue(progress);
+        m_progressBar->setScrollvalue(progress);
         if (pAction.get() != nullptr)
         {
+            Console::print("Performing next replay action", Console::eDEBUG);
             performAction(pAction);
         }
         else
         {
             swapPlay();
-            _paused = true;
-            _requestPause = false;
+            Console::print("Pausing replay", Console::eDEBUG);
+            m_paused = true;
         }
     }
 }
@@ -171,23 +167,23 @@ void ReplayMenu::loadUIButtons()
     pButtonBox->addChild(exitGame);
 
     qint32 y = 9;
-    _playButton = ObjectManager::createIconButton("play");
-    _playButton->setVisible(false);
-    _pauseButton = ObjectManager::createIconButton("pause");
-    _playButton->setPosition(exitGame->getX() - 4 - _playButton->getWidth(), y);
-    _pauseButton->setPosition(exitGame->getX() - 4 - _pauseButton->getWidth(), y);
-    _playButton->addClickListener([=](oxygine::Event * )
+    m_playButton = ObjectManager::createIconButton("play");
+    m_playButton->setVisible(false);
+    m_pauseButton = ObjectManager::createIconButton("pause");
+    m_playButton->setPosition(exitGame->getX() - 4 - m_playButton->getWidth(), y);
+    m_pauseButton->setPosition(exitGame->getX() - 4 - m_pauseButton->getWidth(), y);
+    m_playButton->addClickListener([=](oxygine::Event * )
     {
         emit sigSwapPlay();
     });
-    _pauseButton->addClickListener([=](oxygine::Event * )
+    m_pauseButton->addClickListener([=](oxygine::Event * )
     {
         emit sigSwapPlay();
     });
-    pButtonBox->addChild(_playButton);
-    pButtonBox->addChild(_pauseButton);
+    pButtonBox->addChild(m_playButton);
+    pButtonBox->addChild(m_pauseButton);
     oxygine::spButton _fastForwardButton = ObjectManager::createIconButton("fastforward");
-    _fastForwardButton->setPosition(_playButton->getX() - 4 - _fastForwardButton->getWidth(), y);
+    _fastForwardButton->setPosition(m_playButton->getX() - 4 - _fastForwardButton->getWidth(), y);
     pButtonBox->addChild(_fastForwardButton);
     _fastForwardButton->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event*)
     {
@@ -197,28 +193,28 @@ void ReplayMenu::loadUIButtons()
     {
         emit sigStopFastForward();
     });
-    _configButton = ObjectManager::createIconButton("settings");
-    _configButton->setPosition(_fastForwardButton->getX() - 4 - _configButton->getWidth(), y);
-    _configButton->addClickListener([=](oxygine::Event*)
+    m_configButton = ObjectManager::createIconButton("settings");
+    m_configButton->setPosition(_fastForwardButton->getX() - 4 - m_configButton->getWidth(), y);
+    m_configButton->addClickListener([=](oxygine::Event*)
     {
         emit sigShowConfig();
     });
-    pButtonBox->addChild(_configButton);
+    pButtonBox->addChild(m_configButton);
 
     qint32 content = m_ReplayRecorder.getRecordSize() * actionPixelSize;
     if (content < exitGame->getX())
     {
         content = exitGame->getX() + 80;
     }
-    _progressBar = new V_Scrollbar(_configButton->getX() - 10, content);
-    connect(_progressBar.get(), &V_Scrollbar::sigScrollValueChanged, this, &ReplayMenu::seekChanged, Qt::QueuedConnection);
-    connect(_progressBar.get(), &V_Scrollbar::sigStartEditValue, this, &ReplayMenu::startSeeking, Qt::QueuedConnection);
-    connect(_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
-    _progressBar->setContentWidth(content);
-    _progressBar->setPosition(8, y);
-    _progressBar->setScrollspeed((_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
+    m_progressBar = new V_Scrollbar(m_configButton->getX() - 10, content);
+    connect(m_progressBar.get(), &V_Scrollbar::sigScrollValueChanged, this, &ReplayMenu::seekChanged, Qt::QueuedConnection);
+    connect(m_progressBar.get(), &V_Scrollbar::sigStartEditValue, this, &ReplayMenu::startSeeking, Qt::QueuedConnection);
+    connect(m_progressBar.get(), &V_Scrollbar::sigEndEditValue, this, &ReplayMenu::seekRecord, Qt::QueuedConnection);
+    m_progressBar->setContentWidth(content);
+    m_progressBar->setPosition(8, y);
+    m_progressBar->setScrollspeed((m_configButton->getX() - 10) / m_ReplayRecorder.getDayFromPosition(m_ReplayRecorder.getRecordSize() - 1));
 
-    pButtonBox->addChild(_progressBar);
+    pButtonBox->addChild(m_progressBar);
     pAnim = pObjectManager->getResAnim("panel");
     pButtonBox = new oxygine::Box9Sprite();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
@@ -274,10 +270,9 @@ void ReplayMenu::loadSeekUi()
 
 void ReplayMenu::startSeeking()
 {
-    QMutexLocker locker(&_replayMutex);
-    if (!_paused && !_requestPause)
+    QMutexLocker locker(&m_replayMutex);
+    if (!m_paused)
     {
-        _seekPause = true;
         swapPlay();
     }
     
@@ -288,7 +283,7 @@ void ReplayMenu::startSeeking()
         GameAnimationFactory::finishAllAnimations();
     }
     Settings::setShowAnimations(_StoredShowAnimations);
-    _seeking = true;
+    m_seeking = true;
     
 }
 
@@ -308,19 +303,19 @@ void ReplayMenu::seekChanged(float value)
 
 void ReplayMenu::seekRecord(float value)
 {
-    QMutexLocker locker(&_replayMutex);
+    QMutexLocker locker(&m_replayMutex);
     
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
     _seekActor->setVisible(false);
-    _seeking = false;
+    m_seeking = false;
     
 }
 
 void ReplayMenu::seekToDay(qint32 day)
 {
-    QMutexLocker locker(&_replayMutex);
+    QMutexLocker locker(&m_replayMutex);
     if (m_ReplayRecorder.getRecordSize() > 0)
     {
         Console::print("Seeking to day " + QString::number(day), Console::eDEBUG);
@@ -335,40 +330,37 @@ void ReplayMenu::seekToDay(qint32 day)
         pMap->getGameRules()->createFogVision();
         connectMap();
         connectMapCursor();
-        
-        if (_seekPause)
-        {
-            swapPlay();
-        }
+        swapPlay();
     }
 }
 
 void ReplayMenu::swapPlay()
 {
-    QMutexLocker locker(&_replayMutex);
-    if (_playButton->getVisible())
+    QMutexLocker locker(&m_replayMutex);
+    Console::print("ReplayMenu::swapPlay()", Console::eDEBUG);
+    if (m_playButton->getVisible())
     {
-        _playButton->setVisible(false);
-        _pauseButton->setVisible(true);
-        _requestPause = false;
-        if (_paused)
+        m_playButton->setVisible(false);
+        m_pauseButton->setVisible(true);
+        if (m_paused)
         {
-            _paused = false;
+            m_paused = false;
             Console::print("emitting sigActionPerformed()", Console::eDEBUG);
             emit sigActionPerformed();
         }
     }
     else
     {
-        _playButton->setVisible(true);
-        _pauseButton->setVisible(false);
-        _requestPause = true;
+        Console::print("requesting pause", Console::eDEBUG);
+        m_playButton->setVisible(true);
+        m_pauseButton->setVisible(false);
+        m_paused = true;
     }
 }
 
 void ReplayMenu::startFastForward()
 {
-    QMutexLocker locker(&_replayMutex);
+    QMutexLocker locker(&m_replayMutex);
     
     _StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
@@ -381,14 +373,14 @@ void ReplayMenu::startFastForward()
 
 void ReplayMenu::stopFastForward()
 {
-    QMutexLocker locker(&_replayMutex);
+    QMutexLocker locker(&m_replayMutex);
     Settings::setShowAnimations(_StoredShowAnimations);
 }
 
 void ReplayMenu::showConfig()
 {
     
-    if (_pauseButton->getVisible())
+    if (m_pauseButton->getVisible())
     {
         swapPlay();
     }
