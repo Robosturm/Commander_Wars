@@ -11,6 +11,7 @@
 #include "menue/costylemenu.h"
 #include "menue/replaymenu.h"
 #include "menue/achievementmenu.h"
+#include "menue/shopmenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -159,6 +160,17 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigEnterCOStyleMenu, this, &Mainwindow::enterCOStyleMenu, Qt::QueuedConnection);
     btnI++;
 
+    // co style button
+    oxygine::spButton pButtonShop = ObjectManager::createButton(tr("Shop"), buttonWidth);
+    pButtonShop->attachTo(this);
+    setButtonPosition(pButtonShop, btnI);
+    pButtonShop->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterShopMenu();
+    });
+    connect(this, &Mainwindow::sigEnterShopMenu, this, &Mainwindow::enterShopMenu, Qt::QueuedConnection);
+    btnI++;
+
     // wiki button
     oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"), buttonWidth);
     pButtonWiki->attachTo(this);
@@ -284,9 +296,18 @@ void Mainwindow::changeUsername(QString name)
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 13;
+    static const qint32 buttonCount = 7;
     float buttonHeigth = pButton->getHeight() + 5;
-    pButton->setPosition(Settings::getWidth() / 2.0f - pButton->getWidth() / 2.0f, Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
+    if (GlobalUtils::isEven(btnI))
+    {
+        pButton->setX(Settings::getWidth() / 2.0f - pButton->getWidth() - 10);
+    }
+    else
+    {
+        pButton->setX(Settings::getWidth() / 2.0f + 10);
+    }
+    btnI = btnI / 2;
+    pButton->setY(Settings::getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
 
 Mainwindow::~Mainwindow()
@@ -341,11 +362,15 @@ void Mainwindow::enterCreditsmenue()
 }
 
 void Mainwindow::enterAchievementmenue()
-{
-    
+{    
     oxygine::getStage()->addChild(new Achievementmenu());
+    leaveMenue();    
+}
+
+void Mainwindow::enterShopMenu()
+{
+    oxygine::getStage()->addChild(new Shopmenu());
     leaveMenue();
-    
 }
 
 void Mainwindow::enterLoadGame()
@@ -361,15 +386,13 @@ void Mainwindow::enterLoadGame()
 }
 
 void Mainwindow::enterLoadCampaign()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.camp");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
-    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);
-    
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadCampaign, Qt::QueuedConnection);    
 }
 
 void Mainwindow::loadCampaign(QString filename)
@@ -449,11 +472,9 @@ void Mainwindow::replayGame(QString filename)
 }
 
 void Mainwindow::leaveMenue()
-{
-    
+{    
     Console::print("Leaving Main Menue", Console::eDEBUG);
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void Mainwindow::enterCOStyleMenu()

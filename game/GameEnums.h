@@ -232,6 +232,8 @@ public:
         ShopItemType_CO,
         ShopItemType_CO_Skin,
         ShopItemType_Map,
+        ShopItemType_Unit,
+        ShopItemType_Perk
     };
     Q_ENUM(ShopItemType)
 

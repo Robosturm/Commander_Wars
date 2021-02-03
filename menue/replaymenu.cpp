@@ -20,7 +20,7 @@ ReplayMenu::ReplayMenu(QString filename)
     connect(this, &ReplayMenu::sigExitReplay, this, &ReplayMenu::exitReplay, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowRecordInvalid, this, &ReplayMenu::showRecordInvalid, Qt::QueuedConnection);
     connect(this, &GameMenue::sigActionPerformed, this, &ReplayMenu::nextReplayAction, Qt::QueuedConnection);
-    connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::swapPlay, Qt::QueuedConnection);
+    connect(this, &ReplayMenu::sigSwapPlay, this, &ReplayMenu::togglePlayUi, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStartFastForward, this, &ReplayMenu::startFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigStopFastForward, this, &ReplayMenu::stopFastForward, Qt::QueuedConnection);
     connect(this, &ReplayMenu::sigShowConfig, this, &ReplayMenu::showConfig, Qt::QueuedConnection);
@@ -95,6 +95,11 @@ void ReplayMenu::exitReplay()
 void ReplayMenu::nextReplayAction()
 {
     QMutexLocker locker(&m_replayMutex);
+    if (m_pauseRequested)
+    {
+        m_pauseRequested = false;
+        m_paused = true;
+    }
     if (!m_paused)
     {
         spGameAction pAction = m_ReplayRecorder.nextAction();
@@ -112,9 +117,9 @@ void ReplayMenu::nextReplayAction()
         }
         else
         {
-            swapPlay();
             Console::print("Pausing replay", Console::eDEBUG);
-            m_paused = true;
+            swapPlay();
+            togglePlayUi();
         }
     }
 }
@@ -337,16 +342,30 @@ void ReplayMenu::seekToDay(qint32 day)
 void ReplayMenu::swapPlay()
 {
     QMutexLocker locker(&m_replayMutex);
+    if (m_paused)
+    {
+        Console::print("emitting sigActionPerformed()", Console::eDEBUG);
+        m_paused = false;
+        emit sigActionPerformed();
+    }
+    else
+    {
+        m_paused = true;
+    }
+}
+
+void ReplayMenu::togglePlayUi()
+{
+    QMutexLocker locker(&m_replayMutex);
     Console::print("ReplayMenu::swapPlay()", Console::eDEBUG);
     if (m_playButton->getVisible())
     {
         m_playButton->setVisible(false);
         m_pauseButton->setVisible(true);
+        m_pauseRequested = false;
         if (m_paused)
         {
-            m_paused = false;
-            Console::print("emitting sigActionPerformed()", Console::eDEBUG);
-            emit sigActionPerformed();
+            swapPlay();
         }
     }
     else
@@ -354,7 +373,7 @@ void ReplayMenu::swapPlay()
         Console::print("requesting pause", Console::eDEBUG);
         m_playButton->setVisible(true);
         m_pauseButton->setVisible(false);
-        m_paused = true;
+        m_pauseRequested = true;
     }
 }
 

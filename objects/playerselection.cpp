@@ -168,10 +168,10 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
             cos= COSpriteManager::getInstance()->getLoadedRessources();
         }
         Userdata* pUserdata = Userdata::getInstance();
-        auto items = pUserdata->getItems(GameEnums::ShopItemType_CO_Skin, false);
+        auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO_Skin, false);
         for (const auto & item : items)
         {
-            cos.removeAll(item.key);
+            cos.removeAll(item);
         }
         if (cos.size() == 0)
         {
@@ -1058,8 +1058,7 @@ void PlayerSelection::slotCOsRandom(qint32 mode)
         {
             playerCO2Changed("CO_RANDOM", i);
         }
-    }
-    
+    }    
 }
 
 void PlayerSelection::showSelectCOPerks(qint32 player)
@@ -1068,7 +1067,9 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
     Player* pPlayer = pMap->getPlayer(player);
     if (pPlayer->getCO(0) != nullptr || pPlayer->getCO(1) != nullptr)
     {
-        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false);
+        Userdata* pUserdata = Userdata::getInstance();
+        auto hiddenList = pUserdata->getItemsList(GameEnums::ShopItemType_Perk, false);
+        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
         oxygine::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
         {

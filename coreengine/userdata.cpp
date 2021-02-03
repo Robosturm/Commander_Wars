@@ -292,6 +292,20 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
     return ret;
 }
 
+QStringList Userdata::getItemsList(GameEnums::ShopItemType type, bool bought)
+{
+    QStringList ret;
+    for (const auto & item : m_shopItems)
+    {
+        if (item.itemType == type &&
+            item.bought == bought)
+        {
+            ret.append(item.key);
+        }
+    }
+    return ret;
+}
+
 void Userdata::addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable)
 {
     bool found = false;

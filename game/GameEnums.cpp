@@ -126,6 +126,8 @@ void GameEnums::registerEnums()
     value.setProperty("ShopItemType_CO", ShopItemType_CO);
     value.setProperty("ShopItemType_CO_Skin", ShopItemType_CO_Skin);
     value.setProperty("ShopItemType_Map", ShopItemType_Map);
+    value.setProperty("ShopItemType_Unit", ShopItemType_Unit);
+    value.setProperty("ShopItemType_Perk", ShopItemType_Perk);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

@@ -233,6 +233,7 @@ set(${PROJECT_NAME}_SRCS
         menue/costylemenu.cpp
         menue/replaymenu.cpp
         menue/achievementmenu.cpp
+        menue/shopmenu.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp

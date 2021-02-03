@@ -17,7 +17,7 @@ class PerkSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, bool banning);
+    explicit PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, bool banning, QStringList hiddenList);
 protected slots:
     void changeCO(qint32 index);
     /**

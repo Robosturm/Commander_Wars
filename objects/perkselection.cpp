@@ -6,10 +6,11 @@
 #include "game/gamemap.h"
 #include "objects/base/label.h"
 
-PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning)
+PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool banning, QStringList hiddenList)
     : m_pCO(pCO),
       m_maxPerks(maxPerks),
-      m_banning(banning)
+      m_banning(banning),
+      m_hiddenPerks(hiddenList)
 {
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
@@ -47,6 +48,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     {
         QString id = pCOPerkManager->getID(i);
         if (pCOPerkManager->isSelectable(i) &&
+            !m_hiddenPerks.contains(id) &&
             (m_banning || pMap->getGameRules()->getAllowedPerks().contains(id)))
         {
             QString name = pCOPerkManager->getName(i);
@@ -151,6 +153,16 @@ void PerkSelection::toggleAll(bool toggle)
     {
        m_perks.clear();
     }
+}
+
+QStringList PerkSelection::getHiddenPerks() const
+{
+    return m_hiddenPerks;
+}
+
+void PerkSelection::setHiddenPerks(const QStringList &hiddenPerks)
+{
+    m_hiddenPerks = hiddenPerks;
 }
 
 QStringList PerkSelection::getPerks() const

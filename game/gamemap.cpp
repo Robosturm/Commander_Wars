@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
+#include "coreengine/userdata.h"
 
 #include "ai/coreai.h"
 
@@ -1215,6 +1216,9 @@ void GameMap::startGame()
             }
         }
     }
+    Userdata* pUserdata = Userdata::getInstance();
+    auto lockedUnits = pUserdata->getItemsList(GameEnums::ShopItemType_Unit, true);
+
     for (qint32 i = 0; i < players.size(); i++)
     {
         players[i]->loadVisionFields();
@@ -1224,6 +1228,16 @@ void GameMap::startGame()
         if (pAI != nullptr)
         {
             pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
+        }
+        HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(players[i]->getBaseGameInput());
+        if (pHuman != nullptr)
+        {
+            auto buildList = players[i]->getBuildList();
+            for (const auto & unitId : lockedUnits)
+            {
+                buildList.removeAll(unitId);
+            }
+            players[i]->setBuildList(buildList);
         }
     }
     QStringList mods = Settings::getMods();

@@ -25,6 +25,7 @@ signals:
     void sigEnterAchievementmenue();
     void sigImport();
     void sigOnEnter();
+    void sigEnterShopMenu();
 public slots:
     void enterSingleplayer();
     void enterEditor();
@@ -42,11 +43,13 @@ public slots:
     void quitGame();
     void enterCOStyleMenu();
     void enterLoadCampaign();
+    void enterShopMenu();
     void loadCampaign(QString filename);
     void enterAchievementmenue();
     void import();
     void importFromDirectory(QString file);
     void onEnter();
+
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 

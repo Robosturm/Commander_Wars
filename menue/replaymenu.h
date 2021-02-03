@@ -54,6 +54,10 @@ public slots:
      * @param value
      */
     void seekChanged(float value);
+    /**
+     * @brief togglePlayUi
+     */
+    void togglePlayUi();
 protected:
     /**
      * @brief loadUIButtons
@@ -70,6 +74,7 @@ protected:
     void seekToDay(qint32 day);
 private:
     bool m_paused{false};
+    bool m_pauseRequested{false};
     spV_Scrollbar m_progressBar;
     QMutex m_replayMutex{QMutex::RecursionMode::Recursive};
     oxygine::spButton m_playButton;

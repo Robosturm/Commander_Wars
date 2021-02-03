@@ -142,6 +142,13 @@ public:
      * @return
      */
     QVector<Userdata::ShopItem> getItems(GameEnums::ShopItemType type, bool bought);
+    /**
+     * @brief Userdata::getItems
+     * @param type
+     * @param bought
+     * @return
+     */
+    QStringList getItemsList(GameEnums::ShopItemType type, bool bought);
 signals:
 
 public slots:

@@ -219,12 +219,7 @@ void MapSelection::changeFolder(QString folder)
         infoList.append(QDir(newFolder).entryInfoList(QDir::Dirs));
         infoList.append(QDir(newFolder).entryInfoList(list.split(";"), QDir::Files));
         Userdata* pUserdata = Userdata::getInstance();
-        auto notBoughtMaps = pUserdata->getItems(GameEnums::ShopItemType_Map, false);
-        QStringList hideList;
-        for (const auto & item : notBoughtMaps)
-        {
-            hideList.append(item.key);
-        }
+        auto hideList = pUserdata->getItemsList(GameEnums::ShopItemType_Map, false);
         for (qint32 i = 1; i < infoList.size(); i++)
         {
             QString myPath = infoList[i].absoluteFilePath();
