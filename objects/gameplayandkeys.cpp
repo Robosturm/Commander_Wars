@@ -315,7 +315,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Auto Camare Mode: "));
+    pTextfield->setHtmlText(tr("Auto Camera Mode: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     items = {tr("Last Position"), tr("Owned HQ")};
@@ -328,6 +328,19 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     {
         Settings::setAutoFocusing(static_cast<GameEnums::AutoFocusing>(value));
     });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Center Camera on Fields: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCenterOnCamera = new Checkbox();
+    pCenterOnCamera->setChecked(Settings::getCenterOnMarkedField());
+    pCenterOnCamera->setPosition(sliderOffset - 130, y);
+    pCenterOnCamera->setTooltipText(tr("Selects if the camera centers on marked fields for an action or not."));
+    m_pOptions->addItem(pCenterOnCamera);
+    connect(pCenterOnCamera.get(), &Checkbox::checkChanged, Settings::getInstance(), Settings::setCenterOnMarkedField, Qt::QueuedConnection);
     y += 40;
 
     pTextfield = new Label(sliderOffset - 10);

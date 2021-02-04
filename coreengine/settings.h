@@ -42,9 +42,9 @@ public:
     static QString getSlaveServerName();
     static void setSlaveServerName(const QString &slaveServerName);
 
-
-
 public slots:
+    static bool getCenterOnMarkedField();
+    static void setCenterOnMarkedField(bool centerOnMarkedField);
 
     static bool getDialogAnimation();
     static void setDialogAnimation(bool dialogAnimation);
@@ -451,8 +451,8 @@ private:
     static QString m_slaveServerName;
     static bool m_Server;
     // auto saving
-    static std::chrono::seconds autoSavingCylceTime;
-    static qint32 autoSavingCycle;
+    static std::chrono::seconds autoSavingCylceTime;    static qint32 autoSavingCycle;
+
 
     // ingame options
     static GameEnums::AnimationMode showAnimations;
@@ -477,6 +477,7 @@ private:
     static bool m_autoScrolling;
     static bool m_autoCamera;
     static GameEnums::AutoFocusing m_autoFocusing;
+    static bool m_centerOnMarkedField;
 
     // internal members
     static Settings* m_pInstance;

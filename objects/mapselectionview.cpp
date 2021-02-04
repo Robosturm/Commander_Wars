@@ -60,11 +60,6 @@ MapSelectionView::MapSelectionView()
     this->addChild(m_MapInfo);
 
     qint32 y = 10;
-    m_pVictoryInfo = new oxygine::Actor();
-    m_pVictoryInfo->setPosition(10, y);
-    m_MapInfo->addItem(m_pVictoryInfo);
-    loadMapVictoryInfo();
-    y += 55 * Userdata::MAX_VICTORY_INFO_PER_MAP;
 
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
@@ -102,6 +97,12 @@ MapSelectionView::MapSelectionView()
     m_MapDescription->setPosition(10, y);
     m_MapInfo->addItem(m_MapDescription);
     y += 40;
+
+    m_pVictoryInfo = new oxygine::Actor();
+    m_pVictoryInfo->setPosition(10, y);
+    m_MapInfo->addItem(m_pVictoryInfo);
+    loadMapVictoryInfo();
+    y += 55 * Userdata::MAX_VICTORY_INFO_PER_MAP;
 
     // building count
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
@@ -276,8 +277,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         maxWidth = m_MapName->getX() + m_MapName->getTextRect().getWidth();
     }
     m_MapInfo->setContentWidth(maxWidth + 30);
-    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
-
+    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30 + Userdata::MAX_VICTORY_INFO_PER_MAP * 55);
 }
 
 void MapSelectionView::loadMapVictoryInfo()

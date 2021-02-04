@@ -891,7 +891,7 @@ bool Unit::canAttackWithWeapon(qint32 weaponIndex, qint32 unitX, qint32 unitY, q
             }
         }
     }
-    return false;
+    return ret;
 }
 
 GameEnums::WeaponType Unit::getTypeOfWeapon1()
