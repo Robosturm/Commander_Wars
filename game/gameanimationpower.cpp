@@ -208,7 +208,8 @@ GameAnimationPower::~GameAnimationPower()
 
 void GameAnimationPower::rightClick()
 {
-    GameAnimationFactory::finishAllAnimations();
+    stop();
+    onFinished(false);
 }
 
 void GameAnimationPower::stop()

@@ -150,7 +150,8 @@ void GameAnimationNextDay::rightClick()
 {
     if (!m_permanent)
     {
-        GameAnimationFactory::finishAllAnimations();
+        stop();
+        onFinished(false);
     }
     else
     {
