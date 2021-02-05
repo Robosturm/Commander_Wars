@@ -28,6 +28,11 @@ var Constructor = function()
 
         return -1;
     };
+
+    this.activate = function(weather)
+    {
+        audio.playSound("sandstorm.wav");
+    };
 }
 
 Constructor.prototype = WEATHER;
