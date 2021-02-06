@@ -67,7 +67,7 @@ var Constructor = function()
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 1000;
+        return 1000 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_ARTILLERY.getMaxUnitCount();
     };
 };
 

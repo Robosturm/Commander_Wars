@@ -18,12 +18,6 @@ var Constructor = function()
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
     };
 
-    this.getDyingDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
-    };
-
     this.hasDyingAnimation = function()
     {
         // return true if the unit has an implementation for loadDyingAnimation
@@ -33,6 +27,12 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_TRANSPORTPLANE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
     };
 };
 

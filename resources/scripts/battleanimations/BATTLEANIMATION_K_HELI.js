@@ -85,12 +85,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 0)
@@ -115,7 +109,13 @@ var Constructor = function()
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_K_HELI.getMaxUnitCount();
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_K_HELI.getMaxUnitCount();
     };
 };
 

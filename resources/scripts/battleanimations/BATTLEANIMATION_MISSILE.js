@@ -71,12 +71,6 @@ var Constructor = function()
         BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "+fired");
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 60),
@@ -88,12 +82,18 @@ var Constructor = function()
         sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
     };
 
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MISSILE.getMaxUnitCount();
+    };
+
     this.getImpactDurationMS = function()
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
-        return 1500;
-    }
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MISSILE.getMaxUnitCount();
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

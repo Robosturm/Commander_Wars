@@ -30,7 +30,6 @@ var Constructor = function()
         BATTLEANIMATION_NEOTANK.loadSprite(sprite, unit, defender, weapon, "");
     };
 
-
     this.loadSprite = function(sprite, unit, defender, weapon, ending)
     {
         var offset = Qt.point(-15, 5);
@@ -77,17 +76,13 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820;
-    };
 
     this.hasMoveInAnimation = function()
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return true;
     };
+
     this.getMoveInDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
@@ -97,7 +92,13 @@ var Constructor = function()
     this.getStopDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 300;
+        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_NEOTANK.getMaxUnitCount();
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_NEOTANK.getMaxUnitCount();
     };
 };
 

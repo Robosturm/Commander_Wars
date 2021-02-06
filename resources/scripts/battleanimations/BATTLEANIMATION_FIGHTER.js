@@ -79,7 +79,7 @@ var Constructor = function()
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_FIGHTER.getMaxUnitCount();
     };
 };
 

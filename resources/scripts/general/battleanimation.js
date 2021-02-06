@@ -1,5 +1,7 @@
 var BATTLEANIMATION =
 {
+    defaultFrameDelay : 75,
+
     getMaxUnitCount : function()
     {
         return 5;
@@ -120,4 +122,6 @@ var BATTLEANIMATION =
         }
         return 0;
     },
+
+
 };

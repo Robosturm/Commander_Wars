@@ -153,12 +153,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820;
-    };
-
     this.hasMoveInAnimation = function()
     {
         // return true if the unit has an implementation for loadMoveInAnimation
@@ -173,7 +167,13 @@ var Constructor = function()
     this.getStopDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 300;
+        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount();
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount();
     };
 };
 

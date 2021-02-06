@@ -188,12 +188,6 @@ var Constructor = function()
         }
     };
 
-    this.getImpactDurationMS = function()
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    }
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
     {
@@ -210,12 +204,6 @@ var Constructor = function()
         return Qt.point(0, 0);
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 500;
-    };
-
     this.hasMoveInAnimation = function()
     {
         // return true if the unit has an implementation for loadMoveInAnimation
@@ -230,8 +218,21 @@ var Constructor = function()
     this.getStopDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 300;
+        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
     };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
+    };
+
+    this.getImpactDurationMS = function()
+    {
+        // should be a second or longer.
+        // the time will be scaled with animation speed inside the engine
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_MECH.getMaxUnitCount();
+    }
 };
 
 Constructor.prototype = BATTLEANIMATION;

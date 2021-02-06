@@ -29,12 +29,6 @@ var Constructor = function()
                           false, -1, 1.0, 0, 0, false, 50);
     }
 
-    this.getDyingDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
-    };
-
     this.hasDyingAnimation = function()
     {
         // return true if the unit has an implementation for loadDyingAnimation
@@ -44,6 +38,12 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_T_HELI.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
     };
 };
 

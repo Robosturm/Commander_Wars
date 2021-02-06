@@ -26,12 +26,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
@@ -56,7 +50,13 @@ var Constructor = function()
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * 5;
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1250;
     };
 };
 

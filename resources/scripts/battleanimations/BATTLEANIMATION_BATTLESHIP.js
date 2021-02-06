@@ -93,23 +93,11 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
         sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
-    };
-
-    this.getDyingDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
     };
 
     this.hasDyingAnimation = function()
@@ -121,6 +109,18 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(-140, 0), 600);
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
     };
 };
 

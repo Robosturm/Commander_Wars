@@ -116,16 +116,17 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 820;
-    };
-
     this.hasMoveInAnimation = function()
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return true;
+    };
+
+    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+                          1, 1.0, 0, 0);
+        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
     };
     this.getMoveInDurationMS = function()
     {
@@ -136,14 +137,13 @@ var Constructor = function()
     this.getStopDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 300;
+        return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();
     };
 
-    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    this.getFireDurationMS = function()
     {
-        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
-                          1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        // the time will be scaled with animation speed inside the engine
+        return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();
     };
 };
 

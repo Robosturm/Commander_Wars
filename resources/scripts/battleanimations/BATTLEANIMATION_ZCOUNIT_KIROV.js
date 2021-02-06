@@ -31,12 +31,6 @@ var Constructor = function()
         sprite.loadSound("falling_bomb.wav", 1, "resources/sounds/", 0);
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
@@ -45,19 +39,6 @@ var Constructor = function()
                                 Qt.point(0, -130), 400, true,
                                 1, 1, 0, 0, true);
         sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
-    };
-
-    this.getImpactDurationMS = function()
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
-    this.getDyingDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1000;
     };
 
     this.hasDyingAnimation = function()
@@ -69,6 +50,25 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_ZCOUNIT_KIROV.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1250;
+    };
+
+    this.getImpactDurationMS = function()
+    {
+        // should be a second or longer.
+        // the time will be scaled with animation speed inside the engine
+        return 1500 + BATTLEANIMATION.defaultFrameDelay * 5;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1000;
     };
 };
 

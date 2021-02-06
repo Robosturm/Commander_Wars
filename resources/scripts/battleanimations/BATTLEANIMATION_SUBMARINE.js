@@ -69,11 +69,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
@@ -103,20 +98,6 @@ var Constructor = function()
         }
     };
 
-    this.getImpactDurationMS = function()
-    {
-        // should be a second or longer.
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
-
-    this.getDyingDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1200;
-    };
-
     this.hasDyingAnimation = function()
     {
         // return true if the unit has an implementation for loadDyingAnimation
@@ -126,6 +107,25 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 1000);
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1250;
+    };
+
+    this.getImpactDurationMS = function()
+    {
+        // should be a second or longer.
+        // the time will be scaled with animation speed inside the engine
+        return 1500;
+    };
+
+    this.getDyingDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1200;
     };
 };
 

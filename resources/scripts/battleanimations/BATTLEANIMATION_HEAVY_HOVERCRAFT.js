@@ -37,7 +37,7 @@ var Constructor = function()
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 500;
+        return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_HEAVY_HOVERCRAFT.getMaxUnitCount();
     };
 };
 

@@ -40,12 +40,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1250;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
@@ -66,11 +60,21 @@ var Constructor = function()
         sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
     };
 
-    this.getImpactDurationMS = function()
+    this.hasDyingAnimation = function()
     {
-        // should be a second or longer.
+        // return true if the unit has an implementation for loadDyingAnimation
+        return true;
+    };
+
+    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+    };
+
+    this.getFireDurationMS = function()
+    {
         // the time will be scaled with animation speed inside the engine
-        return 1500;
+        return 1250;
     };
 
     this.getImpactDurationMS = function()
@@ -84,17 +88,6 @@ var Constructor = function()
     {
         // the time will be scaled with animation speed inside the engine
         return 1000;
-    };
-
-    this.hasDyingAnimation = function()
-    {
-        // return true if the unit has an implementation for loadDyingAnimation
-        return true;
-    };
-
-    this.loadDyingAnimation = function(sprite, unit, defender, weapon)
-    {
-        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
     };
 };
 

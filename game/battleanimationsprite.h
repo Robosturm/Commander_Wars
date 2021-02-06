@@ -39,7 +39,23 @@ public:
     {
         return m_Actor;
     }
+    /**
+     * @brief clear removes all sprites from the animation
+     */
+    void clear();
+    /**
+     * @brief flipActorsX
+     * @param flippedX
+     */
+    virtual void flipActorsX(bool flippedX) override;
 
+
+    bool getStartWithFraming() const;
+    void setStartWithFraming(bool startWithFraming);
+    /**
+     * @brief startNextFrame
+     */
+    void startNextFrame();
 signals:
     void sigDetachChild(oxygine::spActor pActor);
 public slots:
@@ -268,6 +284,12 @@ public slots:
      * @brief stopSound
      */
     void stopSound();
+    /**
+     * @brief setUnitFrameDelay delay time between each individual unit animation start
+     */
+    void setUnitFrameDelay(qint32 delay);
+private slots:
+    void startNextUnitFrames();
 private:
     spUnit m_pUnit;
     Terrain* m_pTerrain;
@@ -277,6 +299,14 @@ private:
 
     QVector<std::tuple<QString, QString>> m_Sounds;
     QVector<QTimer*> m_Timers;
+
+    QVector<QVector<oxygine::spSprite>> m_currentFrame;
+
+    QVector<QVector<QVector<oxygine::spSprite>>> m_nextFrames;
+    oxygine::spSprite m_lastLoadedSprite;
+    qint32 m_frameIterator{0};
+    QTimer m_nextFrameTimer;
+    bool m_startWithFraming{false};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

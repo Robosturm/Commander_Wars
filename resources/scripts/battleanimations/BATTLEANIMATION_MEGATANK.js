@@ -68,12 +68,6 @@ var Constructor = function()
         }
     };
 
-    this.getFireDurationMS = function()
-    {
-        // the time will be scaled with animation speed inside the engine
-        return 1500;
-    };
-
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 0)
@@ -88,6 +82,12 @@ var Constructor = function()
                               1, 1.0, 0, 0);
             sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
         }
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1500;
     };
 };
 
