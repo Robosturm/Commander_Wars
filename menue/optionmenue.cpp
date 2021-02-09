@@ -177,7 +177,6 @@ void OptionMenue::showSettings()
     m_pGameplayAndKeys->setVisible(false);
     m_pOptions->clearContent();
     Mainapp* pApp = Mainapp::getInstance();
-    AudioThread* pAudio = pApp->getAudioThread();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -410,61 +409,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = new Label(sliderOffset - 10);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Audio Settings"));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    y += 40;
-    pTextfield = new Label(sliderOffset - 10);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Global Volume: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the global volume for the game"));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getTotalVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
-    {
-        Settings::setTotalVolume(value);
-        pAudio->setVolume(Settings::getMusicVolume());
-    });
-    m_pOptions->addItem(pSlider);
-
-    y += 40;
-    pTextfield = new Label(sliderOffset - 10);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Music Volume: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the music volume for the game"));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getMusicVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
-    {
-        Settings::setMusicVolume(value);
-        pAudio->setVolume(value);
-    });
-    m_pOptions->addItem(pSlider);
-
-    y += 40;
-    pTextfield = new Label(sliderOffset - 10);
-    pTextfield->setStyle(style);
-    pTextfield->setHtmlText(tr("Sound Volume: "));
-    pTextfield->setPosition(10, y);
-    m_pOptions->addItem(pTextfield);
-    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
-    pSlider->setTooltipText(tr("Selects the sound volume for the game"));
-    pSlider->setPosition(sliderOffset - 130, y);
-    pSlider->setCurrentValue(Settings::getSoundVolume());
-    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
-    {
-        Settings::setSoundVolume(value);
-    });
-    m_pOptions->addItem(pSlider);
-    y += 40;
+    showSoundOptions(m_pOptions, sliderOffset, y);
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
@@ -655,7 +600,72 @@ void OptionMenue::showSettings()
     y += 40;
 
     m_pOptions->setContentHeigth(20 + y);
-    
+}
+
+void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y)
+{
+    AudioThread* pAudio = Mainapp::getInstance()->getAudioThread();
+    oxygine::TextStyle style = FontManager::getMainFont24();
+    style.color = FontManager::getFontColor();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    spLabel pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Audio Settings"));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    y += 40;
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Global Volume: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    spSlider pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the global volume for the game"));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getTotalVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setTotalVolume(value);
+        pAudio->setVolume(Settings::getMusicVolume());
+    });
+    pOwner->addItem(pSlider);
+
+    y += 40;
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Music Volume: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the music volume for the game"));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getMusicVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setMusicVolume(value);
+        pAudio->setVolume(value);
+    });
+    pOwner->addItem(pSlider);
+
+    y += 40;
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Sound Volume: "));
+    pTextfield->setPosition(10, y);
+    pOwner->addItem(pTextfield);
+    pSlider = new Slider(Settings::getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the sound volume for the game"));
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(Settings::getSoundVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setSoundVolume(value);
+    });
+    pOwner->addItem(pSlider);
+    y += 40;
 }
 
 void OptionMenue::showMods()

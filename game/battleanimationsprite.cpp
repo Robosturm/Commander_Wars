@@ -363,12 +363,17 @@ void BattleAnimationSprite::loadSpriteV2(QString spriteID, GameEnums::Recoloring
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
 {
-    return GlobalUtils::roundUp(hpRounded / Unit::MAX_UNIT_HP * maxUnitCount);
+    return getUnitCount(maxUnitCount, hpRounded);
 }
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount, qint32 hp)
 {
-    return GlobalUtils::roundUp(hp / Unit::MAX_UNIT_HP * maxUnitCount);
+    qint32 count = GlobalUtils::roundUp(hp / Unit::MAX_UNIT_HP * maxUnitCount);
+    if (count < 0)
+    {
+        count = 0;
+    }
+    return count;
 }
 
 void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,

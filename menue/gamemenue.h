@@ -165,6 +165,10 @@ public slots:
      */
     void showOptions();
     /**
+     * @brief showChangeSound
+     */
+    void showChangeSound();
+    /**
      * @brief showAttackLog
      */
     void showAttackLog(qint32 player);

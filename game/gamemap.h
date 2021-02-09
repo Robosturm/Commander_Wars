@@ -332,6 +332,7 @@ signals:
     void sigSurrenderGame();
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowOptions();
+    void sigShowChangeSound();
 public slots:
     /**
      * @brief getFrameTime
@@ -448,6 +449,10 @@ public slots:
      * @brief options
      */
     void options();
+    /**
+     * @brief changeSound
+     */
+    void changeSound();
     /**
      * @brief saveGame
      */

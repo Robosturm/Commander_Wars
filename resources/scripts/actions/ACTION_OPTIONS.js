@@ -15,12 +15,40 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        map.options();
+        action.startReading();
+        var id = action.readDataString();
+        if (id === "OPTIONS")
+        {
+            map.options();
+        }
+        else if (id === "SOUND")
+        {
+            map.changeSound();
+        }
     };
     this.isFinalStep = function(action)
     {
         action.setIsLocal(true);
-        return true;
+        var step = action.getInputStep();
+        if (step === 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    };
+    this.getStepInputType = function(action)
+    {
+        return "MENU";
+    };
+
+    this.getStepData = function(action, data)
+    {
+        var step = action.getInputStep();
+        data.addData(qsTr("Game Options"), "OPTIONS", "options");
+        data.addData(qsTr("Music"), "SOUND", "music");;
     };
 }
 

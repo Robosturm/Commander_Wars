@@ -14,6 +14,8 @@ class OptionMenue : public QObject, public oxygine::Actor
 public:
     explicit OptionMenue();
     virtual ~OptionMenue();
+
+    static void showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 & y);
 signals:
     void sigExitMenue();
     void sigShowMods();

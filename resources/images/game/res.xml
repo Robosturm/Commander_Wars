@@ -140,6 +140,7 @@
 		<image file="unit_info.png" />
 		<image file="options.png" />
 		<image file="nickname.png" />
+		<image file="music.png" />
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

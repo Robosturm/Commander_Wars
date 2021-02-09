@@ -1162,6 +1162,12 @@ void GameMap::options()
     emit sigShowOptions();
 }
 
+void GameMap::changeSound()
+{
+    emit sigShowChangeSound();
+}
+
+
 void GameMap::surrenderGame()
 {
     emit sigSurrenderGame();
