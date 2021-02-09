@@ -100,6 +100,7 @@ namespace oxygine
 
         int                     getLoops() const { return _loops; }
         timeMS                  getDuration() const { return _duration; }
+        void                    setElapsed(const timeMS &elapsed);
         timeMS                  getElapsed() const { return _elapsed; }
         EASE                    getEase() const { return _ease; }
         EASE                    getGlobalEase() const { return _globalEase; }
@@ -154,6 +155,7 @@ namespace oxygine
 
         /** tween will freeze on 100% and never complete  */
         void setDisabledStatusDone(bool disabled) { _disabledStatusDone = disabled; }
+
 
     protected:
         void done(Actor&, const UpdateState& us);

@@ -10,12 +10,20 @@ var Constructor = function()
         BATTLEANIMATION_BLACK_BOMB.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         sprite.loadMovingSprite("black_bomb",  false,
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime, false, -1);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
         sprite.loadMovingSpriteV2("black_bomb+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime, false, -1);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
     };
 
     this.getDyingDurationMS = function()
@@ -32,7 +40,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BLACK_BOMB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+        BATTLEANIMATION_BLACK_BOMB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
     };
 };
 

@@ -159,6 +159,26 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     }
 }
 
+void BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
+{
+    qint32 maxUnitCount = getMaxUnitCount();
+    qint32 startCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
+    qint32 endCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
+    for (qint32 i = startCount; i > endCount; --i)
+    {
+        if (i - 1 < m_currentFrame.size())
+        {
+            auto & sprites = m_currentFrame[i - 1];
+            for (auto & sprite : sprites)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenAlpha(0),
+                                                              oxygine::timeMS(fadeoutTime  / static_cast<qint32>(Settings::getBattleAnimationSpeed())));
+                sprite->addTween(tween);
+            }
+        }
+    }
+}
+
 QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -316,9 +336,9 @@ qint32 BattleAnimationSprite::getStopDurationMS()
 
 QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCount)
 {
-    qint32 x = (unitCount * 70) % 100;
-    qint32 y = 20 * (maxUnitCount - unitCount);
-    return QPoint(x, y);
+    QPoint ret = QPoint((unitCount * 70) % 100,
+                 20 * (maxUnitCount - unitCount));
+    return ret;
 }
 
 void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
@@ -385,7 +405,16 @@ void BattleAnimationSprite::loadMovingSpriteV2(QString spriteID, GameEnums::Reco
         QPoint position(0, 0);
         if (maxUnitCount > 1)
         {
-            position = getUnitPosition(i, maxUnitCount);
+            qint32 offset = 0;
+            if (m_invertStartPosition)
+            {
+                qint32 livingCount = getUnitCount(getAnimationUnitCount(), m_dyingStartHp);
+                if (value < livingCount)
+                {
+                    offset = livingCount - value;
+                }
+            }
+            position = getUnitPosition(i - offset, maxUnitCount);
         }
         QPoint posOffset = getUnitPositionOffset(i);
         loadSingleMovingSpriteV2(spriteID, mode, offset + position + posOffset, movement, moveTime, deleteAfter,
@@ -501,6 +530,27 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
     }
 }
 
+void BattleAnimationSprite::addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs, qint32 loops)
+{
+    if (m_nextFrames.size() > 0)
+    {
+        qint32 count = 0;
+        for (auto & sprites : m_nextFrames[m_nextFrames.size() - 1])
+        {
+            if (sprites.size() > 0)
+            {
+                auto & sprite = sprites[sprites.size() - 1];
+                oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(sprite->getX() + deltaX, sprite->getY() + deltaY)),
+                                                                  oxygine::timeMS(static_cast<qint64>(moveTime / Settings::getBattleAnimationSpeed())),
+                                                                  loops, true);
+                sprite->addTween(moveTween);
+                moveTween->setElapsed(oxygine::timeMS(delayPerUnitMs * count));
+                ++count;
+            }
+        }
+    }
+}
+
 void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 {
     
@@ -576,14 +626,17 @@ void BattleAnimationSprite::startNextUnitFrames()
         {
             m_currentFrame.append(QVector<oxygine::spSprite>());
         }
-        if (m_frameIterator < m_nextFrames[0].length())
+        if (m_nextFrames.length() > 0)
         {
-            for (auto & sprite : m_nextFrames[0][m_frameIterator])
+            if (m_frameIterator < m_nextFrames[0].length())
             {
-                m_currentFrame[m_frameIterator].append(sprite);
-                m_Actor->addChild(sprite);
+                for (auto & sprite : m_nextFrames[0][m_frameIterator])
+                {
+                    m_currentFrame[m_frameIterator].append(sprite);
+                    m_Actor->addChild(sprite);
+                }
+                m_nextFrames[0][m_frameIterator].clear();
             }
-            m_nextFrames[0][m_frameIterator].clear();
         }
     }
 
@@ -608,6 +661,36 @@ void BattleAnimationSprite::startNextUnitFrames()
             m_frameIterator = 0;
         }
     }
+}
+
+bool BattleAnimationSprite::getInvertStartPosition() const
+{
+    return m_invertStartPosition;
+}
+
+void BattleAnimationSprite::setInvertStartPosition(bool invertStartPosition)
+{
+    m_invertStartPosition = invertStartPosition;
+}
+
+float BattleAnimationSprite::getDyingEndHp() const
+{
+    return m_dyingEndHp;
+}
+
+void BattleAnimationSprite::setDyingEndHp(float dyingEndHp)
+{
+    m_dyingEndHp = dyingEndHp;
+}
+
+float BattleAnimationSprite::getDyingStartHp() const
+{
+    return m_dyingStartHp;
+}
+
+void BattleAnimationSprite::setDyingStartHp(float dyingStartHp)
+{
+    m_dyingStartHp = dyingStartHp;
 }
 
 bool BattleAnimationSprite::getStartWithFraming() const

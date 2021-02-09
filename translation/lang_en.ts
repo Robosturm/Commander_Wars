@@ -6575,7 +6575,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Shopmenu</name>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="33"/>
+        <location filename="../menue/shopmenu.cpp" line="34"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

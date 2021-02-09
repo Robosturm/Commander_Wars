@@ -17,16 +17,24 @@ var Constructor = function()
         BATTLEANIMATION_T_HELI.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_T_HELI.armyData);
         sprite.loadMovingSpriteV2("t_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
         sprite.loadMovingSprite("t_heli+" + armyName,  false,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime,
                           false, -1, 1.0, 0, 0, false, 50);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
     }
 
     this.hasDyingAnimation = function()
@@ -37,7 +45,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_T_HELI.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+        BATTLEANIMATION_T_HELI.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
     };
 
     this.getDyingDurationMS = function()

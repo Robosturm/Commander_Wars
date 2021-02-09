@@ -10,12 +10,20 @@ var Constructor = function()
         BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         sprite.loadMovingSprite("stealthbomber",  false,
                           BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
         sprite.loadMovingSpriteV2("stealthbomber+mask", GameEnums.Recoloring_Table,
                             BATTLEANIMATION_STEALTHBOMBER.getMaxUnitCount(), Qt.point(0, 60), movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -68,7 +76,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
     };
 
     this.getFireDurationMS = function()

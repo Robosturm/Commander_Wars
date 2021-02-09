@@ -24,8 +24,10 @@ var Constructor = function()
         }
         sprite.loadSprite("fighter+" + armyName,  false,
                           BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
         sprite.loadSpriteV2("fighter+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

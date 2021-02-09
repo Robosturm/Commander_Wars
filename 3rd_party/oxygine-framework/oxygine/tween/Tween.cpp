@@ -97,6 +97,11 @@ namespace oxygine
         return v;
     }
 
+    void Tween::setElapsed(const timeMS &elapsed)
+    {
+        _elapsed = elapsed;
+    }
+
     void Tween::remove()
     {
         getClient()->removeTween(this);

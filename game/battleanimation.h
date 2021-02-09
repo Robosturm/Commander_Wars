@@ -104,6 +104,14 @@ private:
      */
     void loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
+     * @brief loadFiredAnimation
+     * @param pSprite
+     * @param pUnit1
+     * @param pUnit2
+     * @param weapon
+     */
+    void loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
+    /**
      * @brief loadImpactAnimation
      * @param pUnit1
      * @param pUnit2
@@ -124,12 +132,17 @@ private:
      * @param endHp
      * @param weapon
      */
-    void loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, float endHp, qint32 weapon);
+    void loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon);
     /**
      * @brief nextAnimatinStep
      */
     void nextAnimatinStep();
-
+    /**
+     * @brief loadDyingFadeoutAnimation
+     * @param pSprite
+     */
+    void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
+private:
     QTimer battleTimer;
 
     oxygine::spSprite m_AtkCO0;

@@ -209,6 +209,8 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     // dummy impl for standing units
     m_pAttackerAnimation = new BattleAnimationSprite(pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
                                                                                GlobalUtils::roundUp(atkStartHp));
+    m_pAttackerAnimation->setDyingStartHp(atkStartHp);
+    m_pAttackerAnimation->setDyingEndHp(atkEndHp);
     setSpritePosition(m_pAttackerAnimation, pAtkUnit, pDefUnit);
     m_pAttackerAnimation->clear();
     m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, pAtkUnit, pDefUnit, m_AtkWeapon);
@@ -217,6 +219,8 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     addChild(m_pAttackerAnimation);
     m_pDefenderAnimation = new BattleAnimationSprite(pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
                                                                                GlobalUtils::roundUp(defStartHp));
+    m_pDefenderAnimation->setDyingStartHp(defStartHp);
+    m_pDefenderAnimation->setDyingEndHp(defEndHp);
     if (!m_pAttackerAnimation->hasMoveInAnimation())
     {
         // skip move in
@@ -388,7 +392,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::AttackerImpact:
         {
-            m_pAttackerAnimation->startNextFrame();
+            loadFiredAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             // load impact
             loadImpactAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_pAttackerAnimation,
                                 m_HealthBar1, m_defEndHp, m_AtkWeapon, m_atkStartHp);
@@ -397,10 +401,16 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::AttackerDying:
         {
             qint32 count = m_pDefenderAnimation->getAnimationUnitCount();
-            if (m_pDefenderAnimation->hasDyingAnimation() &&
-                m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defStartHp)))
+            if (m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defStartHp)))
             {
-                loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_defEndHp, m_DefWeapon);
+                if (m_pDefenderAnimation->hasDyingAnimation())
+                {
+                    loadDyingAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
+                }
+                else
+                {
+                    loadDyingFadeoutAnimation(m_pDefenderAnimation);
+                }
                 break;
             }
             else
@@ -427,7 +437,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::DefenderImpact:
         {
             // remove firing frames
-            m_pDefenderAnimation->startNextFrame();
+            loadFiredAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
                                 m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
             break;
@@ -435,10 +445,16 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::DefenderDying:
         {
             qint32 count = m_pAttackerAnimation->getAnimationUnitCount();
-            if (m_pAttackerAnimation->hasDyingAnimation() &&
-                m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkStartHp)))
+            if (m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkStartHp)))
             {
-                loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_atkEndHp, m_AtkWeapon);
+                if (m_pAttackerAnimation->hasDyingAnimation())
+                {
+                    loadDyingAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_AtkWeapon);
+                }
+                else
+                {
+                    loadDyingFadeoutAnimation(m_pAttackerAnimation);
+                }
                 break;
             }
             else
@@ -493,22 +509,16 @@ void BattleAnimation::loadStopAnimation(spBattleAnimationSprite pSprite, Unit* p
     setSpritePosition(pSprite, pUnit1, pUnit2);  
 }
 
-
 void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
-{
-    
+{    
     pSprite->loadAnimation(BattleAnimationSprite::fireAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
-    pSprite->loadAnimation(BattleAnimationSprite::standingFiredAnimation, pUnit1, pUnit2, weapon);
-    setSpritePosition(pSprite, pUnit1, pUnit2);
     battleTimer.start(pSprite->getFireDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
                                           oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp)
-{
-    
+{    
     if (endHp < 0.0f)
     {
         endHp = 0.0f;
@@ -519,14 +529,14 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / Unit::MAX_UNIT_HP), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
     // add impact image
-    oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));
-    oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
-    while (child)
-    {
-        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(500 / Settings::getBattleAnimationSpeed())), 1, true, oxygine::timeMS(100));
-        child->addTween(colorTween2);
-        child = child->getNextSibling();
-    }
+//    oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));
+//    oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
+//    while (child)
+//    {
+//        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(500 / Settings::getBattleAnimationSpeed())), 1, true, oxygine::timeMS(100));
+//        child->addTween(colorTween2);
+//        child = child->getNextSibling();
+//    }
     if (currentState <= AnimationProgress::AttackerImpact)
     {
         setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);
@@ -541,25 +551,36 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
         setCOMood(m_DefCO0, m_defEndHp, m_atkEndHp);
         setCOMood(m_DefCO1, m_defEndHp, m_atkEndHp);
     }
-
-
     // buffer hp
     qint32 curHp = pSprite->getHpRounded();
     pSprite->setHpRounded(GlobalUtils::roundUp(enemyHp));
+    pSprite->setInvertStartPosition(true);
     pSprite->setMaxUnitCount(pAttackerSprite->getMaxUnitCount());
     pSprite->loadAnimation(BattleAnimationSprite::impactAnimation, pUnit2, pUnit1, weapon, false);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     // restore sprite data
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
+    pSprite->setInvertStartPosition(false);
     battleTimer.start(pSprite->getImpactDurationMS(pUnit2) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
+void BattleAnimation::loadFiredAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
+{
+    pSprite->loadAnimation(BattleAnimationSprite::standingFiredAnimation, pUnit1, pUnit2, weapon);
+    setSpritePosition(pSprite, pUnit1, pUnit2);
+}
 
-void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, float, qint32 weapon)
+void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)
 {
     pSprite->loadAnimation(BattleAnimationSprite::dyingAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
-    battleTimer.start(pSprite->getDyingDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
-    
+    battleTimer.start(pSprite->getDyingDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));    
+}
+
+void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
+{
+    constexpr qint32 fadeoutTime = 500;
+    pSprite->loadDyingFadeOutAnimation(fadeoutTime - 100);
+    battleTimer.start(fadeoutTime / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }

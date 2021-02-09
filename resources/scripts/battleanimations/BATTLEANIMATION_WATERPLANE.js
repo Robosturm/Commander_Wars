@@ -9,8 +9,10 @@ var Constructor = function()
     {
         sprite.loadSprite("waterplane",  false,
                           BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20));
+        sprite.addMoveTweenToLastLoadedSprites(0, -5, 800);
         sprite.loadSpriteV2("waterplane+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20));
+        sprite.addMoveTweenToLastLoadedSprites(0, -5, 800);
     };
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {

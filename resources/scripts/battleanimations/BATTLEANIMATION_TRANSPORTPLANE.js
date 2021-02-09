@@ -10,12 +10,20 @@ var Constructor = function()
         BATTLEANIMATION_TRANSPORTPLANE.loadSprite(sprite, unit, defender, weapon, Qt.point(0, 0), 0);
     };
 
-    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
+    this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime, alive = true)
     {
         sprite.loadMovingSprite("transportplane",  false,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
         sprite.loadMovingSpriteV2("transportplane+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
+        if (alive)
+        {
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        }
     };
 
     this.hasDyingAnimation = function()
@@ -26,7 +34,7 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_TRANSPORTPLANE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+        BATTLEANIMATION_TRANSPORTPLANE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
     };
 
     this.getDyingDurationMS = function()

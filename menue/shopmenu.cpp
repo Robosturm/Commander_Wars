@@ -8,6 +8,7 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/shoploader.h"
 
 Shopmenu::Shopmenu()
 {
@@ -39,6 +40,8 @@ Shopmenu::Shopmenu()
         emit sigExitMenue();
     });
     connect(this, &Shopmenu::sigExitMenue, this, &Shopmenu::exitMenue, Qt::QueuedConnection);
+
+
 
     pApp->continueRendering();
 }

@@ -48,17 +48,68 @@ public:
      * @param flippedX
      */
     virtual void flipActorsX(bool flippedX) override;
-
-
+    /**
+     * @brief getStartWithFraming
+     * @return
+     */
     bool getStartWithFraming() const;
+    /**
+     * @brief setStartWithFraming
+     * @param startWithFraming
+     */
     void setStartWithFraming(bool startWithFraming);
     /**
      * @brief startNextFrame
      */
     void startNextFrame();
+    /**
+     * @brief setDyingStartHp
+     * @param dyingStartHp
+     */
+    void setDyingStartHp(float dyingStartHp);
+    /**
+     * @brief setDyingEndHp
+     * @param dyingEndHp
+     */
+    void setDyingEndHp(float dyingEndHp);
+    /**
+     * @brief loadDyingFadeOutAnimation
+     */
+    void loadDyingFadeOutAnimation(qint32 fadeoutTime);
+    /**
+     * @brief setInvertStartPosition
+     * @param invertStartPosition
+     */
+    void setInvertStartPosition(bool invertStartPosition);
+
 signals:
     void sigDetachChild(oxygine::spActor pActor);
 public slots:
+    /**
+     * @brief addMoveTweenToLastLoadedSprites
+     * @param deltaX
+     * @param deltaY
+     * @param moveTime
+     * @param loops
+     */
+    void addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs = 75, qint32 loops = -1);
+    /**
+     * @brief getInvertStartPosition
+     * @return is true during impact animations and results in an inverted positioning of the impacts.
+     * So the impacts are drawm at the position of the dying units
+     */
+    bool getInvertStartPosition() const;
+    /**
+     * @brief getDyingStartHp
+     * @return
+     */
+    float getDyingStartHp() const;
+    /**
+     * @brief getDyingEndHp
+     * @return
+     */
+    float getDyingEndHp() const;
+
     /**
      * @brief setMaxUnitCount
      * @param value
@@ -307,6 +358,10 @@ private:
     qint32 m_frameIterator{0};
     QTimer m_nextFrameTimer;
     bool m_startWithFraming{false};
+
+    float m_dyingStartHp{10.0f};
+    float m_dyingEndHp{10.0f};
+    bool m_invertStartPosition{false};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H
