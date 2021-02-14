@@ -16,6 +16,6 @@
 		<image file="victorymenu.png" />
 		<image file="wikimenu.png" />
 		<image file="lobbymenu.png" />
-		
+		<image file="loadingscreen.png" />		
 	</atlas>
 </resources>

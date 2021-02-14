@@ -580,7 +580,7 @@ void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAni
 
 void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 {
-    constexpr qint32 fadeoutTime = 500;
-    pSprite->loadDyingFadeOutAnimation(fadeoutTime - 200);
+    constexpr qint32 fadeoutTime = 800;
+    pSprite->loadDyingFadeOutAnimation(fadeoutTime - 400);
     battleTimer.start(fadeoutTime / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }

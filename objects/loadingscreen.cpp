@@ -32,9 +32,8 @@ void LoadingScreen::show()
         // load background
         oxygine::spSprite sprite = new oxygine::Sprite();
         addChild(sprite);
-        oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
+        oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("loadingscreen");
         sprite->setResAnim(pBackground);
-        sprite->setPosition(-1, -1);
         // background should be last to draw
         sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
         sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
