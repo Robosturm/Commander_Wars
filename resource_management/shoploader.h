@@ -9,6 +9,7 @@ class ShopLoader : public QObject, public RessourceManagement<ShopLoader>
     Q_OBJECT
 public:
     virtual void loadAll() override;
+    void onItemBought(qint32 itemType, QString key);
 protected:
     friend RessourceManagement<ShopLoader>;
     ShopLoader();

@@ -242,7 +242,7 @@ void GameRules::addWeather(QString weatherId, qint32 weatherChance)
     }
 }
 
-void GameRules::changeWeatherChance(QString weatherId, qint32 weatherChance)
+void GameRules::changeWeatherChanceByName(QString weatherId, qint32 weatherChance)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {

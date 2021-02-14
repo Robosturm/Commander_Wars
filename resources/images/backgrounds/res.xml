@@ -2,8 +2,20 @@
 <resources>
 	<set path = "resources/images/backgrounds/" />
 	<atlas>
-		<image file="Background+0.png" />
-		<image file="Background+1.png" />
-		<image file="Background+2.png" />
+		<image file="achievementmenu.png" />
+		<image file="campaignmenu.png" />
+		<image file="costylemenu.png" />
+		<image file="creditsmenu.png" />
+		<image file="editormenu.png" />
+		<image file="gamemenu.png" />
+		<image file="mainmenu.png" />
+		<image file="optionmenu.png" />
+		<image file="mapselectionmenu.png" />
+		<image file="replaymenu.png" />
+		<image file="shopmenu.png" />
+		<image file="victorymenu.png" />
+		<image file="wikimenu.png" />
+		<image file="lobbymenu.png" />
+		
 	</atlas>
 </resources>

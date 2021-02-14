@@ -229,11 +229,13 @@ public:
 
     enum ShopItemType
     {
+        ShopItemType_All = -1,
         ShopItemType_CO,
         ShopItemType_CO_Skin,
         ShopItemType_Map,
         ShopItemType_Unit,
-        ShopItemType_Perk
+        ShopItemType_Perk,
+        ShopItemType_Max,
     };
     Q_ENUM(ShopItemType)
 

@@ -269,7 +269,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
     QVector<Userdata::ShopItem> ret;
     for (const auto & item : m_shopItems)
     {
-        if (item.itemType == type &&
+        if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.buyable == buyable &&
             item.bought == bought)
         {
@@ -284,7 +284,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
     QVector<Userdata::ShopItem> ret;
     for (const auto & item : m_shopItems)
     {
-        if (item.itemType == type &&
+        if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
         {
             ret.append(item);
@@ -298,7 +298,7 @@ QStringList Userdata::getItemsList(GameEnums::ShopItemType type, bool bought)
     QStringList ret;
     for (const auto & item : m_shopItems)
     {
-        if (item.itemType == type &&
+        if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
         {
             ret.append(item.key);
@@ -507,5 +507,10 @@ void Userdata::deserializeObject(QDataStream& pStream)
     if (version > 5)
     {
         pStream >> m_credtis;
+        // bug fix for not initialised variable --> not sure if enabled in the last release or not
+        if (m_credtis < 0)
+        {
+            m_credtis = 0;
+        }
     }
 }

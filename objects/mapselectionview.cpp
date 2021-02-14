@@ -223,6 +223,8 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_MapName->setHtmlText(m_pCurrentMap->getMapName());
         m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
         m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
+        m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
+        m_pVictoryInfo->setVisible(true);
         m_currentMapFile = info;
         loadMapVictoryInfo();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -266,6 +268,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
         m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
         m_MapName->setHtmlText(m_CurrentCampaign->getName());
+        m_pVictoryInfo->setVisible(false);
     }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
     if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())
@@ -356,4 +359,5 @@ void MapSelectionView::updateMapData()
     m_MapName->setHtmlText(m_pCurrentMap->getMapName());
     m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
     m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
+    m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
 }

@@ -3,5 +3,9 @@
 	<set path = "resources/images/shop/" />
 	<atlas linearFilter="false">
 		<image file="hachi_shop.png" />
+		<image file="shop_co.png" />
+		<image file="shop_co_color.png" />
+		<image file="shop_map.png" />
+		<image file="shop_perk.png" />
 	</atlas>
 </resources>

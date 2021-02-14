@@ -14,6 +14,7 @@
 #include "resource_management/achievementmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/terrainmanager.h"
+#include "resource_management/shoploader.h"
 
 #include "game/co.h"
 #include "game/player.h"
@@ -293,6 +294,10 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
     if (pAnim == nullptr)
     {
         pAnim = AchievementManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = ShopLoader::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim != nullptr)
     {

@@ -31,7 +31,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
     addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
+    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("campaignmenu");
     sprite->setResAnim(pBackground);
     // background should be last to draw
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));

@@ -261,7 +261,7 @@ public slots:
      * @param weatherId
      * @param weatherChance
      */
-    void changeWeatherChance(QString weatherId, qint32 weatherChance);
+    void changeWeatherChanceByName(QString weatherId, qint32 weatherChance);
     /**
      * @brief changeWeatherChance
      * @param index

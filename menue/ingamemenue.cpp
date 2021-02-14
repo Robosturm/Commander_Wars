@@ -49,16 +49,21 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
 void InGameMenue::loadBackground()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
-    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
-    oxygine::Actor::addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+0");
-    sprite->setResAnim(pBackground);
+    m_backgroundSprite = new oxygine::Sprite();
+    oxygine::Actor::addChild(m_backgroundSprite);
+    changeBackground("gamemenu");
+}
+
+void InGameMenue::changeBackground(QString background)
+{
+    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim(background);
+    m_backgroundSprite->setResAnim(pBackground);
     // background should be last to draw
-    sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
-    sprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
-    sprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
+    m_backgroundSprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));
+    m_backgroundSprite->setScaleX(Settings::getWidth() / pBackground->getWidth());
+    m_backgroundSprite->setScaleY(Settings::getHeight() / pBackground->getHeight());
 }
 
 void InGameMenue::loadHandling()

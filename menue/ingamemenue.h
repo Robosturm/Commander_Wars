@@ -42,6 +42,7 @@ public slots:
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
     void centerMapOnCursor();
+    void changeBackground(QString background);
 protected:
     void loadBackground();
     void loadHandling();
@@ -55,7 +56,7 @@ protected:
 
     QThread m_MapMoveThread;
     spMapMover m_MapMover;
-
+    oxygine::spSprite m_backgroundSprite;
     bool handlingLoaded{false};
 };
 

@@ -242,7 +242,7 @@ private:
     /**
      * @brief m_credtis money available to spend in the shop
      */
-    qint32 m_credtis;
+    qint32 m_credtis{900};
 };
 
 #endif // USERDATA_H

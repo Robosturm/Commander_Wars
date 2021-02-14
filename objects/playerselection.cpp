@@ -168,7 +168,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
             cos= COSpriteManager::getInstance()->getLoadedRessources();
         }
         Userdata* pUserdata = Userdata::getInstance();
-        auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO_Skin, false);
+        auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO, false);
         for (const auto & item : items)
         {
             cos.removeAll(item);

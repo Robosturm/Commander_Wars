@@ -44,6 +44,7 @@ EditorMenue::EditorMenue()
     Mainapp* pApp = Mainapp::getInstance();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
+    changeBackground("editormenu");
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
