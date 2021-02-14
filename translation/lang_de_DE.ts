@@ -6630,13 +6630,18 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="97"/>
+        <location filename="../menue/shopmenu.cpp" line="98"/>
         <source>Points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/shopmenu.cpp" line="108"/>
+        <location filename="../menue/shopmenu.cpp" line="109"/>
         <source>Total Price:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/shopmenu.cpp" line="148"/>
+        <source>Check to but the item on the buy list. Afterwards click buy to confirm your shopping.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

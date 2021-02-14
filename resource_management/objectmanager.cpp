@@ -93,3 +93,28 @@ oxygine::spButton ObjectManager::createIconButton(QString icon)
     });
     return pButton;
 }
+
+oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite)
+{
+    oxygine::spButton pButton = new oxygine::Button();
+    pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
+    pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    pButton->setSize(37, 37);
+    pButton->addChild(pSprite);
+
+    oxygine::Sprite* ptr = pButton.get();
+    pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+    });
+
+    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+    });
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
+    });
+    return pButton;
+}

@@ -19,6 +19,7 @@ signals:
     void sigExitMenue();
     void sigUpdateItemCosts(qint32 costChange);
     void sigBuy();
+    void sigShowWikipage(QString key);
 public slots:
     /**
      * @brief exitMenue
@@ -33,6 +34,11 @@ public slots:
      * @brief buy
      */
     void buy();
+    /**
+     * @brief showWikipage
+     * @param key
+     */
+    void showWikipage(QString key);
 private:
     QVector<Userdata::ShopItem> getItems(qint32 itemType);
     void updateItemCosts(qint32 costChange);

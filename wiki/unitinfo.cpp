@@ -441,7 +441,6 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
     }
 }
 
-
 void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
 {
     qint32 x = 0;

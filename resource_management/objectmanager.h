@@ -9,6 +9,7 @@ class ObjectManager : public QObject, public RessourceManagement<ObjectManager>
 public:
     static oxygine::spButton createButton(QString text, qint32 width = -1, QString tooltip = "");
     static oxygine::spButton createIconButton(QString icon);
+    static oxygine::spButton createIconButton(oxygine::spSprite pSprite);
 protected:
     friend RessourceManagement<ObjectManager>;
     ObjectManager();

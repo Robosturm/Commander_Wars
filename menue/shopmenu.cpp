@@ -92,6 +92,7 @@ Shopmenu::Shopmenu()
         emit sigBuy();
     });
     connect(this, &Shopmenu::sigBuy, this, &Shopmenu::buy, Qt::QueuedConnection);
+    connect(this, &Shopmenu::sigShowWikipage, this, &Shopmenu::showWikipage, Qt::QueuedConnection);
 
     pLabel = new Label(width - 30);
     pLabel->setText(tr("Points:"));
@@ -144,6 +145,7 @@ void Shopmenu::filterChanged(qint32 item)
         m_shoppingList.append(false);
         spCheckbox pCheckbox = new Checkbox();
         pCheckbox->setPosition(10, y);
+        pCheckbox->setTooltipText(tr("Check to but the item on the buy list. Afterwards click buy to confirm your shopping."));
         qint32 costs = item.price;
         qint32 itemPos = m_shoppingList.size() - 1;
         connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
@@ -161,9 +163,10 @@ void Shopmenu::filterChanged(qint32 item)
         m_pPanel->addItem(pCheckbox);
         oxygine::spSprite icon = getIcon(item.itemType);
         oxygine::spButton pButton = ObjectManager::createIconButton(icon);
+        icon->setPosition(2, 2);
         loadWikiInfo(pButton, item.itemType, item.key);
-        icon->setPosition(55, y);
-        m_pPanel->addItem(icon);
+        pButton->setPosition(55, y);
+        m_pPanel->addItem(pButton);
         spLabel pLabel = new Label(width);
         pLabel->setPosition(95, y);
         pLabel->setText(QString::number(costs) + " " + item.name);
@@ -262,15 +265,13 @@ void Shopmenu::loadWikiInfo(oxygine::spButton pIcon, GameEnums::ShopItemType ite
     {
         case GameEnums::ShopItemType_CO:
         case GameEnums::ShopItemType_CO_Skin:
-        {
-            break;
-        }
         case GameEnums::ShopItemType_Perk:
-        {
-            break;
-        }
         case GameEnums::ShopItemType_Unit:
         {
+            pIcon->addClickListener([=](oxygine::Event*)
+            {
+                emit sigShowWikipage(key);
+            });
             break;
         }
         case GameEnums::ShopItemType_All:
@@ -281,4 +282,10 @@ void Shopmenu::loadWikiInfo(oxygine::spButton pIcon, GameEnums::ShopItemType ite
         }
     }
     static_assert(GameEnums::ShopItemType_Max == 5, "Check switch case");
+}
+
+void Shopmenu::showWikipage(QString key)
+{
+    WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
+    oxygine::getStage()->addChild(pWikiDatabase->getPage(pWikiDatabase->getEntry(key)));
 }
