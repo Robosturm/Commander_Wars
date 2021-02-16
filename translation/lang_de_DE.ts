@@ -287,12 +287,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="312"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="314"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="619"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="621"/>
         <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -800,7 +800,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="302"/>
+        <location filename="../game/co.cpp" line="303"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>

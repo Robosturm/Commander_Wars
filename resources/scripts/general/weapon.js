@@ -28,7 +28,7 @@ var WEAPON =
         return -1;
     },
     // aw dc damage formular used here.
-    calculateDamage : function(hp, damage, offBonus, defBonus)
+    calculateDamage : function(hp, damage, offBonus, defBonus, luckDamage = 0)
     {
         if (defBonus <= 0)
         {
@@ -39,7 +39,8 @@ var WEAPON =
         {
             hp = 0;
         }
-        var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus);
+        var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus)
+            + luckDamage * (hp / 10.0) * (offBonus / defBonus);
         return calcDamage;
     },
 

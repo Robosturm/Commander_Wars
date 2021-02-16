@@ -24,6 +24,7 @@ CO::CO(QString coID, Player* owner)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_perkList.append(coID);
+    m_perkList.append("TAGPOWER");
     init();
 }
 
@@ -1208,6 +1209,7 @@ void CO::setPerkList(QStringList perks)
 {
     m_perkList.clear();
     m_perkList.append(coID);
+    m_perkList.append("TAGPOWER");
     m_perkList.append(perks);
 }
 
@@ -1542,6 +1544,10 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     else
     {
         m_perkList.append(coID);
+    }
+    if (!m_perkList.contains("TAGPOWER"))
+    {
+        m_perkList.append("TAGPOWER");
     }
     if (version > 4)
     {
