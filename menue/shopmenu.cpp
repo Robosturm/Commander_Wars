@@ -215,8 +215,9 @@ void Shopmenu::buy()
     }
 
     pUserdata->addCredtis(-m_pointCosts);
-    m_points->setText(QString::number(Userdata::getInstance()->getCredtis()));
+    pUserdata->storeUser();
     filterChanged(0);
+    updateItemCosts(0);
 }
 
 oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType)

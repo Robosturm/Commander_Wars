@@ -60,7 +60,12 @@ public slots:
      * @brief finishGraph
      */
     void finishGraph();
+    /**
+     * @brief onEnter
+     */
     void onEnter();
+protected slots:
+    void onProgressTimerStart();
 protected:
     /**
      * @brief drawGraphStep

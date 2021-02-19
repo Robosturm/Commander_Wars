@@ -195,6 +195,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogs/dialogmessagebox.cpp
         objects/dialogs/dialogtextinput.cpp
         objects/dialogs/folderdialog.cpp
+        objects/dialogs/dialogvaluecounter.cpp
         # objects dialogs editor
         objects/dialogs/editor/dialogmodifyunit.cpp
         objects/dialogs/editor/dialogmodifybuilding.cpp

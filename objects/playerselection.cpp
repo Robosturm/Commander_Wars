@@ -199,7 +199,8 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
 
 void PlayerSelection::showPlayerSelection()
 {
-    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     resetPlayerSelection();
     m_pPlayerSelection->setVisible(true);
 
@@ -696,7 +697,7 @@ void PlayerSelection::showPlayerSelection()
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y + 50);
-    
+    pApp->continueRendering();
 }
 
 void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPositions, qint32 y, qint32 itemIndex, qint32 player)
