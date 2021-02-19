@@ -557,10 +557,6 @@ set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
      ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
 )
 
-set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-     ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
-)
-
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
@@ -571,6 +567,9 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
     set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
          ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
     )
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
@@ -584,6 +583,10 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
     set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
         # todo install the proper  linux style lib to be used
         # ${QT_BIN_DIR}/../plugins/styles/
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+        # todo install the proper  linux style lib to be used
+        # ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
     )
 endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")

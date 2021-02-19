@@ -512,32 +512,34 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
 
 void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 {
-    
-    // we're currently selecting the action for this action
-    if (m_pGameAction->getActionID() == "")
+    if (m_pGameAction.get() != nullptr)
     {
-        // set the id
-        m_pGameAction->setActionID(itemID);
-        m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
-    }
-    // we want to append some data to the action
-    else
-    {
-        m_pGameAction->writeDataString(itemID);
-        // increase costs and input step
-        m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
-        m_pGameAction->setInputStep(m_pGameAction->getInputStep() + 1);
-    }
-    // check if the action needs further information
-    if (m_pGameAction->isFinalStep())
-    {
-        // if not perform action
-        finishAction();
-    }
-    else
-    {
-        // else introduce next step
-        getNextStepData();
+        // we're currently selecting the action for this action
+        if (m_pGameAction->getActionID() == "")
+        {
+            // set the id
+            m_pGameAction->setActionID(itemID);
+            m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
+        }
+        // we want to append some data to the action
+        else
+        {
+            m_pGameAction->writeDataString(itemID);
+            // increase costs and input step
+            m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
+            m_pGameAction->setInputStep(m_pGameAction->getInputStep() + 1);
+        }
+        // check if the action needs further information
+        if (m_pGameAction->isFinalStep())
+        {
+            // if not perform action
+            finishAction();
+        }
+        else
+        {
+            // else introduce next step
+            getNextStepData();
+        }
     }
 }
 
@@ -587,48 +589,51 @@ void HumanPlayerInput::getNextStepData()
 
 void HumanPlayerInput::finishAction()
 {
-    Unit* pUnit = m_pGameAction->getTargetUnit();
-    if (pUnit != nullptr && m_pUnitPathFindingSystem.get() != nullptr)
+    if (m_pGameAction.get() != nullptr)
     {
-        qint32 movepoints = pUnit->getMovementpoints(m_pGameAction->getTarget());
-        if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
+        Unit* pUnit = m_pGameAction->getTargetUnit();
+        if (pUnit != nullptr && m_pUnitPathFindingSystem.get() != nullptr)
         {
-            // shorten path
-            QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
-            m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
-            QVector<QPoint> multiTurnPath;
-            for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
+            qint32 movepoints = pUnit->getMovementpoints(m_pGameAction->getTarget());
+            if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
             {
-                multiTurnPath.append(m_ArrowPoints[i]);
+                // shorten path
+                QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
+                m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
+                QVector<QPoint> multiTurnPath;
+                for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
+                {
+                    multiTurnPath.append(m_ArrowPoints[i]);
+                }
+                m_pGameAction->setMultiTurnPath(multiTurnPath);
             }
-            m_pGameAction->setMultiTurnPath(multiTurnPath);
+            else
+            {
+                // reset path in all other cases
+                pUnit->setMultiTurnPath(QVector<QPoint>());
+            }
+        }
+
+        spGameMap pMap = GameMap::getInstance();
+        bool isViewPlayer = (pMap->getCurrentViewPlayer() == m_pPlayer);
+        if (pMap->getCurrentPlayer() == m_pPlayer)
+        {
+            emit performAction(m_pGameAction);
+        }
+        else if (isViewPlayer)
+        {
+            if (m_pGameAction->getIsLocal())
+            {
+                m_pGameAction->perform();
+            }
+            m_pGameAction = nullptr;
         }
         else
         {
-            // reset path in all other cases
-            pUnit->setMultiTurnPath(QVector<QPoint>());
-        }
-    }
-
-    spGameMap pMap = GameMap::getInstance();
-    bool isViewPlayer = (pMap->getCurrentViewPlayer() == m_pPlayer);
-    if (pMap->getCurrentPlayer() == m_pPlayer)
-    {
-        emit performAction(m_pGameAction);
-    }
-    else if (isViewPlayer)
-    {
-        if (m_pGameAction->getIsLocal())
-        {
-            m_pGameAction->perform();
+            // do nothing
         }
         m_pGameAction = nullptr;
     }
-    else
-    {
-        // do nothing
-    }
-    m_pGameAction = nullptr;
     cleanUpInput();
 }
 

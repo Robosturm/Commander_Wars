@@ -17,6 +17,7 @@ class BattleAnimationSprite : public QObject, public oxygine::Sprite
     Q_OBJECT
 public:
     static const QString standingAnimation;
+    static const QString impactUnitOverlayAnimation;
     static const QString impactAnimation;
     static const QString fireAnimation;
     static const QString moveInAnimation;
@@ -92,7 +93,15 @@ public slots:
      * @param moveTime
      * @param loops
      */
-    void addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs = 75, qint32 loops = -1);
+    void addMoveTweenToLastLoadedSprites(qint32 deltaX, qint32 deltaY, qint32 moveTime, qint32 delayPerUnitMs = 75, qint32 loops = -1, bool scaleWithAnimationSpeed = false);
+    /**
+     * @brief loadColorOverlayForLastLoadedFrame
+     * @param color
+     * @param time
+     * @param loops
+     * @param showDelayMs
+     */
+    void loadColorOverlayForLastLoadedFrame(QColor color, qint32 time, qint32 loops, qint32 showDelayMs, bool delayPerUnit = true);
     /**
      * @brief getInvertStartPosition
      * @return is true during impact animations and results in an inverted positioning of the impacts.
@@ -123,7 +132,7 @@ public slots:
      * @param attackerWeapon weapon used by the attacking unit
      * @param clearSprite if true clears the battle animation sprite buffer so you can add stuff from scratch default
      */
-    void loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender = nullptr, qint32 attackerWeapon = 0, bool clearSprite = true);
+    void loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender = nullptr, qint32 attackerWeapon = 0, bool clearSprite = true, bool start = true);
     /**
      * @brief getMaxUnitCount
      * @return

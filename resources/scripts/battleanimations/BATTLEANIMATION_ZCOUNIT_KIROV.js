@@ -31,6 +31,11 @@ var Constructor = function()
         sprite.loadSound("falling_bomb.wav", 1, "resources/sounds/", 0);
     };
 
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),

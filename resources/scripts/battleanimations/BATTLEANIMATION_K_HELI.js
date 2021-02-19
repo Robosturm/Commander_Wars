@@ -23,11 +23,11 @@ var Constructor = function()
         }
         sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSprite("k_heli+" + armyName,  false,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1.0, 0, 0,
                           false, false, 30);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -84,7 +84,19 @@ var Constructor = function()
             }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
+        }
+    };
+
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
+        }
+        else
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 2, 0);
         }
     };
 

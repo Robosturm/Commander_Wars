@@ -15,13 +15,13 @@ var Constructor = function()
     {
         var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
         sprite.loadMovingSprite("heavy_tank+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-85, 5),
-                                Qt.point(65, 0), 400, false,
+                                Qt.point(65, 0), 600, false,
                                 1, 1);
         sprite.loadMovingSpriteV2("heavy_tank+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-85, 5),
-                                  Qt.point(65, 0), 400, false,
+                                  Qt.point(65, 0), 600, false,
                                   1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-105, 7),
-                                Qt.point(65, 0), 400, false,
+                                Qt.point(65, 0), 600, false,
                                 1, 1);
     };
 
@@ -161,7 +161,7 @@ var Constructor = function()
     this.getMoveInDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 410;
+        return 610;
     };
 
     this.getStopDurationMS = function()

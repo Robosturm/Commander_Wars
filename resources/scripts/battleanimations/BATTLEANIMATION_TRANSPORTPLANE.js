@@ -16,13 +16,13 @@ var Constructor = function()
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
         sprite.loadMovingSpriteV2("transportplane+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_TRANSPORTPLANE.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
     };
 

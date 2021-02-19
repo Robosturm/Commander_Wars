@@ -561,7 +561,8 @@ void GameRules::setFogMode(const GameEnums::Fog &FogMode)
 
 void GameRules::createFogVision()
 {
-    Console::print("Creating fog vision.", Console::eDEBUG);
+    Console::print("Creating fog vision. Pausing Rendering", Console::eDEBUG);
+    Mainapp::getInstance()->pauseRendering();
     spGameMap pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -610,7 +611,8 @@ void GameRules::createFogVision()
             }
         }
     }
-    
+    Console::print("Fog vision created. Continue Rendering", Console::eDEBUG);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameRules::createFieldFogClear(qint32 x, qint32 y, Player* pPlayer)

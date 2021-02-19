@@ -168,6 +168,18 @@ var Constructor = function()
         }
     };
 
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
+        }
+        else
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 2, 0);
+        }
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         if (weapon === 1)

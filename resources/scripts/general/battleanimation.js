@@ -54,6 +54,19 @@ var BATTLEANIMATION =
         return Qt.point(0, 0);
     },
 
+
+    loadImpactUnitOverlayAnimation : function(sprite, unit, defender, weapon)
+    {
+        if (weapon === 0)
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 0);
+        }
+        else
+        {
+            sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 3, 0);
+        }
+    },
+
     loadImpactAnimation : function(sprite, unit, defender, weapon)
     {
         if (weapon === 0)

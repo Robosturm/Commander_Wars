@@ -26,14 +26,14 @@ var Constructor = function()
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
         sprite.loadMovingSprite("t_heli+" + armyName,  false,
                           BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime,
                           false, -1, 1.0, 0, 0, false, 50);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
     }
 

@@ -23,11 +23,11 @@ var Constructor = function()
     {
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
         sprite.loadMovingSprite("recon+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                Qt.point(65, 0), 400, false, 1, 1);
+                                Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSpriteV2("recon+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-70, 5),
-                                  Qt.point(65, 0), 400, false, 1, 1);
+                                  Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
-                                Qt.point(65, 0), 400, false, 1, 1);
+                                Qt.point(65, 0), 600, false, 1, 1);
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -122,6 +122,11 @@ var Constructor = function()
         return true;
     };
 
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadColorOverlayForLastLoadedFrame("#969696", 300, 3, 0);
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
@@ -131,7 +136,7 @@ var Constructor = function()
     this.getMoveInDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 410;
+        return 610;
     };
 
     this.getStopDurationMS = function()

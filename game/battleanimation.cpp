@@ -528,15 +528,6 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pColorRect->addTween(colorTween);
     oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(spriteWidth * endHp / Unit::MAX_UNIT_HP), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
-    // add impact image
-//    oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));
-//    oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
-//    while (child)
-//    {
-//        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(500 / Settings::getBattleAnimationSpeed())), 1, true, oxygine::timeMS(100));
-//        child->addTween(colorTween2);
-//        child = child->getNextSibling();
-//    }
     if (currentState <= AnimationProgress::AttackerImpact)
     {
         setCOMood(m_AtkCO0, m_atkStartHp, m_defEndHp);
@@ -556,6 +547,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setHpRounded(GlobalUtils::roundUp(enemyHp));
     pSprite->setInvertStartPosition(true);
     pSprite->setMaxUnitCount(pAttackerSprite->getMaxUnitCount());
+    pSprite->loadAnimation(BattleAnimationSprite::impactUnitOverlayAnimation, pUnit2, pUnit1, weapon, false, false);
     pSprite->loadAnimation(BattleAnimationSprite::impactAnimation, pUnit2, pUnit1, weapon, false);
     setSpritePosition(pSprite, pUnit1, pUnit2);
     // restore sprite data

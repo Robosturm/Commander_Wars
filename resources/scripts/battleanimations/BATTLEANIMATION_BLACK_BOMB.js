@@ -16,13 +16,13 @@ var Constructor = function()
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime, false, -1);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
         sprite.loadMovingSpriteV2("black_bomb+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_BLACK_BOMB.getMaxUnitCount(), Qt.point(0, 40), movement, moveTime, false, -1);
         if (alive)
         {
-            sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+            sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         }
     };
 

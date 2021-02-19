@@ -24,10 +24,10 @@ var Constructor = function()
         }
         sprite.loadSprite("fighter+" + armyName,  false,
                           BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSpriteV2("fighter+" + armyName + "+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
-        sprite.addMoveTweenToLastLoadedSprites(0, -3, 800);
+        sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -64,6 +64,11 @@ var Constructor = function()
     {
         // the time will be scaled with animation speed inside the engine
         return 500;
+    };
+
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)

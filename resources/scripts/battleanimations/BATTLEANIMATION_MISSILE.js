@@ -71,6 +71,11 @@ var Constructor = function()
         BATTLEANIMATION_MISSILE.loadSprite(sprite, unit, defender, weapon, "+fired");
     };
 
+    this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadColorOverlayForLastLoadedFrame("#969696", 1000, 1, 300);
+    };
+
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 60),
