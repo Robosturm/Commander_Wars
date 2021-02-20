@@ -22,6 +22,14 @@ var RANDOMMAPGENERATOR =
     {
         return ["FACTORY", "AIRPORT", "HARBOUR", "TOWN", "MINE", "OILRIG"];
     },
+    getUnitBaseChances : function()
+    {
+        return [50, 10, 10, 20, 10];
+    },
+    getUnitBases : function()
+    {
+        return ["INFANTRY", "MECH", "ARTILLERY", "LIGHT_TANK", "FLAK"];
+    },
     getRoadCreation : function(terrain)
     {
         // describes how roads from hq to hq are created on different tiles without a building on it

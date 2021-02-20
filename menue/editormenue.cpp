@@ -601,13 +601,19 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
                                   QVector<std::tuple<QString, float>> terrains,
                                   QVector<std::tuple<QString, float>> buildings,
                                   QVector<float> ownedBaseSize,
-                                  float startBaseSize)
+                                  float startBaseSize,
+                                  QVector<std::tuple<QString, float>> units,
+                                  qint32 unitCount,
+                                  float startBaseUnitSize,
+                                  QVector<float> unitDistribution,
+                                  bool unitsDistributed)
 {
     
     cleanTemp(-1);
     GameMap* pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
-                        terrains, buildings, ownedBaseSize, startBaseSize / 100.0f);
+                        terrains, buildings, ownedBaseSize, startBaseSize / 100.0f,
+                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed);
     pGameMap->setMapName(mapName);
     pGameMap->setMapAuthor(author);
     pGameMap->setMapDescription(description);

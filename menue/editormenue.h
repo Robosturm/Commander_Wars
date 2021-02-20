@@ -233,7 +233,12 @@ public slots:
                          QVector<std::tuple<QString, float>> terrains,
                          QVector<std::tuple<QString, float>> buildings,
                          QVector<float> ownedBaseSize,
-                         float startBaseSize);
+                         float startBaseSize,
+                         QVector<std::tuple<QString, float>> units,
+                         qint32 unitCount,
+                         float startBaseUnitSize,
+                         QVector<float> unitDistribution,
+                         bool unitsDistributed);
     /**
      * @brief showResizeMap
      */

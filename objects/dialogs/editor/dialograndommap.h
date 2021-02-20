@@ -2,18 +2,17 @@
 #define DIALOGRANDOMMAP_H
 
 #include <QObject>
+#include <QVector>
 
 #include "oxygine-framework.h"
 
 #include "objects/base/panel.h"
-
 #include "objects/base/textbox.h"
-
 #include "objects/base/spinbox.h"
-
 #include "objects/base/checkbox.h"
-
 #include "objects/base/multislider.h"
+#include "objects/base/label.h"
+#include "objects/base/dropdownmenu.h"
 
 class DialogRandomMap;
 typedef oxygine::intrusive_ptr<DialogRandomMap> spDialogRandomMap;
@@ -31,7 +30,12 @@ signals:
                      QVector<std::tuple<QString, float>> terrains,
                      QVector<std::tuple<QString, float>> buildings,
                      QVector<float> ownedBaseSize,
-                     float startBaseSize);
+                     float startBaseSize,
+                     QVector<std::tuple<QString, float>> units,
+                     qint32 unitCount,
+                     float startBaseUnitSize,
+                     QVector<float> unitDistribution,
+                     bool unitsDistributed);
     void sigCancel();
     /**
      * @brief sigShowGeneratorSelection
@@ -41,6 +45,8 @@ public slots:
     void generatorChanged(QString filename);
     void showGeneratorSelection();
     void playerChanged(qreal);
+private:
+    void createUnitChances();
 private:
     spTextbox m_GeneratorFile;
     oxygine::spButton m_Generator;
@@ -66,7 +72,21 @@ private:
     oxygine::spTextField m_OwnerDistributionLabel;
     spMultislider m_OwnerDistribution;
 
-     spPanel m_pPanel;
+    spLabel m_unitCountLabel;
+    spSpinBox m_unitCount;
+    spLabel m_unitsNearHqLabel;
+    spSpinBox m_unitsNearHq;
+    spLabel m_unitDistributionLabel;
+    spDropDownmenu m_unitDistributionSelection;
+    oxygine::spTextField m_UnitDistributionLabel;
+    spMultislider m_unitDistribution;
+    oxygine::spTextField m_UnitChanceLabel;
+    spMultislider m_UnitChances;
+    QStringList m_UnitIDs;
+    QVector<qint32> m_UnitChanceValues;
+
+
+    spPanel m_pPanel;
 };
 
 #endif // DIALOGRANDOMMAP_H

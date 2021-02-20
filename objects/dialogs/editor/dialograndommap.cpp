@@ -8,7 +8,6 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/dialogs/filedialog.h"
-#include "objects/base/label.h"
 
 DialogRandomMap::DialogRandomMap()
     : QObject()
@@ -195,8 +194,61 @@ DialogRandomMap::DialogRandomMap()
     m_OwnerDistributionLabel->setPosition(30, 5 + y + m_OwnerDistributionLabel->getHeight());
     m_pPanel->addItem(m_OwnerDistributionLabel);
     y += 40;
-    m_pPanel->setContentHeigth(y + 40);
 
+    // Label
+    m_unitCountLabel = new Label(width - 10);
+    m_unitCountLabel->setStyle(style);
+    m_unitCountLabel->setHtmlText(tr("Unit Count:"));
+    m_unitCountLabel->setPosition(30, 5 + y );
+    m_pPanel->addItem(m_unitCountLabel);
+    m_unitCount = new SpinBox(300, 0, 9999, SpinBox::Mode::Int);
+    m_unitCount->setTooltipText(tr("Total amount of units that get spawned. If no valid position for a unit is found no unit gets spawned instead"));
+    m_unitCount->setPosition(m_unitCountLabel->getX() + width, m_unitCountLabel->getY());
+    m_unitCount->setCurrentValue(0);
+    m_pPanel->addItem(m_unitCount);
+    y += 40;
+
+    // Label
+    m_unitsNearHqLabel = new Label(width - 10);
+    m_unitsNearHqLabel->setStyle(style);
+    m_unitsNearHqLabel->setHtmlText(tr("Units near HQ:"));
+    m_unitsNearHqLabel->setPosition(30, 5 + y );
+    m_pPanel->addItem(m_unitsNearHqLabel);
+    m_unitsNearHq = new SpinBox(300, 0, 100, SpinBox::Mode::Int);
+    m_unitsNearHq->setUnit("%");
+    m_unitsNearHq->setTooltipText(tr("The percantage of units which get spawned near the HQ of the player."));
+    m_unitsNearHq->setPosition(text->getX() + width, text->getY());
+    m_unitsNearHq->setCurrentValue(100);
+    m_pPanel->addItem(m_unitsNearHq);
+    y += 40;
+    // Label
+    m_unitDistributionLabel = new Label(width - 10);
+    m_unitDistributionLabel->setStyle(style);
+    m_unitDistributionLabel->setHtmlText(tr("Units spawn mode:"));
+    m_unitDistributionLabel->setPosition(30, 5 + y );
+    m_pPanel->addItem(m_unitDistributionLabel);
+    QVector<QString> items = {tr("Random"), tr("Distributed")};
+    m_unitDistributionSelection = new DropDownmenu(300, items);
+    m_unitDistributionSelection->setTooltipText(tr("Random for units getting spawned at random.\nDistributed for units beeing spawned at the given rate."));
+    m_unitDistributionSelection->setPosition(text->getX() + width, text->getY());
+    m_unitDistributionSelection->setCurrentItem(1);
+    m_pPanel->addItem(m_unitDistributionSelection);
+    y += 40;
+    m_UnitDistributionLabel = new oxygine::TextField();
+    m_UnitDistributionLabel->setStyle(style);
+    m_UnitDistributionLabel->setHtmlText(tr("Unit distribution:"));
+    m_UnitDistributionLabel->setPosition(30, 5 + y + m_UnitDistributionLabel->getHeight());
+    m_pPanel->addItem(m_UnitDistributionLabel);
+    y += 40;
+    m_UnitChanceLabel = new oxygine::TextField();
+    m_UnitChanceLabel->setStyle(style);
+    m_UnitChanceLabel->setHtmlText(tr("Unit spawn chance"));
+    m_UnitChanceLabel->setPosition(30, 5 + y + m_UnitChanceLabel->getHeight());
+    m_pPanel->addItem(m_UnitChanceLabel);
+    y += 40;
+
+
+    m_pPanel->setContentHeigth(y + 40);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(Settings::getWidth() - m_OkButton->getWidth() - 30, Settings::getHeight() - 30 - m_OkButton->getHeight());
@@ -219,12 +271,28 @@ DialogRandomMap::DialogRandomMap()
         {
             ownedBaseSize.append(m_OwnerDistribution->getSliderValue(i + 1));
         }
+
+        QVector<std::tuple<QString, float>> units;
+        for (qint32 i = 0; i < m_UnitIDs.size(); i++)
+        {
+            units.append(std::tuple<QString, float>(m_UnitIDs[i], m_UnitChances->getSliderValue(i)));
+        }
+        QVector<float> unitDistribution;
+        for (qint32 i = 0; i < player; i++)
+        {
+            unitDistribution.append(m_unitDistribution->getSliderValue(i));
+        }
+
         emit sigFinished(m_MapName->getCurrentText(), m_MapAuthor->getCurrentText(),
                          m_MapDescription->getCurrentText(),
                          static_cast<qint32>(m_MapWidth->getCurrentValue()), static_cast<qint32>(m_MapHeigth->getCurrentValue()),
                          player, m_CreateRoad->getChecked(), static_cast<qint32>(m_Seed->getCurrentValue()),
                          terrains, buildings, ownedBaseSize,
-                         m_BaseSize->getCurrentValue());
+                         m_BaseSize->getCurrentValue(),
+                         units, m_unitCount->getCurrentValue(),
+                         m_unitsNearHq->getCurrentValue(),
+                         unitDistribution,
+                         (m_unitDistributionSelection->getCurrentItem() == 1));
         detach();
     });
 
@@ -274,9 +342,12 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         QList<QVariant> terrainChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getTerrainBaseChances").toVariant().toList();
         m_BuildingIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getBuildingBases").toVariant().toStringList();
         QList<QVariant> buildingChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getBuildingBaseChances").toVariant().toList();
+        m_UnitIDs = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBases").toVariant().toStringList();
+        QList<QVariant> unitChancesVariant = pInterpreter->doFunction("RANDOMMAPGENERATOR", "getUnitBaseChances").toVariant().toList();
+
         QVector<QString> terrainStrings;
         QVector<qint32> terrainChances;
-        if (terrainStrings.size() == terrainChances.size())
+        if (m_TerrainIDs.size() == terrainChancesVariant.size())
         {
             for (qint32 i = 0; i < m_TerrainIDs.size(); i++)
             {
@@ -300,9 +371,9 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
 
         QVector<QString> buildingStrings;
         QVector<qint32> buildingChances;
-        if (buildingStrings.size() == buildingChances.size())
+        if (m_BuildingIDs.size() == buildingChancesVariant.size())
         {
-            for (qint32 i = 0; i < m_TerrainIDs.size(); i++)
+            for (qint32 i = 0; i < m_BuildingIDs.size(); i++)
             {
                 buildingStrings.append(pInterpreter->doFunction(m_BuildingIDs[i], "getName").toString());
                 buildingChances.append(buildingChancesVariant[i].toInt());
@@ -313,6 +384,10 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         m_BuildingChances->setPosition(30, m_BuildingChanceLabel->getY() + 40);
         m_pPanel->addItem(m_BuildingChances);
         m_OwnerDistributionLabel->setY(m_BuildingChances->getY() + 40 * buildingStrings.size());
+        for (qint32 i = 0; i < m_UnitIDs.size(); i++)
+        {
+            m_UnitChanceValues.append(unitChancesVariant[i].toInt());
+        }
         playerChanged(0);
     }
     
@@ -336,9 +411,56 @@ void DialogRandomMap::playerChanged(qreal)
         playerChances.append(0);
     }
     m_OwnerDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
-    m_OwnerDistribution->setTooltipText(tr("The percent distribution between the players. Note buildings close to an Player HQ may be ignored."));
+    m_OwnerDistribution->setTooltipText(tr("The percent building distribution between the players. Note buildings close to an Player HQ may be ignored."));
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 40);
     m_pPanel->addItem(m_OwnerDistribution);
-    m_pPanel->setContentHeigth(m_OwnerDistribution->getY() + 40 * (playerStrings.size() + 1));
-    
+    createUnitChances();
+}
+
+void DialogRandomMap::createUnitChances()
+{
+    if (m_unitDistribution.get())
+    {
+        m_unitDistribution->detach();
+    }
+    if (m_UnitChances.get())
+    {
+        m_UnitChances->detach();
+    }
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QVector<QString> unitStrings;
+    if (m_UnitIDs.size() == m_UnitChanceValues.size())
+    {
+        for (qint32 i = 0; i < m_UnitIDs.size(); i++)
+        {
+            unitStrings.append(pInterpreter->doFunction(m_UnitIDs[i], "getName").toString());
+        }
+    }
+    qint32 player = m_MapPlayerCount->getCurrentValue() + 1;
+    m_unitCountLabel->setY(m_OwnerDistribution->getY() + 40 * player);
+    m_unitCount->setY(m_OwnerDistribution->getY() + 40 * player);
+    m_unitsNearHqLabel->setY(m_unitCount->getY() + 40);
+    m_unitsNearHq->setY(m_unitCount->getY() + 40);
+    m_unitDistributionLabel->setY(m_unitsNearHq->getY() + 40);
+    m_unitDistributionSelection->setY(m_unitsNearHq->getY() + 40);
+    m_UnitDistributionLabel->setY(m_unitDistributionSelection->getY() + 40);
+
+    QVector<QString> playerStrings;
+    QVector<qint32> playerChances;
+    for (qint32 i = 0; i < player - 1; i++)
+    {
+        playerStrings.append(tr("Player ") + QString::number(i + 1));
+        playerChances.append(0);
+    }
+    m_unitDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
+    m_unitDistribution->setTooltipText(tr("The percent unit distribution between the players. Note units that can't be spawned still count to the distribution."));
+    m_unitDistribution->setPosition(30, m_UnitDistributionLabel->getY() + 40);
+    m_pPanel->addItem(m_unitDistribution);
+
+    m_UnitChanceLabel->setY(m_unitDistribution->getY() + 40 * (player - 1));
+    m_UnitChances = new Multislider(unitStrings, Settings::getWidth() - 150, m_UnitChanceValues);
+    m_UnitChances->setTooltipText(tr("The percent distribution between the units that will be spawned. Note units that can't be spawned still count to the distribution."));
+    m_UnitChances->setPosition(30, m_UnitChanceLabel->getY() + 40);
+    m_pPanel->addItem(m_UnitChances);
+    m_pPanel->setContentHeigth(m_UnitChances->getY() + 40 * (m_UnitIDs.size() + 1));
 }

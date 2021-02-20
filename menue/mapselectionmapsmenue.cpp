@@ -399,13 +399,19 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             QVector<std::tuple<QString, float>> terrains,
                                             QVector<std::tuple<QString, float>> buildings,
                                             QVector<float> ownedBaseSize,
-                                            float startBaseSize)
+                                            float startBaseSize,
+                                            QVector<std::tuple<QString, float>> units,
+                                            qint32 unitCount,
+                                            float startBaseUnitSize,
+                                            QVector<float> unitDistribution,
+                                            bool unitsDistributed)
 {
     
     spGameMap pGameMap = new GameMap(width, heigth, playerCount);
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
-                        startBaseSize / 100.0f);
+                        startBaseSize / 100.0f,
+                        units, unitCount, startBaseUnitSize / 100.0f, unitDistribution, unitsDistributed);
     pGameMap->setMapName(mapName);
     if (mapName.isEmpty())
     {

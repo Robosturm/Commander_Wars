@@ -440,11 +440,15 @@ set(${PROJECT_NAME}_SRCS
 )
 
 
-FILE(GLOB_RECURSE JavaScripts "resources/*.js")
-add_custom_target(scripts SOURCES ${JavaScripts})
+FILE(GLOB_RECURSE scripts "resources/*.js")
+FILE(GLOB_RECURSE images "resources/*.png")
+FILE(GLOB_RECURSE xmls "resources/*.xml")
+add_custom_target(Resources SOURCES ${scripts} ${images} ${xmls})
 
-FILE(GLOB_RECURSE ModScripts "mods/*.js")
-add_custom_target(modscripts SOURCES ${ModScripts})
+FILE(GLOB_RECURSE modScripts "mods/*.js")
+FILE(GLOB_RECURSE modImages "resources/*.png")
+FILE(GLOB_RECURSE modXmls "resources/*.xml")
+add_custom_target(modscripts SOURCES ${modScripts} ${modImages} ${modXmls})
 
 FILE(GLOB_RECURSE TemplateScripts "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
@@ -457,6 +461,10 @@ add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 
 FILE(GLOB_RECURSE ShaderScripts "system/*.glsl")
 add_custom_target(shaders SOURCES ${ShaderScripts})
+
+FILE(GLOB_RECURSE DataScripts "data/*.js")
+add_custom_target(data SOURCES ${DataScripts})
+
 # create translation here :)
 set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
 message ("Language Update Options: ${LUPDATE_OPTIONS}")

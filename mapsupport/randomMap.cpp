@@ -24,13 +24,18 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                           QVector<std::tuple<QString, float>> terrains,
                           QVector<std::tuple<QString, float>> buildings,
                           QVector<float> ownedBaseSize,
-                          float startBaseSize)
+                          float startBaseSize,
+                          QVector<std::tuple<QString, float>> units,
+                          qint32 unitCount,
+                          float startBaseUnitSize,
+                          QVector<float> unitDistribution,
+                          bool unitsDistributed)
 {
     clearMap();
 
     LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
     pLoadingScreen->show();
-    qint32 maxSteps = terrains.size() + buildings.size() + 1;
+    qint32 maxSteps = terrains.size() + buildings.size() + units.size() + 1;
     qint32 progress = 0;
 
     qint32 startSeed = seed;
@@ -87,9 +92,12 @@ qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
 
     if (roadSupport)
     {
-        pLoadingScreen->setProgress(tr("Generating ") + "Roads", (progress - 1) * 100 / maxSteps);
+        pLoadingScreen->setProgress(tr("Generating ") + "Roads", (progress) * 100 / (maxSteps));
+        ++progress;
         randomMapCreateRoad(randInt, basePoints);
     }
+    randomMapPlaceUnits(units, unitCount, startBaseUnitSize, unitDistribution, basePoints, unitsDistributed, progress, maxSteps, randInt);
+
     pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "customStep");
 
     updateSprites();
@@ -651,7 +659,7 @@ void GameMap::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID,
                 y = -1;
             }
         }
-        if ((x >= 0) && (y >= 0))
+        if (onMap(x, y))
         {
             replaceTerrain(baseTerrainID, x, y);
             Building* pBuilding = new Building(buildingId);
@@ -699,4 +707,113 @@ bool GameMap::randomMapIsBuildingPlace(QString buildingId, qint32 x, qint32 y)
         }
     }
     return false;
+}
+
+void GameMap::randomMapPlaceUnits(QVector<std::tuple<QString, float>> units,
+                                  qint32 unitCount,
+                                  float startBaseUnitSize,
+                                  QVector<float> unitDistribution,
+                                  QVector<QPoint> playerPositions,
+                                  bool distributed,
+                                  qint32& progress, qint32 maxProgess, QRandomGenerator& randInt)
+{
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    if (distributed)
+    {
+        for (qint32 owner = 0; owner < playerPositions.size(); ++owner)
+        {
+            pLoadingScreen->setProgress(tr("Generating ") + "Units", (progress + owner / playerPositions.size() * unitCount) * 100 / (maxProgess));
+            qint32 hqUnits = static_cast<qint32>(unitCount) * unitDistribution[owner] / 100.0f;
+            // round up for units near the hq
+            qint32 randomSpawnCount = static_cast<qint32>(hqUnits * (1.0f - startBaseUnitSize));
+            for (qint32 i = 0; i < hqUnits; ++i)
+            {
+                qint32 unitIndex = 0;
+                float percentPlaced = static_cast<float>(i) / static_cast<float>(hqUnits);
+                float sum = std::get<1>(units[unitIndex]) / 100.0f;
+                while (percentPlaced >= sum)
+                {
+                    ++unitIndex;
+                    sum += std::get<1>(units[unitIndex]) / 100.0f;
+                }
+                randomMapSpawnUnit(std::get<0>(units[unitIndex]), owner, true, playerPositions, randInt);
+            }
+            for (qint32 i = 0; i < randomSpawnCount; ++i)
+            {
+                qint32 unitIndex = 0;
+                float percentPlaced = static_cast<float>(i) / static_cast<float>(hqUnits);
+                float sum = std::get<1>(units[unitIndex]) / 100.0f;
+                while (percentPlaced >= sum)
+                {
+                    ++unitIndex;
+                    sum += std::get<1>(units[unitIndex]) / 100.0f;
+                }
+                randomMapSpawnUnit(std::get<0>(units[unitIndex]), owner, false, playerPositions, randInt);
+            }
+        }
+    }
+    else
+    {
+        // random spawning
+        // distribution spawning
+        QVector<qint32> placedPerPlayer;
+        for (qint32 i = 0; i < playerPositions.length(); ++i)
+        {
+            placedPerPlayer.append(0);
+        }
+        for (qint32 i = 0; i < unitCount; ++i)
+        {
+            pLoadingScreen->setProgress(tr("Generating ") + "Units", (progress + i * units.size() / unitCount) * 100 / (maxProgess));
+            qint32 owner = 0;
+            float percentPlaced = static_cast<float>(i) / static_cast<float>(unitCount);
+            float sum = unitDistribution[owner] / 100.0f;
+            while (percentPlaced >= sum)
+            {
+                ++owner;
+                sum += unitDistribution[owner] / 100.0f;
+            }
+            qint32 index = randInt.bounded(0, units.length());
+            if (placedPerPlayer[owner] < startBaseUnitSize * unitCount * unitDistribution[owner] / 100.0f)
+            {
+                randomMapSpawnUnit(std::get<0>(units[index]), owner, true, playerPositions, randInt);
+            }
+            else
+            {
+                randomMapSpawnUnit(std::get<0>(units[index]), owner, false, playerPositions, randInt);
+            }
+
+            placedPerPlayer[owner] += 1;
+        }
+    }
+}
+
+void GameMap::randomMapSpawnUnit(QString unitId, qint32 owner, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt)
+{
+    qint32 mapWidth = getMapWidth();
+    qint32 mapHeigth = getMapHeight();
+    qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
+    qint32 maximumUnitTry = 2000;
+    spUnit pUnit = new Unit(unitId, players[owner].get(), false);
+    qint32 x = 0;
+    qint32 y = 0;
+    for (qint32 i2 = 0; i2 < maximumUnitTry; ++i2)
+    {
+        if (nearHq)
+        {
+            x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(owner).x();
+            y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(owner).y();
+        }
+        else
+        {
+            x = randInt.bounded(0, mapWidth);
+            y = randInt.bounded(0, mapHeigth);
+        }
+        if (onMap(x, y) &&
+            pUnit->getBaseMovementCosts(x, y) > 0 &&
+            getTerrain(x, y)->getUnit() == nullptr)
+        {
+            spawnUnit(x, y, unitId, players[owner].get(), 0);
+            break;
+        }
+    }
 }

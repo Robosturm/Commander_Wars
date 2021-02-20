@@ -7,6 +7,7 @@
 
 void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString baseTerrain)
 {
+    Mainapp::getInstance()->pauseRendering();
     clearMap();
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -29,10 +30,12 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString ba
 
     updateSprites();
     centerMap(width / 2, heigth / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
     qint32 currentPlayerCount = getPlayerCount();
@@ -109,10 +112,12 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
 
     updateSprites();
     centerMap(width / 2, heigth / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     if (left + getMapWidth() > 0)
     {
@@ -134,7 +139,11 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
-                    fields[y][0]->detach();
+                    if (fields[y][0]->getUnit() != nullptr)
+                    {
+                        fields[y][0]->getUnit()->detach();
+                    }
+                    fields[y][0]->detach();                    
                     fields[y].pop_front();
                 }
             }
@@ -160,6 +169,10 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 y = 0; y < currentHeigth; y++)
                 {
+                    if (fields[y].back()->getUnit() != nullptr)
+                    {
+                        fields[y].back()->getUnit()->detach();
+                    }
                     fields[y].back()->detach();
                     fields[y].pop_back();
                 }
@@ -188,6 +201,10 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
+                    if (fields[0][x]->getUnit() != nullptr)
+                    {
+                        fields[0][x]->getUnit()->detach();
+                    }
                     fields[0][x]->detach();
                 }
                 fields.pop_front();
@@ -215,6 +232,10 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             {
                 for (qint32 x = 0; x < currentWidth; x++)
                 {
+                    if (fields.back()[x]->getUnit() != nullptr)
+                    {
+                        fields.back()[x]->getUnit()->detach();
+                    }
                     fields.back()[x]->detach();
                 }
                 fields.pop_back();
@@ -249,13 +270,14 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             }
         }
     }
-
     updateSprites();
     centerMap(currentWidth / 2, currentHeigth / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::flipX()
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
     for (qint32 y = 0; y < currentHeigth; y++)
@@ -264,6 +286,10 @@ void GameMap::flipX()
         {
             spTerrain currentTerrain = fields[y][x];
             currentTerrain->detach();
+            if (currentTerrain->getUnit() != nullptr)
+            {
+                currentTerrain->getUnit()->detach();
+            }
             spTerrain flipTerrain = fields.at(y)[currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -289,10 +315,12 @@ void GameMap::flipX()
     }
     updateSprites();
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::rotateX()
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
     for (qint32 y = 0; y < currentHeigth; y++)
@@ -301,6 +329,10 @@ void GameMap::rotateX()
         {
             spTerrain currentTerrain = fields[y][x];
             currentTerrain->detach();
+            if (currentTerrain->getUnit() != nullptr)
+            {
+                currentTerrain->getUnit()->detach();
+            }
             spTerrain flipTerrain = fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -326,10 +358,12 @@ void GameMap::rotateX()
     }
     updateSprites();
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::flipY()
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
     for (qint32 y = currentHeigth / 2; y < currentHeigth; y++)
@@ -338,6 +372,10 @@ void GameMap::flipY()
         {
             spTerrain currentTerrain = fields[y][x];
             currentTerrain->detach();
+            if (currentTerrain->getUnit() != nullptr)
+            {
+                currentTerrain->getUnit()->detach();
+            }
             spTerrain flipTerrain = fields[currentHeigth - y - 1][x];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -363,10 +401,12 @@ void GameMap::flipY()
     }
     updateSprites();
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::rotateY()
 {
+    Mainapp::getInstance()->pauseRendering();
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
     for (qint32 y = currentHeigth / 2; y < currentHeigth; y++)
@@ -375,6 +415,10 @@ void GameMap::rotateY()
         {
             spTerrain currentTerrain = fields[y][x];
             currentTerrain->detach();
+            if (currentTerrain->getUnit() != nullptr)
+            {
+                currentTerrain->getUnit()->detach();
+            }
             spTerrain flipTerrain = fields[currentHeigth - y - 1][currentWidth - x - 1];
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -400,4 +444,5 @@ void GameMap::rotateY()
     }
     updateSprites();
     centerMap(getMapWidth() / 2, getMapHeight() / 2);
+    Mainapp::getInstance()->continueRendering();
 }

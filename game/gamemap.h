@@ -113,7 +113,12 @@ public:
                      QVector<std::tuple<QString, float>> terrains,
                      QVector<std::tuple<QString, float>> buildings,
                      QVector<float> ownedBaseSize,
-                     float startBaseSize);
+                     float startBaseSize,
+                     QVector<std::tuple<QString, float>> units,
+                     qint32 unitCount,
+                     float startBaseUnitSize,
+                     QVector<float> unitDistribution,
+                     bool unitsDistributed);
     /**
      * @brief placeGroup
      * @param startX
@@ -204,6 +209,32 @@ public:
      * @param randInt
      */
     void randomMapPlaceOnTop(QString terrainID, QString topId, float chance, QRandomGenerator& randInt);
+    /**
+     * @brief randomMapPlaceUnits
+     * @param units
+     * @param unitCount
+     * @param startBaseUnitSize
+     * @param unitDistribution
+     * @param progress
+     * @param maxProgess
+     */
+    void randomMapPlaceUnits(QVector<std::tuple<QString, float>> units,
+                             qint32 unitCount,
+                             float startBaseUnitSize,
+                             QVector<float> unitDistribution,
+                             QVector<QPoint> playerPositions,
+                             bool distributed,
+                             qint32& progress, qint32 maxProgess,
+                             QRandomGenerator& randInt);
+    /**
+     * @brief randomMapSpawnUnit
+     * @param unitId
+     * @param owner
+     * @param nearHq
+     * @param playerPositions
+     * @param randInt
+     */
+    void randomMapSpawnUnit(QString unitId, qint32 owner, bool nearHq, QVector<QPoint> playerPositions, QRandomGenerator& randInt);
     /**
      * @brief getInstance
      * @return
