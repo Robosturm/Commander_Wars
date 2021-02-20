@@ -33,7 +33,7 @@ QByteArray Filesupport::getRuntimeHash()
 {
     QStringList folders = Settings::getMods();
     folders.append("/resources");
-    QStringList filter = {"*.js", "*.txt"};
+    QStringList filter = {"*.js", "*.txt", "*.csv"};
     return getHash(filter, folders);
 }
 
