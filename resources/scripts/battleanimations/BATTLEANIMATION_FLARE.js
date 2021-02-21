@@ -55,7 +55,7 @@ var Constructor = function()
         sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_FLARE.getMaxUnitCount();

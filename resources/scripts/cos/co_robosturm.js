@@ -181,8 +181,6 @@ var Constructor = function()
         return -20;
     };
 
-
-
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -220,7 +218,10 @@ var Constructor = function()
         }
         return 1;
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     // CO - Intel
     this.getBio = function(co)
     {

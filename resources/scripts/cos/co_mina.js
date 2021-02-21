@@ -180,7 +180,10 @@ var Constructor = function()
         }
         return 0;
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     this.getCOUnitRange = function(co)
     {
         return 3;

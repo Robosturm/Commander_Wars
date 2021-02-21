@@ -214,6 +214,15 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (unit.getBaseMaxRange() === 1)
+        {
+            return 2;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

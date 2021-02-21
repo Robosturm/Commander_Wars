@@ -187,7 +187,14 @@ var Constructor = function()
         }
         return 0;
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (attacker.getUnitID() === "K_HELI")
+        {
+            return 3;
+        }
+        return 0;
+    };
     // CO - Intel
     this.getBio = function(co)
     {

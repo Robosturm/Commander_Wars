@@ -76,7 +76,7 @@ var Constructor = function()
                           1, 1.0, 0, 0);
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 500 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_SNIPER.getMaxUnitCount();

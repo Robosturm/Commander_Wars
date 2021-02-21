@@ -18,13 +18,13 @@ public:
     ENUM_CLASS ThreadLevel
     {
         Normal,
-        High,
-        Hq
+                High,
+                Hq
     };
     ENUM_CLASS FunctionType
     {
         JavaScript,
-        CPlusPlus
+                CPlusPlus
     };
     struct UnitData
     {
@@ -59,12 +59,17 @@ protected:
     void scoreActions(UnitData & unit);
 private:
     void setupTurn(const spQmlVectorBuilding & buildings);
+    void endTurn();
     void createIslandMaps();
     void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units, bool enemyUnits);
     void findHqThreads(const spQmlVectorBuilding & buildings);
     bool isCaptureTransporterOrCanCapture(Unit* pUnit);
+    void mutateActionForFields(UnitData & unit, const QVector<QPoint> & moveTargets,
+                               QString action, FunctionType type, qint32 index,
+                               float & bestScore, QVector<float> & bestScores,
+                               QVector<spGameAction> & bestActions);
     bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition, float & score);
     /**
      * @brief performAction
@@ -81,8 +86,28 @@ private:
      * @param action
      * @return
      */
-    float scoreFire(spGameAction action);    
-
+    float scoreFire(spGameAction action);
+    /**
+     * @brief scoreWait
+     * @param unit
+     */
+    void scoreWait();
+    /**
+     * @brief getFunctionType
+     * @param action
+     * @param type
+     * @param index
+     */
+    void getFunctionType(QString action, FunctionType & type, qint32 & index);
+    /**
+     * @brief scoreProduction
+     */
+    void scoreProduction();
+    /**
+     * @brief buildUnits
+     * @return
+     */
+    bool buildUnits();
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action)>;

@@ -1198,6 +1198,37 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
     }
 }
 
+float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    float value = 0;
+    valid = false;
+    QString function1 = "getAiCoUnitBonus";
+    if (pInterpreter->exists(coID, function1))
+    {
+        valid = true;
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue obj1 = pInterpreter->newQObject(pUnit);
+        args << obj1;
+        QJSValue erg = pInterpreter->doFunction(coID, function1, args);
+        if (erg.isNumber())
+        {
+            value = erg.toNumber();
+        }
+        if (value > MAX_CO_UNIT_VALUE)
+        {
+            value = MAX_CO_UNIT_VALUE;
+        }
+        else if (value < -MAX_CO_UNIT_VALUE)
+        {
+            value = -MAX_CO_UNIT_VALUE;
+        }
+    }
+    return value;
+}
+
 QStringList CO::getPerkList()
 {
     QStringList ret = m_perkList;

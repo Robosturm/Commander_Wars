@@ -74,8 +74,8 @@ void Tooltip::showTooltip()
     if (!m_disabled)
     {
         Mainapp* pApp = Mainapp::getInstance();
+        pApp->pauseRendering();
         hideTooltip();
-
         if (oxygine::getStage()->isDescendant(this) && m_enabled)
         {
             if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
@@ -84,7 +84,6 @@ void Tooltip::showTooltip()
 
                 m_Tooltip = new oxygine::Actor();
                 m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
-                oxygine::getStage()->addChild(m_Tooltip);
 
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
@@ -110,6 +109,7 @@ void Tooltip::showTooltip()
                 pSpriteBox->addChild(pText);
                 pSpriteBox->setSize(pText->getTextRect().getSize() + oxygine::Point(30, 30));
 
+                oxygine::getStage()->addChild(m_Tooltip);
                 if (curPos.x() + 10 + pSpriteBox->getWidth() + 5 > Settings::getWidth())
                 {
                     m_Tooltip->setX(curPos.x() - 10 - pSpriteBox->getWidth());
@@ -128,7 +128,7 @@ void Tooltip::showTooltip()
                 }
             }
         }
-        
+        pApp->continueRendering();
     }
 }
 
@@ -146,12 +146,15 @@ void Tooltip::disableTooltip()
 
 void Tooltip::hideTooltip()
 {    
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->pauseRendering();
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
         m_Tooltip = nullptr;
         stopTooltiptimer();
     }
+    pApp->continueRendering();
 }
 
 void Tooltip::looseFocusInternal()

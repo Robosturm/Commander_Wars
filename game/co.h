@@ -26,6 +26,8 @@ class CO : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
+    static constexpr qint32 MAX_CO_UNIT_VALUE = 10;
+
     explicit CO(QString coID, Player* owner);
     /**
      * @brief serialize stores the object
@@ -514,6 +516,14 @@ public slots:
     GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
                                        qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
                                        GameEnums::AiTurnMode turnMode);
+
+    /**
+     * @brief getCoUnitBonus
+     * @param pUnit
+     * @param bonus
+     * @return
+     */
+    float getAiCoUnitBonus(Unit* pUnit, bool & valid);
     /**
      * @brief getPerkList
      * @return

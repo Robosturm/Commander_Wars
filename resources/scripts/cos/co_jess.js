@@ -220,6 +220,20 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+            (attacker.getUnitType() === GameEnums.UnitType_Naval))
+        {
+            return -2;
+        }
+        else if (attacker.getUnitType() !== GameEnums.UnitType_Infantry)
+        {
+            return 2;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

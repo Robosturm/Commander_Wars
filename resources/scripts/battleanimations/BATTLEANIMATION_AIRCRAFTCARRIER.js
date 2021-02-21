@@ -53,14 +53,14 @@ var Constructor = function()
         sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
     };
 
-    this.getImpactDurationMS = function()
+    this.getImpactDurationMS = function(sprite, unit, defender, weapon)
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1500;
     };
 
-    this.getDyingDurationMS = function()
+    this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 1200;

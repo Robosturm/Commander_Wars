@@ -209,6 +209,20 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (unit.getBaseMaxRange() === 1 &&
+            unit.getUnitType() !== GameEnums.UnitType_Infantry)
+        {
+            return 3;
+        }
+        else if (unit.getBaseMaxRange() > 1)
+        {
+            return -3;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

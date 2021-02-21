@@ -133,19 +133,19 @@ var Constructor = function()
                           1, 1.0, 0, 0);
         sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
     };
-    this.getMoveInDurationMS = function()
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
-    this.getStopDurationMS = function()
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_RECON.getMaxUnitCount();

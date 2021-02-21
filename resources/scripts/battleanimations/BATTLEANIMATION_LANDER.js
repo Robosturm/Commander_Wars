@@ -38,7 +38,7 @@ var Constructor = function()
         }
     };
 
-    this.getDyingDurationMS = function()
+    this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 1200;

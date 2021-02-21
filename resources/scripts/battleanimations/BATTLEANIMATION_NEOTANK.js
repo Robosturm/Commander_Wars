@@ -83,19 +83,19 @@ var Constructor = function()
         return true;
     };
 
-    this.getMoveInDurationMS = function()
+    this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 610;
     };
 
-    this.getStopDurationMS = function()
+    this.getStopDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 300 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_NEOTANK.getMaxUnitCount();
     };
 
-    this.getFireDurationMS = function()
+    this.getFireDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 820 + BATTLEANIMATION.defaultFrameDelay * BATTLEANIMATION_NEOTANK.getMaxUnitCount();

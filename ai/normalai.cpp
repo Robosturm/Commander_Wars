@@ -502,7 +502,6 @@ void NormalAi::process()
                     turnMode = GameEnums::AiTurnMode_EndOfDay;
                     if (useCOPower(pUnits.get(), pEnemyUnits.get()))
                     {
-                        clearEnemyData();
                         usedTransportSystem = false;
                         turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
@@ -599,12 +598,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
                         if (pUnit->hasWeapons())
                         {
                             qint32 score = 0;
-                            if (pCO->getOffensiveBonus(pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                                pCO->getDeffensiveBonus(nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false) > 0 ||
-                                pCO->getFirerangeModifier(pUnit, QPoint(-1, -1)) > 0)
-                            {
-                                score += pUnit->getUnitValue() * m_coUnitScoreMultiplier;
-                            }
+                            score += pUnit->getUnitValue() * m_coUnitScoreMultiplier * getAiCoUnitMultiplier(pCO, pUnit);
                             score += pUnit->getUnitValue();
                             if (pUnit->getUnitValue() >= m_coUnitValue)
                             {
@@ -2095,15 +2089,9 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                     data[NotAttackableCount] = std::get<1>(damageData);
                                     data[DamageData] =  std::get<0>(damageData);
 
-                                    if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                                        dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
-                                    {
-                                        data[COBonus] = 1;
-                                    }
-                                    else
-                                    {
-                                        data[COBonus] = 0;
-                                    }
+                                    data[COBonus] = 0;
+                                    data[COBonus] += getAiCoUnitMultiplier(m_pPlayer->getCO(0), &dummy);
+                                    data[COBonus] += getAiCoUnitMultiplier(m_pPlayer->getCO(1), &dummy);
                                     data[Movementpoints] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
                                     data[ReachDistance] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
                                     score = calcBuildScore(data);

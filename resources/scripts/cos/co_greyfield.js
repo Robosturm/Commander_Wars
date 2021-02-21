@@ -221,6 +221,15 @@ var Constructor = function()
         return [];
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (CO_GREYFIELD.isBoostUnit(unit))
+        {
+            return 2.5;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

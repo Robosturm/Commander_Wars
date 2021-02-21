@@ -187,7 +187,14 @@ var Constructor = function()
         }
         return [];
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (attacker.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return 2;
+        }
+        return 0;
+    };
     // CO - Intel
     this.getBio = function(co)
     {

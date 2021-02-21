@@ -166,6 +166,11 @@ var Constructor = function()
         return CO_KANBEI.globalBonus;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

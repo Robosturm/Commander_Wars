@@ -1819,6 +1819,26 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
     return false;
 }
 
+float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
+{
+    bool valid = false;
+    float multiplier = 0.0f;
+    if (pCO != nullptr)
+    {
+        multiplier = pCO->getAiCoUnitBonus(pUnit, valid);
+        if (!valid)
+        {
+            if (pCO->getOffensiveBonus(pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                pCO->getDeffensiveBonus(nullptr, QPoint(-1, -1), pUnit, QPoint(-1, -1), false) > 0 ||
+                pCO->getFirerangeModifier(pUnit, QPoint(-1, -1)) > 0)
+            {
+                multiplier = 1.0f;
+            }
+        }
+    }
+    return multiplier;
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();

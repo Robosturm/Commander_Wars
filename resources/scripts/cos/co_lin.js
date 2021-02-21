@@ -202,7 +202,16 @@ var Constructor = function()
                 return false;
         }
     };
-	
+
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (!seaAirUnit)
+        {
+            return 2;
+        }
+        return 1;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

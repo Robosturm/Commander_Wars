@@ -107,7 +107,6 @@ var Constructor = function()
         CO_VON_BOLT.postAnimationLaserrayRange = 0;
     };
 
-
     this.getCOUnitRange = function(co)
     {
         return 3;
@@ -166,7 +165,10 @@ var Constructor = function()
         }
         return [];
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     // CO - Intel
     this.getBio = function(co)
     {

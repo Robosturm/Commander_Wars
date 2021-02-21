@@ -346,6 +346,13 @@ var CO =
         return CO.getAiUsePowerAtStart(co, powerSurplus, turnMode);
     },
 
+//    getAiCoUnitBonus : function(co, unit)
+//    {
+//        implement this function for a co to make the ai build more of the co's good units and to increase the chance
+//        the ai deploys a co unit in it. The return value is capped at 10 and -10
+//        return 0;
+//    },
+
     getAiUsePowerAlways : function(co, powerSurplus)
     {
         if (co.canUseSuperpower())

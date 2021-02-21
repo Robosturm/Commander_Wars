@@ -182,6 +182,11 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

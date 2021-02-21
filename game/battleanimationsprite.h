@@ -101,7 +101,7 @@ public slots:
      * @param loops
      * @param showDelayMs
      */
-    void loadColorOverlayForLastLoadedFrame(QColor color, qint32 time, qint32 loops, qint32 showDelayMs, bool delayPerUnit = true);
+    void loadColorOverlayForLastLoadedFrame(QColor color, qint32 time, qint32 loops, qint32 showDelayMs);
     /**
      * @brief getInvertStartPosition
      * @return is true during impact animations and results in an inverted positioning of the impacts.
@@ -290,33 +290,27 @@ public slots:
      * @brief getImpactDurationMS
      * @return
      */
-    qint32 getImpactDurationMS();
-    /**
-     * @brief getImpactDurationMS
-     * @param pUnit
-     * @return
-     */
-    qint32 getImpactDurationMS(Unit* pUnit);
+    qint32 getImpactDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief getFireDurationMS
      * @return
      */
-    qint32 getFireDurationMS();
+    qint32 getFireDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief getMoveInDurationMS
      * @return
      */
-    qint32 getMoveInDurationMS();
+    qint32 getMoveInDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief getStopDurationMS
      * @return
      */
-    qint32 getStopDurationMS();
+    qint32 getStopDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief getMoveInDurationMS
      * @return
      */
-    qint32 getDyingDurationMS();
+    qint32 getDyingDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief getMoveInDurationMS
      * @return

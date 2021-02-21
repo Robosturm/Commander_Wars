@@ -89,18 +89,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/amy.mp3", 3444, 604297)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/amy.mp3", 3444, 604297)
+            break;
         }
     };
 
@@ -114,33 +114,33 @@ var Constructor = function()
     };
     this.hoverCraftBoost = 80;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+            {
+                return 80;
+            }
+            return 10;
+        case GameEnums.PowerMode_Power:
+            if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
+            {
+                return 80;
+            }
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
                 if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
                 {
-                    return 80;
+                    return CO_AMY.hoverCraftBoost;
                 }
                 return 10;
-            case GameEnums.PowerMode_Power:
-                if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-                {
-                    return 80;
-                }
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    if (attacker.getMovementType() === "MOVE_HOVERCRAFT")
-                    {
-                        return CO_AMY.hoverCraftBoost;
-                    }
-                    return 10;
-                }
-                break;
+            }
+            break;
         }
         return 0;
     };
@@ -149,21 +149,21 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (isDefender === true)
-                {
-                    return 99999;
-                }
-                return 110;
-            case GameEnums.PowerMode_Power:
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (isDefender === true)
+            {
+                return 99999;
+            }
+            return 110;
+        case GameEnums.PowerMode_Power:
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
                 return 10;
-            default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                {
-                    return 10;
-                }
-                break;
+            }
+            break;
         }
         return 0;
     };
@@ -201,6 +201,15 @@ var Constructor = function()
         return 0;
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (unit.getMovementType() === "MOVE_HOVERCRAFT")
+        {
+            return 3;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {
@@ -221,7 +230,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nReaf costs are always 1.") +
-               qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower boost.");
+                qsTr("\n\nCO Zone Effect: \nHovercrafts gain %0% firepower boost.");
         text = replaceTextArgs(text, [CO_AMY.hoverCraftBoost]);
         return text;
     };

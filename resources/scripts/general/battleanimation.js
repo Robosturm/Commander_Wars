@@ -83,26 +83,26 @@ var BATTLEANIMATION =
         }
     },
 
-    getImpactDurationMS : function()
+    getImpactDurationMS : function(sprite, unit, defender, weapon)
     {
         // should be a second or longer.
         // the time will be scaled with animation speed inside the engine
         return 1000;
     },
 
-    getFireDurationMS : function()
+    getFireDurationMS : function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
     },
 
-    getMoveInDurationMS : function()
+    getMoveInDurationMS : function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 100;
     },
 
-    getStopDurationMS : function()
+    getStopDurationMS : function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 100;

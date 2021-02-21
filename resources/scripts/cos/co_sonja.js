@@ -153,7 +153,10 @@ var Constructor = function()
         // are the hp hidden of this unit?
         return true;
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     // CO - Intel
     this.getBio = function(co)
     {

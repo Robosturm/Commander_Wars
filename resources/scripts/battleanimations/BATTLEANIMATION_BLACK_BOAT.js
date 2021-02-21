@@ -18,7 +18,7 @@ var Constructor = function()
                                   BATTLEANIMATION_BLACK_BOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
-    this.getDyingDurationMS = function()
+    this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
         return 1200;

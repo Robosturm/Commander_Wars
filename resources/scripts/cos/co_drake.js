@@ -231,6 +231,19 @@ var Constructor = function()
         return [];
     };
 
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (unit.getUnitType() === GameEnums.UnitType_Naval)
+        {
+            return 2;
+        }
+        else if (unit.getUnitType() === GameEnums.UnitType_Air)
+        {
+            return -2;
+        }
+        return 0;
+    };
+
     // CO - Intel
     this.getBio = function(co)
     {

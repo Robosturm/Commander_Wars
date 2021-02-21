@@ -19,6 +19,7 @@
 class GameAction;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 class Unit;
+class CO;
 class UnitPathFindingSystem;
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -455,6 +456,13 @@ protected:
     {
         return m_missileTarget;
     };
+    /**
+     * @brief getAiCoUnitMultiplier
+     * @param pCO
+     * @param pUnit
+     * @return
+     */
+    float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

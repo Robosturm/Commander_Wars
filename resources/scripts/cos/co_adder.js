@@ -112,6 +112,10 @@ var Constructor = function()
     {
         return "BH";
     };
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     this.coZoneBonus = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender)

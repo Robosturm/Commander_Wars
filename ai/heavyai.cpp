@@ -23,7 +23,7 @@ HeavyAi::HeavyAi()
                    }),
       m_InfluenceFrontMap(m_IslandMaps)
 {
-    m_timer.setSingleShot(true);
+    m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/heavy.ini");
 }
@@ -72,37 +72,56 @@ void HeavyAi::process()
 {
     spQmlVectorBuilding pBuildings = m_pPlayer->getBuildings();
     pBuildings->randomize();
-    setupTurn(pBuildings);
     if (m_pause)
     {
         m_timer.start(1000);
         return;
     }
-    if (useBuilding(pBuildings.get())){}
     else
     {
-        turnMode = GameEnums::AiTurnMode_EndOfDay;
-        if (useCOPower(m_pUnits.get(), m_pEnemyUnits.get()))
+        m_timer.stop();
+    }
+    if (useBuilding(pBuildings.get())){}
+    else if (useCOPower(m_pPlayer->getUnits(), m_pPlayer->getEnemyUnits())){}
+    else
+    {
+        setupTurn(pBuildings);
+        turnMode = GameEnums::AiTurnMode_DuringDay;
+        if (!selectActionToPerform())
         {
-            turnMode = GameEnums::AiTurnMode_DuringDay;
-            usedTransportSystem = false;
-        }
-        else
-        {
+            // nothing we could do with our units try to move them or/and let them wait
+            scoreWait();
             if (!selectActionToPerform())
             {
-                // end the turn for the player
-                turnMode = GameEnums::AiTurnMode_StartOfDay;
-                m_pUnits = nullptr;
-                m_pEnemyUnits = nullptr;
-                finishTurn();
+                scoreProduction();
+                if (!buildUnits())
+                {
+                    endTurn();
+                }
             }
         }
     }
 }
 
+void HeavyAi::endTurn()
+{
+    turnMode = GameEnums::AiTurnMode_EndOfDay;
+    m_pUnits = nullptr;
+    m_pEnemyUnits = nullptr;
+    if (useCOPower(m_pPlayer->getUnits(), m_pPlayer->getEnemyUnits()))
+    {
+    }
+    else
+    {
+        // end the turn for the player
+        turnMode = GameEnums::AiTurnMode_StartOfDay;
+        finishTurn();
+    }
+}
+
 bool HeavyAi::selectActionToPerform()
 {
+    Console::print("HeavyAi selecting action to be performed", Console::eDEBUG);
     float bestScore = std::numeric_limits<float>::min();
     qint32 index = -1;
     for (qint32 i = 0; i < m_ownUnits.size(); ++i)
@@ -330,78 +349,11 @@ void HeavyAi::scoreActions(UnitData & unit)
         {
             if (!forbiddenActions.contains(action))
             {
-                spGameAction pAction = nullptr;
-                Interpreter* pInterpreter = Interpreter::getInstance();
                 FunctionType type;
                 qint32 index = -1;
-                if (pInterpreter->exists(heavyAiObject, action))
-                {
-                    type = FunctionType::JavaScript;
-                }
-                else
-                {
-                    for (qint32 i = 0; i < m_scoreInfos.size(); ++i)
-                    {
-                        if (m_scoreInfos[i].m_actionId == action)
-                        {
-                            type = FunctionType::CPlusPlus;
-                            index = i;
-                            break;
-                        }
-                    }
-                }
-                for (const auto & target : moveTargets)
-                {
-                    QVector<QPoint> path = unit.m_pPfs->getPath(target.x(), target.y());
-                    qint32 costs = unit.m_pPfs->getCosts(path);
-                    bool mutate = true;
-                    QVector<qint32> stepPosition;
-                    while (mutate)
-                    {
-                        qint32 step = 0;
-                        pAction = new GameAction();
-                        pAction->setActionID(action);
-                        pAction->setMovepath(path, costs);
-                        pAction->setTarget(QPoint(unit.m_pUnit->getX(), unit.m_pUnit->getY()));
-                        if (pAction->canBePerformed())
-                        {
-                            float score = 0;
-                            mutate = mutateAction(pAction, type, index, step, stepPosition, score);
-                            if (score > m_minActionScore)
-                            {
-                                if (score > bestScore)
-                                {
-                                    bestScore = score;
-                                    qint32 i = 0;
-                                    bestScores.append(score);
-                                    bestActions.append(pAction);
-                                    while (i < bestScores.size())
-                                    {
-                                        if (bestScores[i] - m_actionScoreVariant <= score && score <= bestScores[i] + m_actionScoreVariant)
-                                        {
-                                            i++;
-                                        }
-                                        else
-                                        {
-                                            bestScores.removeAt(i);
-                                            bestActions.removeAt(i);
-                                        }
-                                    }
-                                }
-                                else if (bestScore - m_actionScoreVariant <= score && score <= bestScore + m_actionScoreVariant)
-                                {
-                                    bestScores.append(score);
-                                    bestActions.append(pAction);
-                                }
-                            }
-                        }
-                        // stop mutating?
-                        if (stepPosition.size() == 0)
-                        {
-                            break;
-                        }
-                    }
-                }
+                getFunctionType(action, type, index);
+                mutateActionForFields(unit, moveTargets, action, type, index,
+                                      bestScore, bestScores, bestActions);
             }
         }
         if (bestActions.size() > 0)
@@ -414,6 +366,65 @@ void HeavyAi::scoreActions(UnitData & unit)
         {
             unit.m_score = 0.0f;
             unit.m_action = nullptr;
+        }
+    }
+}
+
+void HeavyAi::mutateActionForFields(UnitData & unit, const QVector<QPoint> & moveTargets,
+                                    QString action, FunctionType type, qint32 index,
+                                    float & bestScore, QVector<float> & bestScores,
+                                    QVector<spGameAction> & bestActions)
+{
+    for (const auto & target : moveTargets)
+    {
+        QVector<QPoint> path = unit.m_pPfs->getPath(target.x(), target.y());
+        qint32 costs = unit.m_pPfs->getCosts(path);
+        bool mutate = true;
+        QVector<qint32> stepPosition;
+        while (mutate)
+        {
+            qint32 step = 0;
+            spGameAction pAction  = new GameAction();
+            pAction->setActionID(action);
+            pAction->setMovepath(path, costs);
+            pAction->setTarget(QPoint(unit.m_pUnit->getX(), unit.m_pUnit->getY()));
+            if (pAction->canBePerformed())
+            {
+                float score = 0;
+                mutate = mutateAction(pAction, type, index, step, stepPosition, score);
+                if (score > m_minActionScore)
+                {
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        qint32 i = 0;
+                        bestScores.append(score);
+                        bestActions.append(pAction);
+                        while (i < bestScores.size())
+                        {
+                            if (bestScores[i] - m_actionScoreVariant <= score && score <= bestScores[i] + m_actionScoreVariant)
+                            {
+                                i++;
+                            }
+                            else
+                            {
+                                bestScores.removeAt(i);
+                                bestActions.removeAt(i);
+                            }
+                        }
+                    }
+                    else if (bestScore - m_actionScoreVariant <= score && score <= bestScore + m_actionScoreVariant)
+                    {
+                        bestScores.append(score);
+                        bestActions.append(pAction);
+                    }
+                }
+            }
+            // stop mutating?
+            if (stepPosition.size() == 0)
+            {
+                break;
+            }
         }
     }
 }
@@ -516,4 +527,71 @@ float HeavyAi::scoreCapture(spGameAction action)
 float HeavyAi::scoreFire(spGameAction action)
 {
     return 0;
+}
+
+void HeavyAi::getFunctionType(QString action, FunctionType & type, qint32 & index)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    index = -1;
+    if (pInterpreter->exists(heavyAiObject, action))
+    {
+        type = FunctionType::JavaScript;
+    }
+    else
+    {
+        for (qint32 i = 0; i < m_scoreInfos.size(); ++i)
+        {
+            if (m_scoreInfos[i].m_actionId == action)
+            {
+                type = FunctionType::CPlusPlus;
+                index = i;
+                break;
+            }
+        }
+    }
+}
+
+void HeavyAi::scoreWait()
+{
+    Console::print("HeavyAi scoring wait actions if needed", Console::eDEBUG);
+    for (auto & unit : m_ownUnits)
+    {
+        if (!unit.m_pUnit->getHasMoved() &&
+            unit.m_action.get() == nullptr)
+        {
+            QVector<float> bestScores;
+            QVector<spGameAction> bestActions;
+            float bestScore = 0.0f;
+            QString action = ACTION_WAIT;
+            spGameAction pAction = nullptr;
+            FunctionType type;
+            qint32 index = -1;
+            getFunctionType(action, type, index);
+            qint32 movePoints = unit.m_pUnit->getMovementpoints(unit.m_pUnit->getMapPosition());
+            auto moveTargets = unit.m_pPfs->getAllNodePoints(movePoints);
+            mutateActionForFields(unit, moveTargets, action, type, index,
+                                  bestScore, bestScores, bestActions);
+            if (bestActions.size() > 0)
+            {
+                qint32 item = GlobalUtils::randInt(0, bestScores.size() - 1);
+                unit.m_score = bestScores[item];
+                unit.m_action = bestActions[item];
+            }
+            else
+            {
+                unit.m_score = 0.0f;
+                unit.m_action = nullptr;
+            }
+        }
+    }
+}
+
+void HeavyAi::scoreProduction()
+{
+
+}
+
+bool HeavyAi::buildUnits()
+{
+    return false;
 }

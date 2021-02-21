@@ -202,6 +202,20 @@ var Constructor = function()
         }
         return 0;
     };
+
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        if (unit.getBaseMaxRange() > 1)
+        {
+            return 2;
+        }
+        else if (unit.getUnitType() === GameEnums.UnitType_Ground)
+        {
+            return -1;
+        }
+        return 0;
+    };
+
     this.getCOArmy = function()
     {
         return "BM";

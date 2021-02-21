@@ -201,7 +201,10 @@ var Constructor = function()
                 break;
         }
     };
-
+    this.getAiCoUnitBonus = function(co, unit)
+    {
+        return 1;
+    };
     this.getCOArmy = function()
     {
         return "MA";
