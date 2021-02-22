@@ -58,7 +58,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
 endif()
 
-
 ###################################################################################
 # start oxygine stuff -> qoxygine
 ###################################################################################
