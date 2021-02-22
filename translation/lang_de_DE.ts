@@ -2203,27 +2203,27 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2564,17 +2564,17 @@ Host mods: </source>
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="68"/>
+        <location filename="../menue/optionmenue.cpp" line="67"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="77"/>
+        <location filename="../menue/optionmenue.cpp" line="76"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="89"/>
+        <location filename="../menue/optionmenue.cpp" line="88"/>
         <source>Gameplay &amp;amp; Keys</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2769,14 +2769,31 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="707"/>
+        <location filename="../menue/optionmenue.cpp" line="709"/>
         <source>Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="793"/>
-        <source>
-Version: </source>
+        <location filename="../menue/optionmenue.cpp" line="780"/>
+        <source>Compatible Mods:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="785"/>
+        <source>Incompatible Mods:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="790"/>
+        <source>Required Mods:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="795"/>
+        <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3019,7 +3036,7 @@ Version: </source>
     </message>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="44"/>
-        <location filename="../menue/optionmenue.cpp" line="56"/>
+        <location filename="../menue/optionmenue.cpp" line="55"/>
         <location filename="../menue/gamemenue.cpp" line="403"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
@@ -3035,29 +3052,29 @@ Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="700"/>
+        <location filename="../menue/optionmenue.cpp" line="702"/>
         <source>Advance Wars Game:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="702"/>
+        <location filename="../menue/optionmenue.cpp" line="704"/>
         <source>Unkown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="703"/>
+        <location filename="../menue/optionmenue.cpp" line="705"/>
         <location filename="../main.cpp" line="77"/>
         <location filename="../main.cpp" line="84"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="704"/>
+        <location filename="../menue/optionmenue.cpp" line="706"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="705"/>
+        <location filename="../menue/optionmenue.cpp" line="707"/>
         <source>Advance Wars DC</source>
         <translation type="unfinished"></translation>
     </message>

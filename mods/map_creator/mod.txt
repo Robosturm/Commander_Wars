@@ -1,3 +1,6 @@
 name=Commander Wars Map Creator Mod
 description=This mod removes the limitations for placing terrain and units for vanilla units and terrains. This mod is only meant to be used for creating custom maps. This mod is not meant to be used to play a map with. The results are mostlikely horrible. 
 version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=

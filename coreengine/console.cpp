@@ -234,8 +234,6 @@ void Console::update(const oxygine::UpdateState& us)
         outputSize = num + 30;
         qint32 i = 0;
         qint32 start = output.size() - num;
-        // todo clean up output
-
         if (start < 0)
         {
             start = 0;

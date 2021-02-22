@@ -1,3 +1,6 @@
 name=Advance Wars Dark Conflict Unit Mod 
 description=This mod changes the damage dealt by units and the units to that of Advance Wars Dark Conflict. Created by Robosturm
 version=1.0.0
+compatible_mods=
+incompatible_mods=mods/awds_unit;mods/cow_triangle_weapons
+required_mods=

@@ -446,9 +446,10 @@ FILE(GLOB_RECURSE xmls "resources/*.xml")
 add_custom_target(Resources SOURCES ${scripts} ${images} ${xmls})
 
 FILE(GLOB_RECURSE modScripts "mods/*.js")
+FILE(GLOB_RECURSE modDescs "mods/*.txt")
 FILE(GLOB_RECURSE modImages "resources/*.png")
 FILE(GLOB_RECURSE modXmls "resources/*.xml")
-add_custom_target(modscripts SOURCES ${modScripts} ${modImages} ${modXmls})
+add_custom_target(modscripts SOURCES ${modScripts} ${modImages} ${modXmls} ${modDescs})
 
 FILE(GLOB_RECURSE TemplateScripts "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})

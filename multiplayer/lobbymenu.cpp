@@ -214,7 +214,6 @@ void LobbyMenu::join(QString adress, QString password)
 {
     
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    // todo
     oxygine::getStage()->addChild(new Multiplayermenu(adress, password, false));
     oxygine::Actor::detach();
     
@@ -265,7 +264,7 @@ void LobbyMenu::updateGamesView()
         QString modString;
         for (const auto & mod : mods)
         {
-            modString.append(mod + "; ");
+            modString.append(Settings::getModName(mod) + "; ");
         }
         data.append(modString);
         char lockChar = 1;

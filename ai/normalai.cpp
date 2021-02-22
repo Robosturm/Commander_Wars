@@ -1877,37 +1877,11 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     qint32 infantryUnits = 0;
     qint32 indirectUnits = 0;
     qint32 directUnits = 0;
-    QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
     QVector<std::tuple<Unit*, Unit*>> transportTargets;
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getActionList().contains(ACTION_CAPTURE))
-        {
-            infantryUnits++;
-        }
-        else if (pUnit->hasWeapons())
-        {
-            if (pUnit->getBaseMaxRange() > 1)
-            {
-                indirectUnits++;
-            }
-            else
-            {
-                directUnits++;
-            }
-        }
-        if (pUnit->getLoadingPlace() > 0)
-        {
-            QVector<QVector3D> ret;
-            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
-            for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
-            {
-                transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
-            }
-        }
-    }
-
+    GetOwnUnitCounts(pUnits, pEnemyUnits, pEnemyBuildings,
+                     infantryUnits, indirectUnits, directUnits,
+                     transportTargets);
+    QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
         for (qint32 i = 0; i < pUnits->size(); i++)
@@ -1947,6 +1921,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             }
         }
     }
+
     float funds = m_pPlayer->getFunds();
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds / (static_cast<float>(productionBuildings));

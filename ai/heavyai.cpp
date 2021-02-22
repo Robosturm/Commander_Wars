@@ -5,7 +5,6 @@
 #include "coreengine/globalutils.h"
 
 #include "ai/heavyai.h"
-#include "ai/targetedunitpathfindingsystem.h"
 
 #include "game/player.h"
 #include "game/gameaction.h"
@@ -90,7 +89,7 @@ void HeavyAi::process()
         if (!selectActionToPerform())
         {
             // nothing we could do with our units try to move them or/and let them wait
-            scoreWait();
+            scoreActionWait();
             if (!selectActionToPerform())
             {
                 scoreProduction();
@@ -521,11 +520,13 @@ bool HeavyAi::mutateAction(spGameAction pAction, FunctionType type, qint32 funct
 
 float HeavyAi::scoreCapture(spGameAction action)
 {
+    // todo
     return 20;
 }
 
 float HeavyAi::scoreFire(spGameAction action)
 {
+    // todo
     return 0;
 }
 
@@ -551,7 +552,12 @@ void HeavyAi::getFunctionType(QString action, FunctionType & type, qint32 & inde
     }
 }
 
-void HeavyAi::scoreWait()
+void HeavyAi::getBasicFieldInputVector(spGameAction action, QVector<double> & data)
+{
+    // todo
+}
+
+void HeavyAi::scoreActionWait()
 {
     Console::print("HeavyAi scoring wait actions if needed", Console::eDEBUG);
     for (auto & unit : m_ownUnits)
@@ -569,8 +575,13 @@ void HeavyAi::scoreWait()
             getFunctionType(action, type, index);
             qint32 movePoints = unit.m_pUnit->getMovementpoints(unit.m_pUnit->getMapPosition());
             auto moveTargets = unit.m_pPfs->getAllNodePoints(movePoints);
+            QVector<QVector3D> targets;
+            getMoveTargets(unit, targets);
+            m_currentTargetefPfs = new TargetedUnitPathFindingSystem(unit.m_pUnit, targets, &m_MoveCostMap);
+            m_currentTargetefPfs->explore();
             mutateActionForFields(unit, moveTargets, action, type, index,
                                   bestScore, bestScores, bestActions);
+            m_currentTargetefPfs = nullptr;
             if (bestActions.size() > 0)
             {
                 qint32 item = GlobalUtils::randInt(0, bestScores.size() - 1);
@@ -586,12 +597,52 @@ void HeavyAi::scoreWait()
     }
 }
 
+void HeavyAi::getMoveTargets(UnitData & unit, QVector<QVector3D> & targets)
+{
+    // todo
+}
+
+float HeavyAi::scoreWait(spGameAction action)
+{
+    return 0.0f;
+    // todo
+}
+
 void HeavyAi::scoreProduction()
 {
+    // todo
+}
 
+void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit)
+{
+    // todo
+    QVector<double> in(BuildingEntry::MaxSize);
+    QStringList actionList = pUnit->getActionList();
+    if (pUnit->getBaseMaxRange() > 1)
+    {
+        in[BuildingEntry::BasicAttackRange] = 1;
+    }
+    else
+    {
+        in[BuildingEntry::BasicAttackRange] = -1;
+    }
+    if (actionList.contains(ACTION_CAPTURE))
+    {
+        in[BuildingEntry::CaptureUnit] = 1;
+    }
+    else
+    {
+        in[BuildingEntry::CaptureUnit] = 1;
+    }
+    float value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
+    value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
+    in[BuildingEntry::CoUnitValue] = value / CO::MAX_CO_UNIT_VALUE;
+    float maxMovementpoints = 10;
+    in[BuildingEntry::Movementpoints] = pUnit->getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY())) / maxMovementpoints;
 }
 
 bool HeavyAi::buildUnits()
 {
+    // todo
     return false;
 }

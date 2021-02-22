@@ -1839,6 +1839,40 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
     return multiplier;
 }
 
+void CoreAI::GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                              qint32 & infantryUnits, qint32 & indirectUnits,
+                              qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets)
+{
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        {
+            infantryUnits++;
+        }
+        else if (pUnit->hasWeapons())
+        {
+            if (pUnit->getBaseMaxRange() > 1)
+            {
+                indirectUnits++;
+            }
+            else
+            {
+                directUnits++;
+            }
+        }
+        if (pUnit->getLoadingPlace() > 0)
+        {
+            QVector<QVector3D> ret;
+            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret, true);
+            for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
+            {
+                transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
+            }
+        }
+    }
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();

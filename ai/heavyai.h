@@ -6,6 +6,7 @@
 
 #include "ai/coreai.h"
 #include "ai/influencefrontmap.h"
+#include "ai/targetedunitpathfindingsystem.h"
 #include "game/unitpathfindingsystem.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
@@ -14,6 +15,17 @@ class HeavyAi : public CoreAI
 {
     Q_OBJECT
     static const QString heavyAiObject;
+    /**
+     * @brief The BuildingEntry enum
+     */
+    enum BuildingEntry
+    {
+        BasicAttackRange,
+        CaptureUnit,
+        CoUnitValue,
+        Movementpoints,
+        MaxSize,
+    };
 public:
     ENUM_CLASS ThreadLevel
     {
@@ -70,7 +82,8 @@ private:
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, QVector<float> & bestScores,
                                QVector<spGameAction> & bestActions);
-    bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex, qint32 & step, QVector<qint32> & stepPosition, float & score);
+    bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex,
+                      qint32 & step, QVector<qint32> & stepPosition, float & score);
     /**
      * @brief performAction
      */
@@ -91,7 +104,25 @@ private:
      * @brief scoreWait
      * @param unit
      */
-    void scoreWait();
+    void scoreActionWait();
+    /**
+     * @brief getMoveTargets
+     * @param unit
+     * @param targets
+     */
+    void getMoveTargets(UnitData & unit, QVector<QVector3D> & targets);
+    /**
+     * @brief scoreWait
+     * @param action
+     * @return
+     */
+    float scoreWait(spGameAction action);
+    /**
+     * @brief getBasicFieldInputVector
+     * @param action
+     * @param data
+     */
+    void getBasicFieldInputVector(spGameAction action, QVector<double> & data);
     /**
      * @brief getFunctionType
      * @param action
@@ -103,6 +134,12 @@ private:
      * @brief scoreProduction
      */
     void scoreProduction();
+    /**
+     * @brief getProductionInputVector
+     * @param pBuilding
+     * @param pUnit
+     */
+    void getProductionInputVector(Building* pBuilding, Unit* pUnit);
     /**
      * @brief buildUnits
      * @return
@@ -128,9 +165,12 @@ private:
     QTimer m_timer;
     bool m_pause{false};
 
+    spTargetedUnitPathFindingSystem m_currentTargetefPfs;
+
     static const qint32 minSiloDamage;
     float m_minActionScore{0.1f};
     float m_actionScoreVariant{0.05f};
+
 };
 
 #endif // HEAVYAI_H

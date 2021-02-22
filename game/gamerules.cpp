@@ -316,7 +316,6 @@ void GameRules::startOfTurn(bool newDay)
         m_WeatherDays.removeAt(0);
         Console::print("New Day removing current weather. Currently predicting for " + QString::number(m_WeatherDays.size()), Console::eDEBUG);
     }
-    // todo maybe make this changeable some day
     const qint32 predictionSize = 4;
 
     qint32 dayInsert = -1;

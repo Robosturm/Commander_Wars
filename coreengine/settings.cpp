@@ -1792,3 +1792,59 @@ void Settings::setServerPort(const quint16 &ServerPort)
 {
     m_ServerPort = ServerPort;
 }
+
+QString Settings::getModName(QString mod)
+{
+    QString name;
+    QString description;
+    QString version;
+    QStringList compatibleMods;
+    QStringList incompatibleMods;
+    QStringList requiredMods;
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods);
+    return name;
+}
+
+void Settings::getModInfos(QString mod, QString & name, QString & description, QString & version,
+                           QStringList & compatibleMods, QStringList & incompatibleMods,
+                           QStringList & requiredMods)
+{
+    name = mod;
+    QFile file(mod + "/mod.txt");
+    if (file.exists())
+    {
+        file.open(QFile::ReadOnly);
+        QTextStream stream(&file);
+        while (!stream.atEnd())
+        {
+            QString line = stream.readLine();
+            if (line.startsWith("name="))
+            {
+                name = line.split("=")[1];
+            }
+            if (line.startsWith("description="))
+            {
+                description = line.split("=")[1];
+            }
+            if (line.startsWith("version="))
+            {
+                version = line.split("=")[1];
+            }
+            if (line.startsWith("compatible_mods="))
+            {
+                compatibleMods = line.split("=")[1].split(";");
+                compatibleMods.removeAll("");
+            }
+            if (line.startsWith("incompatible_mods="))
+            {
+                incompatibleMods = line.split("=")[1].split(";");
+                incompatibleMods.removeAll("");
+            }
+            if (line.startsWith("required_mods="))
+            {
+                requiredMods = line.split("=")[1].split(";");
+                requiredMods.removeAll("");
+            }
+        }
+    }
+}

@@ -543,13 +543,13 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 QString hostMods;
                 for (auto & mod : mods)
                 {
-                    hostMods += mod + ";";
+                    hostMods += Settings::getModName(mod) + "\n";
                 }
                 mods = Settings::getMods();
                 QString myMods;
                 for (auto & mod : mods)
                 {
-                    myMods += mod + ";";
+                    myMods += Settings::getModName(mod) + "\n";
                 }
                 pDialogMessageBox = new DialogMessageBox(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
             }

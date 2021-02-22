@@ -1,3 +1,6 @@
 name=Advance Wars Dual Strike Weather Mod
 description=This mod changes all Weather effects to Advance Wars DS.
 version=1.0.0
+compatible_mods=
+incompatible_mods=mods/awdc_weather
+required_mods=

@@ -37,12 +37,12 @@ public:
     ENUM_CLASS AISteps
     {
         moveUnits = 0,
-        moveToTargets,
-        loadUnits,
-        moveTransporters,
-        moveSupportUnits,
-        moveAway,
-        buildUnits,
+                moveToTargets,
+                loadUnits,
+                moveTransporters,
+                moveSupportUnits,
+                moveAway,
+                buildUnits,
     };
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
@@ -463,6 +463,17 @@ protected:
      * @return
      */
     float getAiCoUnitMultiplier(CO* pCO, Unit* pUnit);
+    /**
+     * @brief GetUnitCounts
+     * @param pUnits
+     * @param infantryUnits
+     * @param indirectUnits
+     * @param directUnits
+     * @param transportTargets
+     */
+    void GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                          qint32 & infantryUnits, qint32 & indirectUnits,
+                          qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

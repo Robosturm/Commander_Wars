@@ -1,3 +1,6 @@
 name=Advance Wars Darc Conflict Powergain Mod
 description=This mod changes the powermeter gain to that of Advance Wars Darc Conflict. It doesn't change anything else. Created  by Robosturm
 version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=

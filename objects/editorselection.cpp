@@ -186,7 +186,6 @@ EditorSelection::EditorSelection()
         }
         else
         {
-            // todo maybe to something about this here
             pAnim = pTerrainManager->getResAnim("plains+0");
             pSprite->setResAnim(pAnim);
         }

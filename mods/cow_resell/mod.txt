@@ -1,3 +1,6 @@
 name=Resell Units
 description=This mod allows you to resell units for half their price.
 version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=

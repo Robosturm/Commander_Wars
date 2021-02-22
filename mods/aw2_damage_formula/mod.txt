@@ -1,3 +1,6 @@
 name=Advance Wars 2 Damage Formula
 description=This mod changes the damage to an Advance Wars 2/DS style formula. Created by Robosturm
 version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=

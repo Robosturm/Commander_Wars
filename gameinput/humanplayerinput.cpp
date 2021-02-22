@@ -679,8 +679,6 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
         m_CurrentMenu->moveMouseToItem(0, 0);
         pMenu->setFocused(false);
         connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
-
-        // todo
         connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
     }
 }

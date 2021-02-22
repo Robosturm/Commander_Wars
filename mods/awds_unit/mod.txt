@@ -1,3 +1,6 @@
 name=Advance Wars Dual Strike Unit Mod
 description=This mod changes all unit damges and unit effects back to the Advance Wars Dual Strike game. Created by Robosturm
 version=1.0.0
+compatible_mods=
+incompatible_mods=mods/awdc_unit;mods/cow_triangle_weapons
+required_mods=

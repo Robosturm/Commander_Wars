@@ -1,3 +1,6 @@
 name=AW-Styled Icons
 description=Changes the unit status icons (Fuel, Ammo, etc.) and movement arrow to be styled like in Advance Wars.
 version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=

@@ -28,7 +28,6 @@
 #include "objects/base/textbox.h"
 #include "objects/base/label.h"
 #include "objects/base/timespinbox.h"
-#include "objects/base/checkbox.h"
 
 OptionMenue::OptionMenue()
 {
@@ -94,6 +93,7 @@ OptionMenue::OptionMenue()
         emit sigShowGameplayAndKeys();
     });
     connect(this, &OptionMenue::sigShowGameplayAndKeys, this, &OptionMenue::showGameplayAndKeys, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigUpdateModCheckboxes, this, &OptionMenue::updateModCheckboxes, Qt::QueuedConnection);
 
     QSize size(Settings::getWidth() - 20,
                Settings::getHeight() - static_cast<qint32>(20 + pButtonMods->getHeight()) * 2);
@@ -517,7 +517,7 @@ void OptionMenue::showSettings()
     {
         if (value.isEmpty())
         {
-           pTextbox->setCurrentText(Settings::getUsername());
+            pTextbox->setCurrentText(Settings::getUsername());
         }
         else
         {
@@ -673,6 +673,8 @@ void OptionMenue::showMods()
     
     m_pMods->clearContent();
     m_pModDescription->clearContent();
+    m_ModBoxes.clear();
+    m_ModCheckboxes.clear();
 
     m_pOptions->setVisible(false);
     m_pMods->setVisible(true);
@@ -718,31 +720,14 @@ void OptionMenue::showMods()
         QString folder = info.filePath();
         if (!folder.endsWith("."))
         {
-            QString name = folder;
+            QString name;
             QString description;
             QString version;
-            QFile file(folder + "/mod.txt");
-            if (file.exists())
-            {
-                file.open(QFile::ReadOnly);
-                QTextStream stream(&file);
-                while (!stream.atEnd())
-                {
-                    QString line = stream.readLine();
-                    if (line.startsWith("name="))
-                    {
-                        name = line.split("=")[1];
-                    }
-                    if (line.startsWith("description="))
-                    {
-                        description = line.split("=")[1];
-                    }
-                    if (line.startsWith("version="))
-                    {
-                        version = line.split("=")[1];
-                    }
-                }
-            }
+            QStringList compatibleMods;
+            QStringList incompatibleMods;
+            QStringList requiredMods;
+            Settings::getModInfos(folder, name, description, version,
+                                  compatibleMods, incompatibleMods, requiredMods);
             oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
             oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
             pBox->setResAnim(pAnim);
@@ -756,6 +741,7 @@ void OptionMenue::showMods()
             pBox->addChild(pTextfield);
             qint32 curWidth = pTextfield->getTextRect().getWidth() + 30;
             spCheckbox modCheck = new Checkbox();
+            m_ModCheckboxes.append(modCheck);
             modCheck->setPosition(10, 5);
             pBox->addChild(modCheck);
             curWidth += modCheck->getWidth() + 10;
@@ -774,6 +760,7 @@ void OptionMenue::showMods()
                     Settings::removeMod(folder);
                 }
                 restartNeeded = true;
+                emit sigUpdateModCheckboxes();
             });
             if (curWidth > width)
             {
@@ -790,7 +777,22 @@ void OptionMenue::showMods()
                     m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
                 }
                 pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
-                m_ModDescriptionText->setHtmlText(description + tr("\nVersion: ") + version);
+                QString modInfo = "\n\n" + tr("Compatible Mods:\n");
+                for (const auto & mod : compatibleMods)
+                {
+                    modInfo += Settings::getModName(mod) + "\n";
+                }
+                modInfo += "\n" + tr("Incompatible Mods:\n");
+                for (const auto & mod : incompatibleMods)
+                {
+                    modInfo += Settings::getModName(mod) + "\n";
+                }
+                modInfo += "\n" + tr("Required Mods:\n");
+                for (const auto & mod : requiredMods)
+                {
+                    modInfo += Settings::getModName(mod) + "\n";
+                }
+                m_ModDescriptionText->setHtmlText(description + modInfo + "\n\n" + tr("Version: ") + version);
                 m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
             });
             m_ModBoxes.append(pBox);
@@ -823,7 +825,7 @@ void OptionMenue::selectMods(qint32 item)
             removeList.append("mods/awdc_weather");
             removeList.append("mods/awdc_terrain");
             removeList.append("mods/awdc_flare");
-            removeList.append("map_creator");            
+            removeList.append("map_creator");
             removeList.append("coop_mod");
             break;
         }
@@ -880,4 +882,49 @@ void OptionMenue::restart()
 {
     Console::print("Forcing restart to reload required data changed in the options.", Console::eDEBUG);
     QCoreApplication::exit(1);
+}
+
+void OptionMenue::updateModCheckboxes()
+{
+    const auto mods = Settings::getActiveMods();
+    QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
+
+    qint32 i = 0;
+    for (const auto & info : infoList)
+    {
+        QString mod = info.filePath();
+        if (!mod.endsWith("."))
+        {
+            QString name;
+            QString description;
+            QString version;
+            QStringList compatibleMods;
+            QStringList incompatibleMods;
+            QStringList requiredMods;
+            Settings::getModInfos(mod, name, description, version,
+                                  compatibleMods, incompatibleMods, requiredMods);
+            bool enabled = true;
+            for (const auto & incompatibleMod : incompatibleMods)
+            {
+                if (mods.contains(incompatibleMod))
+                {
+                    enabled = false;
+                    break;
+                }
+            }
+            if (enabled)
+            {
+                for (const auto & requiredMod : requiredMods)
+                {
+                    if (!mods.contains(requiredMod))
+                    {
+                        enabled = false;
+                        break;
+                    }
+                }
+            }
+            m_ModCheckboxes[i]->setEnabled(enabled);
+            ++i;
+        }
+    }
 }
