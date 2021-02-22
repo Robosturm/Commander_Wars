@@ -426,7 +426,6 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/events/scripteventcentermap.cpp
         ingamescriptsupport/events/scripteventplaysound.cpp
 
-
         # wiki stuff
         wiki/terraininfo.cpp
         wiki/unitinfo.cpp
@@ -438,7 +437,6 @@ set(${PROJECT_NAME}_SRCS
         # spriting support
         spritingsupport/spritecreator.cpp
 )
-
 
 FILE(GLOB_RECURSE scripts "resources/*.js")
 FILE(GLOB_RECURSE images "resources/*.png")
@@ -500,7 +498,6 @@ endif(WIN32)
 
 
 # link libraries
-
 set(QT_LIBRARIES
     Qt5::Core
     Qt5::Qml
