@@ -2083,7 +2083,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <location filename="../game/ui/ingameinfobar.cpp" line="535"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="541"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="545"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="794"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="793"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2119,13 +2119,13 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="611"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="833"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="832"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../game/ui/ingameinfobar.cpp" line="616"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="827"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2155,12 +2155,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="811"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="810"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="824"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="823"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>

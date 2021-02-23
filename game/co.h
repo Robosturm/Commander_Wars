@@ -51,7 +51,7 @@ public:
      */
     virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief writeCoStyleToStream
@@ -81,9 +81,20 @@ public:
      */
     oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const;
 
+
 signals:
 
 public slots:
+    /**
+     * @brief getCoRangeEnabled
+     * @return
+     */
+    bool getCoRangeEnabled() const;
+    /**
+     * @brief setCoRangeEnabled
+     * @param coRangeEnabled
+     */
+    void setCoRangeEnabled(bool coRangeEnabled);
     /**
      * @brief getPowerUsed
      * @return
@@ -627,6 +638,7 @@ private:
     ScriptVariables m_Variables;
     qint32 m_powerUsed{0};
     bool m_powerCharging{false};
+    bool m_coRangeEnabled{true};
 
     QStringList m_perkList;
 

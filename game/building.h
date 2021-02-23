@@ -9,6 +9,8 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
+#include "objects/base/tooltip.h"
+
 class QmlVectorPoint;
 
 class Player;
@@ -18,7 +20,7 @@ class Terrain;
 class Building;
 typedef oxygine::intrusive_ptr<Building> spBuilding;
 
-class Building : public QObject, public oxygine::Sprite, public FileSerializable
+class Building : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:

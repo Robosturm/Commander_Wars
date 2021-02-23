@@ -119,7 +119,9 @@ EditorSelection::EditorSelection()
     QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
     for (const auto& terrainId : sortedTerrainIDs)
     {
-        m_Terrains.append(Terrain::createTerrain(terrainId, -10, -10, ""));
+        spTerrain pTerrain = Terrain::createTerrain(terrainId, -10, -10, "");
+        pTerrain->setTooltipText(pTerrain->getTerrainName());
+        m_Terrains.append(pTerrain);
         m_Terrains[m_Terrains.size() - 1]->loadSprites();
         m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
     }
@@ -136,6 +138,7 @@ EditorSelection::EditorSelection()
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
         spBuilding building = new Building(pBuildingSpriteManager->getID(i));
+        building->setTooltipText(building->getName());
         qint32 width = building->getBuildingWidth();
         qint32 heigth = building->getBuildingHeigth();
         building->setScaleX(1.0f / static_cast<float>(width));
@@ -171,6 +174,7 @@ EditorSelection::EditorSelection()
     for (const auto& unitId : sortedUnits)
     {
         spUnit unit = new Unit(unitId, m_Players.at(1)->getOwner(), false);
+        unit->setTooltipText(unit->getName());
         m_Units.append(unit);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         QString movementType = unit->getMovementType();

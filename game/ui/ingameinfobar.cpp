@@ -701,8 +701,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
                     Unit* pTransportUnit = pUnit->getLoadedUnit(i);
                     if (pTransportUnit != nullptr)
                     {
-                        GameManager* pGameManager = GameManager::getInstance();
-                        spUnit pCopypTransportUnit = dynamic_cast<Unit*>(pGameManager->getIcon(pTransportUnit->getUnitID()).get());
+                        spUnit pCopypTransportUnit = new Unit(pTransportUnit->getUnitID(), pTransportUnit->getOwner(), false);
                         pCopypTransportUnit->setHasMoved(pTransportUnit->getHasMoved());
                         pCopypTransportUnit->setHp(pTransportUnit->getHp());
                         pCopypTransportUnit->setAmmo1(pTransportUnit->getAmmo1());

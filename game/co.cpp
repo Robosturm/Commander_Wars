@@ -739,6 +739,7 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
 void CO::activatePower()
 {
     ++m_powerUsed;
+    m_coRangeEnabled = false;
     m_PowerMode = GameEnums::PowerMode_Power;
     powerFilled -= powerStars;
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -761,6 +762,7 @@ void CO::activatePower()
 void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 {
     ++m_powerUsed;
+    m_coRangeEnabled = false;
     m_PowerMode = powerMode;
     powerFilled = 0;
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -1038,7 +1040,7 @@ QStringList CO::getActionModifierList(Unit* pUnit)
 qint32 CO::getCORange()
 {    
     qint32 ret = 0;
-    if (m_PowerMode == GameEnums::PowerMode_Off)
+    if (m_coRangeEnabled)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getCOUnitRange";
@@ -1522,6 +1524,7 @@ void CO::serializeObject(QDataStream& pStream) const
         pStream << perk;
     }
     writeCoStyleToStream(pStream);
+    pStream << m_coRangeEnabled;
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -1583,6 +1586,10 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     if (version > 4)
     {
         readCoStyleFromStream(pStream);
+    }
+    if (version > 5)
+    {
+        pStream >> m_coRangeEnabled;
     }
     if (!fast)
     {
@@ -1735,6 +1742,16 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pCOAnim = nullptr;
+}
+
+bool CO::getCoRangeEnabled() const
+{
+    return m_coRangeEnabled;
+}
+
+void CO::setCoRangeEnabled(bool coRangeEnabled)
+{
+    m_coRangeEnabled = coRangeEnabled;
 }
 
 oxygine::ResAnim* CO::getResAnim(QString id, oxygine::error_policy ep) const

@@ -14,13 +14,15 @@
 #include "game/unit.h"
 #include "game/building.h"
 
+#include "objects/base/tooltip.h"
+
 class Player;
 class TerrainFindingSystem;
 
 class Terrain;
 typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
-class Terrain : public QObject, public oxygine::Sprite, public FileSerializable
+class Terrain : public Tooltip, public FileSerializable
 {
     Q_OBJECT
 public:

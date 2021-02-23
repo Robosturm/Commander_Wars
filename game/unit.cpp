@@ -32,8 +32,7 @@ Unit::Unit()
 }
 
 Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
-    : QObject(),
-      m_UnitID(unitID),
+    : m_UnitID(unitID),
       m_pOwner(pOwner)
 {
     setHeight(GameMap::getImageSize());

@@ -21,7 +21,6 @@ Tooltip::Tooltip()
     });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        emit sigStopTooltip();
         emit sigHideTooltip();
     });
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -51,7 +50,7 @@ void Tooltip::restartTooltiptimer()
     {
         m_TooltipTimer.start(std::chrono::milliseconds(1000));
     }
-    emit sigHideTooltip();
+    removeTooltip();
 }
 
 void Tooltip::stopTooltiptimer()
@@ -146,13 +145,18 @@ void Tooltip::disableTooltip()
 
 void Tooltip::hideTooltip()
 {    
+    stopTooltiptimer();
+    removeTooltip();
+}
+
+void Tooltip::removeTooltip()
+{
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();
         m_Tooltip = nullptr;
-        stopTooltiptimer();
     }
     pApp->continueRendering();
 }

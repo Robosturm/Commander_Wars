@@ -32,6 +32,7 @@ public slots:
     void enableTooltip();
 protected:
     virtual void looseFocusInternal() override;
+    void removeTooltip();
 protected:
     oxygine::spActor m_Tooltip;
 private:

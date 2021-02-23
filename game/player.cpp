@@ -1163,11 +1163,13 @@ void Player::startOfTurn()
     if (playerCOs[0].get() != nullptr)
     {
         playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
+        playerCOs[0]->setCoRangeEnabled(true);
         playerCOs[0]->startOfTurn();
     }
     if (playerCOs[1].get() != nullptr)
     {
         playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
+        playerCOs[1]->setCoRangeEnabled(true);
         playerCOs[1]->startOfTurn();
     }
 }
