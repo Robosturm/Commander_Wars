@@ -40,6 +40,11 @@ public:
      * @param width
      */
     virtual void setWidth(float width) override;
+    /**
+     * @brief setHeigth
+     * @param height
+     */
+    virtual void setHeight(float height) override;
 public slots:
     virtual void focusedLost() override {}
 protected:

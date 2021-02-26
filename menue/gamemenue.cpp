@@ -684,9 +684,9 @@ void GameMenue::performAction(spGameAction pGameAction)
             }
 
             pCurrentPlayer->getBaseGameInput()->centerCameraOnAction(pGameAction.get());
-            m_CurrentActionUnit = pMoveUnit;
             pGameAction->perform();
             // clean up the action
+            m_pCurrentAction = pGameAction;
             pGameAction = nullptr;
             skipAnimations();
             if (!pMap->anyPlayerAlive())
@@ -986,18 +986,22 @@ void GameMenue::autoScroll()
 
 void GameMenue::finishActionPerformed()
 {
-    
-    if (m_CurrentActionUnit.get() != nullptr)
-    {
-        m_CurrentActionUnit->postAction();
-        m_CurrentActionUnit = nullptr;
-    }
+    Console::print("Doing post action update", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
+    if (m_pCurrentAction.get() != nullptr)
+    {
+        Unit* pUnit = m_pCurrentAction->getTargetUnit();
+        if (pUnit != nullptr)
+        {
+            pUnit->postAction(m_pCurrentAction);
+        }
+        pMap->getCurrentPlayer()->postAction(m_pCurrentAction.get());
+        m_pCurrentAction = nullptr;
+    }
     pMap->killDeadUnits();
-    pMap->getGameScript()->actionDone();
+    pMap->getGameScript()->actionDone(m_pCurrentAction);
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
-    
 }
 
 void GameMenue::actionPerformed()

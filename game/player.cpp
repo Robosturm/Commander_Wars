@@ -690,6 +690,23 @@ qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
     return reduction;
 }
 
+void Player::postAction(GameAction* pAction)
+{
+    if (!isDefeated)
+    {
+        CO* pCO = getCO(0);
+        if (pCO != nullptr)
+        {
+            pCO->postAction(pAction);
+        }
+        pCO = getCO(1);
+        if (pCO != nullptr)
+        {
+            pCO->postAction(pAction);
+        }
+    }
+}
+
 qint32 Player::calcIncome(float modifier)
 {
     qint32 ret = 0;

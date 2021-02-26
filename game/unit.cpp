@@ -1107,13 +1107,15 @@ bool Unit::isTransporter()
     return false;
 }
 
-void Unit::postAction()
+void Unit::postAction(spGameAction pAction)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postAction";
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
+    QJSValue obj2 = pInterpreter->newQObject(pAction.get());
+    args1 << obj2;
     pInterpreter->doFunction(m_UnitID, function1, args1);
 }
 

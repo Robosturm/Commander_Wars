@@ -180,7 +180,7 @@ var UNIT =
         // gotAttacked if true we're defending else we're attacking
         // this function gets called twice for a unit for one attack.
     },
-    postAction : function(unit)
+    postAction : function(unit, action)
     {
     },
     getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender)

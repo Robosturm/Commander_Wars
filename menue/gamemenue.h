@@ -290,7 +290,7 @@ protected:
     QTimer m_UpdateTimer;
     QTimer m_AutoSavingTimer;
     spGameAction m_pStoredAction{nullptr};
-    spUnit m_CurrentActionUnit{nullptr};
+    spGameAction m_pCurrentAction{nullptr};
 
     qint64 m_syncCounter{0};
     qint32 m_autoSaveCounter{0};

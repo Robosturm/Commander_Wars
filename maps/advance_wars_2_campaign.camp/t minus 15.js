@@ -67,7 +67,7 @@ var Constructor = function()
         map.getPlayer(1).setBuildList(bhList);
         map.getPlayer(2).getBaseGameInput().setEnableNeutralTerrainAttack(false);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var town1 = map.getTerrain(7, 7).getBuilding();
         var town2 = map.getTerrain(7, 10).getBuilding();

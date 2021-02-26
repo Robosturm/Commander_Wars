@@ -76,7 +76,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var variables = map.getGameScript().getVariables();
         var t_copter = map.getTerrain(8, 8).getUnit();

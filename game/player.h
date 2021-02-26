@@ -104,6 +104,11 @@ signals:
 
 public slots:
     /**
+     * @brief postAction
+     * @param pAction
+     */
+    void postAction(GameAction* pAction);
+    /**
      * @brief setPlayerArmy
      * @param value
      */

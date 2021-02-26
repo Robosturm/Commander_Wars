@@ -8,6 +8,8 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
+#include "game/gameaction.h"
+
 class GameScript;
 typedef oxygine::intrusive_ptr<GameScript> spGameScript;
 
@@ -56,7 +58,7 @@ public:
     /**
      * @brief actionDone call function after an action has been finished
      */
-    void actionDone();
+    void actionDone(spGameAction pAction);
     /**
      * @brief turnStart called on the start of each player
      * @param turn current day

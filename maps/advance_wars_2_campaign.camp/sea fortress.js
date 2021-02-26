@@ -71,7 +71,7 @@ var Constructor = function()
         map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
         // here we decide how you can win the game
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var miniCannon1 = map.getTerrain(20, 1).getBuilding();
         var miniCannon2 = map.getTerrain(20, 8).getBuilding();

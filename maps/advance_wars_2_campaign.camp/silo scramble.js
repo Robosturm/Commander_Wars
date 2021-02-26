@@ -52,7 +52,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
 
     };

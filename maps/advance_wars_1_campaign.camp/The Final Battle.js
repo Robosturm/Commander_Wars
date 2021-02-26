@@ -219,7 +219,7 @@ var Constructor = function()
         }
 
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
     };
 

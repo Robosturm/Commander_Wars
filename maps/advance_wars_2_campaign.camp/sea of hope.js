@@ -64,7 +64,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var labor = map.getTerrain(7, 2).getBuilding();
         if (labor.getOwner().getPlayerID() === 0)

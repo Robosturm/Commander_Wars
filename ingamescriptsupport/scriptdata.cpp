@@ -206,7 +206,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "    }; // " + turnStart + "\n";
 
     // action conditions
-    rStream << "    this.actionDone = function() { // " + actionConditions + "\n";
+    rStream << "    this.actionDone = function(action) { // " + actionConditions + "\n";
     rStream << "    // precondition\n";
     rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
     rStream << "        var " << campaignVariables << ";\n";

@@ -10,6 +10,7 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 #include "game/GameEnums.h"
+#include "game/gameaction.h"
 
 #include "objects/base/tooltip.h"
 
@@ -624,7 +625,7 @@ public slots:
      * @brief postAction
      * @param pAction
      */
-    void postAction();
+    void postAction(spGameAction pAction);
     /**
      * @brief getBonusOffensive
      * @param position

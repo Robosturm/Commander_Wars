@@ -155,7 +155,7 @@ var Constructor = function()
         map.getPlayer(3).getBaseGameInput().setEnableNeutralTerrainAttack(false);
     };    
 
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var blackCannon1 = map.getTerrain(10, 1).getBuilding();
         var blackCannon2 = map.getTerrain(14, 1).getBuilding();

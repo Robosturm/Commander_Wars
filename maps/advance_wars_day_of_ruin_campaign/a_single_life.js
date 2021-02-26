@@ -168,7 +168,7 @@ var Constructor = function() { // scriptStart
             variable2.writeDataBool(true);
         }
     }; // turnStart
-    this.actionDone = function() { // actionConditions
+    this.actionDone = function(action) { // actionConditions
     // precondition
         var variables = map.getGameScript().getVariables();
         var campaignVariables;

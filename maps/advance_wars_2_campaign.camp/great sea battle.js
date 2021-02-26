@@ -150,7 +150,7 @@ var Constructor = function()
         map.getPlayer(3).setBuildList(bhList);
         map.getPlayer(3).getBaseGameInput().setEnableNeutralTerrainAttack(false);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         // check if the buildings changed there owner to a certain player and call a dialog on it
         var weld = map.getTerrain(36, 4);

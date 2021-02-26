@@ -129,13 +129,16 @@ void GameScript::gameStart()
     }
 }
 
-void GameScript::actionDone()
+void GameScript::actionDone(spGameAction pAction)
 {
     if (loaded)
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
-        pInterpreter->doFunction(scriptName, function1);
+        QJSValueList args;
+        QJSValue obj2 = pInterpreter->newQObject(pAction.get());
+        args << obj2;
+        pInterpreter->doFunction(scriptName, function1, args);
     }
 }
 

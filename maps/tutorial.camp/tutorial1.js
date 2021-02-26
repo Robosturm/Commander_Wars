@@ -26,7 +26,7 @@ var Constructor = function()
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         // check if we spawned the inital tanks after lash lost her first infantry
         if (map.getPlayer(1).getUnitCount() === 1)

@@ -76,7 +76,7 @@ var Constructor = function()
         var volcan = map.getTerrain(10, 5).getBuilding();
         volcan.setFireCount(-1);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
     };
 

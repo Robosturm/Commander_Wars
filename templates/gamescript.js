@@ -15,7 +15,7 @@ var Constructor = function()
     {
         // called before a game starts
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         // function called after all animations are finished
     };

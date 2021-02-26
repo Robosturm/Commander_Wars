@@ -22,12 +22,17 @@ Label::Label(qint32 width)
 }
 
 void Label::setWidth(float width)
-{
-    
+{    
     _clipRect->setWidth(width);
     _textField->setWidth(width);
-    oxygine::Sprite::setWidth(width);
-    
+    oxygine::Sprite::setWidth(width);    
+}
+
+void Label::setHeight(float height)
+{
+    _clipRect->setHeight(height);
+    _textField->setHeight(height);
+    oxygine::Sprite::setHeight(height);
 }
 
 void Label::setText(QString str)

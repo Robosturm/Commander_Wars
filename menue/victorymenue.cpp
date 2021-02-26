@@ -375,10 +375,10 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                     }
                     m_VictoryPanel->addItem(pCOSprite);
 
-                    oxygine::spTextField winLooseText = new oxygine::TextField();
+                    spLabel winLooseText = new Label(sentenceWidth - 110);
                     style.multiline = true;
                     winLooseText->setStyle(style48);
-                    winLooseText->setSize(sentenceWidth - 110, pWinLooseSprite->getScaledHeight());
+                    winLooseText->setHeight(pWinLooseSprite->getScaledHeight());
                     winLooseText->setPosition(48 * scale + 10, 1 + y);
                     winLooseText->setHtmlText(sentence);
                     m_VictoryPanel->addItem(winLooseText);

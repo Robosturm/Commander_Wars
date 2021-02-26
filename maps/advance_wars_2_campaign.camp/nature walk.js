@@ -53,7 +53,7 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var unit = map.getTerrain(7, 2).getUnit();
         if (unit !== null && unit.getOwner().getPlayerID() === 0)

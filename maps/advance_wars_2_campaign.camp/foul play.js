@@ -57,7 +57,7 @@ var Constructor = function()
         map.getPlayer(1).setBuildList(bhList);
         map.getPlayer(1).getBaseGameInput().setEnableNeutralTerrainAttack(false);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var miniCannon1 = map.getTerrain(2, 5).getBuilding();
         var miniCannon2 = map.getTerrain(4, 5).getBuilding();

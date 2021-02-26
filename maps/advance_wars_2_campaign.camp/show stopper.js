@@ -66,7 +66,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var variables = map.getGameScript().getVariables();
         var mapTown = map.getTerrain(6, 8).getBuilding();

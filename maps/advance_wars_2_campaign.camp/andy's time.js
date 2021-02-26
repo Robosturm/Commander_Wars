@@ -96,7 +96,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var variables = map.getGameScript().getVariables();
         // check if the buildings changed there owner to a certain player and call a dialog on it

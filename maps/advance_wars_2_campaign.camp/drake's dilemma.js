@@ -78,7 +78,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(2).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var blackCannon1 = map.getTerrain(2, 23).getBuilding();
         var blackCannon2 = map.getTerrain(6, 23).getBuilding();

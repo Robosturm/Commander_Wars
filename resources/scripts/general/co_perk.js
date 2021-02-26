@@ -238,6 +238,11 @@ var CO_PERK =
         // called at the start of the turn use it to do cool co stuff like caulder's healing :)
     },
 
+    postAction: function(co, action)
+    {
+        // called after the action was performed
+    },
+
     // Perk - Intel
     getDescription : function()
     {

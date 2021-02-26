@@ -18,6 +18,7 @@ class Player;
 class Building;
 class GameAnimationDialog;
 class GameAnimationPower;
+class GameAction;
 
 class CO;
 typedef oxygine::intrusive_ptr<CO> spCO;
@@ -605,7 +606,11 @@ public slots:
      * @return
      */
     QString getSuperPowerName();
-
+    /**
+     * @brief postAction
+     * @param pAction
+     */
+    void postAction(GameAction* pAction);
     /**
      * @brief setCoStyleFromUserdata
      */
@@ -616,7 +621,10 @@ public slots:
      * @param style index in the related predefined styles
      */
     void setCoStyle(QString file, qint32 style);
-
+    /**
+     * @brief postAction
+     * @param pAction
+     */
     /**
      * @brief getActiveCoStyle
      * @param coid

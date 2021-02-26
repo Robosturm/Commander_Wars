@@ -52,7 +52,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var town1 = map.getTerrain(21, 0).getBuilding();
         var town2 = map.getTerrain(22, 0).getBuilding();

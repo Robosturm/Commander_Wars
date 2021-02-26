@@ -19,7 +19,7 @@ var BASEGAMESCRIPT =
     {
         // called before a game starts
     },
-    actionDone : function()
+    actionDone : function(action)
     {
         // function called after all animations are finished
     },

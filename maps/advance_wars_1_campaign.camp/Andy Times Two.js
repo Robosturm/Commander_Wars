@@ -69,7 +69,7 @@ var Constructor = function()
         map.getPlayer(1).setBuildList(list);
         map.getPlayer(2).setBuildList(list);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
 
     };

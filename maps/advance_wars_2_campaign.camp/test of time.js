@@ -75,7 +75,7 @@ var Constructor = function()
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
         turnLimit.setRuleValue(7, 0);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var variables = map.getGameScript().getVariables();
         // check if the buildings changed there owner to a certain player and call a dialog on it

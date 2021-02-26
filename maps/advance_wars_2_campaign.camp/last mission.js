@@ -408,7 +408,7 @@ var Constructor = function()
         map.getPlayer(3).getBaseGameInput().setEnableNeutralTerrainAttack(false);
     };
 
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var deathRay = map.getTerrain(16, 5).getBuilding();
         if ((deathRay === null || deathRay.getBuildingID() === "ZBLACK_BUILDING_DESTROYED"))

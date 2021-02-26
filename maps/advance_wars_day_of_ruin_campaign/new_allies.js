@@ -129,7 +129,7 @@ var Constructor = function() { // scriptStart
             // Dialog
         } // Start Of Turn End
     }; // turnStart
-    this.actionDone = function() { // actionConditions
+    this.actionDone = function(action) { // actionConditions
     // precondition
         var variables = map.getGameScript().getVariables();
         var campaignVariables;

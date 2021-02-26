@@ -106,7 +106,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var unit1 = map.getTerrain(10, 9).getUnit();
         var unit2 = map.getTerrain(11, 9).getUnit();

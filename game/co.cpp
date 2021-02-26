@@ -9,6 +9,7 @@
 #include "game/gameanimationfactory.h"
 #include "game/gameanimationdialog.h"
 #include "game/gameanimationpower.h"
+#include "game/gameaction.h"
 
 #include "menue/gamemenue.h"
 
@@ -1173,6 +1174,21 @@ bool CO::getWeatherImmune()
     return false;
 }
 
+void CO::postAction(GameAction* pAction)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "postAction";
+    QJSValueList args1;
+    QJSValue obj3 = pInterpreter->newQObject(this);
+    args1 << obj3;
+    QJSValue obj2 = pInterpreter->newQObject(pAction);
+    args1 << obj2;
+    for (const auto & perk : m_perkList)
+    {
+        pInterpreter->doFunction(perk, function1, args1);
+    }
+}
+
 GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
                                        qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
                                        GameEnums::AiTurnMode turnMode)
@@ -1488,6 +1504,7 @@ QString CO::getSuperPowerName()
     }
     return ret;
 }
+
 
 void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {

@@ -67,7 +67,7 @@ var Constructor = function()
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
-    this.actionDone = function()
+    this.actionDone = function(action)
     {
         var variables = map.getGameScript().getVariables();
         var t_copter = map.getTerrain(12, 4).getUnit();
