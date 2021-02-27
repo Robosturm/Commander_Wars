@@ -140,6 +140,19 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
+    oxygine::spTextField testField = new oxygine::TextField();
+    testField->setHtmlText(text);
+    qint32 textSize = testField->getTextRect().getWidth();
+    if (textSize > Settings::getWidth() - 20)
+    {
+        // select smaller font size in case of small screen or large name
+        headline = FontManager::getMainFont48();
+        headline.color = FontManager::getFontColor();
+        headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        headline.multiline = false;
+    }
+
     qint32 xPos = 10;
     for (qint32 i = 0; i < text.size(); i++)
     {

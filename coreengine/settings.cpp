@@ -1801,16 +1801,31 @@ QString Settings::getModName(QString mod)
     QStringList compatibleMods;
     QStringList incompatibleMods;
     QStringList requiredMods;
-    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods);
+    bool isCosmetic = false;
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic);
     return name;
+}
+
+bool Settings::getIsCosmetic(QString mod)
+{
+    QString name;
+    QString description;
+    QString version;
+    QStringList compatibleMods;
+    QStringList incompatibleMods;
+    QStringList requiredMods;
+    bool isCosmetic = false;
+    getModInfos(mod, name, description, version, compatibleMods, incompatibleMods, requiredMods, isCosmetic);
+    return isCosmetic;
 }
 
 void Settings::getModInfos(QString mod, QString & name, QString & description, QString & version,
                            QStringList & compatibleMods, QStringList & incompatibleMods,
-                           QStringList & requiredMods)
+                           QStringList & requiredMods, bool & isCosmetic)
 {
     name = mod;
     QFile file(mod + "/mod.txt");
+    isCosmetic = false;
     if (file.exists())
     {
         file.open(QFile::ReadOnly);
@@ -1844,6 +1859,15 @@ void Settings::getModInfos(QString mod, QString & name, QString & description, Q
             {
                 requiredMods = line.split("=")[1].split(";");
                 requiredMods.removeAll("");
+            }
+            if (line.startsWith("required_mods="))
+            {
+                requiredMods = line.split("=")[1].split(";");
+                requiredMods.removeAll("");
+            }
+            if (line.startsWith("cosmetic=true"))
+            {
+                isCosmetic = true;
             }
         }
     }

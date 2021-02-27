@@ -4,3 +4,4 @@ version=1.0.0
 compatible_mods=
 incompatible_mods=mods/awds_weather
 required_mods=
+cosmetic=false

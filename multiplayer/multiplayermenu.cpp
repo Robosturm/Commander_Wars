@@ -238,6 +238,9 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     stream << Mainapp::getGameVersion();
     QStringList mods = Settings::getMods();
     QStringList versions = Settings::getActiveModVersions();
+    bool filter = m_pMapSelectionView->getCurrentMap()->getGameRules()->getCosmeticModsAllowed();
+    filterCosmeticMods(mods, versions, filter);
+    stream << filter;
     stream << static_cast<qint32>(mods.size());
     for (qint32 i = 0; i < mods.size(); i++)
     {
@@ -269,6 +272,26 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
     }
     // send map data to client
     m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+}
+
+void Multiplayermenu::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
+{
+    if (filter)
+    {
+        qint32 i = 0;
+        while (i < mods.length())
+        {
+            if (Settings::getIsCosmetic(mods[i]))
+            {
+                mods.removeAt(i);
+                versions.removeAt(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
 }
 
 void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -462,6 +485,8 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
     {
         QString version;
         stream >> version;
+        bool filter = false;
+        stream >> filter;
         qint32 size = 0;
         stream >> size;
         QStringList mods;
@@ -475,7 +500,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             stream >> version;
             versions.append(version);
         }
-        bool sameMods = checkMods(mods, versions);
+        bool sameMods = checkMods(mods, versions, filter);
         bool differentHash = false;
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
         if (hostRuntime != Filesupport::getRuntimeHash())
@@ -561,10 +586,11 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
     }
 }
 
-bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions)
+bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & versions, bool filter)
 {
     QStringList myVersions = Settings::getActiveModVersions();
     QStringList myMods = Settings::getMods();
+    filterCosmeticMods(myVersions, myMods, filter);
     bool sameMods = true;
     if (myMods.size() != mods.size())
     {

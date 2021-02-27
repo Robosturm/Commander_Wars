@@ -827,6 +827,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getCosmeticModsAllowed() const
+{
+    return m_cosmeticModsAllowed;
+}
+
+void GameRules::setCosmeticModsAllowed(bool value)
+{
+    m_cosmeticModsAllowed = value;
+}
+
 bool GameRules::getSingleCo() const
 {
     return m_singleCo;
@@ -1044,6 +1054,7 @@ void GameRules::serializeObject(QDataStream& pStream) const
     pStream << m_description;
     m_password.serializeObject(pStream);
     pStream << m_singleCo;
+    pStream << m_cosmeticModsAllowed;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -1298,5 +1309,12 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> m_description;
         m_password.deserializeObject(pStream);
     }
-    pStream >> m_singleCo;
+    if (version > 17)
+    {
+        pStream >> m_singleCo;
+    }
+    if (version > 18)
+    {
+        pStream << m_cosmeticModsAllowed;
+    }
 }

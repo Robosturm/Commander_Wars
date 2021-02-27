@@ -174,6 +174,19 @@ void RuleSelection::showRuleSelection()
         connect(pPasswordbox.get(), &Passwordbox::sigTextChanged, pMap->getGameRules(), &GameRules::setPassword, Qt::QueuedConnection);
         addChild(pPasswordbox);
         y += 40;
+
+        textField = new Label(textWidth - 40);
+        textField->setStyle(style);
+        textField->setHtmlText(tr("Cosmetic Mods: "));
+        textField->setPosition(30, y);
+        addChild(textField);
+        spCheckbox pCheckbox = new Checkbox();
+        pCheckbox->setPosition(textWidth, y);
+        pCheckbox->setChecked(false);
+        pCheckbox->setTooltipText(tr("If checked cosmetic mods can be different on host and client site.\nWarning this may lead to asynchron games or crashes in case one of the mods is not a pure cosmetic mod."));
+        connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCosmeticModsAllowed, Qt::QueuedConnection);
+        addChild(pCheckbox);
+        y += 40;
     }
 
     spLabel textField = new Label(800);

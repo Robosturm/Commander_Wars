@@ -269,7 +269,6 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         m_PlayerSelectPanel->addItem(pTextfield);
     }
 
-    showGraph(GraphModes::Funds);
     // victory score
     qint32 winnerTeam = pMap->getWinnerTeam();
     if (winnerTeam >= 0)
@@ -419,7 +418,10 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
         addShopMoney();
     }
-
+    else
+    {
+        showGraph(GraphModes::Funds);
+    }
 
     m_pGraphBackground->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
     {
@@ -463,6 +465,7 @@ void VictoryMenue::addShopMoney()
     }
     if (highestScore > 0)
     {
+        Console::print("Adding points to userdata.", Console::eDEBUG);
         Userdata* pUserdata = Userdata::getInstance();
         spDialogValueCounter pDialogValueCounter = new DialogValueCounter(pUserdata->getCredtis(), highestScore);
         connect(pDialogValueCounter.get(), &DialogValueCounter::sigFinished, this, &VictoryMenue::onProgressTimerStart, Qt::QueuedConnection);
@@ -470,6 +473,10 @@ void VictoryMenue::addShopMoney()
         pUserdata->addCredtis(highestScore);
         pUserdata->storeUser();
         m_ProgressTimer.stop();
+    }
+    else
+    {
+        showGraph(GraphModes::Funds);
     }
 }
 
@@ -480,7 +487,7 @@ void VictoryMenue::onProgressTimerStart()
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 {
-    
+    Console::print("VictoryMenue::showGraph " + QString::number(static_cast<qint32>(mode)), Console::eDEBUG);
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {

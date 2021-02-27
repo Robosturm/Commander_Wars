@@ -37,7 +37,7 @@ LobbyMenu::LobbyMenu()
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
     addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
+    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("lobbymenu");
     sprite->setResAnim(pBackground);
     sprite->setPosition(-1, -1);
     // background should be last to draw

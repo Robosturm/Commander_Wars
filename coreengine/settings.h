@@ -373,9 +373,15 @@ public slots:
 
     static void getModInfos(QString mod, QString & name, QString & description, QString & version,
                             QStringList & compatibleMods, QStringList & incompatibleMods,
-                            QStringList & requiredMods);
+                            QStringList & requiredMods, bool & isCosmetic);
 
     static QString getModName(QString mod);
+    /**
+     * @brief getIsCosmetic
+     * @param mod
+     * @return
+     */
+    static bool getIsCosmetic(QString mod);
 private:
     Settings();
     virtual ~Settings() = default;

@@ -4,3 +4,4 @@ version=1.0.0
 CompatibleMods=
 IncompatibleMods=
 required_mods=
+cosmetic=true

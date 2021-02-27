@@ -726,8 +726,9 @@ void OptionMenue::showMods()
             QStringList compatibleMods;
             QStringList incompatibleMods;
             QStringList requiredMods;
+            bool isComsetic = false;
             Settings::getModInfos(folder, name, description, version,
-                                  compatibleMods, incompatibleMods, requiredMods);
+                                  compatibleMods, incompatibleMods, requiredMods, isComsetic);
             oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
             oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
             pBox->setResAnim(pAnim);
@@ -777,6 +778,11 @@ void OptionMenue::showMods()
                     m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
                 }
                 pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
+                QString cosmeticInfo;
+                if (isComsetic)
+                {
+                    cosmeticInfo = QString("\n\n") + tr("The mod is claimed to be pure cosmetic by the creator and may be used during multiplayer games based on the game rules.");
+                }
                 QString modInfo = "\n\n" + tr("Compatible Mods:\n");
                 for (const auto & mod : compatibleMods)
                 {
@@ -792,7 +798,7 @@ void OptionMenue::showMods()
                 {
                     modInfo += Settings::getModName(mod) + "\n";
                 }
-                m_ModDescriptionText->setHtmlText(description + modInfo + "\n\n" + tr("Version: ") + version);
+                m_ModDescriptionText->setHtmlText(description + cosmeticInfo + modInfo + "\n\n" + tr("Version: ") + version);
                 m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
             });
             m_ModBoxes.append(pBox);
@@ -901,8 +907,9 @@ void OptionMenue::updateModCheckboxes()
             QStringList compatibleMods;
             QStringList incompatibleMods;
             QStringList requiredMods;
+            bool isComsetic = false;
             Settings::getModInfos(mod, name, description, version,
-                                  compatibleMods, incompatibleMods, requiredMods);
+                                  compatibleMods, incompatibleMods, requiredMods, isComsetic);
             bool enabled = true;
             for (const auto & incompatibleMod : incompatibleMods)
             {

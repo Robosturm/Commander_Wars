@@ -40,7 +40,9 @@ public:
      * @brief connectNetworkSlots
      */
     void connectNetworkSlots();
-
+    /**
+     * @brief showRuleSelection
+     */
     virtual void showRuleSelection() override;
 signals:
     void sigConnected();
@@ -78,7 +80,13 @@ protected:
     GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);
     void clientMapInfo(QDataStream & stream, quint64 socketID);
-    bool checkMods(const QStringList & mods, const QStringList & versions);
+    /**
+     * @brief filterCosmeticMods
+     * @param mods
+     * @param versions
+     */
+    void filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter);
+    bool checkMods(const QStringList & mods, const QStringList & versions, bool filter);
     void requestRule(quint64 socketID);
     void sendInitUpdate(QDataStream & stream, quint64 socketID);
     void requestMap(quint64 socketID);

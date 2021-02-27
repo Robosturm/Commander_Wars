@@ -4,3 +4,4 @@ version=1.0.1
 compatible_mods=
 incompatible_mods=mods/awdc_co
 required_mods=
+cosmetic=false

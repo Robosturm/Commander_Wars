@@ -61,7 +61,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 18;
+        return 19;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -85,9 +85,20 @@ public:
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
 
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getN_cosmeticModsAllowed
+     * @return
+     */
+    bool getCosmeticModsAllowed() const;
+    /**
+     * @brief setN_cosmeticModsAllowed
+     * @param value
+     */
+    void setCosmeticModsAllowed(bool value);
     /**
      * @brief getSingleCo
      * @return
@@ -490,6 +501,7 @@ private:
 
     Password m_password;
     QString m_description;
+    bool m_cosmeticModsAllowed{false};
 };
 
 #endif // GAMERULES_H

@@ -4,3 +4,4 @@ version=1.0.0
 compatible_mods=
 incompatible_mods=mods/awds_unit;mods/cow_triangle_weapons
 required_mods=
+cosmetic=false
