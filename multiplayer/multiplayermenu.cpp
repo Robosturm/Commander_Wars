@@ -247,7 +247,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         stream << mods[i];
         stream << versions[i];
     }
-    Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash());
+    Filesupport::writeByteArray(stream, Filesupport::getRuntimeHash(mods));
     stream << m_saveGame;
     if (m_saveGame)
     {
@@ -503,7 +503,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
         bool sameMods = checkMods(mods, versions, filter);
         bool differentHash = false;
         QByteArray hostRuntime = Filesupport::readByteArray(stream);
-        if (hostRuntime != Filesupport::getRuntimeHash())
+        if (hostRuntime != Filesupport::getRuntimeHash(mods))
         {
             differentHash = false;
         }
@@ -590,7 +590,7 @@ bool Multiplayermenu::checkMods(const QStringList & mods, const QStringList & ve
 {
     QStringList myVersions = Settings::getActiveModVersions();
     QStringList myMods = Settings::getMods();
-    filterCosmeticMods(myVersions, myMods, filter);
+    filterCosmeticMods(myMods, myVersions, filter);
     bool sameMods = true;
     if (myMods.size() != mods.size())
     {

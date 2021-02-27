@@ -204,7 +204,7 @@ protected:
      */
     void sendOpenPlayerCount();
 
-    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player);
+    void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest);
 private:
     // player selection
     spPanel m_pPlayerSelection;

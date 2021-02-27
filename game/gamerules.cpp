@@ -1315,6 +1315,6 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     }
     if (version > 18)
     {
-        pStream << m_cosmeticModsAllowed;
+        pStream >> m_cosmeticModsAllowed;
     }
 }

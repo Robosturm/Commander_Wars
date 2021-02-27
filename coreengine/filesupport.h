@@ -12,7 +12,7 @@ public:
      * @brief getRuntimeHash
      * @return
      */
-    static QByteArray getRuntimeHash();
+    static QByteArray getRuntimeHash(QStringList mods);
     /**
      * @brief getHash
      * @param filter

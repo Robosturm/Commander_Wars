@@ -1132,7 +1132,7 @@ void PlayerSelection::selectAI(qint32 player)
                 ai = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             QByteArray data;
-            createPlayerChangedData(data, socket, name, ai, player);
+            createPlayerChangedData(data, socket, name, ai, player, false);
             // update data for all clients
             m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             updatePlayerData(player);
@@ -1375,7 +1375,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 aiType = static_cast<qint32>(GameEnums::AiTypes_Human);
             }
             QByteArray sendDataRequester;
-            createPlayerChangedData(sendDataRequester, socketID, username, aiType, player);
+            createPlayerChangedData(sendDataRequester, socketID, username, aiType, player, true);
             // create data block for other clients
             if (eAiType == GameEnums::AiTypes_Open)
             {
@@ -1386,7 +1386,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 aiType = static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }            
             QByteArray sendDataOtherClients;
-            createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player);
+            createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false);
             // send player update
             m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
             emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
@@ -1409,6 +1409,8 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
         QString name;
         qint32 aiType;
         qint32 player;
+        bool clientRequest = false;;
+        stream >> clientRequest;
         stream >> socket;
         stream >> name;
         stream >> player;
@@ -1422,6 +1424,14 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
             {
                 if (aiType != GameEnums::AiTypes::AiTypes_Open &&
                     aiType != GameEnums::AiTypes::AiTypes_Human)
+                {
+                    aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
+                }
+                Console::print("Change of Player " + QString::number(player) + " to " + name + " for socket " + QString::number(socket) + " and ai " + QString::number(aiType) + " after validation.", Console::eDEBUG);
+            }
+            else if (!clientRequest)
+            {
+                if (aiType == GameEnums::AiTypes::AiTypes_Human)
                 {
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
@@ -1453,7 +1463,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                     aiType = GameEnums::AiTypes::AiTypes_ProxyAi;
                 }
                 QByteArray data;
-                createPlayerChangedData(data, socket, name, aiType, player);
+                createPlayerChangedData(data, socket, name, aiType, player, false);
                 m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
             }
         }
@@ -1464,11 +1474,12 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
     }
 }
 
-void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player)
+void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest)
 {
     QDataStream sendStream(&data, QIODevice::WriteOnly);
     spGameMap pMap = GameMap::getInstance();
     sendStream << NetworkCommands::PLAYERCHANGED;
+    sendStream << clientRequest;
     sendStream << socketId;
     sendStream << name;
     sendStream << player;

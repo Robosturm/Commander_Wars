@@ -29,9 +29,9 @@ QByteArray Filesupport::getHash(QStringList filter, QStringList folders)
     return myHash.result();
 }
 
-QByteArray Filesupport::getRuntimeHash()
+QByteArray Filesupport::getRuntimeHash(QStringList mods)
 {
-    QStringList folders = Settings::getMods();
+    QStringList folders = mods;
     folders.append("/resources");
     QStringList filter = {"*.js", "*.txt", "*.csv"};
     return getHash(filter, folders);
