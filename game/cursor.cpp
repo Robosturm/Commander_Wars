@@ -29,14 +29,17 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);
     m_CurrentCursor = new oxygine::Sprite();
-    if (pAnim->getTotalFrames() > 1)
+    if (pAnim != nullptr)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * 200), -1);
-        m_CurrentCursor->addTween(tween);
-    }
-    else
-    {
-        m_CurrentCursor->setResAnim(pAnim);
+        if (pAnim->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * 200), -1);
+            m_CurrentCursor->addTween(tween);
+        }
+        else
+        {
+            m_CurrentCursor->setResAnim(pAnim);
+        }
     }
     m_CurrentCursor->setScale(scale * static_cast<float>(GameMap::getImageSize()) / static_cast<float>(GameMap::defaultImageSize));
     m_CurrentCursor->setPosition(xOffset, yOffset);

@@ -255,7 +255,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
     pBox->setResAnim(pAnim);
-    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + style + "+nrm"));
+    pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + style + "+nrm"));    
     float scale = (m_pCOPanel->getHeight() - 100) / pAnim->getHeight();
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
