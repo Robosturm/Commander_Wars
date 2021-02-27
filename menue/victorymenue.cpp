@@ -454,7 +454,8 @@ void VictoryMenue::addShopMoney()
     qint32 highestScore = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        if (pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+        if (pMap->getPlayer(i)->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+            pMap->getPlayer(i)->getTeam() == pMap->getWinnerTeam())
         {
             qint32 score = m_VictoryScores[i].x() + m_VictoryScores[i].y() + m_VictoryScores[i].z();
             if (score > highestScore)
