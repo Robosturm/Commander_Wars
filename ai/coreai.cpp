@@ -32,7 +32,10 @@
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
 const QString CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
+const QString CoreAI::ACTION_SUPPORTSINGLE_REPAIR = "ACTION_SUPPORTSINGLE_REPAIR";
+const QString CoreAI::ACTION_SUPPORTSINGLE_FREEREPAIR = "ACTION_SUPPORTSINGLE_FREEREPAIR";
 const QString CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
+const QString CoreAI::ACTION_SUPPORTALL_RATION = "ACTION_SUPPORTALL_RATION";
 const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
 const QString CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
 const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
@@ -1873,6 +1876,71 @@ void CoreAI::GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
     }
 }
 
+bool CoreAI::buildCOUnit(QmlVectorUnit* pUnits)
+{
+    spGameAction pAction = new GameAction();
+    for (quint8 i2 = 0; i2 < 2; i2++)
+    {
+        if (i2 == 0)
+        {
+            pAction->setActionID(ACTION_CO_UNIT_0);
+        }
+        else
+        {
+            pAction->setActionID(ACTION_CO_UNIT_1);
+        }
+        CO* pCO = m_pPlayer->getCO(i2);
+        qint32 bestScore = 0;
+        qint32 unitIdx = -1;
+        if (pCO != nullptr &&
+            pCO->getCOUnit() == nullptr)
+        {
+            qint32 active = 0;
+            bool expensive = false;
+            for (qint32 i = 0; i < pUnits->size(); i++)
+            {
+                Unit* pUnit = pUnits->at(i);
+
+                if (pUnit->getUnitValue() >= m_coUnitValue && pUnit->getUnitRank() >= GameEnums::UnitRank_None)
+                {
+                    active++;
+                }
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                if (pAction->canBePerformed())
+                {
+                    if (!pUnit->getHasMoved())
+                    {
+                        if (pUnit->hasWeapons())
+                        {
+                            qint32 score = 0;
+                            score += pUnit->getUnitValue() * m_coUnitScoreMultiplier * getAiCoUnitMultiplier(pCO, pUnit);
+                            score += pUnit->getUnitValue();
+                            if (pUnit->getUnitValue() >= m_coUnitValue)
+                            {
+                                expensive = true;
+                            }
+                            score -= m_coUnitRankReduction * pUnit->getUnitRank();
+                            if (score > bestScore)
+                            {
+                                bestScore = score;
+                                unitIdx = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if (unitIdx >= 0 && bestScore > m_minCoUnitScore && (active > m_minCoUnitCount || expensive))
+            {
+                Unit* pUnit = pUnits->at(unitIdx);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void CoreAI::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
@@ -1899,6 +1967,7 @@ void CoreAI::serializeObject(QDataStream& stream) const
         stream << m_files[i];
     }
 }
+
 void CoreAI::deserializeObject(QDataStream& stream)
 {
     qint32 version;

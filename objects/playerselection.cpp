@@ -947,6 +947,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
         m_playerCO1[playerIdx]->setResAnim(pAnim);
+        m_playerCO1[playerIdx]->setScale(2.0f * pAnim->getWidth() / 32.0f);
     }
 }
 void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
@@ -996,6 +997,7 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
             pAnim = pCurrentCO->getResAnim((coid + "+info"));
         }
         m_playerCO2[playerIdx]->setResAnim(pAnim);
+        m_playerCO2[playerIdx]->setScale(2.0f * pAnim->getWidth() / 32.0f);
     }
 }
 

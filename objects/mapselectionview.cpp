@@ -326,7 +326,7 @@ void MapSelectionView::loadMapVictoryInfo()
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
                 pSprite->setResAnim(pAnim);
-                pSprite->setScale(2.0f);
+                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
                 pSprite->setPosition(150, posY);
                 m_pVictoryInfo->addChild(pSprite);
                 if (!co2.isEmpty())
@@ -338,7 +338,7 @@ void MapSelectionView::loadMapVictoryInfo()
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
                 pSprite = new oxygine::Sprite();
-                pSprite->setScale(2.0f);
+                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
                 pSprite->setResAnim(pAnim);
                 pSprite->setPosition(150, posY + pAnim->getHeight() * 2.0f);
                 m_pVictoryInfo->addChild(pSprite);

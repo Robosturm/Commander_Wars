@@ -58,12 +58,6 @@ protected:
      */
     virtual void finishTurn() override;
     /**
-     * @brief buildCOUnit
-     * @param pUnits
-     * @return
-     */
-    bool buildCOUnit(QmlVectorUnit* pUnits);
-    /**
      * @brief isUsingUnit
      * @param pUnit
      * @return
@@ -80,6 +74,31 @@ protected:
     bool moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
                    qint32 minfireRange, qint32 maxfireRange, bool supportUnits = false);
+    /**
+     * @brief refillUnits
+     * @param pUnits
+     * @param pBuildings
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool refillUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    /**
+     * @brief getBestRefillTarget
+     * @param pfs
+     * @param maxRefillCount
+     * @param moveTarget
+     * @param refillTarget
+     * @return
+     */
+    bool getBestRefillTarget(UnitPathFindingSystem & pfs, qint32 maxRefillCount, QPoint & moveTarget, QPoint & refillTarget);
+    /**
+     * @brief appendRefillTargets
+     * @param actions
+     * @param pUnit
+     * @param pUnits
+     * @param targets
+     */
+    void appendRefillTargets(QStringList actions, Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
     /**
      * @brief moveUnit
      * @param pAction
@@ -309,11 +328,7 @@ private:
     float m_minAttackFunds{0.0f};
     float m_minSuicideDamage{0.75f};
     float m_spamingFunds{7500};
-    qint32 m_coUnitValue{1000};
-    float m_minCoUnitScore{5000.0f};
-    float m_coUnitRankReduction{1000.0f};
-    float m_coUnitScoreMultiplier{1.1f};
-    qint32 m_minCoUnitCount{5};
+
     qint32 m_minUnitHealth{3};
     qint32 m_maxUnitHealth{7};
     float m_lockedUnitHp{4};

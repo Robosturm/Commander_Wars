@@ -98,7 +98,7 @@ void PlayerInfo::updateData()
             pSprite = new oxygine::Sprite();
             pSprite->setResAnim(pAnim);
             pSprite->setY(yPos);
-            pSprite->setScale(2.0f);
+            pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
             pSprite->setFlippedX(m_flippedX);
             if (m_flippedX)
             {
@@ -134,7 +134,7 @@ void PlayerInfo::updateData()
                 pCoPowermeter->setFlippedX(m_flippedX);
                 pCoPowermeter->drawPowerMeter();
                 addChild(pCoPowermeter);
-                pSprite->setScale(2.0f);
+                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
                 pSprite->setFlippedX(m_flippedX);
                 if (m_flippedX)
                 {

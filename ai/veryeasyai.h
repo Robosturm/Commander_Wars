@@ -39,12 +39,6 @@ protected:
     bool performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
                             QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
     /**
-     * @brief buildCOUnit
-     * @param pUnits
-     * @return
-     */
-    bool buildCOUnit(QmlVectorUnit* pUnits);
-    /**
      * @brief captureBuildings
      * @param pUnits
      * @return
@@ -111,7 +105,6 @@ protected:
     virtual void finishTurn() override;
 protected:
 private:
-    DecisionTree m_COUnitTree;
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;

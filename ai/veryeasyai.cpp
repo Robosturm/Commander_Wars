@@ -16,10 +16,10 @@
 #include "resource_management/unitspritemanager.h"
 
 #include "coreengine/globalutils.h"
+#include "coreengine/console.h"
 
 VeryEasyAI::VeryEasyAI()
     : CoreAI(GameEnums::AiTypes_VeryEasy),
-      m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
       m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")
@@ -81,6 +81,33 @@ void VeryEasyAI::readIni(QString name)
         if(!ok)
         {
             m_ammoResupply = 0.25f;
+        }
+        settings.endGroup();
+        settings.beginGroup("CoUnit");
+        m_coUnitValue = settings.value("CoUnitValue", 6000).toInt(&ok);
+        if(!ok)
+        {
+            m_coUnitValue = 6000;
+        }
+        m_minCoUnitScore = settings.value("MinCoUnitScore", 5000).toFloat(&ok);
+        if(!ok)
+        {
+            m_minCoUnitScore = 5000;
+        }
+        m_coUnitRankReduction = settings.value("CoUnitRankReduction", 1000).toFloat(&ok);
+        if(!ok)
+        {
+            m_coUnitRankReduction = 1000;
+        }
+        m_coUnitScoreMultiplier = settings.value("CoUnitScoreMultiplier", 1.1f).toFloat(&ok);
+        if(!ok)
+        {
+            m_coUnitScoreMultiplier = 1.1f;
+        }
+        m_minCoUnitCount = settings.value("MinCoUnitCount", 1.1f).toInt(&ok);
+        if(!ok)
+        {
+            m_minCoUnitCount = 5;
         }
         settings.endGroup();
     }
@@ -181,56 +208,9 @@ void VeryEasyAI::finishTurn()
     CoreAI::finishTurn();
 }
 
-bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
-{
-    QVector<float> data;
-    data.append(-1);
-    data.append(-1);
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (!pUnit->getHasMoved())
-        {
-            spGameAction pAction = new GameAction();
-            for (quint8 i2 = 0; i2 < 2; i2++)
-            {
-                if (i2 == 0)
-                {
-                    pAction->setActionID(ACTION_CO_UNIT_0);
-                }
-                else
-                {
-                    pAction->setActionID(ACTION_CO_UNIT_1);
-                }
-                CO* pCO = m_pPlayer->getCO(i2);
-
-                if (pCO != nullptr &&
-                    pCO->getCOUnit() == nullptr)
-                {
-                    data[0] = pCOSpriteManager->getIndex(pCO->getCoID());
-
-                    data[1] = pUnitSpriteManager->getIndex(pUnit->getUnitID());
-                    float ret = m_COUnitTree.getDecision(data);
-                    if (ret == 1.0f)
-                    {
-                        pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                        if (pAction->canBePerformed())
-                        {
-                            emit performAction(pAction);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
-
 bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
 {
+    Console::print("captureBuildings()", Console::eDEBUG);
     qint32 cost = 0;
     QPoint rocketTarget = m_pPlayer->getSiloRockettarget(2, 3, cost);
     bool fireSilos = (cost >= m_minSiloDamage);
@@ -245,8 +225,11 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                 {
                     spGameAction pAction = new GameAction(ACTION_CAPTURE);
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                    emit performAction(pAction);
-                    return true;
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
                 else
                 {
@@ -307,6 +290,7 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
 
 bool VeryEasyAI::fireWithIndirectUnits(QmlVectorUnit* pUnits)
 {
+    Console::print("fireWithIndirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -325,6 +309,7 @@ bool VeryEasyAI::fireWithIndirectUnits(QmlVectorUnit* pUnits)
 
 bool VeryEasyAI::fireWithDirectUnits(QmlVectorUnit* pUnits)
 {
+    Console::print("fireWithDirectUnits()", Console::eDEBUG);
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -381,7 +366,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
                 rebuildIslandMaps = true;
             }
 
-            if (pAction->isFinalStep())
+            if (pAction->isFinalStep() && pAction->canBePerformed())
             {
                 emit performAction(pAction);
                 return true;
@@ -395,6 +380,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
                            bool supportUnits )
 {
+    Console::print("moveUnits()", Console::eDEBUG);
     if (aiStep < AISteps::moveToTargets)
     {
         createMovementMap(pBuildings, pEnemyBuildings);
@@ -454,6 +440,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
 
 bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
+    Console::print("moveTransporters()", Console::eDEBUG);
     aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -516,6 +503,7 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
 
 bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
 {
+    Console::print("loadUnits()", Console::eDEBUG);
     aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -549,6 +537,7 @@ bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
 bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& actions,
                           QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
 {
+    Console::print("moveUnit()", Console::eDEBUG);
     TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
@@ -592,16 +581,22 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
                     }
                 }
                 addMenuItemData(pAction, ACTION_WAIT, 0);
-                emit performAction(pAction);
-                return true;
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
             }
             else
             {
                 QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
                 pAction->setActionID(ACTION_LOAD);
-                emit performAction(pAction);
-                return true;
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
             }
         }
         else
@@ -666,6 +661,7 @@ bool VeryEasyAI::moveUnit(spGameAction pAction, Unit* pUnit, QStringList& action
 
 bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
 {
+    Console::print("buildUnits()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QVector<float> data;
     qint32 productionBuildings = 0;

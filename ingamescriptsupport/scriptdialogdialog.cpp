@@ -168,6 +168,7 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
         }
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pAnim);
+        pSprite->setScale(pAnim->getWidth() / 32.0f);
         pSprite->setSize(pAnim->getSize());
         return pSprite;
     };

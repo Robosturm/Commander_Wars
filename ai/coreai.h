@@ -48,7 +48,10 @@ public:
     static const QString ACTION_WAIT;
     static const QString ACTION_HOELLIUM_WAIT;
     static const QString ACTION_SUPPORTSINGLE;
+    static const QString ACTION_SUPPORTSINGLE_REPAIR;
+    static const QString ACTION_SUPPORTSINGLE_FREEREPAIR;
     static const QString ACTION_SUPPORTALL;
+    static const QString ACTION_SUPPORTALL_RATION;
     static const QString ACTION_UNSTEALTH;
     static const QString ACTION_PLACE;
     static const QString ACTION_STEALTH;
@@ -474,6 +477,11 @@ protected:
     void GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
                           qint32 & infantryUnits, qint32 & indirectUnits,
                           qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
+    /**
+     * @brief buildCOUnit
+     * @return
+     */
+    bool buildCOUnit(QmlVectorUnit* pUnits);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
@@ -485,6 +493,12 @@ protected:
     bool m_missileTarget{false};
     float m_fuelResupply{0.33f};
     float m_ammoResupply{0.25f};
+
+    float m_minCoUnitScore{5000.0f};
+    qint32 m_coUnitValue{1000};
+    float m_coUnitRankReduction{1000.0f};
+    float m_coUnitScoreMultiplier{1.1f};
+    qint32 m_minCoUnitCount{5};
 private:
     bool finish{false};
     struct FlareInfo

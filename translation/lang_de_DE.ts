@@ -4397,18 +4397,18 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="176"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="177"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="199"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="200"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="208"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="209"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
