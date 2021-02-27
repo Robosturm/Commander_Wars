@@ -81,7 +81,7 @@ var Constructor = function()
         for (var i = 0; i < ACHIEVEMENT_VICTORY.coVictory.length; ++i)
         {
             var data = ACHIEVEMENT_VICTORY.coVictory[i];
-            var description = qsTr("Win the given amount of games %0 with the given CO.")
+            var description = qsTr("Win the given amount of games with %0.")
             description = replaceTextArgs(description, [Global[data[0]].getName()]);
             userdata.addAchievement("VICTORY_CO_" + data[0],
                                     data[1],

@@ -2810,22 +2810,32 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="95"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="81"/>
+        <source>If checked clicking the random button. The selected perks are filled up to the maximum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="84"/>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="107"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="104"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="116"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="131"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="143"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="170"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="182"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

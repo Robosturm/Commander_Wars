@@ -7,6 +7,7 @@
 #include "objects/base/panel.h"
 #include "objects/perkselection.h"
 #include "objects/base/dropdownmenu.h"
+#include "objects/base/checkbox.h"
 
 #include "oxygine-framework.h"
 
@@ -44,6 +45,7 @@ private:
     oxygine::spButton m_CancelButton;
     oxygine::spButton m_ToggleAll;
     spDropDownmenu m_PredefinedLists;
+    spCheckbox m_randomFillCheckbox;
     bool toggle{true};
     Player* m_pPlayer{nullptr};
     spPanel m_pPanel;

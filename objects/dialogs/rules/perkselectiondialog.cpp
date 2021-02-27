@@ -71,6 +71,18 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         pDropDownmenu->setPosition(210, 30);
         pSpriteBox->addChild(pDropDownmenu);
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::changeCO, Qt::QueuedConnection);
+
+        pLabel = new Label(100);
+        pLabel->setStyle(style);
+        pLabel->setText("Fill:");
+        pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getWidth() + 10, 30);
+        pSpriteBox->addChild(pLabel);
+        m_randomFillCheckbox = new Checkbox();
+        m_randomFillCheckbox->setTooltipText(tr("If checked clicking the random button. The selected perks are filled up to the maximum."));
+        m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
+        pSpriteBox->addChild(m_randomFillCheckbox);
+        oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
+
     }
 
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());

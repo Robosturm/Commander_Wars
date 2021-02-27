@@ -1831,6 +1831,13 @@ void GameMap::initPlayersAndSelectCOs()
             usedCOs.append(pPlayer->getCO(1)->getCoID());
         }
     }
+    QStringList bannList = m_Rules->getCOBannlist();
+    Userdata* pUserdata = Userdata::getInstance();
+    auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO, false);
+    for (const auto & item : items)
+    {
+        bannList.removeAll(item);
+    }
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
@@ -1849,7 +1856,6 @@ void GameMap::initPlayersAndSelectCOs()
         // resolve random CO
         if (pPlayer->getCO(0) != nullptr && pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
         {
-            QStringList bannList = m_Rules->getCOBannlist();
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
             while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") ||
