@@ -2820,22 +2820,22 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="107"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="108"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="116"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="117"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="143"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="144"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="182"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="183"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

@@ -82,7 +82,8 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
         pSpriteBox->addChild(m_randomFillCheckbox);
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
-
+        randomButton->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
+        pSpriteBox->addChild(randomButton);
     }
 
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());

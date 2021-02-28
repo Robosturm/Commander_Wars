@@ -101,7 +101,8 @@ var UNIT =
         for (var i = 0; i < unit.getLoadedUnitCount(); i++)
         {
             var transportUnit = unit.getLoadedUnit(i);
-            transportUnit.refill();
+            var refillMaterial = (typeof refillRule === 'undefined' || refillRule === null); // an existing rule equals it's set
+            transportUnit.refill(refillMaterial);
             transportUnit.setHasMoved(false);
         }
     },
