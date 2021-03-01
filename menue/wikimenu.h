@@ -5,8 +5,6 @@
 
 #include "oxygine-framework.h"
 
-#include "wiki/wikiview.h"
-
 class Wikimenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT

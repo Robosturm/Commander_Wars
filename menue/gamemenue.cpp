@@ -10,6 +10,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/tweenaddcolorall.h"
+#include "coreengine/settings.h"
 
 #include "ai/proxyai.h"
 
@@ -36,12 +37,15 @@
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 #include "objects/gameplayandkeys.h"
 
+#include "ingamescriptsupport/genericbox.h"
+
 #include "multiplayer/networkcommands.h"
 
 #include "network/tcpserver.h"
 #include "network/localserver.h"
 
 #include "wiki/fieldinfo.h"
+#include "wiki/wikiview.h"
 
 #include "ingamescriptsupport/genericbox.h"
 
@@ -356,7 +360,7 @@ void GameMenue::connectMap()
     connect(pMap.get(), &GameMap::sigShowNicknameUnit, this, &GameMenue::showNicknameUnit, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowChangeSound, this, &GameMenue::showChangeSound, Qt::QueuedConnection);
-
+    connect(pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
 
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
@@ -1643,6 +1647,21 @@ void GameMenue::showExitGame()
     
 }
 
+void GameMenue::showWiki()
+{
+    Console::print("showWiki()", Console::eDEBUG);
+    m_Focused = false;
+    spGenericBox pBox = new GenericBox(false);
+    spWikiView pView = new WikiView(Settings::getWidth() - 40, Settings::getHeight() - 60);
+    pView->setPosition(20, 20);
+    pBox->addItem(pView);
+    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pBox);
+
+}
 void GameMenue::showSurrenderGame()
 {
     spGameMap pMap = GameMap::getInstance();

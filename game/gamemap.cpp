@@ -1208,6 +1208,11 @@ void GameMap::showUnitInfo(qint32 player)
     emit sigShowUnitInfo(player);
 }
 
+void GameMap::showWiki()
+{
+    emit sigShowWiki();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

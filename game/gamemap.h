@@ -364,6 +364,7 @@ signals:
     void sigShowNicknameUnit(qint32 x, qint32 y);
     void sigShowOptions();
     void sigShowChangeSound();
+    void sigShowWiki();
 public slots:
     /**
      * @brief getFrameTime
@@ -508,6 +509,10 @@ public slots:
      * @brief showUnitInfo
      */
     void showUnitInfo(qint32 player);
+    /**
+     * @brief showWiki
+     */
+    void showWiki();
     /**
      * @brief getBuildingCount
      * @param buildingID

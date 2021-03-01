@@ -10,6 +10,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
+#include "wiki/wikiview.h"
 
 Wikimenu::Wikimenu()
     : QObject()

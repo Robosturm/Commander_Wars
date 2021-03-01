@@ -257,6 +257,10 @@ public slots:
      * @brief showSaveAndExitGame
      */
     void showSaveAndExitGame();
+    /**
+     * @brief showWiki
+     */
+    void showWiki();
 protected slots:
     /**
      * @brief updateTimer
