@@ -82,8 +82,13 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
         pSpriteBox->addChild(m_randomFillCheckbox);
         oxygine::spButton randomButton = pObjectManager->createButton(tr("Random"), 150);
-        randomButton->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
+        randomButton->setPosition(m_randomFillCheckbox->getX() + m_randomFillCheckbox->getWidth() + 10, 30);
         pSpriteBox->addChild(randomButton);
+        m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigSelectRandomPerks();
+        });
+        connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
     }
 
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());
@@ -178,17 +183,18 @@ void PerkSelectionDialog::changeCO(qint32 index)
 }
 
 void PerkSelectionDialog::showSavePerklist()
-{
-    
+{    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Perklist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &PerkSelectionDialog::savePerklist, Qt::QueuedConnection);
-    addChild(pSaveInput);
-    
+    addChild(pSaveInput);    
 }
 
 void PerkSelectionDialog::savePerklist(QString filename)
+{    
+    Filesupport::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");    
+}
+
+void PerkSelectionDialog::selectRandomPerks()
 {
-    
-    Filesupport::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");
-    
+
 }

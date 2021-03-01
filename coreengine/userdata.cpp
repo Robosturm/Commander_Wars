@@ -332,6 +332,19 @@ void Userdata::addShopItem(GameEnums::ShopItemType itemType, QString key, QStrin
     }
 }
 
+void Userdata::removeShopItem(GameEnums::ShopItemType itemType, QString key)
+{
+    for (qint32 i = 0; i < m_shopItems.length(); ++i)
+    {
+        if (m_shopItems[i].itemType == itemType &&
+            m_shopItems[i].key == key)
+        {
+            m_shopItems.removeAt(i);
+            break;
+        }
+    }
+}
+
 void Userdata::setShopItemBuyable(GameEnums::ShopItemType itemType, QString key, bool buyable)
 {
     for (auto & item : m_shopItems)

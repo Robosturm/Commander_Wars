@@ -432,6 +432,7 @@ set(${PROJECT_NAME}_SRCS
         wiki/wikidatabase.cpp
         wiki/wikipage.cpp
         wiki/defaultwikipage.cpp
+        wiki/wikiview.cpp
 
         # spriting support
         spritingsupport/spritecreator.cpp

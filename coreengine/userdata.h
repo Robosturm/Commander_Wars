@@ -209,6 +209,12 @@ public slots:
      */
     void addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable = false);
     /**
+     * @brief removeShopItem
+     * @param itemType
+     * @param key
+     */
+    void removeShopItem(GameEnums::ShopItemType itemType, QString key);
+    /**
      * @brief setShopItemBuyable changes if an item can be bought in the shop or not
      * @param itemType
      * @param key

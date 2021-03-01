@@ -2820,22 +2820,22 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="108"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="113"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="117"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="122"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="144"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="149"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="183"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="187"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5764,35 +5764,38 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
-    <name>Wikimenu</name>
+    <name>WikiView</name>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="43"/>
-        <source>Exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/wikimenu.cpp" line="57"/>
+        <location filename="../wiki/wikiview.cpp" line="24"/>
         <source>Search: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="61"/>
+        <location filename="../wiki/wikiview.cpp" line="28"/>
         <source>Text that will be searched for in the title of each wikipage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="65"/>
+        <location filename="../wiki/wikiview.cpp" line="32"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="77"/>
+        <location filename="../wiki/wikiview.cpp" line="44"/>
         <source>Tags: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="81"/>
+        <location filename="../wiki/wikiview.cpp" line="48"/>
         <source>Shows all pages grouped under a given tag. A page can be grouped in several groups at once.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Wikimenu</name>
+    <message>
+        <location filename="../menue/wikimenu.cpp" line="37"/>
+        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

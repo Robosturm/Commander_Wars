@@ -15,7 +15,7 @@ var Constructor = function()
         unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-		unit.setVision(1);
+        unit.setVision(1);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -48,8 +48,8 @@ var Constructor = function()
             {
                 fuelCosts = 0;
             }
+            unit.setFuel(unit.getFuel() - fuelCosts);
         }
-        unit.setFuel(unit.getFuel() - fuelCosts);
     };
     this.createExplosionAnimation = function(x, y, unit)
     {

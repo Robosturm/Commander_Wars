@@ -34,12 +34,17 @@ protected slots:
      * @param item
      */
     void setPerkBannlist(qint32 item);
+    /**
+     * @brief selectRandomPerks
+     */
+    void selectRandomPerks();
 signals:
     void sigCancel();
     void sigFinished();
     void editFinished(QStringList list);
     void sigToggleAll(bool toggle);
     void sigShowSavePerklist();
+    void sigSelectRandomPerks();
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_CancelButton;
