@@ -58,7 +58,7 @@ COStyleMenu::COStyleMenu()
     connect(this, &COStyleMenu::sigEditCOStyle, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
 
     Userdata* pUserdata = Userdata::getInstance();
-    auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO_Skin, false);
+    auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO_Skin, false);
     QStringList bannList = COSpriteManager::getInstance()->getLoadedRessources();
     for (const auto & item : items)
     {

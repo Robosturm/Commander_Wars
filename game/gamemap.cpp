@@ -1228,7 +1228,7 @@ void GameMap::startGame()
         }
     }
     Userdata* pUserdata = Userdata::getInstance();
-    auto lockedUnits = pUserdata->getItemsList(GameEnums::ShopItemType_Unit, true);
+    auto lockedUnits = pUserdata->getShopItemsList(GameEnums::ShopItemType_Unit, true);
 
     for (qint32 i = 0; i < players.size(); i++)
     {
@@ -1822,23 +1822,22 @@ void GameMap::nextTurn()
 
 void GameMap::initPlayersAndSelectCOs()
 {
-    QStringList usedCOs;
     bool singleCO = m_Rules->getSingleRandomCO();
+    QStringList bannList = m_Rules->getCOBannlist();
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
         if (pPlayer->getCO(0) != nullptr)
         {
-            usedCOs.append(pPlayer->getCO(0)->getCoID());
+            bannList.removeAll(pPlayer->getCO(0)->getCoID());
         }
         if (pPlayer->getCO(1) != nullptr)
         {
-            usedCOs.append(pPlayer->getCO(1)->getCoID());
+            bannList.removeAll(pPlayer->getCO(1)->getCoID());
         }
     }
-    QStringList bannList = m_Rules->getCOBannlist();
     Userdata* pUserdata = Userdata::getInstance();
-    auto items = pUserdata->getItemsList(GameEnums::ShopItemType_CO, false);
+    auto items = pUserdata->getShopItemsList(GameEnums::ShopItemType_CO, false);
     for (const auto & item : items)
     {
         bannList.removeAll(item);
@@ -1863,8 +1862,8 @@ void GameMap::initPlayersAndSelectCOs()
         {
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(0)->getPerkList();
-            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_") ||
-                   (singleCO && usedCOs.contains(pPlayer->getCO(0)->getCoID())))
+            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" ||
+                   pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
             {
                 pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 0);
                 pPlayer->getCO(0)->setCoStyleFromUserdata();
@@ -1881,9 +1880,9 @@ void GameMap::initPlayersAndSelectCOs()
                 pPlayer->getCO(0)->setPerkList(perkList);
             }
         }
-        if (pPlayer->getCO(0) != nullptr)
+        if (pPlayer->getCO(0) != nullptr && singleCO)
         {
-            usedCOs.append(pPlayer->getCO(0)->getCoID());
+            bannList.removeAll(pPlayer->getCO(0)->getCoID());
         }
         if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
         {
@@ -1892,8 +1891,7 @@ void GameMap::initPlayersAndSelectCOs()
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
                    (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
-                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")) ||
-                   (singleCO && usedCOs.contains(pPlayer->getCO(1)->getCoID())))
+                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
             {
                 pPlayer->setCO(bannList[GlobalUtils::randInt(0, bannList.size() - 1)], 1);
                 pPlayer->getCO(1)->setCoStyleFromUserdata();
@@ -1909,9 +1907,10 @@ void GameMap::initPlayersAndSelectCOs()
                 pPlayer->getCO(1)->setPerkList(perkList);
             }
         }
-        if (pPlayer->getCO(1) != nullptr)
+        if (pPlayer->getCO(1) != nullptr && singleCO)
         {
-            usedCOs.append(pPlayer->getCO(1)->getCoID());
+            bannList.removeAll(pPlayer->getCO(1)->getCoID());
+
         }
         // define army of this player
         pPlayer->defineArmy();

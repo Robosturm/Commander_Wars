@@ -332,7 +332,11 @@ void OptionMenue::showSettings()
     connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, [=](qint32)
     {
         QStringList itemData = pScreenResolution->getCurrentItemText().split(" x ");
-        emit sigChangeScreenSize(itemData[0].toInt(), itemData[1].toInt());
+        qint32 width = itemData[0].toInt();
+        qint32 heigth = itemData[1].toInt();
+        Settings::setWidth(width);
+        Settings::setHeight(heigth);
+        emit sigChangeScreenSize(width, heigth);
     });
     y += 40;
 

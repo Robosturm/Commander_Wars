@@ -1115,7 +1115,7 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
 
 void GameMenue::updatePlayerinfo()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     m_pPlayerinfo->updateData();
     m_IngameInfoBar->updatePlayerInfo();
     spGameMap pMap = GameMap::getInstance();
@@ -1123,7 +1123,7 @@ void GameMenue::updatePlayerinfo()
     {
         pMap->getPlayer(i)->updateVisualCORange();
     }
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMenue::victory(qint32 team)

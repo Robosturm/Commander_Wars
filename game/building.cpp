@@ -118,7 +118,14 @@ void Building::setOwner(Player* pOwner)
     // change ownership
     m_pOwner = pOwner;
     // update sprites :)
-    updateBuildingSprites(false);
+    bool visible = true;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        visible = pMap->getCurrentViewPlayer()->getFieldVisible(Building::getX(),
+                                                                Building::getY());
+    }
+    updatePlayerColor(visible);
 }
 
 Player* Building::getOwner()
@@ -425,7 +432,7 @@ QStringList Building::getActionList()
     QStringList retList;
     if (ret.isString())
     {
-       retList = ret.toString().split(",");
+        retList = ret.toString().split(",");
     }
     else
     {

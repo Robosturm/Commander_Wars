@@ -293,7 +293,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
     return ret;
 }
 
-QStringList Userdata::getItemsList(GameEnums::ShopItemType type, bool bought)
+QStringList Userdata::getShopItemsList(GameEnums::ShopItemType type, bool bought)
 {
     QStringList ret;
     for (const auto & item : m_shopItems)
