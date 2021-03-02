@@ -67,7 +67,7 @@ var Constructor = function()
         data.addData(qsTr("Unit Info"), "UNIT", "unit_info");
         data.addData(qsTr("Game Info"), "GAME", "intel");
         data.addData(qsTr("Attack Log"), "ATTACK", "fire");
-        data.addData(qsTr("Wiki"), "WIKI", "help");
+        data.addData(qsTr("Wiki"), "WIKI", "wiki");
     };
 }
 

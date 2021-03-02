@@ -141,6 +141,7 @@
 		<image file="options.png" />
 		<image file="nickname.png" />
 		<image file="music.png" />
+		<image file="wiki.png" />
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

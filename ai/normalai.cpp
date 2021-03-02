@@ -493,11 +493,17 @@ void NormalAi::process()
             if (performActionSteps(pUnits.get(), pEnemyUnits.get(), pBuildings.get(), pEnemyBuildings.get())){}
             else
             {
-                aiStep = AISteps::moveUnits;
+                if (aiStep == AISteps::buildUnits)
+                {
+                    aiStep = AISteps::moveUnits;
+                }
                 if (performActionSteps(pUnits.get(), pEnemyUnits.get(), pBuildings.get(), pEnemyBuildings.get())){}
                 else
                 {
-                    aiStep = AISteps::moveUnits;
+                    if (aiStep == AISteps::buildUnits)
+                    {
+                        aiStep = AISteps::moveUnits;
+                    }
                     clearEnemyData();
                     m_IslandMaps.clear();
                     turnMode = GameEnums::AiTurnMode_EndOfDay;

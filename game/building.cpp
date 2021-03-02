@@ -120,7 +120,8 @@ void Building::setOwner(Player* pOwner)
     // update sprites :)
     bool visible = true;
     spGameMap pMap = GameMap::getInstance();
-    if (pMap.get() != nullptr)
+    if (pMap.get() != nullptr &&
+        pMap->getCurrentViewPlayer() != nullptr)
     {
         visible = pMap->getCurrentViewPlayer()->getFieldVisible(Building::getX(),
                                                                 Building::getY());
@@ -204,6 +205,8 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
+        setSize(pAnim->getWidth(),
+                pAnim->getHeight());
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
         m_addPlayerColor.append(mode);

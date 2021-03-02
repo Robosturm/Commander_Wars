@@ -86,6 +86,17 @@ MapSelectionView::MapSelectionView()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
+    pTextfield->setHtmlText(tr("Player: "));
+    m_MapInfo->addItem(pTextfield);
+    m_MapPlayerCount = new oxygine::TextField();
+    m_MapPlayerCount->setStyle(style);
+    m_MapPlayerCount->setPosition(150, y);
+    m_MapInfo->addItem(m_MapPlayerCount);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Description "));
     m_MapInfo->addItem(pTextfield);
     y += 40;
@@ -222,9 +233,11 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
         m_MapName->setHtmlText(m_pCurrentMap->getMapName());
         m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
+        m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
         m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
         m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
         m_pVictoryInfo->setVisible(true);
+        m_MapPlayerCount->setVisible(true);
         m_currentMapFile = info;
         loadMapVictoryInfo();
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -267,6 +280,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_CurrentCampaign = new Campaign(info.absoluteFilePath());
         m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
         m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
+        m_MapPlayerCount->setVisible(false);
         m_MapName->setHtmlText(m_CurrentCampaign->getName());
         m_pVictoryInfo->setVisible(false);
     }
@@ -358,6 +372,7 @@ void MapSelectionView::updateMapData()
 {
     m_MapName->setHtmlText(m_pCurrentMap->getMapName());
     m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
+    m_MapPlayerCount->setHtmlText(QString::number(m_pCurrentMap->getPlayerCount()));
     m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
     m_pVictoryInfo->setY(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 10);
 }

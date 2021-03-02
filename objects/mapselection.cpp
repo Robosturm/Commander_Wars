@@ -318,7 +318,17 @@ void MapSelection::updateSelection(qint32 startIndex)
                 QFile file(m_currentFolder + m_Files[currentStartIndex + i]);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);
-                QString name = GameMap::readMapName(pStream);
+                QString name;
+                qint32 version = 0;
+                QString mapAuthor;
+                QString mapDescription;
+                qint32 width = 0;
+                qint32 heigth = 0;
+                qint32 playerCount = 0;
+                qint32 uniqueIdCounter = 0;
+                GameMap::readMapHeader(pStream, version, name, mapAuthor, mapDescription,
+                                       width, heigth, playerCount, uniqueIdCounter);
+                QString mapNameEnding = " (" + QString::number(playerCount) + ")";
                 if (name.isEmpty())
                 {
                     QStringList data = m_Files[currentStartIndex + i].split("/");
@@ -333,11 +343,11 @@ void MapSelection::updateSelection(qint32 startIndex)
                         }
                         item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                     }
-                    m_Items[i]->setHtmlText(item);
+                    m_Items[i]->setHtmlText(item + mapNameEnding);
                 }
                 else
                 {
-                    m_Items[i]->setHtmlText(name);
+                    m_Items[i]->setHtmlText(name + mapNameEnding);
                 }
             }
         }

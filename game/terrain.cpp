@@ -338,7 +338,9 @@ void Terrain::loadBaseSprite(QString spriteID)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
+        setSize(pAnim->getWidth(),
+                pAnim->getHeight());
 
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
@@ -370,6 +372,8 @@ void Terrain::update(const oxygine::UpdateState& us)
         m_SpriteAnim = pAnim;
         m_pTerrainSprite->setResAnim(pAnim);
         m_pTerrainSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+        setSize(pAnim->getWidth(),
+                pAnim->getHeight());
         m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::getImageSize()));
         loadSprite = false;
     }
@@ -1140,7 +1144,7 @@ void Terrain::deserializeObject(QDataStream& pStream)
 }
 
 void Terrain::deserializer(QDataStream& pStream, bool fast)
-    {
+{
     qint32 version = 0;
     pStream >> version;
     if (version > 3)
@@ -1201,7 +1205,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-           m_Building = nullptr;
+            m_Building = nullptr;
         }
     }
     bool hasUnit = false;
@@ -1238,7 +1242,7 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 5)
     {
-         pStream >> m_hasStartOfTurn;
+        pStream >> m_hasStartOfTurn;
     }
     if (version > 6)
     {

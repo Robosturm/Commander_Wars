@@ -420,6 +420,9 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     }
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
+    setWidth(width * GameMap::getImageSize());
+    setHeight(heigth * GameMap::getImageSize());
+
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites

@@ -226,7 +226,8 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
             pSprite->setResAnim(pAnim);
             pWaitSprite->setResAnim(pAnim);
         }
-
+        setSize(pAnim->getWidth(),
+                pAnim->getHeight());
         pSprite->setPriority(static_cast<short>(Priorities::Colored));
         pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
         // repaint the unit?
