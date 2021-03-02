@@ -17,7 +17,7 @@ public:
     explicit Minimap();
     virtual ~Minimap();
 
-
+    void clear();
 signals:
     void clicked(qint32 x, qint32 y);
 public slots:

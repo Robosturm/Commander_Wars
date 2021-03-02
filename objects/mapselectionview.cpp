@@ -227,6 +227,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast);
         m_pCurrentMap->setMapPath(info.absoluteFilePath().replace(QCoreApplication::applicationDirPath(), ""));
         m_pCurrentMap->getGameScript()->init();
+        m_pMinimap->clear();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapPanel->addItem(m_pMinimap);
         m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);

@@ -326,9 +326,13 @@ void MapSelection::updateSelection(qint32 startIndex)
                 qint32 heigth = 0;
                 qint32 playerCount = 0;
                 qint32 uniqueIdCounter = 0;
-                GameMap::readMapHeader(pStream, version, name, mapAuthor, mapDescription,
-                                       width, heigth, playerCount, uniqueIdCounter);
-                QString mapNameEnding = " (" + QString::number(playerCount) + ")";
+                QString mapNameEnding = "";
+                if (m_Files[currentStartIndex + i].endsWith(".map"))
+                {
+                    GameMap::readMapHeader(pStream, version, name, mapAuthor, mapDescription,
+                                           width, heigth, playerCount, uniqueIdCounter);
+                    mapNameEnding = " (" + QString::number(playerCount) + ")";
+                }
                 if (name.isEmpty())
                 {
                     QStringList data = m_Files[currentStartIndex + i].split("/");

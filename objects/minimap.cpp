@@ -36,6 +36,13 @@ Minimap::~Minimap()
 {
 }
 
+void Minimap::clear()
+{
+    // clear minimap
+    removeChildren();
+    m_Items.clear();
+}
+
 void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
     
@@ -48,9 +55,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
         setSize(ImageSize * width, ImageSize * heigth);
         if (size != m_Items.length())
         {
-            // clear minimap
-            removeChildren();
-            m_Items.clear();
+            clear();
             m_Items.reserve(size);
         }
 
