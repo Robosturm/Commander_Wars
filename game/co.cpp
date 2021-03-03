@@ -1707,7 +1707,6 @@ void CO::setCoStyle(QString file, qint32 style)
     maskTable = baseColorTable.copy(0, style, baseColorTable.width(), 1);
     loadResAnim(coID, file, colorTable, maskTable, useColorBox);
     m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
-
 }
 
 QString CO::getActiveCoStyle()
