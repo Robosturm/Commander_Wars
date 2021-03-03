@@ -5,6 +5,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/userdata.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include <QDir>
 #include <QQmlEngine>
@@ -57,6 +58,8 @@ void Interpreter::init()
     globalObject().setProperty("settings", settings);
     QJSValue userdata = newQObject(Userdata::getInstance());
     globalObject().setProperty("userdata", userdata);
+    QJSValue coSpriteManager = newQObject(COSpriteManager::getInstance());
+    globalObject().setProperty("coSpriteManager", userdata);
 
     GameEnums::registerEnums();
 

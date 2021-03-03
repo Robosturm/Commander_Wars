@@ -30,6 +30,11 @@ public:
 signals:
     void sigLoadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 public slots:
+    QStringList getCoIds()
+    {
+        return m_loadedRessources;
+    }
+protected slots:
     /**
      * @brief loadResAnim
      * @param coid
