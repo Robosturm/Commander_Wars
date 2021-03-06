@@ -49,7 +49,7 @@ add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
     -DMINOR=18
-    -DREVISION=0
+    -DREVISION=1
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
