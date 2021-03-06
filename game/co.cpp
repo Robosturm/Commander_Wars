@@ -1707,6 +1707,7 @@ void CO::setCoStyle(QString file, qint32 style)
     maskTable = baseColorTable.copy(0, style, baseColorTable.width(), 1);
     loadResAnim(coID, file, colorTable, maskTable, useColorBox);
     m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+
 }
 
 QString CO::getActiveCoStyle()
@@ -1758,6 +1759,11 @@ void CO::loadResAnim(QString coid, QString file, QImage colorTable, QImage maskT
         }
     }
     pCOAnim = nullptr;
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
+    {
+        pMenu->updatePlayerinfo();
+    }
 }
 
 bool CO::getCoRangeEnabled() const

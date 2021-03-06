@@ -21,6 +21,7 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     pButtonBox->setSize(bannerWidth, 60);
+    setSize(bannerWidth, 60);
     addChild(pButtonBox);
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);

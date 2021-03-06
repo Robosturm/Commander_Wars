@@ -2815,7 +2815,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
 
     if (data[ReachDistance] > 0 && data[Movementpoints] > 0)
     {
-        score += m_nearEnemyBonus / GlobalUtils::roundUp(data[ReachDistance] / data[Movementpoints]);
+        score += m_nearEnemyBonus * data[Movementpoints] / GlobalUtils::roundUp(data[ReachDistance]);
     }
     return score;
 }

@@ -34,9 +34,8 @@ public slots:
     {
         return m_loadedRessources;
     }
-protected slots:
     /**
-     * @brief loadResAnim
+     * @brief loadResAnim this function is not callable from js
      * @param coid
      * @param file
      * @param colorTable

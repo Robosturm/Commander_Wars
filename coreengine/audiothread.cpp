@@ -450,7 +450,7 @@ void AudioThread::reportReplayError(QMediaPlayer::Error error)
         }
         case QMediaPlayer::Error::ResourceError:
         {
-            Console::print("Audio playback error: Media ressouce file couldn'tbe resolved.", Console::eERROR);
+            Console::print("Audio playback error: Media ressouce file could not be resolved.", Console::eERROR);
             break;
         }
         case QMediaPlayer::Error::MediaIsPlaylist:

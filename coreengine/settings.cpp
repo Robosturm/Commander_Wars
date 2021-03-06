@@ -94,6 +94,7 @@ quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::walkAnimationSpeed = 20;
 quint32 Settings::dialogAnimationSpeed = 1;
+quint32 Settings::captureAnimationSpeed = 1;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
@@ -1147,6 +1148,13 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         dialogAnimationSpeed = 1u;
     }
+    captureAnimationSpeed = settings.value("CaptureAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || captureAnimationSpeed <= 0 ||  captureAnimationSpeed > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " CaptureAnimationSpeed";
+        Console::print(error, Console::eERROR);
+        captureAnimationSpeed = 1u;
+    }
 
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
     if(!ok || multiTurnCounter <= 0 || multiTurnCounter > 10u)
@@ -1338,6 +1346,7 @@ void Settings::saveSettings()
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
         settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
         settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(dialogAnimationSpeed));
+        settings.setValue("CaptureAnimationSpeed",           static_cast<qint32>(captureAnimationSpeed));
         settings.setValue("AnimationSpeed",                 animationSpeed);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
@@ -1486,7 +1495,7 @@ float Settings::getDialogAnimationSpeedValue()
 
 float Settings::getDialogAnimationSpeed()
 {
-    if (battleAnimationSpeed <= 100)
+    if (dialogAnimationSpeed <= 100)
     {
         return 100.0f / (101.0f - dialogAnimationSpeed);
     }
@@ -1496,6 +1505,25 @@ float Settings::getDialogAnimationSpeed()
 void Settings::setDialogAnimationSpeed(const quint32 &value)
 {
     dialogAnimationSpeed = value;
+}
+
+float Settings::getCaptureAnimationSpeedValue()
+{
+    return captureAnimationSpeed;
+}
+
+float Settings::getCaptureAnimationSpeed()
+{
+    if (captureAnimationSpeed <= 100)
+    {
+        return 100.0f / (101.0f - captureAnimationSpeed);
+    }
+    return 100;
+}
+
+void Settings::setCaptureAnimationSpeed(const quint32 &value)
+{
+    captureAnimationSpeed = value;
 }
 
 Qt::Key Settings::getKey_up()

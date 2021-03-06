@@ -140,6 +140,22 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pCaptureAnimationSpeed = new Slider(Settings::getWidth() - 20 - sliderOffset, 1, 100, "");
+    pCaptureAnimationSpeed->setTooltipText(tr("Selects the speed at which capture animations are played."));
+    pCaptureAnimationSpeed->setPosition(sliderOffset - 130, y);
+    pCaptureAnimationSpeed->setCurrentValue(static_cast<qint32>(Settings::getCaptureAnimationSpeedValue()));
+    m_pOptions->addItem(pCaptureAnimationSpeed);
+    connect(pCaptureAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        Settings::setCaptureAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

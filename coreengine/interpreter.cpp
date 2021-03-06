@@ -76,7 +76,7 @@ void Interpreter::openScript(QString script, bool setup)
     QFile scriptFile(script);
     if (!scriptFile.open(QIODevice::ReadOnly))
     {
-        QString error = "Error: attemp to read File " + script + " which couldn't be opened.";
+        QString error = "Error: attemp to read File " + script + " which could not be opened.";
         Console::print(error, Console::eERROR);
     }
     else

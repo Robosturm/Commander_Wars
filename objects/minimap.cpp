@@ -170,6 +170,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                 pSprite->setResAnim(pAnim);
                             }
                             pSprite->setPosition(x * ImageSize, y * ImageSize);
+                            pSprite->setSize(ImageSize, ImageSize);
                             addChild(pSprite);
                             m_Items[item].background = pSprite;
                         }
@@ -206,6 +207,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                     oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), oxygine::timeMS(1000), -1);
                                     pSprite->addTween(tween2);
                                     pSprite->setPosition(x * ImageSize, y * ImageSize);
+                                    pSprite->setSize(ImageSize, ImageSize);
                                     Player* pPlayer = pUnit->getOwner();
                                     QColor color = pPlayer->getColor();
                                     pSprite->setColor(color.red(), color.green(), color.blue(), 255);

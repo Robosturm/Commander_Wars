@@ -328,7 +328,7 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "What? I should work faster? Look at your PC even a snake is faster than your CPU";
             break;
         case 3:
-            printmessage = "I know this Quest. Nothing can happen! Sorry we couldn't find their corps!";
+            printmessage = "I know this Quest. Nothing can happen! Sorry we could not find their corps!";
             break;
         case 4:
             printmessage = "1+1=10 ... What you don't understand Binary Stuff -> I can't work with such stupid Users.";
