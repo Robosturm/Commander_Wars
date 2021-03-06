@@ -222,12 +222,12 @@ var Constructor = function()
 
     this.getAiCoUnitBonus = function(co, unit)
     {
-        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
-            (attacker.getUnitType() === GameEnums.UnitType_Naval))
+        if ((unit.getUnitType() === GameEnums.UnitType_Air) ||
+            (unit.getUnitType() === GameEnums.UnitType_Naval))
         {
             return -2;
         }
-        else if (attacker.getUnitType() !== GameEnums.UnitType_Infantry)
+        else if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
         {
             return 2;
         }

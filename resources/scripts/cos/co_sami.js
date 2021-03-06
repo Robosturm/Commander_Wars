@@ -217,11 +217,11 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit)
     {
-        if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             return 3;
         }
-        else if (attacker.getBaseMaxRange() === 1)
+        else if (unit.getBaseMaxRange() === 1)
         {
             return 0;
         }

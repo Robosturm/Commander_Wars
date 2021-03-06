@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit)
     {
-        if (attacker.getUnitType() === GameEnums.UnitType_Air)
+        if (unit.getUnitType() === GameEnums.UnitType_Air)
         {
             return 2;
         }

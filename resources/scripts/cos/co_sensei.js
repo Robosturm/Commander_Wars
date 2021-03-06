@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit)
     {
-        if (attacker.getUnitID() === "K_HELI")
+        if (unit.getUnitID() === "K_HELI")
         {
             return 3;
         }

@@ -205,6 +205,9 @@ var Constructor = function()
 
     this.getAiCoUnitBonus = function(co, unit)
     {
+        var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
+                         (unit.getUnitType() === GameEnums.UnitType_Naval);
+
         if (!seaAirUnit)
         {
             return 2;

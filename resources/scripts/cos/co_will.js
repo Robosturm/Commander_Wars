@@ -182,7 +182,7 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit)
     {
-        if (attacker.getBaseMaxRange() === 1 && !seaAirUnit)
+        if (unit.getBaseMaxRange() === 1 && !seaAirUnit)
         {
             return 2;
         }
