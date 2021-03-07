@@ -42,6 +42,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     {
         pAnimMask = GameManager::getInstance()->getResAnim("superpower_background");
     }
+    setSize(Settings::getWidth(), Settings::getHeight());
     // first sprite for rotating
     oxygine::spBox9Sprite firstSpriteMask = new oxygine::Box9Sprite();
     firstSpriteMask->setResAnim(pAnimMask);

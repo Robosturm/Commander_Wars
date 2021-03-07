@@ -110,7 +110,10 @@ bool Building::getVisionHide()
 
 void Building::setUnitOwner(Unit* pUnit)
 {
-    setOwner(pUnit->getOwner());
+    if (pUnit != nullptr)
+    {
+        setOwner(pUnit->getOwner());
+    }
 }
 
 void Building::setOwner(Player* pOwner)
@@ -120,13 +123,23 @@ void Building::setOwner(Player* pOwner)
     // update sprites :)
     bool visible = true;
     spGameMap pMap = GameMap::getInstance();
+    qint32 x = Building::getX();
+    qint32 y = Building::getY();
+
     if (pMap.get() != nullptr &&
-        pMap->getCurrentViewPlayer() != nullptr)
+        pMap->getCurrentViewPlayer() != nullptr &&
+        pMap->onMap(x, y))
     {
-        visible = pMap->getCurrentViewPlayer()->getFieldVisible(Building::getX(),
-                                                                Building::getY());
+        visible = pMap->getCurrentViewPlayer()->getFieldVisible(x, y);
     }
-    updatePlayerColor(visible);
+    if (m_pBuildingSprites.size() == 0)
+    {
+        updateBuildingSprites(false);
+    }
+    else
+    {
+        updatePlayerColor(visible);
+    }
 }
 
 Player* Building::getOwner()

@@ -1318,12 +1318,12 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameAnimationNextDay</name>
     <message>
-        <location filename="../game/gameanimationnextday.cpp" line="128"/>
+        <location filename="../game/gameanimationnextday.cpp" line="127"/>
         <source>Save and Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gameanimationnextday.cpp" line="137"/>
+        <location filename="../game/gameanimationnextday.cpp" line="136"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>

@@ -180,6 +180,7 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     pBox->setResAnim(pAnim);
     pBox->setSize(width, heigth);
+    setSize(width, heigth);
     if (sleepAfterFinish > 0)
     {
         oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
@@ -251,6 +252,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
         oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
         queuedAnim->add(tween1);
     }
+    setSize(pAnim->getSize());
     pSprite->setScaleX(scaleX);
     pSprite->setScaleY(scaleY);
     pSprite->addTween(queuedAnim);

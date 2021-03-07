@@ -21,9 +21,8 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);
-
+    setSize(Settings::getWidth(), Settings::getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
-
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnim);
     pSprite->setScaleX((Settings::getWidth() + 8.0f) / pAnim->getWidth());

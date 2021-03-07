@@ -87,6 +87,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
         oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
         pSprite->setPosition(m_pUnit->getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
                              m_pUnit->getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
+        setSize(pAnim->getSize());
         if (m_pUnit->isStealthed(pPlayer))
         {
             setVisible(false);

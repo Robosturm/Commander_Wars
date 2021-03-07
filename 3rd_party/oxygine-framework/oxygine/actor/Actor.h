@@ -315,6 +315,7 @@ namespace oxygine
         spTween _addTween(spTween tween, bool rel);
 
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
+        bool onScreen(RenderState& rs);
         void completeRender(const RenderState& rs);
 
 
