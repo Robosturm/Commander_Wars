@@ -525,7 +525,7 @@ void NormalAi::process()
 
 void NormalAi::finishTurn()
 {
-    m_TransporterScores.clear();
+    m_productionData.clear();
     CoreAI::finishTurn();
 }
 
@@ -964,8 +964,8 @@ void NormalAi::appendRefillTargets(QStringList actions, Unit* pUnit, QmlVectorUn
                 qint32 unitY = pSupplyUnit->getY();
                 for (qint32 i2 = 0; i2 < circle->size(); ++i2)
                 {
-                    qint32 x = unitX + circle->at(i).x();
-                    qint32 y = unitY + circle->at(i).y();
+                    qint32 x = unitX + circle->at(i2).x();
+                    qint32 y = unitY + circle->at(i2).y();
                     if (pMap->onMap(x, y))
                     {
                         if (onSameIsland(islandIdx, curX, curY, x, y))
@@ -1973,9 +1973,13 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
     Console::print("buildUnits()", Console::eDEBUG);
+    if (aiStep < AISteps::buildUnits)
+    {
+        m_productionData.clear();
+    }
     aiStep = AISteps::buildUnits;
     spGameMap pMap = GameMap::getInstance();
-    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+
     qint32 enemeyCount = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -2004,46 +2008,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                      infantryUnits, indirectUnits, directUnits,
                      transportTargets);
     QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
-    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
-    {
-        for (qint32 i = 0; i < pUnits->size(); i++)
-        {
-            Unit* pUnit = pUnits->at(i);
-            float dmg1 = 0.0f;
-            float hpValue = pUnit->getHpRounded() / Unit::MAX_UNIT_HP;
-            Unit* pEnemyUnit = pEnemyUnits->at(i2);
-            // get weapon 1 damage
-            if (!pUnit->getWeapon1ID().isEmpty())
-            {
-                dmg1 = pWeaponManager->getBaseDamage(pUnit->getWeapon1ID(), pEnemyUnit) * hpValue;
-            }
-            // get weapon 2 damage
-            float dmg2 = 0.0f;
-            if (!pUnit->getWeapon2ID().isEmpty())
-            {
-                dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit) * hpValue;
-            }
-
-            if ((dmg1 > m_notAttackableDamage || dmg2 > m_notAttackableDamage) &&
-                pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->getX(), pEnemyUnit->getY())) - pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())) < 2)
-            {
-                if (onSameIsland(pUnit, pEnemyUnits->at(i2)))
-                {
-                    attackCount[i2].setY(attackCount[i2].y() + 1);
-                }
-                attackCount[i2].setX(attackCount[i2].x() + 1);
-            }
-            if (dmg1 > m_midDamage || dmg2 > m_midDamage)
-            {
-                attackCount[i2].setZ(attackCount[i2].z() + 1);
-            }
-            if (dmg1 > m_highDamage || dmg2 > m_highDamage)
-            {
-                attackCount[i2].setW(attackCount[i2].w() + 1);
-            }
-        }
-    }
-
+    getEnemyDamageCounts(pUnits, pEnemyUnits, attackCount);
     float funds = m_pPlayer->getFunds();
     // calc average costs if we would build same cost units on every building
     float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
@@ -2115,142 +2080,103 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                 {
                     auto enableList = pData->getEnabledList();
                     auto actionIds = pData->getActionIDs();
+                    qint32 index = getIndexInProductionData(pBuilding);
+                    auto & buildingData = m_productionData[index];
                     QVector<qint32> actions;
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
                         if (enableList[i2])
                         {
-                            Unit dummy(actionIds[i2], m_pPlayer, false);
-                            qint32 buildingX = pBuilding->getX();
-                            qint32 buildingY = pBuilding->getY();
-                            dummy.setVirtuellX(buildingX);
-                            dummy.setVirtuellY(buildingY);
-                            data[UnitCost] = dummy.getUnitCosts();
-                            createIslandMap(dummy.getMovementType(), dummy.getUnitID());
-                            bool canMove = false;
-
-                            for (qint32 i3 = 0; i3 < pFields->size(); i3++)
+                            float score = 0.0f;
+                            qint32 unitIdx = getUnitProductionIdx(index, actionIds[i2],
+                                                                  pUnits, transportTargets,
+                                                                  pEnemyUnits, pEnemyBuildings,
+                                                                  attackCount, data);
+                            bool isTransporter = false;
+                            if (unitIdx >= 0)
                             {
-                                qint32 x = buildingX + pFields->at(i3).x();
-                                qint32 y = buildingY + pFields->at(i3).y();
-                                if (pMap->onMap(x, y) &&
-                                    dummy.getBaseMovementCosts(x, y, x, y) > 0)
+                                auto & unitData = buildingData.m_buildData[unitIdx];
+                                data[UnitCost] = unitData.cost;
+                                if (unitData.canMove)
                                 {
-                                    canMove = true;
-                                    break;
-                                }
-                            }
-
-                            if (canMove)
-                            {
-                                float score = 0.0f;
-                                bool isTransporter = false;
-                                if (!dummy.getWeapon1ID().isEmpty() ||
-                                    !dummy.getWeapon2ID().isEmpty())
-                                {
-                                    if (dummy.getBaseMaxRange() > 1)
+                                    if (!unitData.isTransporter)
                                     {
-                                        data[IndirectUnit] = 1.0;
-                                        data[DirectUnit] = 0.0;
-                                    }
-                                    else
-                                    {
-                                        data[IndirectUnit] = 0.0;
-                                        data[DirectUnit] = 1.0;
-                                    }
-                                    if (dummy.getActionList().contains(ACTION_CAPTURE) &&
-                                        dummy.getLoadingPlace() == 0)
-                                    {
-                                        data[InfantryUnit] = 1.0;
-                                    }
-                                    else
-                                    {
-                                        data[InfantryUnit] = 0.0;
-                                    }
-                                    data[FundsFactoryRatio] = dummy.getUnitCosts() / fundsPerFactory;
-                                    if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
-                                    {
-                                        data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
-                                    }
-                                    else
-                                    {
-                                        data[BuildingEnemyRatio] = 0.0;
-                                    }
-                                    float bonusFactor = 1.0f;
-                                    if ((data[DirectUnitRatio] > m_directIndirectRatio && dummy.getBaseMaxRange() > 1) ||
-                                        (data[DirectUnitRatio] < m_directIndirectRatio && dummy.getBaseMaxRange() == 1))
-                                    {
-                                        bonusFactor = m_directIndirectUnitBonusFactor;
-                                    }
-                                    auto damageData = calcExpectedFundsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
-                                    data[NotAttackableCount] = std::get<1>(damageData);
-                                    data[DamageData] =  std::get<0>(damageData);
-
-                                    data[COBonus] = 0;
-                                    data[COBonus] += getAiCoUnitMultiplier(m_pPlayer->getCO(0), &dummy);
-                                    data[COBonus] += getAiCoUnitMultiplier(m_pPlayer->getCO(1), &dummy);
-                                    data[Movementpoints] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
-                                    data[ReachDistance] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
-                                    score = calcBuildScore(data);
-                                }
-                                else
-                                {
-                                    bool found = false;
-                                    for (auto & data : m_TransporterScores)
-                                    {
-                                        if (std::get<2>(data) == buildingX &&
-                                            std::get<3>(data) == buildingY &&
-                                            std::get<1>(data) == actionIds[i2])
+                                        data[Movementpoints] = unitData.movePoints;
+                                        data[ReachDistance] = unitData.closestTarget;
+                                        data[COBonus] = unitData.coBonus;
+                                        data[NotAttackableCount] = unitData.notAttackableCount;
+                                        data[DamageData] =  unitData.damage;
+                                        data[FundsFactoryRatio] = unitData.cost / fundsPerFactory;
+                                        if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
                                         {
-                                            score = std::get<0>(data);
-                                            found = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!found)
-                                    {
-                                        score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
-                                        m_TransporterScores.append(std::tuple<float, QString, qint32, qint32>(score, actionIds[i2], buildingX, buildingY));
-                                    }
-                                    isTransporter = true;
-                                }
-                                score *= BaseGameInputIF::getUnitBuildValue(dummy.getUnitID());
-                                if (score > bestScore)
-                                {
-                                    bestScore = score;
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                    transporters.append(isTransporter);
-                                    qint32 index = 0;
-                                    while (index < scores.size())
-                                    {
-                                        if (scores[index] < bestScore - variance)
-                                        {
-                                            buildingIdx.removeAt(index);
-                                            unitIDx.removeAt(index);
-                                            scores.removeAt(index);
-                                            transporters.removeAt(index);
+                                            data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
                                         }
                                         else
                                         {
-                                            index++;
+                                            data[BuildingEnemyRatio] = 0.0;
                                         }
+                                        if (unitData.infantryUnit)
+                                        {
+                                            data[InfantryUnit] = 1.0;
+                                        }
+                                        else
+                                        {
+                                            data[InfantryUnit] = 0.0;
+                                        }
+                                        if (unitData.indirectUnit)
+                                        {
+                                            data[IndirectUnit] = 1.0;
+                                            data[DirectUnit] = 0.0;
+                                        }
+                                        else
+                                        {
+                                            data[IndirectUnit] = 0.0;
+                                            data[DirectUnit] = 1.0;
+                                        }
+                                        score = calcBuildScore(data);
+                                    }
+                                    else
+                                    {
+                                        score = unitData.transporterScore;
+                                        isTransporter = true;
                                     }
                                 }
-                                else if (score >= bestScore - variance)
+                            }
+                            score *= BaseGameInputIF::getUnitBuildValue(actionIds[i2]);
+                            if (score > bestScore)
+                            {
+                                bestScore = score;
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
+                                transporters.append(isTransporter);
+                                qint32 index = 0;
+                                while (index < scores.size())
                                 {
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                    transporters.append(isTransporter);
+                                    if (scores[index] < bestScore - variance)
+                                    {
+                                        buildingIdx.removeAt(index);
+                                        unitIDx.removeAt(index);
+                                        scores.removeAt(index);
+                                        transporters.removeAt(index);
+                                    }
+                                    else
+                                    {
+                                        index++;
+                                    }
                                 }
+                            }
+                            else if (score >= bestScore - variance)
+                            {
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
+                                transporters.append(isTransporter);
                             }
                         }
                     }
                 }
             }
-
         }
     }
 
@@ -2261,7 +2187,13 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
         if (transporters[item])
         {
-            m_TransporterScores.clear();
+            for (auto & building : m_productionData)
+            {
+                for (auto & unit : building.m_buildData)
+                {
+                    unit.transporterScore = 0.0f;
+                }
+            }
         }
         spMenuData pData = pAction->getMenuStepData();
         if (pData->validData())
@@ -2277,6 +2209,172 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         }
     }
     return false;
+}
+
+qint32 NormalAi::getIndexInProductionData(Building* pBuilding)
+{
+    qint32 x = pBuilding->getX();
+    qint32 y = pBuilding->getY();
+    qint32 ret = -1;
+    for (qint32 i = 0; i < m_productionData.length(); ++i)
+    {
+        if (m_productionData[i].m_x == x &&
+            m_productionData[i].m_y == y)
+        {
+            ret = i;
+            break;
+        }
+    }
+    if (ret < 0)
+    {
+        m_productionData.append(ProductionData());
+        ret = m_productionData.length() - 1;
+        m_productionData[ret].m_x = x;
+        m_productionData[ret].m_y = y;
+    }
+    return ret;
+}
+
+qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
+                                      QmlVectorUnit* pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                                      QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                      QVector<QVector4D> & attackCount, QVector<float> & buildData)
+{
+    qint32 ret = -1;
+    auto & data = m_productionData[index];
+    for (qint32 i = 0; i < data.m_buildData.length(); ++i)
+    {
+        auto & unitData = data.m_buildData[i];
+        if (unitData.unitId == unitId)
+        {
+            if (unitData.notAttackableCount > 0)
+            {
+                Unit dummy(unitId, m_pPlayer, false);
+                dummy.setVirtuellX(data.m_x);
+                dummy.setVirtuellY(data.m_y);
+                float bonusFactor = 1.0f;
+                if ((buildData[DirectUnitRatio] > m_directIndirectRatio && unitData.baseRange > 1) ||
+                    (buildData[DirectUnitRatio] < m_directIndirectRatio && unitData.baseRange == 1))
+                {
+                    bonusFactor = m_directIndirectUnitBonusFactor;
+                }
+                auto damageData = calcExpectedFundsDamage(data.m_x, data.m_y, dummy, pEnemyUnits, attackCount, bonusFactor);
+                unitData.notAttackableCount = std::get<1>(damageData);
+                unitData.damage =  std::get<0>(damageData);
+            }
+            if ((unitData.isTransporter &&
+                  unitData.transporterScore <= 0.0f))
+            {
+                data.m_buildData.removeAt(i);
+            }
+            else
+            {
+                ret = i;
+            }
+            break;
+        }
+    }
+    if (ret < 0)
+    {
+        data.m_buildData.append(UnitBuildData());
+        ret = data.m_buildData.length() - 1;
+        auto & unitBuildData = data.m_buildData[ret];
+        unitBuildData.unitId = unitId;
+        createUnitBuildData(data.m_x, data.m_y, unitBuildData,
+                            pUnits, transportTargets,
+                            pEnemyUnits, pEnemyBuildings,
+                            attackCount, buildData);
+    }
+    return ret;
+}
+
+void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
+                                   QmlVectorUnit* pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                                   QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                   QVector<QVector4D> & attackCount, QVector<float> & buildData)
+{
+    Unit dummy(unitBuildData.unitId, m_pPlayer, false);
+    dummy.setVirtuellX(x);
+    dummy.setVirtuellY(y);
+    createIslandMap(dummy.getMovementType(), dummy.getUnitID());
+    UnitPathFindingSystem pfs(&dummy, m_pPlayer);
+    pfs.explore();
+    unitBuildData.movePoints = dummy.getMovementpoints(QPoint(x, y));
+    auto points = pfs.getAllNodePoints();
+    if (points.length() >= unitBuildData.movePoints * 1.5f)
+    {
+        unitBuildData.canMove = true;
+        unitBuildData.isTransporter = (dummy.getWeapon1ID().isEmpty() &&
+                                       dummy.getWeapon2ID().isEmpty());
+        if (unitBuildData.isTransporter)
+        {
+            unitBuildData.transporterScore = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, buildData);
+        }
+        else
+        {
+            unitBuildData.closestTarget = getClosestTargetDistance(x, y, dummy, pEnemyUnits, pEnemyBuildings);
+            unitBuildData.coBonus += getAiCoUnitMultiplier(m_pPlayer->getCO(0), &dummy);
+            unitBuildData.coBonus += getAiCoUnitMultiplier(m_pPlayer->getCO(1), &dummy);
+            unitBuildData.baseRange = dummy.getBaseMaxRange();
+            float bonusFactor = 1.0f;
+            if ((buildData[DirectUnitRatio] > m_directIndirectRatio && unitBuildData.baseRange > 1) ||
+                (buildData[DirectUnitRatio] < m_directIndirectRatio && unitBuildData.baseRange == 1))
+            {
+                bonusFactor = m_directIndirectUnitBonusFactor;
+            }
+            auto damageData = calcExpectedFundsDamage(x, y, dummy, pEnemyUnits, attackCount, bonusFactor);
+            unitBuildData.notAttackableCount = std::get<1>(damageData);
+            unitBuildData.damage =  std::get<0>(damageData);
+            unitBuildData.cost = dummy.getUnitCosts();
+            unitBuildData.infantryUnit = (dummy.getActionList().contains(ACTION_CAPTURE) &&
+                                          dummy.getLoadingPlace() == 0);
+            unitBuildData.indirectUnit = dummy.getBaseMaxRange() > 1;
+        }
+    }
+}
+
+void NormalAi::getEnemyDamageCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> & attackCount)
+{
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+    {
+        for (qint32 i = 0; i < pUnits->size(); i++)
+        {
+            Unit* pUnit = pUnits->at(i);
+            float dmg1 = 0.0f;
+            float hpValue = pUnit->getHpRounded() / Unit::MAX_UNIT_HP;
+            Unit* pEnemyUnit = pEnemyUnits->at(i2);
+            // get weapon 1 damage
+            if (!pUnit->getWeapon1ID().isEmpty())
+            {
+                dmg1 = pWeaponManager->getBaseDamage(pUnit->getWeapon1ID(), pEnemyUnit) * hpValue;
+            }
+            // get weapon 2 damage
+            float dmg2 = 0.0f;
+            if (!pUnit->getWeapon2ID().isEmpty())
+            {
+                dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit) * hpValue;
+            }
+
+            if ((dmg1 > m_notAttackableDamage || dmg2 > m_notAttackableDamage) &&
+                pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->getX(), pEnemyUnit->getY())) - pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())) < 2)
+            {
+                if (onSameIsland(pUnit, pEnemyUnits->at(i2)))
+                {
+                    attackCount[i2].setY(attackCount[i2].y() + 1);
+                }
+                attackCount[i2].setX(attackCount[i2].x() + 1);
+            }
+            if (dmg1 > m_midDamage || dmg2 > m_midDamage)
+            {
+                attackCount[i2].setZ(attackCount[i2].z() + 1);
+            }
+            if (dmg1 > m_highDamage || dmg2 > m_highDamage)
+            {
+                attackCount[i2].setW(attackCount[i2].w() + 1);
+            }
+        }
+    }
 }
 
 qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)

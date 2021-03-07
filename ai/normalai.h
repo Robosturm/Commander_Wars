@@ -16,6 +16,29 @@ class Building;
 class NormalAi : public CoreAI
 {
     Q_OBJECT
+
+    struct UnitBuildData
+    {
+        QString unitId;
+        bool isTransporter{false};
+        bool canMove{false};
+        bool indirectUnit{false};
+        bool infantryUnit{false};
+        qint32 cost{0};
+        qint32 baseRange{0};
+        float damage{0.0f};
+        qint32 notAttackableCount{0};
+        float coBonus{0.0f};
+        float closestTarget{0.0f};
+        qint32 movePoints{0};
+        float transporterScore{0.0f};
+    };
+    struct ProductionData
+    {
+        qint32 m_x = -1;
+        qint32 m_y = -1;
+        QVector<UnitBuildData> m_buildData;
+    };
 public:
     enum BuildItems
     {
@@ -247,11 +270,48 @@ protected:
     bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                     QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
     /**
+     * @brief getEnemyDamageCounts
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param attackCount
+     */
+    void getEnemyDamageCounts(QmlVectorUnit* pUnits,QmlVectorUnit* pEnemyUnits, QVector<QVector4D> & attackCount);
+    /**
+     * @brief getIndexInProductionData
+     * @param pBuilding
+     * @return
+     */
+    qint32 getIndexInProductionData(Building* pBuilding);
+    /**
+     * @brief getUnitProductionIdx
+     * @param index
+     * @param unitId
+     * @return
+     */
+    qint32 getUnitProductionIdx(qint32 index, QString unitId,
+                                QmlVectorUnit* pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                                QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                QVector<QVector4D> & attackCount, QVector<float> & buildData);
+    /**
      * @brief calcBuildScore
      * @param data
      * @return
      */
     float calcBuildScore(QVector<float>& data);
+    /**
+     * @brief createUnitBuildData
+     * @param x
+     * @param y
+     * @param unitBuildData
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @param attackCount
+     * @param buildData
+     */
+    void createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuildData,
+                             QmlVectorUnit* pUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets,
+                             QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                             QVector<QVector4D> & attackCount, QVector<float> & buildData);
     /**
      * @brief calcCostScore
      * @param data
@@ -315,9 +375,10 @@ private:
      */
     QVector<QPointF> m_VirtualEnemyData;
     /**
-     * @brief m_TransporterScores
+     * @brief m_productionData
      */
-    QVector<std::tuple<float, QString, qint32, qint32>> m_TransporterScores;
+    QVector<ProductionData> m_productionData;
+
 
     float m_notAttackableDamage{25.0f};
     float m_midDamage{55.0f};
