@@ -182,6 +182,8 @@ var Constructor = function()
     };
     this.getAiCoUnitBonus = function(co, unit)
     {
+        var seaAirUnit = (unit.getUnitType() === GameEnums.UnitType_Air) ||
+                         (unit.getUnitType() === GameEnums.UnitType_Naval);
         if (unit.getBaseMaxRange() === 1 && !seaAirUnit)
         {
             return 2;
