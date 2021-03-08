@@ -41,6 +41,10 @@ var Constructor = function()
         {
             map.showWiki();
         }
+        else if (id === "RULES")
+        {
+            map.showRules();
+        }
     };
     this.isFinalStep = function(action)
     {
@@ -67,6 +71,7 @@ var Constructor = function()
         data.addData(qsTr("Unit Info"), "UNIT", "unit_info");
         data.addData(qsTr("Game Info"), "GAME", "intel");
         data.addData(qsTr("Attack Log"), "ATTACK", "fire");
+        data.addData(qsTr("Rules"), "RULES", "wiki");
         data.addData(qsTr("Wiki"), "WIKI", "wiki");
     };
 }

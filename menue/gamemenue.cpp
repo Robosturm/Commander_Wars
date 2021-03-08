@@ -35,6 +35,7 @@
 #include "objects/dialogs/dialogtextinput.h"
 #include "objects/dialogs/ingame/dialogattacklog.h"
 #include "objects/dialogs/ingame/dialogunitinfo.h"
+#include "objects/dialogs/rules/ruleselectiondialog.h"
 #include "objects/gameplayandkeys.h"
 
 #include "ingamescriptsupport/genericbox.h"
@@ -361,6 +362,7 @@ void GameMenue::connectMap()
     connect(pMap.get(), &GameMap::sigShowOptions, this, &GameMenue::showOptions, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowChangeSound, this, &GameMenue::showChangeSound, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
 
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
@@ -1190,6 +1192,18 @@ void GameMenue::showAttackLog(qint32 player)
         m_Focused = true;
     });
     addChild(pAttackLog);    
+}
+
+void GameMenue::showRules()
+{
+    m_Focused = false;
+    Console::print("showRuleSelection()", Console::eDEBUG);
+    spRuleSelectionDialog pRuleSelection = new RuleSelectionDialog(RuleSelection::Mode::Singleplayer, false);
+    connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pRuleSelection);
 }
 
 void GameMenue::showUnitInfo(qint32 player)

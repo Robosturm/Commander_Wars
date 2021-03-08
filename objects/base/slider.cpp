@@ -73,3 +73,9 @@ void Slider::setCurrentValue(const qint32 &CurrentValue)
     float scrollValue = static_cast<float>(value - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);    
 }
+
+void Slider::setEnabled(bool value)
+{
+    V_Scrollbar::setEnabled(value);
+    m_spinBox->setEnabled(value);
+}

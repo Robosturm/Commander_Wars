@@ -22,7 +22,7 @@ public:
         Singleplayer,
         Multiplayer,
     };
-    explicit RuleSelection(qint32 width, Mode mode);
+    explicit RuleSelection(qint32 width, Mode mode, bool enabled = true);
     virtual ~RuleSelection();
     void showRuleSelection();
     void confirmRuleSelectionSetup();
@@ -48,6 +48,7 @@ private:
     spMultislider m_pWeatherSlider;
     spTextbox m_MapScriptFile;
     Mode m_mode;
+    bool m_ruleChangeEabled{true};
 };
 
 #endif // RULESELECTION_H

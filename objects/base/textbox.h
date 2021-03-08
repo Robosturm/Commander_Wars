@@ -35,7 +35,11 @@ public:
      * @param text
      */
     void setCurrentText(QString text);
-
+    /**
+     * @brief setEnabled
+     * @param value
+     */
+    virtual void setEnabled(bool value) override;
 signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);

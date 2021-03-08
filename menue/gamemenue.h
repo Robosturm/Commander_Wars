@@ -173,6 +173,10 @@ public slots:
      */
     void showAttackLog(qint32 player);
     /**
+     * @brief showRuleSelection
+     */
+    void showRules();
+    /**
      * @brief showAttackLog
      */
     void showUnitInfo(qint32 player);

@@ -15,7 +15,7 @@ class RuleSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit RuleSelectionDialog(RuleSelection::Mode mode);
+    explicit RuleSelectionDialog(RuleSelection::Mode mode, bool enabled = true);
     virtual ~RuleSelectionDialog() = default;
 signals:
     void sigRulesChanged();

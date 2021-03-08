@@ -1216,6 +1216,11 @@ void GameMap::showWiki()
     emit sigShowWiki();
 }
 
+void GameMap::showRules()
+{
+    emit sigShowRules();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

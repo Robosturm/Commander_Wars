@@ -18,6 +18,7 @@ public:
     qint32 getCurrentValue() const;
     void setCurrentValue(const qint32 &CurrentValue);
 
+    virtual void setEnabled(bool value) override;
 signals:
     void sliderValueChanged(qint32 value);
 public slots:

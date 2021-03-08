@@ -36,7 +36,11 @@ public:
     void setScrollvalue(float Scrollvalue);
     bool getSliding() const;
     void setSliding(bool sliding);
-
+    /**
+     * @brief setEnabled
+     * @param value
+     */
+    virtual void setEnabled(bool value) override;
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -76,6 +80,7 @@ private:
 
     oxygine::spBox9Sprite m_pBox;
     oxygine::spButton m_pArrowRigth;
+    oxygine::spButton m_pArrowLeft;
 };
 
 #endif // V_SCROLLBAR_H

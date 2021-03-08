@@ -8,7 +8,7 @@
 
 #include "objects/dialogs/filedialog.h"
 
-RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode)
+RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -35,25 +35,27 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode)
     });
     connect(this, &RuleSelectionDialog::sigOk, this, &RuleSelectionDialog::pressedOk, Qt::QueuedConnection);
 
-    m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
-    m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
-    m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    if (enabled)
     {
-        emit sigShowLoadRules();
-    });
-    pSpriteBox->addChild(m_pButtonLoadRules);
-    connect(this, &RuleSelectionDialog::sigShowLoadRules, this, &RuleSelectionDialog::showLoadRules, Qt::QueuedConnection);
+        m_pButtonLoadRules = ObjectManager::createButton(tr("Load"));
+        m_pButtonLoadRules->setPosition(Settings::getWidth() / 2 + 20 + m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+        m_pButtonLoadRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowLoadRules();
+        });
+        pSpriteBox->addChild(m_pButtonLoadRules);
+        connect(this, &RuleSelectionDialog::sigShowLoadRules, this, &RuleSelectionDialog::showLoadRules, Qt::QueuedConnection);
 
-    m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
-    m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 20 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
-    m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigShowSaveRules();
-    });
-    pSpriteBox->addChild(m_pButtonSaveRules);
-    connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
-
-    m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80, mode);
+        m_pButtonSaveRules = ObjectManager::createButton(tr("Save"));
+        m_pButtonSaveRules->setPosition(Settings::getWidth() / 2 - m_pButtonSaveRules->getWidth() - 20 - m_OkButton->getWidth() / 2, Settings::getHeight() - 30 - m_OkButton->getHeight());
+        m_pButtonSaveRules->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowSaveRules();
+        });
+        pSpriteBox->addChild(m_pButtonSaveRules);
+        connect(this, &RuleSelectionDialog::sigShowSaveRules, this, &RuleSelectionDialog::showSaveRules, Qt::QueuedConnection);
+    }
+    m_pRuleSelection = new RuleSelection(Settings::getWidth() - 80, mode, enabled);
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2 - m_OkButton->getHeight());
     m_pPanel = new  Panel(true,  size, size);
     m_pPanel->setPosition(10, 20);
@@ -65,33 +67,27 @@ RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode)
 
 
 void RuleSelectionDialog::showLoadRules()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::loadRules, Qt::QueuedConnection);
-    
 }
 
 void RuleSelectionDialog::showSaveRules()
 {
-    
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
     spFileDialog fileDialog = new FileDialog(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &RuleSelectionDialog::saveRules, Qt::QueuedConnection);
-    
 }
 
 void RuleSelectionDialog::loadRules(QString filename)
 {
-    
-
     if (filename.endsWith(".grl"))
     {
         QFile file(filename);
@@ -110,13 +106,10 @@ void RuleSelectionDialog::loadRules(QString filename)
             m_pPanel->setContentWidth(m_pRuleSelection->getWidth());
         }
     }
-    
 }
 
 void RuleSelectionDialog::saveRules(QString filename)
 {
-    
-
     if (filename.endsWith(".grl"))
     {
         QFile file(filename);
@@ -125,15 +118,12 @@ void RuleSelectionDialog::saveRules(QString filename)
         spGameMap pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
-    }
-    
+    }    
 }
 
 void RuleSelectionDialog::pressedOk()
-{
-    
+{    
     m_pRuleSelection->confirmRuleSelectionSetup();
     emit sigRulesChanged();
-    detach();
-    
+    detach();    
 }

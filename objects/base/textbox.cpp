@@ -252,3 +252,9 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
     }
 }
 
+void Textbox::setEnabled(bool value)
+{
+    oxygine::Actor::setEnabled(value);
+    m_Textbox->setEnabled(value);
+    m_Textfield->setEnabled(value);
+}

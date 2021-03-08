@@ -130,3 +130,12 @@ void Multislider::sliderValueChanged(qint32 slider)
     emit signalSliderChanged();
     
 }
+
+void Multislider::setEnabled(bool value)
+{
+    for (qint32 i = 0; i < m_Slider.size(); i++)
+    {
+        m_Slider[i]->setEnabled(value);
+        m_Textfields[i]->setEnabled(value);
+    }
+}

@@ -22,6 +22,7 @@ public:
     explicit Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values = {});
 
     qint32 getSliderValue(qint32 slider);
+    virtual void setEnabled(bool value) override;
 signals:
     void signalSliderChanged();
     void signalSliderValueChanged(qint32 slider);

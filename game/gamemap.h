@@ -365,6 +365,7 @@ signals:
     void sigShowOptions();
     void sigShowChangeSound();
     void sigShowWiki();
+    void sigShowRules();
 public slots:
     /**
      * @brief getFrameTime
@@ -513,6 +514,10 @@ public slots:
      * @brief showWiki
      */
     void showWiki();
+    /**
+     * @brief showRules
+     */
+    void showRules();
     /**
      * @brief getBuildingCount
      * @param buildingID

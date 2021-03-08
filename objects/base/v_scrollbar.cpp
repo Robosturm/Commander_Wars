@@ -63,26 +63,26 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->addChild(m_pArrowRigth);
     m_pArrowRigth->setPosition(width - m_pArrowRigth->getWidth() - 8, 9);
 
-    oxygine::spButton pArrowLeft = new oxygine::Button();
+    m_pArrowLeft = new oxygine::Button();
     // pButton->setPosition(200, 200);
-    pArrowLeft->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
-    pArrowLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    pArrowLeft->setFlippedX(true);
-    pArrowLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowLeft->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
+    m_pArrowLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_pArrowLeft->setFlippedX(true);
+    m_pArrowLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
         if (m_enabled)
         {
-            pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+            m_pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
         }
     });
-    pArrowLeft->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowLeft->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         if (m_enabled)
         {
-            pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+            m_pArrowLeft->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         }
     });
-    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
+    m_pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
@@ -93,7 +93,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             emit sigStartEditValue();
         }
     });
-    pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
+    m_pArrowLeft->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event* pEvent)
     {
         if (m_enabled)
         {
@@ -102,8 +102,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             emit sigEndEditValue(m_Scrollvalue);
         }
     });
-    m_pBox->addChild(pArrowLeft);
-    pArrowLeft->setPosition(9, 8);
+    m_pBox->addChild(m_pArrowLeft);
+    m_pArrowLeft->setPosition(9, 8);
 
     m_slider = new oxygine::Box9Sprite();
     pAnim = pObjectManager->getResAnim("v_scrollbar");
@@ -340,12 +340,19 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
 }
 
 void V_Scrollbar::setWidth(float w)
-{
-    
+{    
     oxygine::Actor::setWidth(w);
     m_Width = w;
     m_pBox->setWidth(w);
     m_pArrowRigth->setPosition(m_Width - m_pArrowRigth->getWidth() - 8, 9);
-    setContentWidth(m_ContentWidth);
-    
+    setContentWidth(m_ContentWidth);    
+}
+
+void V_Scrollbar::setEnabled(bool value)
+{
+    oxygine::Actor::setEnabled(value);
+    m_slider->setEnabled(value);
+    m_pBox->setEnabled(value);
+    m_pArrowRigth->setEnabled(value);
+    m_pArrowLeft->setEnabled(value);
 }
