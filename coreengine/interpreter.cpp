@@ -59,7 +59,7 @@ void Interpreter::init()
     QJSValue userdata = newQObject(Userdata::getInstance());
     globalObject().setProperty("userdata", userdata);
     QJSValue coSpriteManager = newQObject(COSpriteManager::getInstance());
-    globalObject().setProperty("coSpriteManager", userdata);
+    globalObject().setProperty("coSpriteManager", coSpriteManager);
 
     GameEnums::registerEnums();
 
