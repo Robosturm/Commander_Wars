@@ -2835,22 +2835,22 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="116"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="113"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="125"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="122"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="152"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="149"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="190"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="187"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

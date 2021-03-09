@@ -89,9 +89,6 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
             emit sigSelectRandomPerks();
         });
         connect(this, &PerkSelectionDialog::sigSelectRandomPerks, this, &PerkSelectionDialog::selectRandomPerks, Qt::QueuedConnection);
-
-        randomButton->setVisible(false);
-        pLabel->setVisible(false);
     }
 
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());

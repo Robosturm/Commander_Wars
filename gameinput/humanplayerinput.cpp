@@ -93,7 +93,8 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             else if (m_CurrentMenu.get() == nullptr)
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
-                if (pUnit != nullptr && !pUnit->getHasMoved())
+                if (pUnit != nullptr && !pUnit->getHasMoved() &&
+                    m_pUnitPathFindingSystem.get() != nullptr)
                 {
                     qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
                     if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
@@ -943,6 +944,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
     }
     deleteArrow();
     if (m_pGameAction->getTarget() != QPoint(x, y) &&
+        m_pUnitPathFindingSystem.get() != nullptr &&
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
         m_FieldPoints.contains(QVector3D(x, y, 0)))
     {
