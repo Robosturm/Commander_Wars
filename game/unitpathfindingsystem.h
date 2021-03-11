@@ -70,6 +70,12 @@ public:
      */
     bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints);
     /**
+     * @brief blockedByEnemy
+     * @param pNodeUnit
+     * @return
+     */
+    bool blockedByEnemy(Unit* pNodeUnit);
+    /**
      * @brief getFast
      * @return
      */

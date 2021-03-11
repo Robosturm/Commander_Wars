@@ -1,4 +1,6 @@
-#include "perkselection.h"
+#include "objects/perkselection.h"
+
+#include "coreengine/globalutils.h"
 
 #include "resource_management/coperkmanager.h"
 #include "resource_management/fontmanager.h"
@@ -20,8 +22,7 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
 }
 
 void PerkSelection::updatePerksView(CO* pCO)
-{
-    
+{    
     m_pCO = pCO;
     removeChildren();
     if (m_banning)
@@ -63,18 +64,15 @@ void PerkSelection::updatePerksView(CO* pCO)
             pCheckbox->setChecked(m_perks.contains(id));
             connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
             {
-                if (m_banning)
+                if (value)
                 {
-                    if (value)
-                    {
-                        m_perks.append(id);
-                    }
-                    else
-                    {
-                        m_perks.removeAll(id);
-                    }
+                    m_perks.append(id);
                 }
                 else
+                {
+                    m_perks.removeAll(id);
+                }
+                if (!m_banning)
                 {
                     if (value)
                     {
@@ -115,8 +113,7 @@ void PerkSelection::updatePerksView(CO* pCO)
     }
     y += GameMap::getImageSize() * 2 + 10;
     setHeight(y);
-    updatePerkCount();
-    
+    updatePerkCount();    
 }
 
 void PerkSelection::updatePerkCount()
@@ -173,6 +170,10 @@ QStringList PerkSelection::getPerks() const
 void PerkSelection::setPerks(const QStringList &perks)
 {
     m_perks = perks;
+    if (!m_banning)
+    {
+        m_pCO->setPerkList(perks);
+    }
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     qint32 count = pCOPerkManager->getCount();
     spGameMap pMap = GameMap::getInstance();
@@ -192,4 +193,23 @@ void PerkSelection::setPerks(const QStringList &perks)
             }
         }
     }
+    updatePerkCount();
+}
+
+void PerkSelection::selectRandomPerks(bool fill)
+{
+    QStringList perks = GameMap::getInstance()->getGameRules()->getAllowedPerks();
+    QStringList selectedPerks;
+    if (fill)
+    {
+        selectedPerks = m_pCO->getPerkList();
+    }
+    while (selectedPerks.size() < m_maxPerks &&
+           perks.size() > 0)
+    {
+        qint32 index = GlobalUtils::randInt(0, perks.size() - 1);
+        selectedPerks.append(perks[index]);
+        perks.removeAt(index);
+    }
+    setPerks(selectedPerks);
 }

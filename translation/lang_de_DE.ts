@@ -2820,37 +2820,38 @@ Host mods: </source>
 <context>
     <name>PerkSelectionDialog</name>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="30"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="34"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="81"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="85"/>
         <source>If checked clicking the random button. The selected perks are filled up to the maximum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="84"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="88"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="113"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="118"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="122"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="127"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="149"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="154"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="167"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="187"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="250"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>

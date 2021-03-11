@@ -232,7 +232,8 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
                     ret.push_front(lastValidPoint);
                     buffer.clear();
                 }
-                else if (currentCosts > movepoints)
+                else if (currentCosts > movepoints ||
+                         blockedByEnemy(pNodeUnit))
                 {
                     break;
                 }
@@ -258,10 +259,19 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
 {
     if ((pNodeUnit == nullptr || // empty field
          (pNodeUnit == m_pUnit) || // current field
-         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
-         (pNodeUnit != nullptr && !pNodeUnit->isStealthed(m_pPlayer) && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit))) && // stealthed unit
+         blockedByEnemy(pNodeUnit)) &&
         (movepoints < 0 || movementCosts <= movepoints) && // inside given cost limits
         (getCosts(getIndex(x, y), x, y, curX, curY) > 0))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool UnitPathFindingSystem::blockedByEnemy(Unit* pNodeUnit)
+{
+    if ((m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
+        (pNodeUnit != nullptr && !pNodeUnit->isStealthed(m_pPlayer) && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)))
     {
         return true;
     }

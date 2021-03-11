@@ -55,6 +55,7 @@ private:
     Player* m_pPlayer{nullptr};
     spPanel m_pPanel;
     spPerkSelection m_pPerkSelection;
+    bool m_banning{false};
 };
 
 #endif // PERKSELECTIONDIALOG_H

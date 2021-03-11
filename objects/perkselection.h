@@ -51,6 +51,10 @@ public slots:
      * @param toggle
      */
     void toggleAll(bool toggle);
+    /**
+     * @brief selectRandomPerks
+     */
+    void selectRandomPerks(bool fill);
 private:
     CO* m_pCO{nullptr};
     QVector<spCheckbox> m_Checkboxes;

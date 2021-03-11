@@ -1250,7 +1250,8 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
 QStringList CO::getPerkList()
 {
     QStringList ret = m_perkList;
-    ret.removeFirst();
+    ret.removeAll(coID);
+    ret.removeAll("TAGPOWER");
     return ret;
 }
 
