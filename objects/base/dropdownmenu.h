@@ -37,6 +37,11 @@ public:
      * @param index
      */
     void setCurrentItem(qint32 index) override;
+    /**
+     * @brief changeList
+     * @param items
+     */
+    void changeList(QVector<QString> items);
 signals:
     void sigItemChanged(qint32 item);
 public slots:

@@ -18,6 +18,13 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
+    changeList(items);
+}
+
+void DropDownmenu::changeList(QVector<QString> items)
+{
+    m_Items.clear();
+    m_Panel->clearContent();
     if (items.size() > 0)
     {
         m_Textfield->setHtmlText(items[0]);
@@ -41,6 +48,7 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     {
         addDropDownText(m_ItemTexts[i], i);
     }
+    changeItemCount(items.size());
 }
 
 void DropDownmenu::setCurrentItem(qint32 index)

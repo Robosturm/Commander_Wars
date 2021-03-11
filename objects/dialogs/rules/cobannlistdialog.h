@@ -33,6 +33,8 @@ public slots:
      */
     void saveBannlist(QString filename);
 private:
+    QVector<QString> getNameList();
+private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;
     oxygine::spButton m_ExitButton;

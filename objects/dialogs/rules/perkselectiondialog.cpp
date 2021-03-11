@@ -133,18 +133,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
             emit sigToggleAll(toggle);
         });
         connect(this, &PerkSelectionDialog::sigToggleAll, m_pPerkSelection.get(), &PerkSelection::toggleAll, Qt::QueuedConnection);
-
-        QVector<QString> items;
-        QStringList filters;
-        filters << "*.bl";
-        QDirIterator dirIter("data/perkbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
-        while (dirIter.hasNext())
-        {
-            dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
-            std::tuple<QString, QStringList> data = Filesupport::readList(file);
-            items.append(std::get<0>(data));
-        }
+        auto items = getNameList("data/perkbannlist/");
         m_PredefinedLists = new DropDownmenu(260, items);
 
         m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
@@ -172,24 +161,13 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         });
         pSpriteBox->addChild(pSave);
         connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
-
-        QVector<QString> items;
-        QStringList filters;
-        filters << "*.bl";
-        QDirIterator dirIter("data/perkselection/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
-        while (dirIter.hasNext())
-        {
-            dirIter.next();
-            QString file = dirIter.fileInfo().absoluteFilePath();
-            std::tuple<QString, QStringList> data = Filesupport::readList(file);
-            items.append(std::get<0>(data));
-        }
+        auto items = getNameList("data/perkselection/");
         m_PredefinedLists = new DropDownmenu(260, items);
 
         m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - pSave->getHeight());
         pSpriteBox->addChild(m_PredefinedLists);
         connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::setPerkBannlist, Qt::QueuedConnection);
-}
+    }
 }
 
 void PerkSelectionDialog::setPerkBannlist(qint32)
@@ -249,19 +227,39 @@ void PerkSelectionDialog::showSavePerklist()
 {    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Perklist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &PerkSelectionDialog::savePerklist, Qt::QueuedConnection);
-    addChild(pSaveInput);    
+    addChild(pSaveInput);
+}
+
+QVector<QString> PerkSelectionDialog::getNameList(QString path)
+{
+    QVector<QString> items;
+    QStringList filters;
+    filters << "*.bl";
+    QDirIterator dirIter(path, filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
+        items.append(std::get<0>(data));
+    }
+    return items;
 }
 
 void PerkSelectionDialog::savePerklist(QString filename)
-{    
+{
+    QString path;
     if (m_banning)
     {
-        Filesupport::storeList(filename, m_pPerkSelection->getPerks(), "data/perkbannlist/");
+        path = "data/perkbannlist/";
     }
     else
     {
-        Filesupport::storeList(filename, m_pPerkSelection->getPerks(), "data/perkselection/");
+        path = "data/perkselection/";
     }
+    Filesupport::storeList(filename, m_pPerkSelection->getPerks(), path);
+    auto items = getNameList(path);
+    m_PredefinedLists->changeList(items);
 }
 
 void PerkSelectionDialog::selectRandomPerks()

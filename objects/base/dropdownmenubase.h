@@ -42,6 +42,11 @@ public:
      * @param value
      */
     virtual void setEnabled(bool value) override;
+    /**
+     * @brief changeItemCount
+     * @param itemcount
+     */
+    void changeItemCount(qint32 itemcount);
 signals:
     void sigItemChangedInternal(qint32 item);
 

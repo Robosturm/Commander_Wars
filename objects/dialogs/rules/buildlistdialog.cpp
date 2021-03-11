@@ -68,23 +68,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
             emit m_Checkboxes[i]->checkChanged(toggle);
         }
     });
-
-    QVector<QString> items = {tr("Commander Wars"),
-                              tr("Advance Wars DoR"),
-                              tr("Advance Wars DS"),
-                              tr("Advance Wars 2"),
-                              tr("Advance Wars")};
-    QStringList filters;
-    filters << "*.bl";
-    QDirIterator dirIter("data/unitbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
-    while (dirIter.hasNext())
-    {
-        dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Filesupport::readList(file);
-        items.append(std::get<0>(data));
-    }
-
+    auto items = getNameList();
     m_PredefinedLists = new DropDownmenu(300, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
@@ -250,7 +234,29 @@ void BuildListDialog::showSaveBannlist()
     
 }
 
+QVector<QString> BuildListDialog::getNameList()
+{
+    QVector<QString> items = {tr("Commander Wars"),
+                              tr("Advance Wars DoR"),
+                              tr("Advance Wars DS"),
+                              tr("Advance Wars 2"),
+                              tr("Advance Wars")};
+    QStringList filters;
+    filters << "*.bl";
+    QDirIterator dirIter("data/unitbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
+        items.append(std::get<0>(data));
+    }
+    return items;
+}
+
 void BuildListDialog::saveBannlist(QString filename)
 {    
     Filesupport::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
+    auto items = getNameList();
+    m_PredefinedLists->changeList(items);
 }

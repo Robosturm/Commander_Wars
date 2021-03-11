@@ -67,19 +67,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
             emit m_Checkboxes[i]->checkChanged(toggle);
         }
     });
-
-    QVector<QString> items;
-    QStringList filters;
-    filters << "*.bl";
-    QDirIterator dirIter("data/actionbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
-    while (dirIter.hasNext())
-    {
-        dirIter.next();
-        QString file = dirIter.fileInfo().absoluteFilePath();
-        std::tuple<QString, QStringList> data = Filesupport::readList(file);
-        items.append(std::get<0>(data));
-    }
-
+    auto items = getNameList();
     m_PredefinedLists = new DropDownmenu(300, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
@@ -187,6 +175,22 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     pPanel->setContentHeigth(y + 50);
 }
 
+QVector<QString> ActionListDialog::getNameList()
+{
+    QVector<QString> items;
+    QStringList filters;
+    filters << "*.bl";
+    QDirIterator dirIter("data/actionbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        std::tuple<QString, QStringList> data = Filesupport::readList(file);
+        items.append(std::get<0>(data));
+    }
+    return items;
+}
+
 void ActionListDialog::setBuildlist(qint32)
 {
     QStringList data;
@@ -197,15 +201,15 @@ void ActionListDialog::setBuildlist(qint32)
 }
 
 void ActionListDialog::showSaveBannlist()
-{
-    
+{    
     spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &ActionListDialog::saveBannlist, Qt::QueuedConnection);
-    addChild(pSaveInput);
-    
+    addChild(pSaveInput);    
 }
 
 void ActionListDialog::saveBannlist(QString filename)
 {    
     Filesupport::storeList(filename, m_CurrentActionList, "data/actionbannlist/");
+    auto items = getNameList();
+    m_PredefinedLists->changeList(items);
 }

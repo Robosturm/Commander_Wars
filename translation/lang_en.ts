@@ -42,17 +42,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="89"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="77"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="117"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="105"/>
         <source>Action List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="202"/>
+        <location filename="../objects/dialogs/rules/actionlistdialog.cpp" line="205"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -75,42 +75,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="72"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="239"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="73"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="240"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="74"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="241"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="75"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="242"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="76"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="243"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="94"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="78"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="122"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="106"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="247"/>
+        <location filename="../objects/dialogs/rules/buildlistdialog.cpp" line="231"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,42 +141,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="70"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="295"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="71"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="296"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="72"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="297"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="73"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="298"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="74"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="299"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="91"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="77"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="120"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="106"/>
         <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="301"/>
+        <location filename="../objects/dialogs/rules/cobannlistdialog.cpp" line="287"/>
         <source>Banlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1226,7 +1226,7 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>DropDownmenu</name>
     <message>
-        <location filename="../objects/base/dropdownmenu.cpp" line="27"/>
+        <location filename="../objects/base/dropdownmenu.cpp" line="34"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2845,13 +2845,13 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="154"/>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="167"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="143"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="156"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="250"/>
+        <location filename="../objects/dialogs/rules/perkselectiondialog.cpp" line="228"/>
         <source>Perklist Name</source>
         <translation type="unfinished"></translation>
     </message>
