@@ -14,6 +14,10 @@
 #include <windows.h>
 #include <cxxabi.h>
 #include <imagehlp.h>
+#else
+#include <csignal>
+#include <err.h>
+#include <execinfo.h>
 #endif
 
 namespace crashReporter
@@ -21,7 +25,7 @@ namespace crashReporter
     static QString sCrashReportDirPath; // log file path
     static QString sProgramName;        // the full path to the executable (which we need to resolve symbols)
     // Note that we are looking for GCC-style name mangles
-    // See: https://en.wikipedia.org/wiki/Name_mangling#How_different_compilers_mangle_the_same_functions
+    // See: https://en.wikipedia.org/wiki/Name_mangling #How_different_compilers_mangle_the_same_functions
     static QRegularExpression  sSymbolMatching("^.*(_Z[^ ]+).*$");
 
     static logWrittenCallback  sLogWrittenCallback; // function to call after we've written the log file
@@ -31,6 +35,16 @@ namespace crashReporter
     QString _addressToLine( const QString &inProgramName, void const * const inAddr )
     {
         const QString  cAddrStr = QStringLiteral("0x%1").arg(quintptr(inAddr), 16, 16, QChar('0'));
+#ifdef Q_OS_MAC
+      // Uses atos
+      const QString  cProgram = QStringLiteral( "atos" );
+
+      const QStringList  cArguments = {
+         "-o", inProgramName,
+         "-arch", "x86_64",
+         cAddrStr
+      };
+#else
         // Uses addr2line
         const QString  cProgram = QStringLiteral("%1/addr2line").arg(QCoreApplication::applicationDirPath());
         const QStringList  cArguments =
@@ -41,12 +55,16 @@ namespace crashReporter
             "-e", inProgramName,
             cAddrStr
         };
+#endif
         sProcess->setProgram(cProgram);
         sProcess->setArguments(cArguments);
         sProcess->start(QIODevice::ReadOnly);
         if (!sProcess->waitForFinished())
         {
-            return cAddrStr;
+            return QStringLiteral( "* Error running command\n   %1 %2\n   %3" ).arg(
+                        sProcess->program(),
+                        sProcess->arguments().join( ' ' ),
+                        sProcess->errorString() );
         }
         const QString  cLocationStr = QString( sProcess->readAll() ).trimmed();
         if (cLocationStr == cAddrStr)
@@ -121,25 +139,25 @@ namespace crashReporter
         DWORD   image;
 
 #ifdef _M_IX86
-        image = IMAGE_FILE_MACHINE_I386;
+      image = IMAGE_FILE_MACHINE_I386;
 
-        stackFrame.AddrPC.Offset = context->Eip;
-        stackFrame.AddrPC.Mode = AddrModeFlat;
-        stackFrame.AddrStack.Offset = context->Esp;
-        stackFrame.AddrStack.Mode = AddrModeFlat;
-        stackFrame.AddrFrame.Offset = context->Ebp;
-        stackFrame.AddrFrame.Mode = AddrModeFlat;
+      stackFrame.AddrPC.Offset = context->Eip;
+      stackFrame.AddrPC.Mode = AddrModeFlat;
+      stackFrame.AddrStack.Offset = context->Esp;
+      stackFrame.AddrStack.Mode = AddrModeFlat;
+      stackFrame.AddrFrame.Offset = context->Ebp;
+      stackFrame.AddrFrame.Mode = AddrModeFlat;
 #elif _M_X64
-        image = IMAGE_FILE_MACHINE_AMD64;
+      image = IMAGE_FILE_MACHINE_AMD64;
 
-        stackFrame.AddrPC.Offset = context->Rip;
-        stackFrame.AddrPC.Mode = AddrModeFlat;
-        stackFrame.AddrFrame.Offset = context->Rsp;
-        stackFrame.AddrFrame.Mode = AddrModeFlat;
-        stackFrame.AddrStack.Offset = context->Rsp;
-        stackFrame.AddrStack.Mode = AddrModeFlat;
+      stackFrame.AddrPC.Offset = context->Rip;
+      stackFrame.AddrPC.Mode = AddrModeFlat;
+      stackFrame.AddrFrame.Offset = context->Rsp;
+      stackFrame.AddrFrame.Mode = AddrModeFlat;
+      stackFrame.AddrStack.Offset = context->Rsp;
+      stackFrame.AddrStack.Mode = AddrModeFlat;
 #else
-        // see http://theorangeduck.com/page/printing-stack-trace-mingw
+      // see http://theorangeduck.com/page/printing-stack-trace-mingw
 #error You need to define the stack frame layout for this architecture
 #endif
         QStringList frameList;
@@ -152,8 +170,9 @@ namespace crashReporter
             {
                 QString  locationStr = _addressToLine(sProgramName, reinterpret_cast<void*>(stackFrame.AddrPC.Offset));
                 // match the mangled name and demangle if we can
-                QRegularExpressionMatch match = sSymbolMatching.match(locationStr);
-                const QString  cSymbol( match.captured( 1 ) );
+                QRegularExpressionMatch match = sSymbolMatching.match(locationStr);                
+                const QString cSymbol(match.captured(1));
+
                 if (!cSymbol.isNull())
                 {
                     int demangleStatus = 0;
@@ -259,6 +278,164 @@ namespace crashReporter
 
         return EXCEPTION_EXECUTE_HANDLER;
     }
+#else
+   constexpr int  MAX_STACK_FRAMES = 64;
+   static void    *sStackTraces[MAX_STACK_FRAMES];
+   static uint8_t sAlternateStack[SIGSTKSZ];
+
+   QStringList  _stackTrace()
+   {
+      int   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
+      char  **messages = backtrace_symbols( sStackTraces, traceSize );
+
+      // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
+      QStringList frameList;
+      int         frameNumber = 0;
+
+      frameList.reserve( traceSize );
+
+      for ( int i = 2; i < (traceSize - 1); ++i )
+      {
+         QString  message( messages[i] );
+
+         // match the mangled name if possible and replace with file & line number
+         QRegularExpressionMatch match = sSymbolMatching.match( message );
+
+         const QString  cSymbol( match.captured( 1 ) );
+
+         if ( !cSymbol.isNull() )
+         {
+            QString  locationStr = _addressToLine( sProgramName, sStackTraces[i] );
+
+            if ( !locationStr.isEmpty() )
+            {
+               int   matchStart = match.capturedStart( 1 );
+
+               message.replace( matchStart, message.length() - matchStart, locationStr );
+            }
+         }
+
+         frameList += message;
+
+         ++frameNumber;
+      }
+
+      if ( messages != nullptr )
+      {
+         free( messages );
+      }
+
+      return frameList;
+   }
+
+   // prototype to prevent warning about not returning
+   void _posixSignalHandler( int inSig, siginfo_t *inSigInfo, void *inContext ) __attribute__ ((noreturn));
+   void _posixSignalHandler( int inSig, siginfo_t *inSigInfo, void *inContext )
+   {
+      Q_UNUSED( inContext )
+
+      const QString  cSignalType = [] ( int sig, int inSignalCode ) {
+         switch( sig )
+         {
+            case SIGSEGV:
+               return QStringLiteral( "Caught SIGSEGV: Segmentation Fault" );
+            case SIGINT:
+               return QStringLiteral( "Caught SIGINT: Interactive attention signal, (usually ctrl+c)" );
+            case SIGFPE:
+               switch( inSignalCode )
+               {
+                  case FPE_INTDIV:
+                     return QStringLiteral( "Caught SIGFPE: (integer divide by zero)" );
+                  case FPE_INTOVF:
+                     return QStringLiteral( "Caught SIGFPE: (integer overflow)" );
+                  case FPE_FLTDIV:
+                     return QStringLiteral( "Caught SIGFPE: (floating-point divide by zero)" );
+                  case FPE_FLTOVF:
+                     return QStringLiteral( "Caught SIGFPE: (floating-point overflow)" );
+                  case FPE_FLTUND:
+                     return QStringLiteral( "Caught SIGFPE: (floating-point underflow)" );
+                  case FPE_FLTRES:
+                     return QStringLiteral( "Caught SIGFPE: (floating-point inexact result)" );
+                  case FPE_FLTINV:
+                     return QStringLiteral( "Caught SIGFPE: (floating-point invalid operation)" );
+                  case FPE_FLTSUB:
+                     return QStringLiteral( "Caught SIGFPE: (subscript out of range)" );
+                  default:
+                     return QStringLiteral( "Caught SIGFPE: Arithmetic Exception" );
+               }
+            case SIGILL:
+               switch( inSignalCode )
+               {
+                  case ILL_ILLOPC:
+                     return QStringLiteral( "Caught SIGILL: (illegal opcode)" );
+                  case ILL_ILLOPN:
+                     return QStringLiteral( "Caught SIGILL: (illegal operand)" );
+                  case ILL_ILLADR:
+                     return QStringLiteral( "Caught SIGILL: (illegal addressing mode)" );
+                  case ILL_ILLTRP:
+                     return QStringLiteral( "Caught SIGILL: (illegal trap)" );
+                  case ILL_PRVOPC:
+                     return QStringLiteral( "Caught SIGILL: (privileged opcode)" );
+                  case ILL_PRVREG:
+                     return QStringLiteral( "Caught SIGILL: (privileged register)" );
+                  case ILL_COPROC:
+                     return QStringLiteral( "Caught SIGILL: (coprocessor error)" );
+                  case ILL_BADSTK:
+                     return QStringLiteral( "Caught SIGILL: (internal stack error)" );
+                  default:
+                     return QStringLiteral( "Caught SIGILL: Illegal Instruction" );
+               }
+            case SIGTERM:
+               return QStringLiteral( "Caught SIGTERM: a termination request was sent to the program" );
+            case SIGABRT:
+               return QStringLiteral( "Caught SIGABRT: usually caused by an abort() or assert()" );
+         }
+
+         return QStringLiteral( "Unrecognized Signal" );
+      } ( inSig, inSigInfo->si_code );
+
+      const QStringList cFrameInfoList = _stackTrace();
+
+      _writeLog( cSignalType, cFrameInfoList );
+
+      _Exit(1);
+   }
+
+   void _posixSetupSignalHandler()
+   {
+      // setup alternate stack
+      #ifdef Q_OS_LINUX
+            stack_t ss {static_cast<void*>(sAlternateStack), 0, SIGSTKSZ};
+      #else
+            stack_t ss {static_cast<void*>(sAlternateStack), SIGSTKSZ, 0};
+      #endif
+
+      if ( sigaltstack( &ss, nullptr ) != 0 )
+      {
+         err( 1, "sigaltstack" );
+      }
+
+      // register our signal handlers
+      struct sigaction sigAction;
+
+      sigAction.sa_sigaction = _posixSignalHandler;
+
+      sigemptyset( &sigAction.sa_mask );
+
+#ifdef __APPLE__
+      // backtrace() doesn't work on macOS when we use an alternate stack
+      sigAction.sa_flags = SA_SIGINFO;
+#else
+      sigAction.sa_flags = SA_SIGINFO | SA_ONSTACK;
+#endif
+
+      if ( sigaction( SIGSEGV, &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+      if ( sigaction( SIGFPE,  &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+      if ( sigaction( SIGINT,  &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+      if ( sigaction( SIGILL,  &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+      if ( sigaction( SIGTERM, &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+      if ( sigaction( SIGABRT, &sigAction, nullptr ) != 0 ) { err( 1, "sigaction" ); }
+   }
 #endif
     void  setSignalHandler(logWrittenCallback inLogWrittenCallback )
     {
@@ -273,6 +450,8 @@ namespace crashReporter
         }
 #ifdef Q_OS_WIN
         SetUnhandledExceptionFilter( _winExceptionHandler );
+#else
+      _posixSetupSignalHandler();
 #endif
     }
 
