@@ -1527,7 +1527,7 @@ void GameMenue::startGame()
     else
     {
         pApp->getAudioThread()->clearPlayList();
-        pMap->getCurrentPlayer()->loadCOMusic();
+        pMap->playMusic();
         pMap->updateUnitIcons();
         pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();

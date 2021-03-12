@@ -293,7 +293,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 9;
+        return 10;
     }
     /**
      * @brief clearMap
@@ -350,7 +350,10 @@ public:
     void registerMapAtInterpreter();
     QString getMapPath() const;
     void setMapPath(const QString &mapPath);
-
+    /**
+     * @brief playMusic
+     */
+    void playMusic();
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -367,6 +370,20 @@ signals:
     void sigShowWiki();
     void sigShowRules();
 public slots:
+    /**
+     * @brief getMapMusic
+     * @return
+     */
+    QString getMapMusic() const;
+    /**
+     * @brief setMapMusic
+     * @param mapMusic
+     */
+    void setMapMusic(const QString &mapMusic, qint32 startLoopMs = -1, qint32 endLoopMs = -1);
+    /**
+     * @brief clearMapMusic
+     */
+    void clearMapMusic();
     /**
      * @brief getFrameTime
      * @return
@@ -805,6 +822,10 @@ private:
     float m_zoom{1.0f};
     bool loaded{false};
     qint32 m_UniqueIdCounter{0};
+    QString m_mapMusic;
+    QString m_loadedMapMusic;
+    qint32 m_startLoopMs{-1};
+    qint32 m_endLoopMs{-1};
     static qint32 m_imagesize;
     void loadMapData();
 };

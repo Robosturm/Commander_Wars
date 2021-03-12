@@ -518,6 +518,24 @@ void GameMap::killDeadUnits()
     
 }
 
+QString GameMap::getMapMusic() const
+{
+    return m_mapMusic;
+}
+
+void GameMap::clearMapMusic()
+{
+    setMapMusic("");
+}
+
+void GameMap::setMapMusic(const QString &mapMusic, qint32 startLoopMs, qint32 endLoopMs)
+{
+    m_mapMusic = mapMusic;
+    m_startLoopMs = startLoopMs;
+    m_endLoopMs = endLoopMs;
+    playMusic();
+}
+
 QString GameMap::getMapPath() const
 {
     return m_mapPath;
@@ -998,6 +1016,9 @@ void GameMap::serializeObject(QDataStream& pStream) const
         pStream << false;
     }
     pStream << m_mapPath;
+    pStream << m_mapMusic;
+    pStream << m_startLoopMs;
+    pStream << m_endLoopMs;
 }
 
 void GameMap::readMapHeader(QDataStream& pStream,
@@ -1142,6 +1163,12 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         if (version > 8)
         {
             pStream >> m_mapPath;
+        }
+        if (version > 9)
+        {
+            pStream >> m_mapMusic;
+            pStream >> m_startLoopMs;
+            pStream >> m_endLoopMs;
         }
     }
     if (showLoadingScreen)
@@ -1749,8 +1776,6 @@ void GameMap::nextTurn()
 {
     m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->getAudioThread()->clearPlayList();
     bool nextDay = nextPlayer();
     if (nextDay)
     {
@@ -1768,10 +1793,7 @@ void GameMap::nextTurn()
     {
         pMenu->updatePlayerinfo();
     }
-
-
-    m_CurrentPlayer->loadCOMusic();
-    pApp->getAudioThread()->playRandom();
+    playMusic();
     bool permanent = false;
     bool found = false;
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
@@ -1825,6 +1847,25 @@ void GameMap::nextTurn()
     else
     {
         GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
+    }
+}
+
+void GameMap::playMusic()
+{
+    if (m_mapMusic.isEmpty())
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->getAudioThread()->clearPlayList();
+        m_CurrentPlayer->loadCOMusic();
+        pApp->getAudioThread()->playRandom();
+    }
+    else if (m_loadedMapMusic != m_mapMusic)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->getAudioThread()->clearPlayList();
+        pApp->getAudioThread()->addMusic(m_mapMusic, m_startLoopMs, m_endLoopMs);
+        m_loadedMapMusic = m_mapMusic;
+        pApp->getAudioThread()->playRandom();
     }
 }
 
