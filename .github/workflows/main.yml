@@ -5,11 +5,11 @@ env:
   compiler: gcc
 jobs:
   install:
-    name: Install Qt
+    name: All
     runs-on: windows-latest
     steps:
-      - uses: jurplel/install-qt-action@v2
-        with:
+    - uses: jurplel/install-qt-action@v2 
+      with:
           version: '5.15.2'
           host: 'windows'
           target: 'desktop'
@@ -21,9 +21,6 @@ jobs:
           tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.13.2-0,qt.tools.qtcreator'
           set-env: 'false'
           tools-only: 'false'
-  build:
-    runs-on: windows-latest
-    steps:
     - uses: actions/checkout@v2
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
