@@ -68,6 +68,8 @@ void AudioThread::initAudio()
     connect(m_Player2, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
     connect(m_Player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &AudioThread::reportReplayError, Qt::QueuedConnection);
     connect(m_Player2, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, &AudioThread::reportReplayError, Qt::QueuedConnection);
+    connect(m_playList, &QMediaPlaylist::loadFailed, this, &AudioThread::SlotCheckMusicEnded, Qt::QueuedConnection);
+    connect(m_playList2, &QMediaPlaylist::loadFailed, this, &AudioThread::SlotMediaStatusChanged, Qt::QueuedConnection);
 
     doubleBufferTimer->setSingleShot(false);
     doubleBufferTimer->setInterval(50);
@@ -472,5 +474,14 @@ void AudioThread::reportReplayError(QMediaPlayer::Error error)
         {
             break;
         }
+        default:
+        {
+            Console::print("Audio playback error: Service for replaying the requested audio format is missing.", Console::eERROR);
+            break;
+        }
     }
+     Console::print("Error in player1: " + m_Player->errorString(), Console::eERROR);
+     Console::print("Error in player2: " + m_Player2->errorString(), Console::eERROR);
+     Console::print("Error in playlist1: " + m_playList->errorString(), Console::eERROR);
+     Console::print("Error in playlist2: " + m_playList2->errorString(), Console::eERROR);
 }
