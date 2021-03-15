@@ -2,6 +2,7 @@ name: CMake
 on: [push]
 env:
   BUILD_TYPE: RelWithDebInfo
+  compiler: gcc
 jobs:
   install:
     name: Install Qt
