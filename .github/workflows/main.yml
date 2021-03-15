@@ -29,8 +29,8 @@ jobs:
     - name: Translate
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target Commander_Wars_translations
+      run: cmake --build . --config $BUILD_TYPE -DCMAKE_CXX_COMPILER=g++-10 --target Commander_Wars_translations
     - name: Build
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE --target install
+      run: cmake --build . --config $BUILD_TYPE -DCMAKE_CXX_COMPILER=g++-10 --target install
