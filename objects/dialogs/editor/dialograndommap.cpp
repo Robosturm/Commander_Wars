@@ -44,7 +44,7 @@ DialogRandomMap::DialogRandomMap()
     m_GeneratorFile = new Textbox(Settings::getWidth() - 300 - width);
     m_GeneratorFile->setTooltipText(tr("Selects the generator script used to generate the random map."));
     m_GeneratorFile->setPosition(text->getX() + width, text->getY());
-    m_GeneratorFile->setCurrentText("data/randomMaps/commanderwarsgenerator.js");
+    m_GeneratorFile->setCurrentText("data/randommaps/commanderwarsgenerator.js");
     m_pPanel->addItem(m_GeneratorFile);
     m_Generator = ObjectManager::createButton(tr("Select"), 130);
     m_Generator->setPosition(m_GeneratorFile->getX() + m_GeneratorFile->getWidth() + 10, y);
