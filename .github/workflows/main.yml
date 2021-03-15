@@ -17,7 +17,7 @@ on:
 jobs:
   install:
     name: Install Qt
-    runs-on: windows
+    runs-on: windows-latest
     steps:
       - uses: jurplel/install-qt-action@v2
         with:
