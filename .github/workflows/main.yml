@@ -10,13 +10,6 @@ jobs:
     name: All
     runs-on: windows-latest
     steps:
-    - name: Install correct version of mingw
-      run: |
-        choco uninstall mingw --force
-        choco uninstall strawberryperl --force
-    - uses: numworks/setup-msys2@v1
-      with:
-        msystem: MINGW32
     - uses: jurplel/install-qt-action@v2.5.3
       with:
           version: ${{ env.QT_VERSION }}
