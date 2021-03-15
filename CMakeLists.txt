@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 3.16.0)
 project (Commander_Wars)
 
+# Information for building commander wars on other platforms
+# 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
+# 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.0/gcc_64/lib
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -436,6 +440,9 @@ set(${PROJECT_NAME}_SRCS
         spritingsupport/spritecreator.cpp
 )
 
+#######################################################
+# this is just for the ide view nothing for execution #
+#######################################################
 FILE(GLOB_RECURSE scripts "resources/*.js")
 FILE(GLOB_RECURSE images "resources/*.png")
 FILE(GLOB_RECURSE xmls "resources/*.xml")
@@ -462,6 +469,9 @@ add_custom_target(shaders SOURCES ${ShaderScripts})
 
 FILE(GLOB_RECURSE DataScripts "data/*.js")
 add_custom_target(data SOURCES ${DataScripts})
+##############################################################
+# end of this is just for the ide view nothing for execution #
+##############################################################
 
 # create translation here :)
 set(LUPDATE_OPTIONS "-I ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -638,25 +648,27 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling")
 endif()
 
-# install  folders
-install(DIRECTORY system DESTINATION ".")
-install(DIRECTORY resources DESTINATION ".")
-install(DIRECTORY maps DESTINATION ".")
-install(DIRECTORY customTerrainImages DESTINATION ".")
-install(DIRECTORY mods DESTINATION ".")
-install(DIRECTORY templates DESTINATION ".")
-install(DIRECTORY savegames DESTINATION ".")
-install(DIRECTORY data DESTINATION ".")
-# install libs and exe
-install(TARGETS ${PROJECT_NAME} DESTINATION ".")
-install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION "." OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION "." OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION "audio" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION "bearer" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION "platforms" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION "playlistformats" OPTIONAL)
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION "styles" OPTIONAL)
-
-# install translations
-install(FILES ${QM_FILES} DESTINATION "resources/translation/")
+message("install lib dir: ${CMAKE_SYSTEM_PREFIX_PATH}")
+# install folders and executable
+install(DIRECTORY system DESTINATION                ".")
+install(DIRECTORY resources DESTINATION             ".")
+install(DIRECTORY maps DESTINATION                  ".")
+install(DIRECTORY customTerrainImages DESTINATION   ".")
+install(DIRECTORY mods DESTINATION                  ".")
+install(DIRECTORY templates DESTINATION             ".")
+install(DIRECTORY savegames DESTINATION             ".")
+install(DIRECTORY data DESTINATION                  ".")
+install(FILES ${QM_FILES} DESTINATION               "resources/translation/")
+install(TARGETS ${PROJECT_NAME} DESTINATION         "."
+                RUNTIME         DESTINATION         "."
+                ARCHIVE         DESTINATION         "."
+                LIBRARY         DESTINATION         ".")
+# install libs
+install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION                       "." OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION                    "." OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION         "mediaservice" OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION              "audio" OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION             "bearer" OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION    "playlistformats" OPTIONAL)
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION             "styles" OPTIONAL)

@@ -249,11 +249,26 @@ void AudioThread::SlotSetVolume(qint32 value)
 void AudioThread::SlotAddMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 {
     QString currentPath = QFileInfo(File).absoluteFilePath();
-    m_Player->stop();
-    m_playList->addMedia(QUrl::fromLocalFile(currentPath));
-    m_Player2->stop();
-    m_playList2->addMedia(QUrl::fromLocalFile(currentPath));
-    m_PlayListdata.append(std::tuple<qint64, qint64>(startPointMs, endPointMs));
+    if (QFile::exists(currentPath))
+    {
+        m_Player->stop();
+        bool loaded = m_playList->addMedia(QUrl::fromLocalFile(currentPath));
+        m_Player2->stop();
+        loaded = loaded && m_playList2->addMedia(QUrl::fromLocalFile(currentPath));
+        if (loaded)
+        {
+            m_PlayListdata.append(std::tuple<qint64, qint64>(startPointMs, endPointMs));
+
+        }
+        else
+        {
+            Console::print("Unable to load music file: " + currentPath, Console::eERROR);
+        }
+    }
+    else
+    {
+         Console::print("Unable to locate music file: " + currentPath, Console::eERROR);
+    }
 }
 
 void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
@@ -286,17 +301,31 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
 {
     QString currentPath = QFileInfo(folder).absoluteFilePath();
     QDir directory(folder);
-    QStringList filter("*.mp3");
-    QStringList files = directory.entryList(filter);
-    for (const auto& file : files)
+    if (directory.exists())
     {
-        if (!loadedSounds.contains(file))
+        QStringList filter("*.mp3");
+        QStringList files = directory.entryList(filter);
+        for (const auto& file : files)
         {
-            m_playList->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
-            m_playList2->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
-            m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
-            loadedSounds.append(file);
+            if (!loadedSounds.contains(file))
+            {
+                bool loaded = m_playList->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
+                loaded = loaded && m_playList2->addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
+                if (loaded)
+                {
+                    m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
+                    loadedSounds.append(file);
+                }
+                else
+                {
+                    Console::print("Unable to load music file: " + currentPath + '/' + file, Console::eERROR);
+                }
+            }
         }
+    }
+    else
+    {
+         Console::print("Unable to locate music folder: " + currentPath, Console::eERROR);
     }
 }
 
