@@ -58,6 +58,9 @@ message ("CXX System: ${CMAKE_SYSTEM_NAME}")
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
     set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
+else()
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
 endif()
 
 ###################################################################################
@@ -590,31 +593,34 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../lib/libQt5Xml.so
         ${ADDR_2_LINE}
     )
-
-    # libs seem to be named completely different in mediaservice - not sure why
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-#         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.so
-#         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.so
+         ${QT_BIN_DIR}/../plugins/mediaservice/libgstaudiodecoder.so
+         ${QT_BIN_DIR}/../plugins/mediaservice/libgstcamerabin.so
+         ${QT_BIN_DIR}/../plugins/mediaservice/libgstmediaplayer.so
+         ${QT_BIN_DIR}/../plugins/mediaservice/libgstmediacapture.so
     )
-
     set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
          ${QT_BIN_DIR}/../plugins/bearer/libqgenericbearer.so
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
          ${QT_BIN_DIR}/../plugins/playlistformats/libqtmultimedia_m3u.so
     )
-
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
          ${QT_BIN_DIR}/../plugins/audio/libqtmedia_pulse.so
          ${QT_BIN_DIR}/../plugins/audio/libqtaudio_alsa.so
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-        # todo install the proper platforms library for linux here
-        # ${QT_BIN_DIR}/../plugins/platforms/
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-        # todo install the proper  linux style lib to be used
-        # ${QT_BIN_DIR}/../plugins/styles/
+            ${QT_BIN_DIR}/../plugins/platforms/libqeglfs.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqoffscreen.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-egl.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqlinuxfb.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqvnc.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqwayland-xcomposite-glx.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqminimalegl.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqwayland-egl.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqxcb.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqminimal.so
+            ${QT_BIN_DIR}/../plugins/platforms/libqwayland-generic.so
     )
 endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -658,5 +664,7 @@ install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION "platform
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION "playlistformats" OPTIONAL)
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION "styles" OPTIONAL)
 
-# install translations
-install(FILES ${QM_FILES} DESTINATION "resources/translation/")
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+  # Install translations - only seems to work on Windows
+  install(FILES ${QM_FILES} DESTINATION "resources/translation/")
+endif()
