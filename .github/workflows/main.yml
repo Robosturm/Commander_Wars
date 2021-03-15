@@ -11,11 +11,9 @@ jobs:
     - uses: jurplel/install-qt-action@v2 
       with:
           version: '5.15.2'
-          host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw81'
-          dir: '${{ github.workspace }}/example/'
-          install-deps: 'true'
+          dir: '${{ github.workspace }}/qt/'
           cached: 'false'
           setup-python: 'true'
           tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.13.2-0,qt.tools.qtcreator'
@@ -29,10 +27,8 @@ jobs:
     - name: Translate
       working-directory: ${{github.workspace}}/build
       shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE --target Commander_Wars_translations
     - name: Build
       working-directory: ${{github.workspace}}/build
       shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE --target install
