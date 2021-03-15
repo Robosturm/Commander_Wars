@@ -1,6 +1,5 @@
 name: CMake
 on: [push]
-
 env:
   BUILD_TYPE: RelWithDebInfo
   QT_VERSION:     "5.15.2"
