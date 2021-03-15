@@ -543,14 +543,14 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/Qt5Multimedia.dll
         ${QT_BIN_DIR}/Qt5Gui.dll
         ${QT_BIN_DIR}/Qt5Widgets.dll
+        ${QT_BIN_DIR}/Qt5Svg.dll
+        ${QT_BIN_DIR}/Qt5Xml.dll
         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
         ${QT_BIN_DIR}/d3dcompiler_47.dll
         ${QT_BIN_DIR}/libEGL.dll
         ${QT_BIN_DIR}/libGLESv2.dll
-        ${QT_BIN_DIR}/Qt5Svg.dll
-        ${QT_BIN_DIR}/Qt5Xml.dll
         ${ADDR_2_LINE}
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/libEGL.dll
