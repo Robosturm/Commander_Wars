@@ -181,32 +181,32 @@ void Console::print(QString message, eLogLevels MsgLogLevel)
         {
             case eDEBUG:
             {
-                qDebug(msg.toStdString().c_str());
+                qDebug("%s", msg.toStdString().c_str());
                 prefix = "DEBUG: ";
                 break;
             }
             case eINFO:
             {
-                qInfo(msg.toStdString().c_str());
+                qInfo("%s", msg.toStdString().c_str());
                 prefix = "INFO: ";
                 break;
             }
             case eWARNING:
             {
-                qWarning(msg.toStdString().c_str());
+                qWarning("%s", msg.toStdString().c_str());
                 prefix = "WARNING: ";
                 break;
             }
             case eERROR:
             {
-                qCritical(msg.toStdString().c_str());
+                qCritical("%s", msg.toStdString().c_str());
                 prefix = "CRITICAL: ";
                 break;
             }
             case eFATAL:
             {
                 prefix = "FATAL: ";
-                qFatal(msg.toStdString().c_str());
+                qFatal("%s", msg.toStdString().c_str());
                 break;
             }
             default:
