@@ -13,7 +13,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 # add qt to our project and provide qt path to package path on travis
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};$ENV{QT5_BASE_DIR};$ENV{QT5_BASE_DIR}/lib/cmake")
 message("Module Path: ${CMAKE_PREFIX_PATH}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
@@ -62,7 +61,6 @@ endif()
 ###################################################################################
 # start oxygine stuff -> qoxygine
 ###################################################################################
-
 set(${PROJECT_NAME}_OXYGINE_SRCS
     # top level
     3rd_party/oxygine-framework/oxygine/AnimationFrame.cpp
@@ -551,7 +549,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/Qt5Svg.dll
         ${QT_BIN_DIR}/Qt5Xml.dll
-        ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
+        ${CMAKE_PREFIX_PATH}/bin/addr2line.exe
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/libEGL.dll
     )
@@ -580,35 +578,28 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
 
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/libqtQml.so
-        ${QT_BIN_DIR}/libqtCore.so
-        ${QT_BIN_DIR}/libqtNetwork.so
-        ${QT_BIN_DIR}/libqtMultimedia.so
-        ${QT_BIN_DIR}/libqtGui.so
-        ${QT_BIN_DIR}/libqtWidgets.so
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.so
-        ${QT_BIN_DIR}/libstdc++-6.so
-        ${QT_BIN_DIR}/libwinpthread-1.so
-        ${QT_BIN_DIR}/d3dcompiler_47.so
-        ${QT_BIN_DIR}/libEGL.so
-        ${QT_BIN_DIR}/libGLESv2.so
-        ${QT_BIN_DIR}/libqtSvg.so
-        ${QT_BIN_DIR}/libqt5Xml.so
-        ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
-        ${QT_BIN_DIR}/libGLESv2.so
-        ${QT_BIN_DIR}/libEGL.so
+        ${QT_BIN_DIR}/../lib/libQt5Qml.so
+        ${QT_BIN_DIR}/../lib/libQt5Core.so
+        ${QT_BIN_DIR}/../lib/libQt5Network.so
+        ${QT_BIN_DIR}/../lib/libQt5Multimedia.so
+        ${QT_BIN_DIR}/../lib/libQt5Gui.so
+        ${QT_BIN_DIR}/../lib/libQt5Widgets.so
+        ${QT_BIN_DIR}/../lib/libQt5Svg.so
+        ${QT_BIN_DIR}/../lib/libQt5Xml.so
+        ${CMAKE_PREFIX_PATH}/bin/addr2line.exe
     )
 
+    # libs seem to be named completely different in mediaservice - not sure why
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.so
-         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.so
+#         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.so
+#         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.so
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-         ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.so
+         ${QT_BIN_DIR}/../plugins/bearer/libqgenericbearer.so
     )
     set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.so
+         ${QT_BIN_DIR}/../plugins/playlistformats/libqtmultimedia_m3u.so
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
