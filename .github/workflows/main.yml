@@ -19,8 +19,6 @@ jobs:
           cached: 'false'
           setup-python: 'true'
           tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.13.2-0,qt.tools.qtcreator'
-          set-env: 'false'
-          tools-only: 'false'
     - uses: actions/checkout@v2
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
