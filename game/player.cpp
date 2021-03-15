@@ -1275,8 +1275,7 @@ QmlVectorBuilding* Player::getEnemyBuildings()
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
             if (pBuilding != nullptr &&
                 pBuilding->getTerrain() == pMap->getTerrain(x, y) &&
-                (pBuilding->getOwner() == nullptr || !pBuilding->getOwner()->getIsDefeated()) &&
-                isEnemy(pBuilding->getOwner()))
+                pBuilding->isEnemyBuilding(this))
             {
                 ret->append(pBuilding);
             }

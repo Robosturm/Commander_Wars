@@ -94,7 +94,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/core/Restorable.cpp
     ${OXYGINE_ROOT}/oxygine/core/UberShaderProgram.cpp
     ${OXYGINE_ROOT}/oxygine/core/VideoDriver.cpp
-	${OXYGINE_ROOT}/oxygine/core/gamewindow.cpp
+    ${OXYGINE_ROOT}/oxygine/core/gamewindow.cpp
     # core gl
     ${OXYGINE_ROOT}/oxygine/core/gl/NativeTextureGLES.cpp
     ${OXYGINE_ROOT}/oxygine/core/gl/ShaderProgramGL.cpp
@@ -442,7 +442,8 @@ set(${PROJECT_NAME}_SRCS
 FILE(GLOB_RECURSE scripts "resources/*.js")
 FILE(GLOB_RECURSE images "resources/*.png")
 FILE(GLOB_RECURSE xmls "resources/*.xml")
-add_custom_target(Resources SOURCES ${scripts} ${images} ${xmls})
+FILE(GLOB_RECURSE inis "resources/*.ini")
+add_custom_target(Resources SOURCES ${scripts} ${images} ${xmls} ${inis})
 
 FILE(GLOB_RECURSE modScripts "mods/*.js")
 FILE(GLOB_RECURSE modDescs "mods/*.txt")
@@ -564,6 +565,9 @@ set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
 set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
      ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
 )
+set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+     ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
+)
 
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
@@ -575,9 +579,6 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     )
     set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
          ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
     )
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
@@ -591,10 +592,6 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
     set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
         # todo install the proper  linux style lib to be used
         # ${QT_BIN_DIR}/../plugins/styles/
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-        # todo install the proper  linux style lib to be used
-        # ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
     )
 endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")

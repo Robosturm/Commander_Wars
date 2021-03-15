@@ -227,14 +227,14 @@ public slots:
     QString getTerrainName() const;
     void setTerrainName(const QString &value);
 
-    qint32 getX() const;
-    void setX(const qint32 &value);
+    qint32 getMapX() const;
+    void setMapX(const qint32 &value);
 
     qint32 getHp() const;
     void setHp(const qint32 &value);
 
-    qint32 getY() const;
-    void setY(const qint32 &value);
+    qint32 getMapY() const;
+    void setMapY(const qint32 &value);
     /**
      * @brief Terrain::getVision
      * @return

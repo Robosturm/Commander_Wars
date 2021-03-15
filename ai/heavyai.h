@@ -11,10 +11,11 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class GameMap;
+
 class HeavyAi : public CoreAI
 {
     Q_OBJECT
-    static const QString heavyAiObject;
     /**
      * @brief The BuildingEntry enum
      */
@@ -118,6 +119,36 @@ private:
      */
     float scoreWait(spGameAction action);
     /**
+     * @brief addCaptureTargets
+     * @param pUnit
+     * @param actions
+     * @param pEnemyBuildings
+     * @param targets
+     */
+    void addCaptureTargets(const QStringList & actions,
+                           Terrain* pTerrain, QVector<QVector3D>& targets);
+    /**
+     * @brief getCaptureDistanceModifier
+     * @return
+     */
+    qint32 getMovingToCaptureDistanceModifier();
+    /**
+     * @brief addAttackTargets
+     * @param pUnit
+     * @param pTargetFields
+     * @param targets
+     */
+    void addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets);
+    /**
+     * @brief getMovingToAttackDistanceModifier
+     */
+    qint32 getMovingToAttackDistanceModifier();
+    /**
+     * @brief getMovingToAttackEnvironmentDistanceModifier
+     * @return
+     */
+    qint32 getMovingToAttackEnvironmentDistanceModifier();
+    /**
      * @brief getBasicFieldInputVector
      * @param action
      * @param data
@@ -170,7 +201,11 @@ private:
     static const qint32 minSiloDamage;
     float m_minActionScore{0.1f};
     float m_actionScoreVariant{0.05f};
+    float m_stealthDistanceMultiplier{2.0f};
+    float m_alliedDistanceModifier{5.0f};
 
+    // storable stuff
+    QString m_aiName{"HEAVY_AI"};
 };
 
 #endif // HEAVYAI_H

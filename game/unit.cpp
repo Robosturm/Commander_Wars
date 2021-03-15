@@ -1971,7 +1971,7 @@ bool Unit::getTransportHidden(Player* pPlayer)
     return false;
 }
 
-QString Unit::getMovementType()
+QString Unit::getMovementType() const
 {
     return m_MovementType;
 }
@@ -2035,7 +2035,7 @@ qint32 Unit::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getX();
+        return m_pTerrain->getMapX();
     }
     else
     {
@@ -2047,7 +2047,7 @@ qint32 Unit::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getY();
+        return m_pTerrain->getMapY();
     }
     else
     {

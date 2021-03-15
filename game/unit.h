@@ -448,7 +448,7 @@ public slots:
      * @brief getMovementType the movement type id
      * @return
      */
-    QString getMovementType();
+    QString getMovementType() const;
     /**
      * @brief setMovementType
      * @param Movementtype

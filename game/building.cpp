@@ -47,8 +47,8 @@ QPoint Building::getOffset(Terrain* pTerrain)
 {
     if (pTerrain != nullptr)
     {
-        return QPoint(m_pTerrain->getX() - pTerrain->getX(),
-                      m_pTerrain->getY() - pTerrain->getY());
+        return QPoint(m_pTerrain->getMapX() - pTerrain->getMapX(),
+                      m_pTerrain->getMapY() - pTerrain->getMapY());
     }
     else
     {
@@ -419,7 +419,7 @@ qint32 Building::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getX();
+        return m_pTerrain->getMapX();
     }
     else
     {
@@ -431,7 +431,7 @@ qint32 Building::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getY();
+        return m_pTerrain->getMapY();
     }
     else
     {
@@ -988,6 +988,12 @@ qint32 Building::getHp() const
 void Building::setHp(const qint32 &Hp)
 {
     m_Hp = Hp;
+}
+
+bool Building::isEnemyBuilding(Player* pPlayer)
+{
+    return (m_pOwner == nullptr || !m_pOwner->getIsDefeated()) &&
+            pPlayer->isEnemy(m_pOwner);
 }
 
 void Building::serializeObject(QDataStream& pStream) const
