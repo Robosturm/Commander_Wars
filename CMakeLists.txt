@@ -14,6 +14,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 # add qt to our project and provide qt path to package path on travis
 message("Module Path: ${CMAKE_PREFIX_PATH}")
+find_program(ADDR_2_LINE addr2line)
+message("Addr2Line Path: ${ADDR_2_LINE}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
 
@@ -549,7 +551,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/Qt5Svg.dll
         ${QT_BIN_DIR}/Qt5Xml.dll
-        ${CMAKE_PREFIX_PATH}/bin/addr2line.exe
+        ${ADDR_2_LINE}
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/libEGL.dll
     )
@@ -586,7 +588,7 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
         ${QT_BIN_DIR}/../lib/libQt5Widgets.so
         ${QT_BIN_DIR}/../lib/libQt5Svg.so
         ${QT_BIN_DIR}/../lib/libQt5Xml.so
-        ${CMAKE_PREFIX_PATH}/bin/addr2line.exe
+        ${ADDR_2_LINE}
     )
 
     # libs seem to be named completely different in mediaservice - not sure why
