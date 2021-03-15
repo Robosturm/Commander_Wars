@@ -1,7 +1,7 @@
-#include "AtlasBuilder.h"
-#include "../Image.h"
-#include "../core/ImageDataOperations.h"
-#include "../core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 
 namespace oxygine
 {
@@ -51,7 +51,7 @@ namespace oxygine
 
         Point size(w, h);
 
-        for (size_t i = 0; i != _free.size(); ++i)
+        for (qint32 i = 0; i != _free.size(); ++i)
         {
             const Rect& rect_ = _free[i];
             if (rect_.getWidth() >= w && rect_.getHeight() >= h)
@@ -192,7 +192,7 @@ namespace oxygine
 
         Point size(w, h);
 
-        for (size_t i = 0; i != _free.size(); ++i)
+        for (qint32 i = 0; i != _free.size(); ++i)
         {
             const rect& rect_ = _free[i];
             if (rect_.rct.getWidth() >= w && rect_.rct.getHeight() >= h)

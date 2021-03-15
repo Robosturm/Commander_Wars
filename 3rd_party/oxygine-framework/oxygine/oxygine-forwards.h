@@ -1,7 +1,6 @@
 #pragma  once
-#include "core/intrusive_ptr.h"
-#include "closure/closure.h"
-
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include <chrono>
 
 #define DECLARE_SMART(class_name, spname) \
@@ -125,6 +124,6 @@ namespace oxygine
     typedef int cloneOptions;
     typedef int copyOptions;//deprecated typedef
     typedef int eventType;
-    typedef size_t glyphOptions;
+    typedef int glyphOptions;
     typedef void* nativeTextureHandle;
 }

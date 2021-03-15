@@ -1,7 +1,8 @@
 #ifndef ACHIEVEMENTMENU_H
 #define ACHIEVEMENTMENU_H
 
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include <QObject>
 
 #include "objects/base/panel.h"

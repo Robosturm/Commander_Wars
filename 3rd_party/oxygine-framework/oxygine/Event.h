@@ -1,8 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
-#include "EventDispatcher.h"
-#include "Input.h"
-#include "closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 
 namespace oxygine
 {

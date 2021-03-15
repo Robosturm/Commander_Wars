@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "Material.h"
-#include "core/Renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/Material.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include <functional>
 
 namespace oxygine

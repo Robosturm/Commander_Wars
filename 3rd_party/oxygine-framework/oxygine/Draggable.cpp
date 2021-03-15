@@ -1,9 +1,8 @@
-#include "Draggable.h"
-#include "actor/Actor.h"
-#include "actor/Stage.h"
-#include "math/AffineTransform.h"
-
-#include "Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/Draggable.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 namespace oxygine
 {

@@ -1,8 +1,8 @@
-#include "ClipRectActor.h"
-#include "Stage.h"
-#include "../RenderDelegate.h"
-#include "../RenderState.h"
-#include "../core/oxygine.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
 
 namespace oxygine
 {

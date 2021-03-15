@@ -1,6 +1,4 @@
-#include "slidingsprite.h"
-
-#include "game/gamemap.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/slidingsprite.h"
 
 namespace oxygine
 {

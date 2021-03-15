@@ -1,11 +1,7 @@
-#include "Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
 #include <qmutex.h>
 #include <QMutexLocker>
-#include <algorithm>
-#include <stdio.h>
-#include <string.h>
-#include <typeinfo>
-#include "../EventDispatcher.h"
 
 namespace oxygine
 {    

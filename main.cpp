@@ -3,7 +3,7 @@
 #include <qdir.h>
 #include <qapplication.h>
 #include "qfile.h"
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>

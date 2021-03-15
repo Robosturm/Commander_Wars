@@ -1,11 +1,8 @@
 #pragma once
 #ifndef OXYGINE_SCALARMATH
 #define OXYGINE_SCALARMATH
-#include "../oxygine-include.h"
-#include <math.h>
-#include <stdlib.h>
-
-#include "qcolor.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include <qcolor.h>
 
 namespace oxygine
 {

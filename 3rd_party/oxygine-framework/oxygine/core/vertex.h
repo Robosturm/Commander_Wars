@@ -2,8 +2,8 @@
 #ifndef OXYGINE_VERTEX
 #define OXYGINE_VERTEX
 
-#include "../oxygine-include.h"
-#include "../math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 namespace oxygine
 {

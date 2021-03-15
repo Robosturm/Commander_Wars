@@ -1,7 +1,7 @@
-#include "MaskedSprite.h"
-#include "../MaskedRenderer.h"
-#include "../RenderDelegate.h"
-#include "../RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.h"
+#include "3rd_party/oxygine-framework/oxygine/MaskedRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
 
 namespace oxygine
 {

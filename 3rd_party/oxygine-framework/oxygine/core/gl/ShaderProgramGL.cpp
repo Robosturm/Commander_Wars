@@ -1,6 +1,6 @@
-#include "ShaderProgramGL.h"
-#include "VertexDeclarationGL.h"
-#include "../gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {

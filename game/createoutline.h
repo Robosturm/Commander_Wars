@@ -1,7 +1,8 @@
 #ifndef CREATEOUTLINE_H
 #define CREATEOUTLINE_H
 
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class CreateOutline
 {

@@ -1,7 +1,6 @@
-#include "VideoDriverGL.h"
-#include "NativeTextureGLES.h"
-
-#include "../gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {

@@ -1,13 +1,12 @@
-#include "TextField.h"
-#include "../Font.h"
-#include "../res/ResFont.h"
-#include "../RenderDelegate.h"
-#include "../RenderState.h"
-#include "../core/gl/VideoDriverGLES20.h"
-#include "../res/Resources.h"
-#include "../text_utils/Node.h"
-#include "../text_utils/TextBuilder.h"
-#include <sstream>
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
+#include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 
 namespace oxygine
 {

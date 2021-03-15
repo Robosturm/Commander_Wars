@@ -1,7 +1,7 @@
 #ifndef TWEENWAIT_H
 #define TWEENWAIT_H
 
-#include "oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
 
 class TweenWait
 {

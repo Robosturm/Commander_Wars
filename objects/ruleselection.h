@@ -2,7 +2,8 @@
 #define RULESELECTION_H
 
 #include <QObject>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/multislider.h"
 #include "objects/base/textbox.h"

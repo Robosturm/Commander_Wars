@@ -1,11 +1,14 @@
 #pragma once
-#include "oxygine-include.h"
-#include "core/Object.h"
-#include "math/Rect.h"
-#include <unordered_set>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include <QSet>
 
 namespace oxygine
 {
+    struct glyph;
+    inline uint qHash(const oxygine::glyph& k, uint seed = 0) noexcept;
+
     struct glyph
     {
         RectF src;
@@ -25,14 +28,6 @@ namespace oxygine
         spNativeTexture texture;
 
         bool operator == (const glyph& r) const {return ch == r.ch && opt == r.opt;}
-    };
-
-    struct GlyphHasher
-    {
-        std::size_t operator()(const glyph& k) const
-        {
-            return std::hash<size_t>()(k.ch + k.opt);
-        }
     };
 
     class Font;
@@ -64,7 +59,7 @@ namespace oxygine
 
         virtual bool loadGlyph(int, glyph&, const glyphOptions&) { return false; }
 
-        typedef std::unordered_set<glyph, GlyphHasher> glyphs;
+        typedef QSet<glyph> glyphs;
 
         glyphs _glyphs;
         bool _ignoreOptions;

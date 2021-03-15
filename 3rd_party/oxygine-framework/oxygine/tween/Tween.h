@@ -1,14 +1,13 @@
 #pragma once
-#include "oxygine-include.h"
-#include "../Event.h"
-#include "../EventDispatcher.h"
-#include "../Property.h"
-#include "../UpdateState.h"
-#include "../closure/closure.h"
-#include "../core/Object.h"
-#include "../utils/intrusive_list.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/Event.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
+#include "3rd_party/oxygine-framework/oxygine/Property.h"
+#include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/utils/intrusive_list.h"
 #include <limits>
-#include <stdint.h>
 
 namespace oxygine
 {

@@ -1,7 +1,5 @@
-#include "Resource.h"
-#include "CreateResourceContext.h"
-#include <stdio.h>
-
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
 #include "qfileinfo.h"
 
 namespace oxygine

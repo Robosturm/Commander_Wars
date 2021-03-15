@@ -1,5 +1,5 @@
 #pragma once
-#include "ResAtlas.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
 
 namespace oxygine
 {

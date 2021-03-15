@@ -1,6 +1,6 @@
-#include "VideoDriver.h"
-#include "NativeTexture.h"
-#include "ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 
 namespace oxygine
 {

@@ -4,7 +4,8 @@
 #include <QObject>
 #include "qvector.h"
 #include "qstringlist.h"
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "objects/base/label.h"
 
 class TableView;

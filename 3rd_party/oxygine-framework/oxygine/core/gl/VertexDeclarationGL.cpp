@@ -1,4 +1,4 @@
-#include "VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
 
 namespace oxygine
 {

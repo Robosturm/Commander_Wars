@@ -1,8 +1,6 @@
-#include "Image.h"
-#include "core/ImageDataOperations.h"
-#include "math/Rect.h"
-#include <stdint.h>
-
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 namespace oxygine
 {

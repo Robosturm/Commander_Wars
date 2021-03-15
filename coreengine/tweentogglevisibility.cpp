@@ -1,12 +1,10 @@
 #include "coreengine/tweentogglevisibility.h"
-
-#include "oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 TweenToggleVisibility::TweenToggleVisibility(float start, float end)
     : startFraction(start),
       endFracrtion(end)
 {
-
 }
 
 

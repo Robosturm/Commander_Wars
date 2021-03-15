@@ -1,10 +1,10 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Restorable.h"
-#include "Texture.h"
-#include "QtGlobal"
-#include "../closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 #include <QOpenGLShader>
+#include <QtGlobal>
 
 namespace oxygine
 {

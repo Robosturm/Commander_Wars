@@ -3,7 +3,8 @@
 
 #include "objects/base/tooltip.h"
 
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Checkbox;
 typedef oxygine::intrusive_ptr<Checkbox> spCheckbox;

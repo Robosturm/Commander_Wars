@@ -1,9 +1,8 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "../EventDispatcher.h"
-#include "../Event.h"
-#include "../math/Vector2.h"
-#include <string>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
+#include "3rd_party/oxygine-framework/oxygine/Event.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
 
 /**main oxygine namespace*/
 namespace oxygine

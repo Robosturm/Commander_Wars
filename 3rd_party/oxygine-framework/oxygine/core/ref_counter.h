@@ -1,8 +1,7 @@
 #pragma once
-#include "../oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
 
 #include <atomic>
-
 #include <qobject.h>
 
 namespace oxygine

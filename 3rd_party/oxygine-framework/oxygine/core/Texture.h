@@ -1,10 +1,9 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "ImageData.h"
-#include "Object.h"
-#include "ref_counter.h"
-#include "../math/Rect.h"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageData.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 namespace oxygine
 {

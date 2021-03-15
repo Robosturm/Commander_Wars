@@ -6,8 +6,9 @@
 #include <qrect.h>
 #include <QTimer>
 #include <QThread>
-#include "oxygine-framework.h"
-#include "oxygine/KeyEvent.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "game/cursor.h"
 

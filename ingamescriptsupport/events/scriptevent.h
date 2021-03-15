@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QTextStream>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 

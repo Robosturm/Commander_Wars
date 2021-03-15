@@ -1,6 +1,6 @@
-#include "TweenAnim.h"
-#include "../actor/Sprite.h"
-#include "../res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 
 namespace oxygine
 {

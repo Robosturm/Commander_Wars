@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 
 namespace oxygine
 {

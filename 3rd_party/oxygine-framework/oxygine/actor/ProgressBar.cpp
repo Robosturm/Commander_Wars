@@ -1,10 +1,8 @@
-#include "ProgressBar.h"
-#include "../RenderDelegate.h"
-#include "../RenderState.h"
-#include "../STDRenderDelegate.h"
-#include "../STDRenderer.h"
-#include <sstream>
-
+#include "3rd_party/oxygine-framework/oxygine/actor/ProgressBar.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
 #include <qmath.h>
 
 namespace oxygine

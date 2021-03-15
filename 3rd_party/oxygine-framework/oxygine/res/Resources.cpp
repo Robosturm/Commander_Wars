@@ -1,12 +1,8 @@
-#include "Resources.h"
-#include "CreateResourceContext.h"
-#include "ResAnim.h"
-#include "ResFont.h"
-#include "Resource.h"
-#include <algorithm>
-#include <stdarg.h>
-#include <stdio.h>
-
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qdir.h"

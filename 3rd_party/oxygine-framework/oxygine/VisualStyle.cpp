@@ -1,8 +1,7 @@
-#include "VisualStyle.h"
-#include "MaterialCache.h"
-#include "RenderState.h"
-#include "actor/Actor.h"
-#include <sstream>
+#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
 
 namespace oxygine
 {

@@ -1,7 +1,7 @@
-#include "ResBuffer.h"
-#include "CreateResourceContext.h"
-#include "Resources.h"
-#include "qtextstream.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include <qtextstream.h>
 
 namespace oxygine
 {

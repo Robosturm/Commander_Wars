@@ -1,12 +1,12 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Actor.h"
-#include "../AnimationFrame.h"
-#include "../VisualStyle.h"
-#include "../core/Texture.h"
-#include "../math/Rect.h"
-#include "../res/ResAnim.h"
-#include "../tween/TweenAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
+#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/TweenAnim.h"
 
 namespace oxygine
 {

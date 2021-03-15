@@ -2,8 +2,8 @@
 #ifndef INTRUSIVE_PTR_HEADER
 #define INTRUSIVE_PTR_HEADER
 
-#include "../oxygine-include.h"
-#include "ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include "QtGlobal"
 
 namespace oxygine

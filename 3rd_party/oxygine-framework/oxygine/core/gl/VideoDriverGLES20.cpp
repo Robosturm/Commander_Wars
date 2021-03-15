@@ -1,10 +1,9 @@
-#include "VideoDriverGLES20.h"
-#include "NativeTextureGLES.h"
-#include "ShaderProgramGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
 
-#include "../vertex.h"
-
-#include "../gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {

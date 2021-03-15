@@ -1,9 +1,8 @@
-#include "NativeTextureGLES.h"
-#include "../gamewindow.h"
-#include "../../Image.h"
-#include "../ImageDataOperations.h"
-#include "../NativeTexture.h"
-#include <stdio.h>
+#include "3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
 
 #ifndef GL_COMPRESSED_RGBA8_ETC2_EAC
 #   define GL_COMPRESSED_RGBA8_ETC2_EAC      0x9278

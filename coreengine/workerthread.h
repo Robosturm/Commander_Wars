@@ -5,7 +5,8 @@
 #include "qtimer.h"
 
 #include "coreengine/interpreter.h"
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class WorkerThread : public QObject
 {

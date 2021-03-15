@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "core/Texture.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Texture.h"
 
 #include <qimage.h>
 

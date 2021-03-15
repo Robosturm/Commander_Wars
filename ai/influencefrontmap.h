@@ -5,7 +5,8 @@
 #include <QMap>
 #include <QVector>
 #include "ai/islandmap.h"
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Player;
 class Unit;

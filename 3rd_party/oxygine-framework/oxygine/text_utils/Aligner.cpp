@@ -1,7 +1,6 @@
-#include "Aligner.h"
-#include "../Font.h"
-#include "../res/ResFont.h"
-#include <assert.h>
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 namespace oxygine
 {

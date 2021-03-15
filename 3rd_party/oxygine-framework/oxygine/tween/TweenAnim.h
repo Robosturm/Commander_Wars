@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
 
 namespace oxygine
 {
@@ -24,7 +24,7 @@ namespace oxygine
         TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame);
 
         void init(Sprite& actor);
-        void done(Sprite& actor) {}
+        void done(Sprite&) {}
 
         const ResAnim*  getResAnim() const {return _resAnim;}
         int             getRow() const {return _row;}

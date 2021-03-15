@@ -62,83 +62,80 @@ endif()
 ###################################################################################
 # start oxygine stuff -> qoxygine
 ###################################################################################
-# setup include dirs
-set(OXYGINE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/oxygine-framework)
-include_directories(${OXYGINE_ROOT})
 
 set(${PROJECT_NAME}_OXYGINE_SRCS
     # top level
-    ${OXYGINE_ROOT}/oxygine/AnimationFrame.cpp
-    ${OXYGINE_ROOT}/oxygine/Clock.cpp
-    ${OXYGINE_ROOT}/oxygine/Draggable.cpp
-    ${OXYGINE_ROOT}/oxygine/EventDispatcher.cpp
-    ${OXYGINE_ROOT}/oxygine/Font.cpp
-    ${OXYGINE_ROOT}/oxygine/Image.cpp
-    ${OXYGINE_ROOT}/oxygine/Input.cpp
-    ${OXYGINE_ROOT}/oxygine/MaskedRenderer.cpp
-    ${OXYGINE_ROOT}/oxygine/Material.cpp
-    ${OXYGINE_ROOT}/oxygine/MaterialCache.cpp
-    ${OXYGINE_ROOT}/oxygine/PointerState.cpp
-    ${OXYGINE_ROOT}/oxygine/PostProcess.cpp
-    ${OXYGINE_ROOT}/oxygine/RenderDelegate.cpp
-    ${OXYGINE_ROOT}/oxygine/STDRenderDelegate.cpp
-    ${OXYGINE_ROOT}/oxygine/STDRenderer.cpp
-    ${OXYGINE_ROOT}/oxygine/VisualStyle.cpp
+    3rd_party/oxygine-framework/oxygine/AnimationFrame.cpp
+    3rd_party/oxygine-framework/oxygine/Clock.cpp
+    3rd_party/oxygine-framework/oxygine/Draggable.cpp
+    3rd_party/oxygine-framework/oxygine/EventDispatcher.cpp
+    3rd_party/oxygine-framework/oxygine/Font.cpp
+    3rd_party/oxygine-framework/oxygine/Image.cpp
+    3rd_party/oxygine-framework/oxygine/Input.cpp
+    3rd_party/oxygine-framework/oxygine/MaskedRenderer.cpp
+    3rd_party/oxygine-framework/oxygine/Material.cpp
+    3rd_party/oxygine-framework/oxygine/MaterialCache.cpp
+    3rd_party/oxygine-framework/oxygine/PointerState.cpp
+    3rd_party/oxygine-framework/oxygine/PostProcess.cpp
+    3rd_party/oxygine-framework/oxygine/RenderDelegate.cpp
+    3rd_party/oxygine-framework/oxygine/STDRenderDelegate.cpp
+    3rd_party/oxygine-framework/oxygine/STDRenderer.cpp
+    3rd_party/oxygine-framework/oxygine/VisualStyle.cpp
     #core
-    ${OXYGINE_ROOT}/oxygine/core/ImageData.cpp
-    ${OXYGINE_ROOT}/oxygine/core/ImageDataOperations.cpp
-    ${OXYGINE_ROOT}/oxygine/core/NativeTexture.cpp
-    ${OXYGINE_ROOT}/oxygine/core/Object.cpp
-    ${OXYGINE_ROOT}/oxygine/core/oxygine.cpp
-    ${OXYGINE_ROOT}/oxygine/core/Renderer.cpp
-    ${OXYGINE_ROOT}/oxygine/core/Restorable.cpp
-    ${OXYGINE_ROOT}/oxygine/core/UberShaderProgram.cpp
-    ${OXYGINE_ROOT}/oxygine/core/VideoDriver.cpp
-    ${OXYGINE_ROOT}/oxygine/core/gamewindow.cpp
+    3rd_party/oxygine-framework/oxygine/core/ImageData.cpp
+    3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.cpp
+    3rd_party/oxygine-framework/oxygine/core/NativeTexture.cpp
+    3rd_party/oxygine-framework/oxygine/core/Object.cpp
+    3rd_party/oxygine-framework/oxygine/core/oxygine.cpp
+    3rd_party/oxygine-framework/oxygine/core/Renderer.cpp
+    3rd_party/oxygine-framework/oxygine/core/Restorable.cpp
+    3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.cpp
+    3rd_party/oxygine-framework/oxygine/core/VideoDriver.cpp
+    3rd_party/oxygine-framework/oxygine/core/gamewindow.cpp
     # core gl
-    ${OXYGINE_ROOT}/oxygine/core/gl/NativeTextureGLES.cpp
-    ${OXYGINE_ROOT}/oxygine/core/gl/ShaderProgramGL.cpp
-    ${OXYGINE_ROOT}/oxygine/core/gl/VertexDeclarationGL.cpp
-    ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGL.cpp
-    ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGLES20.cpp
+    3rd_party/oxygine-framework/oxygine/core/gl/NativeTextureGLES.cpp
+    3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.cpp
+    3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.cpp
+    3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGL.cpp
+    3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.cpp
     # actor
-    ${OXYGINE_ROOT}/oxygine/actor/Actor.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/Box9Sprite.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/Button.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/ClipRectActor.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/ColorRectSprite.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/MaskedSprite.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/Polygon.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/ProgressBar.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/SlidingActor.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/Sprite.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/Stage.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/TextField.cpp
-    ${OXYGINE_ROOT}/oxygine/actor/slidingsprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Actor.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Button.cpp
+    3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.cpp
+    3rd_party/oxygine-framework/oxygine/actor/ColorRectSprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/MaskedSprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Polygon.cpp
+    3rd_party/oxygine-framework/oxygine/actor/ProgressBar.cpp
+    3rd_party/oxygine-framework/oxygine/actor/SlidingActor.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Sprite.cpp
+    3rd_party/oxygine-framework/oxygine/actor/Stage.cpp
+    3rd_party/oxygine-framework/oxygine/actor/TextField.cpp
+    3rd_party/oxygine-framework/oxygine/actor/slidingsprite.cpp
     # tween
-    ${OXYGINE_ROOT}/oxygine/tween/Tween.cpp
-    ${OXYGINE_ROOT}/oxygine/tween/TweenAlphaFade.cpp
-    ${OXYGINE_ROOT}/oxygine/tween/TweenAnim.cpp
-    ${OXYGINE_ROOT}/oxygine/tween/TweenGlow.cpp
-    ${OXYGINE_ROOT}/oxygine/tween/TweenOutline.cpp
-    ${OXYGINE_ROOT}/oxygine/tween/TweenQueue.cpp
+    3rd_party/oxygine-framework/oxygine/tween/Tween.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenAlphaFade.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenAnim.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenGlow.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenOutline.cpp
+    3rd_party/oxygine-framework/oxygine/tween/TweenQueue.cpp
     # res stuff
-    ${OXYGINE_ROOT}/oxygine/res/CreateResourceContext.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResAnim.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResAtlas.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResAtlasGeneric.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResBuffer.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResFont.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResFontBM.cpp
-    ${OXYGINE_ROOT}/oxygine/res/Resource.cpp
-    ${OXYGINE_ROOT}/oxygine/res/Resources.cpp
-    ${OXYGINE_ROOT}/oxygine/res/SingleResAnim.cpp
+    3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResAnim.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResAtlas.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResBuffer.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResFont.cpp
+    3rd_party/oxygine-framework/oxygine/res/ResFontBM.cpp
+    3rd_party/oxygine-framework/oxygine/res/Resource.cpp
+    3rd_party/oxygine-framework/oxygine/res/Resources.cpp
+    3rd_party/oxygine-framework/oxygine/res/SingleResAnim.cpp
     # text utils
-    ${OXYGINE_ROOT}/oxygine/text_utils/Aligner.cpp
-    ${OXYGINE_ROOT}/oxygine/text_utils/Node.cpp
-    ${OXYGINE_ROOT}/oxygine/text_utils/TextBuilder.cpp
+    3rd_party/oxygine-framework/oxygine/text_utils/Aligner.cpp
+    3rd_party/oxygine-framework/oxygine/text_utils/Node.cpp
+    3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.cpp
     # text utils
-    ${OXYGINE_ROOT}/oxygine/utils/AtlasBuilder.cpp
+    3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.cpp
 )
 ###################################################################################
 # end oxygine stuff -> qoxygine
@@ -537,40 +534,40 @@ get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
 message(${QT_BIN_DIR})
 
-set(${PROJECT_NAME}_INSTALL_QT_LIBS
-    ${QT_BIN_DIR}/Qt5Qml.dll
-    ${QT_BIN_DIR}/Qt5Core.dll
-    ${QT_BIN_DIR}/Qt5Network.dll
-    ${QT_BIN_DIR}/Qt5Multimedia.dll
-    ${QT_BIN_DIR}/Qt5Gui.dll
-    ${QT_BIN_DIR}/Qt5Widgets.dll
-    ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-    ${QT_BIN_DIR}/libstdc++-6.dll
-    ${QT_BIN_DIR}/libwinpthread-1.dll
-    ${QT_BIN_DIR}/d3dcompiler_47.dll
-    ${QT_BIN_DIR}/libEGL.dll
-    ${QT_BIN_DIR}/libGLESv2.dll
-    ${QT_BIN_DIR}/Qt5Svg.dll
-    ${QT_BIN_DIR}/Qt5Xml.dll
-    ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
-    ${QT_BIN_DIR}/libGLESv2.dll
-    ${QT_BIN_DIR}/libEGL.dll
-)
-
-set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-     ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
-     ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
-)
-
-set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-     ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
-)
-set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-     ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
-)
-
 # those libs are not the same for each platform and need to be selected based on the os
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+    set(${PROJECT_NAME}_INSTALL_QT_LIBS
+        ${QT_BIN_DIR}/Qt5Qml.dll
+        ${QT_BIN_DIR}/Qt5Core.dll
+        ${QT_BIN_DIR}/Qt5Network.dll
+        ${QT_BIN_DIR}/Qt5Multimedia.dll
+        ${QT_BIN_DIR}/Qt5Gui.dll
+        ${QT_BIN_DIR}/Qt5Widgets.dll
+        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/libstdc++-6.dll
+        ${QT_BIN_DIR}/libwinpthread-1.dll
+        ${QT_BIN_DIR}/d3dcompiler_47.dll
+        ${QT_BIN_DIR}/libEGL.dll
+        ${QT_BIN_DIR}/libGLESv2.dll
+        ${QT_BIN_DIR}/Qt5Svg.dll
+        ${QT_BIN_DIR}/Qt5Xml.dll
+        ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
+        ${QT_BIN_DIR}/libGLESv2.dll
+        ${QT_BIN_DIR}/libEGL.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
+         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
+         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
+         ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
+    )
+
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
          ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
     )
@@ -581,6 +578,39 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
          ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
     )
 else() # currently this is for linux systems -> may differ for ios # todo maybe a proper check would be nice here
+
+    set(${PROJECT_NAME}_INSTALL_QT_LIBS
+        ${QT_BIN_DIR}/libqtQml.so
+        ${QT_BIN_DIR}/libqtCore.so
+        ${QT_BIN_DIR}/libqtNetwork.so
+        ${QT_BIN_DIR}/libqtMultimedia.so
+        ${QT_BIN_DIR}/libqtGui.so
+        ${QT_BIN_DIR}/libqtWidgets.so
+        ${QT_BIN_DIR}/libgcc_s_dw2-1.so
+        ${QT_BIN_DIR}/libstdc++-6.so
+        ${QT_BIN_DIR}/libwinpthread-1.so
+        ${QT_BIN_DIR}/d3dcompiler_47.so
+        ${QT_BIN_DIR}/libEGL.so
+        ${QT_BIN_DIR}/libGLESv2.so
+        ${QT_BIN_DIR}/libqtSvg.so
+        ${QT_BIN_DIR}/libqt5Xml.so
+        ${QT_BIN_DIR}/../../../tools/mingw810_32/bin/addr2line.exe
+        ${QT_BIN_DIR}/libGLESv2.so
+        ${QT_BIN_DIR}/libEGL.so
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
+         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.so
+         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.so
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
+         ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.so
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.so
+    )
+
     set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
          ${QT_BIN_DIR}/../plugins/audio/libqtmedia_pulse.so
          ${QT_BIN_DIR}/../plugins/audio/libqtaudio_alsa.so
@@ -595,16 +625,25 @@ else() # currently this is for linux systems -> may differ for ios # todo maybe 
     )
 endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
-        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
-        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
-        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
-        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
-        ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
-    )
+    if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+        set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
+            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
+            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
+            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
+            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
+            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
+        )
+    else()
+        set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_server.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_debugger.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_inspector.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_messages.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_tcp.so
+        )
+    endif()
     install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling")
 endif()
-
 
 # install  folders
 install(DIRECTORY system DESTINATION ".")

@@ -1,6 +1,5 @@
-#include "Input.h"
-#include "actor/Stage.h"
-#include <string.h>
+#include "3rd_party/oxygine-framework/oxygine/Input.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
 
 namespace oxygine
 {

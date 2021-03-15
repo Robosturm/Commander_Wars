@@ -7,7 +7,8 @@
 #include <QPoint>
 #include <qlist.h>
 #include "array"
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/qmlvector.h"
 

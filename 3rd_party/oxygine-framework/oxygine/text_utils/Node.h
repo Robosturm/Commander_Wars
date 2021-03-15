@@ -1,11 +1,9 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Aligner.h"
-#include "../core/Object.h"
-#include "../math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Aligner.h"
 #include <qstring.h>
-#include <vector>
-
 #include <QDomElement>
 
 namespace pugi

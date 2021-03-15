@@ -1,10 +1,10 @@
-#include "Node.h"
-#include "../AnimationFrame.h"
-#include "../Font.h"
-#include "../MaterialCache.h"
-#include "../RenderState.h"
-#include "../STDRenderDelegate.h"
-#include "../res/ResFont.h"
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 
 namespace oxygine
 {

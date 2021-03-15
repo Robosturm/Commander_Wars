@@ -1,9 +1,7 @@
 #pragma once
-#include "Object.h"
-#include "Restorable.h"
-#include <vector>
-
-#include "oxygine/core/ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 
 namespace oxygine
 {

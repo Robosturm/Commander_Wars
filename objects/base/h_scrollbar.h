@@ -3,7 +3,8 @@
 
 #include "objects/base/tooltip.h"
 #include <QElapsedTimer>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class H_Scrollbar;
 typedef oxygine::intrusive_ptr<H_Scrollbar> spH_Scrollbar;

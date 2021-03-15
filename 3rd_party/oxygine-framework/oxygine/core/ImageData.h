@@ -1,7 +1,7 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "pixel.h"
-#include "../math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/core/pixel.h"
 
 namespace oxygine
 {

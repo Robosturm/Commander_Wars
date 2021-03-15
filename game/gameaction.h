@@ -6,7 +6,8 @@
 #include <QVector>
 #include <QBuffer>
 #include <QDataStream>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"

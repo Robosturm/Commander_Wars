@@ -1,7 +1,6 @@
-#include "Restorable.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
 #include <qmutex.h>
 #include <QMutexLocker>
-#include <algorithm>
 
 namespace oxygine
 {
@@ -26,7 +25,7 @@ namespace oxygine
 
         {
             QMutexLocker al(&_mutex);
-            swap(rs, _restorable);
+            rs.swap(_restorable);
         }
 
         for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
@@ -47,7 +46,7 @@ namespace oxygine
         restorable rs;
         {
             QMutexLocker al(&_mutex);
-            swap(rs, _restorable);
+            rs.swap(_restorable);
         }
 
         for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
@@ -58,7 +57,7 @@ namespace oxygine
 
         {
             QMutexLocker al(&_mutex);
-            swap(rs, _restorable);
+            rs.swap(_restorable);
         }
     }
 

@@ -32,7 +32,7 @@
 #include "oxygine/tween/Tween.h"
 #include "oxygine/tween/TweenQueue.h"
 #include "oxygine/TouchEvent.h"
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "oxygine/UpdateState.h"
 #include "oxygine/VisualStyle.h"
 #include "oxygine/STDRenderer.h"

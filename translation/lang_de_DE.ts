@@ -2965,6 +2965,11 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/playerselection.cpp" line="344"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/playerselection.cpp" line="351"/>
         <location filename="../objects/playerselection.cpp" line="358"/>
         <location filename="../objects/playerselection.cpp" line="362"/>

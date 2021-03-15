@@ -1,10 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
-#include "core/intrusive_ptr.h"
-#include "core/ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <unordered_map>
-#include <vector>
-
 #include <qmutex.h>
 
 namespace oxygine

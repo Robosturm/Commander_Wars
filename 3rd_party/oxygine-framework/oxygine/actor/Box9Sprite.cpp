@@ -1,11 +1,10 @@
-#include "Box9Sprite.h"
-#include "../RenderState.h"
-#include "../STDRenderDelegate.h"
-#include "../STDRenderer.h"
-#include "../math/ScalarMath.h"
-#include "../res/ResAnim.h"
-#include "../res/Resources.h"
-#include <sstream>
+#include "3rd_party/oxygine-framework/oxygine/actor/Box9Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/math/ScalarMath.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 namespace oxygine
 {

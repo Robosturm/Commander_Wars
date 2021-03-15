@@ -1,10 +1,9 @@
-#include "ResAtlasGeneric.h"
-#include "Resources.h"
-#include "../Image.h"
-#include "../core/ImageDataOperations.h"
-#include "../core/VideoDriver.h"
-#include "../utils/AtlasBuilder.h"
-#include <stdint.h>
+#include "3rd_party/oxygine-framework/oxygine/res/ResAtlasGeneric.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/utils/AtlasBuilder.h"
 #include <qvariant.h>
 #include <qfile.h>
 

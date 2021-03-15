@@ -1,6 +1,6 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "ref_counter.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ref_counter.h"
 #include <qstring.h>
 #include <qmutex.h>
 

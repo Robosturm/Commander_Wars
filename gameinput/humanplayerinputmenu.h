@@ -5,8 +5,9 @@
 #include <QVector>
 #include <QStringList>
 
-#include "oxygine-framework.h"
-#include "oxygine/KeyEvent.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 class HumanPlayerInputMenu;
 typedef oxygine::intrusive_ptr<HumanPlayerInputMenu> spHumanPlayerInputMenu;

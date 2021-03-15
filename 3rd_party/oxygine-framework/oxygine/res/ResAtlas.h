@@ -1,8 +1,8 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "CreateResourceContext.h"
-#include "ResAnim.h"
-#include "Resource.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 
 namespace oxygine
 {

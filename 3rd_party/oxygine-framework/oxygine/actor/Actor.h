@@ -1,14 +1,14 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "../EventDispatcher.h"
-#include "../TouchEvent.h"
-#include "../core/Object.h"
-#include "../core/Renderer.h"
-#include "../math/AffineTransform.h"
-#include "../math/Rect.h"
-#include "../oxygine-forwards.h"
-#include "../tween/Tween.h"
-#include "../utils/intrusive_list.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
+#include "3rd_party/oxygine-framework/oxygine/TouchEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/math/AffineTransform.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-forwards.h"
+#include "3rd_party/oxygine-framework/oxygine/tween/Tween.h"
+#include "3rd_party/oxygine-framework/oxygine/utils/intrusive_list.h"
 
 namespace oxygine
 {

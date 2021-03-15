@@ -1,7 +1,7 @@
-#include "Button.h"
-#include "Stage.h"
-#include "../res/ResAnim.h"
-#include "../res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Button.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
 
 namespace oxygine
 {

@@ -1,8 +1,9 @@
 #pragma once
-#include "../../oxygine-include.h"
-#include "VertexDeclarationGL.h"
 #include <qopengl.h>
-#include "../VideoDriver.h"
+
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 namespace oxygine
 {

@@ -5,7 +5,8 @@
 #include <QVector>
 #include <QPoint>
 #include <QColor>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class MarkedFieldData;
 typedef oxygine::intrusive_ptr<MarkedFieldData> spMarkedFieldData;

@@ -1,6 +1,6 @@
 #pragma once
-#include "../../oxygine-include.h"
-#include "../NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include <QOpenGLShader>
 
 namespace oxygine

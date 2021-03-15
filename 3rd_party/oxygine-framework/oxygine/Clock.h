@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
 #include <chrono>
 
 namespace oxygine

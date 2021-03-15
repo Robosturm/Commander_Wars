@@ -1,10 +1,8 @@
-#include "CreateResourceContext.h"
-#include "pthread.h"
-#include "../Image.h"
-#include "../core/NativeTexture.h"
-#include "../core/oxygine.h"
-
-#include "qvariant.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+#include <qvariant.h>
 
 namespace oxygine
 {

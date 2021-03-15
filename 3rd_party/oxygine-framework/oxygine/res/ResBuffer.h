@@ -1,7 +1,6 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Resource.h"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
 #include "qfile.h"
 
 namespace oxygine

@@ -7,7 +7,8 @@
 #include <QVector>
 #include <QElapsedTimer>
 
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class MapSelection;
 typedef oxygine::intrusive_ptr<MapSelection> spMapSelection;

@@ -1,7 +1,6 @@
-#include "NativeTexture.h"
-#include "ImageDataOperations.h"
-#include "../Image.h"
-#include <stdio.h>
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
 
 namespace oxygine
 {

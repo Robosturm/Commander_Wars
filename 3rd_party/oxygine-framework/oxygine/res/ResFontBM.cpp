@@ -1,11 +1,10 @@
-#include "ResFontBM.h"
-#include "CreateResourceContext.h"
-#include "Resources.h"
-#include "../Font.h"
-#include "../Image.h"
-#include "../core/NativeTexture.h"
-#include "../core/VideoDriver.h"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 #include <qfile.h>
 #include <qfileinfo.h>

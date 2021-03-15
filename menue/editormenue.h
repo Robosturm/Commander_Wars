@@ -2,7 +2,7 @@
 #define EDITORMENUE_H
 
 #include <QObject>
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "menue/ingamemenue.h"
 

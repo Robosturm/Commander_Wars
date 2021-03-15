@@ -1,11 +1,12 @@
-#include "Polygon.h"
-#include "../RenderDelegate.h"
-#include "../RenderState.h"
-#include "../STDRenderDelegate.h"
-#include "../STDRenderer.h"
-#include "../core/UberShaderProgram.h"
-#include "../core/VertexDeclaration.h"
-#include <sstream>
+#include "3rd_party/oxygine-framework/oxygine/actor/Polygon.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/core/UberShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
+
+#include <QVector>
 
 namespace oxygine
 {

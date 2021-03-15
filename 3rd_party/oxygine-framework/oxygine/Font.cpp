@@ -1,8 +1,13 @@
-#include "Font.h"
-#include "core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 
 namespace oxygine
 {
+    uint qHash(const oxygine::glyph& k, uint seed) noexcept
+    {
+        return ::qHash(k.ch + k.opt, seed);
+    }
+
     Font::Font()
         : _ignoreOptions(true),
           _scale(1.0f),

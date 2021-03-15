@@ -1,5 +1,5 @@
-#include "EventDispatcher.h"
-#include "Event.h"
+#include "3rd_party/oxygine-framework/oxygine/EventDispatcher.h"
+#include "3rd_party/oxygine-framework/oxygine/Event.h"
 
 namespace oxygine
 {

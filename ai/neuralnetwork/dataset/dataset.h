@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QVector>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class Dataset;
 using spDataset = oxygine::intrusive_ptr<Dataset>;

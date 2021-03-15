@@ -1,8 +1,7 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Vector2.h"
-
-#include "qmath.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
+#include <qmath.h>
 
 namespace oxygine
 {

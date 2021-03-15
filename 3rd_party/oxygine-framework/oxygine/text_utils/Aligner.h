@@ -1,11 +1,10 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "../Font.h"
-#include "../Material.h"
-#include "../TextStyle.h"
-#include "../core/NativeTexture.h"
-#include "../math/Rect.h"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/Font.h"
+#include "3rd_party/oxygine-framework/oxygine/Material.h"
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
 
 namespace oxygine
 {

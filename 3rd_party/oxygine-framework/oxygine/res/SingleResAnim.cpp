@@ -1,7 +1,7 @@
-#include "SingleResAnim.h"
-#include "../Image.h"
-#include "../core/NativeTexture.h"
-#include "../core/VideoDriver.h"
+#include "3rd_party/oxygine-framework/oxygine/res/SingleResAnim.h"
+#include "3rd_party/oxygine-framework/oxygine/Image.h"
+#include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
 
 #include "qthread.h"
 #include "qapplication.h"

@@ -2,7 +2,8 @@
 #define CAMPAIGNMENU_H
 
 #include <QObject>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "game/campaign.h"
 

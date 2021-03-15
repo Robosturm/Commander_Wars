@@ -1,7 +1,7 @@
 #ifndef TWEENTOGGLEVISIBILITY_H
 #define TWEENTOGGLEVISIBILITY_H
 
-#include "oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
 
 class TweenToggleVisibility
 {
@@ -16,8 +16,8 @@ public:
 
     void update(oxygine::Sprite& actor, float p, const oxygine::UpdateState& us);
 
-    void init(oxygine::Sprite& actor){}
-    void done(oxygine::Sprite& actor){}
+    void init(oxygine::Sprite&){}
+    void done(oxygine::Sprite&){}
 protected:
     float startFraction{0};
     float endFracrtion{0};

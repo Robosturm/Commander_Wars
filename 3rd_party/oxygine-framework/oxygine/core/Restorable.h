@@ -1,7 +1,8 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "../closure/closure.h"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+
+#include <qvector.h>
 
 namespace oxygine
 {
@@ -11,7 +12,7 @@ namespace oxygine
         Restorable();
         virtual ~Restorable();
 
-        typedef std::vector<Restorable*> restorable;
+        typedef QVector<Restorable*> restorable;
         static const restorable& getObjects();
         static void restoreAll();
         static void releaseAll();

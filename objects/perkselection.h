@@ -5,7 +5,8 @@
 #include <QVector>
 
 #include "objects/base/checkbox.h"
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "game/co.h"
 
 class PerkSelection;

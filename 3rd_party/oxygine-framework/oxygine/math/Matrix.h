@@ -1,11 +1,8 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include <algorithm>
-#include <math.h>
-#include <stdlib.h>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector3.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector4.h"
 
 namespace oxygine
 {

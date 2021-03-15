@@ -1,10 +1,9 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Resource.h"
-#include "../closure/closure.h"
-#include "../core/Object.h"
-#include "QDomDocument"
-#include <vector>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Object.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+#include <QDomDocument>
 #include <qstring.h>
 #include <qmap.h>
 

@@ -19,7 +19,7 @@
 
 #include "spritingsupport/spritecreator.h"
 
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 // values which differ from release to debug build
 #ifdef GAMEDEBUG

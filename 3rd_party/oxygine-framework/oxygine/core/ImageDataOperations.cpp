@@ -1,5 +1,4 @@
-#include "ImageDataOperations.h"
-#include <string.h>
+#include "3rd_party/oxygine-framework/oxygine/core/ImageDataOperations.h"
 
 namespace oxygine
 {

@@ -1,6 +1,4 @@
-#include "Clock.h"
-#include <sstream>
-
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 namespace oxygine
 {

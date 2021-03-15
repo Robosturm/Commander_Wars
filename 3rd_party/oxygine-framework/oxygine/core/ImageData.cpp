@@ -1,4 +1,4 @@
-#include "ImageData.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ImageData.h"
 
 namespace oxygine
 {

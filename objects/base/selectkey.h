@@ -2,9 +2,10 @@
 #define SELECTKEY_H
 
 #include <QObject>
-#include "oxygine-framework.h"
 
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 #include "objects/base/tooltip.h"
 
 class SelectKey;

@@ -1,15 +1,13 @@
-#include "PostProcess.h"
-#include "RenderState.h"
-#include "STDRenderDelegate.h"
-#include "actor/Actor.h"
-#include "core/gl/ShaderProgramGL.h"
-#include "core/gl/VertexDeclarationGL.h"
-#include "core/oxygine.h"
-#include "core/Renderer.h"
-
-#include "core/gamewindow.h"
-
-#include "Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/ShaderProgramGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 #include <qfile.h>
 #include <qtextstream.h>

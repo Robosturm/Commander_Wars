@@ -1,4 +1,4 @@
-#include "RenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderDelegate.h"
 
 namespace oxygine
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "../AnimationFrame.h"
-#include "../math/Rect.h"
-#include <deque>
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/AnimationFrame.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include <qqueue.h>
 
 namespace oxygine
 {
@@ -24,7 +24,7 @@ namespace oxygine
         const Rect& getBounds() const { return _bounds; }
 
     protected:
-        typedef std::deque<Rect> rects;
+        typedef QQueue<Rect> rects;
         Rect _bounds;
         rects _free;
         int _skipSize;
@@ -57,7 +57,7 @@ namespace oxygine
 
         void place(const rect& dest, int w, int h, const ImageData& src, spTexture& t, Rect& srcRect);
 
-        typedef std::deque<rect> rects;
+        typedef QQueue<rect> rects;
         Rect _bounds;
         rects _free;
         int _skipSize;

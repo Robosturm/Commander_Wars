@@ -1,11 +1,10 @@
-#include "SlidingActor.h"
-#include "ClipRectActor.h"
-#include "Stage.h"
-#include "../PointerState.h"
-#include "../UpdateState.h"
-#include "../initActor.h"
-
-#include "../Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/SlidingActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
+#include "3rd_party/oxygine-framework/oxygine/UpdateState.h"
+#include "3rd_party/oxygine-framework/oxygine/initActor.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
 
 namespace oxygine
 {

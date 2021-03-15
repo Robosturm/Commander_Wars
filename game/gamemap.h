@@ -1,13 +1,12 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
+
 #include <QObject>
 #include <QVector>
 #include <QRandomGenerator>
 #include "memory"
-
-#include "oxygine/core/ref_counter.h"
-#include "oxygine-framework.h"
 
 #include "game/terrain.h"
 #include "game/cursor.h"

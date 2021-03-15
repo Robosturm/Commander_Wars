@@ -2,7 +2,8 @@
 #define COSTYLEMENU_H
 #pragma once
 
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include <QObject>
 
 class COStyleMenu : public QObject, public oxygine::Actor

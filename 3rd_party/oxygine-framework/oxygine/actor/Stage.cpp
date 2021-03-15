@@ -1,12 +1,10 @@
-#include "Stage.h"
-#include "../Clock.h"
-#include "../RenderState.h"
-#include "../STDRenderDelegate.h"
-#include "../core/oxygine.h"
-#include "../math/Rect.h"
-#include <sstream>
-
-#include "../core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/RenderState.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Rect.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 namespace oxygine
 {

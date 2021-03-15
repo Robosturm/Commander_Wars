@@ -7,8 +7,7 @@
 #include <QThread>
 #include <QCoreApplication>
 #include "QMutex"
-
-#include "oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"

@@ -1,40 +1,29 @@
-#include "gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
+#include "3rd_party/oxygine-framework/oxygine/core/oxygine.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
 
-#include <cmath>
-
-#include "../KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
+#include "3rd_party/oxygine-framework/oxygine/MaterialCache.h"
+#include "3rd_party/oxygine-framework/oxygine/PostProcess.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Stage.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/TextField.h"
+#include "3rd_party/oxygine-framework/oxygine/res/CreateResourceContext.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResAtlas.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResBuffer.h"
+#include "3rd_party/oxygine-framework/oxygine/res/ResFontBM.h"
+#include "3rd_party/oxygine-framework/oxygine/res/Resources.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderer.h"
+#include "3rd_party/oxygine-framework/oxygine/Clock.h"
+#include "3rd_party/oxygine-framework/oxygine/STDRenderDelegate.h"
 
 #include <QMouseEvent>
 #include <QTimerEvent>
-
-#include "../actor/Stage.h"
-
-#include "../STDRenderDelegate.h"
-#include "../PostProcess.h"
-#include "oxygine.h"
-
-#include "qapplication.h"
-
-#include "../MaterialCache.h"
-#include "../PostProcess.h"
-#include "../STDRenderDelegate.h"
-#include "../actor/Stage.h"
-#include "../actor/TextField.h"
-#include "../res/CreateResourceContext.h"
-#include "../res/ResAtlas.h"
-#include "../res/ResBuffer.h"
-#include "../res/ResFontBM.h"
-#include "../res/Resources.h"
-
-#include "../STDRenderDelegate.h"
-
-#include "gl/VideoDriverGLES20.h"
-
-#include "../STDRenderer.h"
-
-#include "../Clock.h"
-
-#include "QMutexLocker"
+#include <QMutexLocker>
+#include <qapplication.h>
 
 
 namespace oxygine

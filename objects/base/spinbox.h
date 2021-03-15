@@ -3,11 +3,12 @@
 
 #include <QObject>
 #include <QElapsedTimer>
-#include "oxygine-framework.h"
+
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "objects/base/tooltip.h"
 
-#include "oxygine/KeyEvent.h"
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 class SpinBox;
 typedef oxygine::intrusive_ptr<SpinBox> spSpinBox;
