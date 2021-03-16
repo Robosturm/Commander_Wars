@@ -29,6 +29,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_ARTILLERY.getMaxUnitCount());
         var offset = Qt.point(-5, 5);
         var player = unit.getOwner();
         // get army name
@@ -36,7 +37,7 @@ var Constructor = function()
         sprite.loadSprite("artillery+" + armyName + "+fire",  false,
                           BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
         sprite.loadSpriteV2("artillery+" + armyName + "+fire+mask",  GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
+                            BATTLEANIMATION_ARTILLERY.getMaxUnitCount(), offset, 1);
         offset = Qt.point(30, 37);
         // gun
         if (armyName === "yc")
@@ -61,7 +62,10 @@ var Constructor = function()
         }
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 500);
-        sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 500);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 500 + i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

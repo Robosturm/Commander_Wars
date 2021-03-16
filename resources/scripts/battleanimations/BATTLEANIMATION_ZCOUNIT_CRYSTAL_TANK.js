@@ -37,17 +37,25 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+		var count = sprite.getUnitCount(5);
+        var i = 0;
         if (weapon === 0)
         {
-            sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
-                              1, 1.0, 0, 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
+			sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
+                            1, 1.0, 0, 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
-                              1, 1.0, 0, 0);
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+                            1, 1.0, 0, 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+			}
         }
     };
 

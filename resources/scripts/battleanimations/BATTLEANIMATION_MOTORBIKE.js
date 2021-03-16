@@ -15,14 +15,14 @@ var Constructor = function()
             armyName = "bh"
         }
         if ((armyName !== "+bm") &&
-            (armyName !== "+os"))
+                (armyName !== "+os"))
         {
             armyName = "";
         }
         sprite.loadSprite("motorbike" + armyName,  false,
                           BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
         sprite.loadSpriteV2("motorbike" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
+                            BATTLEANIMATION_MOTORBIKE.getMaxUnitCount(), Qt.point(-15, 5));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -56,9 +56,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_MOTORBIKE.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

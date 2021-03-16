@@ -61,8 +61,7 @@ var Constructor = function()
             offset = Qt.point(31, 12);
         }
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                          1, 1, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+                        1, 1, 0, 0);
     };
 
     this.loadImpactUnitOverlayAnimation = function(sprite, unit, defender, weapon)
@@ -72,8 +71,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_SNIPER.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

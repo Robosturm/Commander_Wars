@@ -21,7 +21,7 @@ var Constructor = function()
             unit.getTerrain().getTerrainID();
         }
         if (terrainId === "RIVER" ||
-            terrainId === "DESERT_TRY_RIVER")
+                terrainId === "DESERT_TRY_RIVER")
         {
             return "+river";
         }
@@ -31,8 +31,8 @@ var Constructor = function()
     this.isMountain = function(terrainId)
     {
         if (terrainId === "MOUNTAIN" ||
-            terrainId === "SNOW_MOUNTAIN" ||
-            terrainId === "DESERT_ROCK")
+                terrainId === "SNOW_MOUNTAIN" ||
+                terrainId === "DESERT_ROCK")
         {
             return true
         }
@@ -94,7 +94,7 @@ var Constructor = function()
         sprite.loadSprite("mech+" + armyName + riverName + ending,  false,
                           BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
         sprite.loadSpriteV2("mech+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
+                            BATTLEANIMATION_MECH.getMaxUnitCount(), offset, count);
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
@@ -111,6 +111,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
         if (weapon === 1)
         {
             BATTLEANIMATION_MECH.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
@@ -148,7 +149,10 @@ var Constructor = function()
                 offset.y = (offset.y - 12);
                 sprite.loadSprite("bazooka_launch",  false, BATTLEANIMATION_MECH.getMaxUnitCount(), offset);
             }
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
@@ -182,6 +186,8 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+        var i = 0;
         if (weapon === 1)
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
@@ -189,14 +195,20 @@ var Constructor = function()
             sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                               1, 1.0, 0, 0);
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
     };
 

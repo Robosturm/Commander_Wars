@@ -10,7 +10,7 @@ var Constructor = function()
         sprite.loadSprite("hoverflak",  false,
                           BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));
         sprite.loadSpriteV2("hoverflak+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));
+                            BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -37,9 +37,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_HOVERFLAK.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

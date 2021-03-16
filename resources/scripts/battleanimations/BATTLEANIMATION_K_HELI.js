@@ -22,7 +22,7 @@ var Constructor = function()
             offset = Qt.point(-30, 20);
         }
         sprite.loadSpriteV2("k_heli+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
+                            BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSprite("k_heli+" + armyName,  false,
                           BATTLEANIMATION_K_HELI.getMaxUnitCount(), offset, -1, 1.0, 0, 0,
@@ -37,6 +37,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_K_HELI.armyData);
         var offset = Qt.point(0, 0);
+        var count = sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
         if (weapon === 0)
         {
             // gun
@@ -60,7 +61,10 @@ var Constructor = function()
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, -100), 400, false,
                                     1, 1, -1);
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
@@ -102,6 +106,8 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_K_HELI.getMaxUnitCount());
+        var i = 0;
         if (weapon === 0)
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
@@ -109,14 +115,20 @@ var Constructor = function()
             sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 90),
                                     Qt.point(-127, -60), 400, true,
                                     1, 1, 0, 0, true);
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                               1, 1.0, 0, 0);
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
     };
 

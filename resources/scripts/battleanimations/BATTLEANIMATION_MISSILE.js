@@ -29,7 +29,7 @@ var Constructor = function()
         sprite.loadSprite("missile+" + armyName + ending,  false,
                           BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset);
         sprite.loadSpriteV2("missile+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset);
+                            BATTLEANIMATION_MISSILE.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -39,6 +39,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_MISSILE.armyData);
         var offset = Qt.point(5, 30);
+        var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
         // rocket
         if (armyName === "yc")
         {
@@ -63,7 +64,10 @@ var Constructor = function()
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(128, 64), 400, false,
                                 1, 1, -1);
-        sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.loadStandingFiredAnimation = function(sprite, unit, defender, weapon)
@@ -78,13 +82,17 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_MISSILE.getMaxUnitCount());
         sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 60),
                           1, 1.0, 0, 300);
         sprite.loadMovingSprite("rocket_up", false, sprite.getMaxUnitCount(), Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
                                 1, 1, 0, 0, true);
-        sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

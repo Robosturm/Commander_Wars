@@ -10,20 +10,24 @@ var Constructor = function()
         sprite.loadSprite("hovercraft",  false,
                           BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
         sprite.loadSpriteV2("hovercraft+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
+                            BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_HOVERCRAFT.loadStandingAnimation(sprite, unit, defender, weapon);
         var offset = Qt.point(0, 0);
+        var count = sprite.getUnitCount(BATTLEANIMATION_HOVERCRAFT.getMaxUnitCount());
         if (weapon === 0)
         {
             // gun
             offset = Qt.point(0, 28);
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 0.5, 0, 0);
-            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {

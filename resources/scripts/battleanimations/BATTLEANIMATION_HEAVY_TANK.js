@@ -63,6 +63,7 @@ var Constructor = function()
         // get army name
         var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
         var offset = Qt.point(0, 0);
+        var count = sprite.getUnitCount(BATTLEANIMATION_HEAVY_TANK.getMaxUnitCount());
         if (weapon === 0)
         {
             BATTLEANIMATION_HEAVY_TANK.loadSprite(sprite, unit, defender, weapon, "+fire", 1);
@@ -90,7 +91,10 @@ var Constructor = function()
             }
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1.0, 0, 120);
-            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 120);
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 120 + i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {

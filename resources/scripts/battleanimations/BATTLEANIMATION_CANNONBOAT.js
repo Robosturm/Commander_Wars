@@ -13,9 +13,9 @@ var Constructor = function()
     this.loadSprite = function(sprite, unit, defender, weapon, movement, moveTime)
     {
         sprite.loadMovingSprite("cannonboat",  false,
-                          BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("cannonboat+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_CANNONBOAT.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -59,9 +59,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
-        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)

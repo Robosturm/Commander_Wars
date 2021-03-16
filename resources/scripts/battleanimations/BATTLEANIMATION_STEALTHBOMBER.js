@@ -55,6 +55,7 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+		var count = sprite.getUnitCount(5);
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
                           1, 1.0, 0, 300);
         if (defender.getUnitType() === GameEnums.UnitType_Air)
@@ -69,8 +70,11 @@ var Constructor = function()
                                     Qt.point(-128, -64), 400, true,
                                     1, 1, 0, 0, true);
         }
-        sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+        for (var i = 0; i < count; i++)
+        {
+			sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+		}
     };
 
     this.hasDyingAnimation = function()

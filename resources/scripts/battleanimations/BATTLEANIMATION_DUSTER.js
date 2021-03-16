@@ -11,7 +11,7 @@ var Constructor = function()
                           BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSpriteV2("duster+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
+                            BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
@@ -39,9 +39,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

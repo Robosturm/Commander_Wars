@@ -22,9 +22,9 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_CRUISER.armyData);
         sprite.loadMovingSprite("cruiser+" + armyName,  false,
-                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("cruiser+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_CRUISER.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -133,6 +133,8 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
+        var i = 0;
         if (weapon === 0)
         {
             sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
@@ -140,14 +142,20 @@ var Constructor = function()
             sprite.loadMovingSprite("rocket_down", false, 5, Qt.point(127, 90),
                                     Qt.point(-127, -60), 400, true,
                                     1, 1, 0, 0, true);
-            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, 5, Qt.point(0, 22),
                               1, 1.0, 0, 0);
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
     };
 

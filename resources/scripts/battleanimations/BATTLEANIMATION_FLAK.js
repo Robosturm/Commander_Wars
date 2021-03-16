@@ -25,7 +25,7 @@ var Constructor = function()
         sprite.loadSprite("flak+" + armyName,  false,
                           BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
         sprite.loadSpriteV2("flak+" + armyName + "+mask",  GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                            BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -44,7 +44,7 @@ var Constructor = function()
                 sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSpriteV2("flak+" + armyName + "+fire+air+mask", GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 if (armyName === "bh")
                 {
                     offset = Qt.point(29, 40);
@@ -69,11 +69,11 @@ var Constructor = function()
                                   2, 1, 0, 0);
             }
             else
-            {                
+            {
                 sprite.loadSprite("flak+" + armyName + "+fire+ground",  false,
                                   BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSpriteV2("flak+" + armyName + "+fire+ground+mask",  GameEnums.Recoloring_Table,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 if (armyName === "bh")
                 {
                     offset = Qt.point(31, 31);
@@ -117,9 +117,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

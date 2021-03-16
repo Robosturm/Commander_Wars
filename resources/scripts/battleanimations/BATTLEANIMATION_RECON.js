@@ -53,7 +53,7 @@ var Constructor = function()
         sprite.loadSprite("recon+" + armyName + ending,  false,
                           BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
         sprite.loadSpriteV2("recon+" + armyName + ending + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
+                            BATTLEANIMATION_RECON.getMaxUnitCount(), offset, count);
     };
 
 
@@ -129,9 +129,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
     this.getMoveInDurationMS = function(sprite, unit, defender, weapon)
     {

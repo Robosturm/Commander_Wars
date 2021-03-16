@@ -74,7 +74,7 @@ var Constructor = function()
         sprite.loadSprite("infantry+" + armyName + riverName + ending,  false,
                           BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
         sprite.loadSpriteV2("infantry+" + armyName + riverName + ending + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
+                            BATTLEANIMATION_INFANTRY.getMaxUnitCount(), offset, count);
     };
 
 
@@ -201,9 +201,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
-        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.hasMoveInAnimation = function()

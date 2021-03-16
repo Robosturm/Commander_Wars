@@ -14,7 +14,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-		var player = unit.getOwner();
+        var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
         var offset = Qt.point(-40, 20);
@@ -26,7 +26,7 @@ var Constructor = function()
                           BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSpriteV2("fighter+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
+                            BATTLEANIMATION_FIGHTER.getMaxUnitCount(), offset);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 
@@ -37,6 +37,7 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FIGHTER.armyData);
         var offset = Qt.point(-5, 37);
+        var count = sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
         // gun
         if (armyName === "yc")
         {
@@ -57,7 +58,10 @@ var Constructor = function()
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), offset,
                                 Qt.point(127, 0), 400, false,
                                 1, 1, -1);
-        sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
@@ -73,13 +77,17 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_FIGHTER.getMaxUnitCount());
         sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                           1, 1.0, 0, 300);
         sprite.loadMovingSprite("rocket", false, sprite.getMaxUnitCount(), Qt.point(127, 20),
                                 Qt.point(-127, 0), 400, true,
                                 1, 1, 0, 0, true);
-        sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getImpactDurationMS = function(sprite, unit, defender, weapon)

@@ -1,5 +1,5 @@
 var BATTLEANIMATION =
-{
+        {
     defaultFrameDelay : 75,
 
     getMaxUnitCount : function()
@@ -69,17 +69,25 @@ var BATTLEANIMATION =
 
     loadImpactAnimation : function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION.getMaxUnitCount());
+        var i = 0;
         if (weapon === 0)
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                               1, 1.0, 0, 0);
-            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+            for (i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
     },
 

@@ -22,17 +22,17 @@ var Constructor = function()
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_BATTLESHIP.armyData);
         sprite.loadMovingSprite("battleship+" + armyName,  false,
-                          BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         sprite.loadMovingSpriteV2("battleship+" + armyName + "+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
+                                  BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         if (armyName !== "ma")
         {
             sprite.loadMovingSprite("battleship+" + armyName + "+fire",  false,
-                              BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
-                              movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
+                                    BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
+                                    movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
             sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Table,
-                              BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
-                              movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
+                                      BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
+                                      movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
         }
     };
 
@@ -95,9 +95,13 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(5);
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
-        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.hasDyingAnimation = function()
