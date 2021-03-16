@@ -50,6 +50,14 @@ public:
         spGameAction m_action;
         float m_score{0};
     };
+
+    struct BuildingData
+    {
+        Building* m_pBuilding;
+
+    };
+
+
     explicit HeavyAi();
     virtual ~HeavyAi() = default;
 public slots:
@@ -69,7 +77,17 @@ public slots:
     void showFrontLines();
     void hideFrontMap();
 protected:
+    /**
+     * @brief scoreActions
+     * @param unit
+     */
     void scoreActions(UnitData & unit);
+    /**
+     * @brief prepareWaitPfs
+     * @param unitData
+     * @param actions
+     */
+    void prepareWaitPfs(UnitData & unitData, QStringList & actions);
 private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();

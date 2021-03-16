@@ -363,8 +363,13 @@ void HeavyAi::scoreActions(UnitData & unit)
         auto moveTargets = unit.m_pPfs->getAllNodePoints(unit.m_movepoints + 1);
         for (const auto & action : actions)
         {
-            if (!forbiddenActions.contains(action))
+            if (!forbiddenActions.contains(action) ||
+                (action == ACTION_WAIT && actions.contains(ACTION_CAPTURE)))
             {
+                if (action == ACTION_WAIT)
+                {
+                    prepareWaitPfs(unit, actions);
+                }
                 FunctionType type;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
@@ -372,6 +377,7 @@ void HeavyAi::scoreActions(UnitData & unit)
                                       bestScore, bestScores, bestActions);
             }
         }
+        m_currentTargetedfPfs = nullptr;
         if (bestActions.size() > 0)
         {
             qint32 item = GlobalUtils::randInt(0, bestScores.size() - 1);
@@ -383,6 +389,17 @@ void HeavyAi::scoreActions(UnitData & unit)
             unit.m_score = 0.0f;
             unit.m_action = nullptr;
         }
+    }
+}
+
+void HeavyAi::prepareWaitPfs(UnitData & unitData, QStringList & actions)
+{
+    if (m_currentTargetedfPfs.get() == nullptr)
+    {
+        QVector<QVector3D> targets;
+        getMoveTargets(unitData, actions, targets);
+        m_currentTargetedfPfs = new TargetedUnitPathFindingSystem(unitData.m_pUnit, targets, &m_MoveCostMap);
+        m_currentTargetedfPfs->explore();
     }
 }
 
@@ -599,10 +616,7 @@ void HeavyAi::scoreActionWait()
                 qint32 index = -1;
                 getFunctionType(action, type, index);
                 auto moveTargets = unit.m_pPfs->getAllNodePoints(unit.m_movepoints + 1);
-                QVector<QVector3D> targets;
-                getMoveTargets(unit, actions, targets);
-                m_currentTargetedfPfs = new TargetedUnitPathFindingSystem(unit.m_pUnit, targets, &m_MoveCostMap);
-                m_currentTargetedfPfs->explore();
+                prepareWaitPfs(unit, actions);
                 mutateActionForFields(unit, moveTargets, action, type, index,
                                       bestScore, bestScores, bestActions);
                 m_currentTargetedfPfs = nullptr;
@@ -818,11 +832,11 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit)
     }
     else
     {
-        in[BuildingEntry::CaptureUnit] = 1;
+        in[BuildingEntry::CaptureUnit] = -1;
     }
     float value = getAiCoUnitMultiplier(m_pPlayer->getCO(0), pUnit);
     value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
-    in[BuildingEntry::CoUnitValue] = value / CO::MAX_CO_UNIT_VALUE;
+    in[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
     float maxMovementpoints = 10;
     in[BuildingEntry::Movementpoints] = pUnit->getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY())) / maxMovementpoints;
 }

@@ -2,21 +2,21 @@ var Constructor = function()
 {
     this.getMaxUnitCount = function()
     {
-        return 1;
+        return 5;
     };
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("neospider_tank",  false,
-                          BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(25, 25));
+                          BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(-35, 0));
         sprite.loadSpriteV2("neospider_tank+mask", GameEnums.Recoloring_Table,
-                          BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(25, 25));
+                          BATTLEANIMATION_ZCOUNIT_NEOSPIDER_TANK.getMaxUnitCount(), Qt.point(-35, 0));
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadAnimation("loadStandingAnimation", unit);
-        var offset = Qt.point(84, 42);
+        var offset = Qt.point(24, 17);
         if (weapon === 0)
 		{
                 
@@ -28,7 +28,7 @@ var Constructor = function()
         else
         {
             // mg
-            offset = Qt.point(92, 42);
+            offset = Qt.point(32, 17);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
         }
