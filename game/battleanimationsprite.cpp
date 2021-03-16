@@ -650,7 +650,7 @@ void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder
     Mainapp* pApp = Mainapp::getInstance();
     AudioThread* pAudio = pApp->getAudioThread();
     m_Sounds.append(std::tuple<QString, QString>(file, folder));
-    pAudio->playSound(file, loops, folder, delay);
+    pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 void BattleAnimationSprite::stopSound()
