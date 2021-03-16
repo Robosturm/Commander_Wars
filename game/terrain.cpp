@@ -918,22 +918,22 @@ QString Terrain::getTerrainID() const
     return terrainID;
 }
 
-qint32 Terrain::getMapX() const
+qint32 Terrain::getX() const
 {
     return x;
 }
 
-void Terrain::setMapX(const qint32 &value)
+void Terrain::setX(const qint32 &value)
 {
     x = value;
 }
 
-qint32 Terrain::getMapY() const
+qint32 Terrain::getY() const
 {
     return y;
 }
 
-void Terrain::setMapY(const qint32 &value)
+void Terrain::setY(const qint32 &value)
 {
     y = value;
 }
@@ -958,7 +958,7 @@ qint32 Terrain::getVision(Player* pPlayer)
 
 TerrainFindingSystem* Terrain::createTerrainFindingSystem()
 {
-    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), getMapX(), getMapY());
+    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), getX(), getY());
     pPfs->explore();
     return pPfs;
 }

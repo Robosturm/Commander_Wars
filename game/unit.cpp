@@ -2035,7 +2035,7 @@ qint32 Unit::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getMapX();
+        return m_pTerrain->getX();
     }
     else
     {
@@ -2047,7 +2047,7 @@ qint32 Unit::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getMapY();
+        return m_pTerrain->getY();
     }
     else
     {

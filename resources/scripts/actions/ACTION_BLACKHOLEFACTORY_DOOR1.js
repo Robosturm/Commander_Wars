@@ -53,11 +53,13 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         var x = building.getX() - 2;
         var y = building.getY() + 1;
+        var buildlist = building.getOwner().getBuildList();
         var units = map.getAllUnitIDs();
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+            if (buildlist.includes(units[i]) &&
+                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
                 return true;
@@ -72,10 +74,12 @@ var Constructor = function()
         var x = building.getX() - 2;
         var y = building.getY() + 1;
         var units = map.getAllUnitIDs();
+        var buildlist = building.getOwner().getBuildList();
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+            if (buildlist.includes(units[i]) &&
+                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
                 var name = Global[units[i]].getName();

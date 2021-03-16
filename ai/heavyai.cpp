@@ -664,8 +664,8 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
     {
-        qint32 x = pTerrain->getMapX();
-        qint32 y = pTerrain->getMapY();
+        qint32 x = pTerrain->getX();
+        qint32 y = pTerrain->getY();
         bool missileTarget = hasMissileTarget();
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr &&
@@ -696,8 +696,8 @@ qint32 HeavyAi::getMovingToCaptureDistanceModifier()
 void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 x = pTerrain->getMapX();
-    qint32 y = pTerrain->getMapY();
+    qint32 x = pTerrain->getX();
+    qint32 y = pTerrain->getY();
     for (qint32 i = 0; i < pTargetFields->size(); ++i)
     {
         qint32 targetX = pTargetFields->at(i).x() + x;

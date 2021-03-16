@@ -2,9 +2,6 @@ name: CMake
 on: [push]
 env:
   BUILD_TYPE: RelWithDebInfo
-  QT_VERSION:     "5.15.2"
-  MINGW_VERSION:  "win32_mingw81"
-  MINGW_PATH:     "mingw810_32"
 jobs:
   install:
     name: All
@@ -12,9 +9,9 @@ jobs:
     steps:
     - uses: jurplel/install-qt-action@v2.5.3
       with:
-          version: ${{ env.QT_VERSION }}
+          version: '5.15.2'
           target: 'desktop'
-          arch:    ${{ env.MINGW_VERSION }}
+          arch: 'win64_mingw81'
           dir: '${{ github.workspace }}/qt/'
           cached: 'false'
           setup-python: 'true'

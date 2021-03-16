@@ -47,8 +47,8 @@ QPoint Building::getOffset(Terrain* pTerrain)
 {
     if (pTerrain != nullptr)
     {
-        return QPoint(m_pTerrain->getMapX() - pTerrain->getMapX(),
-                      m_pTerrain->getMapY() - pTerrain->getMapY());
+        return QPoint(m_pTerrain->getX() - pTerrain->getX(),
+                      m_pTerrain->getY() - pTerrain->getY());
     }
     else
     {
@@ -118,6 +118,7 @@ void Building::setUnitOwner(Unit* pUnit)
 
 void Building::setOwner(Player* pOwner)
 {
+    Player* prevOwner = m_pOwner;
     // change ownership
     m_pOwner = pOwner;
     // update sprites :)
@@ -132,7 +133,8 @@ void Building::setOwner(Player* pOwner)
     {
         visible = pMap->getCurrentViewPlayer()->getFieldVisible(x, y);
     }
-    if (m_pBuildingSprites.size() == 0)
+    if (m_pBuildingSprites.size() == 0 ||
+        prevOwner == nullptr)
     {
         updateBuildingSprites(false);
     }
@@ -419,7 +421,7 @@ qint32 Building::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getMapX();
+        return m_pTerrain->getX();
     }
     else
     {
@@ -431,7 +433,7 @@ qint32 Building::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getMapY();
+        return m_pTerrain->getY();
     }
     else
     {
