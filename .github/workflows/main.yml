@@ -3,6 +3,8 @@ on: [push]
 env:
   BUILD_TYPE: RelWithDebInfo
   compiler: gcc
+  QT_Version: '5.15.2'
+  MINGW_VERSION: 'win64_mingw81'
 jobs:
   install:
     name: All
@@ -10,9 +12,9 @@ jobs:
     steps:
     - uses: jurplel/install-qt-action@v2
       with:
-          version: '5.15.2'
+          version: ${{env.QT_Version}}
           target: 'desktop'
-          arch: 'win64_mingw81'
+          arch: ${{env.MINGW_VERSION}}
           dir: '${{ github.workspace }}/qt/'
           cached: 'false'
           setup-python: 'true'
@@ -23,12 +25,12 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_PREFIX_PATH=${{ github.workspace }}/qt/ -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_BUILD_TYPE=$BUILD_TYPE 
     - name: Translate
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE -DCMAKE_PREFIX_PATH=${{ github.workspace }}/qt/ -DCMAKE_CXX_COMPILER=g++-10 --target Commander_Wars_translations
+      run: cmake --build . --config $BUILD_TYPE --target Commander_Wars_translations
     - name: Build
       working-directory: ${{github.workspace}}/build
       shell: bash
-      run: cmake --build . --config $BUILD_TYPE -DCMAKE_PREFIX_PATH=${{ github.workspace }}/qt/ -DCMAKE_CXX_COMPILER=g++-10 --target install
+      run: cmake --build . --config $BUILD_TYPE --target install
