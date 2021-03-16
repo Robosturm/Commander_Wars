@@ -287,39 +287,48 @@ namespace crashReporter
    {
       int   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
       char  **messages = backtrace_symbols( sStackTraces, traceSize );
-
-      // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
-      QStringList frameList;
-      int         frameNumber = 0;
-
-      frameList.reserve( traceSize );
-
-      for ( int i = 2; i < (traceSize - 1); ++i )
+      try
       {
-         QString  message( messages[i] );
+          // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
+          QStringList frameList;
+          int         frameNumber = 0;
 
-         // match the mangled name if possible and replace with file & line number
-         QRegularExpressionMatch match = sSymbolMatching.match( message );
+          frameList.reserve( traceSize );
 
-         const QString  cSymbol( match.captured( 1 ) );
+          for ( int i = 2; i < (traceSize - 1); ++i )
+          {
+              QString  message( messages[i] );
 
-         if ( !cSymbol.isNull() )
-         {
-            QString  locationStr = _addressToLine( sProgramName, sStackTraces[i] );
+              // match the mangled name if possible and replace with file & line number
+              QRegularExpressionMatch match = sSymbolMatching.match( message );
 
-            if ( !locationStr.isEmpty() )
-            {
-               int   matchStart = match.capturedStart( 1 );
+              const QString  cSymbol( match.captured( 1 ) );
 
-               message.replace( matchStart, message.length() - matchStart, locationStr );
-            }
-         }
+              if ( !cSymbol.isNull() )
+              {
+                  QString  locationStr = _addressToLine( sProgramName, sStackTraces[i] );
 
-         frameList += message;
+                  if ( !locationStr.isEmpty() )
+                  {
+                      int   matchStart = match.capturedStart( 1 );
 
-         ++frameNumber;
+                      message.replace( matchStart, message.length() - matchStart, locationStr );
+                  }
+              }
+
+              frameList += message;
+
+              ++frameNumber;
+              // anything above isn't really helpful
+              if (frameNumber > 10)
+              {
+                  break;
+              }
+          }
+      } catch (...)
+      {
+
       }
-
       if ( messages != nullptr )
       {
          free( messages );
