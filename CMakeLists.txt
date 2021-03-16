@@ -659,6 +659,7 @@ message("install lib dir: ${CMAKE_SYSTEM_PREFIX_PATH}")
 install(DIRECTORY system DESTINATION                ".")
 install(DIRECTORY resources DESTINATION             ".")
 install(DIRECTORY maps DESTINATION                  ".")
+install(FILES ${QM_FILES} DESTINATION "resources/translation/" OPTIONAL)
 install(DIRECTORY customTerrainImages DESTINATION   ".")
 install(DIRECTORY mods DESTINATION                  ".")
 install(DIRECTORY templates DESTINATION             ".")
@@ -677,8 +678,3 @@ install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION             
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION          "platforms" OPTIONAL)
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION    "playlistformats" OPTIONAL)
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION             "styles" OPTIONAL)
-
-if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
-  # Install translations - only seems to work on Windows
-  install(FILES ${QM_FILES} DESTINATION "resources/translation/")
-endif()
