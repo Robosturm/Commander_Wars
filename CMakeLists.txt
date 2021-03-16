@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-# add qt to our project and provide qt path to package path on travis
+# show configuration
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
 find_program(ADDR_2_LINE addr2line)

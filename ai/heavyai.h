@@ -83,7 +83,7 @@ private:
                                QString action, FunctionType type, qint32 index,
                                float & bestScore, QVector<float> & bestScores,
                                QVector<spGameAction> & bestActions);
-    bool mutateAction(spGameAction pAction, FunctionType type, qint32 functionIndex,
+    bool mutateAction(spGameAction pAction, UnitData & unitData, FunctionType type, qint32 functionIndex,
                       qint32 & step, QVector<qint32> & stepPosition, float & score);
     /**
      * @brief performAction
@@ -94,13 +94,13 @@ private:
      * @param action
      * @return
      */
-    float scoreCapture(spGameAction action);
+    float scoreCapture(spGameAction action, UnitData & unitData);
     /**
      * @brief scoreFire
      * @param action
      * @return
      */
-    float scoreFire(spGameAction action);
+    float scoreFire(spGameAction action, UnitData & unitData);
     /**
      * @brief scoreWait
      * @param unit
@@ -111,13 +111,13 @@ private:
      * @param unit
      * @param targets
      */
-    void getMoveTargets(UnitData & unit, QVector<QVector3D> & targets);
+    void getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVector3D> & targets);
     /**
      * @brief scoreWait
      * @param action
      * @return
      */
-    float scoreWait(spGameAction action);
+    float scoreWait(spGameAction action, UnitData & unitData);
     /**
      * @brief addCaptureTargets
      * @param pUnit
@@ -178,7 +178,7 @@ private:
     bool buildUnits();
 private:
     // function for scoring a function
-    using scoreFunction = std::function<float (spGameAction action)>;
+    using scoreFunction = std::function<float (spGameAction action, UnitData & unitData)>;
     struct ScoreInfo
     {
         QString m_actionId;
@@ -196,7 +196,7 @@ private:
     QTimer m_timer;
     bool m_pause{false};
 
-    spTargetedUnitPathFindingSystem m_currentTargetefPfs;
+    spTargetedUnitPathFindingSystem m_currentTargetedfPfs;
 
     static const qint32 minSiloDamage;
     float m_minActionScore{0.1f};
