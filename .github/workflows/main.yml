@@ -25,7 +25,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_MODULE_PATH=$GITHUB_WORKSPACE\\\\qt\\\\Qt\\\\Tools\\\\${{env.COMPILER_VERSION}} -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE\\qt\\Qt\\Tools\\${{env.COMPILER_VERSION}} -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_BUILD_TYPE=$BUILD_TYPE 
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_BUILD_TYPE=$BUILD_TYPE 
     - name: Translate
       working-directory: ${{github.workspace}}/build
       shell: bash
