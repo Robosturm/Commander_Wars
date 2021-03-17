@@ -19,6 +19,7 @@ set(CMAKE_AUTORCC ON)
 # show configuration
 message("Prefix Path: ${CMAKE_PREFIX_PATH}")
 message("Module Path: ${CMAKE_MODULE_PATH}")
+message("Qt-Dir: ${Qt5_DIR}")
 find_program(ADDR_2_LINE addr2line)
 message("Addr2Line Path: ${ADDR_2_LINE}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
