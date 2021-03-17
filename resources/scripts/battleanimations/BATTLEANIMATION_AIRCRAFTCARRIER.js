@@ -44,16 +44,16 @@ var Constructor = function()
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {
-        var count = sprite.getUnitCount(5);
+        var count = sprite.getUnitCount(BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount());
+        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
+                          1, 1.0, 0, 300);
+        sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
+                                Qt.point(-128, 64), 400, true,
+                                1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
-                              1, 1.0, 0, 300);
-            sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
-                                    Qt.point(-128, 64), 400, true,
-                                    1, 1, 0, 0, true);
             sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * 75);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

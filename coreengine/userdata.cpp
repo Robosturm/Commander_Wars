@@ -310,11 +310,14 @@ QStringList Userdata::getShopItemsList(GameEnums::ShopItemType type, bool bought
 void Userdata::addShopItem(GameEnums::ShopItemType itemType, QString key, QString name, qint32 price, bool buyable)
 {
     bool found = false;
-    for (const auto & item : m_shopItems)
+    for (auto & item : m_shopItems)
     {
         if (item.itemType == itemType &&
             item.key == key)
         {
+            item.name = name;
+            item.price = price;
+            item.buyable = buyable;
             found = true;
             break;
         }
