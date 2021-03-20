@@ -7,8 +7,23 @@
 
 GameManager::GameManager()
     : RessourceManagement<GameManager>("/images/game/res.xml",
-                                       "scripts/actions")
+                                       "")
 {
+}
+
+void GameManager::reset()
+{
+    RessourceManagement<GameManager>::reset(m_loadedRessources);
+    RessourceManagement<GameManager>::reset(m_loadedHeavyAis);
+}
+
+void GameManager::loadAll()
+{
+    reset();
+    scriptPath = "scripts/actions/";
+    RessourceManagement<GameManager>::loadAll(m_loadedRessources);
+    scriptPath = "aidata/heavy/";
+    RessourceManagement<GameManager>::loadAll(m_loadedHeavyAis);
 }
 
 QString GameManager::getActionIcon(QString actionID)

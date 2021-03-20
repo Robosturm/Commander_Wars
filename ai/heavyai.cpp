@@ -17,14 +17,15 @@ const qint32 HeavyAi::minSiloDamage = 7000;
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-HeavyAi::HeavyAi()
+HeavyAi::HeavyAi(QString type)
     : CoreAI(GameEnums::AiTypes_Heavy),
       m_scoreInfos({
 {ACTION_CAPTURE,  std::bind(&HeavyAi::scoreCapture,     this,   _1, _2)},
 {ACTION_FIRE,     std::bind(&HeavyAi::scoreFire,        this,   _1, _2)},
 {ACTION_WAIT,     std::bind(&HeavyAi::scoreWait,        this,   _1, _2)},
                    }),
-      m_InfluenceFrontMap(m_IslandMaps)
+      m_InfluenceFrontMap(m_IslandMaps),
+      m_aiName(type)
 {
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
@@ -483,7 +484,7 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, FunctionTy
                 QJSValue erg = pInterpreter->doFunction(m_aiName, pAction->getActionID(), args);
                 if (erg.isNumber())
                 {
-                    score = erg.toInt();
+                    score = erg.toNumber();
                 }
                 break;
             }
@@ -491,6 +492,10 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, FunctionTy
             {
                 score = m_scoreInfos[functionIndex].callback(pAction, unitData);
                 break;
+            }
+            default:
+            {
+                Q_ASSERT(false);
             }
         }
         ret = true;
@@ -845,4 +850,9 @@ bool HeavyAi::buildUnits()
 {
     // todo
     return false;
+}
+
+void HeavyAi::scoreUnitBuilding()
+{
+
 }

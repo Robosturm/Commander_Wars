@@ -58,7 +58,7 @@ public:
     };
 
 
-    explicit HeavyAi();
+    explicit HeavyAi(QString type);
     virtual ~HeavyAi() = default;
 public slots:
     /**
@@ -194,6 +194,10 @@ private:
      * @return
      */
     bool buildUnits();
+    /**
+     * @brief scoreUnitBuilding
+     */
+    void scoreUnitBuilding();
 private:
     // function for scoring a function
     using scoreFunction = std::function<float (spGameAction action, UnitData & unitData)>;

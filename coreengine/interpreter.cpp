@@ -338,3 +338,13 @@ bool Interpreter::exists(QString object, QString function)
     }
     return false;
 }
+
+bool Interpreter::exists(QString object)
+{
+    QJSValue objPointer = globalObject().property(object);
+    if (objPointer.isObject())
+    {
+        return true;
+    }
+    return false;
+}

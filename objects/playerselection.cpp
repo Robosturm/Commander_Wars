@@ -341,7 +341,17 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def."), tr("Heavy"),  tr("Closed")}; // // heavy ai disabled cause it's not finished
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
+    GameManager* pGameManager = GameManager::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
+    {
+        QString id = pGameManager->getHeavyAiID(i);
+        QJSValue aiName = pInterpreter->doFunction(id, "getName");
+        defaultAiList.append(aiName.toString());
+    }
+    defaultAiList.append(tr("Closed"));
+
     QVector<QString> aiList = defaultAiList;
     if (m_pCampaign.get() != nullptr)
     {
@@ -362,8 +372,6 @@ void PlayerSelection::showPlayerSelection()
             aiList = {tr("Human"), tr("Open")};
         }
     }
-
-    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
     QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
@@ -1158,7 +1166,15 @@ void PlayerSelection::selectAI(qint32 player)
     }
     else
     {
-        createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
+        QString aiName = m_playerAIs[player]->getCurrentItemText();
+        if (aiName == tr("Closed"))
+        {
+            createAi(player, GameEnums::AiTypes_Closed);
+        }
+        else
+        {
+            createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
+        }
     }
 }
 

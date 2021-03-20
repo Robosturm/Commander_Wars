@@ -74,7 +74,19 @@ public slots:
     QString getGlobalString(QString var);
     QJSValue getGlobal(QString var);
     void setGlobal(QString var, QJSValue obj);
+    /**
+     * @brief exists checks if the js object exists
+     * @param object
+     * @return
+     */
+    bool exists(QString object);
+    /**
+     * @brief exists checks if the js object and function exists
+     * @param object
+     * @return
+     */
     bool exists(QString object, QString function);
+
 
 private:
     explicit Interpreter();    

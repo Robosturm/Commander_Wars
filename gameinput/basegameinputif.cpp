@@ -11,6 +11,7 @@
 
 #include "game/gamemap.h"
 
+#include "resource_management/gamemanager.h"
 
 BaseGameInputIF::BaseGameInputIF(GameEnums::AiTypes aiType)
     : m_AiType(aiType)
@@ -111,11 +112,6 @@ BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
             ret = new ProxyAi();
             break;
         }
-        case GameEnums::AiTypes_Heavy:
-        {
-            ret = new HeavyAi();
-            break;
-        }
         case GameEnums::AiTypes_Open:
         {
             ret = nullptr;
@@ -128,7 +124,9 @@ BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
         }
         default: // fall back case for damaged files or unset ai's
         {
-            ret = new HumanPlayerInput();
+            GameManager* pGameManager = GameManager::getInstance();
+            QString id = pGameManager->getHeavyAiID(static_cast<qint32>(type) - GameEnums::AiTypes_Heavy);
+            ret = new HeavyAi(id);
             break;
         }
     }
