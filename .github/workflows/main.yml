@@ -4,7 +4,7 @@ env:
   BUILD_TYPE: RelWithDebInfo
   compiler: gcc
   QT_Version: '5.15.2'
-  COMPILER_VERSION: 'win64_msvc2015_64'
+  COMPILER_VERSION: 'win64_msvc2019_64'
 jobs:
   install:
     name: All
@@ -16,16 +16,13 @@ jobs:
           target: 'desktop'
           arch: ${{env.COMPILER_VERSION}}
           dir: '${{ github.workspace }}/qt/'
-          cached: 'false'
-          setup-python: 'true'
-          tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.13.2-0,qt.tools.qtcreator'
     - uses: actions/checkout@v2
     - name: Create Build Environment
       run: cmake -E make_directory ${{github.workspace}}/build
     - name: Configure CMake
       shell: bash
       working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DQt5_DIR=$Qt5_Dir -DCMAKE_MODULE_PATH=$Qt5_Dir/lib/cmake/Qt5 -DCMAKE_PREFIX_PATH=$Qt5_Dir/lib/cmake/Qt5 -DCMAKE_CXX_COMPILER=g++-10 -DCMAKE_BUILD_TYPE=$BUILD_TYPE 
+      run: cmake $GITHUB_WORKSPACE -DQt5_DIR=$Qt5_Dir -DCMAKE_MODULE_PATH=$Qt5_Dir -DCMAKE_PREFIX_PATH=$Qt5_Dir -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DQT_QMAKE_EXECUTABLE=$Qt5_Dir/bin/qmake.exe
     - name: Translate
       working-directory: ${{github.workspace}}/build
       shell: bash
