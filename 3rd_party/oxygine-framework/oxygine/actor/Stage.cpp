@@ -25,7 +25,6 @@ namespace oxygine
 
     void Stage::onDeactivate(Event*)
     {
-        //_active = false;
         core::reset();
     }
 
@@ -47,7 +46,6 @@ namespace oxygine
 
     void Stage::init(const Point& displaySize, const Point& gameSize)
     {
-        //_realDisplaySize = displaySize;
         setSize(gameSize);
 
         _viewport = calcCenteredViewport(displaySize, gameSize);
@@ -66,18 +64,9 @@ namespace oxygine
 
     RectF Stage::getDestRect() const
     {
-//        Q_ASSERT(0);
         Vector2 s = getSize() + getPosition();
         return RectF(-getPosition(), s);
     }
-
-    /*
-    bool Stage::handleEvent(const EventState &es)
-    {
-        bool handled = Actor::handleEvent(es);
-        return handled;
-    }
-    */
 
     void Stage::render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {

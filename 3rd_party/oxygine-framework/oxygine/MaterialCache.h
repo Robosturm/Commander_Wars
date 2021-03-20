@@ -34,6 +34,7 @@ namespace oxygine
         void removeUnused();
         size_t getTotalMaterials() const { return _materials.size(); }
 
+        static MaterialCache& mc();
     protected:
         typedef QMultiMap<size_t, spMaterialX> materials;
         materials _materials;
@@ -43,7 +44,7 @@ namespace oxygine
 
         Material* clone_(const Material& other);
         void removeUnusedNoLock();
+    private:
+        static MaterialCache mcache;
     };
-
-    MaterialCache& mc();
 }

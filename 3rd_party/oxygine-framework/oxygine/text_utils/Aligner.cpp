@@ -18,7 +18,6 @@ namespace oxygine
               _y(0),
               _lineWidth(0)
         {
-            //qDebug("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
             _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
             options = Style.options;

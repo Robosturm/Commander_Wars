@@ -52,8 +52,9 @@ namespace oxygine
     void SlidingActor::sizeChanged(const Vector2& size)
     {
         if (_clip)
+        {
             _clip->setSize(size);
-
+        }
         updateDragBounds();
     }
 
@@ -86,18 +87,11 @@ namespace oxygine
         _lastIterTime = timeMS(0);
         _sliding = false;
 
-        //_prev[0].pos = _content->getPosition();
-        //_prev[0].tm = tm;
-
         for (int i = 0; i < NUM; ++i)
             _prev[i].tm = timeMS(0);
 
         _holded = nullptr; //event->target;
-        //_downPos = te->localPosition;
-        //_downTime = tm;
         _finger = 0;
-
-
         _speed = Vector2(0, 0);
 
         _content = content;
@@ -116,7 +110,9 @@ namespace oxygine
     void SlidingActor::updateDragBounds()
     {
         if (!_content)
+        {
             return;
+        }
         float w = std::max(0.0f, _content->getWidth() * _content->getScaleX() - _clip->getWidth());
         float h = std::max(0.0f, _content->getHeight() * _content->getScaleY() - _clip->getHeight());
         RectF bounds(-w, -h, w, h);
@@ -211,10 +207,10 @@ namespace oxygine
     void SlidingActor::_newEvent(Event* event)
     {
         if (!_content)
+        {
             return;
-
+        }
         TouchEvent* te = safeCast<TouchEvent*>(event);
-        //if (te->)
         timeMS tm = Clock::getTimeMS();
         switch (te->type)
         {
@@ -228,7 +224,9 @@ namespace oxygine
                 _prev[0].tm = tm;
 
                 for (int i = 1; i < NUM; ++i)
+                {
                     _prev[i].tm = timeMS(0);
+                }
 
                 _holded = event->target;
                 _downPos = te->localPosition;
@@ -259,11 +257,17 @@ namespace oxygine
                     {
                         int n = (_current + NUM - i) % NUM;
                         if (_prev[n].tm > timeMS(0))
+                        {
                             last = _prev + n;
+                        }
                         else
+                        {
                             break;
+                        }
                         if (!mid && (last->tm + timeMS(50) <= tm))
+                        {
                             mid = last;
+                        }
                         if (last->tm + timeMS(150) <= tm)
                         {
                             old = last;
@@ -271,16 +275,19 @@ namespace oxygine
                         }
                     }
                     if (!old)
+                    {
                         old = last;
+                    }
                     if (!mid)
+                    {
                         mid = last;
-
-
-
+                    }
                     Vector2 midpos = mid->pos;
                     Vector2 dir = pos - midpos;
                     if (dir.sqlength() < 10 * 10)
+                    {
                         _speed = Vector2(0, 0);
+                    }
                     else
                     {
                         timeMS v = tm - old->tm;
@@ -294,10 +301,13 @@ namespace oxygine
                         Vector2 ns = (dr * 1000.0f) / v.count();
 
                         if (_speed.dot(ns) < 0)
+                        {
                             _speed = ns;
+                        }
                         else
+                        {
                             _speed += ns;
-
+                        }
                     }
 
 

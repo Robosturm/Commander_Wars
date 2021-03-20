@@ -31,9 +31,9 @@ public:
      * @param localScale
      * @return
      */
-    const oxygine::Rect& getTextRect(float localScale = 1.0f)
+    const oxygine::Rect& getTextRect()
     {
-        return _textField->getTextRect(localScale);
+        return _textField->getTextRect();
     }
     /**
      * @brief setWidth

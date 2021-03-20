@@ -15,8 +15,9 @@ namespace oxygine
         if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
         {
             if (type == TouchEvent::TOUCH_UP)
+            {
                 _ids[ps->getIndex() - 1] = 0;
-
+            }
             return;
         }
 
@@ -28,24 +29,30 @@ namespace oxygine
         me.pressure = pressure;
 
         if (type == TouchEvent::TOUCH_DOWN)
+        {
             ps->_pressed |= 1 << button;
+        }
         else if (type == TouchEvent::TOUCH_UP)
+        {
             ps->_pressed &= ~(1 << button);
-
+        }
         ps->_position = p;
 
         stage->handleEvent(&me);
 
         if (type == TouchEvent::TOUCH_UP)
+        {
             _ids[ps->getIndex() - 1] = 0;
+        }
     }
 
     void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps)
     {
 
         if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+        {
             return;
-
+        }
         TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
         me.index = ps->getIndex();
         me.pressure = pressure;
@@ -71,7 +78,9 @@ namespace oxygine
     {
         _pointerMouse.init(MAX_TOUCHES + 1);
         for (int i = 0; i < MAX_TOUCHES; ++i)
+        {
             _pointers[i].init(i + 1);
+        }
         memset(_ids, 0, sizeof(_ids));
         _multiTouch = true;
     }
@@ -96,7 +105,9 @@ namespace oxygine
 
         int index = index_;
         if (index == MAX_TOUCHES + 1)
+        {
             return &_pointerMouse;
+        }
         index -= 1;
         Q_ASSERT(index >= 0 && index < MAX_TOUCHES);
         index = std::min(std::max(index, 0), MAX_TOUCHES);
@@ -105,20 +116,20 @@ namespace oxygine
 
     int Input::touchID2index(qint64 id)
     {
-        // We can't be sure that SDL's fingerId is not 0,
-        // but 0 is reserved for empty slot, so increment id by one:
         id += 1;
-
         int firstEmptySlotIndex = -1;
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
             qint64& d = _ids[i];
 
             if (d == id)
+            {
                 return i + 1;
-
+            }
             if (d == 0 && firstEmptySlotIndex == -1)
+            {
                 firstEmptySlotIndex = i;
+            }
         }
 
         if (firstEmptySlotIndex != -1)
@@ -126,8 +137,6 @@ namespace oxygine
             _ids[firstEmptySlotIndex] = id;
             return firstEmptySlotIndex + 1;
         }
-
-        //qWarning("can't find touch id %d", id);
         return -1;
     }
 
@@ -135,7 +144,9 @@ namespace oxygine
     {
         int i = touchID2index(id);
         if (i == -1)
+        {
             return 0;
+        }
         return getTouchByIndex(i);
     }
 }

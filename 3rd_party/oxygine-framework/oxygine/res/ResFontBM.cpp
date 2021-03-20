@@ -248,8 +248,6 @@ namespace oxygine
         }
 
         QString path = _file;
-
-        QString data;
         QFile file(path);
         if (!file.exists())
         {
@@ -292,7 +290,6 @@ namespace oxygine
             QString textureFile = page_node.attribute("file");
             addPage(tw, th, dir.path().toStdString().c_str(), textureFile);
         }
-
 
         if (!tw)
         {

@@ -52,7 +52,7 @@ namespace oxygine
         clearPostProcessItems();
         PostProcess::freeShaders();
 
-        mc().clear();
+        MaterialCache::mc().clear();
 
         STDRenderer::release();
         STDRenderDelegate::instance = nullptr;

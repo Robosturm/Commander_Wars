@@ -30,7 +30,7 @@ namespace oxygine
         virtual void apply(const Rect* rect = 0) = 0;
 
         /**returns handle (ptr) to HW texture ID*/
-        virtual nativeTextureHandle getHandle() const = 0;
+        virtual GLuint getHandle() const = 0;
 
         static QVector<spNativeTexture> getCreatedTextures();
         /**debug counter of created textures*/
@@ -40,26 +40,26 @@ namespace oxygine
     class NativeTextureNull: public NativeTexture
     {
     public:
-        void init(nativeTextureHandle, int w, int h, ImageData::TextureFormat tf);
-        void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget = false);
-        void init(const ImageData& src, bool sysMemCopy);
-        void release();
+        virtual void init(GLuint, int w, int h, ImageData::TextureFormat tf) override;
+        virtual void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget = false) override;
+        virtual void init(const ImageData& src, bool sysMemCopy) override;
+        virtual void release() override;
 
-        ImageData lock(lock_flags, const Rect* src);
-        void unlock();
-        void swap(NativeTexture*);
+        virtual ImageData lock(lock_flags, const Rect* src) override;
+        virtual void unlock() override;
+        virtual void swap(NativeTexture*) override;
 
-        void setClamp2Edge(bool clamp2edge);
-        void setLinearFilter(quint32 filter) override;
-        void updateRegion(int x, int y, const ImageData& data);
-        void apply(const Rect* rect = 0);
+        virtual void setClamp2Edge(bool clamp2edge) override;
+        virtual void setLinearFilter(quint32 filter) override;
+        virtual void updateRegion(int x, int y, const ImageData& data) override;
+        virtual void apply(const Rect* rect = 0) override;
 
         /**returns handle (ptr) to HW texture ID*/
-        nativeTextureHandle getHandle() const;
-        int getWidth() const;
-        int getHeight() const;
-        ImageData::TextureFormat getFormat() const;
+        virtual GLuint getHandle() const override;
+        virtual int getWidth() const override;
+        virtual int getHeight() const override;
+        virtual ImageData::TextureFormat getFormat() const override;
 
-        void* _getRestorableObject() { return 0; }
+        virtual void* _getRestorableObject() override { return 0; }
     };
 }

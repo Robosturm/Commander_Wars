@@ -6,6 +6,8 @@
 
 namespace oxygine
 {
+    MaterialCache MaterialCache::mcache;
+
     Material* MaterialCache::clone_(const Material& other)
     {
         QMutexLocker alock(&_lock);
@@ -80,9 +82,7 @@ namespace oxygine
         _materials.clear();
     }
 
-    static MaterialCache mcache;
-
-    MaterialCache& mc()
+    MaterialCache& MaterialCache::mc()
     {
         return mcache;
     }

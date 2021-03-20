@@ -75,7 +75,9 @@ namespace oxygine
         if (_actor && !_singleDrag)
         {
             if (_actor->_getStage())
+            {
                 _actor->_getStage()->removeEventListeners(this);
+            }
             _actor->removeEventListeners(this);
             _actor = 0;
         }
@@ -138,10 +140,13 @@ namespace oxygine
             Vector2 np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
+            {
                 np = _clientPos + dragOffset;
+            }
             else
+            {
                 np = client->getPosition() + converted;
-
+            }
             client->setPosition(np);
 
 
@@ -151,9 +156,6 @@ namespace oxygine
 
     void Draggable::onEvent(Event* event)
     {
-        //if (event->currentTarget.get() != _actor)
-        //  return;
-
         TouchEvent* te = safeCast<TouchEvent*>(event);
         switch (te->type)
         {
@@ -199,24 +201,13 @@ namespace oxygine
         while (child)
         {
             if (child == isItParent)
+            {
                 return true;
+            }
             child = child->getParent();
         }
-
         return false;
     }
-
-    /*
-    void Draggable::onPress(TouchEvent *es, bool press)
-    {
-        if (press)
-        {
-            _dragPos = es.localPosition;
-            _clientPos = getClient()->getPosition();
-
-            _clientIsParent = isParent(es.actor, getClient());
-        }
-    }*/
 
     Actor* Draggable::getClient()
     {

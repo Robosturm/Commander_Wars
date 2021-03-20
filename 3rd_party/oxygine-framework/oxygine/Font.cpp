@@ -67,7 +67,9 @@ namespace oxygine
     {
         const glyph* g = findGlyph(code, opt);
         if (g)
+        {
             return g;
+        }
 
         glyph gl;
         Font* fn = const_cast<Font*>(this);

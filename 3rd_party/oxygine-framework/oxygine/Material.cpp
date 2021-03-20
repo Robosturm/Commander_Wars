@@ -97,7 +97,7 @@ namespace oxygine
     {
         STDMaterial mat(*this);
         mat._uberShader = &STDRenderer::uberShader;
-        return mc().cache(mat);
+        return MaterialCache::mc().cache(mat);
     }
 
     Material::Material(const Material& other)

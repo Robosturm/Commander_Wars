@@ -34,9 +34,9 @@ namespace oxygine
     {
     }
 
-    bool TextField::isOn(const Vector2& localPosition, float localScale)
+    bool TextField::isOn(const Vector2& localPosition, float)
     {
-        Rect r = getTextRect(localScale);
+        Rect r = getTextRect();
         r.expand(Point(_extendedIsOn, _extendedIsOn), Point(_extendedIsOn, _extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
@@ -243,12 +243,12 @@ namespace oxygine
 
     text::Symbol* TextField::getSymbolAt(int pos) const
     {
-        return const_cast<TextField*>(this)->getRootNode(_rtscale)->getSymbol(pos);
+        return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
     }
 
-    const Rect& TextField::getTextRect(float localScale) const
+    const Rect& TextField::getTextRect() const
     {
-        const_cast<TextField*>(this)->getRootNode(localScale);
+        const_cast<TextField*>(this)->getRootNode();
         return _textRect;
     }
 
@@ -259,15 +259,12 @@ namespace oxygine
     }
 
 
-    text::Node* TextField::getRootNode(float globalScale)
+    text::Node* TextField::getRootNode()
     {
         if (!_style.font)
         {
             return _root.get();
         }
-
-        globalScale = qAbs(globalScale);
-
         return _root.get();
     }
 

@@ -49,10 +49,9 @@ namespace oxygine
     void Polygon::doRender(const RenderState& rs)
     {
         if (!_verticesSize)
+        {
             return;
-
-
-
+        }
         _mat->apply2([ = ]()
         {
 

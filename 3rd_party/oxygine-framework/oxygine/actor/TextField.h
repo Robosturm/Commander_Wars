@@ -19,7 +19,7 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
-        const Rect&                 getTextRect(float localScale = 1.0f) const;
+        const Rect&                 getTextRect() const;
         /**Returns current text*/
         QString              getText() const;
         const ResFont*              getFont() const;
@@ -75,13 +75,13 @@ namespace oxygine
         */
         void setHtmlText(QString str);
 
-        bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
+        virtual bool isOn(const Vector2& localPosition, float) override;
 
 
     public:
         void doRender(const RenderState&) override;
 
-        text::Node* getRootNode(float scale);
+        text::Node* getRootNode();
     protected:
         QString  _text;
         TextStyle _style;

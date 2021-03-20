@@ -23,7 +23,9 @@ namespace oxygine
 
         _baseShaderFlags |= UberShaderProgram::MASK;
         if (channelR)
+        {
             _baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
+        }
 
         clipUV.get(_msk);
         _clipMask = Vector4(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());

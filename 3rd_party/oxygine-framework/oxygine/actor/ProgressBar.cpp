@@ -299,14 +299,9 @@ namespace oxygine
                 pv++;
                 fill_tex_coord(*pv, color, p2, u2, v2);
                 pv++;
-
-
-
                 renderer->addVertices(vertices, sizeof(vertices));
             }
         }
-
-        //renderer->drawBatch();
     }
     void ProgressBar::setProgress(float f)
     {

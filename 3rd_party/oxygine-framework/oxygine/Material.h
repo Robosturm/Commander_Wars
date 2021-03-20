@@ -35,8 +35,8 @@ namespace oxygine
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
-        virtual void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) {}
-        virtual void render(const QColor& c, const RectF& src, const RectF& dest) {}
+        virtual void render(const AffineTransform& , const QColor& , const RectF& , const RectF& ) {}
+        virtual void render(const QColor& , const RectF& , const RectF& ) {}
 
         void apply();
         void flush();
@@ -66,7 +66,7 @@ namespace oxygine
         void copyTo(NullMaterialX &d) const{d = *this;}
         void copyFrom(const NullMaterialX &d) {*this = d;}
         NullMaterialX* clone() const override {return new NullMaterialX(*this);}
-        void update(size_t &hash, compare &cm) const override
+        virtual void update(size_t &hash, compare &cm) const override
         {
             typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
             fn f = &NullMaterialX::cmp;\
@@ -74,8 +74,8 @@ namespace oxygine
             hash = 0;\
             rehash(hash);
         }
-        static bool cmp(const NullMaterialX& a, const NullMaterialX& b) { return false; }
-        void rehash(size_t& hash) const override {}
+        static bool cmp(const NullMaterialX&, const NullMaterialX&) { return false; }
+        virtual void rehash(size_t&) const override {}
     };
 
     DECLARE_SMART(STDMaterial, spSTDMaterial);
@@ -92,7 +92,7 @@ namespace oxygine
         void copyTo(STDMaterial &d) const{d = *this;}
         void copyFrom(const STDMaterial &d) {*this = d;}
         STDMaterial* clone() const override {return new STDMaterial(*this);}
-        void update(size_t &hash, compare &cm) const override
+        virtual void update(size_t &hash, compare &cm) const override
         {
             typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
             fn f = &STDMaterial::cmp;\
@@ -111,14 +111,14 @@ namespace oxygine
 
         static bool cmp(const STDMaterial& a, const STDMaterial& b);
 
-        void init() override;
-        void rehash(size_t& hash) const override;
+        virtual void init() override;
+        virtual void rehash(size_t& hash) const override;
 
-        void xapply() override;
-        void xflush() override;
+        virtual void xapply() override;
+        virtual void xflush() override;
 
-        void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) override;
-        void render(const QColor& c, const RectF& src, const RectF& dest) override;
+        virtual void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) override;
+        virtual void render(const QColor& c, const RectF& src, const RectF& dest) override;
 
         spSTDMaterial cloneDefaultShader() const;
     };

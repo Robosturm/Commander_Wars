@@ -22,17 +22,12 @@ namespace oxygine
         _skipSize = skipSize;
         _bounds = Rect(0, 0, 0, 0);
         _free.clear();
-        //_free.reserve(15);
         _free.push_back(Rect(0, 0, w, h));
     }
 
     bool sortRects(const Rect& a, const Rect& b)
     {
         return std::min(a.size.x, a.size.y) < std::min(b.size.x, b.size.y);
-        //return a.pos.y < b.pos.y;
-        //return a.size.x * a.size.y < b.size.x * b.size.y;
-        //return a.size.x < b.size.x;
-        //return a.size.y < b.size.y;
     }
 
     bool AtlasBuilder::add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset_)
@@ -62,13 +57,17 @@ namespace oxygine
                 srcRect.size = Point(src.w, src.h);
 
                 if (_bounds.isEmpty())
+                {
                     _bounds = srcRect;
+                }
                 else
+                {
                     _bounds.unite(srcRect);
-
+                }
                 if (dest)
+                {
                     dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);
-
+                }
                 _free.erase(_free.begin() + i);
 
                 Point ds = rect.size - size;
@@ -78,10 +77,13 @@ namespace oxygine
                 Rect b = rect;
 
                 if (ds.x > ds.y)
+                {
                     a.setWidth(w);
+                }
                 else
+                {
                     b.setHeight(h);
-
+                }
                 b.setWidth(ds.x);
                 a.setHeight(ds.y);
 
@@ -124,22 +126,11 @@ namespace oxygine
     void MultiAtlas::init(int skipSize)
     {
         _skipSize = skipSize;
-
-        /*
-        _bounds = Rect(0, 0, 0, 0);
-        _free.clear();
-        //_free.reserve(15);
-        _free.push_back(Rect(0, 0, w, h));
-        */
     }
 
     bool MultiAtlas::sortRects(const rect& a, const rect& b)
     {
         return std::min(a.rct.size.x, a.rct.size.y) < std::min(b.rct.size.x, b.rct.size.y);
-        //return a.pos.y < b.pos.y;
-        //return a.size.x * a.size.y < b.size.x * b.size.y;
-        //return a.size.x < b.size.x;
-        //return a.size.y < b.size.y;
     }
 
     void MultiAtlas::place(const rect& rct, int w, int h, const ImageData& src, spTexture& t, Rect& srcRect)
@@ -160,10 +151,13 @@ namespace oxygine
         rect b = rct;
 
         if (ds.x > ds.y)
+        {
             a.rct.setWidth(w);
+        }
         else
+        {
             b.rct.setHeight(h);
-
+        }
         b.rct.setWidth(ds.x);
         a.rct.setHeight(ds.y);
 
@@ -211,15 +205,13 @@ namespace oxygine
         rect rc;
         rc.texture = _cb(w, h);
         if (!rc.texture)
+        {
             return false;
-
+        }
         rc.rct = Rect(0, 0, rc.texture->getWidth(), rc.texture->getHeight());
 
 
         place(rc, w, h, src, t, srcRect);
-
-
         return true;
-        ///Rect a = re
     }
 }

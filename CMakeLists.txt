@@ -44,6 +44,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_QML_DEBUG
         -DGAMEDEBUG
     )
+    find_package(Qt5 COMPONENTS QmlDebug REQUIRED)
 else("Release")
     message("Compiling as Release")
     add_definitions(
@@ -59,8 +60,6 @@ add_definitions(
     -DREVISION=1
 )
 
-message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
-message ("CXX System: ${CMAKE_SYSTEM_NAME}")
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
     set(CMAKE_C_FLAGS "-g ${CMAKE_C_FLAGS}") # -g for debug info
@@ -68,6 +67,10 @@ else()
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
     set(CMAKE_INSTALL_RPATH "${QT_BIN_DIR}/../")
 endif()
+
+message ("CFlags: ${CMAKE_C_FLAGS}")
+message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
+message ("CMake Systemname: ${CMAKE_SYSTEM_NAME}")
 
 ###################################################################################
 # start oxygine stuff -> qoxygine
@@ -523,10 +526,21 @@ set(QT_LIBRARIES
     Qt5::OpenGL
 )
 
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(QT_DEBUG_LIBRARIES
+        Qt5::QmlDebug
+    )
+else()
+    set(QT_DEBUG_LIBRARIES
+    )
+endif()
+
+
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     target_link_libraries(
         ${PROJECT_NAME}
         ${QT_LIBRARIES}
+        ${QT_DEBUG_LIBRARIES}
         ${OPENGL_LIBRARIES}
         Dbghelp
     )
@@ -569,6 +583,7 @@ if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         ${ADDR_2_LINE}
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/libEGL.dll
+        ${QT_BIN_DIR}/libgcc_s_seh-1.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -638,22 +653,34 @@ endif()
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
         set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
-            ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_debugger.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_inspector.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_local.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_messages.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_native.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_nativedebugger.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_preview.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_profiler.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_quickprofiler.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_server.dll
+           ${QT_BIN_DIR}/../plugins/qmltooling/qmldbg_tcp.dll
         )
     else()
         set(${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS
-            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_server.so
             ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_debugger.so
             ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_inspector.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_local.so
             ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_messages.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_native.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_nativedebugger.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_preview.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_profiler.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_quickprofiler.so
+            ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_server.so
             ${QT_BIN_DIR}/../plugins/qmltooling/libqmldbg_tcp.so
         )
     endif()
-    install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling")
+    install(FILES ${${PROJECT_NAME}_INSTALL_QT_QMLTOOLING_LIBS} DESTINATION "qmltooling" OPTIONAL)
 endif()
 
 message("install lib dir: ${CMAKE_SYSTEM_PREFIX_PATH}")

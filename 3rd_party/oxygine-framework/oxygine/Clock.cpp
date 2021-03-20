@@ -54,7 +54,6 @@ namespace oxygine
     void Clock::resume()
     {
         _counter -= 1;
-        //Q_ASSERT(_counter >= 0);
     }
     void Clock::resetPause()
     {
@@ -66,45 +65,49 @@ namespace oxygine
         timeMS time = globalTime;
         const timeMS neg =  std::chrono::milliseconds(-1);
         if (time <= neg)
+        {
             time = Clock::getTimeMS();
-
+        }
         if (_lastUpdateTime <= neg)
+        {
             _lastUpdateTime = time;
-
+        }
         double dt = (time - _lastUpdateTime).count() * _multiplier;
         if (dt < 1 && dt > 0)
+        {
             dt = 1;
-
+        }
         if (dt > 100)
+        {
             dt = 100;
+        }
         if (dt < 0)
+        {
             dt = 1;
-
+        }
         if (_counter > 0)
-            dt = 0;//todo destTime == srcTime ??
-
-        //qDebug("dt: %x %d", this, dt);
+        {
+            dt = 0;
+        }
         _destTime += dt;
 
         _lastUpdateTime = time;
         _lastDT = static_cast<int>(dt);
-
-        //if (_fixedStep > 0)
-        //  printf("ticks: %d\n", int((_destTime - _srcTime)/_fixedStep));
     }
 
     timeMS Clock::doTick()
     {
         if (_counter > 0)
+        {
             return timeMS(0);
-
+        }
         if (_srcTime + _fixedStep > _destTime)
+        {
             return timeMS(0);
-
+        }
         if (_fixedStep == 0)
         {
             timeMS dt = timeMS(static_cast<qint64>(_destTime - _srcTime));
-            //Q_ASSERT(dt <= 100);
             _srcTime = _destTime;
             return dt;
         }

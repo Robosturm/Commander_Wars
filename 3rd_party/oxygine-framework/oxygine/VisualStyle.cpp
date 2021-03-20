@@ -16,7 +16,7 @@ namespace oxygine
         mat._blend = blend_premultiplied_alpha;
         mat._base = STDRenderer::white;
         _flags |= flag_actorHasBounds;
-        _mat = mc().cache(mat);
+        _mat = MaterialCache::mc().cache(mat);
     }
 
     void VisualStyle::setColor(const QColor& color)
@@ -58,7 +58,7 @@ namespace oxygine
 
         _mat = _mat->clone();
         _mat->_addColor = color;
-        _mat = mc().cache(*_mat.get());
+        _mat = MaterialCache::mc().cache(*_mat.get());
         matChanged();
     }
 
@@ -76,7 +76,7 @@ namespace oxygine
 
         _mat = _mat->clone();
         _mat->_blend = mode;
-        _mat = mc().cache(*_mat.get());
+        _mat = MaterialCache::mc().cache(*_mat.get());
         matChanged();
     }
 

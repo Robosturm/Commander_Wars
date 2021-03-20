@@ -203,7 +203,7 @@ namespace oxygine
             {
                 _mat = _mat->clone();
                 _mat->_table = frame.getDiffuse().base;
-                _mat = mc().cache(*_mat.get());
+                _mat = MaterialCache::mc().cache(*_mat.get());
                 matChanged();
             }
         }
@@ -275,7 +275,7 @@ namespace oxygine
             mat->_base  = df.base;
             mat->_alpha = df.alpha;
             mat->_flags = df.flags;           
-            _mat = mc().cache(*mat.get());
+            _mat = MaterialCache::mc().cache(*mat.get());
         }
         animFrameChanged(_frame);
     }

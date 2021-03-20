@@ -65,5 +65,7 @@ namespace oxygine
         animationFrames _frames;
 
         QString resPath;
+    private:
+        static AnimationFrame emptyFrame;
     };
 }

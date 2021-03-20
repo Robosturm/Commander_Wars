@@ -3099,8 +3099,8 @@ Host mods: </source>
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="709"/>
-        <location filename="../main.cpp" line="77"/>
-        <location filename="../main.cpp" line="84"/>
+        <location filename="../main.cpp" line="73"/>
+        <location filename="../main.cpp" line="80"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

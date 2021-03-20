@@ -11,33 +11,33 @@ namespace oxygine
     public:
         ~NativeTextureGLES();
 
-        void init(GLuint id, int w, int h, ImageData::TextureFormat tf);
-        void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget);
-        void init(const ImageData& src, bool sysMemCopy);
-        void release();
-        void swap(NativeTexture*) ;
+        virtual void init(GLuint id, int w, int h, ImageData::TextureFormat tf) override;
+        virtual void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget) override;
+        virtual void init(const ImageData& src, bool sysMemCopy) override;
+        virtual void release() override;
+        virtual void swap(NativeTexture*)  override;
 
-        nativeTextureHandle getHandle() const;
-        int                 getWidth() const;
-        int                 getHeight() const;
-        ImageData::TextureFormat       getFormat() const;
+        virtual GLuint getHandle() const override;
+        virtual int    getWidth() const override;
+        virtual int    getHeight() const override;
+        virtual ImageData::TextureFormat getFormat() const override;
         unsigned int        getFboID() const;
 
-        ImageData lock(lock_flags, const Rect* src);
-        void unlock();
+        virtual ImageData lock(lock_flags, const Rect* src) override;
+        virtual void unlock() override;
 
         void setLinearFilter(quint32 filter) override;
-        void setClamp2Edge(bool clamp2edge);
+        virtual void setClamp2Edge(bool clamp2edge) override;
 
-        void updateRegion(int x, int y, const ImageData& data);
-        void apply(const Rect* rect = 0);
+        virtual void updateRegion(int x, int y, const ImageData& data) override;
+        virtual void apply(const Rect* rect = 0) override;
 
         GLuint getId() override
         {
             return _id;
         }
     protected:
-        void* _getRestorableObject() {return this;}
+        virtual void* _getRestorableObject() override {return this;}
         friend class VideoDriverGL;
         friend class VideoDriverGLES20;
         NativeTextureGLES();

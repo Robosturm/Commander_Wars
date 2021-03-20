@@ -162,15 +162,19 @@ namespace oxygine
     bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const
     {
         if (!t)
+        {
             return false;
-
+        }
         if (!t->getHandle())
+        {
             return false;
-
+        }
         if (t->getFormat() == tf &&
             t->getWidth() >= w && t->getHeight() >= h &&
             t->getWidth() <= (w + ALIGN_SIZE) && t->getHeight() <= (h + ALIGN_SIZE))
+        {
             return true;
+        }
         return false;
     }
 
@@ -204,12 +208,8 @@ namespace oxygine
             result = IVideoDriver::instance->createTexture();
             result->init(w, h, tf, true);
         }
-
         result->setCreationTime(Clock::getTimeMS());
         _rts.push_back(result);
-
-        //print();
-
         return result;
     }
 
@@ -379,16 +379,18 @@ namespace oxygine
     Rect PostProcess::getScreenRect(const Actor& actor) const
     {
         if (_options._flags & PostProcessOptions::flag_screen)
+        {
             return _screen;
-
+        }
         GameWindow* window = oxygine::GameWindow::getWindow();
         QSize size = window->size();
 
         Rect display(Point(0, 0), Point(size.width(), size.height()));
 
         if (_options._flags & PostProcessOptions::flag_fullscreen)
+        {
             return display;
-
+        }
         RectF bounds = RectF::invalidated();
         AffineTransform transform = actor.computeGlobalTransform();
         if (_options._flags & PostProcessOptions::flag_fixedBounds)
@@ -400,8 +402,9 @@ namespace oxygine
             bounds.unite(transform.transform(fb.getLeftBottom()));
         }
         else
+        {
             bounds = actor.computeBounds(transform);
-
+        }
         Rect screen;
         screen = bounds.cast<Rect>();
 
@@ -409,8 +412,9 @@ namespace oxygine
         screen.expand(_extend, _extend);
 
         if (!(_options._flags & PostProcessOptions::flag_singleR2T))
+        {
             screen.clip(display);
-
+        }
         return screen.cast<Rect>();
     }
 
@@ -418,8 +422,9 @@ namespace oxygine
     {
         _screen = getScreenRect(*actor);
         if (_screen.isEmpty())
+        {
             return;
-
+        }
         _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
 
 
@@ -488,15 +493,18 @@ namespace oxygine
 
         removePostProcessItem(this);
         if (_actor && _actor->getRenderDelegate())
+        {
             _actor->setRenderDelegate(_prevMaterial);
+        }
     }
 
 
     void TweenPostProcess::renderPP()
     {
         if (_pp._options._flags & PostProcessOptions::flag_singleR2T && _pp._rt)
+        {
             return;
-
+        }
         _pp.update(_actor);
         _renderPP();
     }

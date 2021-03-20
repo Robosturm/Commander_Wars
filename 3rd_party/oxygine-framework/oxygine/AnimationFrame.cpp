@@ -31,23 +31,23 @@ namespace oxygine
 
         f._destRect.clip(rect);
         if (f._destRect.isEmpty())
+        {
             f._destRect = RectF(0, 0, 0, 0);
-
+        }
 
         RectF srcRect = _srcRect * Vector2(w, h);
 
-        float sc = 1.0f;//(float)srcRect.getWidth() / f._destRect.getWidth();
+        float sc = 1.0f;
         if (_resAnim)
+        {
             sc = _resAnim->getScaleFactor();
-
+        }
 
         f._srcRect.pos = srcRect.pos - (_destRect.pos - f._destRect.pos) * sc;
         f._srcRect.size = srcRect.size - (_destRect.size - f._destRect.size) * sc;
         f._srcRect = f._srcRect / Vector2(w, h);
 
         f._frameSize = rect.size;
-        //if (move2lefttop)
-        //    f._destRect.pos -= rect.pos;
 
         return f;
     }
@@ -56,11 +56,13 @@ namespace oxygine
     {
         AnimationFrame f = *this;
         if (vertical)
+        {
             f.flipY();
-
+        }
         if (horizontal)
+        {
             f.flipX();
-
+        }
         return f;
     }
 
@@ -83,7 +85,6 @@ namespace oxygine
         _row = _column = 0;
         _resAnim = 0;
         _diffuse.base = t;
-        //_diffuse.premultiplied = true;
         _srcRect = RectF(0, 0, 1, 1);
         _destRect = RectF(0, 0, (float)t->getWidth(), (float)t->getHeight());
         _frameSize = Vector2((float)t->getWidth(), (float)t->getHeight());

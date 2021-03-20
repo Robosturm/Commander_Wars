@@ -50,7 +50,6 @@ namespace oxygine
             {
                 _listeners.erase(_listeners.begin() + i);
                 break;
-                //--i;
             }
         }
     }

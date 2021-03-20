@@ -1,15 +1,13 @@
 #include <QObject>
 #include <QProcess>
-#include <qdir.h>
-#include <qapplication.h>
-#include "qfile.h"
-#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
-
+#include <QDir>
+#include <QGuiApplication>
+#include <QFile>
 #ifdef GAMEDEBUG
-#include <QQmlApplicationEngine>
-#include <QJSEngine>
-#include <QQmlContext>
+    #include <QQmlEngine>
 #endif
+
+#include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
@@ -55,14 +53,12 @@
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
 
-#include "ai/heavyai.h"
-
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 
 #include "network/mainserver.h"
 
-#include "ai/neuralnetwork/neural/neuralnetwork.h"
+#include "ai/heavyai.h"
 
 int main(int argc, char* argv[])
 {
@@ -70,10 +66,10 @@ int main(int argc, char* argv[])
     srand(static_cast<unsigned>(time(nullptr)));
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
 #ifdef GAMEDEBUG
-    QQmlDebuggingEnabler enabler;
+QQmlDebuggingEnabler enabler;
 #endif
 
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     app.setApplicationName(QObject::tr("Commander Wars"));
     app.setApplicationVersion(Mainapp::getGameVersion());
     Settings::loadSettings();

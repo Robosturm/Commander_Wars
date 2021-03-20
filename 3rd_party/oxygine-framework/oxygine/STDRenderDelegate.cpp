@@ -200,9 +200,7 @@ namespace oxygine
 
     void STDRenderDelegate::doRender(TextField* tf, const RenderState& rs)
     {
-        float scale = qSqrt(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
-
-        text::Node* root = tf->getRootNode(scale);
+        text::Node* root = tf->getRootNode();
         if (!root)
         {
             return;
