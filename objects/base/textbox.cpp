@@ -134,6 +134,7 @@ void Textbox::update(const oxygine::UpdateState& us)
     {
         m_Textfield->setHtmlText(m_Text);
     }
+    m_Textfield->setWidth( m_Textfield->getTextRect().getWidth());
     oxygine::Actor::update(us);
 }
 

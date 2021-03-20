@@ -848,11 +848,16 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit)
 
 bool HeavyAi::buildUnits()
 {
+    scoreUnitBuilding();
     // todo
+    for (qint32 i = 0; i < m_BuildingData.size(); ++i)
+    {
+
+    }
     return false;
 }
 
 void HeavyAi::scoreUnitBuilding()
 {
-
+    // todo
 }

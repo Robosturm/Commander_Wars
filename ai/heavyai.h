@@ -210,6 +210,7 @@ private:
     QVector<UnitData> m_enemyUnits;
     QVector<UnitData> m_ownUnits;
     QVector<QPoint> m_updatePoints;
+    QVector<BuildingData> m_BuildingData;
     InfluenceFrontMap m_InfluenceFrontMap;
 
     spQmlVectorUnit m_pUnits = nullptr;
