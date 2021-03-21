@@ -93,7 +93,7 @@ GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAni
 quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
 quint32 Settings::walkAnimationSpeed = 20;
-quint32 Settings::dialogAnimationSpeed = 1;
+quint32 Settings::dialogAnimationSpeed = 20;
 quint32 Settings::captureAnimationSpeed = 1;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
@@ -1146,7 +1146,7 @@ void Settings::loadSettings()
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " DialogAnimationSpeed";
         Console::print(error, Console::eERROR);
-        dialogAnimationSpeed = 1u;
+        dialogAnimationSpeed = 20u;
     }
     captureAnimationSpeed = settings.value("CaptureAnimationSpeed", 1u).toUInt(&ok);
     if(!ok || captureAnimationSpeed <= 0 ||  captureAnimationSpeed > 100u)

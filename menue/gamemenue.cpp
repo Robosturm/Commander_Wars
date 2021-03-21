@@ -608,7 +608,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             }
             QVector<QPoint> path = pGameAction->getMovePath();
             Unit * pMoveUnit = pGameAction->getTargetUnit();
-            if (path.size() > 0 && pMoveUnit != nullptr)
+            if (path.size() > 1 && pMoveUnit != nullptr)
             {
                 QVector<QPoint> trapPath;
                 qint32 trapPathCost = 0;
@@ -653,8 +653,10 @@ void GameMenue::performAction(spGameAction pGameAction)
                     else
                     {
                         trapPath.push_front(point);
-                        if (point.x() != pMoveUnit->getX() ||
-                            point.y() != pMoveUnit->getY())
+                        qint32 x = pMoveUnit->getX();
+                        qint32 y = pMoveUnit->getY();
+                        if (point.x() != x ||
+                            point.y() != y)
                         {
                             QPoint previousPoint = path[i + 1];
                             trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
