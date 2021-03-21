@@ -88,6 +88,11 @@ signals:
      * @brief sigDisconnect emitted when we need to leave the game cause we don't own a player
      */
     void sigDisconnect();
+    /**
+     * @brief sigChangeAllTeams
+     * @param value
+     */
+    void sigChangeAllTeams(qint32 value);
 public slots:
     // slots for automation
     /**
@@ -206,6 +211,10 @@ protected:
     void sendOpenPlayerCount();
 
     void createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest);
+    /**
+     * @brief changeTeams
+     */
+    void changeAllTeams(qint32 value);
 private:
     // player selection
     spPanel m_pPlayerSelection;
