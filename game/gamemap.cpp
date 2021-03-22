@@ -1263,7 +1263,7 @@ void GameMap::startGame()
         }
     }
     Userdata* pUserdata = Userdata::getInstance();
-    auto lockedUnits = pUserdata->getShopItemsList(GameEnums::ShopItemType_Unit, true);
+    auto lockedUnits = pUserdata->getShopItemsList(GameEnums::ShopItemType_Unit, false);
 
     for (qint32 i = 0; i < players.size(); i++)
     {
