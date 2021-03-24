@@ -161,7 +161,7 @@ void Shopmenu::filterChanged(qint32 item)
             }
         });
         m_pPanel->addItem(pCheckbox);
-        oxygine::spSprite icon = getIcon(item.itemType);
+        oxygine::spSprite icon = getIcon(item.itemType, item.key);
         oxygine::spButton pButton = ObjectManager::createIconButton(icon);
         icon->setPosition(2, 2);
         loadWikiInfo(pButton, item.itemType, item.key);
@@ -220,7 +220,7 @@ void Shopmenu::buy()
     updateItemCosts(0);
 }
 
-oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType)
+oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType, QString key)
 {
     oxygine::spSprite pRet = nullptr;
     switch (itemType)
@@ -247,7 +247,7 @@ oxygine::spSprite Shopmenu::getIcon(GameEnums::ShopItemType itemType)
         }
         case GameEnums::ShopItemType_Unit:
         {
-            pRet = WikiDatabase::getInstance()->getIcon("INFANTRY", 32);
+            pRet = WikiDatabase::getInstance()->getIcon(key, 32);
             break;
         }
         case GameEnums::ShopItemType_All:

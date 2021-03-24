@@ -43,7 +43,7 @@ public slots:
 private:
     QVector<Userdata::ShopItem> getItems(qint32 itemType);
     void updateItemCosts(qint32 costChange);
-    oxygine::spSprite getIcon(GameEnums::ShopItemType itemType);
+    oxygine::spSprite getIcon(GameEnums::ShopItemType itemType, QString key);
     void loadWikiInfo(oxygine::spButton pIcon, GameEnums::ShopItemType itemType, QString key);
 private:
     spPanel m_pPanel;
