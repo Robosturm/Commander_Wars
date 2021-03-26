@@ -2436,7 +2436,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::getImageSize() / 2) / pAnim->getWidth() );
+        pSprite->setScale((GameMap::getImageSize() / 2) / pAnim->getWidth());
         pSprite->setPosition(x, y);
         pSprite->setPriority(static_cast<short>(Priorities::Icons));
 

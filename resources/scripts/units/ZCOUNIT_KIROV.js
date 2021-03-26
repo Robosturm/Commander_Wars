@@ -37,9 +37,6 @@ var Constructor = function()
     {
         return qsTr("Kirov");
     };
-    this.startOfTurn = function(unit)
-    {
-    };
     this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);

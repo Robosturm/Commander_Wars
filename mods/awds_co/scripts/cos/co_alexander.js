@@ -3,19 +3,22 @@ CO_ALEXANDER.startOfTurn = function(co)
     if (co.getIsCO0() === true)
     {
         var player = co.getOwner();
-        var buildings = player.getBuildings();
-        for (var i = 0; i < buildings.size(); i++)
+        if (!player.getIsDefeated())
         {
-            var building = buildings.at(i);
-            var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
-            if (unit !== null)
+            var buildings = player.getBuildings();
+            for (var i = 0; i < buildings.size(); i++)
             {
-                var points = unit.getCapturePoints();
-                // apply revolt bonus
-                if (points > 0)
+                var building = buildings.at(i);
+                var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
+                if (unit !== null)
                 {
-                    points--;
-                    unit.setCapturePoints(points);
+                    var points = unit.getCapturePoints();
+                    // apply revolt bonus
+                    if (points > 0)
+                    {
+                        points--;
+                        unit.setCapturePoints(points);
+                    }
                 }
             }
         }

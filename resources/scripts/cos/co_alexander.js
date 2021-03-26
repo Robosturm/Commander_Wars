@@ -58,7 +58,7 @@ var Constructor = function()
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
                 var funds = enemyPlayer.getFunds();
                 enemyPlayer.setFunds(funds / 2);
@@ -70,19 +70,22 @@ var Constructor = function()
     this.startOfTurn = function(co)
     {
         var player = co.getOwner();
-        var buildings = player.getBuildings();
-        for (var i = 0; i < buildings.size(); i++)
+        if (!player.getIsDefeated())
         {
-            var building = buildings.at(i);
-            var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
-            if (unit !== null)
+            var buildings = player.getBuildings();
+            for (var i = 0; i < buildings.size(); i++)
             {
-                var points = unit.getCapturePoints();
-                // apply revolt bonus
-                if (points > 0)
+                var building = buildings.at(i);
+                var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
+                if (unit !== null)
                 {
-                    points--;
-                    unit.setCapturePoints(points);
+                    var points = unit.getCapturePoints();
+                    // apply revolt bonus
+                    if (points > 0)
+                    {
+                        points--;
+                        unit.setCapturePoints(points);
+                    }
                 }
             }
         }
@@ -92,7 +95,7 @@ var Constructor = function()
     {
         // set income to 0 during scop
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return income;
         }
@@ -104,18 +107,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/alexander.mp3")
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/alexander.mp3")
+            break;
         }
     };
 
@@ -129,21 +132,21 @@ var Constructor = function()
     };
     this.coZoneBonus = 15;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 10;
-            case GameEnums.PowerMode_Power:
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return CO_ALEXANDER.coZoneBonus;
-                }
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 10;
+        case GameEnums.PowerMode_Power:
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_ALEXANDER.coZoneBonus;
+            }
+            break;
         }
         return 0;
     };
@@ -152,7 +155,7 @@ var Constructor = function()
                                        defender, defPosX, defPosY, isDefender)
     {
         if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-            co.getPowerMode() > GameEnums.PowerMode_Off)
+                co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return CO_ALEXANDER.coZoneBonus;
         }
@@ -193,7 +196,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
+                qsTr("\n\nCO Zone Effect: \nUnits gain %0% firepower and defence.");
         text = replaceTextArgs(text, [CO_ALEXANDER.coZoneBonus]);
         return text;
     };

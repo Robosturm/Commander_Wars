@@ -41,21 +41,25 @@ CO_CAULDER.startOfTurn = function(co)
 {
     if (co.getIsCO0() === true)
     {
-        var units = co.getOwner().getUnits();
-        units.randomize();
-        var viewplayer = map.getCurrentViewPlayer();
-        for (var i = 0; i < units.size(); i++)
+        var player = co.getOwner();
+        if (!player.getIsDefeated())
         {
-            var unit = units.at(i);
-            UNIT.repairUnit(unit, 1);
-            animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
-            if (!viewplayer.getFieldVisible(unitX, unitY))
+            var units = co.getOwner().getUnits();
+            units.randomize();
+            var viewplayer = map.getCurrentViewPlayer();
+            for (var i = 0; i < units.size(); i++)
             {
-                animation.setVisible(false);
+                var unit = units.at(i);
+                UNIT.repairUnit(unit, 1);
+                animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                if (!viewplayer.getFieldVisible(unitX, unitY))
+                {
+                    animation.setVisible(false);
+                }
             }
+            units.remove();
         }
-        units.remove();
     }
 };
 

@@ -864,7 +864,7 @@ void GameMap::zoom(float zoom)
     Interpreter::getInstance()->doFunction("onZoomLevelChanged");
 }
 
-void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain)
+void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool removeUnit)
 {
     if (onMap(x, y))
     {
@@ -872,6 +872,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
         if (pTerrainOld->getTerrainID() != terrainID)
         {
             pTerrainOld->removeBuilding();
+            spUnit pUnit = pTerrainOld->getUnit();
             pTerrainOld->setUnit(nullptr);
 
             spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
@@ -896,6 +897,10 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
+            }
+            if (!removeUnit)
+            {
+                pTerrain->setUnit(pUnit);
             }
         }
         else
@@ -1369,6 +1374,10 @@ bool GameMap::nextPlayer()
             found = true;
             break;
         }
+        else
+        {
+            startOfTurn(players[i].get());
+        }
     }
     if (!found)
     {
@@ -1380,6 +1389,10 @@ bool GameMap::nextPlayer()
             if (!m_CurrentPlayer->getIsDefeated())
             {
                 break;
+            }
+            else
+            {
+                startOfTurn(players[i].get());
             }
         }
     }
@@ -1517,7 +1530,10 @@ void GameMap::startOfTurn(Player* pPlayer)
     if (pPlayer != nullptr)
     {
         pPlayer->startOfTurn();
-        pPlayer->getBaseGameInput()->centerCameraOnAction(nullptr);
+        if (!pPlayer->getIsDefeated())
+        {
+            pPlayer->getBaseGameInput()->centerCameraOnAction(nullptr);
+        }
         startOfTurnPlayer(pPlayer);
     }
     else

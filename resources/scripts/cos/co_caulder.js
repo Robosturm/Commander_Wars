@@ -103,18 +103,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/power_ids_dc.mp3", 0, 0);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/bh_tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/caulder.mp3", 6755, 60471)
+            break;
         }
     };
 
@@ -130,83 +130,87 @@ var Constructor = function()
     this.coGlobalBonus = 15;
     this.coHealing = 5;
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
-    {
-            switch (co.getPowerMode())
-            {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    return 60;
-                case GameEnums.PowerMode_Power:
-                    return 40;
-                default:
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                    {
-                        return CO_CAULDER.coZoneBonus;
-                    }
-                    else
-                    {
-                        return -CO_CAULDER.coGlobalBonus;
-                    }
-            }
-    };
-
-    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 60;
-            case GameEnums.PowerMode_Power:
-                return 40;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return CO_CAULDER.coZoneBonus;
-                }
-                else
-                {
-                    return -CO_CAULDER.coGlobalBonus;
-                }
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 60;
+        case GameEnums.PowerMode_Power:
+            return 40;
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_CAULDER.coZoneBonus;
+            }
+            else
+            {
+                return -CO_CAULDER.coGlobalBonus;
+            }
+        }
+    };
+
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+    {
+        switch (co.getPowerMode())
+        {
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 60;
+        case GameEnums.PowerMode_Power:
+            return 40;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_CAULDER.coZoneBonus;
+            }
+            else
+            {
+                return -CO_CAULDER.coGlobalBonus;
+            }
         }
     };
 
     this.startOfTurn = function(co)
     {
-        var counit = co.getCOUnit();
-        var coRange = co.getCORange();
-        if (counit !== null)
+        var player = co.getOwner();
+        if (!player.getIsDefeated())
         {
-            UNIT.repairUnit(counit, 5);
-            var fields = globals.getCircle(1, coRange);
-            var x = counit.getX();
-            var y = counit.getY();
-            var animation = null;
-            var viewplayer = map.getCurrentViewPlayer();
-            for (var i = 0; i < fields.size(); i++)
+            var counit = co.getCOUnit();
+            var coRange = co.getCORange();
+            if (counit !== null)
             {
-                var point = fields.at(i);
-                var unitX = x + point.x;
-                var unitY = y + point.y;
-                if (map.onMap(unitX, unitY))
-                {                    
-                    var unit = map.getTerrain(unitX, unitY).getUnit();
-                    if ((unit !== null) &&
-                        (unit.getOwner() === counit.getOwner()))
+                UNIT.repairUnit(counit, 5);
+                var fields = globals.getCircle(1, coRange);
+                var x = counit.getX();
+                var y = counit.getY();
+                var animation = null;
+                var viewplayer = map.getCurrentViewPlayer();
+                for (var i = 0; i < fields.size(); i++)
+                {
+                    var point = fields.at(i);
+                    var unitX = x + point.x;
+                    var unitY = y + point.y;
+                    if (map.onMap(unitX, unitY))
                     {
-                        UNIT.repairUnit(unit, CO_CAULDER.coHealing);
-                        animation = GameAnimationFactory.createAnimation(unitX, unitY);
-                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
-                        if (!viewplayer.getFieldVisible(unitX, unitY))
+                        var unit = map.getTerrain(unitX, unitY).getUnit();
+                        if ((unit !== null) &&
+                                (unit.getOwner() === counit.getOwner()))
                         {
-                            animation.setVisible(false);
+                            UNIT.repairUnit(unit, CO_CAULDER.coHealing);
+                            animation = GameAnimationFactory.createAnimation(unitX, unitY);
+                            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                            if (!viewplayer.getFieldVisible(unitX, unitY))
+                            {
+                                animation.setVisible(false);
+                            }
                         }
                     }
                 }
+                fields.remove();
             }
-            fields.remove();
         }
     };
 
@@ -235,7 +239,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         var text = qsTr("\nGlobal Effect: \nUnits loose firepower by %0% and defense by %0%.") +
-               qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
+                qsTr("\n\nCO Zone Effect: \nUnits gain %1% firepower and %1% defense. They also heal %2HP each turn..");
         text = replaceTextArgs(text, [CO_CAULDER.coGlobalBonus, CO_CAULDER.coZoneBonus, CO_CAULDER.coHealing]);
         return text;
     };

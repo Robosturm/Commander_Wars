@@ -1,40 +1,43 @@
 PLAYER.startOfTurn = function(player)
 {
-    for (var i = 0; i < map.getPlayerCount(); i++)
+    if (!player.getIsDefeated())
     {
-        var otherPlayer = map.getPlayer(i);
-        if (otherPlayer.isAlly(player) && otherPlayer !== player)
+        for (var i = 0; i < map.getPlayerCount(); i++)
         {
-            var buildings = otherPlayer.getBuildings();
-            for (var j = 0; j < buildings.size(); j++)
+            var otherPlayer = map.getPlayer(i);
+            if (otherPlayer.isAlly(player) && otherPlayer !== player)
             {
-                var building = buildings.at(j);
-                var constructionList = building.getConstructionList();
-                var repairList = building.getRepairTypes();
-                var unit = building.getTerrain().getUnit();
-                if ((unit !== null) &&
-                        (unit.getOwner() === player) &&
-                        ((repairList.indexOf(unit.getUnitType()) >= 0) ||
-                         (constructionList.indexOf(unit.getUnitID()) >= 0)))
+                var buildings = otherPlayer.getBuildings();
+                for (var j = 0; j < buildings.size(); j++)
                 {
-                    var x = unit.getX();
-                    var y = unit.getY();
-                    if (unit.canBeRepaired(Qt.point(x, y)))
+                    var building = buildings.at(j);
+                    var constructionList = building.getConstructionList();
+                    var repairList = building.getRepairTypes();
+                    var unit = building.getTerrain().getUnit();
+                    if ((unit !== null) &&
+                            (unit.getOwner() === player) &&
+                            ((repairList.indexOf(unit.getUnitType()) >= 0) ||
+                             (constructionList.indexOf(unit.getUnitID()) >= 0)))
                     {
-                        unit.refill();
-                        var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
-                        UNIT.repairUnit(unit, repairAmount);
-                        if (!unit.isStealthed(map.getCurrentViewPlayer()))
+                        var x = unit.getX();
+                        var y = unit.getY();
+                        if (unit.canBeRepaired(Qt.point(x, y)))
                         {
-                            var animation = GameAnimationFactory.createAnimation(x, y);
-                            var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
-                            animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
-                            animation.addSprite("repair", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                            unit.refill();
+                            var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
+                            UNIT.repairUnit(unit, repairAmount);
+                            if (!unit.isStealthed(map.getCurrentViewPlayer()))
+                            {
+                                var animation = GameAnimationFactory.createAnimation(x, y);
+                                var width = animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 25, 2, 1);
+                                animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
+                                animation.addSprite("repair", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                            }
                         }
                     }
                 }
+                buildings.remove();
             }
-            buildings.remove();
         }
     }
     PLAYER.coop_ModApplyDefenceDebuf(player);
