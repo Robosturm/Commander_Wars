@@ -1568,6 +1568,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
+    qint32 playerId = pPlayer->getPlayerID();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -1580,6 +1581,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                     pUnit->removeShineTween();
                     pUnit->startOfTurn();
                 }
+                pUnit->updateIconDuration(playerId);
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
             spBuilding pBuilding = fields[y][x]->getSpBuilding();

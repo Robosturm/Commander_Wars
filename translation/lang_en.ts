@@ -1344,7 +1344,7 @@ Distributed for units beeing spawned at the given rate.</source>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="57"/>
         <location filename="../mapsupport/importawbyweb_text.cpp" line="71"/>
         <location filename="../game/gamemap.cpp" line="479"/>
-        <location filename="../game/gamemap.cpp" line="1094"/>
+        <location filename="../game/gamemap.cpp" line="1099"/>
         <source> of </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1378,27 +1378,27 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1094"/>
+        <location filename="../game/gamemap.cpp" line="1099"/>
         <source>Loading Map Row </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1121"/>
+        <location filename="../game/gamemap.cpp" line="1126"/>
         <source>Loading Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1131"/>
+        <location filename="../game/gamemap.cpp" line="1136"/>
         <source>Loading Record</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1139"/>
+        <location filename="../game/gamemap.cpp" line="1144"/>
         <source>Loading scripts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1151"/>
+        <location filename="../game/gamemap.cpp" line="1156"/>
         <source>Loading Campaign</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3045,7 +3045,7 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/gamemap.cpp" line="1072"/>
+        <location filename="../game/gamemap.cpp" line="1077"/>
         <source>Loading Players</source>
         <translation type="unfinished"></translation>
     </message>

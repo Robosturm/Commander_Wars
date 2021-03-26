@@ -31,6 +31,15 @@ public:
     static constexpr float MAX_UNIT_HP = 10.0f;
     static constexpr float DAMAGE_100 = 100.0f;
 
+    struct IconDuration
+    {
+        QString icon;
+        qint32 x;
+        qint32 y;
+        qint32 duration;
+        qint32 player;
+    };
+
     ENUM_CLASS Priorities
     {
         Colored = 0,
@@ -83,7 +92,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 16;
+        return 17;
     }
 
 
@@ -561,8 +570,10 @@ public slots:
      * @param iconID icon we want to load
      * @param x position of the icon
      * @param y position of the icon
+     * @param duration number of days the icon will be shown on the unit
+     * @param player the player on which the duration gets decreased
      */
-    void loadIcon(QString iconID, qint32 x, qint32 y);
+    void loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration = -1, qint32 player = -1);
     /**
      * @brief unloadIcon removes the given icon from this unit
      * @param iconID
@@ -572,6 +583,11 @@ public slots:
      * @brief startOfTurn
      */
     void startOfTurn();
+    /**
+     * @brief updateIconDuration
+     * @param player
+     */
+    void updateIconDuration(qint32 player);
     /**
      * @brief getTerrain
      * @return
@@ -977,6 +993,8 @@ private:
     QVector<QPoint> m_VisionBonus;
     QVector<QPoint> m_MovementBonus;
     QVector<QPoint> m_FirerangeBonus;
+
+    QVector<IconDuration> m_IconDurations;
 };
 
 #endif // UNIT_H

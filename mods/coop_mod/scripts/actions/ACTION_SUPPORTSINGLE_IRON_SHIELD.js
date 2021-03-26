@@ -49,6 +49,8 @@ ACTION_SUPPORTSINGLE_IRON_SHIELD.performPostAnimation = function(postAnimation)
         boosts.push(unitId);
         boostVariable.writeDataListInt32(boosts);
     }
+    var playerId  = ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit.getOwner().getPlayerID();
+    defenseUnit.loadIcon("iron_shield", map.getImageSize() / 2, map.getImageSize() / 2, 1, playerId)
     ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit.setHasMoved(true);
     ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationUnit = null;
     ACTION_SUPPORTSINGLE_IRON_SHIELD.postAnimationTargetX = -1;

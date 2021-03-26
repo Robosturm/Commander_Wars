@@ -1557,6 +1557,32 @@ void Unit::startOfTurn()
     }
 }
 
+void Unit::updateIconDuration(qint32 player)
+{
+    qint32 i = 0;
+    while (i < m_IconDurations.size())
+    {
+        IconDuration & icon = m_IconDurations[i];
+        if (icon.player == player)
+        {
+            --icon.duration;
+            if (icon.duration <= 0)
+            {
+                unloadIcon(icon.icon);
+                m_IconDurations.removeAt(i);
+            }
+            else
+            {
+                ++i;
+            }
+        }
+        else
+        {
+            ++i;
+        }
+    }
+}
+
 qint32 Unit::getCapturePoints() const
 {
     return capturePoints;
@@ -2411,8 +2437,19 @@ void Unit::increaseCapturePoints(QPoint position)
     setCapturePoints(capturePoints);
 }
 
-void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
+void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
 {
+    if (duration >= 0 && player >= 0)
+    {
+        IconDuration info;
+        info.icon = iconID;
+        info.x = x;
+        info.y = y;
+        info.duration = duration;
+        info.player = player;
+        m_IconDurations.append(info);
+    }
+
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
         if (m_pIconSprites[i]->getResAnim()->getName() == iconID)
@@ -2942,6 +2979,17 @@ void Unit::serializeObject(QDataStream& pStream) const
     {
         pStream << m_AiMovePath[i];
     }
+    size = m_IconDurations.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        const IconDuration & iconInfo = m_IconDurations[i];
+        pStream << iconInfo.icon;
+        pStream << iconInfo.x;
+        pStream << iconInfo.y;
+        pStream << iconInfo.duration;
+        pStream << iconInfo.player;
+    }
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3149,6 +3197,25 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             QPoint point;
             pStream >> point;
             m_AiMovePath.append(point);
+        }
+    }
+    if (version > 16)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            IconDuration iconInfo;
+            pStream >> iconInfo.icon;
+            pStream >> iconInfo.x;
+            pStream >> iconInfo.y;
+            pStream >> iconInfo.duration;
+            pStream >> iconInfo.player;
+            if (!fast)
+            {
+                loadIcon(iconInfo.icon, iconInfo.x, iconInfo.y,
+                         iconInfo.duration, iconInfo.player);
+            }
         }
     }
 }
