@@ -226,7 +226,7 @@ public slots:
      */
     QPoint getPosition() const
     {
-        return QPoint(getX(), getY());
+        return QPoint(Building::getX(), Building::getY());
     }
 
     qint32 getHp() const;

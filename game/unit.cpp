@@ -226,8 +226,6 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
             pSprite->setResAnim(pAnim);
             pWaitSprite->setResAnim(pAnim);
         }
-        setSize(pAnim->getWidth(),
-                pAnim->getHeight());
         pSprite->setPriority(static_cast<short>(Priorities::Colored));
         pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
         // repaint the unit?
@@ -812,7 +810,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
     if (pDefender != nullptr &&
         pMap.get() != nullptr)
     {
-        if (m_pOwner->getFieldVisible(pDefender->getX(), pDefender->getY()) || ignoreOutOfVisionRange)
+        if (m_pOwner->getFieldVisible(pDefender->Unit::getX(), pDefender->Unit::getY()) || ignoreOutOfVisionRange)
         {
             if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
             {
@@ -822,7 +820,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
                         if (hasAmmo1() && !weapon1ID.isEmpty() &&
-                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, unitPos.x(), unitPos.y(), pDefender->getX(), pDefender->getY())))
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
                         {
                             if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
                             {
@@ -830,7 +828,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
                             }
                         }
                         if (hasAmmo2() && !weapon2ID.isEmpty() &&
-                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, unitPos.x(), unitPos.y(), pDefender->getX(), pDefender->getY())))
+                            (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
                         {
                             if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
                             {
@@ -1251,7 +1249,7 @@ qint32 Unit::getTerrainDefense()
     spGameMap pMap = GameMap::getInstance();
     if (useTerrainDefense() && m_pTerrain != nullptr)
     {
-        return pMap->getTerrain(getX(), getY())->getDefense(this);
+        return pMap->getTerrain(Unit::getX(), Unit::getY())->getDefense(this);
     }
     return 0;
 }
@@ -1909,7 +1907,7 @@ bool Unit::getHpHidden(Player* pPlayer)
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)
         {
-            if (pCO->getHpHidden(this, QPoint(getX(), getY())))
+            if (pCO->getHpHidden(this, QPoint(Unit::getX(), Unit::getY())))
             {
                 return true;
             }
@@ -1917,7 +1915,7 @@ bool Unit::getHpHidden(Player* pPlayer)
         pCO = m_pOwner->getCO(1);
         if (pCO != nullptr)
         {
-            if (pCO->getHpHidden(this, QPoint(getX(), getY())))
+            if (pCO->getHpHidden(this, QPoint(Unit::getX(), Unit::getY())))
             {
                 return true;
             }
@@ -1934,7 +1932,7 @@ bool Unit::getPerfectHpView(Player* pPlayer)
         CO* pCO = pPlayer->getCO(0);
         if (pCO != nullptr)
         {
-            if (pCO->getPerfectHpView(this, QPoint(getX(), getY())))
+            if (pCO->getPerfectHpView(this, QPoint(Unit::getX(), Unit::getY())))
             {
                 return true;
             }
@@ -1942,7 +1940,7 @@ bool Unit::getPerfectHpView(Player* pPlayer)
         pCO = pPlayer->getCO(1);
         if (pCO != nullptr)
         {
-            if (pCO->getPerfectHpView(this, QPoint(getX(), getY())))
+            if (pCO->getPerfectHpView(this, QPoint(Unit::getX(), Unit::getY())))
             {
                 return true;
             }
@@ -2072,7 +2070,7 @@ qint32 Unit::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getX();
+        return m_pTerrain->Terrain::getX();
     }
     else
     {
@@ -2084,7 +2082,7 @@ qint32 Unit::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getY();
+        return m_pTerrain->Terrain::getY();
     }
     else
     {
@@ -2292,7 +2290,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     
     if (movePath.size() < 1)
     {
-        movePath.append(QPoint(getX(), getY()));
+        movePath.append(QPoint(Unit::getX(), Unit::getY()));
     }
     // update vision based on the movepath of the unit
     spGameMap pMap = GameMap::getInstance();
@@ -2412,8 +2410,8 @@ void Unit::killUnit()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
     QJSValueList args1;
-    args1 << getX();
-    args1 << getY();
+    args1 << Unit::getX();
+    args1 << Unit::getY();
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
@@ -2859,8 +2857,8 @@ void Unit::updateStealthIcon()
 
 bool Unit::hasTerrainHide(Player* pPlayer) const
 {
-    qint32 x = getX();
-    qint32 y = getY();
+    qint32 x = Unit::getX();
+    qint32 y = Unit::getY();
     bool visibleField = pPlayer->getFieldVisible(x, y);
     spGameMap pMap = GameMap::getInstance();
     return (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
@@ -2873,8 +2871,8 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
         spGameMap pMap = GameMap::getInstance();
-        qint32 x = getX();
-        qint32 y = getY();
+        qint32 x = Unit::getX();
+        qint32 y = Unit::getY();
         if (pMap->onMap(testX, testY))
         {
             x = testX;
@@ -3267,7 +3265,7 @@ void Unit::createCORange(qint32 coRange)
         //        QColor inversColor = playerColor;
         //        oxygine::Sprite::TweenColor tweenColor(inversColor);
         //        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
-        m_CORange->setPosition(GameMap::getImageSize() * getX(), GameMap::getImageSize() * getY());
+        m_CORange->setPosition(GameMap::getImageSize() * Unit::getX(), GameMap::getImageSize() * Unit::getY());
         pMap->addChild(m_CORange);
     }
 }

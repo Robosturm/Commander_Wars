@@ -1082,7 +1082,7 @@ bool CO::inCORange(QPoint position, Unit* pUnit)
     }
     else if (m_pCOUnit != nullptr)
     {
-        if ((qAbs(m_pCOUnit->getX() - position.x()) + qAbs(m_pCOUnit->getY() - position.y())) <= getCORange())
+        if ((qAbs(m_pCOUnit->Unit::getX() - position.x()) + qAbs(m_pCOUnit->Unit::getY() - position.y())) <= getCORange())
         {
             return true;
         }

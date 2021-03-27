@@ -501,7 +501,7 @@ public slots:
      */
     inline QPoint getMapPosition() const
     {
-        return  QPoint(getX(), getY());
+        return  QPoint(Unit::getX(), Unit::getY());
     }
     /**
      * @brief getPosition the unit position as qpoint
@@ -509,7 +509,7 @@ public slots:
      */
     QPoint getPosition() const
     {
-        return QPoint(getX(), getY());
+        return QPoint(Unit::getX(), Unit::getY());
     }
     /**
      * @brief refill fills up all ammo and fuel to max

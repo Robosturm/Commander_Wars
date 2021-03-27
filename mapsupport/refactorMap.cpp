@@ -262,8 +262,8 @@ void GameMap::resizeMap(qint32 left, qint32 top, qint32 right, qint32 bottom)
             spBuilding pBuilding = fields[y][x]->getBuilding();
             if (pBuilding.get() != nullptr)
             {
-                if (pBuilding->getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
-                    pBuilding->getY() - pBuilding->getBuildingHeigth() + 1 < 0)
+                if (pBuilding->Building::getX() - pBuilding->getBuildingWidth() + 1 < 0 ||
+                    pBuilding->Building::getY() - pBuilding->getBuildingHeigth() + 1 < 0)
                 {
                     fields[y][x]->setBuilding(nullptr);
                 }

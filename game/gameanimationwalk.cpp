@@ -85,8 +85,8 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
 
         oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
         oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
-        pSprite->setPosition(m_pUnit->getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
-                             m_pUnit->getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
+        pSprite->setPosition(m_pUnit->Unit::getX() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::getImageSize()) / 2.0f),
+                             m_pUnit->Unit::getY() * GameMap::getImageSize() - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::getImageSize()) / 2.0f));
         setSize(pAnim->getSize());
         if (m_pUnit->isStealthed(pPlayer))
         {
@@ -102,7 +102,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                 GameEnums::Directions direction = GameEnums::Directions_None;
                 if (i == m_movePath.size() - 1)
                 {
-                    direction = getMovementDirection(m_pUnit->getX(), m_pUnit->getY(), m_movePath[i].x(), m_movePath[i].y());
+                    direction = getMovementDirection(m_pUnit->Unit::getX(), m_pUnit->Unit::getY(), m_movePath[i].x(), m_movePath[i].y());
                 }
                 else
                 {

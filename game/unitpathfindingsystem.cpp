@@ -10,7 +10,7 @@
 #include "game/unitpathfindingsystem.h"
 
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
-    : PathFindingSystem(pUnit->getX(), pUnit->getY(),
+    : PathFindingSystem(pUnit->Unit::getX(), pUnit->Unit::getY(),
                         GameMap::getInstance()->getMapWidth(),
                         GameMap::getInstance()->getMapHeight()),
       m_pUnit(pUnit),
@@ -23,7 +23,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     {
         m_pPlayer = m_pUnit->getOwner();
     }
-    setMovepoints(m_pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())));
+    setMovepoints(m_pUnit->getMovementpoints(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())));
 }
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)

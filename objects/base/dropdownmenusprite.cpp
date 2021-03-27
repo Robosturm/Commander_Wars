@@ -80,13 +80,14 @@ void DropDownmenuSprite::addDropDownText(QString spriteID, qint32 id, qint32 dro
     auto size = addDropDownItem(pSprite, id);
     if (dropDownWidth > 0)
     {
-        pSprite->setScaleX((dropDownWidth) / pSprite->getWidth());
+        pSprite->setScaleX((dropDownWidth) / pSprite->getScaledWidth());
     }
     else
     {
-        pSprite->setScaleX((size.x - 13.0f) / pSprite->getWidth());
+        pSprite->setScaleX((size.x - 13.0f) / pSprite->getScaledWidth());
     }
-    pSprite->setScaleY((size.y - 12.0f) / pSprite->getHeight());
+    float spriteHeigth = pSprite->getScaledHeight();
+    pSprite->setScaleY((size.y - 12.0f) / spriteHeigth);
 }
 
 void DropDownmenuSprite::itemChanged(qint32 id)

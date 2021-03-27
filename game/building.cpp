@@ -22,6 +22,8 @@ Building::Building(QString BuildingID)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    setSize(GameMap::getImageSize(),
+            GameMap::getImageSize());
     if (m_BuildingID != "")
     {
         init();
@@ -47,8 +49,8 @@ QPoint Building::getOffset(Terrain* pTerrain)
 {
     if (pTerrain != nullptr)
     {
-        return QPoint(m_pTerrain->getX() - pTerrain->getX(),
-                      m_pTerrain->getY() - pTerrain->getY());
+        return QPoint(m_pTerrain->Terrain::getX() - pTerrain->Terrain::getX(),
+                      m_pTerrain->Terrain::getY() - pTerrain->Terrain::getY());
     }
     else
     {
@@ -220,8 +222,6 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
             pSprite->setScale(((GameMap::getImageSize() ) * width) / pAnim->getWidth());
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::getImageSize(), -pSprite->getScaledHeight() + GameMap::getImageSize());
         }
-        setSize(pAnim->getWidth(),
-                pAnim->getHeight());
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
         m_addPlayerColor.append(mode);
@@ -421,7 +421,7 @@ qint32 Building::getX() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getX();
+        return m_pTerrain->Terrain::getX();
     }
     else
     {
@@ -433,7 +433,7 @@ qint32 Building::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-        return m_pTerrain->getY();
+        return m_pTerrain->Terrain::getY();
     }
     else
     {

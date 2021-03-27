@@ -264,9 +264,9 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, bool enemyUnits)
         {
             if (!updated.contains(i2))
             {
-                if (qAbs(m_updatePoints[i].x() - units[i2].m_pUnit->getX()) +
-                    qAbs(m_updatePoints[i].y() - units[i2].m_pUnit->getY()) <=
-                    units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->getX(), units[i2].m_pUnit->getY())) + 2)
+                if (qAbs(m_updatePoints[i].x() - units[i2].m_pUnit->Unit::getX()) +
+                    qAbs(m_updatePoints[i].y() - units[i2].m_pUnit->Unit::getY()) <=
+                    units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
                     units[i2].m_pPfs = new UnitPathFindingSystem(units[i2].m_pUnit);
                     units[i2].m_pPfs->setIgnoreEnemies(enemyUnits);
@@ -297,7 +297,7 @@ void HeavyAi::findHqThreads(const spQmlVectorBuilding & buildings)
         const auto * pBuilding = buildings->at(i);
         if (pBuilding->getBuildingID() == "HQ")
         {
-            hqPositions.append(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
+            hqPositions.append(QVector3D(pBuilding->Building::getX(), pBuilding->Building::getY(), 1));
         }
     }
     for (auto & enemy : m_enemyUnits)
@@ -421,7 +421,7 @@ void HeavyAi::mutateActionForFields(UnitData & unitData, const QVector<QPoint> &
             spGameAction pAction  = new GameAction();
             pAction->setActionID(action);
             pAction->setMovepath(path, costs);
-            pAction->setTarget(QPoint(unitData.m_pUnit->getX(), unitData.m_pUnit->getY()));
+            pAction->setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
             if (pAction->canBePerformed())
             {
                 float score = 0;
@@ -656,7 +656,7 @@ void HeavyAi::getMoveTargets(UnitData & unit, QStringList & actions, QVector<QVe
         for (qint32 y = 0; y < mapHeight; ++y)
         {
             if (unit.m_pUnit->canMoveOver(x, y) &&
-                onSameIsland(unitIslandIdx, unit.m_pUnit->getX(), unit.m_pUnit->getY(), x, y))
+                onSameIsland(unitIslandIdx, unit.m_pUnit->Unit::getX(), unit.m_pUnit->Unit::getY(), x, y))
             {
                 Terrain* pTerrain = pMap->getTerrain(x, y);
                 addCaptureTargets(actions, pTerrain, targets);
@@ -687,8 +687,8 @@ void HeavyAi::addCaptureTargets(const QStringList & actions,
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
     {
-        qint32 x = pTerrain->getX();
-        qint32 y = pTerrain->getY();
+        qint32 x = pTerrain->Terrain::getX();
+        qint32 y = pTerrain->Terrain::getY();
         bool missileTarget = hasMissileTarget();
         Building* pBuilding = pTerrain->getBuilding();
         if (pBuilding != nullptr &&
@@ -719,8 +719,8 @@ qint32 HeavyAi::getMovingToCaptureDistanceModifier()
 void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* pTargetFields, QVector<QVector3D> & targets)
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 x = pTerrain->getX();
-    qint32 y = pTerrain->getY();
+    qint32 x = pTerrain->Terrain::getX();
+    qint32 y = pTerrain->Terrain::getY();
     for (qint32 i = 0; i < pTargetFields->size(); ++i)
     {
         qint32 targetX = pTargetFields->at(i).x() + x;
@@ -848,7 +848,7 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit)
     value += getAiCoUnitMultiplier(m_pPlayer->getCO(1), pUnit);
     in[BuildingEntry::CoUnitValue] = value / (CO::MAX_CO_UNIT_VALUE * 2);
     float maxMovementpoints = 10;
-    in[BuildingEntry::Movementpoints] = pUnit->getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY())) / maxMovementpoints;
+    in[BuildingEntry::Movementpoints] = pUnit->getMovementpoints(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY())) / maxMovementpoints;
 }
 
 bool HeavyAi::buildUnits()

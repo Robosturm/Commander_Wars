@@ -208,7 +208,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             spQmlVectorPoint pPoints = pBuilding->getActionTargetFields();
             QPoint targetOffset = pBuilding->getActionTargetOffset();
-            QPoint buildingPos(pBuilding->getX(), pBuilding->getY());
+            QPoint buildingPos(pBuilding->Building::getX(), pBuilding->Building::getY());
             if (pPoints.get() != nullptr && pPoints->size() > 0)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");

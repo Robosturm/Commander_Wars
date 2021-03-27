@@ -678,7 +678,7 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
         pTextfield = new Label(spriteWidth + 10);
         pTextfield->setPosition(posX + spriteWidth, posY);
         pTextfield->setStyle(smallStyle);
-        pTextfield->setHtmlText(QString::number(pUnit->getVision(QPoint(pUnit->getX(), pUnit->getY()))));
+        pTextfield->setHtmlText(QString::number(pUnit->getVision(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()))));
         m_pCursorInfoBox->addChild(pTextfield);
         posY += 5 + pTextfield->getTextRect().getHeight();
 

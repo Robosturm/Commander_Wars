@@ -240,12 +240,12 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
 bool BattleAnimation::getIsLeft(Unit* pUnit1, Unit* pUnit2)
 {
-    if (pUnit1->getX() < pUnit2->getX())
+    if (pUnit1->Unit::getX() < pUnit2->Unit::getX())
     {
         return true;
     }
-    else if ((pUnit1->getY() < pUnit2->getY()) &&
-             (pUnit1->getX() == pUnit2->getX()))
+    else if ((pUnit1->Unit::getY() < pUnit2->Unit::getY()) &&
+             (pUnit1->Unit::getX() == pUnit2->Unit::getX()))
     {
         return true;
     }

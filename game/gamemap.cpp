@@ -716,7 +716,7 @@ qint32 GameMap::getBuildingCount(QString buildingID)
             {
                 if (pBuilding->getBuildingID() == buildingID || buildingID.isEmpty())
                 {
-                    if (pBuilding->getX() == x && pBuilding->getY() == y)
+                    if (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y)
                     {
                         ret++;
                     }
@@ -1555,8 +1555,8 @@ void GameMap::startOfTurnNeutral()
             spBuilding pBuilding = pTerrain->getSpBuilding();
             if (pBuilding.get() != nullptr &&
                 pBuilding->getOwner() == nullptr &&
-                (pBuilding->getX() == x &&
-                 pBuilding->getY() == y))
+                (pBuilding->Building::getX() == x &&
+                 pBuilding->Building::getY() == y))
             {
                 pBuilding->startOfTurn();
             }
@@ -1588,7 +1588,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == pPlayer &&
-                    (pBuilding->getX() == x && pBuilding->getY() == y))
+                    (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
                 {
                     pBuilding->startOfTurn();
                 }
@@ -1623,7 +1623,7 @@ void GameMap::centerOnPlayer(Player* pPlayer)
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == pPlayer &&
-                    (pBuilding->getX() == x && pBuilding->getY() == y))
+                    (pBuilding->Building::getX() == x && pBuilding->Building::getY() == y))
                 {
                     if (pBuilding->getBuildingID() == "HQ" &&
                         hqWarp.x() < 0)

@@ -54,6 +54,8 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain));
+    setSize(GameMap::getImageSize(),
+            GameMap::getImageSize());
 }
 
 bool Terrain::getHasStartOfTurn() const
@@ -339,9 +341,6 @@ void Terrain::loadBaseSprite(QString spriteID)
             pSprite->setResAnim(pAnim);
         }
         pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth());
-        setSize(pAnim->getWidth(),
-                pAnim->getHeight());
-
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         this->addChild(pSprite);
         m_terrainSpriteName = spriteID;
@@ -372,8 +371,6 @@ void Terrain::update(const oxygine::UpdateState& us)
         m_SpriteAnim = pAnim;
         m_pTerrainSprite->setResAnim(pAnim);
         m_pTerrainSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
-        setSize(pAnim->getWidth(),
-                pAnim->getHeight());
         m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::getImageSize()));
         loadSprite = false;
     }
@@ -958,7 +955,7 @@ qint32 Terrain::getVision(Player* pPlayer)
 
 TerrainFindingSystem* Terrain::createTerrainFindingSystem()
 {
-    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), getX(), getY());
+    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), Terrain::getX(), Terrain::getY());
     pPfs->explore();
     return pPfs;
 }

@@ -653,8 +653,8 @@ void GameMenue::performAction(spGameAction pGameAction)
                     else
                     {
                         trapPath.push_front(point);
-                        qint32 x = pMoveUnit->getX();
-                        qint32 y = pMoveUnit->getY();
+                        qint32 x = pMoveUnit->Unit::getX();
+                        qint32 y = pMoveUnit->Unit::getY();
                         if (point.x() != x ||
                             point.y() != y)
                         {

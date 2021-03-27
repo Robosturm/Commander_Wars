@@ -90,7 +90,7 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
         pText->setPosition(10, y);
         pPanel->addItem(pText);
         Unit* pUnit = pUnits->at(i);
-        Terrain* pTerrain = pMap->getTerrain(pUnit->getX(), pUnit->getY());
+        Terrain* pTerrain = pMap->getTerrain(pUnit->Unit::getX(), pUnit->Unit::getY());
         spTerrain pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
         Building* pBuilding = pTerrain->getBuilding();
@@ -155,8 +155,8 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
 
         oxygine::spButton pButton = ObjectManager::createButton(tr("Go to Unit"));
         pButton->setPosition(750, y);
-        qint32 posX = pUnit->getX();
-        qint32 posY = pUnit->getY();
+        qint32 posX = pUnit->Unit::getX();
+        qint32 posY = pUnit->Unit::getY();
         pButton->addClickListener([=](oxygine::Event*)
         {
             emit sigMoveToUnit(posX, posY);

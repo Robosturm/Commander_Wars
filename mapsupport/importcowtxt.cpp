@@ -201,17 +201,17 @@ void GameMap::importTxtMap(QString file)
                             }
                             else if (i < building4x4Start)
                             {
-                                Terrain* pTargetTerrain = getTerrain(pTerrain->getX() + 1, pTerrain->getY() + 1);
+                                Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 1, pTerrain->Terrain::getY() + 1);
                                 pTargetTerrain->setBuilding(pBuilding);
                             }
                             else if (i < building3x4Start)
                             {
-                                Terrain* pTargetTerrain = getTerrain(pTerrain->getX() + 2, pTerrain->getY() + 1);
+                                Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 2, pTerrain->Terrain::getY() + 1);
                                 pTargetTerrain->setBuilding(pBuilding);
                             }
                             else
                             {
-                                Terrain* pTargetTerrain = getTerrain(pTerrain->getX() + 1, pTerrain->getY() + 1);
+                                Terrain* pTargetTerrain = getTerrain(pTerrain->Terrain::getX() + 1, pTerrain->Terrain::getY() + 1);
                                 pTargetTerrain->setBuilding(pBuilding);
                             }
                             break;
