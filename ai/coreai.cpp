@@ -457,7 +457,6 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<
     }
 }
 
-
 void CoreAI::getAttackTargets(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
@@ -494,9 +493,14 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
             if (pDef != nullptr)
             {
                 qint32 stealthMalus = 0;
-                if (pDef->isStatusStealthedAndInvisible(m_pPlayer))
+                bool terrainHide = false;
+                if (pDef->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
                 {
                     stealthMalus = 4;
+                    if (terrainHide)
+                    {
+                        stealthMalus /= 2;
+                    }
                 }
                 QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
                 ret.append(QVector4D(target.x(), target.y(), dmg.y(), dmg.x()));
@@ -1042,10 +1046,15 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
                 {
                     if (pUnit->canMoveOver(x, y))
                     {
-                        qint32 stealthMalus = 0;
-                        if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer))
+                        qint32 stealthMalus = 0;                        
+                        bool terrainHide = false;
+                        if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
                         {
                             stealthMalus = 4;
+                            if (terrainHide)
+                            {
+                                stealthMalus /= 2;
+                            }
                         }
                         QVector3D possibleTarget(x, y, 1 + stealthMalus);
                         if (!targets.contains(possibleTarget))
@@ -1081,9 +1090,14 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnem
                         pTargetUnit->getOwner()->checkAlliance(m_pPlayer) == GameEnums::Alliance_Friend)
                     {
                         qint32 stealthMalus = 0;
-                        if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer))
+                        bool terrainHide = false;
+                        if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
                         {
                             stealthMalus = 6;
+                            if (terrainHide)
+                            {
+                                stealthMalus /= 2;
+                            }
                         }
                         QVector3D possibleTarget(x, y, 4 + stealthMalus);
                         if (!targets.contains(possibleTarget))

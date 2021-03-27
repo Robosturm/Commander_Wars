@@ -1560,6 +1560,8 @@ void Unit::startOfTurn()
 void Unit::updateIconDuration(qint32 player)
 {
     qint32 i = 0;
+    QStringList removeList;
+    QStringList existList;
     while (i < m_IconDurations.size())
     {
         IconDuration & icon = m_IconDurations[i];
@@ -1568,17 +1570,26 @@ void Unit::updateIconDuration(qint32 player)
             --icon.duration;
             if (icon.duration <= 0)
             {
-                unloadIcon(icon.icon);
+                removeList.append(icon.icon);
                 m_IconDurations.removeAt(i);
             }
             else
             {
+                existList.append(icon.icon);
                 ++i;
             }
         }
         else
         {
+            existList.append(icon.icon);
             ++i;
+        }
+    }
+    for (const auto & item : removeList)
+    {
+        if (!existList.contains(item))
+        {
+            unloadIcon(item);
         }
     }
 }
@@ -2812,9 +2823,10 @@ bool Unit::isStatusStealthed() const
     return (m_Hidden || (m_cloaked > 0));
 }
 
-bool Unit::isStatusStealthedAndInvisible(Player* pPlayer) const
+bool Unit::isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide) const
 {
-    if (isStatusStealthed() &&
+    terrainHide = hasTerrainHide(pPlayer);
+    if ((isStatusStealthed() || terrainHide) &&
         isStealthed(pPlayer))
     {
         return true;

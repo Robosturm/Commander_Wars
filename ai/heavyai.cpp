@@ -740,9 +740,14 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                     alliedmultiplier = m_alliedDistanceModifier;
                 }
                 qint32 stealthMalus = 0;
-                if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer))
+                bool terrainHide = false;
+                if (pEnemy->isStatusStealthedAndInvisible(m_pPlayer, terrainHide))
                 {
                     stealthMalus = m_stealthDistanceMultiplier;
+                    if (terrainHide)
+                    {
+                        stealthMalus /=  2;
+                    }
                 }
                 qint32 attackDistanceModifier = getMovingToAttackDistanceModifier();
                 QVector3D possibleTarget(x, y, (stealthMalus + attackDistanceModifier) * alliedmultiplier);

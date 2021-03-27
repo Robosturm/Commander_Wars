@@ -23,8 +23,29 @@ signals:
     void sigRightClick();
     void sigLeftClick();
 public slots:
+    /**
+     * @brief nextDialogStep
+     */
     void nextDialogStep();
+    /**
+     * @brief keyInput
+     * @param event
+     */
     void keyInput(oxygine::KeyEvent event);
+    /**
+     * @brief loadCoSprite
+     * @param coid
+     * @param offsetX
+     * @param offsetY
+     * @param scale
+     * @param flippedX
+     */
+    void loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale = 1.0f);
+    /**
+     * @brief onFinished
+     * @param skipping
+     * @return
+     */
     virtual bool onFinished(bool skipping) override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game

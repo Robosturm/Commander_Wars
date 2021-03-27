@@ -392,7 +392,7 @@ public slots:
      * @param pOwner
      * @return
      */
-    bool isStatusStealthedAndInvisible(Player* pPlayer) const;
+    bool isStatusStealthedAndInvisible(Player* pPlayer, bool & terrainHide) const;
     bool getHidden() const;
     void setHidden(bool Hidden);
     /**

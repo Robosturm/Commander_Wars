@@ -25,6 +25,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     {
         emitFinished();
     });
+    m_BackgroundSprite->setPriority(-1);
     m_BackgroundSprite = new oxygine::Sprite();
     addChild(m_BackgroundSprite);
 
@@ -39,6 +40,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_TextBackground = new oxygine::Sprite();
     m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
+    m_TextBackground->setPriority(1);
     addChild(m_TextBackground);
 
     oxygine::TextStyle style = FontManager::getMainFont48();
@@ -56,11 +58,13 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     m_TextField->setSize(pRect->getWidth() - 5, pRect->getHeight());
     m_TextField->setStyle(style);
     pRect->addChild(m_TextField);
+    pRect->setPriority(1);
     addChild(pRect);
 
     m_COSprite = new oxygine::Sprite();
     m_COSprite->setScale(2);
     m_COSprite->setY(6);
+    m_COSprite->setPriority(1);
     addChild(m_COSprite);
 
     setPositionTop(false);
@@ -313,4 +317,16 @@ void GameAnimationDialog::_loadBackground()
         m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
     }
     m_BackgroundFile = "";
+}
+
+void GameAnimationDialog::loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale)
+{
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
+    pSprite->setSize(pAnim->getSize());
+    pSprite->setFlippedX(flippedX);
+    pSprite->setScale(scale);
+    pSprite->setResAnim(pAnim);
+    pSprite->setPosition(offsetX, offsetY);
+    addChild(pSprite);
 }

@@ -84,9 +84,9 @@ void DropDownmenuSprite::addDropDownText(QString spriteID, qint32 id, qint32 dro
     }
     else
     {
-        pSprite->setScaleX((size.x - 13) / pSprite->getWidth());
+        pSprite->setScaleX((size.x - 13.0f) / pSprite->getWidth());
     }
-    pSprite->setScaleY((size.y - 12) / pSprite->getHeight());
+    pSprite->setScaleY((size.y - 12.0f) / pSprite->getHeight());
 }
 
 void DropDownmenuSprite::itemChanged(qint32 id)
