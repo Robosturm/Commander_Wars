@@ -25,8 +25,8 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     {
         emitFinished();
     });
-    m_BackgroundSprite->setPriority(-1);
     m_BackgroundSprite = new oxygine::Sprite();
+    m_BackgroundSprite->setPriority(-1);
     addChild(m_BackgroundSprite);
 
     GameManager* pGameManager = GameManager::getInstance();

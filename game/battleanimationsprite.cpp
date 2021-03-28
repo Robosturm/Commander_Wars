@@ -514,6 +514,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
         }
         pSprite->setPriority(priority);
         pSprite->setScale(scale);
+        pSprite->setSize(pAnim->getSize());
         pSprite->setInvertFlipX(_invertFlipX);
 
         qint32 xPos = offset.x();

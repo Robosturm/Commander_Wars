@@ -253,7 +253,7 @@ var Constructor = function() { // scriptStart
 			var player = map.getPlayer(i);
 			if (i === 1 && player.getUnitCount() === 3)
 			{
-				if (variables.createVariable("UnitsSpawned").readDataInt32() === 0) {
+                if (variables.createVariable("EventCounter").readDataInt32() === 0) {
 					// Dialog
 					var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("Er... The enemy has wiped out almost all of our units, sir. This isn't good."), "co_officier_dm", GameEnums.COMood_Normal, "#6038a0"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 					var dialog1 = GameAnimationFactory.createGameAnimationDialog(qsTr("Boo! Get more units!"), "CO_PENNY", GameEnums.COMood_Normal, "#6038a0"); dialog1.loadBackground(""); // 1 ScriptEventDialogItem
@@ -265,21 +265,21 @@ var Constructor = function() { // scriptStart
 					// Dialog
 					variables.createVariable("EventCounter").writeDataInt32(1); // 0 Modify Variable
 				}
-				else if (variables.createVariable("UnitsSpawned").readDataInt32() === 1) {
+                else if (variables.createVariable("EventCounter").readDataInt32() === 2) {
 					// Dialog
 					var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("Er... Our reinforcements are being destroyed, sir."), "co_officier_dm", GameEnums.COMood_Normal, "#6038a0"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 					var dialog1 = GameAnimationFactory.createGameAnimationDialog(qsTr("MORE! MORE!"), "CO_PENNY", GameEnums.COMood_Normal, "#6038a0"); dialog1.loadBackground(""); // 1 ScriptEventDialogItem
 					dialog0.queueAnimation(dialog1);
 					// Dialog
-					variables.createVariable("EventCounter").writeDataInt32(2); // 0 Modify Variable
+                    variables.createVariable("EventCounter").writeDataInt32(3); // 0 Modify Variable
 				}
-				else if (variables.createVariable("UnitsSpawned").readDataInt32() === 2) {
+                else if (variables.createVariable("EventCounter").readDataInt32() === 4) {
 					// Dialog
 					var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("OH NO! The second wave is going down, sir. And the Great Owl is barely holding together!"), "co_officier_dm", GameEnums.COMood_Normal, "#6038a0"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 					var dialog1 = GameAnimationFactory.createGameAnimationDialog(qsTr("More more more! Moooooooore!!"), "CO_PENNY", GameEnums.COMood_Normal, "#6038a0"); dialog1.loadBackground(""); // 1 ScriptEventDialogItem
 					dialog0.queueAnimation(dialog1);
 					// Dialog
-					variables.createVariable("EventCounter").writeDataInt32(3); // 0 Modify Variable
+                    variables.createVariable("EventCounter").writeDataInt32(5); // 0 Modify Variable
 				}
 			}
 			if (player.getUnitCount() === 0)
@@ -299,9 +299,10 @@ var Constructor = function() { // scriptStart
 						map.spawnUnit(0, 8, "LIGHT_TANK", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 2, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 5, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
-						map.spawnUnit(15, 2, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit        
+                        map.spawnUnit(15, 8, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
+                        variables.createVariable("EventCounter").writeDataInt32(2); // 0 Modify Variable
 					} // Check Variable End
-					else if (variables.createVariable("EventCounter").readDataInt32() === 2) { // 0 Check Variable
+                    else if (variables.createVariable("EventCounter").readDataInt32() === 3) { // 0 Check Variable
 						// Dialog
 						var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("More reinforcements arriving! Assume defensive positions!"), "CO_LIN", GameEnums.COMood_Normal, "#ff0000"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 						// Dialog
@@ -310,9 +311,10 @@ var Constructor = function() { // scriptStart
 						map.spawnUnit(0, 8, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 8, "LIGHT_TANK", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 5, "LIGHT_TANK", map.getPlayer(1), 10); // 0 Spawn Unit
-						map.spawnUnit(15, 2, "LIGHT_TANK", map.getPlayer(1), 10); // 0 Spawn Unit        
+                        map.spawnUnit(15, 2, "LIGHT_TANK", map.getPlayer(1), 10); // 0 Spawn Unit
+                        variables.createVariable("EventCounter").writeDataInt32(4); // 0 Modify Variable
 					} // Check Variable End
-					else if (variables.createVariable("EventCounter").readDataInt32() === 3) { // 0 Check Variable
+                    else if (variables.createVariable("EventCounter").readDataInt32() === 5) { // 0 Check Variable
 						// Dialog
 						var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("More? ...Are you kidding me?"), "CO_LIN", GameEnums.COMood_Normal, "#6038a0"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 						// Dialog
@@ -322,7 +324,7 @@ var Constructor = function() { // scriptStart
 						map.spawnUnit(15, 8, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 5, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(15, 2, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
-						variables.createVariable("EventCounter").writeDataInt32(4); // 0 Modify Variable
+                        variables.createVariable("EventCounter").writeDataInt32(6); // 0 Modify Variable
 					} // Check Variable End
 					else
 					{
