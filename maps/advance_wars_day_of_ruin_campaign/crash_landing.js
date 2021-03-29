@@ -130,8 +130,9 @@ var Constructor = function() { // scriptStart
             var dialog16 = GameAnimationFactory.createGameAnimationDialog(qsTr("Oh, just...you know. Hanging around."), "CO_LIN", GameEnums.COMood_Normal, "#0098f8"); dialog16.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
             var dialog17 = GameAnimationFactory.createGameAnimationDialog(qsTr("You followed me!"), "CO_WILL", GameEnums.COMood_Normal, "#ff0000"); dialog17.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
             var dialog18 = GameAnimationFactory.createGameAnimationDialog(qsTr("Not just me. I brought a few units along for the ride. It's not an overwhelming force, but it should be enough."), "CO_LIN", GameEnums.COMood_Normal, "#0098f8"); dialog18.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
-            var dialog19 = GameAnimationFactory.createGameAnimationDialog(qsTr("I told you! I don't want your help! I don't want to risk anyone else. Too late, Will. You resigned, remember? You don't give the orders anymore. Everyone made the choice to come with me. They want to be here."), "CO_WILL", GameEnums.COMood_Normal, "#ff0000"); dialog19.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
-            var dialog20 = GameAnimationFactory.createGameAnimationDialog(qsTr("I... I can't..."), "CO_LIN", GameEnums.COMood_Normal, "#0098f8"); dialog20.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
+            var dialog19 = GameAnimationFactory.createGameAnimationDialog(qsTr("I told you! I don't want your help! I don't want to risk anyone else."), "CO_WILL", GameEnums.COMood_Normal, "#ff0000"); dialog19.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
+            var dialog60 = GameAnimationFactory.createGameAnimationDialog(qsTr(" Too late, Will. You resigned, remember? You don't give the orders anymore. Everyone made the choice to come with me. They want to be here."), "CO_LIN", GameEnums.COMood_Normal, "#0098f8"); dialog60.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
+            var dialog20 = GameAnimationFactory.createGameAnimationDialog(qsTr("I... I can't..."), "CO_WILL", GameEnums.COMood_Normal, "#0098f8"); dialog20.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
             var dialog21 = GameAnimationFactory.createGameAnimationDialog(qsTr("I am envious of you. Such companionship is an experience that will forever elude me. Enough. We have no more time to waste. Follow me, and quickly."), "co_cyrus", GameEnums.COMood_Normal, "#0098f8"); dialog21.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
             var dialog22 = GameAnimationFactory.createGameAnimationDialog(qsTr("And how are we doing today?"), "CO_TABITHA", GameEnums.COMood_Normal, "#6038a0"); dialog22.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
             var dialog23 = GameAnimationFactory.createGameAnimationDialog(qsTr("... ... ... ..."), "CO_ISABELLA", GameEnums.COMood_Normal, "#ff0000"); dialog23.loadBackground("maps/advance_wars_day_of_ruin_campaign/cutscenes/bg_factory.png"); // 1 ScriptEventDialogItem
@@ -190,7 +191,8 @@ var Constructor = function() { // scriptStart
             dialog16.queueAnimation(dialog17);
             dialog17.queueAnimation(dialog18);
             dialog18.queueAnimation(dialog19);
-            dialog19.queueAnimation(dialog20);
+            dialog19.queueAnimation(dialog60);
+            dialog60.queueAnimation(dialog20);
             dialog20.queueAnimation(dialog21);
             dialog21.queueAnimation(dialog22);
             dialog22.queueAnimation(dialog23);
@@ -304,7 +306,7 @@ var Constructor = function() { // scriptStart
 					} // Check Variable End
                     else if (variables.createVariable("EventCounter").readDataInt32() === 3) { // 0 Check Variable
 						// Dialog
-						var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("More reinforcements arriving! Assume defensive positions!"), "CO_LIN", GameEnums.COMood_Normal, "#ff0000"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
+                        var dialog0 = GameAnimationFactory.createGameAnimationDialog(qsTr("More reinforcements arriving! Assume defensive positions!"), "CO_LIN", GameEnums.COMood_Normal, "#6038a0"); dialog0.loadBackground(""); // 1 ScriptEventDialogItem
 						// Dialog
 						map.spawnUnit(0, 2, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
 						map.spawnUnit(0, 5, "ROCKETTHROWER", map.getPlayer(1), 10); // 0 Spawn Unit
