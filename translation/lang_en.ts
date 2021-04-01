@@ -1122,12 +1122,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="414"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="415"/>
         <source>The percent building distribution between the players. Note buildings close to an Player HQ may be ignored.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="456"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="458"/>
         <source>The percent unit distribution between the players. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1147,18 +1147,18 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="405"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="406"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="410"/>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="452"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="411"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="453"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="462"/>
+        <location filename="../objects/dialogs/editor/dialograndommap.cpp" line="465"/>
         <source>The percent distribution between the units that will be spawned. Note units that can&apos;t be spawned still count to the distribution.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2178,62 +2178,62 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="52"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="53"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="61"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="62"/>
         <source>Host Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="70"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="71"/>
         <source>Host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="79"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="80"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="88"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="89"/>
         <source>Join Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="161"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="162"/>
         <source>Enter Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="206"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="207"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="252"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="253"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>

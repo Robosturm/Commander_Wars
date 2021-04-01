@@ -13,6 +13,7 @@
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
+#include "resource_management/fontmanager.h"
 
 #include "objects/base/chat.h"
 
@@ -267,10 +268,10 @@ void LobbyMenu::updateGamesView()
             modString.append(Settings::getModName(mod) + "; ");
         }
         data.append(modString);
-        char lockChar = 1;
+        char lockChar = FontManager::SpecialChars::unlockChar;
         if (game->getLocked())
         {
-            lockChar = 2;
+            lockChar = FontManager::SpecialChars::lockChar;
         }
         data.append(QString(lockChar));
         items.append(data);

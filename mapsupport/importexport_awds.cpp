@@ -2603,14 +2603,13 @@ void GameMap::exportAWDSMap(QString file)
                     }
                     else if (pTerrain->getTerrainID() == "BRIDGE")
                     {
-                        //                        Dim Ausr As String = Objektverwalter.LandschaftenBilder(Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).ID).getAusrichtung(X, Y, Objektverwalter.Spielfeld)
-                        //                        If Ausr = "+N+S" Then
-                        //                        stream << static_cast<uchar>(2)
-                        //                        stream << static_cast<uchar>(0)
-                        //                        Else
-                        //                        stream << static_cast<uchar>(32)
-                        //                        stream << static_cast<uchar>(0)
-                        //                        End If
+                        // North South bridge
+                        stream << static_cast<uchar>(2);
+                        stream << static_cast<uchar>(0);
+                        // east west brdige
+                        //                        stream << static_cast<uchar>(32);
+                        //                        stream << static_cast<uchar>(0);
+
                     }
                     else if (pTerrain->getTerrainID() == "RIVER")
                     {

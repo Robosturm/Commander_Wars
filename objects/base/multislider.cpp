@@ -1,6 +1,9 @@
 #include "multislider.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
+
+#include "objects/base/label.h"
 
 #include "coreengine/mainapp.h"
 
@@ -26,9 +29,10 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
         }
         addChild(m_Textfields[i]);
     }
-    width = width - textWidth - 10 - 110;
+    width = width - textWidth - 10 - 110 - 50;
     qint32 totalSliderValue = 0;
     setSize(width, texts.size() * 40);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < texts.size(); i++)
     {
         m_Slider.append(new Slider(width, 0, 100));
@@ -49,6 +53,30 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
             emit signalSliderValueChanged(i);
         });
         addChild(m_Slider[i]);
+        char unlockChar = FontManager::SpecialChars::unlockChar;
+        char lockChar = FontManager::SpecialChars::lockChar;
+        oxygine::spButton pLockButton = pObjectManager->createButton(QString(unlockChar), 40, "Locks this slider. So the value can't be changed.", "button_square");
+        pLockButton->getFirstChild()->setY(-5);
+        qint32 x = m_Slider[i]->getX() + m_Slider[i]->getWidth() + 10;
+        pLockButton->setPosition(x, i * 40);
+        pLockButton->addClickListener([=](oxygine::Event*)
+        {
+            Label* pLabel = static_cast<Label*>(pLockButton->getFirstChild()->getFirstChild().get());
+            if (m_locked[i])
+            {
+                pLockButton->getFirstChild()->setY(-5);
+                pLabel->setText(QString(unlockChar));
+            }
+            else
+            {
+                pLockButton->getFirstChild()->setY(0);
+                pLabel->setText(QString(lockChar));
+            }
+            m_Slider[i]->setEnabled(m_locked[i]);
+            m_locked[i] = !m_locked[i];
+        });
+        m_locked.append(false);
+        addChild(pLockButton);
     }
     connect(this, &Multislider::signalSliderValueChanged, this, &Multislider::sliderValueChanged, Qt::QueuedConnection);
     qint32 sliderDirection = 0;
@@ -109,14 +137,16 @@ void Multislider::sliderValueChanged(qint32 slider)
     {
         sliderDirection = 1;
     }
+    bool changed = false;
     while (totalSliderValue != 100)
     {
-        if (currentSliderChange != slider)
+        if (currentSliderChange != slider && !m_locked[currentSliderChange])
         {
             qint32 currentValue = m_Slider[currentSliderChange]->getCurrentValue();
             if ((currentValue > 0 && sliderDirection < 0) ||
                 (currentValue < 100 && sliderDirection > 0))
             {
+                changed = true;
                 m_Slider[currentSliderChange]->setCurrentValue(m_Slider[currentSliderChange]->getCurrentValue() + sliderDirection);
                 totalSliderValue += sliderDirection;
             }
@@ -124,7 +154,13 @@ void Multislider::sliderValueChanged(qint32 slider)
         currentSliderChange += 1;
         if (currentSliderChange >= m_Slider.size())
         {
+            if (!changed)
+            {
+                m_Slider[slider]->setCurrentValue(m_Slider[slider]->getCurrentValue() + sliderDirection);
+                totalSliderValue += sliderDirection;
+            }
             currentSliderChange = 0;
+            changed = false;
         }
     }
     emit signalSliderChanged();

@@ -11,10 +11,10 @@ ObjectManager::ObjectManager()
     loadRessources("/cursor/res.xml");
 }
 
-oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QString tooltip)
+oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QString tooltip, QString resAnim)
 {
     oxygine::spButton pButton = new oxygine::Button();
-    pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button"));
+    pButton->setResAnim(ObjectManager::getInstance()->getResAnim(resAnim));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     //Create Actor with Text and add it to button as child

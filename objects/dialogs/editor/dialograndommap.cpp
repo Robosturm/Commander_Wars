@@ -384,6 +384,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
         m_BuildingChances->setPosition(30, m_BuildingChanceLabel->getY() + 40);
         m_pPanel->addItem(m_BuildingChances);
         m_OwnerDistributionLabel->setY(m_BuildingChances->getY() + 40 * buildingStrings.size());
+        m_UnitChanceValues.clear();
         for (qint32 i = 0; i < m_UnitIDs.size(); i++)
         {
             m_UnitChanceValues.append(unitChancesVariant[i].toInt());
@@ -452,15 +453,17 @@ void DialogRandomMap::createUnitChances()
         playerStrings.append(tr("Player ") + QString::number(i + 1));
         playerChances.append(0);
     }
+    qint32 y = m_UnitDistributionLabel->getY() + 40;
     m_unitDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
     m_unitDistribution->setTooltipText(tr("The percent unit distribution between the players. Note units that can't be spawned still count to the distribution."));
-    m_unitDistribution->setPosition(30, m_UnitDistributionLabel->getY() + 40);
+    m_unitDistribution->setPosition(30, y);
     m_pPanel->addItem(m_unitDistribution);
 
-    m_UnitChanceLabel->setY(m_unitDistribution->getY() + 40 * (player - 1));
+    y = m_unitDistribution->getY() + 40 * (player - 1);
+    m_UnitChanceLabel->setY(y);
     m_UnitChances = new Multislider(unitStrings, Settings::getWidth() - 150, m_UnitChanceValues);
     m_UnitChances->setTooltipText(tr("The percent distribution between the units that will be spawned. Note units that can't be spawned still count to the distribution."));
     m_UnitChances->setPosition(30, m_UnitChanceLabel->getY() + 40);
     m_pPanel->addItem(m_UnitChances);
-    m_pPanel->setContentHeigth(m_UnitChances->getY() + 40 * (m_UnitIDs.size() + 1));
+    m_pPanel->setContentHeigth(m_UnitChances->getY() + 40 * (m_UnitIDs.size() + 2));
 }
