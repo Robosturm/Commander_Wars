@@ -96,7 +96,7 @@ var RANDOMMAPGENERATOR =
     },
     getRIVERDistribution : function()
     {
-        return Qt.point(1, 3);
+        return Qt.point(3, 5);
     },
 	getRIVERPlaceable : function(x, y)
     {
@@ -105,6 +105,10 @@ var RANDOMMAPGENERATOR =
     getRIVERCreateType : function()
     {
         return GameEnums.RandomMapTerrainType_Line;
+    },
+    getRIVERStraigthLineChance: function()
+    {
+        return 14;
     },
     getSNOWTopTerrainIDs : function()
     {

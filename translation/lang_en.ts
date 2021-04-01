@@ -1360,10 +1360,10 @@ Distributed for units beeing spawned at the given rate.</source>
     </message>
     <message>
         <location filename="../mapsupport/randomMap.cpp" line="95"/>
-        <location filename="../mapsupport/randomMap.cpp" line="594"/>
-        <location filename="../mapsupport/randomMap.cpp" line="598"/>
-        <location filename="../mapsupport/randomMap.cpp" line="725"/>
-        <location filename="../mapsupport/randomMap.cpp" line="766"/>
+        <location filename="../mapsupport/randomMap.cpp" line="597"/>
+        <location filename="../mapsupport/randomMap.cpp" line="601"/>
+        <location filename="../mapsupport/randomMap.cpp" line="728"/>
+        <location filename="../mapsupport/randomMap.cpp" line="769"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3030,7 +3030,7 @@ Host mods: </source>
     </message>
     <message>
         <location filename="../mapsupport/randomMap.cpp" line="61"/>
-        <location filename="../mapsupport/randomMap.cpp" line="522"/>
+        <location filename="../mapsupport/randomMap.cpp" line="525"/>
         <source>Generating </source>
         <translation type="unfinished"></translation>
     </message>

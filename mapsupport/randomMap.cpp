@@ -174,6 +174,13 @@ qint32 GameMap::randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, Q
     qint32 placed = 0;
     qint32 maximumTries = 1000;
     qint32 maximumTry = maximumTries;
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "get" + terrainID + "StraigthLineChance");
+    qint32 lineChance = 4;
+    if (erg.isNumber())
+    {
+        lineChance = erg.toInt();
+    }
     while (count > 0 && maximumTry > 0)
     {
         // we need to place terrains
@@ -202,13 +209,12 @@ qint32 GameMap::randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, Q
                     }
                     if (randomMapAddTerrainPoint(points, x + 1, y, terrainID, 0))
                     {
-                        points.append(QPoint(x + 1, y));
-                        points.append(QPoint(x + 1, y));
-                        points.append(QPoint(x + 1, y));
                         directions.append(GameEnums::Directions_East);
-                        directions.append(GameEnums::Directions_East);
-                        directions.append(GameEnums::Directions_East);
-                        directions.append(GameEnums::Directions_East);
+                        for (qint32 i = 0; i < lineChance - 1; ++i)
+                        {
+                            points.append(QPoint(x + 1, y));
+                            directions.append(GameEnums::Directions_East);
+                        }
                     }
                     break;
                 }
@@ -224,13 +230,12 @@ qint32 GameMap::randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, Q
                     }
                     if (randomMapAddTerrainPoint(points, x - 1, y, terrainID, 0))
                     {
-                        points.append(QPoint(x - 1, y));
-                        points.append(QPoint(x - 1, y));
-                        points.append(QPoint(x - 1, y));
                         directions.append(GameEnums::Directions_West);
-                        directions.append(GameEnums::Directions_West);
-                        directions.append(GameEnums::Directions_West);
-                        directions.append(GameEnums::Directions_West);
+                        for (qint32 i = 0; i < lineChance - 1; ++i)
+                        {
+                            points.append(QPoint(x - 1, y));
+                            directions.append(GameEnums::Directions_West);
+                        }
                     }
                     break;
                 }
@@ -246,13 +251,12 @@ qint32 GameMap::randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, Q
                     }
                     if (randomMapAddTerrainPoint(points, x, y - 1, terrainID, 0))
                     {
-                        points.append(QPoint(x, y - 1));
-                        points.append(QPoint(x, y - 1));
-                        points.append(QPoint(x, y - 1));
                         directions.append(GameEnums::Directions_North);
-                        directions.append(GameEnums::Directions_North);
-                        directions.append(GameEnums::Directions_North);
-                        directions.append(GameEnums::Directions_North);
+                        for (qint32 i = 0; i < lineChance - 1; ++i)
+                        {
+                            points.append(QPoint(x, y - 1));
+                            directions.append(GameEnums::Directions_North);
+                        }
                     }
                     break;
                 }
@@ -268,13 +272,12 @@ qint32 GameMap::randomMapPlaceLine(qint32 startX, qint32 startY, qint32 count, Q
                     }
                     if (randomMapAddTerrainPoint(points, x, y + 1, terrainID, 0))
                     {
-                        points.append(QPoint(x, y + 1));
-                        points.append(QPoint(x, y + 1));
-                        points.append(QPoint(x, y + 1));
                         directions.append(GameEnums::Directions_South);
-                        directions.append(GameEnums::Directions_South);
-                        directions.append(GameEnums::Directions_South);
-                        directions.append(GameEnums::Directions_South);
+                        for (qint32 i = 0; i < lineChance - 1; ++i)
+                        {
+                            points.append(QPoint(x, y + 1));
+                            directions.append(GameEnums::Directions_South);
+                        }
                     }
                     break;
                 }
