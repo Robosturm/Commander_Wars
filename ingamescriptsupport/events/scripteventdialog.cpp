@@ -81,7 +81,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
             if (items.size() >= 4)
             {
                 spDialogEntry dialog = new DialogEntry();
-                dialog->text = items[0];
+                dialog->text = items[0].replace("\\\"", "\"");
                 dialog->coid = items[1];
                 if (items[2] == "Sad")
                 {
@@ -112,7 +112,9 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
     for (qint32 i = 0; i < m_Dialog.size(); i++)
     {
         rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"";
-        rStream <<  m_Dialog[i]->text;
+        QString text = m_Dialog[i]->text;
+        text = text.replace("\"", "\\\"");
+        rStream <<  text;
         if (m_Dialog[i]->coid.contains("."))
         {
             rStream << "\"), " << m_Dialog[i]->coid << ", GameEnums.COMood_";
