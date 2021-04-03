@@ -68,7 +68,7 @@ var Constructor = function()
         unit.reduceAmmo2(1);
         // pay for the unit
         player.addFunds(-costs);
-        map.getGameRecorder().buildUnit(player.getPlayerID());
+        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
         var spawnUnit = unit.spawnUnit(unitID);
         unit.setHasMoved(true);
         spawnUnit.setHasMoved(true);

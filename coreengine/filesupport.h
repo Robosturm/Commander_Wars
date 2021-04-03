@@ -83,7 +83,40 @@ public:
      * @return
      */
     static std::tuple<QString, QStringList> readList(QString file, QString folder);
-
+    /**
+     *
+     */
+    template<typename _TMap>
+    static void writeMap(QDataStream& stream, _TMap map)
+    {
+        stream << static_cast<qint32>(map.size());
+        auto iter = map.constBegin();
+        while (iter != map.constEnd())
+        {
+            stream << iter.key();
+            stream << iter.value();
+            ++iter;
+        }
+    }
+    /**
+     *
+     */
+    template<typename _TKey, typename _TType, template<typename _T1, typename _T2> class _TMap>
+    static _TMap<_TKey, _TType> readMap(QDataStream& stream)
+    {
+        _TMap<_TKey, _TType> map;
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            _TKey key;
+            _TType value;
+            stream >> key;
+            stream >> value;
+            map.insert(key, value);
+        }
+        return map;
+    }
 signals:
 
 private:

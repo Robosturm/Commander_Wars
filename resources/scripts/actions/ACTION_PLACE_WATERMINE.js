@@ -122,7 +122,7 @@ var Constructor = function()
         if (unit !== null)
         {
             // pay for the unit
-            map.getGameRecorder().buildUnit(player.getPlayerID());
+            map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
             unit.setHasMoved(true);
         }
         player.buildedUnit(unit);

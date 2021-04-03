@@ -92,7 +92,7 @@ var Constructor = function()
                         if (targetUnit.getHp() <= 0)
                         {
                             // we destroyed a unit
-                            map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID());
+                            map.getGameRecorder().destroyedUnit(targetUnit.getOwner().getPlayerID(), targetUnit.getUnitID());
                             targetUnit.killUnit();
                         }
                     }
@@ -102,9 +102,9 @@ var Constructor = function()
                 }
             }
             fields.remove();
-            unit.killUnit();
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(owner.getPlayerID());
+            map.getGameRecorder().destroyedUnit(owner.getPlayerID(), unit.getUnitID());
+            unit.killUnit();
         }
     };
     this.createExplosionAnimation = function(x, y, unit)

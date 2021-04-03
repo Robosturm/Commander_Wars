@@ -24,7 +24,7 @@ ACTION_EXPLODE.performPostAnimation = function(postAnimation)
                 if (unit.getHp() <= 0)
                 {
                     // we destroyed a unit
-                    map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID());
+                    map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID(), unit.getUnitID());
                     unit.killUnit();
                 }
             }
@@ -34,9 +34,9 @@ ACTION_EXPLODE.performPostAnimation = function(postAnimation)
         }
     }
     fields.remove();
-    ACTION_EXPLODE.postAnimationUnit.killUnit();
     // we destroyed a unit
-    map.getGameRecorder().destroyedUnit(owner.getPlayerID());
+    map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID());
+    ACTION_EXPLODE.postAnimationUnit.killUnit();
     ACTION_EXPLODE.postAnimationUnit = null;
     ACTION_EXPLODE.postAnimationTargetX = -1;
     ACTION_EXPLODE.postAnimationTargetY = -1;

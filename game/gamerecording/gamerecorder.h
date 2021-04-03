@@ -79,9 +79,13 @@ public:
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
+    struct PlayerData
+    {
+        QMap<QString, qint32> producedUnits;
+        QMap<QString, qint32> lostUnits;
+        QMap<QString, qint32> killedUnits;
+    };
 public:
-
-
     ENUM_CLASS Rang
     {
         S,
@@ -108,7 +112,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief calculateRang
@@ -159,8 +163,9 @@ public slots:
     /**
      * @brief lostUnit
      * @param player
+     * @param unitId is optional to make it upwards compatible
      */
-    void lostUnit(qint32 player);
+    void lostUnit(qint32 player, QString unitId = "");
     /**
      * @brief getLostUnits
      * @param player
@@ -170,8 +175,9 @@ public slots:
     /**
      * @brief destroyedUnit
      * @param player
+     * @param unitId is optional to make it upwards compatible
      */
-    void destroyedUnit(qint32 player);
+    void destroyedUnit(qint32 player, QString unitId = "");
     /**
      * @brief getDestroyedUnits
      * @param player
@@ -181,8 +187,9 @@ public slots:
     /**
      * @brief buildUnit
      * @param player
+     * @param unitId is optional to make it upwards compatible
      */
-    void buildUnit(qint32 player);
+    void buildUnit(qint32 player, QString unitId = "");
     /**
      * @brief getBuildedUnits
      * @param player
@@ -246,9 +253,9 @@ private:
     QVector<quint32> damageDealt;
     QVector<quint32> attackNumbers;
     QVector<quint32> deployedUnits;
-
     qint32 m_mapTime{0};
     quint32 m_deployLimit{0};
+    QVector<PlayerData> m_playerDataRecords;
 };
 
 #endif // GAMERECORDER_H

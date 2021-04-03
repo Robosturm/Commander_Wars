@@ -279,10 +279,12 @@ set(${PROJECT_NAME}_SRCS
         coreengine/crashreporter.cpp
         coreengine/filesupport.cpp
         coreengine/globalutils.cpp
+
         # tweens
-        coreengine/tweentogglevisibility.cpp
-        coreengine/tweenwait.cpp
-        coreengine/tweenaddcolorall.cpp
+        coreengine/tweens/tweentogglevisibility.cpp
+        coreengine/tweens/tweenwait.cpp
+        coreengine/tweens/tweenaddcolorall.cpp
+        coreengine/tweens/tweenscreenshake.cpp
 
         # network engine
         network/tcpclient.cpp

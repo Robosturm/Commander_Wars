@@ -49,7 +49,7 @@ var Constructor = function()
         var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
         // pay for the unit
         map.getCurrentPlayer().addFunds(-action.getCosts());
-        map.getGameRecorder().buildUnit(player.getPlayerID());
+        map.getGameRecorder().buildUnit(player.getPlayerID(), unitID);
         unit.setHasMoved(true);
         player.buildedUnit(unit);
         // achievements

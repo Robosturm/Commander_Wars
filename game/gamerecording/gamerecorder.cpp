@@ -8,6 +8,8 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "coreengine/filesupport.h"
+
 GameRecorder::GameRecorder()
     : QObject()
 {
@@ -52,6 +54,14 @@ void GameRecorder::serializeObject(QDataStream& pStream) const
         pStream << m_Attackreports[i]->defenderOwnerID;
         pStream << m_Attackreports[i]->defenderKilled;
         pStream << m_Attackreports[i]->defenderSeesAttacker;
+    }
+
+    pStream << static_cast<qint32>(m_playerDataRecords.size());
+    for (qint32 i = 0; i < m_playerDataRecords.size(); i++)
+    {
+        Filesupport::writeMap(pStream, m_playerDataRecords[i].killedUnits);
+        Filesupport::writeMap(pStream, m_playerDataRecords[i].lostUnits);
+        Filesupport::writeMap(pStream, m_playerDataRecords[i].producedUnits);
     }
 }
 
@@ -140,6 +150,18 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             }
         }
     }
+    if (version > 5)
+    {
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            PlayerData data;
+            data.killedUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            data.lostUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            data.producedUnits = Filesupport::readMap<QString, qint32, QMap>(pStream);
+            m_playerDataRecords.append(data);
+        }
+    }
 }
 
 void GameRecorder::newDay()
@@ -154,16 +176,23 @@ void GameRecorder::newDay()
             damageDealt.append(0);
             attackNumbers.append(0);
             deployedUnits.append(0);
+            m_playerDataRecords.append(PlayerData());
         }
     }
     m_Record.append(new DayToDayRecord(playerCount));
 }
 
-void GameRecorder::lostUnit(qint32 player)
+void GameRecorder::lostUnit(qint32 player, QString unitId)
 {
     if (player >= 0 && player < lostUnits.size())
     {
         lostUnits[player]++;
+        if (!unitId.isEmpty())
+        {
+            qint32 value = m_playerDataRecords[player].lostUnits.value(unitId);
+            value++;
+            m_playerDataRecords[player].lostUnits.insert(unitId, value);
+        }
     }
 }
 
@@ -176,11 +205,17 @@ quint32 GameRecorder::getLostUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::destroyedUnit(qint32 player)
+void GameRecorder::destroyedUnit(qint32 player, QString unitId)
 {
     if (player >= 0 && player < destroyedUnits.size())
     {
         destroyedUnits[player]++;
+        if (!unitId.isEmpty())
+        {
+            qint32 value = m_playerDataRecords[player].killedUnits.value(unitId);
+            value++;
+            m_playerDataRecords[player].killedUnits.insert(unitId, value);
+        }
     }
 }
 
@@ -193,11 +228,17 @@ quint32 GameRecorder::getDestroyedUnits(qint32 player)
     return 0;
 }
 
-void GameRecorder::buildUnit(qint32 player)
+void GameRecorder::buildUnit(qint32 player, QString unitId)
 {
     if (player >= 0 && player < deployedUnits.size())
     {
         deployedUnits[player]++;
+        if (!unitId.isEmpty())
+        {
+            qint32 value = m_playerDataRecords[player].producedUnits.value(unitId);
+            value++;
+            m_playerDataRecords[player].producedUnits.insert(unitId, value);
+        }
     }
 }
 

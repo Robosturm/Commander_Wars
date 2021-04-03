@@ -95,19 +95,20 @@ var Constructor = function()
                     if (unit.getHp() <= 0)
                     {
                         // we destroyed a unit
-                        map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID());
+                        map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID(), unit.getUnitID());
                         unit.killUnit();
                     }
                 }                
             }
         }
         fields.remove();
-        ACTION_EXPLODE.postAnimationUnit.killUnit();
         var animation = GameAnimationFactory.createAnimation(x - 2, y - 3);
         animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
         audio.playSound("explosion+land.wav");
         // we destroyed a unit
-        map.getGameRecorder().destroyedUnit(owner.getPlayerID());
+        map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID());
+        ACTION_EXPLODE.postAnimationUnit.killUnit();
+        ACTION_EXPLODE.postAnimationUnit.killUnit();
         ACTION_EXPLODE.postAnimationUnit = null;
         ACTION_EXPLODE.postAnimationTargetX = -1;
         ACTION_EXPLODE.postAnimationTargetY = -1;

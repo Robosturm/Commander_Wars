@@ -566,9 +566,9 @@ var Constructor = function()
             {
                 ACHIEVEMENT_KILL_UNIT.unitKilled(attacker.getUnitID());
             }
-            attacker.killUnit();
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID());
+            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID(), attacker.getUnitID());
+            attacker.killUnit();
             UNITRANKINGSYSTEM.increaseRang(defUnit);
         }
         // level up and attacker destruction
@@ -579,9 +579,9 @@ var Constructor = function()
             {
                 ACHIEVEMENT_KILL_UNIT.unitKilled(defUnit.getUnitID());
             }
-            defUnit.killUnit();
             // we destroyed a unit nice
-            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
+            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID(), defUnit.getUnitID());
+            defUnit.killUnit();
             UNITRANKINGSYSTEM.increaseRang(attacker);
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;

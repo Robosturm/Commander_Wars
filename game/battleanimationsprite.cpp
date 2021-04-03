@@ -1,7 +1,7 @@
 #include "qcolor.h"
 
 #include "coreengine/mainapp.h"
-#include "coreengine/tweentogglevisibility.h"
+#include "coreengine/tweens/tweentogglevisibility.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"

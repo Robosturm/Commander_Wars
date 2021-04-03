@@ -10,7 +10,7 @@
 
 #include "game/co.h"
 
-#include "coreengine/tweentogglevisibility.h"
+#include "coreengine/tweens/tweentogglevisibility.h"
 
 #include "resource_management/gamemanager.h"
 #include "menue/gamemenue.h"

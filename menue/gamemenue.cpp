@@ -9,7 +9,7 @@
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/tweenaddcolorall.h"
+#include "coreengine/tweens/tweenaddcolorall.h"
 #include "coreengine/settings.h"
 
 #include "ai/proxyai.h"

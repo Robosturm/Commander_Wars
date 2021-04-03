@@ -1,4 +1,4 @@
-#include "coreengine/tweenwait.h"
+#include "coreengine/tweens/tweenwait.h"
 
 TweenWait::TweenWait()
 {

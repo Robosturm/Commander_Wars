@@ -17,8 +17,8 @@
 
 #include "menue/editormenue.h"
 
-#include "coreengine/tweentogglevisibility.h"
-#include "coreengine/tweenaddcolorall.h"
+#include "coreengine/tweens/tweentogglevisibility.h"
+#include "coreengine/tweens/tweenaddcolorall.h"
 
 const float Unit::animationSpeed = 1.5f;
 
@@ -2420,7 +2420,10 @@ void Unit::killUnit()
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
     if (pRecorder != nullptr)
     {
-        GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
+        if (!m_pOwner->getIsDefeated())
+        {
+            GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID);
+        }
     }
     detach();
     removeUnit();

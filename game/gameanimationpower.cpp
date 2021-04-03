@@ -8,8 +8,8 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/tweentogglevisibility.h"
-#include "coreengine/tweenwait.h"
+#include "coreengine/tweens/tweentogglevisibility.h"
+#include "coreengine/tweens/tweenwait.h"
 #include "coreengine/audiothread.h"
 
 #include "game/gameanimationfactory.h"

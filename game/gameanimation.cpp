@@ -7,7 +7,7 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
-#include "coreengine/tweenwait.h"
+#include "coreengine/tweens/tweenwait.h"
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
