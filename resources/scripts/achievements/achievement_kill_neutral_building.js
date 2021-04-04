@@ -9,7 +9,8 @@ var Constructor = function()
                             ["ZLASER",              "ZLASER",                    100,    qsTr("No lasers!")],
                             ["ZGATE",               "ZGATE_E_W",                 100,    qsTr("We can walk here!")],
                             ["WELD",                "WELD",                      100,    qsTr("Why?!")],
-                            ["WEAK_WALL",           "WEAK_WALL",                 100,    qsTr("We can pass here!")],];
+                            ["WEAK_WALL",           "WEAK_WALL",                 100,    qsTr("We can pass here!")],
+                            ["METEOR",              "METEOR",                    100,    qsTr("Was that Sturm?")],];
 
     this.registerAchievements = function()
     {
