@@ -199,15 +199,15 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
             {
                 x = 20;
             }
-            else if (x > this->getWidth() - m_slider->getWidth() - 20)
+            else if (x > m_Width - m_slider->getWidth() - 20)
             {
-                x = this->getWidth() - m_slider->getWidth() - 20;
+                x = m_Width - m_slider->getWidth() - 20;
             }
             m_slider->setX(x);
             // calc new scroll value :)
-            if (static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20) > 0)
+            if (static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20) > 0)
             {
-                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(this->getWidth() - m_slider->getWidth() - 20 - 20);
+                m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20);
             }
             else
             {
@@ -256,14 +256,14 @@ void V_Scrollbar::setContentWidth(qint32 width)
     
     m_ContentWidth = width;
     qint32 sliderWidth = 50;
-    sliderWidth = ((this->getWidth() - 20 - 20) * this->getWidth()) / m_ContentWidth;
+    sliderWidth = ((m_Width - 20 - 20) * m_Width) / m_ContentWidth;
     if (sliderWidth < 11)
     {
         sliderWidth = 11;
     }
-    else if (sliderWidth > (this->getWidth() - 20 - 20))
+    else if (sliderWidth > (m_Width - 20 - 20))
     {
-        sliderWidth = (this->getWidth() - 20 - 20);
+        sliderWidth = (m_Width - 20 - 20);
     }
     m_Scrollvalue = 0;
     m_slider->setSize(sliderWidth, 18);

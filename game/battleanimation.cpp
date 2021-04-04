@@ -583,7 +583,7 @@ void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 
 void BattleAnimation::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
-    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay, oxygine::timeMS(shakePauseMs)),
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                                    oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
     addTween(tween);
 }
