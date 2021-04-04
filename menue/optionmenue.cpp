@@ -29,8 +29,6 @@
 #include "objects/base/label.h"
 #include "objects/base/timespinbox.h"
 
-#include "coreengine/tweens/tweenscreenshake.h"
-
 OptionMenue::OptionMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();

@@ -3,6 +3,8 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
+#include "coreengine/tweens/tweenscreenshake.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 
@@ -577,4 +579,11 @@ void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
     constexpr qint32 fadeoutTime = 800;
     pSprite->loadDyingFadeOutAnimation(fadeoutTime - 400);
     battleTimer.start(fadeoutTime / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+}
+
+void BattleAnimation::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay, oxygine::timeMS(shakePauseMs)),
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+    addTween(tween);
 }

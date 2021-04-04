@@ -1141,13 +1141,14 @@ namespace oxygine
     spTween Actor::_addTween(spTween tween, bool)
     {
         Q_ASSERT(tween);
+        m_Locked.lock();
         if (!tween)
         {
             return nullptr;
         }
         tween->start(*this);
         _tweens.append(tween);
-
+        m_Locked.unlock();
         return tween;
     }
 

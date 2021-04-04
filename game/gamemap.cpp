@@ -5,6 +5,8 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/userdata.h"
 
+#include "coreengine/tweens/tweenscreenshake.h"
+
 #include "ai/coreai.h"
 
 #include "resource_management/terrainmanager.h"
@@ -501,8 +503,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
 void GameMap::killDeadUnits()
 {
     qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();
-    
+    qint32 width = getMapWidth();    
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -515,7 +516,13 @@ void GameMap::killDeadUnits()
             }
         }
     }
-    
+}
+
+void GameMap::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay, oxygine::timeMS(shakePauseMs)),
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+    oxygine::getStage()->addTween(tween);
 }
 
 QString GameMap::getMapMusic() const

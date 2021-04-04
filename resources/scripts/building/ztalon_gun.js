@@ -81,6 +81,7 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        animation2.addScreenshake(60, 0.98, 3000, 200);
         audio.playSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZTALON_GUN_DESTROYED");
     };

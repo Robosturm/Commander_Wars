@@ -16,6 +16,8 @@
 #include "game/battleanimationsprite.h"
 #include "game/gameaction.h"
 
+#include "objects/base/label.h"
+
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()
 {
@@ -398,8 +400,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
         addChild(pDummy);
-        oxygine::spTextField pLabel = new oxygine::TextField();
-        pLabel->setWidth(width);
+        spLabel pLabel = new Label(width);
         pLabel->setStyle(style);
         if (damage > 0)
         {

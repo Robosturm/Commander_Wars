@@ -142,6 +142,12 @@ public:
         }
         return nullptr;
     }
+    /**
+     * @brief getPlayerDataRecords
+     * @return
+     */
+    const QVector<PlayerData> & getPlayerDataRecords() const;
+
 signals:
 
 public slots:

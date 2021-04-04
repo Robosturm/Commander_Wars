@@ -142,6 +142,14 @@ private:
      * @param pSprite
      */
     void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
+    /**
+     * @brief addScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param shakePauseMs
+     */
+    void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 10);
 private:
     QTimer battleTimer;
 

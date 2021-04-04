@@ -23,6 +23,7 @@
 
 #include "objects/dialogs/dialogvaluecounter.h"
 
+
 VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     : QObject(),
       m_pNetworkInterface(pNetworkInterface)
@@ -223,11 +224,20 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     });
     panel->addItem(pButtonPlayerStrength);
 
+    oxygine::spButton pButtonPlayerStatistic = ObjectManager::createButton(tr("Player Statistics"));
+    pButtonPlayerStatistic->attachTo(this);
+    pButtonPlayerStatistic->setPosition(10 + pButtonPlayerStrength->getWidth() + pButtonPlayerStrength->getX(), 5);
+    pButtonPlayerStatistic->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowGraph(GraphModes::PlayerStatistics);
+    });
+    panel->addItem(pButtonPlayerStatistic);
+
     if (pMap->getWinnerTeam() >= 0)
     {
         oxygine::spButton pButtonVictoryRanking = ObjectManager::createButton(tr("Ranking"));
         pButtonVictoryRanking->attachTo(this);
-        pButtonVictoryRanking->setPosition(10 + pButtonPlayerStrength->getWidth() + pButtonPlayerStrength->getX(), 5);
+        pButtonVictoryRanking->setPosition(10 + pButtonPlayerStatistic->getWidth() + pButtonPlayerStatistic->getX(), 5);
         pButtonVictoryRanking->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
         {
             emit sigShowGraph(GraphModes::VictoryRanking);
@@ -238,7 +248,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     }
     else
     {
-        panel->setContentWidth(pButtonPlayerStrength->getX() + pButtonPlayerStrength->getWidth() + 5);
+        panel->setContentWidth(pButtonPlayerStatistic->getX() + pButtonPlayerStatistic->getWidth() + 5);
     }
 
     m_Textfield = new oxygine::TextField();
@@ -268,7 +278,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
         m_PlayerSelectPanel->addItem(pCheckbox);
         m_PlayerSelectPanel->addItem(pTextfield);
     }
-
+    createStatisticsView();
     // victory score
     qint32 winnerTeam = pMap->getWinnerTeam();
     if (winnerTeam >= 0)
@@ -448,6 +458,44 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     emit sigOnEnter();
 }
 
+void VictoryMenue::createStatisticsView()
+{
+    spGameMap pMap = GameMap::getInstance();
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    m_statisticsBox = new oxygine::Box9Sprite();
+    m_statisticsBox->setSize(Settings::getWidth() - 10, Settings::getHeight() - 210);
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    m_statisticsBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_statisticsBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    m_statisticsBox->setResAnim(pAnim);
+    m_statisticsBox->setPosition(5, 100);
+    m_statisticsBox->setVisible(false);
+    addChild(m_statisticsBox);
+    QVector<QString> items;
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        items.append(tr("Player ") + QString::number(i + 1));
+    }
+    m_pStatisticPlayer = new DropDownmenu(250, items);
+    m_pStatisticPlayer->setTooltipText(tr("The player for which the statistics should be shown."));
+    m_pStatisticPlayer->setPosition(10, 10);
+    m_statisticsBox->addChild(m_pStatisticPlayer);
+    items = {tr("Produced"), tr("Destroyed"), tr("Lost")};
+    m_pStatisticSelection = new DropDownmenu(250, items);
+    m_pStatisticSelection->setTooltipText(tr("The unit statistic you want to watch."));
+    m_pStatisticSelection->setPosition(10 + m_pStatisticPlayer->getWidth() + m_pStatisticPlayer->getX(), 10);
+    m_statisticsBox->addChild(m_pStatisticSelection);
+    connect(m_pStatisticSelection.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    {
+        showPlayerStatistic(m_pStatisticPlayer->getCurrentItem(), static_cast<StatisticModes>(item));
+    });
+    connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+    {
+        showPlayerStatistic(item, static_cast<StatisticModes>(m_pStatisticSelection->getCurrentItem()));
+    });
+    showPlayerStatistic(0, StatisticModes::Produced);
+}
+
 void VictoryMenue::addShopMoney()
 {
     spGameMap pMap = GameMap::getInstance();
@@ -496,6 +544,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         m_ProgressTimer.start(getStepTime());
         m_PlayerSelectPanel->setVisible(true);
         m_pGraphBackground->setVisible(true);
+        m_statisticsBox->setVisible(false);
         if (m_VictoryPanel.get() != nullptr)
         {
             m_VictoryPanel->setVisible(false);
@@ -532,6 +581,11 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
             case GraphModes::PlayerStrength:
             {
                 m_Textfield->setHtmlText(tr("Player Strength"));
+                break;
+            }
+            case GraphModes::PlayerStatistics:
+            {
+
                 break;
             }
             case GraphModes::Max:
@@ -572,7 +626,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
             }
         }
     }
-    else
+    else if (m_CurrentGraphMode == GraphModes::VictoryRanking)
     {
         m_ProgressTimer.stop();
         m_ProgressTimer.start(50);
@@ -580,9 +634,17 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         {
             m_PlayerSelectPanel->setVisible(false);
             m_pGraphBackground->setVisible(false);
+            m_statisticsBox->setVisible(false);
             m_VictoryPanel->setVisible(true);
             m_Textfield->setHtmlText(tr("Victory"));
         }
+    }
+    else if (m_CurrentGraphMode == GraphModes::PlayerStatistics)
+    {
+        m_PlayerSelectPanel->setVisible(false);
+        m_pGraphBackground->setVisible(false);
+        m_statisticsBox->setVisible(true);
+        m_Textfield->setHtmlText(tr("Player Statistics"));
     }
     m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
 
@@ -794,6 +856,7 @@ void VictoryMenue::drawGraphStep(qint32 progress)
                 }
                 case GraphModes::Max:
                 case GraphModes::VictoryRanking:
+                case GraphModes::PlayerStatistics:
                 {
                     break;
                 }
@@ -940,4 +1003,40 @@ void VictoryMenue::onEnter()
         args << value;
         pInterpreter->doFunction(object, func, args);
     }
+}
+
+void VictoryMenue::showPlayerStatistic(qint32 player, StatisticModes mode)
+{
+    if (m_statisticsView.get() != nullptr)
+    {
+        m_statisticsView->detach();
+    }
+    spGameMap pMap = GameMap::getInstance();
+    QString headline;
+    QMap<QString, qint32> items;
+    const auto & playerdata = pMap->getGameRecorder()->getPlayerDataRecords()[player];
+    switch (mode)
+    {
+        case StatisticModes::Produced:
+        {
+            headline = tr("Produced");
+            items = playerdata.producedUnits;
+            break;
+        }
+        case StatisticModes::Lost:
+        {
+            headline = tr("Lost");
+            items = playerdata.lostUnits;
+            break;
+        }
+        case StatisticModes::Destroyed:
+        {
+            headline = tr("Destroyed");
+            items = playerdata.killedUnits;
+            break;
+        }
+    }
+    m_statisticsView = new UnitStatisticView(headline, items, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+    m_statisticsView->setPosition(10, 60);
+    m_statisticsBox->addChild(m_statisticsView);
 }

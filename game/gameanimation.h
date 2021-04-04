@@ -266,6 +266,14 @@ public slots:
      * @param vis
      */
     virtual void setVisible(bool vis) override;
+    /**
+     * @brief addScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param shakePauseMs
+     */
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 10);
 protected:
     void emitFinished();
 
@@ -330,6 +338,8 @@ private:
     QDataStream actionData{&buffer};
 
     QVector<SpriteData> sprites;
+
+    QVector<oxygine::spTween> m_stageTweens;
 
 };
 

@@ -157,7 +157,7 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
 set(${PROJECT_NAME}_SRCS
         main.cpp
 
-        #objects
+        #objects --> i don't have a good place to put them right now
         objects/coinfoactor.cpp
         objects/rotatingsprite.cpp
         objects/ruleselection.cpp
@@ -171,6 +171,7 @@ set(${PROJECT_NAME}_SRCS
         objects/coselection.cpp
         objects/playerselection.cpp
         objects/achievementbanner.cpp
+        objects/unitstatisticview.cpp
         # objects base
         objects/base/topbar.cpp
         objects/base/textbox.cpp

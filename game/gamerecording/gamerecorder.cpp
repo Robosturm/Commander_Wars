@@ -333,6 +333,11 @@ QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)
     return ret;
 }
 
+const QVector<GameRecorder::PlayerData> & GameRecorder::getPlayerDataRecords() const
+{
+    return m_playerDataRecords;
+}
+
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)
 {
     spGameMap pMap = GameMap::getInstance();

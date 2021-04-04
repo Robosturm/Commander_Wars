@@ -11,6 +11,8 @@
 #include "coreengine/settings.h"
 #include "coreengine/audiothread.h"
 
+#include "coreengine/tweens/tweenscreenshake.h"
+
 GameAnimation::GameAnimation(quint32 frameTime)
     : QObject(),
       m_frameTime(frameTime / Settings::getAnimationSpeed())
@@ -30,11 +32,20 @@ void GameAnimation::restart()
 {
     m_stopped = false;
     m_previousAnimation = nullptr;
+
+    for (auto & tween : m_stageTweens)
+    {
+       oxygine::getStage()->addTween(tween);
+    }
     GameMap::getInstance()->addChild(this);
 }
 
 void GameAnimation::stop()
 {
+    for (auto & tween : m_stageTweens)
+    {
+        tween->complete();
+    }
     m_stopped = true;
 }
 
@@ -310,6 +321,11 @@ bool GameAnimation::onFinished(bool skipping)
             pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
         }
     }
+    for (auto & tween : m_stageTweens)
+    {
+        tween->complete();
+    }
+    m_stageTweens.clear();
     GameAnimationFactory::removeAnimation(this, m_skipping);
     return true;
 }
@@ -376,4 +392,13 @@ void GameAnimation::emitFinished()
     {
         emit sigFinished(m_skipping);
     }
+}
+
+void GameAnimation::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay, oxygine::timeMS(shakePauseMs)),
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+    m_stageTweens.append(tween);
+    oxygine::getStage()->addTween(tween);
+
 }

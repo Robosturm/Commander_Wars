@@ -802,6 +802,10 @@ public slots:
      * qbrief killDeadUnits
      */
     void killDeadUnits();
+    /**
+     * @brief addScreenshake
+     */
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 10);
 private:
     static spGameMap m_pInstance;
     QString m_mapName;

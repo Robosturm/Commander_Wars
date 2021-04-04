@@ -11,6 +11,10 @@
 
 #include "objects/base/panel.h"
 #include "objects/base/checkbox.h"
+#include "objects/base/dropdownmenu.h"
+
+#include "objects/unitstatisticview.h"
+
 #include "network/NetworkInterface.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
@@ -27,7 +31,15 @@ public:
         Units,
         PlayerStrength,
         Max,
+        PlayerStatistics,
         VictoryRanking
+    };
+
+    ENUM_CLASS StatisticModes
+    {
+        Produced,
+        Destroyed,
+        Lost
     };
 
     explicit VictoryMenue(spNetworkInterface pNetworkInterface);
@@ -66,7 +78,16 @@ public slots:
      */
     void onEnter();
 protected slots:
+    /**
+     * @brief onProgressTimerStart
+     */
     void onProgressTimerStart();
+    /**
+     * @brief showPlayerStatistic
+     * @param player
+     * @param mode
+     */
+    void showPlayerStatistic(qint32 player, StatisticModes mode);
 protected:
     /**
      * @brief drawGraphStep
@@ -85,6 +106,10 @@ protected:
      * @brief addShopMoney
      */
     void addShopMoney();
+    /**
+     * @brief createStatisticsView
+     */
+    void createStatisticsView();
 private:
     GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**
@@ -123,6 +148,12 @@ private:
     QVector<QVector3D> m_VictoryScores;
     QVector<QVector<oxygine::spTextField>> m_VictoryTexts;
     spPanel m_VictoryPanel;
+
+    oxygine::spBox9Sprite m_statisticsBox;
+    spUnitStatisticView m_statisticsView;
+    spDropDownmenu m_pStatisticPlayer;
+    spDropDownmenu m_pStatisticSelection;
+
     qint32 progress = 0;
 
     spNetworkInterface m_pNetworkInterface;
