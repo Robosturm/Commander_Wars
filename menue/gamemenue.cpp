@@ -37,6 +37,7 @@
 #include "objects/dialogs/ingame/dialogunitinfo.h"
 #include "objects/dialogs/rules/ruleselectiondialog.h"
 #include "objects/gameplayandkeys.h"
+#include "objects/unitstatisticview.h"
 
 #include "ingamescriptsupport/genericbox.h"
 
@@ -363,6 +364,7 @@ void GameMenue::connectMap()
     connect(pMap.get(), &GameMap::sigShowChangeSound, this, &GameMenue::showChangeSound, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowWiki, this, &GameMenue::showWiki, Qt::QueuedConnection);
     connect(pMap.get(), &GameMap::sigShowRules, this, &GameMenue::showRules, Qt::QueuedConnection);
+    connect(pMap.get(), &GameMap::sigShowUnitStatistics, this, &GameMenue::showUnitStatistics, Qt::QueuedConnection);
 
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap.get(), &GameMap::centerMap, Qt::QueuedConnection);
 }
@@ -1209,8 +1211,7 @@ void GameMenue::showRules()
 }
 
 void GameMenue::showUnitInfo(qint32 player)
-{
-    
+{    
     m_Focused = false;
     Console::print("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
     spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getPlayer(player));
@@ -1219,7 +1220,24 @@ void GameMenue::showUnitInfo(qint32 player)
         m_Focused = true;
     });
     addChild(pDialogUnitInfo);
-    
+}
+
+void GameMenue::showUnitStatistics()
+{
+    m_Focused = false;
+    spGameMap pMap = GameMap::getInstance();
+    Console::print("showUnitStatistics()", Console::eDEBUG);
+    spGenericBox pBox = new GenericBox();
+    Player* pPlayer = pMap->getCurrentViewPlayer();
+    spUnitStatisticView view = new UnitStatisticView(pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
+                                    Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
+    view->setPosition(30, 30);
+    pBox->addItem(view);
+    connect(pBox.get(), &GenericBox::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pBox);
 }
 
 void GameMenue::showOptions()

@@ -154,6 +154,7 @@ void GameAnimationNextDay::rightClick()
     }
     else
     {
+        onFinished(false);
         detach();
     }
 }
@@ -179,15 +180,14 @@ void GameAnimationNextDay::restart()
 bool GameAnimationNextDay::onFinished(bool skipping)
 {
     bool ret = true;
+    spGameMap pMap = GameMap::getInstance();
+    if (pMap.get() != nullptr)
+    {
+        pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+    }
     if (!m_permanent)
     {
-        spGameMap pMap = GameMap::getInstance();
-        if (pMap.get() != nullptr)
-        {
-            pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
-        }
-        ret = GameAnimation::onFinished(skipping);
-        
+        ret = GameAnimation::onFinished(skipping);        
     }
     return ret;
 }

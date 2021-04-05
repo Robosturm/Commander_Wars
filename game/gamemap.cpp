@@ -1260,6 +1260,11 @@ void GameMap::showRules()
     emit sigShowRules();
 }
 
+void GameMap::showUnitStatistics()
+{
+    emit sigShowUnitStatistics();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

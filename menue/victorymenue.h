@@ -87,7 +87,7 @@ protected slots:
      * @param player
      * @param mode
      */
-    void showPlayerStatistic(qint32 player, StatisticModes mode);
+    void showPlayerStatistic(qint32 player);
 protected:
     /**
      * @brief drawGraphStep
@@ -152,7 +152,6 @@ private:
     oxygine::spBox9Sprite m_statisticsBox;
     spUnitStatisticView m_statisticsView;
     spDropDownmenu m_pStatisticPlayer;
-    spDropDownmenu m_pStatisticSelection;
 
     qint32 progress = 0;
 

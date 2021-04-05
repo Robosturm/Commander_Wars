@@ -181,6 +181,10 @@ public slots:
      */
     void showUnitInfo(qint32 player);
     /**
+     * @brief showUnitStatistics
+     */
+    void showUnitStatistics();
+    /**
      * @brief saveMap
      * @param file
      */

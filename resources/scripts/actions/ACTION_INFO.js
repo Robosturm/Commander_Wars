@@ -45,6 +45,10 @@ var Constructor = function()
         {
             map.showRules();
         }
+        else if (id === "STATISTICS")
+        {
+            map.showUnitStatistics();
+        }
     };
     this.isFinalStep = function(action)
     {
@@ -69,6 +73,7 @@ var Constructor = function()
         data.addData(qsTr("Victory Info"), "VICTORY", "help");
         data.addData(qsTr("CO Info"), "CO", "co_info");
         data.addData(qsTr("Unit Info"), "UNIT", "unit_info");
+        data.addData(qsTr("Unit Statistics"), "STATISTICS", "statistics");
         data.addData(qsTr("Game Info"), "GAME", "intel");
         data.addData(qsTr("Attack Log"), "ATTACK", "fire");
         data.addData(qsTr("Rules"), "RULES", "wiki");

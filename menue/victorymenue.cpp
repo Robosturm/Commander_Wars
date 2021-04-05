@@ -480,20 +480,11 @@ void VictoryMenue::createStatisticsView()
     m_pStatisticPlayer->setTooltipText(tr("The player for which the statistics should be shown."));
     m_pStatisticPlayer->setPosition(10, 10);
     m_statisticsBox->addChild(m_pStatisticPlayer);
-    items = {tr("Produced"), tr("Destroyed"), tr("Lost")};
-    m_pStatisticSelection = new DropDownmenu(250, items);
-    m_pStatisticSelection->setTooltipText(tr("The unit statistic you want to watch."));
-    m_pStatisticSelection->setPosition(10 + m_pStatisticPlayer->getWidth() + m_pStatisticPlayer->getX(), 10);
-    m_statisticsBox->addChild(m_pStatisticSelection);
-    connect(m_pStatisticSelection.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
-    {
-        showPlayerStatistic(m_pStatisticPlayer->getCurrentItem(), static_cast<StatisticModes>(item));
-    });
     connect(m_pStatisticPlayer.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
     {
-        showPlayerStatistic(item, static_cast<StatisticModes>(m_pStatisticSelection->getCurrentItem()));
+        showPlayerStatistic(item);
     });
-    showPlayerStatistic(0, StatisticModes::Produced);
+    showPlayerStatistic(0);
 }
 
 void VictoryMenue::addShopMoney()
@@ -1005,7 +996,7 @@ void VictoryMenue::onEnter()
     }
 }
 
-void VictoryMenue::showPlayerStatistic(qint32 player, StatisticModes mode)
+void VictoryMenue::showPlayerStatistic(qint32 player)
 {
     if (m_statisticsView.get() != nullptr)
     {
@@ -1015,28 +1006,7 @@ void VictoryMenue::showPlayerStatistic(qint32 player, StatisticModes mode)
     QString headline;
     QMap<QString, qint32> items;
     const auto & playerdata = pMap->getGameRecorder()->getPlayerDataRecords()[player];
-    switch (mode)
-    {
-        case StatisticModes::Produced:
-        {
-            headline = tr("Produced");
-            items = playerdata.producedUnits;
-            break;
-        }
-        case StatisticModes::Lost:
-        {
-            headline = tr("Lost");
-            items = playerdata.lostUnits;
-            break;
-        }
-        case StatisticModes::Destroyed:
-        {
-            headline = tr("Destroyed");
-            items = playerdata.killedUnits;
-            break;
-        }
-    }
-    m_statisticsView = new UnitStatisticView(headline, items, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
+    m_statisticsView = new UnitStatisticView(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
     m_statisticsView->setPosition(10, 60);
     m_statisticsBox->addChild(m_statisticsView);
 }

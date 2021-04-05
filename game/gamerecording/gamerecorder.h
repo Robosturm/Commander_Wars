@@ -78,14 +78,14 @@ public:
 
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
 {
-    Q_OBJECT
+    Q_OBJECT    
+public:
     struct PlayerData
     {
         QMap<QString, qint32> producedUnits;
         QMap<QString, qint32> lostUnits;
         QMap<QString, qint32> killedUnits;
     };
-public:
     ENUM_CLASS Rang
     {
         S,

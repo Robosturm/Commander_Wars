@@ -368,6 +368,7 @@ signals:
     void sigShowChangeSound();
     void sigShowWiki();
     void sigShowRules();
+    void sigShowUnitStatistics();
 public slots:
     /**
      * @brief getMapMusic
@@ -534,6 +535,10 @@ public slots:
      * @brief showRules
      */
     void showRules();
+    /**
+     * @brief showUnitStatistics
+     */
+    void showUnitStatistics();
     /**
      * @brief getBuildingCount
      * @param buildingID
