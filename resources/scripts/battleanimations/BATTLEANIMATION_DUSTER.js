@@ -42,6 +42,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_DUSTER.getMaxUnitCount());
         sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                           1, 1.0, 0, 0);
+        sprite.addSpriteScreenshake(8, 0.95, 800, 200);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);

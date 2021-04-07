@@ -192,6 +192,7 @@ var Constructor = function()
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 300);
+            sprite.addSpriteScreenshake(8, 0.95, 800, 500);
             sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);

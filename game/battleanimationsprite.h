@@ -343,6 +343,32 @@ public slots:
      * @brief setUnitFrameDelay delay time between each individual unit animation start
      */
     void setUnitFrameDelay(qint32 delay);
+    /**
+     * @brief addScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param shakePauseMs
+     */
+    void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    /**
+     * @brief addScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param delayMs
+     * @param shakePauseMs
+     */
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
+    /**
+     * @brief addSpriteScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param delayMs
+     * @param shakePauseMs
+     */
+    void addSpriteScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private slots:
     void startNextUnitFrames();
 private:

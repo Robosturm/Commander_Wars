@@ -273,7 +273,7 @@ public slots:
      * @param durationMs
      * @param shakePauseMs
      */
-    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 10);
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delay = 0, qint32 shakePauseMs = 30);
 protected:
     void emitFinished();
 

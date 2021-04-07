@@ -101,6 +101,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount());
         sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                           1, 1.0, 0, 300);
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("rocket_down", false, sprite.getMaxUnitCount(), Qt.point(127, 80),
                                 Qt.point(-128, -64), 400, true,
                                 1, 1, 0, 0, true);

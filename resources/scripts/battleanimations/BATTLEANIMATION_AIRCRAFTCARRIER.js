@@ -50,6 +50,7 @@ var Constructor = function()
         sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
                                 1, 1, 0, 0, true);
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);

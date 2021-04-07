@@ -21,6 +21,7 @@ private:
     float m_decay;
     oxygine::timeMS m_timeMs;
     oxygine::timeMS m_lastUpdate{ 0};
+    float m_lastDegree{-1};
 };
 
 #endif // TWEENSCREENSHAKE_H

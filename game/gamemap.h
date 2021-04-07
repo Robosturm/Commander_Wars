@@ -810,7 +810,7 @@ public slots:
     /**
      * @brief addScreenshake
      */
-    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 10);
+    void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
     static spGameMap m_pInstance;
     QString m_mapName;

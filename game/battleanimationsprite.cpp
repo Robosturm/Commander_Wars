@@ -6,11 +6,13 @@
 #include "coreengine/globalutils.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+#include "coreengine/tweens/tweenscreenshake.h"
 
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/player.h"
 #include "game/battleanimationsprite.h"
+#include "game/battleanimation.h"
 #include "game/co.h"
 
 
@@ -779,4 +781,32 @@ bool BattleAnimationSprite::getStartWithFraming() const
 void BattleAnimationSprite::setStartWithFraming(bool startWithFraming)
 {
     m_startWithFraming = startWithFraming;
+}
+
+void BattleAnimationSprite::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
+    if (pOwner != nullptr)
+    {
+        pOwner->addScreenshake(startIntensity, decay * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(),
+                               durationMs  * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(),
+                               delayMs  * Settings::getAnimationSpeed() / Settings::getBattleAnimationSpeed(), shakePauseMs);
+    }
+}
+
+
+void BattleAnimationSprite::addSpriteScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getBattleAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
+                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getBattleAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getBattleAnimationSpeed())));
+    getParent()->addTween(tween);
+}
+
+void BattleAnimationSprite::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
+{
+    auto pOwner = dynamic_cast<BattleAnimation*>(getParent());
+    if (pOwner != nullptr)
+    {
+        pOwner->addBattleViewScreenshake(startIntensity, decay, durationMs, delayMs, shakePauseMs);
+    }
 }

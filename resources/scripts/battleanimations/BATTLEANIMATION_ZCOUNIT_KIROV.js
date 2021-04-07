@@ -41,6 +41,7 @@ var Constructor = function()
         var count = sprite.getUnitCount(5);
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
                           1, 1.0, 0, 300);
+        sprite.addSpriteScreenshake(8, 0.95, 800, 500);
         sprite.loadMovingSprite("bomb_falling", false, 5, Qt.point(0, 150),
                                 Qt.point(0, -130), 400, true,
                                 1, 1, 0, 0, true);

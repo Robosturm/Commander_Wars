@@ -76,6 +76,7 @@ var Constructor = function()
         {
             sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
                               1, 1.0, 0, 0);
+            sprite.addSpriteScreenshake(8, 0.95, 800, 200);
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);

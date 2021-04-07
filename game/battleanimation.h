@@ -52,6 +52,14 @@ public slots:
      * @return
      */
     Unit *getDefUnit() const;
+    /**
+     * @brief addScreenshake
+     * @param startIntensity
+     * @param decay
+     * @param durationMs
+     * @param shakePauseMs
+     */
+    void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
     /**
      * @brief getIsRight
@@ -66,7 +74,14 @@ private:
      * @param pAtkUnit
      * @param pDefUnit
      */
-    void setSpritePosition(oxygine::spSprite pSprite, Unit* pUnit1, Unit* pUnit2);
+    void setSpritePosition(oxygine::spActor pSprite, Unit* pUnit1, Unit* pUnit2);
+    /**
+     * @brief setSpriteFlipped
+     * @param pSprite
+     * @param pUnit1
+     * @param pUnit2
+     */
+    void setSpriteFlipped(oxygine::spSprite pSprite, Unit* pUnit1, Unit* pUnit2);
     /**
      * @brief setCOMood
      * @param hp1
@@ -142,14 +157,6 @@ private:
      * @param pSprite
      */
     void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
-    /**
-     * @brief addScreenshake
-     * @param startIntensity
-     * @param decay
-     * @param durationMs
-     * @param shakePauseMs
-     */
-    void addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 10);
 private:
     QTimer battleTimer;
 
@@ -163,6 +170,9 @@ private:
 
     spBattleAnimationSprite m_pAttackerAnimation;
     spBattleAnimationSprite m_pDefenderAnimation;
+
+    oxygine::spActor m_pAttackerSprite;
+    oxygine::spActor m_pDefenderSprite;
 
     Terrain* m_pAtkTerrain;
     Unit* m_pAtkUnit;
