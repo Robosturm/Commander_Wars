@@ -432,7 +432,7 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
     pBox->addChild(pTerrainSprite);
     if (pUnit.get() != nullptr)
     {
-        BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
+        BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation, -1, false);
         pBattleAnimationSprite->setPosition(6, 3);
         if (HpHidden)
         {

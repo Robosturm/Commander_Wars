@@ -39,6 +39,17 @@ var BATTLEANIMATION =
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
 
+    loadDyingAnimationSound : function(sprite, unit, defender, weapon)
+    {
+        var maxUnitCount = sprite.getMaxUnitCount()
+        var startCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingStartHp()));
+        var endCount = sprite.getUnitCount(maxUnitCount, globals.roundUp(sprite.getDyingEndHp()));
+        for (var i = 0; i < startCount - endCount; i++)
+        {
+            //sprite.loadSound("tank_explode.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
+    },
+
     loadStandingFiredAnimation : function(sprite, unit, defender, weapon)
     {
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);

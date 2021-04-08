@@ -43,6 +43,10 @@ public:
 
 public slots:
     /**
+     * @brief stopSound
+     */
+    void stopSound();
+    /**
      * @brief getPAtkUnit
      * @return
      */
@@ -156,7 +160,7 @@ private:
      * @brief loadDyingFadeoutAnimation
      * @param pSprite
      */
-    void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
+    void loadDyingFadeoutAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon);
 private:
     QTimer battleTimer;
 

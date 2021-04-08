@@ -379,6 +379,12 @@ void BattleAnimation::stop()
 
 bool BattleAnimation::onFinished(bool skipping)
 {
+    stopSound();
+    return GameAnimation::onFinished(skipping);
+}
+
+void BattleAnimation::stopSound()
+{
     if (m_pAttackerAnimation.get() != nullptr)
     {
         m_pAttackerAnimation->stopSound();
@@ -387,7 +393,6 @@ bool BattleAnimation::onFinished(bool skipping)
     {
         m_pDefenderAnimation->stopSound();
     }
-    return GameAnimation::onFinished(skipping);
 }
 
 void BattleAnimation::nextAnimatinStep()
@@ -396,6 +401,7 @@ void BattleAnimation::nextAnimatinStep()
     {
         case AnimationProgress::MoveIn:
         {
+            stopSound();
             loadMoveInAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             loadStopAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             m_pAttackerAnimation->startNextFrame();
@@ -409,11 +415,13 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterIn:
         {
+            stopSound();
             battleTimer.start(500 / Settings::getBattleAnimationSpeed());
             break;
         }
         case AnimationProgress::AttackerFire:
         {
+            stopSound();
             loadFireAnimation(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             break;
         }
@@ -427,6 +435,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::AttackerDying:
         {
+            stopSound();
             qint32 count = m_pDefenderAnimation->getAnimationUnitCount();
             if (m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defEndHp)) < m_pDefenderAnimation->getUnitCount(count, GlobalUtils::roundUp(m_defStartHp)))
             {
@@ -436,7 +445,7 @@ void BattleAnimation::nextAnimatinStep()
                 }
                 else
                 {
-                    loadDyingFadeoutAnimation(m_pDefenderAnimation);
+                    loadDyingFadeoutAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
                 }
                 break;
             }
@@ -447,6 +456,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::DefenderFire:
         {
+            stopSound();
             m_pDefenderAnimation->setHpRounded(GlobalUtils::roundUp(m_defEndHp));
             if (m_DefenderDamage >= 0)
             {
@@ -471,6 +481,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::DefenderDying:
         {
+            stopSound();
             qint32 count = m_pAttackerAnimation->getAnimationUnitCount();
             if (m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkEndHp)) < m_pAttackerAnimation->getUnitCount(count, GlobalUtils::roundUp(m_atkStartHp)))
             {
@@ -480,7 +491,7 @@ void BattleAnimation::nextAnimatinStep()
                 }
                 else
                 {
-                    loadDyingFadeoutAnimation(m_pAttackerAnimation);
+                    loadDyingFadeoutAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_AtkWeapon);
                 }
                 break;
             }
@@ -598,10 +609,10 @@ void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAni
     battleTimer.start(pSprite->getDyingDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
-void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
+void BattleAnimation::loadDyingFadeoutAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)
 {
     constexpr qint32 fadeoutTime = 800;
-    pSprite->loadDyingFadeOutAnimation(fadeoutTime - 400);
+    pSprite->loadDyingFadeOutAnimation(pUnit1, pUnit2, weapon, fadeoutTime - 400);
     battleTimer.start(fadeoutTime / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 

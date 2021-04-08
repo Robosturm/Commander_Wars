@@ -36,8 +36,8 @@ var Constructor = function()
             sprite.loadSingleMovingSprite("bombs_projectile", false, Qt.point(70, 50),
                                           Qt.point(0, -70), 400, false,
                                           1, 1, -1, i * 150);
+            sprite.loadSound("falling_bomb.wav", 1, "resources/sounds/", i * 150);
         }
-        sprite.loadSound("falling_bomb.wav", 1, "resources/sounds/", 0);
     };
 
     this.getFireDurationMS = function()
@@ -62,7 +62,7 @@ var Constructor = function()
                                 1, 1, 0, 0, true);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 300 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 
@@ -76,7 +76,7 @@ var Constructor = function()
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 1000;
+        return 2000;
     };
 
     this.hasDyingAnimation = function()
@@ -87,7 +87,8 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600);
+        BATTLEANIMATION_BOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800);
+        sprite.loadSound("airunit_dying.wav", 1, "resources/sounds/");
     };
 
 };

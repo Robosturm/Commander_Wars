@@ -117,6 +117,9 @@ var Constructor = function()
             }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 200);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 400);
         }
     };
 
@@ -146,7 +149,7 @@ var Constructor = function()
             for (i = 0; i < count; i++)
             {
                 sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 300 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else

@@ -23,7 +23,7 @@ var Constructor = function()
                           1, 1.0, 0, 0);
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("cannon_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

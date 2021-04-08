@@ -71,7 +71,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setPosition(width - 210, y);
     this->addChild(pSpriteBox);
 
-    spBattleAnimationSprite pBattleAnimationSprite = new BattleAnimationSprite(pUnit, nullptr, BattleAnimationSprite::standingAnimation);
+    spBattleAnimationSprite pBattleAnimationSprite = new BattleAnimationSprite(pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
     pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
     addChild(pBattleAnimationSprite);

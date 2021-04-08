@@ -29,7 +29,7 @@ var Constructor = function()
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 1000;
+        return 2000;
     };
 
     this.hasDyingAnimation = function()
@@ -40,7 +40,8 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_BLACK_BOMB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
+        BATTLEANIMATION_BLACK_BOMB.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800, false);
+        sprite.loadSound("airunit_dying.wav", 1, "resources/sounds/");
     };
 };
 

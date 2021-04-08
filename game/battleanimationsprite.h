@@ -26,7 +26,8 @@ public:
     static const QString dyingAnimation;
     static const QString stopAnimation;
 
-    explicit BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
+    explicit BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1, bool playSound = true);
+    ~BattleAnimationSprite();
     /**
      * @brief loadAnimation
      * @param animationType
@@ -77,7 +78,7 @@ public:
     /**
      * @brief loadDyingFadeOutAnimation
      */
-    void loadDyingFadeOutAnimation(qint32 fadeoutTime);
+    void loadDyingFadeOutAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, qint32 fadeoutTime);
     /**
      * @brief setInvertStartPosition
      * @param invertStartPosition
@@ -392,6 +393,7 @@ private:
     float m_dyingStartHp{10.0f};
     float m_dyingEndHp{10.0f};
     bool m_invertStartPosition{false};
+    bool m_playSound{true};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

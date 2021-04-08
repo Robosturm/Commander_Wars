@@ -50,6 +50,7 @@ var Constructor = function()
             }
             else
             {
+                var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
                 var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
                 var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
                 sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
@@ -58,6 +59,10 @@ var Constructor = function()
                 sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                           Qt.point(65, 0), 600, false,
                                           1, 1);
+                for (var i = 0; i < count; i++)
+                {
+                    sprite.loadSound("infantry_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                }
             }
         }
         else
@@ -151,7 +156,7 @@ var Constructor = function()
             }
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("baazoka_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else

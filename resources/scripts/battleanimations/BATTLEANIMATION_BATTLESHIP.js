@@ -89,7 +89,7 @@ var Constructor = function()
                                                    offset.y + offset2.y),
                                           Qt.point(0, 0), 0, true,
                                           1, 1.0, 5, 200 * i, false);
-            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", i * 200);
+            sprite.loadSound("cannon_weapon_fire.wav", 1, "resources/sounds/", i * 200);
         }
     };
 
@@ -114,6 +114,7 @@ var Constructor = function()
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
         BATTLEANIMATION_BATTLESHIP.baseStandingAnimation(sprite, unit, defender, weapon, 0, Qt.point(-140, 0), 600);
+        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)

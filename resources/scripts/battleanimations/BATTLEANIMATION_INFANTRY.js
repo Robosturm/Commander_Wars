@@ -55,6 +55,7 @@ var Constructor = function()
         }
         else
         {
+            var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
             var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_INFANTRY.armyData);
             var riverName = BATTLEANIMATION_INFANTRY.getRiverString(unit);
             sprite.loadMovingSprite("infantry+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
@@ -63,6 +64,10 @@ var Constructor = function()
             sprite.loadMovingSpriteV2("infantry+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
                                       Qt.point(65, 0), 600, false,
                                       1, 1);
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("infantry_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            }
         }
     };
 
@@ -105,6 +110,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_INFANTRY.getMaxUnitCount());
         var armyName = BATTLEANIMATION_INFANTRY.getArmyName(unit);
         var offset = Qt.point(0, 0);
         var position = BATTLEANIMATION.getRelativePosition(unit, defender);
@@ -191,6 +197,12 @@ var Constructor = function()
             offset.y = offset.y - 5;
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);
+        }
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

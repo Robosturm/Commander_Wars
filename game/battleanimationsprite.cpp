@@ -25,12 +25,13 @@ const QString BattleAnimationSprite::standingFiredAnimation = "loadStandingFired
 const QString BattleAnimationSprite::dyingAnimation = "loadDyingAnimation";
 const QString BattleAnimationSprite::stopAnimation = "loadStopAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
+BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QString animationType, qint32 hp, bool playSound)
     : QObject(),
       m_pUnit(pUnit),
       m_pTerrain(pTerrain),
       hpRounded(hp),
-      m_nextFrameTimer(this)
+      m_nextFrameTimer(this),
+      m_playSound(playSound)
 {
     if (hpRounded < 0.0f)
     {
@@ -50,6 +51,11 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
     loadAnimation(animationType);
     connect(this, &BattleAnimationSprite::sigDetachChild, this, &BattleAnimationSprite::detachChild, Qt::QueuedConnection);
     connect(&m_nextFrameTimer, &QTimer::timeout, this, &BattleAnimationSprite::startNextUnitFrames, Qt::QueuedConnection);
+}
+
+BattleAnimationSprite::~BattleAnimationSprite()
+{
+    stopSound();
 }
 
 void BattleAnimationSprite::clear()
@@ -164,7 +170,7 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     }
 }
 
-void BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
+void BattleAnimationSprite::loadDyingFadeOutAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, qint32 fadeoutTime)
 {
     qint32 maxUnitCount = getMaxUnitCount();
     qint32 startCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
@@ -182,6 +188,19 @@ void BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
             }
         }
     }
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    args1 << obj3;
+    args1 << attackerWeapon;
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), "loadDyingAnimationSound", args1);
+
+
 }
 
 QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
@@ -650,10 +669,13 @@ void BattleAnimationSprite::setHpRounded(const qint32 &value)
 
 void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder, qint32 delay)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    AudioThread* pAudio = pApp->getAudioThread();
-    m_Sounds.append(std::tuple<QString, QString>(file, folder));
-    pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    if (m_playSound)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        AudioThread* pAudio = pApp->getAudioThread();
+        m_Sounds.append(std::tuple<QString, QString>(file, folder));
+        pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    }
 }
 
 void BattleAnimationSprite::stopSound()
