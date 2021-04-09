@@ -58,7 +58,7 @@ var Constructor = function()
             {
                 sprite.loadSingleMovingSprite("torpedo", false, Qt.point(70, 30),
                                               Qt.point(60, 0), 400, false,
-                                              1, 1, 1, i * 150);
+                                              1, 1, 2, i * 150);
             }
             else
             {
@@ -66,6 +66,7 @@ var Constructor = function()
                                               Qt.point(60, 0), 400, false,
                                               1, 0.5, -1, i * 150);
             }
+            sprite.loadSound("torpedo_fire.wav", 1, "resources/sounds/", i * 150);
         }
     };
 
@@ -85,11 +86,11 @@ var Constructor = function()
             {
                 sprite.loadSingleMovingSprite("torpedo", false, Qt.point(127, 30),
                                               Qt.point(-70, 0), 400, true,
-                                              1, 1, 1, i * 150, true);
+                                              1, 1, 2, i * 150, true);
 
                 sprite.loadSingleMovingSprite("unit_explosion",  false, Qt.point(45, 30),
                                               Qt.point(0, 0), 0, false,
-                                              1, 1.0, 1, 300 + i * 150);
+                                              1, 1.0, 2, 300 + i * 150);
             }
             else
             {
@@ -100,7 +101,8 @@ var Constructor = function()
                                               Qt.point(0, 0), 0, false,
                                               1, 0.5, -1, 300 + i * 150, true);
             }
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * 100);
+            sprite.loadSound("torpedo_move.wav", 1, "resources/sounds/");
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 300 + i * 150);
         }
     };
 
@@ -112,7 +114,8 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 1000);
+        BATTLEANIMATION_SUBMARINE.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, 0), 2000);
+        sprite.loadSound("ship_dying_move.wav", -2, "resources/sounds/");
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
@@ -131,7 +134,7 @@ var Constructor = function()
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 1200;
+        return 2200;
     };
 };
 

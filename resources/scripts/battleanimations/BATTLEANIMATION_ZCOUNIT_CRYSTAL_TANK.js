@@ -32,6 +32,7 @@ var Constructor = function()
             offset = Qt.point(93, 73);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/");
         }
     };
 

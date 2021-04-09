@@ -7,6 +7,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_NEOTANK.getMaxUnitCount());
         sprite.loadMovingSprite("neotank+move", false, sprite.getMaxUnitCount(), Qt.point(-80, 5),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
@@ -16,6 +17,10 @@ var Constructor = function()
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-100, 7),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("neotank_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -50,7 +55,7 @@ var Constructor = function()
                               1, 1.0, 0, 120);
             for (var i = 0; i < count; i++)
             {
-                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 120 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("neocannonweapon_fire.wav", 1, "resources/sounds/", 120 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -75,6 +80,12 @@ var Constructor = function()
                 // mg
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), Qt.point(26, 46),
                                   1, 1, 0, 0);
+            }
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };

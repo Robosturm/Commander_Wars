@@ -22,7 +22,7 @@ var Constructor = function()
             sprite.loadSingleMovingSprite("rocket_up", false, Qt.point(82, 82),
                                           Qt.point(128, 64), 400, false,
                                           1, 1, -1, i * 150);
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * 150);
+            sprite.loadSound("pipecannon_weapon_fire.wav", 1, "resources/sounds/", i * 150);
         }
     };
 

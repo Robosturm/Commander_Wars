@@ -44,7 +44,7 @@ var Constructor = function()
                                               Qt.point(128, -64), 400, false,
                                               1, 1, -1, i * 150);
             }
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * 150);
+            sprite.loadSound("stealthfighter_fire.wav", 1, "resources/sounds/", i * 150);
         }
     };
 
@@ -86,7 +86,8 @@ var Constructor = function()
 
     this.loadDyingAnimation = function(sprite, unit, defender, weapon)
     {
-        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 600, false);
+        BATTLEANIMATION_STEALTHBOMBER.loadSprite(sprite, unit, defender, weapon, Qt.point(-140, -140), 1800, false);
+        sprite.loadSound("airunit_dying.wav", 1, "resources/sounds/");
     };
 
     this.getFireDurationMS = function(sprite, unit, defender, weapon)
@@ -105,7 +106,7 @@ var Constructor = function()
     this.getDyingDurationMS = function(sprite, unit, defender, weapon)
     {
         // the time will be scaled with animation speed inside the engine
-        return 1000;
+        return 2000;
     };
 };
 

@@ -660,14 +660,14 @@ void BattleAnimationSprite::setHpRounded(const qint32 &value)
     hpRounded = value;
 }
 
-void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder, qint32 delay)
+void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder, qint32 delay, float volume)
 {
     if (m_playSound)
     {
         Mainapp* pApp = Mainapp::getInstance();
         AudioThread* pAudio = pApp->getAudioThread();
         m_Sounds.append(std::tuple<QString, QString>(file, folder));
-        pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+        pAudio->playSound(file, loops, folder, delay / static_cast<qint32>(Settings::getBattleAnimationSpeed()), volume);
     }
 }
 

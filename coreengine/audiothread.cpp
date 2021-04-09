@@ -89,9 +89,9 @@ void AudioThread::playRandom()
     emit SignalPlayRandom();
 }
 
-void AudioThread::playSound(QString file, qint32 loops, QString folder, qint32 delay)
+void AudioThread::playSound(QString file, qint32 loops, QString folder, qint32 delay, float volume)
 {
-    emit SignalPlaySound(file, loops, folder, delay);
+    emit SignalPlaySound(file, loops, folder, delay, volume);
 }
 
 void AudioThread::stopSound(QString file, QString folder)
@@ -320,10 +320,10 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
     }
 }
 
-void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay)
+void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay, float volume)
 {
     qreal sound = (static_cast<qreal>(Settings::getSoundVolume()) / 100.0 *
-                   static_cast<qreal>(Settings::getTotalVolume()) / 100.0);
+                   static_cast<qreal>(Settings::getTotalVolume()) / 100.0) * volume;
     QString soundfile = folder + file;
     QStringList mods = Settings::getMods();
     for (qint32 i = mods.size() - 1; i >= 0; i--)

@@ -26,7 +26,7 @@ signals:
     void SignalClearPlayList();
     void SignalPlayRandom();
     void SignalLoadFolder(QString folder);
-    void SignalPlaySound(QString file, qint32 loops, QString folder, qint32 delay);
+    void SignalPlaySound(QString file, qint32 loops, QString folder, qint32 delay, float volume = 1.0f);
     void SignalStopSound(QString file, QString folder);
     void SignalStopAllSounds();
 public slots:
@@ -71,7 +71,7 @@ public slots:
      * @param loops
      * @param folder
      */
-    void playSound(QString file, qint32 loops = 1, QString folder = "resources/sounds/", qint32 delay = 0);
+    void playSound(QString file, qint32 loops = 1, QString folder = "resources/sounds/", qint32 delay = 0, float volume = 1.0f);
     /**
      * @brief stopSound
      * @param file
@@ -93,7 +93,7 @@ protected slots:
     void SlotLoadFolder(QString folder);
     void SlotCheckMusicEnded(qint64 duration);
     // audio stuff
-    void SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay);
+    void SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay, float volume = 1.0f);
     void SlotStopSound(QString file, QString folder);
     void SlotStopAllSounds();
     void SlotSoundEnded();

@@ -135,7 +135,6 @@ void Console::applyImagesTable(QString input, QString inTable, QString outTable,
 void Console::extendMaskImages(QString folder, QString filter)
 {
     SpriteCreator::extendMaskImages(folder, filter);
-
 }
 
 void Console::dotask(QString message)

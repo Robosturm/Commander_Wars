@@ -21,6 +21,7 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
         sprite.loadMovingSprite("recon+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
                                 Qt.point(65, 0), 600, false, 1, 1);
@@ -28,6 +29,10 @@ var Constructor = function()
                                   Qt.point(65, 0), 600, false, 1, 1);
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
                                 Qt.point(65, 0), 600, false, 1, 1);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("recon_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.loadStopAnimation = function(sprite, unit, defender, weapon)
@@ -59,11 +64,12 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
+        var count = sprite.getUnitCount(BATTLEANIMATION_RECON.getMaxUnitCount());
         var armyName = BATTLEANIMATION_RECON.getArmyName(unit);
         var offset = Qt.point(35, 44);
         if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
         {
-            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire_air", 4);
+            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire_air", 2);
             offset = Qt.point(35, 50);
             if (armyName === "yc")
             {
@@ -86,11 +92,11 @@ var Constructor = function()
                 offset = Qt.point(38, 25);
             }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
-                              2, 1, 0, 0);
+                              1, 1, 0, 0);
         }
         else
         {
-            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire", 4);
+            BATTLEANIMATION_RECON.loadSprite(sprite, unit, defender, weapon, "+fire", 2);
             if (armyName === "yc")
             {
                 offset = Qt.point(30, 40);
@@ -112,7 +118,13 @@ var Constructor = function()
                 offset = Qt.point(38, 20);
             }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                              2, 1, 0, 0);
+                              1, 1, 0, 0);
+        }
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

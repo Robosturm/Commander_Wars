@@ -33,7 +33,7 @@ var Constructor = function()
         }
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("missile_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

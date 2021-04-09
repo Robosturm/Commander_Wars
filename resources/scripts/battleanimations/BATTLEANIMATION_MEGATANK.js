@@ -56,7 +56,7 @@ var Constructor = function()
                                                        offset.y + offset2.y),
                                               Qt.point(0, 0), 0, true,
                                               1, 1.0, 5, 200 * i, false);
-                sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 200 * i);
+                sprite.loadSound("megacannon_weapon_fire.wav", 1, "resources/sounds/", 200 * i);
             }
         }
         else
@@ -65,6 +65,9 @@ var Constructor = function()
             offset = Qt.point(105, 73);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200);
+            sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400);
         }
     };
 

@@ -1000,7 +1000,7 @@ void GameMenue::finishActionPerformed()
     spGameMap pMap = GameMap::getInstance();
     if (m_pCurrentAction.get() != nullptr)
     {
-        Unit* pUnit = m_pCurrentAction->getTargetUnit();
+        Unit* pUnit = m_pCurrentAction->getMovementTarget();
         if (pUnit != nullptr)
         {
             pUnit->postAction(m_pCurrentAction);
