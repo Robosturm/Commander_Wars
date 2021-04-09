@@ -14,7 +14,8 @@ var Constructor = function()
 
     this.loadMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        var armyName = BATTLEANIMATION_HEAVY_TANK.getArmyName(unit);
+        var count = sprite.getUnitCount(BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount());
+        var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
         sprite.loadMovingSprite("light_tank+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
@@ -24,6 +25,10 @@ var Constructor = function()
         sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("tank_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+        }
     };
 
     this.getArmyName = function(unit)
@@ -153,6 +158,12 @@ var Constructor = function()
                 }
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
+            }
+            for (var i = 0; i < count; i++)
+            {
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+                sprite.loadSound("mg_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
     };

@@ -445,7 +445,7 @@ void BattleAnimation::nextAnimatinStep()
                 }
                 else
                 {
-                    loadDyingFadeoutAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_DefWeapon);
+                    loadDyingFadeoutAnimation(m_pDefenderAnimation);
                 }
                 break;
             }
@@ -491,7 +491,7 @@ void BattleAnimation::nextAnimatinStep()
                 }
                 else
                 {
-                    loadDyingFadeoutAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_AtkWeapon);
+                    loadDyingFadeoutAnimation(m_pAttackerAnimation);
                 }
                 break;
             }
@@ -609,11 +609,11 @@ void BattleAnimation::loadDyingAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAni
     battleTimer.start(pSprite->getDyingDurationMS(pUnit1, pUnit2, weapon) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
-void BattleAnimation::loadDyingFadeoutAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon)
+void BattleAnimation::loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite)
 {
-    constexpr qint32 fadeoutTime = 800;
-    pSprite->loadDyingFadeOutAnimation(pUnit1, pUnit2, weapon, fadeoutTime - 400);
-    battleTimer.start(fadeoutTime / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    constexpr qint32 fadeoutTime = 1700;
+    qint32 sleep = pSprite->loadDyingFadeOutAnimation(fadeoutTime - 400);
+    battleTimer.start((fadeoutTime + sleep) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 void BattleAnimation::addBattleViewScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)

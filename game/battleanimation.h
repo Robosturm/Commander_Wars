@@ -160,7 +160,7 @@ private:
      * @brief loadDyingFadeoutAnimation
      * @param pSprite
      */
-    void loadDyingFadeoutAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, qint32 weapon);
+    void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
 private:
     QTimer battleTimer;
 

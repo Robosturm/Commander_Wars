@@ -59,6 +59,9 @@ var Constructor = function()
             offset = Qt.point(80, 104);
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 200);
+            sprite.loadSound("anti_air_gun_fire.wav", 1, "resources/sounds/", 400);
         }
     };
 

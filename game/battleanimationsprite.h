@@ -78,7 +78,7 @@ public:
     /**
      * @brief loadDyingFadeOutAnimation
      */
-    void loadDyingFadeOutAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, qint32 fadeoutTime);
+    qint32 loadDyingFadeOutAnimation(qint32 fadeoutTime);
     /**
      * @brief setInvertStartPosition
      * @param invertStartPosition

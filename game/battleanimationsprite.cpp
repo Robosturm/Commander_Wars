@@ -170,11 +170,13 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     }
 }
 
-void BattleAnimationSprite::loadDyingFadeOutAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, qint32 fadeoutTime)
+qint32 BattleAnimationSprite::loadDyingFadeOutAnimation(qint32 fadeoutTime)
 {
     qint32 maxUnitCount = getMaxUnitCount();
     qint32 startCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingStartHp));
     qint32 endCount = getUnitCount(maxUnitCount, GlobalUtils::roundUp(m_dyingEndHp));
+    qint32 frameDelay = 75;
+    qint32 count = 0;
     for (qint32 i = startCount; i > endCount; --i)
     {
         if (i - 1 < m_currentFrame.size())
@@ -183,24 +185,15 @@ void BattleAnimationSprite::loadDyingFadeOutAnimation(Unit* pUnit, Unit* pDefend
             for (auto & sprite : sprites)
             {
                 oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenAlpha(0),
-                                                              oxygine::timeMS(fadeoutTime  / static_cast<qint32>(Settings::getBattleAnimationSpeed())));
+                                                              oxygine::timeMS(fadeoutTime  / static_cast<qint32>(Settings::getBattleAnimationSpeed())), 1, false,
+                                                              oxygine::timeMS(count * frameDelay / static_cast<qint32>(Settings::getBattleAnimationSpeed())));
                 sprite->addTween(tween);
             }
+            loadSound("dying_fadeout.wav", 1, "resources/sounds/", count * frameDelay);
+            ++count;
         }
     }
-
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args1;
-    QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue obj2 = pInterpreter->newQObject(pUnit);
-    args1 << obj2;
-    QJSValue obj3 = pInterpreter->newQObject(pDefender);
-    args1 << obj3;
-    args1 << attackerWeapon;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), "loadDyingAnimationSound", args1);
-
-
+    return count * frameDelay;
 }
 
 QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)

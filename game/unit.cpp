@@ -14,6 +14,7 @@
 #include "game/building.h"
 #include "game/player.h"
 #include "game/unit.h"
+#include "game/gameanimation.h"
 
 #include "menue/editormenue.h"
 
@@ -2404,9 +2405,9 @@ void Unit::removeUnit(bool killed)
     
 }
 
-void Unit::killUnit()
-{
-    
+GameAnimation* Unit::killUnit()
+{    
+    GameAnimation* pRet = nullptr;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
     QJSValueList args1;
@@ -2415,7 +2416,10 @@ void Unit::killUnit()
     QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
     QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
-
+    if (ret.isQObject())
+    {
+       pRet = dynamic_cast<GameAnimation*>(ret.toQObject());
+    }
     // record destruction of this unit
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
     if (pRecorder != nullptr)
@@ -2427,7 +2431,7 @@ void Unit::killUnit()
     }
     detach();
     removeUnit();
-    
+    return pRet;
 }
 
 void Unit::increaseCapturePoints(QPoint position)

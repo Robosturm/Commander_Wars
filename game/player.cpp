@@ -11,6 +11,7 @@
 #include "game/gamerules.h"
 #include "game/player.h"
 #include "game/gamemap.h"
+#include "game/gameanimation.h"
 
 #include "menue/gamemenue.h"
 
@@ -617,6 +618,8 @@ void Player::setTeam(const qint32 &value)
 void Player::defeatPlayer(Player* pPLayer, bool units)
 {
     spGameMap pMap = GameMap::getInstance();
+    QVector<GameAnimation*> pAnimations;
+    qint32 counter = 0;
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
@@ -652,7 +655,21 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
                     }
                     else
                     {
-                        pUnit->killUnit();
+                        auto* pAnimation = pUnit->killUnit();
+                        if (pAnimations.length() < 5)
+                        {
+                            pAnimations.append(pAnimation);
+                        }
+                        else
+                        {
+                            pAnimations[counter]->queueAnimation(pAnimation);
+                            pAnimations[counter] = pAnimation;
+                            counter++;
+                            if (counter >= pAnimations.length())
+                            {
+                                counter = 0;
+                            }
+                        }
                     }
                 }
             }

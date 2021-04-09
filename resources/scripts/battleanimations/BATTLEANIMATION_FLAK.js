@@ -31,6 +31,7 @@ var Constructor = function()
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
         // mg
+        var count = sprite.getUnitCount(BATTLEANIMATION_FLAK.getMaxUnitCount());
         var player = unit.getOwner();
         // get army name
         var armyName = Global.getArmyNameFromPlayerTable(player, BATTLEANIMATION_FLAK.armyData);
@@ -42,9 +43,9 @@ var Constructor = function()
             if (BATTLEANIMATION.getRelativePosition(unit, defender) > 0)
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
                 sprite.loadSpriteV2("flak+" + armyName + "+fire+air+mask", GameEnums.Recoloring_Table,
-                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
                 if (armyName === "bh")
                 {
                     offset = Qt.point(29, 40);
@@ -66,14 +67,14 @@ var Constructor = function()
                     offset = Qt.point(35, 43);
                 }
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
             else
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+ground",  false,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
                 sprite.loadSpriteV2("flak+" + armyName + "+fire+ground+mask",  GameEnums.Recoloring_Table,
-                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
+                                    BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 1);
                 if (armyName === "bh")
                 {
                     offset = Qt.point(31, 31);
@@ -95,7 +96,7 @@ var Constructor = function()
                     offset = Qt.point(33, 31);
                 }
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                                  2, 1, 0, 0);
+                                  1, 1, 0, 0);
             }
         }
         else
@@ -106,7 +107,13 @@ var Constructor = function()
             }
             BATTLEANIMATION_FLAK.loadStandingAnimation(sprite, unit, defender, weapon);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                              2, 1, 0, 0);
+                              1, 1, 0, 0);
+        }
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("vulcan_weapon_fire.wav", 1, "resources/sounds/", 400 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

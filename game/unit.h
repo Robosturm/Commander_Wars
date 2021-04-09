@@ -16,6 +16,7 @@
 #include "objects/base/tooltip.h"
 
 class GameAction;
+class GameAnimation;
 typedef oxygine::intrusive_ptr<GameAction> spGameAction;
 
 class Player;
@@ -560,7 +561,7 @@ public slots:
     /**
      * @brief killUnit removes the unit from the game and let it explode
      */
-    void killUnit();
+    GameAnimation* killUnit();
     /**
      * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
      */
