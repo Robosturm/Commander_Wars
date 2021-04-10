@@ -33,8 +33,6 @@ var Constructor = function()
         var x = building.getX() + offset.x;
         var y = building.getY() + offset.y;
         building.setFireCount(building.getFireCount() - 1);
-
-
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
         for (var i = 0; i < fields.size(); i++)
@@ -54,6 +52,7 @@ var Constructor = function()
                 }
             }
         }
+        audio.playSound("crystal_heal.wav");
         fields.remove();
     };
     this.getDescription = function()

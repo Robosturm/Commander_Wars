@@ -12,6 +12,18 @@ var Constructor = function()
         sprite.loadSpriteV2("hoellium+mask", GameEnums.Recoloring_Table,
                           BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));
     };
+
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true);
+        animation.loadSprite(unitID + "+walk", false);
+        animation.setSound("oozium_move.wav", -2);
+        return animation;
+    };
+
 };
 
 Constructor.prototype = BATTLEANIMATION;
