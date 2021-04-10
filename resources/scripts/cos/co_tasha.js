@@ -32,13 +32,13 @@ var Constructor = function()
                 }
                 if (animations.length < 5)
                 {
-                    animation.addSprite("power2", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                    animation.addSprite("power2", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
                     powerNameAnimation.queueAnimation(animation);
                     animations.push(animation);
                 }
                 else
                 {
-                    animation.addSprite("power2", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
+                    animation.addSprite("power2", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
                     animations[counter].queueAnimation(animation);
                     animations[counter] = animation;
                     counter++;

@@ -1812,17 +1812,6 @@ void GameMap::nextTurn()
         startOfTurn(nullptr);
         m_Recorder->newDay();
     }
-    m_Rules->startOfTurn(nextDay);
-    m_CurrentPlayer->earnMoney();
-    checkFuel(m_CurrentPlayer.get());
-    m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
-    m_Rules->initRoundTime();
-    spGameMenue pMenu = GameMenue::getInstance();
-    if (pMenu.get() != nullptr)
-    {
-        pMenu->updatePlayerinfo();
-    }
-    playMusic();
     bool permanent = false;
     bool found = false;
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
@@ -1877,7 +1866,18 @@ void GameMap::nextTurn()
     {
         GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
     }
+    m_Rules->startOfTurn(nextDay);
+    m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
+    checkFuel(m_CurrentPlayer.get());
+    m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
+    m_Rules->initRoundTime();
+    spGameMenue pMenu = GameMenue::getInstance();
+    if (pMenu.get() != nullptr)
+    {
+        pMenu->updatePlayerinfo();
+    }
+    playMusic();
 }
 
 void GameMap::playMusic()

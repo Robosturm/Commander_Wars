@@ -581,10 +581,10 @@ void GameMenue::performAction(spGameAction pGameAction)
     if (pGameAction.get() != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
+        Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
                                                         gameStarted;
-
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
@@ -712,6 +712,7 @@ void GameMenue::performAction(spGameAction pGameAction)
                 performAction(pAction);
             }
         }
+        Mainapp::getInstance()->continueRendering();
     }
     
 }
