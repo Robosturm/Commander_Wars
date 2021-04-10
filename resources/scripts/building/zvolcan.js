@@ -104,7 +104,14 @@ var Constructor = function()
                 animation2 = GameAnimationFactory.createAnimation(target.x, target.y - 3);
                 animation2.addSprite("volcan_fireball", 0, -map.getImageSize() * 1, 400, 1.5);
                 animation2.addTweenPosition(Qt.point(target.x * map.getImageSize(), target.y * map.getImageSize()), 400);
-                animation.queueAnimation(animation2);
+                if (animation3 === null)
+                {
+                    animation.queueAnimation(animation2);
+                }
+                else
+                {
+                    animation3.queueAnimation(animation2);
+                }
                 animation3 = GameAnimationFactory.createAnimation(target.x, target.y);
                 animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 1.5);
                 animation3.setSound("volcan_hit.wav");

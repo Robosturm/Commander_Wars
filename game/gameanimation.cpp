@@ -91,30 +91,33 @@ void GameAnimation::removeQueuedAnimation(GameAnimation* pGameAnimation)
 
 void GameAnimation::update(const oxygine::UpdateState& us)
 {
-    for (SpriteData& data : sprites)
+    if (!m_stopped)
     {
-        if (!data.loaded)
+        for (SpriteData& data : sprites)
         {
-            data.pAnim = new oxygine::SingleResAnim();
-            data.pAnim->setResPath(data.file);
-            data.pAnim->init(data.file, data.frames, 1, 1.0f);
-            loadSpriteAnim(data.pAnim.get(), data.offsetX, data.offsetY,
-                           data.color, data.sleepAfterFinish, data.scaleX, data.scaleY,
-                           data.delay, 1);
-            data.loaded = true;
+            if (!data.loaded)
+            {
+                data.pAnim = new oxygine::SingleResAnim();
+                data.pAnim->setResPath(data.file);
+                data.pAnim->init(data.file, data.frames, 1, 1.0f);
+                loadSpriteAnim(data.pAnim.get(), data.offsetX, data.offsetY,
+                               data.color, data.sleepAfterFinish, data.scaleX, data.scaleY,
+                               data.delay, 1);
+                data.loaded = true;
+            }
         }
-    }
 
-    if (!m_SoundStarted)
-    {
-        if (!m_soundFile.isEmpty())
+        if (!m_SoundStarted)
         {
-            AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
-            pAudioThread->playSound(m_soundFile, m_loops, m_soundFolder, 0, m_volume);
+            if (!m_soundFile.isEmpty())
+            {
+                AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+                pAudioThread->playSound(m_soundFile, m_loops, m_soundFolder, 0, m_volume);
+            }
+            m_SoundStarted = true;
         }
-        m_SoundStarted = true;
+        oxygine::Sprite::update(us);
     }
-    oxygine::Sprite::update(us);
 }
 
 bool GameAnimation::getStopSoundAtAnimationEnd() const

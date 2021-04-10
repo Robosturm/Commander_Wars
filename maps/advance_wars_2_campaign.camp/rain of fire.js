@@ -122,7 +122,7 @@ var Constructor = function()
                            Qt.point(22, 8),
                            Qt.point(23, 0),];
             }
-            ZVOLCAN.volcanFire(volcan, targets, 0);
+            ZVOLCAN.volcanFire(volcan, targets);
         }
     };
 
