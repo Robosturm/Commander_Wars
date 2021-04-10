@@ -82,13 +82,14 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         animation2.addScreenshake(45, 0.98, 3000, 200);
-        audio.playSound("explosion+land.wav");
+        animation2.setSound("black_canon_destroyed.wav");
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
     this.getShotAnimation = function(building)
     {
         var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
         animation.addSprite("blackhole_shot_west", -map.getImageSize() * 3.0, -map.getImageSize() * 3.0, 0, 1.5);
+        animation.setSound("blackcanon_shot.wav");
         return animation;
     };
 

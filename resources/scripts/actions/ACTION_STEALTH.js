@@ -53,12 +53,12 @@ var Constructor = function()
             ACTION_STEALTH.postAnimationUnit.getUnitID() === "ZCOUNIT_MISSILE_SUB")
         {
             animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
-            audio.playSound("dive.wav", 1);
+            animation.setSound("dive.wav", 1);
         }
         else
         {
             animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
-            audio.playSound("stealth.wav", 1);
+            animation.setSound("stealth.wav", 1);
         }
         ACTION_STEALTH.postAnimationUnit.setHasMoved(true);
         ACTION_STEALTH.postAnimationUnit.setHidden(true);

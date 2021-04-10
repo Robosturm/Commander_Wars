@@ -104,7 +104,7 @@ var Constructor = function()
         fields.remove();
         var animation = GameAnimationFactory.createAnimation(x - 2, y - 3);
         animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
-        audio.playSound("explosion+land.wav");
+        animation.setSound("explosion+land.wav");
         // we destroyed a unit
         map.getGameRecorder().destroyedUnit(owner.getPlayerID(), ACTION_EXPLODE.postAnimationUnit.getUnitID());
         ACTION_EXPLODE.postAnimationUnit.killUnit();

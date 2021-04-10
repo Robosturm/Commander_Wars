@@ -66,6 +66,7 @@ var Constructor = function()
                 animation.writeDataInt32(unit.getY());
                 animation.writeDataInt32(heal);
                 animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+                animation.setSound("power3.wav");
                 if (animations.length < 5)
                 {
                     animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -109,6 +110,7 @@ var Constructor = function()
                             animation.writeDataInt32(unit.getY());
                             animation.writeDataInt32(damage);
                             animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                            animation.setSound("power4.wav");
                             if (animations.length < 5)
                             {
                                 animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));

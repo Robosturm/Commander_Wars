@@ -44,6 +44,16 @@ signals:
     void sigFinished(bool skipping);
 public slots:
     /**
+     * @brief getStopSoundAtAnimationEnd
+     * @return
+     */
+    bool getStopSoundAtAnimationEnd() const;
+    /**
+     * @brief setStopSoundAtAnimationEnd
+     * @param stopSoundAtAnimationEnd
+     */
+    void setStopSoundAtAnimationEnd(bool stopSoundAtAnimationEnd);
+    /**
      * @brief setRotation sets the rotation of this animation
      * @param angle angle in degree 0° to 360°
      */
@@ -326,6 +336,7 @@ private:
     GameAnimation* m_previousAnimation{nullptr};
     QString jsPostActionObject{""};
     QString jsPostActionFunction{""};
+    bool m_stopSoundAtAnimationEnd{false};
 
     QString m_soundFile;
     QString m_soundFolder;

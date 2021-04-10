@@ -108,7 +108,7 @@ var Constructor = function()
         for (var i = 0; i < count; i++)
         {
             sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
-            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
+            sprite.loadSound("rockets_explode.wav", 1, "resources/sounds/", 200 + i * BATTLEANIMATION.defaultFrameDelay);
         }
     };
 

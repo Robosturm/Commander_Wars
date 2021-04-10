@@ -45,7 +45,7 @@ var Constructor = function()
                         animation.writeDataInt32(unit.getY());
                         animation.writeDataInt32(3);
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-
+                        animation.setSound("power0.wav");
                         if (animations.length < 5)
                         {
                             animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -114,6 +114,7 @@ var Constructor = function()
                         animation.writeDataInt32(unitY);
                         animation.writeDataInt32(3);
                         animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+                        animation.setSound("power4.wav");
                         if (animations.length < 5)
                         {
                             animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -166,6 +167,7 @@ var Constructor = function()
                                 animation.writeDataInt32(unit.getY());
                                 animation.writeDataInt32(3);
                                 animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                                animation.setSound("power4.wav");
                                 if (animations.length < 5)
                                 {
                                     animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -309,6 +311,7 @@ var Constructor = function()
                                 UNIT.repairUnit(unit, 1);
                                 animation = GameAnimationFactory.createAnimation(unitX, unitY);
                                 animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                                animation.setSound("power0.wav");
                                 if (!viewplayer.getFieldVisible(unitX, unitY))
                                 {
                                     animation.setVisible(false);

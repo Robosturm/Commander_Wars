@@ -42,6 +42,7 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        animation2.setSound("power_sasha.wav");
         powerNameAnimation.queueAnimation(animation2);
 
         var player = co.getOwner();
@@ -82,6 +83,14 @@ var Constructor = function()
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            if (globals.randInt(0, 1) === 0)
+            {
+                animation.setSound("power12_1.wav");
+            }
+            else
+            {
+                animation.setSound("power12_2.wav");
+            }
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));

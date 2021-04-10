@@ -22,7 +22,14 @@ var Constructor = function()
             if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
+                if (globals.randInt(0, 1) === 0)
+                {
+                    animation.setSound("power2_1.wav");
+                }
+                else
+                {
+                    animation.setSound("power2_2.wav");
+                }
                 if (animations.length < 5)
                 {
                     animation.addSprite("power2", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
@@ -61,7 +68,14 @@ var Constructor = function()
             if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
+                if (globals.randInt(0, 1) === 0)
+                {
+                    animation.setSound("power12_1.wav");
+                }
+                else
+                {
+                    animation.setSound("power12_2.wav");
+                }
                 if (animations.length < 5)
                 {
                     animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));

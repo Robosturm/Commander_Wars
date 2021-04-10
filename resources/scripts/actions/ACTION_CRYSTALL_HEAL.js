@@ -35,6 +35,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
+        var damage = Global[building.getBuildingID()].getDamage(building, unit);
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
@@ -44,7 +45,6 @@ var Constructor = function()
                 if ((unit !== null) &&
                         (unit.getOwner() === building.getOwner()))
                 {
-                    var damage = Global[building.getBuildingID()].getDamage(building, unit);
                     unit.refill();
                     unit.setHp(unit.getHpRounded() - damage);
                     animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
@@ -52,7 +52,8 @@ var Constructor = function()
                 }
             }
         }
-        audio.playSound("crystal_heal.wav");
+        var sound = Global[building.getBuildingID()].getHealSound();
+        audio.playSound(sound);
         fields.remove();
     };
     this.getDescription = function()

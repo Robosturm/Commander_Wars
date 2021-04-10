@@ -88,6 +88,8 @@ var Constructor = function()
         var y = building.getY() + targetOffset.y;
         var animation = GameAnimationFactory.createAnimation(x, y - 4);
         animation.addSprite("volcan_eruption", 0, 0, 0, 1.5, delay);
+        animation.setSound("volcan_eruption.wav");
+
         var animation2 = null;
         var animation3 = null;
         for (var i = 0; i < targets.length; i++)
@@ -101,6 +103,7 @@ var Constructor = function()
                 animation.queueAnimation(animation2);
                 animation3 = GameAnimationFactory.createAnimation(target.x, target.y);
                 animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 1.5);
+                animation.setSound("volcan_hit.wav");
                 animation2.queueAnimation(animation3);
                 animation3.writeDataInt32(target.x);
                 animation3.writeDataInt32(target.y);

@@ -74,6 +74,7 @@ var Constructor = function()
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        animation.setSound("missile_launch.wav");
         animation.setEndOfAnimationCall("ACTION_MISSILE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
@@ -125,7 +126,7 @@ var Constructor = function()
 
         var animation = GameAnimationFactory.createAnimation(ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
-        audio.playSound("missle_explosion.wav");
+        animation.setSound("missle_explosion.wav");
         // replace silo with rocket with
         ACTION_MISSILE.postAnimationUnit.getTerrain().loadBuilding("SILO");
 

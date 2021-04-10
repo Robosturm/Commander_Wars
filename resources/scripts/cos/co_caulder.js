@@ -37,7 +37,14 @@ var Constructor = function()
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(5);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-
+            if (globals.randInt(0, 1) === 0)
+            {
+                animation.setSound("power9_1.wav");
+            }
+            else
+            {
+                animation.setSound("power9_2.wav");
+            }
             if (animations.length < 5)
             {
                 animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -77,6 +84,7 @@ var Constructor = function()
             animation.writeDataInt32(unit.getY());
             animation.writeDataInt32(10);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+            animation.setSound("power11.wav");
             if (animations.length < 5)
             {
                 animation.addSprite("power11", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
@@ -202,6 +210,7 @@ var Constructor = function()
                             UNIT.repairUnit(unit, CO_CAULDER.coHealing);
                             animation = GameAnimationFactory.createAnimation(unitX, unitY);
                             animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                            animation.setSound("power0.wav");
                             if (!viewplayer.getFieldVisible(unitX, unitY))
                             {
                                 animation.setVisible(false);

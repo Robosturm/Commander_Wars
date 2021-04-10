@@ -98,7 +98,7 @@ var Constructor = function()
                     }
                     var animation = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
                     animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-                    audio.playSound("explosion+water.wav");
+                    animation.setSound("explosion+water.wav");
                 }
             }
             fields.remove();
@@ -111,7 +111,7 @@ var Constructor = function()
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-        audio.playSound("explosion+water.wav");
+        animation.setSound("explosion+water.wav");
         return animation;
     };
     this.getLoadingPlace = function()

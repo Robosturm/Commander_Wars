@@ -58,7 +58,7 @@ var UNIT =
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-        audio.playSound("explosion+land.wav");
+        animation.setSound("explosion+land.wav");
         return animation;
     },
 

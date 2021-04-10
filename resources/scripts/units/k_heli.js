@@ -54,7 +54,7 @@ var Constructor = function()
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-        audio.playSound("explosion+air.wav");
+        animation.setSound("explosion+copter.wav");
         return animation;
     };
     this.doWalkingAnimation = function(action)

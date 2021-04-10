@@ -57,6 +57,7 @@ var Constructor = function()
                     animation.writeDataInt32(unit.getY());
                     animation.writeDataInt32(value);
                     animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                    animation.setSound("power4.wav");
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -95,6 +96,14 @@ var Constructor = function()
                 {
                     map.spawnUnit(building.getX(), building.getY(), invasion[i % invasion.length], co.getOwner());
                     var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
+                    if (globals.randInt(0, 1) === 0)
+                    {
+                        animation.setSound("power8_1.wav");
+                    }
+                    else
+                    {
+                        animation.setSound("power8_2.wav");
+                    }
                     if (animations.length < 5)
                     {
                         animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));

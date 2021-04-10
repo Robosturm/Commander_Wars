@@ -28,6 +28,14 @@ var Constructor = function()
         {
             var unit = units.at(i);
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            if (globals.randInt(0, 1) === 0)
+            {
+                animation.setSound("power2_1.wav");
+            }
+            else
+            {
+                animation.setSound("power2_2.wav");
+            }
             if (animations.length < 5)
             {
                 animation.addSprite("power2", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -79,6 +87,7 @@ var Constructor = function()
                     var unit = units.at(i);
 
                     animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    animation.setSound("power4.wav");
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));

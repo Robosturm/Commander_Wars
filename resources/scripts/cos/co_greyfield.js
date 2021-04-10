@@ -33,7 +33,14 @@ var Constructor = function()
             var unit = units.at(i);
             unit.refill();
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
+            if (globals.randInt(0, 1) === 0)
+            {
+                animation.setSound("power8_1.wav");
+            }
+            else
+            {
+                animation.setSound("power8_2.wav");
+            }
             if (animations.length < 5)
             {
                 animation.addSprite("power8", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
@@ -70,7 +77,14 @@ var Constructor = function()
             var unit = units.at(i);
             unit.refill();
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
+            if (globals.randInt(0, 1) === 0)
+            {
+                animation.setSound("power12_1.wav");
+            }
+            else
+            {
+                animation.setSound("power12_2.wav");
+            }
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));

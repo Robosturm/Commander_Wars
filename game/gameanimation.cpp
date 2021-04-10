@@ -117,6 +117,16 @@ void GameAnimation::update(const oxygine::UpdateState& us)
     oxygine::Sprite::update(us);
 }
 
+bool GameAnimation::getStopSoundAtAnimationEnd() const
+{
+    return m_stopSoundAtAnimationEnd;
+}
+
+void GameAnimation::setStopSoundAtAnimationEnd(bool stopSoundAtAnimationEnd)
+{
+    m_stopSoundAtAnimationEnd = stopSoundAtAnimationEnd;
+}
+
 bool GameAnimation::getVisible() const
 {
     return oxygine::Sprite::getVisible();
@@ -306,7 +316,10 @@ bool GameAnimation::onFinished(bool skipping)
     m_skipping |= skipping;
     if (m_skipping == skipping)
     {
-        Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
+        if (m_stopSoundAtAnimationEnd || skipping || m_loops < 0)
+        {
+            Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
+        }
         for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
         {
             GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);

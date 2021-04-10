@@ -63,7 +63,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         animation.addScreenshake(30, 0.95, 1000, 200);
-        audio.playSound("explosion+land.wav");
+        animation.setSound("explosion+land.wav");
     };
 
     this.getDescription = function()
