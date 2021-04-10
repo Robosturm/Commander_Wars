@@ -77,19 +77,23 @@ var Constructor = function()
                 }
             }
             targetFields.remove();
-            ZVOLCAN.volcanFire(building, targets, 1000);
+            ZVOLCAN.volcanFire(building, targets);
         }
     };
 
-    this.volcanFire = function(building, targets, delay)
+    this.volcanFire = function(building, targets)
     {
+        var day2dayAnimation = GameAnimationFactory.getAnimation(0);
         var targetOffset = building.getActionTargetOffset();
         var x = building.getX() + targetOffset.x;
         var y = building.getY() + targetOffset.y;
         var animation = GameAnimationFactory.createAnimation(x, y - 4);
-        animation.addSprite("volcan_eruption", 0, 0, 0, 1.5, delay);
+        animation.addSprite("volcan_eruption", 0, 0, 0, 1.5);
         animation.setSound("volcan_eruption.wav");
-
+        if (day2dayAnimation !== null)
+        {
+            day2dayAnimation.queueAnimation(animation);
+        }
         var animation2 = null;
         var animation3 = null;
         for (var i = 0; i < targets.length; i++)
@@ -103,7 +107,7 @@ var Constructor = function()
                 animation.queueAnimation(animation2);
                 animation3 = GameAnimationFactory.createAnimation(target.x, target.y);
                 animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 1.5);
-                animation.setSound("volcan_hit.wav");
+                animation3.setSound("volcan_hit.wav");
                 animation2.queueAnimation(animation3);
                 animation3.writeDataInt32(target.x);
                 animation3.writeDataInt32(target.y);

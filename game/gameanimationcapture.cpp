@@ -27,6 +27,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlayer, Player* capturedPlayer, GameEnums::Recoloring mode)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
+    GameMap* pMap = GameMap::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
@@ -101,7 +102,14 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
                 {
                     pSprite->setColorTable(capturedPlayer->getColorTableAnim());
                 }
-                Mainapp::getInstance()->getAudioThread()->playSound("capture.wav");
+                if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
+                {
+                    Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
+                }
+                else
+                {
+                    Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
+                }
             });
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
             queueAnimating->add(tween3);

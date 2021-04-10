@@ -1814,7 +1814,6 @@ void GameMap::nextTurn()
     }
     m_Rules->startOfTurn(nextDay);
     m_CurrentPlayer->earnMoney();
-    startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
     m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
     m_Rules->initRoundTime();
@@ -1878,6 +1877,7 @@ void GameMap::nextTurn()
     {
         GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
     }
+    startOfTurn(m_CurrentPlayer.get());
 }
 
 void GameMap::playMusic()
