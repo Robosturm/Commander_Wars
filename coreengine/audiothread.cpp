@@ -284,7 +284,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
         QStringList files = directory.entryList(filter);
         for (const auto& file : files)
         {
-            if (!loadedSounds.contains(file))
+            if (!loadedSounds.contains(file) && QFile::exists(currentPath + '/' + file))
             {
                 bool loaded = m_playList.addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
                 loaded = loaded && m_playList2.addMedia(QUrl::fromLocalFile(currentPath + '/' + file));
