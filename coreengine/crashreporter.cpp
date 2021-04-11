@@ -287,14 +287,12 @@ namespace crashReporter
    {
       int   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
       char  **messages = backtrace_symbols( sStackTraces, traceSize );
+      // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
+      QStringList frameList;
+      int         frameNumber = 0;
       try
       {
-          // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
-          QStringList frameList;
-          int         frameNumber = 0;
-
           frameList.reserve( traceSize );
-
           for ( int i = 2; i < (traceSize - 1); ++i )
           {
               QString  message( messages[i] );
