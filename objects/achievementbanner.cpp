@@ -13,6 +13,7 @@ quint32 AchievementBanner::m_activeBanners = 0;
 AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     : QObject()
 {
+    setObjectName("AchievementBanner");
     qint32 bannerWidth = 350;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");

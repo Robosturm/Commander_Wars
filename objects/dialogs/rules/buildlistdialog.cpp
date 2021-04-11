@@ -22,6 +22,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
       m_CurrentBuildList(buildList),
       m_Player(player)
 {
+    setObjectName("BuildListDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

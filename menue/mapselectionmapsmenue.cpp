@@ -27,6 +27,7 @@
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : QObject()
 {
+    setObjectName("MapSelectionMapsMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

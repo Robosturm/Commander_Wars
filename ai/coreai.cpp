@@ -61,6 +61,7 @@ CoreAI::CoreAI(GameEnums::AiTypes aiType)
     : BaseGameInputIF(aiType),
       m_COPowerTree("resources/aidata/copower.tree", "resources/aidata/copower.txt")
 {
+    setObjectName("CoreAI");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

@@ -23,6 +23,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
       m_CostList(costList),
       m_EnabledList(enabledList)
 {
+    setObjectName("HumanPlayerInputMenu");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

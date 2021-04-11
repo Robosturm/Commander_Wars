@@ -21,6 +21,7 @@
 IngameInfoBar::IngameInfoBar()
     : QObject()
 {
+    setObjectName("IngameInfoBar");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

@@ -24,6 +24,7 @@
 
 COInfoActor::COInfoActor(qint32 width)
 {
+    setObjectName("COInfoActor");
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();

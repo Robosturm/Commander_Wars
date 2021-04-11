@@ -30,6 +30,7 @@ constexpr const char* const CO_ARMY = "CO_ARMY";
 PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     : QObject()
 {
+    setObjectName("PlayerSelection");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

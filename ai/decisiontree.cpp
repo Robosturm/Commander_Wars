@@ -12,10 +12,12 @@
 DecisionTree::DecisionTree(spDecisionNode pRootNode)
 	: m_pRootNode(pRootNode)
 {
+    setObjectName("DecisionTree");
 }
 
 DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
+    setObjectName("DecisionTree");
 	m_pRootNode = train(trainingData, questions);
 }
 
@@ -26,6 +28,7 @@ DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVecto
  */
 DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
 {
+    setObjectName("DecisionTree");
     QFile file(treeFile);
     QFile trainingFile(trainingDataFile);
 

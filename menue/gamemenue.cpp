@@ -58,6 +58,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
     : InGameMenue(),
       m_SaveGame(saveGame)
 {
+    setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
@@ -108,6 +109,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
       m_SaveGame(saveGame)
 
 {
+    setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
     oxygine::Actor::addChild(GameMap::getInstance());
@@ -121,6 +123,7 @@ GameMenue::GameMenue(QString map, bool saveGame)
 GameMenue::GameMenue()
     : InGameMenue()
 {
+    setObjectName("GameMenue");
     Console::print("Creating game menu singleton", Console::eDEBUG);
     m_pInstance = this;
     Mainapp* pApp = Mainapp::getInstance();

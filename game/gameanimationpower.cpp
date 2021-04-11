@@ -32,6 +32,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     : GameAnimation (frameTime),
       m_pCO(pCO)
 {
+    setObjectName("GameAnimationPower");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

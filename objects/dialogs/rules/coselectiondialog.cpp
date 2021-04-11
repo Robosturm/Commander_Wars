@@ -17,6 +17,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     : QObject(),
       m_player(player)
 {
+    setObjectName("COSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

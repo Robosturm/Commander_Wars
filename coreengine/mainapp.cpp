@@ -34,17 +34,23 @@ QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 QThread Mainapp::m_GameServerThread;
+WorkerThread* Mainapp::m_Worker = new WorkerThread();
+AudioThread* Mainapp::m_Audiothread = nullptr;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::crashMutex;
 
 Mainapp::Mainapp()
-    : m_Audiothread(new AudioThread()),
-      m_Worker(new WorkerThread())
 {
+    setObjectName("Mainapp");
     pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
 
+    pMainThread->setObjectName("Mainthread");
+    m_Workerthread.setObjectName("Workerthread");
+    m_AudioWorker.setObjectName("AudioWorker");
+    m_Networkthread.setObjectName("Networkthread");
+    m_GameServerThread.setObjectName("GameServerThread");
 
     connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
@@ -72,6 +78,7 @@ bool Mainapp::isWorker()
 
 void Mainapp::loadRessources()
 {
+    Mainapp::m_Audiothread = new AudioThread();
     // load ressources by creating the singletons
     BackgroundManager::getInstance();
     BuildingSpriteManager::getInstance();

@@ -1,12 +1,17 @@
 #include "ai/question.h"
 
+Question::Question()
+{
+    setObjectName("Question");
+}
+
 Question::Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType)
 	: m_MinValue(value),
 	  m_MaxValue(value),
       m_Index(index),
       m_QuestionType(QuestionType)
 {
-
+    setObjectName("Question");
 }
 
 Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQuestionType QuestionType)
@@ -15,6 +20,7 @@ Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQu
       m_Index(index),
       m_QuestionType(QuestionType)
 {
+    setObjectName("Question");
 }
 
 bool Question::matches(float value)

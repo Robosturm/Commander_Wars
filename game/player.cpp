@@ -21,6 +21,7 @@ oxygine::spResAnim Player::m_neutralTableAnim = nullptr;
 
 Player::Player()
 {
+    setObjectName("Player");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

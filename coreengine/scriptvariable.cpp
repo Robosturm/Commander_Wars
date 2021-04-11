@@ -6,6 +6,7 @@
 ScriptVariable::ScriptVariable(QString id)
     : m_Id(id)
 {
+    setObjectName("ScriptVariable");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -14,6 +15,7 @@ ScriptVariable::ScriptVariable(QString id)
 
 ScriptVariable::ScriptVariable()
 {
+    setObjectName("ScriptVariable");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -18,6 +18,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
       m_endPoints(endPoints),
       m_maxPoints(maxPoints)
 {
+    setObjectName("GameAnimationCapture");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

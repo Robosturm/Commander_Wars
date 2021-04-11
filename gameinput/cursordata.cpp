@@ -5,6 +5,7 @@
 
 CursorData::CursorData()
 {
+    setObjectName("CursorData");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

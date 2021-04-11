@@ -26,6 +26,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     : QObject(),
       m_pUnit(pUnit)
 {
+    setObjectName("DialogModifyUnit");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

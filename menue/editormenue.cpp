@@ -41,6 +41,7 @@ EditorMenue* EditorMenue::m_pInstance = nullptr;
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20)
 {
+    setObjectName("EditorMenue");
     Mainapp* pApp = Mainapp::getInstance();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();

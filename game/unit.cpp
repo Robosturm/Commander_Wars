@@ -25,6 +25,7 @@ const float Unit::animationSpeed = 1.5f;
 
 Unit::Unit()
 {
+    setObjectName("Unit");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -36,6 +37,7 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
     : m_UnitID(unitID),
       m_pOwner(pOwner)
 {
+    setObjectName("Unit");
     setHeight(GameMap::getImageSize());
     setWidth(GameMap::getImageSize());
     Mainapp* pApp = Mainapp::getInstance();

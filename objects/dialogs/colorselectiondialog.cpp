@@ -8,6 +8,7 @@
 ColorSelectionDialog::ColorSelectionDialog(QColor color)
     : QObject()
 {
+    setObjectName("ColorSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -8,6 +8,7 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QVector<QString>& items, st
       m_ItemTexts(items),
       m_Creator(creator)
 {
+    setObjectName("DropDownmenuSprite");
     Q_ASSERT(items.size() != 0);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

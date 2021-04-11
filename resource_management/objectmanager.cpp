@@ -8,6 +8,7 @@
 ObjectManager::ObjectManager()
     : RessourceManagement<ObjectManager>("/objects/res.xml", "")
 {
+    setObjectName("ObjectManager");
     loadRessources("/cursor/res.xml");
 }
 

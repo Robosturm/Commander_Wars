@@ -4,9 +4,15 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
+Leaf::Leaf()
+{
+    setObjectName("Leaf");
+}
+
 Leaf::Leaf(QVector<QVector<float>>& trainingData)
     : m_AnswersChances(DecisionTree::countClassItems(trainingData))
 {
+    setObjectName("Leaf");
     for (qint32 i = 0; i < trainingData.size(); i++)
 	{
         float answer = trainingData[i][trainingData[i].size() - 1];

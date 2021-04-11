@@ -21,6 +21,7 @@
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()
 {
+    setObjectName("UnitInfo");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

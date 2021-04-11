@@ -9,6 +9,7 @@
 
 WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 {
+    setObjectName("WikiView");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     oxygine::TextStyle style = FontManager::getMainFont24();

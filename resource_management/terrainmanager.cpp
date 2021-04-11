@@ -4,6 +4,7 @@ TerrainManager::TerrainManager()
     : RessourceManagement<TerrainManager>("/images/terrain/res.xml",
                                              "/scripts/terrain")
 {
+    setObjectName("TerrainManager");
 }
 
 qint32 TerrainManager::getTerrainGroup(qint32 i)

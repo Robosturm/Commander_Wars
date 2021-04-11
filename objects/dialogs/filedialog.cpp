@@ -10,6 +10,7 @@
 FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile, bool preview)
     : m_preview(preview)
 {
+    setObjectName("FileDialog");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

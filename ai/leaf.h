@@ -11,7 +11,7 @@ class Leaf : public DecisionNode
 {
     Q_OBJECT
 public:
-        Leaf() = default;
+        explicit Leaf();
         Leaf(QVector<QVector<float>>& trainingData);
         virtual ~Leaf() = default;
         virtual void serializeObject(QDataStream& pStream) const override;

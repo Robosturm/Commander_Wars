@@ -10,6 +10,7 @@ MapMover::MapMover(InGameMenue* pOwner)
     : m_pOwner(pOwner),
       scrollTimer(this)
 {
+    setObjectName("MapMover");
     connect(&scrollTimer, &QTimer::timeout, this, &MapMover::autoScroll, Qt::QueuedConnection);
     scrollTimer.setSingleShot(false);
     scrollTimer.start(100);

@@ -8,6 +8,7 @@
 
 Checkbox::Checkbox()
 {
+    setObjectName("Checkbox");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -10,6 +10,7 @@ TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qin
                         GameMap::getInstance()->getMapHeight()),
       m_terrainID(terrainID)
 {
+    setObjectName("TerrainFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

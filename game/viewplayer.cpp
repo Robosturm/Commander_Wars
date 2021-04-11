@@ -3,7 +3,7 @@
 
 Viewplayer::Viewplayer()
 {
-
+    setObjectName("Viewplayer");
 }
 
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)

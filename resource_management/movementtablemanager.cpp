@@ -14,6 +14,7 @@ MovementTableManager::MovementTableManager()
     : RessourceManagement<MovementTableManager>("",
                                                 "/scripts/movementtables")
 {
+    setObjectName("MovementTableManager");
 }
 
 void MovementTableManager::loadAll()

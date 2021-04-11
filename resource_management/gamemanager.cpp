@@ -9,6 +9,7 @@ GameManager::GameManager()
     : RessourceManagement<GameManager>("/images/game/res.xml",
                                        "")
 {
+    setObjectName("GameManager");
 }
 
 void GameManager::reset()

@@ -8,6 +8,7 @@
 
 Tooltip::Tooltip()
 {
+    setObjectName("Tooltip");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_TooltipTimer.setSingleShot(true);

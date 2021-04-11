@@ -35,6 +35,7 @@
 
 Mainwindow::Mainwindow()
 {
+    setObjectName("Mainwindow");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

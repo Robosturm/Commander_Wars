@@ -4,6 +4,7 @@
 
 FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
 {
+    setObjectName("FieldInfo");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

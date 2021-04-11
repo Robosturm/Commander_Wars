@@ -13,6 +13,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     : QObject(),
       m_currentFolder(QCoreApplication::applicationDirPath() + "/maps/")
 {
+    setObjectName("MapSelection");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_itemChangedTimer.setSingleShot(true);

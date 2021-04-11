@@ -20,6 +20,7 @@
 DialogVictoryConditions::DialogVictoryConditions()
     : QObject()
 {
+    setObjectName("DialogVictoryConditions");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -76,7 +77,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
-    pTextfield->setWidth(Settings::getWidth() - 60);
+    pTextfield->setWidth(Settings::getWidth() - 90);
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
     y += 10 + pTextfield->getTextRect().getHeight();
@@ -87,7 +88,7 @@ DialogVictoryConditions::DialogVictoryConditions()
 
         pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
-        pTextfield->setWidth(Settings::getWidth() - 60);
+        pTextfield->setWidth(Settings::getWidth() - 90);
         pTextfield->setHtmlText(info);
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
@@ -119,7 +120,7 @@ DialogVictoryConditions::DialogVictoryConditions()
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pTextfield);
                 x += stepWidth;
-                if (x + stepWidth > Settings::getWidth() - 70 && i2 < pMap->getPlayerCount() - 1)
+                if (x + stepWidth > Settings::getWidth() - 90 && i2 < pMap->getPlayerCount() - 1)
                 {
                     x = 10;
                     y += 60;

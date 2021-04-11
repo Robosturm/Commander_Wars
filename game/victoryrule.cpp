@@ -12,6 +12,7 @@ const QString VictoryRule::spinbox = "spinbox";
 
 VictoryRule::VictoryRule()
 {
+    setObjectName("VictoryRule");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -21,6 +22,7 @@ VictoryRule::VictoryRule(QString ruleID)
     : QObject(),
       m_RuleID(ruleID)
 {
+    setObjectName("VictoryRule");
     init();
 }
 

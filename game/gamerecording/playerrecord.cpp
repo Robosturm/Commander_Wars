@@ -6,6 +6,7 @@
 PlayerRecord::PlayerRecord()
     : QObject()
 {
+    setObjectName("PlayerRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
@@ -20,6 +21,7 @@ PlayerRecord::PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 incom
       m_Units(units),
       m_PlayerStrength(playerStrength)
 {
+    setObjectName("PlayerRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }

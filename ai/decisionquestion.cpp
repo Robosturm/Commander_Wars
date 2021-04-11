@@ -1,5 +1,10 @@
 #include "ai/decisionquestion.h"
 
+DecisionQuestion::DecisionQuestion()
+{
+    setObjectName("DecisionQuestion");
+}
+
 void DecisionQuestion::appendQuestion(spQuestion pQuestions)
 {
     m_Questions.append(pQuestions);

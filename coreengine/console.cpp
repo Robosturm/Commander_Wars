@@ -61,6 +61,7 @@ const QString Console::functions[] =
 
 Console::Console()
 {
+    setObjectName("Console");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

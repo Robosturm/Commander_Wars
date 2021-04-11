@@ -7,6 +7,7 @@ bool FocusableObject::m_registeredAtStage = false;
 FocusableObject::FocusableObject()
     : QObject()
 {
+    setObjectName("FocusableObject");
     connect(this, &FocusableObject::sigFocused, this, &FocusableObject::focusedInternal);
     connect(this, &FocusableObject::sigFocusedLost, this, &FocusableObject::focusedLost);
     if (!m_registeredAtStage)

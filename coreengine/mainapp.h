@@ -12,8 +12,8 @@
 #include "coreengine/settings.h"
 #include "coreengine/LUPDATE_MACROS.h"
 
-class AudioThread;
 class WorkerThread;
+class AudioThread;
 
 class Mainapp : public oxygine::GameWindow
 {
@@ -25,24 +25,24 @@ public:
     ENUM_CLASS ZOrder
     {
         Background = std::numeric_limits<qint32>::min(),
-        Map,
-        Terrain,
-        // gap for stacking the terrain sprites
-        CORange = std::numeric_limits<qint32>::max() - 200,
-        FogFields,
-        MarkedFields,
-        Weather,
-        Cursor,
-        Animation,
-        Objects,
-        FocusedObjects,
-        AnimationFullScreen,
-        Dialogs,
-        DropDownList,
-        Tooltip,
-        Loadingscreen,
-        Achievement,
-        Console
+                Map,
+                Terrain,
+                // gap for stacking the terrain sprites
+                CORange = std::numeric_limits<qint32>::max() - 200,
+                FogFields,
+                MarkedFields,
+                Weather,
+                Cursor,
+                Animation,
+                Objects,
+                FocusedObjects,
+                AnimationFullScreen,
+                Dialogs,
+                DropDownList,
+                Tooltip,
+                Loadingscreen,
+                Achievement,
+                Console
     };
 
     explicit Mainapp();
@@ -56,7 +56,7 @@ public:
     inline AudioThread* getAudioThread()
     {
         return m_Audiothread;
-    }    
+    }
 
     inline static QThread* getWorkerthread()
     {
@@ -159,9 +159,9 @@ private:
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
     static QThread m_GameServerThread;
+    static WorkerThread* m_Worker;
+    static AudioThread* m_Audiothread;
     QThread* pMainThread{nullptr};
-    AudioThread* m_Audiothread;
-    WorkerThread* m_Worker;
     static bool m_slave;
     bool m_noUi{false};
 };

@@ -9,6 +9,7 @@
 
 FolderDialog::FolderDialog(QString startFolder)
 {
+    setObjectName("FolderDialog");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

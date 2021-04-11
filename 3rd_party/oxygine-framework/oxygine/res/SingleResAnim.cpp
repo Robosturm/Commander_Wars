@@ -14,6 +14,7 @@ namespace oxygine
     SingleResAnim::SingleResAnim()
     {
         moveToThread(QApplication::instance()->thread());
+        setObjectName("SingleResAnim");
     }
 
     void SingleResAnim::init(QString file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)

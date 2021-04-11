@@ -8,6 +8,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     : m_Width(width),
       m_ContentWidth(contentWidth)
 {
+    setObjectName("V_Scrollbar");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

@@ -8,6 +8,7 @@
 GenericBox::GenericBox(bool cancel)
     : QObject()
 {
+    setObjectName("GenericBox");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

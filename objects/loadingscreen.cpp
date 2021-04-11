@@ -18,6 +18,7 @@ LoadingScreen* LoadingScreen::getInstance()
 LoadingScreen::LoadingScreen()
     : QObject()
 {
+    setObjectName("LoadingScreen");
     setPriority(static_cast<quint16>(Mainapp::ZOrder::Loadingscreen));
 }
 

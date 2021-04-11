@@ -18,6 +18,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     : QObject(),
       m_pPlayer(pPlayer)
 {
+    setObjectName("DialogAttackLog");
     spGameMap pMap = GameMap::getInstance();
     m_Log = pMap->getGameRecorder()->getAttackLog(pPlayer->getPlayerID());
 

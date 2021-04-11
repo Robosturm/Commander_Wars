@@ -20,6 +20,7 @@
 Achievementmenu::Achievementmenu()
     : QObject()
 {
+    setObjectName("Achievementmenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

@@ -17,6 +17,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     : GameAnimation (frameTime),
       textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
+    setObjectName("GameAnimationDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

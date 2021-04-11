@@ -11,6 +11,7 @@
 GameAction::GameAction()
     : m_target(-1, -1)
 {
+    setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -22,6 +23,7 @@ GameAction::GameAction(QString actionID)
     : m_actionID(actionID),
       m_target(-1, -1)
 {
+    setObjectName("GameAction");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

@@ -7,6 +7,7 @@
 
 Topbar::Topbar(qint32 x, qint32 width)
 {
+    setObjectName("Topbar");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     // create the box for the bar in which everything will be placed

@@ -133,6 +133,7 @@ Settings* Settings::getInstance()
 
 Settings::Settings()
 {
+    setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
 }
 

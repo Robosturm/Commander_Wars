@@ -15,6 +15,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     : m_pPlayer(pPlayer),
       m_banning(banning)
 {
+    setObjectName("PerkSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

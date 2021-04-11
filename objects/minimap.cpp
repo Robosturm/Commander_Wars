@@ -18,6 +18,7 @@
 Minimap::Minimap()
     : QObject()
 {
+    setObjectName("Minimap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)

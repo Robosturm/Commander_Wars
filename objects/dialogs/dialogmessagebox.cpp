@@ -10,6 +10,7 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
     : QObject(),
       m_Message(text)
 {
+    setObjectName("DialogMessageBox");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

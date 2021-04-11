@@ -26,6 +26,7 @@ QString Interpreter::m_runtimeData;
 Interpreter::Interpreter()
     : QQmlEngine()
 {
+    setObjectName("Interpreter");
     setCppOwnerShip(this);
     m_pInstance = this;
     init();

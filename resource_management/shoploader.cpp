@@ -4,7 +4,7 @@ ShopLoader::ShopLoader()
     : RessourceManagement<ShopLoader>("/images/shop/res.xml",
                                               "/scripts/shop")
 {
-
+    setObjectName("ShopLoader");
 }
 
 void ShopLoader::loadAll()

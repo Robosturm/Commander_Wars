@@ -50,6 +50,7 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
       y(y),
       m_Building{nullptr}
 {
+    setObjectName("Terrain");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

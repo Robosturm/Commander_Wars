@@ -34,6 +34,7 @@ const QString CampaignEditor::campaignFinished = "campaignFinished";
 CampaignEditor::CampaignEditor()
     : QObject()
 {
+    setObjectName("CampaignEditor");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

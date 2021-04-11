@@ -12,6 +12,7 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
       m_data(data),
       m_widths(widths)
 {
+    setObjectName("TableView");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

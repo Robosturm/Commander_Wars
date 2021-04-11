@@ -7,6 +7,7 @@
 QmlVectorPoint::QmlVectorPoint()
     : QObject()
 {
+    setObjectName("QmlVectorPoint");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -15,6 +16,7 @@ QmlVectorPoint::QmlVectorPoint()
 QmlVectorUnit::QmlVectorUnit()
     : QObject()
 {
+    setObjectName("QmlVectorUnit");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -122,6 +124,7 @@ void QmlVectorUnit::sortShortestMovementRange(bool infantriesLast)
 QmlVectorBuilding::QmlVectorBuilding()
     : QObject()
 {
+    setObjectName("QmlVectorBuilding");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

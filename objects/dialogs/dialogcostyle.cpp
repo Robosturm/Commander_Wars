@@ -18,6 +18,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     : QObject(),
       m_currentCOID(coid)
 {
+    setObjectName("DialogCOStyle");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

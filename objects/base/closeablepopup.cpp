@@ -7,6 +7,7 @@
 CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     : QObject()
 {
+    setObjectName("CloseablePopUp");
     setSize(width, heigth);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

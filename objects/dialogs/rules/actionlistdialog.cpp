@@ -21,6 +21,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     : QObject(),
       m_CurrentActionList(bannlist)
 {
+    setObjectName("ActionListDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -8,6 +8,7 @@
 
 Textbox::Textbox(qint32 width, qint32 heigth)
 {
+    setObjectName("Textbox");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

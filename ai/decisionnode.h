@@ -17,7 +17,7 @@ class DecisionNode : public QObject, public FileSerializable, public oxygine::re
 {
     Q_OBJECT
 public:
-        DecisionNode() = default;
+        DecisionNode();
         DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode> pNodes);
         virtual ~DecisionNode();
 

@@ -2,6 +2,7 @@
 
 Timer::Timer()
 {
+    setObjectName("Timer");
 }
 
 void Timer::pause()

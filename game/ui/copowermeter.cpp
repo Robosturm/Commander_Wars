@@ -8,7 +8,7 @@ CoPowermeter::CoPowermeter(CO* pCO)
     : QObject(),
       _pCO(pCO)
 {
-
+    setObjectName("CoPowermeter");
 }
 
 void CoPowermeter::drawPowerMeter()

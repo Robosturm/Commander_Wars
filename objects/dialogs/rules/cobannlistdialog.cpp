@@ -21,6 +21,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     : QObject(),
       m_CurrentCOBannList(cobannlist)
 {
+    setObjectName("COBannListDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -14,6 +14,7 @@
 TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     : QObject()
 {
+    setObjectName("TerrainInfo");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

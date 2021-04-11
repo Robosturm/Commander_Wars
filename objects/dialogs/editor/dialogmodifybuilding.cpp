@@ -16,6 +16,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     : QObject(),
       m_pBuilding(pBuilding)
 {
+    setObjectName("DialogModifyBuilding");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

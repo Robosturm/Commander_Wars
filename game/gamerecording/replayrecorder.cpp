@@ -17,7 +17,7 @@
 ReplayRecorder::ReplayRecorder()
     : QObject()
 {
-
+    setObjectName("ReplayRecorder");
 }
 
 ReplayRecorder::~ReplayRecorder()

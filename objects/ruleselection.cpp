@@ -28,6 +28,7 @@ RuleSelection::RuleSelection(qint32 width, Mode mode, bool enabled)
       m_mode(mode),
       m_ruleChangeEabled(enabled)
 {
+    setObjectName("RuleSelection");
     setWidth(width);
     showRuleSelection();
 }

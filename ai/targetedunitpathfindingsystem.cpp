@@ -8,6 +8,7 @@ TargetedUnitPathFindingSystem::TargetedUnitPathFindingSystem(Unit* pUnit, QVecto
       m_Targets(targets),
       m_pMoveCostMap(pMoveCostMap)
 {
+    setObjectName("TargetedUnitPathFindingSystem");
     setFast(true);
     for (qint32 i = 0; i < m_Targets.size(); i++)
     {

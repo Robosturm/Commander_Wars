@@ -41,6 +41,7 @@ WikiDatabase* WikiDatabase::getInstance()
 WikiDatabase::WikiDatabase()
     : QObject()
 {
+    setObjectName("WikiDatabase");
     Mainapp* pMainapp = Mainapp::getInstance();
     this->moveToThread(pMainapp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);

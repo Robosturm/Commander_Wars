@@ -10,6 +10,7 @@
 
 TimeSpinBox::TimeSpinBox(qint32 width)
 {
+    setObjectName("TimeSpinBox");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

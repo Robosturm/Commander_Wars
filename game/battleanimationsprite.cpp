@@ -33,6 +33,7 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
       m_nextFrameTimer(this),
       m_playSound(playSound)
 {
+    setObjectName("BattleAnimationSprite");
     if (hpRounded < 0.0f)
     {
         hpRounded = pUnit->getHpRounded();

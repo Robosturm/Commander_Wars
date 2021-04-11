@@ -14,6 +14,7 @@
 InfluenceFrontMap::InfluenceFrontMap(const QVector<spIslandMap> & islands)
     : m_islands(islands)
 {
+    setObjectName("InfluenceFrontMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

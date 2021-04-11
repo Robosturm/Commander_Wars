@@ -11,6 +11,7 @@ COSelection::COSelection(QSize maxSize, QStringList coids)
     : QObject(),
       m_Coids(coids)
 {
+    setObjectName("COSelection");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

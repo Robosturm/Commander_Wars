@@ -18,6 +18,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     : GameAnimation(frameTime),
       m_permanent(permanent)
 {
+    setObjectName("GameAnimationNextDay");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());    
     Interpreter::setCppOwnerShip(this);

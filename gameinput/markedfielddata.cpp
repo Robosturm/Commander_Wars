@@ -6,6 +6,7 @@
 MarkedFieldData::MarkedFieldData()
     : QObject()
 {
+    setObjectName("MarkedFieldData");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

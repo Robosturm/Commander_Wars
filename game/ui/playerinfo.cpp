@@ -17,6 +17,7 @@
 PlayerInfo::PlayerInfo()
     : QObject()
 {
+    setObjectName("PlayerInfo");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     this->setScale(1.0f);

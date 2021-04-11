@@ -19,7 +19,7 @@ class Question : public QObject, public FileSerializable, public oxygine::ref_co
 {
     Q_OBJECT
 public:
-        Question() = default;
+        Question();
         Question(float value, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Equal);
         Question(float minValue, float maxValue, qint32 index, GameEnums::AIQuestionType QuestionType = GameEnums::AIQuestionType_Between);
 

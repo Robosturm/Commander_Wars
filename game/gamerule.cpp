@@ -8,6 +8,7 @@ const QString GameRule::spinbox = "spinbox";
 
 GameRule::GameRule()
 {
+    setObjectName("GameRule");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -17,6 +18,7 @@ GameRule::GameRule(QString ruleID)
     : QObject(),
       m_RuleID(ruleID)
 {
+    setObjectName("GameRule");
     init();
 }
 

@@ -19,6 +19,7 @@ Building::Building(QString BuildingID)
       m_pOwner(nullptr),
       m_pTerrain(nullptr)
 {
+    setObjectName("Building");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

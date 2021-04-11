@@ -11,6 +11,7 @@
 
 SelectKey::SelectKey(Qt::Key code)
 {
+    setObjectName("SelectKey");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
 

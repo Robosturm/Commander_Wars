@@ -16,6 +16,7 @@
 BaseGameInputIF::BaseGameInputIF(GameEnums::AiTypes aiType)
     : m_AiType(aiType)
 {
+    setObjectName("BaseGameInputIF");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

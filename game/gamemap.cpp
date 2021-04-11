@@ -51,6 +51,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
+    setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     m_mapAuthor = Settings::getUsername();
@@ -63,6 +64,7 @@ GameMap::GameMap(QDataStream& stream)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
+    setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     loadMapData();
@@ -74,6 +76,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
+    setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     loadMapData();

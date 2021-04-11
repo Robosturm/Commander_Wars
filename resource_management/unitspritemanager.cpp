@@ -4,6 +4,7 @@ UnitSpriteManager::UnitSpriteManager()
     : RessourceManagement<UnitSpriteManager>("/images/units/res.xml",
                                              "/scripts/units")
 {
+    setObjectName("UnitSpriteManager");
 }
 
 qint32 UnitSpriteManager::getUnitType(qint32 i)

@@ -28,6 +28,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
       m_DefWeapon(defWeapon),
       m_DefenderDamage(defenderDamage)
 {
+    setObjectName("BattleAnimation");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

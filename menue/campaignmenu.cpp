@@ -22,6 +22,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     : QObject(),
       m_Multiplayer(multiplayer)
 {
+    setObjectName("CampaignMenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

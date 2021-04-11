@@ -17,6 +17,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     : QObject(),
       m_pTerrain(pTerrain)
 {
+    setObjectName("DialogModifyTerrain");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -16,9 +16,10 @@ AudioThread::AudioThread()
       m_playList2(this),
       m_doubleBufferTimer(this)
 {
+    setObjectName("AudioThread");
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
-    this->moveToThread(Mainapp::getAudioWorker());
+    moveToThread(Mainapp::getAudioWorker());
     connect(this, &AudioThread::SignalPlayMusic,        this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalSetVolume,        this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalAddMusic,         this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
@@ -341,12 +342,11 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
     QUrl url = QUrl::fromLocalFile(soundfile);
     if (url.isValid())
     {
-        QSoundEffect* pSoundEffect = new QSoundEffect();
+        QSoundEffect* pSoundEffect = new QSoundEffect(this);
         qreal value = QAudio::convertVolume(sound,
                                             QAudio::LogarithmicVolumeScale,
                                             QAudio::LinearVolumeScale);
-        QTimer* pTimer = new QTimer();
-        pTimer->moveToThread(Mainapp::getInstance()->getAudioWorker());
+        QTimer* pTimer = new QTimer(this);
         pSoundEffect->setVolume(value);
         pSoundEffect->setSource(url);
         pSoundEffect->setLoopCount(loops);

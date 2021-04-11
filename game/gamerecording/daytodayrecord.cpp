@@ -7,12 +7,14 @@
 DayToDayRecord::DayToDayRecord()
     : QObject()
 {
+    setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
 DayToDayRecord::DayToDayRecord(qint32 playerCount)
 {
+    setObjectName("DayToDayRecord");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     for (qint32 i = 0; i < playerCount; i++)

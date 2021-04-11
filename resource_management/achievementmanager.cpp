@@ -6,6 +6,7 @@ AchievementManager::AchievementManager()
     : RessourceManagement<AchievementManager>("/images/achievements/res.xml",
                                               "/scripts/achievements")
 {
+    setObjectName("AchievementManager");
 }
 
 void AchievementManager::loadAll()

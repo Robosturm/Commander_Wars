@@ -4,6 +4,7 @@
 
 DefaultWikipage::DefaultWikipage(QString item)
 {
+    setObjectName("DefaultWikipage");
     QJSValueList args;
     args << item;
     Interpreter* pInterpreter = Interpreter::getInstance();

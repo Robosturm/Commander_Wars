@@ -62,6 +62,7 @@ protected:
     FontManager()
         : RessourceManagement<FontManager>("/fonts/fonts.xml", "")
     {
+        setObjectName("FontManager");
     }
 private:
     virtual ~FontManager() = default;

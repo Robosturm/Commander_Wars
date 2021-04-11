@@ -15,6 +15,7 @@
 DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     : QObject()
 {
+    setObjectName("DialogUnitInfo");
     spGameMap pMap = GameMap::getInstance();
 
     Mainapp* pApp = Mainapp::getInstance();

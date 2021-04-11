@@ -21,6 +21,7 @@
 GameRules::GameRules()
     : QObject()
 {
+    setObjectName("GameRules");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

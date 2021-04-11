@@ -3,6 +3,7 @@
 GameRuleManager::GameRuleManager()
     : RessourceManagement<GameRuleManager>("", "")
 {
+    setObjectName("GameRuleManager");
 }
 
 void GameRuleManager::reset()

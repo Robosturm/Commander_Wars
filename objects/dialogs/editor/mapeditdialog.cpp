@@ -14,6 +14,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
                              qint32 turnLimit, quint32 buildLimit)
     : QObject()
 {
+    setObjectName("MapEditDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

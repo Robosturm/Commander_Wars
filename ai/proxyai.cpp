@@ -9,6 +9,7 @@
 ProxyAi::ProxyAi()
     : CoreAI (GameEnums::AiTypes_ProxyAi)
 {
+    setObjectName("ProxyAi");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

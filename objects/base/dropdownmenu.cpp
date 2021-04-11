@@ -7,6 +7,7 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items)
     : DropDownmenuBase(width, items.size()),
       m_ItemTexts(items)
 {
+    setObjectName("DropDownmenu");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

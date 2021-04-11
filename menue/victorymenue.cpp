@@ -28,6 +28,7 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
     : QObject(),
       m_pNetworkInterface(pNetworkInterface)
 {
+    setObjectName("VictoryMenue");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

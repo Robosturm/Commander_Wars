@@ -6,6 +6,12 @@ DecisionNode::DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode>
 	: m_pQuestion(pQuestion),
       m_pNodes(pNodes)
 {
+    setObjectName("DecisionNode");
+}
+
+DecisionNode::DecisionNode()
+{
+    setObjectName("DecisionNode");
 }
 
 DecisionNode::~DecisionNode()

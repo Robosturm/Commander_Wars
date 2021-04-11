@@ -10,6 +10,7 @@
 IslandMap::IslandMap(QString unitID, Player* pOwner)
     : QObject()
 {
+    setObjectName("IslandMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

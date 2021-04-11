@@ -10,6 +10,7 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     : QObject(),
       m_Message(text)
 {
+    setObjectName("DialogConnecting");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

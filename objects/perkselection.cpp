@@ -14,6 +14,7 @@ PerkSelection::PerkSelection(CO* pCO, qint32 width, qint32 maxPerks, bool bannin
       m_banning(banning),
       m_hiddenPerks(hiddenList)
 {
+    setObjectName("PerkSelection");
     setWidth(width);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

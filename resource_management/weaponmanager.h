@@ -33,6 +33,7 @@ protected:
         : RessourceManagement<WeaponManager>("",
                                              "/scripts/weapons")
     {
+        setObjectName("WeaponManager");
     }
 private:
     virtual ~WeaponManager() = default;

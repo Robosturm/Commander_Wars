@@ -5,6 +5,7 @@
 
 Label::Label(qint32 width)
 {
+    setObjectName("Label");
     _clipRect = new oxygine::ClipRectActor();
     _clipRect->setWidth(width);
     _clipRect->setHeight(28);

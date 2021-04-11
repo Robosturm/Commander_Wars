@@ -15,6 +15,7 @@
 Wikimenu::Wikimenu()
     : QObject()
 {
+    setObjectName("Wikimenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

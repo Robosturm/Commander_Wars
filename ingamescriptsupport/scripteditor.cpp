@@ -15,6 +15,7 @@
 ScriptEditor::ScriptEditor()
     : QObject()
 {
+    setObjectName("ScriptEditor");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

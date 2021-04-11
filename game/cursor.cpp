@@ -9,6 +9,7 @@
 
 Cursor::Cursor()
 {
+    setObjectName("Cursor");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");

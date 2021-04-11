@@ -7,6 +7,7 @@
 PlayerSelectionDialog::PlayerSelectionDialog()
     : QObject()
 {
+    setObjectName("PlayerSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

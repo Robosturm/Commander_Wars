@@ -27,6 +27,7 @@ HeavyAi::HeavyAi(QString type)
       m_InfluenceFrontMap(m_IslandMaps),
       m_aiName(type)
 {
+    setObjectName("HeavyAi");
     m_timer.setSingleShot(false);
     connect(&m_timer, &QTimer::timeout, this, &HeavyAi::process, Qt::QueuedConnection);
     loadIni("heavy/" + m_aiName.toLower() + ".ini");

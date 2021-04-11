@@ -22,6 +22,7 @@
 NormalAi::NormalAi(QString configurationFile)
     : CoreAI (GameEnums::AiTypes_Normal)
 {
+    setObjectName("NormalAi");
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

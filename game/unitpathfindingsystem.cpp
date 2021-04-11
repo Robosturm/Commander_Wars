@@ -16,6 +16,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
       m_pUnit(pUnit),
       m_pPlayer(pPlayer)
 {
+    setObjectName("UnitPathFindingSystem");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

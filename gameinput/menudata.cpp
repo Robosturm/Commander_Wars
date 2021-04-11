@@ -14,6 +14,7 @@
 MenuData::MenuData()
     : QObject()
 {
+    setObjectName("MenuData");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

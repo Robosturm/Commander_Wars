@@ -16,6 +16,7 @@
 MapSelectionView::MapSelectionView()
     : QObject()
 {
+    setObjectName("MapSelectionView");
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 

@@ -12,6 +12,7 @@
 DialogRandomMap::DialogRandomMap()
     : QObject()
 {
+    setObjectName("DialogRandomMap");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -13,6 +13,7 @@
 GameRecorder::GameRecorder()
     : QObject()
 {
+    setObjectName("GameRecorder");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }

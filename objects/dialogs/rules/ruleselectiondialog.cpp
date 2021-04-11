@@ -11,6 +11,7 @@
 RuleSelectionDialog::RuleSelectionDialog(RuleSelection::Mode mode, bool enabled)
     : QObject()
 {
+    setObjectName("RuleSelectionDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

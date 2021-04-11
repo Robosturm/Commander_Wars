@@ -25,6 +25,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
       m_StepFunction(stepFunction),
       m_Ingame(ingame)
 {
+    setObjectName("COInfoDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();

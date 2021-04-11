@@ -12,7 +12,7 @@
 ScriptConditionUnitReachedArea::ScriptConditionUnitReachedArea()
     : ScriptCondition (ConditionType::unitReachedArea)
 {
-
+    setObjectName("ScriptConditionUnitReachedArea");
 }
 
 qint32 ScriptConditionUnitReachedArea::getUnitX() const

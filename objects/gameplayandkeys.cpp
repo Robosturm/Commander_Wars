@@ -14,8 +14,7 @@
 
 GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 {
-    
-
+    setObjectName("GameplayAndKeys");
     QSize size(Settings::getWidth() - 20,
                heigth);
     m_pOptions = new  Panel(true,  size, size);

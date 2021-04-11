@@ -4,6 +4,7 @@ COPerkManager::COPerkManager()
     : RessourceManagement<COPerkManager>("/images/co_perks/res.xml",
                                          "/scripts/co_perks")
 {
+    setObjectName("COPerkManager");
 }
 
 QString COPerkManager::getIcon(qint32 position)

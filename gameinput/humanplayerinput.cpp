@@ -22,6 +22,7 @@
 HumanPlayerInput::HumanPlayerInput()
     : BaseGameInputIF(GameEnums::AiTypes_Human)
 {    
+    setObjectName("HumanPlayerInput");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

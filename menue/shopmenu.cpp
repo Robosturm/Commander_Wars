@@ -17,6 +17,7 @@
 
 Shopmenu::Shopmenu()
 {
+    setObjectName("Shopmenu");
     Mainapp* pApp = Mainapp::getInstance();
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());

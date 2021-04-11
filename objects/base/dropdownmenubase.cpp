@@ -5,6 +5,7 @@
 
 DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
 {
+    setObjectName("DropDownmenuBase");
     Mainapp* pApp = Mainapp::getInstance();
     moveToThread(pApp->getWorkerthread());
     setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

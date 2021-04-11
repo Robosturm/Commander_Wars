@@ -5,6 +5,7 @@
 
 SpecialEvent::SpecialEvent()
 {
+    setObjectName("SpecialEvent");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
@@ -15,6 +16,7 @@ SpecialEvent::SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_Spec
       m_Day(day),
       m_Event(event)
 {
+    setObjectName("SpecialEvent");
     moveToThread(Mainapp::getInstance()->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }

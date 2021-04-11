@@ -19,6 +19,7 @@ const float EditorSelection::yFactor = 2.5f;
 EditorSelection::EditorSelection()
     : QObject()
 {
+    setObjectName("EditorSelection");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
