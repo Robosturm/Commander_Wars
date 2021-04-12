@@ -1879,6 +1879,7 @@ void GameMap::nextTurn()
     if (pMenu.get() != nullptr)
     {
         pMenu->updatePlayerinfo();
+        pMenu->updateMinimap();
     }
     playMusic();
 }

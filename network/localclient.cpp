@@ -10,6 +10,7 @@ LocalClient::LocalClient()
       pTXTask(nullptr),
       pSocket(nullptr)
 {
+    setObjectName("LocalClient");
     this->moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
 }
@@ -25,6 +26,7 @@ void LocalClient::connectTCP(QString adress, quint16)
 {
     // Launch Socket
     pSocket = new QLocalSocket(this);
+    pSocket->setObjectName("LocalclientSocket");
     pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(pSocket, &QLocalSocket::disconnected, this, &LocalClient::disconnectTCP, Qt::QueuedConnection);
     QObject::connect(pSocket, &QLocalSocket::errorOccurred, this, &LocalClient::displayLocalError, Qt::QueuedConnection);

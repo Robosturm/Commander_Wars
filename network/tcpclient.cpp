@@ -12,6 +12,7 @@ TCPClient::TCPClient()
       m_pTXTask(nullptr),
       m_pSocket(nullptr)
 {
+    setObjectName("TCPClient");
     this->moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
 }
@@ -22,6 +23,7 @@ TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, qu
       m_pSocket(pSocket),
       m_onServer(true)
 {
+    setObjectName("TCPClient");
     setSocketID(socketId);
     QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }

@@ -343,10 +343,12 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
     if (url.isValid())
     {
         QSoundEffect* pSoundEffect = new QSoundEffect(this);
+        pSoundEffect->setObjectName("SoundEffect");
         qreal value = QAudio::convertVolume(sound,
                                             QAudio::LogarithmicVolumeScale,
                                             QAudio::LinearVolumeScale);
         QTimer* pTimer = new QTimer(this);
+        pTimer->setObjectName("SoundEffectTimer");
         pSoundEffect->setVolume(value);
         pSoundEffect->setSource(url);
         pSoundEffect->setLoopCount(loops);

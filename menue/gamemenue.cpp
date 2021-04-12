@@ -1136,6 +1136,13 @@ void GameMenue::updatePlayerinfo()
     Mainapp::getInstance()->continueRendering();
 }
 
+void GameMenue::updateMinimap()
+{
+    Mainapp::getInstance()->pauseRendering();
+    m_IngameInfoBar->updateMinimap();
+    Mainapp::getInstance()->continueRendering();
+}
+
 void GameMenue::victory(qint32 team)
 {
     

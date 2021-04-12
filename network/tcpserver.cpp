@@ -7,6 +7,7 @@
 
 TCPServer::TCPServer()
 {
+    setObjectName("TCPServer");
     this->moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = true;
     isConnected = true;

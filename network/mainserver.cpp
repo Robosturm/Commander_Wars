@@ -108,6 +108,7 @@ void MainServer::spawnSlaveGame(QDataStream & stream, quint64 socketID, QByteArr
         qint32 pos = m_games.size() - 1;
         QString program = "Commander_Wars.exe";
         m_games[pos]->process = new QProcess();
+        m_games[pos]->process->setObjectName("Slaveprocess");
         QStringList args;
         args << "-slave";
         args << "-slaveServer";

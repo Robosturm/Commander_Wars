@@ -134,6 +134,10 @@ public slots:
      */
     void updatePlayerinfo();
     /**
+     * @brief updateMinimap
+     */
+    void updateMinimap();
+    /**
      * @brief cursorMoved
      * @param x
      * @param y

@@ -40,7 +40,7 @@ signals:
 public slots:
     virtual void focusedLost() override;
 private:
-    QVector<QVector<oxygine::spBox9Sprite>*> m_Items;
+    QVector<QVector<oxygine::spBox9Sprite>> m_Items;
     QVector<oxygine::spButton> m_Buttons;    
     oxygine::spBox9Sprite m_pSpriteBox;
 };

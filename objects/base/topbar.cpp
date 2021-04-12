@@ -34,9 +34,9 @@ void Topbar::hide()
 {    
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
-        for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
+        for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
         {
-            m_Items.at(i)->at(i2)->setVisible(false);
+            m_Items.at(i).at(i2)->setVisible(false);
         }
     }
     
@@ -69,8 +69,8 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     textField->setY(5);
     pBox->setSize(300, 40);
     textField->setSize(pBox->getSize());
-    pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group)->size());
-    m_Items.at(group)->append(pBox);
+    pBox->setPosition(m_Buttons.at(group)->getX(), 65 + 40 * m_Items.at(group).size());
+    m_Items[group].append(pBox);
     pBox->setVisible(false);
     pBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pTooltip->addChild(pBox);
@@ -87,9 +87,9 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     {
         for (qint32 i = 0; i < m_Items.size(); i++)
         {
-            for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
+            for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
             {
-                m_Items.at(i)->at(i2)->setVisible(false);
+                m_Items.at(i).at(i2)->setVisible(false);
             }
         }
         emit pTooltip->sigHideTooltip();
@@ -128,20 +128,20 @@ void Topbar::addGroup(QString text)
         // hide selection
         for (qint32 i = 0; i < m_Items.size(); i++)
         {
-            for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
+            for (qint32 i2 = 0; i2 < m_Items.at(i).size(); i2++)
             {
-                m_Items.at(i)->at(i2)->setVisible(false);
+                m_Items.at(i).at(i2)->setVisible(false);
             }
         }
         // show selected selection
-        for (qint32 i = 0; i < m_Items.at(groupID)->size(); i++)
+        for (qint32 i = 0; i < m_Items.at(groupID).size(); i++)
         {
-            m_Items.at(groupID)->at(i)->setVisible(true);
+            m_Items.at(groupID).at(i)->setVisible(true);
         }
         emit sigFocused();
     });
     m_Buttons.append(pButton);
-    m_Items.append(new QVector<oxygine::spBox9Sprite>());
+    m_Items.append(QVector<oxygine::spBox9Sprite>());
 
     
 }

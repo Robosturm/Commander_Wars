@@ -102,11 +102,11 @@ void WikiDatabase::load()
         QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
         QStringList filter;
         filter << "*.js";
-        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
-        while (dirIter->hasNext())
+        QDirIterator dirIter = QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
         {
-            dirIter->next();
-            QString file = dirIter->fileInfo().absoluteFilePath();
+            dirIter.next();
+            QString file = dirIter.fileInfo().absoluteFilePath();
             if (!hasEntry(file))
             {
                 Interpreter* pInterpreter = Interpreter::getInstance();
