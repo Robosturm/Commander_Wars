@@ -1,0 +1,7 @@
+name=Advance Wars Dual Strike Movement Mod
+description=This mod changes the movement for ships over bridges back to the Advance Wars Dual Strike game. Created by Robosturm
+version=1.0.0
+compatible_mods=
+incompatible_mods=
+required_mods=
+cosmetic=false

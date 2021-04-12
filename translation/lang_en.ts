@@ -3818,11 +3818,6 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="517"/>
-        <source>The defense each terrain star grants.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../objects/ruleselection.cpp" line="571"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
@@ -3931,6 +3926,11 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
     <message>
         <location filename="../objects/ruleselection.cpp" line="501"/>
         <source>The speed at which the power bar fills up. This affects gains from HP damage or Funds damage based on the mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="517"/>
+        <source>The defense each terrain star grants a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
