@@ -18,10 +18,12 @@ Tooltip::Tooltip()
     });
     addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
+        m_mouseHovered = true;
         emit sigStartTooltip();
     });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
+        m_mouseHovered = false;
         emit sigHideTooltip();
     });
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -71,7 +73,7 @@ void Tooltip::setTooltipText(const QString &tooltipText)
 
 void Tooltip::showTooltip()
 {
-    if (!m_disabled)
+    if (!m_disabled && m_mouseHovered)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->pauseRendering();

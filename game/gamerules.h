@@ -62,7 +62,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 19;
+        return 20;
     }
     void addVictoryRule(spVictoryRule rule);
 
@@ -85,11 +85,19 @@ public:
     DayToDayScreen getDayToDayScreen() const;
     void setDayToDayScreen(const DayToDayScreen &DayToDayScreen);
 
-
-
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getTerrainDefense
+     * @return
+     */
+    quint8 getTerrainDefense() const;
+    /**
+     * @brief setTerrainDefense
+     * @param terrainDefense
+     */
+    void setTerrainDefense(const quint8 &terrainDefense);
     /**
      * @brief getN_cosmeticModsAllowed
      * @return
@@ -499,6 +507,7 @@ private:
     bool m_singleCo{false};
     QStringList m_allowedActions;
     float m_powerGainSpeed{1.0f};
+    quint8 m_terrainDefense{10};
 
     Password m_password;
     QString m_description;

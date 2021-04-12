@@ -510,6 +510,22 @@ void RuleSelection::showRuleSelection()
 
     textField = new Label(textWidth - 40);
     textField->setStyle(style);
+    textField->setHtmlText(tr("Terrain Defense: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pSpinbox = new SpinBox(200, 0, 40, SpinBox::Mode::Int);
+    pSpinbox->setTooltipText(tr("The defense each terrain star grants a unit."));
+    pSpinbox->setInfinityValue(-1.0);
+    pSpinbox->setSpinSpeed(1.0f);
+    pSpinbox->setPosition(textWidth, textField->getY());
+    pSpinbox->setEnabled(m_ruleChangeEabled);
+    addChild(pSpinbox);
+    pSpinbox->setCurrentValue(pMap->getGameRules()->getTerrainDefense());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, pMap->getGameRules(), &GameRules::setTerrainDefense, Qt::QueuedConnection);
+    y += 40;
+
+    textField = new Label(textWidth - 40);
+    textField->setStyle(style);
     textField->setHtmlText(tr("Round Time: "));
     textField->setPosition(30, y);
     addChild(textField);

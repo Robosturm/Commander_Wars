@@ -832,6 +832,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+quint8 GameRules::getTerrainDefense() const
+{
+    return m_terrainDefense;
+}
+
+void GameRules::setTerrainDefense(const quint8 &terrainDefense)
+{
+    m_terrainDefense = terrainDefense;
+}
+
 bool GameRules::getCosmeticModsAllowed() const
 {
     return m_cosmeticModsAllowed;
@@ -1060,12 +1070,14 @@ void GameRules::serializeObject(QDataStream& pStream) const
     m_password.serializeObject(pStream);
     pStream << m_singleCo;
     pStream << m_cosmeticModsAllowed;
+    pStream << m_terrainDefense;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
 {
     deserializer(pStream, false);
 }
+
 void GameRules::deserializer(QDataStream& pStream, bool)
 {
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
@@ -1326,5 +1338,9 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     if (version > 18)
     {
         pStream >> m_cosmeticModsAllowed;
+    }
+    if (version > 19)
+    {
+        pStream >> m_terrainDefense;
     }
 }

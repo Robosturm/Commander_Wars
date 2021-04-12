@@ -1371,7 +1371,7 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     }
     if (useTerrainDefense())
     {
-        bonus += getTerrainDefense() * 10;
+        bonus += getTerrainDefense() * pMap->getGameRules()->getTerrainDefense();
     }
     if (m_pTerrain != nullptr)
     {

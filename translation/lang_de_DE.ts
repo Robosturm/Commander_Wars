@@ -3813,17 +3813,27 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="555"/>
+        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <source>Terrain Defense: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="517"/>
+        <source>The defense each terrain star grants.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="571"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="562"/>
+        <location filename="../objects/ruleselection.cpp" line="578"/>
         <source>Unique CO&apos;s: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="566"/>
+        <location filename="../objects/ruleselection.cpp" line="582"/>
         <source>If checked CO&apos;s that are randomly selected are unique. Note: If not enough CO&apos;s are available this may select no co for a player</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3838,12 +3848,12 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="576"/>
+        <location filename="../objects/ruleselection.cpp" line="592"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="580"/>
+        <location filename="../objects/ruleselection.cpp" line="596"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3924,12 +3934,12 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="513"/>
+        <location filename="../objects/ruleselection.cpp" line="529"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="517"/>
+        <location filename="../objects/ruleselection.cpp" line="533"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3954,32 +3964,32 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="590"/>
+        <location filename="../objects/ruleselection.cpp" line="606"/>
         <source>Team Facing :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="594"/>
+        <location filename="../objects/ruleselection.cpp" line="610"/>
         <source>If checked units of the same team have the same direction rather than based on player order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="530"/>
+        <location filename="../objects/ruleselection.cpp" line="546"/>
         <source>Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="533"/>
+        <location filename="../objects/ruleselection.cpp" line="549"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="537"/>
+        <location filename="../objects/ruleselection.cpp" line="553"/>
         <source>The relative path from the exe to the script associated with this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="607"/>
+        <location filename="../objects/ruleselection.cpp" line="623"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

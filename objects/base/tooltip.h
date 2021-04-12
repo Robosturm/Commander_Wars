@@ -39,6 +39,7 @@ private:
     QString m_tooltipText;
     QTimer m_TooltipTimer;
     bool m_disabled{false};
+    bool m_mouseHovered{false};
 };
 
 #endif // TOOLTIP_H
