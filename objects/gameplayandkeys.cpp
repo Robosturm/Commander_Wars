@@ -60,9 +60,16 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    items = {tr("Detailed"), tr("Overworld")};
+    items = {tr("Detailed"),
+             tr("Overworld"),
+             tr("Detailed Fullscreen"),
+             tr("Detailed Transparent"),
+             tr("Fullscreen Transparent")};
     spDropDownmenu pBattleAnimationMode = new DropDownmenu(450, items);
-    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
+    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy.\n"
+                                            "Detailed    - Normal Battleanimation\n"
+                                            "Transparent - Colored background is semi-transparent\n"
+                                            "Fullscreen  - Animations are upscaled based on the resolution\n"));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(Settings::getBattleAnimations()));
     pBattleAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pBattleAnimationMode);

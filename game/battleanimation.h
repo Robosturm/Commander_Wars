@@ -16,6 +16,13 @@ class BattleAnimation : public GameAnimation
 public:
     static constexpr qint32 spriteWidth = 127;
     static constexpr qint32 spriteHeigth = 192;
+
+    static const short priorityBackground = -2;
+    static const short priorityBack = -1;
+    static const short priorityFront = 1;
+    static const short priorityCOBack = 2;
+    static const short priorityCO = 3;
+    static const short priorityCOFront = 4;
     ENUM_CLASS AnimationProgress
     {
         MoveIn,
@@ -191,12 +198,6 @@ private:
     float m_DefenderDamage{-1};
 
     AnimationProgress currentState{AnimationProgress::MoveIn};
-
-    static const short priorityBack = -1;
-    static const short priorityFront = 1;
-    static const short priorityCOBack = 2;
-    static const short priorityCO = 3;
-    static const short priorityCOFront = 4;
 };
 
 #endif // BATTLEANIMATION_H

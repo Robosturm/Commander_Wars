@@ -435,7 +435,6 @@ void GameMenue::loadUIButtons()
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
-    pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_XYButtonBox = pButtonBox;
     m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
     addChild(pButtonBox);

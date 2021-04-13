@@ -105,7 +105,7 @@ void Tooltip::showTooltip()
                 pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
                 oxygine::spTextField pText = new oxygine::TextField();
                 pText->setHtmlText(m_tooltipText);
-                pText->setWidth(Settings::getWidth() / 4);
+                pText->setWidth(Settings::getWidth() / 3);
                 pText->setStyle(style);
                 pText->setPosition(10, 10);
                 pSpriteBox->addChild(pText);

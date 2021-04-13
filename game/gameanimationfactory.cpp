@@ -161,26 +161,13 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                                            atkDamage, pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),
                                            defDamage, pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID(), (defEndHp <= 0),
                                            pDefUnit->getOwner()->getFieldVisible(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY()));
-        if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
-        {
-            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
-            pRet->setScale(2.0f);
-            pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
-                              Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
-            spGameMenue pMenu = GameMenue::getInstance();
-            if (pMenu.get())
-            {
-                pMenu->addChild(pRet);
-            }
-            m_Animations.append(pRet);
-        }
-        else
+        auto battleViewMode = Settings::getBattleAnimations();
+        if (battleViewMode == GameEnums::BattleAnimationMode_Overworld)
         {
             // attacking unit
             GameAnimation* pAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY(), 70);
             pAtk->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
-            pAtk->setSound("talongunhit.wav", 1);            
+            pAtk->setSound("talongunhit.wav", 1);
             GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->Terrain::getX(), pDefTerrain->Terrain::getY());
             pDmgTextAtk->addText(QString::number(atkDamage) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
             pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->Terrain::getX() * GameMap::getImageSize(), (pDefTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
@@ -204,6 +191,55 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             {
                 pRet = pDmgTextAtk;
             }
+        }
+        else
+        {
+            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
+            oxygine::spColorRectSprite pBack = new oxygine::ColorRectSprite();
+            pBack->setSize(Settings::getWidth(), Settings::getHeight());
+            pBack->setColor(pAtkUnit->getOwner()->getColor());
+            if (battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent ||
+                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+            {
+                pBack->setAlpha(128);
+            }
+            if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
+                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+            {
+                float scale = Settings::getHeight() / pRet->getHeight();
+                float widthScale = Settings::getWidth() / pRet->getWidth();
+                if (scale > widthScale)
+                {
+                    scale = widthScale;
+                }
+                qint32 newScale = 2;
+                qint32 lastScale = 2;
+                while (newScale < scale)
+                {
+                    lastScale = newScale;
+                    newScale *= 2;
+                }
+                pRet->setScale(lastScale);
+            }
+            else
+            {
+                pRet->setScale(2.0f);
+            }
+            pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
+                              Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
+            spGameMenue pMenu = GameMenue::getInstance();
+            if (pMenu.get())
+            {
+                if (pBack.get() != nullptr)
+                {
+                    pBack->setPriority(BattleAnimation::priorityBackground);
+                    pBack->setPosition(-pRet->getPosition());
+                    pRet->addChild(pBack);
+                }
+                pMenu->addChild(pRet);
+            }
+            m_Animations.append(pRet);
         }
     }
     else

@@ -145,6 +145,9 @@ public:
     {
         BattleAnimationMode_Detail,
         BattleAnimationMode_Overworld,
+        BattleAnimationMode_Fullscreen,
+        BattleAnimationMode_DetailTransparent,
+        BattleAnimationMode_FullscreenTransparent,
     };
     Q_ENUM(BattleAnimationMode)
 

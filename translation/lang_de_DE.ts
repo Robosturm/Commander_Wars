@@ -1406,17 +1406,17 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="465"/>
+        <location filename="../menue/gamemenue.cpp" line="464"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1323"/>
+        <location filename="../menue/gamemenue.cpp" line="1322"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1333"/>
+        <location filename="../menue/gamemenue.cpp" line="1332"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1502,544 +1502,563 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="63"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="64"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/gameplayandkeys.cpp" line="65"/>
-        <source>Selects which battle animations are played when fighting an enemy.</source>
+        <source>Detailed Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="77"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="66"/>
+        <source>Detailed Transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="67"/>
+        <source>Fullscreen Transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="69"/>
+        <source>Selects which battle animations are played when fighting an enemy.
+Detailed    - Normal Battleanimation
+Transparent - Colored background is semi-transparent
+Fullscreen  - Animations are upscaled based on the resolution
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/gameplayandkeys.cpp" line="84"/>
         <source>Dialogs: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="80"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="87"/>
         <source>off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="80"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="87"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="82"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="89"/>
         <source>Selects if the dialogs are shown or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="94"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="101"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="98"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="105"/>
         <source>Selects the speed at which animations are played. Except battle and walking animations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="110"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="117"/>
         <source>Walk Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="114"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="121"/>
         <source>Selects the speed at which units walk across the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="126"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="133"/>
         <source>Battle Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="130"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="137"/>
         <source>Selects the speed at which battle animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="142"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="149"/>
         <source>Capture Anim. Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="146"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="153"/>
         <source>Selects the speed at which capture animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="158"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="165"/>
         <source>Dialog Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="162"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="169"/>
         <source>Selects the speed at which dialog animations are played.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="174"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="181"/>
         <source>Multi Turn Plantime: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="178"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="185"/>
         <source>Selects the amount of turns you can preplan with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="190"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="197"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="194"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="201"/>
         <source>If active the game will automatically end your turn if you can&apos;t give any orders anymore.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="206"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="213"/>
         <source>Menu Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="210"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="217"/>
         <source>Amount of items per row for ingame menus before a new row is added.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="222"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="229"/>
         <source>Shown Players: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="227"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="234"/>
         <source>Selects the amount of players shown in game on the sidebar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="236"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="243"/>
         <source>Show PC Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="240"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="247"/>
         <source>If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="252"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="259"/>
         <source>Animated Markers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="256"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="263"/>
         <source>If active the currently selectable fiedls get animated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="268"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="275"/>
         <source>CO Info Position: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="271"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="278"/>
         <source>Flipping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="271"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="278"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="271"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="278"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="275"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="282"/>
         <source>Select where the CO Info is shown. Where Flipping positions it at the opposite side of the cursor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="285"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="292"/>
         <source>Auto Scrolling: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="289"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="296"/>
         <source>If active the map is scrolled automatically while the cursor is at the screen borders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="301"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="308"/>
         <source>Show Coordinates: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="305"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="312"/>
         <source>If active the map coordinates are shown during a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="317"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="324"/>
         <source>Auto Camera: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="321"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="328"/>
         <source>If active the map is centered on the unit action during other player turns. If the field is visible to the player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="333"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="340"/>
         <source>Auto Camera Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="336"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="343"/>
         <source>Last Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="336"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="343"/>
         <source>Owned HQ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="340"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="347"/>
         <source>Select where the game starts during a human player phase, when auto focusing is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="350"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="357"/>
         <source>Center Camera on Fields: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="356"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="363"/>
         <source>Selects if the camera centers on marked fields for an action or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="363"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="370"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="370"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="377"/>
         <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="374"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="379"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="381"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="386"/>
         <source>Key for moving the cursor up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="387"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="394"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="391"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="396"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="398"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="403"/>
         <source>Key for moving the cursor left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="404"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="411"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="408"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="413"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="415"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="420"/>
         <source>Key for moving the cursor down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="421"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="428"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="425"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="430"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="432"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="437"/>
         <source>Key for moving the cursor right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="438"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="445"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="442"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="447"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="449"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="454"/>
         <source>Key for confirming any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="455"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="462"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="459"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="464"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="466"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="471"/>
         <source>Key for canceling any action or input in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="472"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="479"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="476"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="481"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="483"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="488"/>
         <source>Key for moving the cursor to the next possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="489"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="496"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="493"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="498"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="500"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="505"/>
         <source>Key for moving the cursor to the previous possible field unit etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="506"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="513"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="510"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="517"/>
         <source>Key for quick saving slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="518"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="525"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="522"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="529"/>
         <source>Key for quick loading slot 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="530"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="537"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="534"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="541"/>
         <source>Key for quick saving slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="542"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="549"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="546"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="553"/>
         <source>Key for quick loading slot 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="554"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="561"/>
         <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="558"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="563"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="565"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="570"/>
         <source>Key to show information about the current field, action, unit at any time in the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="571"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="578"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="575"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="580"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="582"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="587"/>
         <source>Key to move the map a field up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="588"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="595"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="592"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="597"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="599"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="604"/>
         <source>Key to move the map a field left.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="605"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="612"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="609"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="614"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="616"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="621"/>
         <source>Key to move the map a field down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="622"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="629"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="626"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="631"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="633"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="638"/>
         <source>Key to move the map a field right.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="639"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="646"/>
         <source>Key Zoom In: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="643"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="648"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="650"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="655"/>
         <source>Key to zoom into the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="656"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="663"/>
         <source>Key Zoom Out: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="660"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="665"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="667"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="672"/>
         <source>Key to zoom out of the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="673"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="680"/>
         <source>Key Show Indirects: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="677"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="682"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="684"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="689"/>
         <source>Key to show where all enemy indirect units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="690"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="697"/>
         <source>Key Show all: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="694"/>
-        <location filename="../objects/gameplayandkeys.cpp" line="699"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="701"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="706"/>
         <source>Key to show where all enemy units can attack near the selected unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="707"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="714"/>
         <source>Key Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="713"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="720"/>
         <source>Key Place Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="717"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="724"/>
         <source>Key to select Place Terrain in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="725"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="732"/>
         <source>Key Place Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="729"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="736"/>
         <source>Key to select Place Unit in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="737"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="744"/>
         <source>Key Place Building: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="741"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="748"/>
         <source>Key to select Place Building in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="749"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="756"/>
         <source>Key Next Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="753"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="760"/>
         <source>Key to select the next player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="761"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="768"/>
         <source>Key Previous Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="765"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="772"/>
         <source>Key to select the previous player in the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="773"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="780"/>
         <source>Key Next Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="777"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="784"/>
         <source>Key to select the next editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="785"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="792"/>
         <source>Key Previous Item: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="789"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="796"/>
         <source>Key to select the previous editor item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="797"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="804"/>
         <source>Screenshot: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/gameplayandkeys.cpp" line="801"/>
+        <location filename="../objects/gameplayandkeys.cpp" line="808"/>
         <source>Key for taking an screensho.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3131,62 +3150,62 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="596"/>
+        <location filename="../menue/gamemenue.cpp" line="595"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1294"/>
+        <location filename="../menue/gamemenue.cpp" line="1293"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1295"/>
+        <location filename="../menue/gamemenue.cpp" line="1294"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1296"/>
+        <location filename="../menue/gamemenue.cpp" line="1295"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1297"/>
+        <location filename="../menue/gamemenue.cpp" line="1296"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1298"/>
+        <location filename="../menue/gamemenue.cpp" line="1297"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1299"/>
+        <location filename="../menue/gamemenue.cpp" line="1298"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1300"/>
+        <location filename="../menue/gamemenue.cpp" line="1299"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1301"/>
+        <location filename="../menue/gamemenue.cpp" line="1300"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1685"/>
+        <location filename="../menue/gamemenue.cpp" line="1684"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1717"/>
+        <location filename="../menue/gamemenue.cpp" line="1716"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1745"/>
+        <location filename="../menue/gamemenue.cpp" line="1744"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
