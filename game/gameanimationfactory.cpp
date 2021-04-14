@@ -198,7 +198,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                                        pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             oxygine::spColorRectSprite pBack = new oxygine::ColorRectSprite();
             pBack->setSize(Settings::getWidth(), Settings::getHeight());
-            pBack->setColor(pAtkUnit->getOwner()->getColor());
+            pBack->setColor(pAtkUnit->getOwner()->getColor().darker(120));
             if (battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
             {
@@ -207,8 +207,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
             {
-                float scale = Settings::getHeight() / pRet->getHeight();
-                float widthScale = Settings::getWidth() / pRet->getWidth();
+                float scale = Settings::getHeight() / (pRet->getHeight() - 30);
+                float widthScale = Settings::getWidth() / (pRet->getWidth() - 30);
                 if (scale > widthScale)
                 {
                     scale = widthScale;
@@ -226,8 +226,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             {
                 pRet->setScale(2.0f);
             }
-            pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
-                              Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
+            pRet->setPosition(static_cast<qint32>(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2),
+                              static_cast<qint32>(Settings::getHeight() / 2 - pRet->getScaledHeight() / 2));
             spGameMenue pMenu = GameMenue::getInstance();
             if (pMenu.get())
             {

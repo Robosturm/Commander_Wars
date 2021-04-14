@@ -231,7 +231,7 @@ namespace oxygine
         qDebug("core::restore() done");
     }
 
-    void GameWindow::loadResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (QThread::currentThreadId() == m_mainHandle)
         {
@@ -243,7 +243,7 @@ namespace oxygine
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::ResAnim* pAnim, const QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadSingleResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         pAnim->init(image, columns, rows, scaleFactor);
     }

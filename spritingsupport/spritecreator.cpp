@@ -5,6 +5,7 @@
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/globalutils.h"
 
 #include "spritingsupport/spritecreator.h"
 
@@ -610,4 +611,42 @@ void SpriteCreator::extendMaskImage(QString& file)
     }
     QFile::remove(file);
     newPicture.save(file);
+}
+
+void SpriteCreator::addTransparentBorder(QImage & image, qint32 columns, qint32 rows)
+{
+    if ((columns > 1) || (rows > 1))
+    {
+        QImage newImg(image.width() + columns,
+                     image.height() + rows, image.format());
+        qint32 frameWidth = image.width() / columns;
+        qint32 frameHeigth = image.height() / rows;
+
+        for (qint32 column = 0; column < columns; ++column)
+        {
+            for (qint32 row = 0; row < rows; ++row)
+            {
+                for (qint32 x = 0; x < frameWidth; ++x)
+                {
+                    for (qint32 y = 0; y < frameHeigth; ++y)
+                    {
+                        qint32 posX = x + column * frameWidth;
+                        qint32 posY = y + row * frameHeigth;
+                        newImg.setPixel(posX + column, posY + row, image.pixel(posX, posY));
+                    }
+                }
+                qint32 posX = (column + 1) * frameWidth + column;
+                for (qint32 y = 0; y < frameHeigth; ++y)
+                {
+                    newImg.setPixel(posX, row * frameHeigth + y + row, Qt::transparent);
+                }
+                qint32 posY = (row + 1) * frameHeigth + row;
+                for (qint32 x = 0; x <= frameWidth; ++x)
+                {
+                    newImg.setPixel(column * frameWidth + x + column, posY, Qt::transparent);
+                }
+            }
+        }
+        image = newImg;
+    }
 }

@@ -145,6 +145,13 @@ public:
      * @param file
      */
     static void extendMaskImage(QString& file);
+    /**
+     * @brief addTransparentBorder
+     * @param image
+     * @param columns
+     * @param rows
+     */
+    static void addTransparentBorder(QImage & image, qint32 columns, qint32 rows);
 };
 
 #endif // SPRITECREATOR_H

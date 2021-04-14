@@ -230,7 +230,7 @@ void Console::update(const oxygine::UpdateState& us)
         qint32 screenheight = Settings::getHeight();
         qint32 h = FontManager::getMainFont16()->getSize();
         // pre calc message start
-        qint32 num = screenheight / h - 1;
+        qint32 num = screenheight / h - 4;
         outputSize = num + 30;
         qint32 i = 0;
         qint32 start = output.size() - num;

@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Image.h"
 #include "3rd_party/oxygine-framework/oxygine/core/NativeTexture.h"
 #include "3rd_party/oxygine-framework/oxygine/core/VideoDriver.h"
+#include "spritingsupport/spritecreator.h"
 
 namespace oxygine
 {
@@ -24,24 +25,26 @@ namespace oxygine
         }
         int frame_width = originalSize.x / columns;
         int frame_height = originalSize.y / rows;
+        if (rows > 1 || columns > 1)
+        {
+            frame_height -= 1;
+            frame_width -= 1;
+        }
+        float iw = 1.0f / static_cast<float>(columns);
+        float ih = 1.0f / static_cast<float>(rows);
+        float width = static_cast<float>(frame_width) / static_cast<float>(originalSize.x);
+        float height = static_cast<float>(frame_height) / static_cast<float>(originalSize.y);
 
         animationFrames frames;
         int frames_count = rows * columns;
         frames.reserve(frames_count);
 
-        Vector2 frameSize((float)frame_width, (float)frame_height);
+        Vector2 frameSize(static_cast<float>(frame_width), static_cast<float>(frame_height));
         for (int y = 0; y < rows; ++y)
         {
             for (int x = 0; x < columns; ++x)
             {
-                Rect src;
-                src.pos = Point(x * frame_width, y * frame_height);
-                src.size = Point(frame_width, frame_height);
-
-                float iw = 1.0f / texture->getWidth();
-                float ih = 1.0f / texture->getHeight();
-                RectF srcRect(src.pos.x * iw, src.pos.y * ih, src.size.x * iw, src.size.y * ih);
-
+                RectF srcRect(x * iw, y * ih, width, height);
                 RectF destRect(Vector2(0, 0), frameSize * scaleFactor);
                 AnimationFrame frame;
                 Diffuse df;
@@ -57,14 +60,16 @@ namespace oxygine
     void ResAnim::init(QString file, int columns, int rows, float scaleFactor)
     {
         QImage img(file);
+        SpriteCreator::addTransparentBorder(img, columns, rows);
         Image mt;
         mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(const QImage & img, int columns, int rows, float scaleFactor)
+    void ResAnim::init(QImage & img, int columns, int rows, float scaleFactor)
     {
         Image mt;
+        SpriteCreator::addTransparentBorder(img, columns, rows);
         mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
     }

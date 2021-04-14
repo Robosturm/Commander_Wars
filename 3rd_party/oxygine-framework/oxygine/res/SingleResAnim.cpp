@@ -27,8 +27,9 @@ namespace oxygine
 
         _scaleFactor = scaleFactor;
         if (!original)
+        {
             return;
-
+        }
         spNativeTexture texture = IVideoDriver::instance->createTexture();
         _texture = texture;
 

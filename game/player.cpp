@@ -375,7 +375,8 @@ oxygine::spResAnim Player::getNeutralTableAnim()
         {
             if (QFile::exists(path + "neutral.png"))
             {
-                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), QImage(path + "neutral.png"));
+                QImage img(path + "neutral.png");
+                Mainapp::getInstance()->loadResAnim(m_neutralTableAnim.get(), img);
                 break;
             }
         }

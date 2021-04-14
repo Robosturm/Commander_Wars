@@ -303,7 +303,7 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
     }
     else
     {
-        Console::print("Unable to locate music folder: " + currentPath, Console::eERROR);
+        Console::print("Unable to locate music folder: " + currentPath, Console::eDEBUG);
     }
 }
 
