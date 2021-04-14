@@ -70,7 +70,9 @@
 		<image file="battlesprites/background/back_snow_mountain+0.png" />
 		<image file="battlesprites/background/back_ruin.png" />
 		<image file="battlesprites/background/back_snow.png" />
-		
+		<!-- uncomment and use in your mod to get a background rendered instead of filled rectangle
+		<image file="battlesprites/fullscreen_battlebackground.png" />		
+		-->
 		
 		<!-- battle animation -->
 		<image file="battlesprites/battle_back.png" />

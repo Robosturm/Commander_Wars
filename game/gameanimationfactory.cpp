@@ -9,6 +9,8 @@
 #include "game/unit.h"
 #include "game/gameaction.h"
 
+#include "resource_management/gamemanager.h"
+
 #include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
@@ -32,9 +34,9 @@ void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
     {
         if (m_Animations[i].get() == pGameAnimation)
         {
-           m_Animations[i]->detach();
-           m_Animations[i]->stop();
-           break;
+            m_Animations[i]->detach();
+            m_Animations[i]->stop();
+            break;
         }
     }
 }
@@ -196,14 +198,35 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         {
             pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
                                        pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
-            oxygine::spColorRectSprite pBack = new oxygine::ColorRectSprite();
-            pBack->setSize(Settings::getWidth(), Settings::getHeight());
-            pBack->setColor(pAtkUnit->getOwner()->getColor().darker(120));
+            oxygine::spSprite pBack = nullptr;
+
+            if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
+                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent ||
+                battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
+            {
+                oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("fullscreen_battlebackground", oxygine::ep_ignore_error);
+                if (pAnim != nullptr)
+                {
+                    pBack = new oxygine::Sprite();
+                    pBack->setResAnim(pAnim);
+                    pBack->setScaleX(Settings::getWidth() / pAnim->getWidth());
+                    pBack->setScaleY(Settings::getHeight() / pAnim->getHeight());
+                    pBack->setSize(pAnim->getSize());
+                }
+                else
+                {
+                    oxygine::spColorRectSprite pRect = new oxygine::ColorRectSprite();
+                    pRect->setSize(Settings::getWidth(), Settings::getHeight());
+                    pRect->setColor(pAtkUnit->getOwner()->getColor().darker(120));
+                    pBack = pRect;
+                }
+            }
             if (battleViewMode == GameEnums::BattleAnimationMode_DetailTransparent ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
             {
                 pBack->setAlpha(128);
             }
+            qint32 scaleFactor = 2.0f;
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
                 battleViewMode == GameEnums::BattleAnimationMode_FullscreenTransparent)
             {
@@ -220,12 +243,9 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                     lastScale = newScale;
                     newScale *= 2;
                 }
-                pRet->setScale(lastScale);
+                scaleFactor = lastScale;
             }
-            else
-            {
-                pRet->setScale(2.0f);
-            }
+            pRet->setScale(scaleFactor);
             pRet->setPosition(static_cast<qint32>(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2),
                               static_cast<qint32>(Settings::getHeight() / 2 - pRet->getScaledHeight() / 2));
             spGameMenue pMenu = GameMenue::getInstance();
@@ -234,8 +254,10 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 if (pBack.get() != nullptr)
                 {
                     pBack->setPriority(BattleAnimation::priorityBackground);
-                    pBack->setPosition(-pRet->getPosition());
+                    pBack->setPosition(-pRet->getPosition() / scaleFactor);
                     pRet->addChild(pBack);
+                    pBack->setScaleX(pBack->getScaleX() / scaleFactor);
+                    pBack->setScaleY(pBack->getScaleY() / scaleFactor);
                 }
                 pMenu->addChild(pRet);
             }
@@ -249,7 +271,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
         pRet->setSound("talongunhit.wav", 1);
     }
-    
+
     return pRet;
 }
 
@@ -269,7 +291,7 @@ GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
 {
-    
+
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -281,25 +303,25 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipp
         }
         else
         {
-             i++;
+            i++;
         }
     }
     if (m_Animations.size() == 0 && !skipping)
     {
         Console::print("GameAnimationFactory -> emitting animationsFinished()", Console::eDEBUG);
         emit GameAnimationFactory::getInstance()->animationsFinished();
-    }    
+    }
 }
 
 void GameAnimationFactory::clearAllAnimations()
 {
-    
+
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         m_Animations[i]->detach();
     }
     m_Animations.clear();
-    
+
 }
 
 void GameAnimationFactory::finishAllAnimations()
@@ -313,5 +335,5 @@ void GameAnimationFactory::finishAllAnimations()
         {
             i++;
         }
-    }    
+    }
 }
