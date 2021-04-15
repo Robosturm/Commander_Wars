@@ -272,7 +272,10 @@ void AudioThread::SlotLoadFolder(QString folder)
     {
         loadMusicFolder(Settings::getMods().at(i) + "/" + folder, loadedSounds);
     }
-    loadMusicFolder(folder, loadedSounds);
+    if (m_loadBaseGameFolders)
+    {
+        loadMusicFolder(folder, loadedSounds);
+    }
 }
 
 void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
@@ -305,6 +308,16 @@ void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
     {
         Console::print("Unable to locate music folder: " + currentPath, Console::eDEBUG);
     }
+}
+
+bool AudioThread::getLoadBaseGameFolders() const
+{
+    return m_loadBaseGameFolders;
+}
+
+void AudioThread::setLoadBaseGameFolders(bool loadBaseGameFolders)
+{
+    m_loadBaseGameFolders = loadBaseGameFolders;
 }
 
 void AudioThread::SlotCheckMusicEnded(qint64 duration)

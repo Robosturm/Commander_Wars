@@ -31,7 +31,13 @@ class NormalAi : public CoreAI
         float coBonus{0.0f};
         float closestTarget{0.0f};
         qint32 movePoints{0};
-        float transporterScore{0.0f};
+
+        qint32 smallTransporterCount{0};
+        qint32 loadingPlace{0};
+        qint32 noTransporterBonus{0};
+        qint32 transportCount{0};
+        qint32 loadingCount{0};
+        bool flying{false};
     };
     struct ProductionData
     {
@@ -319,6 +325,18 @@ protected:
      */
     float calcCostScore(QVector<float>& data);
     /**
+     * @brief getTransporterData
+     * @param unitBuildData
+     * @param dummy
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @param transportTargets
+     */
+    void getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, QmlVectorUnit* pUnits,
+                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                            QVector<std::tuple<Unit*, Unit*>>& transportTargets);
+    /**
      * @brief calcTransporterScore
      * @param posX
      * @param posY
@@ -327,10 +345,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    float calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
-                               QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                               QVector<std::tuple<Unit*, Unit*>>& transportTargets,
-                               QVector<float>& data);
+    float calcTransporterScore(UnitBuildData & unitBuildData,  QmlVectorUnit* pUnits, QVector<float>& data);
     /**
      * @brief canTransportToEnemy
      * @param pUnit
@@ -456,6 +471,10 @@ private:
     float m_cheapUnitBonusMultiplier{40};
     float m_normalUnitBonusMultiplier{10};
     float m_expensiveUnitBonusMultiplier{5};
+
+    float m_ProducingTransportSearchrange{6};
+    float m_ProducingTransportSizeBonus{10};
+    float m_ProducingTransportRatioBonus{1.7f};
 };
 
 #endif // NORMALAI_H

@@ -459,6 +459,22 @@ void NormalAi::readIni(QString name)
         {
             m_lowIncomeInfantryBonusMultiplier = 50;
         }
+
+        m_ProducingTransportSearchrange = settings.value("ProducingTransportSearchrange", 6).toFloat(&ok);
+        if(!ok)
+        {
+            m_ProducingTransportSearchrange = 6;
+        }
+        m_ProducingTransportSizeBonus = settings.value("ProducingTransportSizeBonus", 10).toFloat(&ok);
+        if(!ok)
+        {
+            m_ProducingTransportSizeBonus = 10;
+        }
+        m_ProducingTransportRatioBonus = settings.value("ProducingTransportRatioBonus", 1.7f).toFloat(&ok);
+        if(!ok)
+        {
+            m_ProducingTransportRatioBonus = 1.7f;
+        }
         settings.endGroup();
     }
 }
@@ -2100,45 +2116,46 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 data[UnitCost] = unitData.cost;
                                 if (unitData.canMove)
                                 {
+                                    data[Movementpoints] = unitData.movePoints;
+                                    data[ReachDistance] = unitData.closestTarget;
+                                    data[COBonus] = unitData.coBonus;
+                                    data[NotAttackableCount] = unitData.notAttackableCount;
+                                    data[DamageData] =  unitData.damage;
+                                    data[FundsFactoryRatio] = unitData.cost / fundsPerFactory;
+                                    if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
+                                    {
+                                        data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
+                                    }
+                                    else
+                                    {
+                                        data[BuildingEnemyRatio] = 0.0;
+                                    }
+                                    if (unitData.infantryUnit)
+                                    {
+                                        data[InfantryUnit] = 1.0;
+                                    }
+                                    else
+                                    {
+                                        data[InfantryUnit] = 0.0;
+                                    }
+                                    if (unitData.indirectUnit)
+                                    {
+                                        data[IndirectUnit] = 1.0;
+                                        data[DirectUnit] = 0.0;
+                                    }
+                                    else
+                                    {
+                                        data[IndirectUnit] = 0.0;
+                                        data[DirectUnit] = 1.0;
+                                    }
                                     if (!unitData.isTransporter)
                                     {
-                                        data[Movementpoints] = unitData.movePoints;
-                                        data[ReachDistance] = unitData.closestTarget;
-                                        data[COBonus] = unitData.coBonus;
-                                        data[NotAttackableCount] = unitData.notAttackableCount;
-                                        data[DamageData] =  unitData.damage;
-                                        data[FundsFactoryRatio] = unitData.cost / fundsPerFactory;
-                                        if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
-                                        {
-                                            data[BuildingEnemyRatio] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
-                                        }
-                                        else
-                                        {
-                                            data[BuildingEnemyRatio] = 0.0;
-                                        }
-                                        if (unitData.infantryUnit)
-                                        {
-                                            data[InfantryUnit] = 1.0;
-                                        }
-                                        else
-                                        {
-                                            data[InfantryUnit] = 0.0;
-                                        }
-                                        if (unitData.indirectUnit)
-                                        {
-                                            data[IndirectUnit] = 1.0;
-                                            data[DirectUnit] = 0.0;
-                                        }
-                                        else
-                                        {
-                                            data[IndirectUnit] = 0.0;
-                                            data[DirectUnit] = 1.0;
-                                        }
+
                                         score = calcBuildScore(data);
                                     }
                                     else
                                     {
-                                        score = unitData.transporterScore;
+                                        score = calcTransporterScore(unitData, pUnits, data);
                                         isTransporter = true;
                                     }
                                 }
@@ -2192,7 +2209,11 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             {
                 for (auto & unit : building.m_buildData)
                 {
-                    unit.transporterScore = 0.0f;
+                    if (unit.isTransporter)
+                    {
+                        unit.noTransporterBonus = 0;
+                        unit.transportCount += 1;
+                    }
                 }
             }
         }
@@ -2263,15 +2284,7 @@ qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
                 unitData.notAttackableCount = std::get<1>(damageData);
                 unitData.damage =  std::get<0>(damageData);
             }
-            if ((unitData.isTransporter &&
-                  unitData.transporterScore <= 0.0f))
-            {
-                data.m_buildData.removeAt(i);
-            }
-            else
-            {
-                ret = i;
-            }
+            ret = i;
             break;
         }
     }
@@ -2309,7 +2322,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                        dummy.getWeapon2ID().isEmpty());
         if (unitBuildData.isTransporter)
         {
-            unitBuildData.transporterScore = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, buildData);
+            getTransporterData(unitBuildData, dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets);
         }
         else
         {
@@ -2658,12 +2671,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
     return std::tuple<float, qint32>(damage, notAttackableCount);
 }
 
-float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
-                                     QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                                     QVector<std::tuple<Unit*, Unit*>>& transportTargets,
-                                     QVector<float>& data)
+void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, QmlVectorUnit* pUnits,
+                                  QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                  QVector<std::tuple<Unit*, Unit*>>& transportTargets)
 {
-    float score = 0.0f;
     QVector<QVector3D> targets;
     QmlVectorUnit relevantUnits;
     QPoint position = dummy.getPosition();
@@ -2675,7 +2686,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
     spGameMap pMap = GameMap::getInstance();
     qint32 loadingPlace = dummy.getLoadingPlace();
     qint32 smallTransporterCount = 0;
-    qint32 maxCounter = pMap->getMapWidth() * pMap->getMapHeight() / (movement * 2);
+    qint32 maxCounter = m_ProducingTransportSearchrange;
     qint32 counter = 1;
     while (relevantUnits.size()  < loadingPlace * m_transporterToRequiredPlaceFactor &&
            pUnits->size() > loadingPlace * (m_transporterToRequiredPlaceFactor - 1) &&
@@ -2725,7 +2736,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
 
             if (transporter == 0)
             {
-                score += m_noTransporterBonus;
+                unitBuildData.noTransporterBonus += m_noTransporterBonus;
             }
             i++;
         }
@@ -2734,12 +2745,22 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
             loadingUnits.removeAt(i);
         }
     }
-    if (score == 0.0f && pUnits->size() / (smallTransporterCount + 1) > m_unitToSmallTransporterRatio && dummy.getLoadingPlace() == 1)
+    unitBuildData.smallTransporterCount = smallTransporterCount;
+    unitBuildData.loadingPlace = dummy.getLoadingPlace();
+    unitBuildData.transportCount = transporterUnits.size();
+    unitBuildData.loadingCount = loadingUnits.size();
+    unitBuildData.flying = !dummy.useTerrainDefense();
+}
+
+float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  QmlVectorUnit* pUnits, QVector<float>& data)
+{
+    float score = 0.0f;
+    if (score == 0.0f && pUnits->size() / (unitBuildData.smallTransporterCount + 1) > m_unitToSmallTransporterRatio && unitBuildData.loadingPlace == 1)
     {
         spGameMap pMap = GameMap::getInstance();
-        if (smallTransporterCount > 0)
+        if (unitBuildData.smallTransporterCount > 0)
         {
-            score += qMin(m_smallTransporterBonus,  pUnits->size() / static_cast<float>(smallTransporterCount + 1.0f) * 10.0f);
+            score += qMin(m_smallTransporterBonus,  pUnits->size() / static_cast<float>(unitBuildData.smallTransporterCount + 1.0f) * 10.0f);
 
         }
         else
@@ -2747,24 +2768,24 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
             score += m_smallTransporterBonus;
         }
         // give a bonus to t-heli's or similar units cause they are mostlikly much faster
-        if (dummy.useTerrainDefense() == false && score > m_minFlyingTransportScoreForBonus)
+        if (unitBuildData.flying && score > m_minFlyingTransportScoreForBonus)
         {
             score += m_flyingTransporterBonus;
         }
     }
-    if (transporterUnits.size() > 0 && loadingUnits.size() > 0)
+    if (unitBuildData.transportCount > 0 && unitBuildData.loadingCount > 0)
     {
-        score += (loadingUnits.size() / static_cast<float>(transporterUnits.size())) * 10 / 6.0f;
+        score += (unitBuildData.loadingCount / static_cast<float>(unitBuildData.transportCount)) * m_ProducingTransportRatioBonus;
     }
     else
     {
-        score += loadingUnits.size() * 10;
+        score += unitBuildData.loadingCount * 10;
     }
-    if (loadingUnits.size() > 0 && score > 20)
+    if (unitBuildData.loadingCount > 0 && score > 20)
     {
-        score += dummy.getLoadingPlace() * m_additionalLoadingUnitBonus;
+        score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
         score += calcCostScore(data);
-        score += loadingUnits.size() * m_additionalLoadingUnitBonus;
+        score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
     }
     // avoid building transporters if the score is low
     if (score <= 10)

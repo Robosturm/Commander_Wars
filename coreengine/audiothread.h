@@ -31,6 +31,16 @@ signals:
     void SignalStopAllSounds();
 public slots:
     /**
+     * @brief getLoadBaseGameFolders
+     * @return
+     */
+    bool getLoadBaseGameFolders() const;
+    /**
+     * @brief setLoadBaseGameFolders
+     * @param loadBaseGameFolders
+     */
+    void setLoadBaseGameFolders(bool loadBaseGameFolders);
+    /**
      * @brief playMusic
      * @param File the music file to be played
      */
@@ -122,6 +132,8 @@ private:
     QVector<QTimer*> m_SoundTimers;
 
     QTimer m_doubleBufferTimer;
+
+    bool m_loadBaseGameFolders{true};
 };
 
 #endif // AUDIOTHREAD_H
