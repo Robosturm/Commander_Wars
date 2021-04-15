@@ -108,6 +108,7 @@ QQmlDebuggingEnabler enabler;
     qRegisterMetaType<GameEnums::COInfoPosition>("GameEnums::COInfoPosition");
     qRegisterMetaType<GameEnums::WeaponType>("GameEnums::WeaponType");
     qRegisterMetaType<GameEnums::ShopItemType>("GameEnums::ShopItemType");
+    qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
@@ -164,6 +165,7 @@ QQmlDebuggingEnabler enabler;
     /*************************************************************************************************/
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
+
     window.setBrightness(Settings::getBrightness());
     window.setGamma(Settings::getGamma());
     window.setPosition(Settings::getX(), Settings::getY());

@@ -41,6 +41,7 @@ namespace oxygine
         _window = this;
         m_mainHandle = QThread::currentThreadId();
         connect(this, &GameWindow::sigLoadSingleResAnim, this, &GameWindow::loadSingleResAnim, Qt::BlockingQueuedConnection);
+        connect(this, &GameWindow::sigLoadRessources, this, &GameWindow::loadRessources, Qt::QueuedConnection);
     }
 
     GameWindow::~GameWindow()
@@ -217,8 +218,7 @@ namespace oxygine
         oxygine::Stage::instance = new oxygine::Stage();
         QSize size = GameWindow::size();
         oxygine::getStage()->setSize(size.width(), size.height());
-
-        loadRessources();
+        emit sigLoadRessources();
     }
 
     void GameWindow::resizeGL(int w, int h)

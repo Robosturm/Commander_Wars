@@ -26,11 +26,13 @@ void LoadingScreen::show()
 {    
     oxygine::getStage()->addChild(this);
     removeChildren();
+    oxygine::ResAnim* pBackground;
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+    pBackground = pBackgroundManager->getResAnim("loadingscreen");
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
     addChild(sprite);
-    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("loadingscreen");
+
     sprite->setResAnim(pBackground);
     // background should be last to draw
     sprite->setPriority(static_cast<qint32>(Mainapp::ZOrder::Background));

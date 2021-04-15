@@ -45,7 +45,6 @@ private:
     oxygine::spColorRectSprite m_BackgroundBar;
     oxygine::spColorRectSprite m_LoadingBar;
 
-
     static spLoadingScreen m_pLoadingScreen;
 };
 

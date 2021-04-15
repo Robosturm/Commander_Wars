@@ -19,6 +19,30 @@ class Mainapp : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
+    static constexpr qint32 stepProgress = 4;
+    enum StartupPhase
+    {
+        Start,
+        General = Start,
+        Building,
+        COSprites,
+        GameAnimations,
+        GameManager,
+        GameRuleManager,
+        ObjectManager,
+        TerrainManager,
+        UnitSpriteManager,
+        BattleAnimationManager,
+        COPerkManager,
+        WikiDatabase,
+        Userdata,
+        Achievementmanager,
+        ShopLoader,
+        LoadingScripts,
+        Finalizing,
+    };
+    Q_ENUM(StartupPhase)
+    static constexpr qint16 SCRIPT_PROCESS = ShopLoader * stepProgress;
     /**
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
@@ -125,6 +149,7 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
+    void nextStartUpStep(StartupPhase step);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -149,6 +174,8 @@ signals:
      * @param filter
      */
     void sigApplyFilter(quint32 filter);
+
+    void sigNextStartUpStep(StartupPhase step);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;

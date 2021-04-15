@@ -11,6 +11,8 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/workerthread.h"
 
+#include "objects/loadingscreen.h"
+
 #include "network/mainserver.h"
 
 #include "resource_management/backgroundmanager.h"
@@ -56,6 +58,7 @@ Mainapp::Mainapp()
     connect(this, &Mainapp::sigChangePosition, this, &Mainapp::changePosition, Qt::QueuedConnection);
     connect(this, &Mainapp::activeChanged, this, &Mainapp::onActiveChanged, Qt::QueuedConnection);
     connect(this, &Mainapp::sigApplyFilter, this, &Mainapp::applyFilter, Qt::BlockingQueuedConnection);
+    connect(this, &Mainapp::sigNextStartUpStep, this, &Mainapp::nextStartUpStep, Qt::QueuedConnection);
 }
 
 Mainapp::~Mainapp()
@@ -73,60 +76,225 @@ Mainapp::~Mainapp()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-           QThread::currentThread() == pMainThread;
+            QThread::currentThread() == pMainThread;
 }
 
 void Mainapp::loadRessources()
 {
-    Mainapp::m_Audiothread = new AudioThread();
-    // load ressources by creating the singletons
-    BackgroundManager::getInstance();
-    BuildingSpriteManager::getInstance();
-    COSpriteManager::getInstance();
-    FontManager::getInstance();
-    GameAnimationManager::getInstance();
-    GameManager::getInstance();
-    GameRuleManager::getInstance();
-    ObjectManager::getInstance();
-    TerrainManager::getInstance();
-    UnitSpriteManager::getInstance();
-    BattleAnimationManager::getInstance();
-    COPerkManager::getInstance();
-    WikiDatabase::getInstance();
-    Userdata::getInstance();
-    AchievementManager::getInstance();
-    ShopLoader::getInstance();
-    applyFilter(Settings::getSpriteFilter());
-    // start after ressource loading
-    m_AudioWorker.setObjectName("AudioThread");
-    m_Networkthread.setObjectName("NetworkThread");
-    m_Workerthread.setObjectName("WorkerThread");
-    m_AudioWorker.start(QThread::Priority::LowPriority);
-    m_Networkthread.start(QThread::Priority::NormalPriority);
-    m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
-    emit m_Audiothread->sigInitAudio();
-    emit m_Worker->sigStart();
-    while (!m_Worker->getStarted())
-    {
-        QThread::msleep(100);
-    }
-    // only launch the server if the rest is ready for it ;)
-    if (Settings::getServer() && !m_slave)
-    {
-        MainServer::getInstance();
-        m_GameServerThread.start(QThread::Priority::TimeCriticalPriority);
-    }
     if (!m_noUi)
     {
-        m_Timer.start(1, this);
+        update();
     }
-    if (!m_slave)
+    emit sigNextStartUpStep(StartupPhase::Start);
+}
+
+void Mainapp::nextStartUpStep(StartupPhase step)
+{
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+    switch (step)
     {
-        emit m_Worker->sigShowMainwindow();
+        case StartupPhase::General:
+        {
+            Mainapp::m_Audiothread = new AudioThread();
+            m_AudioWorker.setObjectName("AudioThread");
+            m_AudioWorker.start(QThread::Priority::LowPriority);
+            emit m_Audiothread->sigInitAudio();
+            m_Audiothread->clearPlayList();
+            m_Audiothread->loadFolder("resources/music/hauptmenue");
+            m_Audiothread->playRandom();
+            FontManager::getInstance();
+            // load ressources by creating the singletons
+            BackgroundManager::getInstance();
+            LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+            pLoadingScreen->show();
+            pLoadingScreen->setProgress(tr("Start Loading..."), step  * stepProgress);
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::Building:
+        {
+            pLoadingScreen->setProgress(tr("Loading Building Textures..."), step  * stepProgress);
+            BuildingSpriteManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::COSprites:
+        {
+            pLoadingScreen->setProgress(tr("Loading CO Textures..."), step  * stepProgress);
+            COSpriteManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::GameAnimations:
+        {
+            pLoadingScreen->setProgress(tr("Loading Animation Textures..."), step  * stepProgress);
+            GameAnimationManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::GameManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Game Textures ..."), step  * stepProgress);
+            GameManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::GameRuleManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Rule Textures ..."), step  * stepProgress);
+            GameRuleManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::ObjectManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Objects Textures ..."), step  * stepProgress);
+            ObjectManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::TerrainManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Terrains Textures ..."), step  * stepProgress);
+            TerrainManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::UnitSpriteManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Units Textures ..."), step  * stepProgress);
+            UnitSpriteManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::BattleAnimationManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Battleanimation Textures ..."), step  * stepProgress);
+            BattleAnimationManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::COPerkManager:
+        {
+            pLoadingScreen->setProgress(tr("Loading CO-Perk Textures ..."), step  * stepProgress);
+            COPerkManager::getInstance();
+            update();
+            break;
+        }
+        case StartupPhase::WikiDatabase:
+        {
+            pLoadingScreen->setProgress(tr("Loading Wiki Textures ..."), step  * stepProgress);
+            WikiDatabase::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::Userdata:
+        {
+            pLoadingScreen->setProgress(tr("Loading Userdata ..."), step  * stepProgress);
+            Userdata::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::Achievementmanager:
+        {
+            pLoadingScreen->setProgress(tr("Loading Achievement Textures ..."), step  * stepProgress);
+            AchievementManager::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::ShopLoader:
+        {
+            pLoadingScreen->setProgress(tr("Loading Shop Textures ..."), step  * stepProgress);
+            ShopLoader::getInstance();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::LoadingScripts:
+        {
+            pLoadingScreen->setProgress(tr("Loading Scripts ..."), SCRIPT_PROCESS);
+            applyFilter(Settings::getSpriteFilter());
+            // start after ressource loading
+            m_Networkthread.setObjectName("NetworkThread");
+            m_Workerthread.setObjectName("WorkerThread");
+            m_Networkthread.start(QThread::Priority::NormalPriority);
+            m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
+            emit m_Worker->sigStart();
+            if (!m_noUi)
+            {
+                update();
+            }
+            break;
+        }
+        case StartupPhase::Finalizing:
+        {
+            if (!m_noUi)
+            {
+                m_Timer.start(1, this);
+            }
+            // only launch the server if the rest is ready for it ;)
+            if (Settings::getServer() && !m_slave)
+            {
+                MainServer::getInstance();
+                m_GameServerThread.start(QThread::Priority::TimeCriticalPriority);
+            }
+            pLoadingScreen->hide();
+            if (!m_slave)
+            {
+                emit m_Worker->sigShowMainwindow();
+            }
+            else
+            {
+                emit m_Worker->sigStartSlaveGame();
+            }
+            update();
+            break;
+        }
     }
-    else
+    if (step < StartupPhase::LoadingScripts)
     {
-        emit m_Worker->sigStartSlaveGame();
+        emit sigNextStartUpStep(static_cast<StartupPhase>(static_cast<qint8>(step) + 1));
     }
 }
 
@@ -357,7 +525,7 @@ void Mainapp::loadArgs(const QStringList & args)
             }
             else
             {
-                 ++i;
+                ++i;
             }
         }
         Settings::setActiveMods(modList);

@@ -70,7 +70,7 @@ namespace oxygine
 
     signals:
         void sigLoadSingleResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
-
+        void sigLoadRessources();
         void sigMousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigMouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y);
         void sigWheelEvent(qint32 x, qint32 y);
@@ -96,10 +96,11 @@ namespace oxygine
          * @param gamma
          */
         void setGamma(float gamma);
+        virtual void initializeGL() override;
     protected slots:
         void loadSingleResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor);
+        virtual void loadRessources(){}
     protected:
-        virtual void initializeGL() override;
         virtual void registerResourceTypes();
         virtual void timerEvent(QTimerEvent *) override;
         virtual void paintGL() override;
@@ -111,7 +112,6 @@ namespace oxygine
         virtual void wheelEvent(QWheelEvent *event) override;
         virtual void mouseMoveEvent(QMouseEvent *event)override;
 
-        virtual void loadRessources(){}
         void updateData();
         bool beginRendering();
         void swapDisplayBuffers();

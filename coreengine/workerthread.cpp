@@ -25,6 +25,7 @@
 #include "resource_management/shoploader.h"
 #include "wiki/wikidatabase.h"
 
+#include "objects/loadingscreen.h"
 
 WorkerThread::WorkerThread()
 {
@@ -42,6 +43,8 @@ WorkerThread::~WorkerThread()
 
 void WorkerThread::start()
 {
+    LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
+
     Mainapp* pApp = Mainapp::getInstance();
     Console* pConsole = Console::getInstance();
     // create the initial menue no need to store the object
@@ -70,29 +73,42 @@ void WorkerThread::start()
             pInterpreter->openScript(file, true);
         }
     }
+    pLoadingScreen->setProgress(tr("Loading Buildings..."), Mainapp::SCRIPT_PROCESS);
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading COs..."), Mainapp::SCRIPT_PROCESS + 2);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     pCOSpriteManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Gamescripts..."), Mainapp::SCRIPT_PROCESS + 4);
     GameManager* pGameManager = GameManager::getInstance();
     pGameManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Gamerules..."), Mainapp::SCRIPT_PROCESS + 6);
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     pGameRuleManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Movements..."), Mainapp::SCRIPT_PROCESS + 8);
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     pMovementTableManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Terrains..."), Mainapp::SCRIPT_PROCESS + 10);
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     pTerrainManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Units..."), Mainapp::SCRIPT_PROCESS + 12);
     UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
     pUnitspritemanager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Weapons..."), Mainapp::SCRIPT_PROCESS + 14);
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     pWeaponManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Battleanimation scripts..."), Mainapp::SCRIPT_PROCESS + 16);
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading CO-Perks..."), Mainapp::SCRIPT_PROCESS + 18);
     COPerkManager* pCOPerkManager = COPerkManager::getInstance();
     pCOPerkManager->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Wikiscripts..."), Mainapp::SCRIPT_PROCESS + 20);
     WikiDatabase::getInstance()->load();
+    pLoadingScreen->setProgress(tr("Loading Shop items..."), Mainapp::SCRIPT_PROCESS + 22);
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     pShopLoader->loadAll();
+    pLoadingScreen->setProgress(tr("Loading Achievements..."), Mainapp::SCRIPT_PROCESS + 24);
     // achievements should be loaded last
     AchievementManager* pAchievementManager = AchievementManager::getInstance();
     pAchievementManager->loadAll();
@@ -107,7 +123,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
     started = true;
-    
+    emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }
 
 void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32 y)
