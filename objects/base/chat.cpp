@@ -40,6 +40,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     m_Chat->setStyle(style);
     m_Chat->setPosition(10, 10);
     m_Chat->setWidth(size.width() - 10 - 60);
+
     m_Panel->addItem(m_Chat);
 
     m_Send = pObjectManager->createButton(tr("Send"), 150);
@@ -88,17 +89,6 @@ void Chat::setVisible(bool vis)
     
 }
 
-void Chat::update(const oxygine::UpdateState& us)
-{
-    QString drawText;
-    for(qint32 i = 0; i < messages.size();i++)
-    {
-        drawText += "> " + messages[i] + "\n";
-    }
-    m_Chat->setHtmlText(drawText);
-    oxygine::Actor::update(us);
-}
-
 void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == m_serviceMode)
@@ -109,8 +99,7 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 }
 
 void Chat::addMessage(QString message, bool local)
-{
-    
+{    
     spGameMenue pGamemenu = GameMenue::getInstance();
     spGameMap pMap = GameMap::getInstance();
     bool show = true;
@@ -172,7 +161,14 @@ void Chat::addMessage(QString message, bool local)
             m_Panel->getH_Scrollbar()->changeScrollValue(1.0f);
         }
     }
-    
+
+    QString drawText;
+    for(qint32 i = 0; i < messages.size();i++)
+    {
+        drawText += "> " + messages[i] + "\n";
+    }
+    m_Chat->setHtmlText(drawText);
+    m_Chat->setHeight(m_Chat->getTextRect().getHeight() + 20);
 }
 
 void Chat::sendData(QString message)

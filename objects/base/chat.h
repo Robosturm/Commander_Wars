@@ -20,7 +20,6 @@ class Chat : public QObject, public oxygine::Actor
 public:
     explicit Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode);
 
-    virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setVisible
      * @param vis
