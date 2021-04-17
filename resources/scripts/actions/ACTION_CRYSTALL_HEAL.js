@@ -35,7 +35,7 @@ var Constructor = function()
         building.setFireCount(building.getFireCount() - 1);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
-        var damage = Global[building.getBuildingID()].getDamage(building, unit);
+        var damage = Global[building.getBuildingID()].getDamage(building, null);
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
@@ -52,8 +52,11 @@ var Constructor = function()
                 }
             }
         }
-        var sound = Global[building.getBuildingID()].getHealSound();
-        audio.playSound(sound);
+        if (animation !== null)
+        {
+            var sound = Global[building.getBuildingID()].getHealSound();
+            animation.addSound(sound);
+        }
         fields.remove();
     };
     this.getDescription = function()

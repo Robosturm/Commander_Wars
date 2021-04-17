@@ -341,6 +341,10 @@ void MapSelectionView::loadMapVictoryInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
+                if (pAnim != nullptr)
+                {
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                }
                 pSprite->setResAnim(pAnim);
                 pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
                 pSprite->setPosition(150, posY);
@@ -350,6 +354,10 @@ void MapSelectionView::loadMapVictoryInfo()
                     pAnim = pCOSpriteManager->getResAnim(co2 + "+info");
                 }
                 else
+                {
+                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                }
+                if (pAnim != nullptr)
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }

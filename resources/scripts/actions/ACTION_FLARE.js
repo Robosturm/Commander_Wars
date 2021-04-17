@@ -104,8 +104,8 @@ var Constructor = function()
     {
         var animation = GameAnimationFactory.createAnimation(ACTION_FLARE.postAnimationTargetX, ACTION_FLARE.postAnimationTargetY);
         animation.addSprite("flare_explosion", -map.getImageSize() - 36, -map.getImageSize() - 37, 0, 1.5);
-        animation.setSound("flare_launch.wav");
-        audio.playSound("flare_explosion.wav", 1, "resources/sounds/", 300);
+        animation.addSound("flare_launch.wav");
+        animation.addSound("flare_explosion.wav", 1, "resources/sounds/", 300);
         var fields = globals.getCircle(0, ACTION_FLARE.getUnfogRange());
         for (var i = 0; i < fields.size(); i++)
         {
