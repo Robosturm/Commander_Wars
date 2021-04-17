@@ -470,10 +470,20 @@ void NormalAi::readIni(QString name)
         {
             m_ProducingTransportSizeBonus = 10;
         }
-        m_ProducingTransportRatioBonus = settings.value("ProducingTransportRatioBonus", 1.7f).toFloat(&ok);
+        m_ProducingTransportRatioBonus = settings.value("ProducingTransportRatioBonus", 10.0f).toFloat(&ok);
         if(!ok)
         {
-            m_ProducingTransportRatioBonus = 1.7f;
+            m_ProducingTransportRatioBonus = 10.0f;
+        }
+        m_ProducingTransportLoadingBonus = settings.value("ProducingTransportLoadingBonus", 15.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_ProducingTransportLoadingBonus = 15.0f;
+        }
+        m_ProducingTransportMinLoadingTransportRatio = settings.value("ProducingTransportMinLoadingTransportRatio", 3.0f).toFloat(&ok);
+        if(!ok)
+        {
+            m_ProducingTransportMinLoadingTransportRatio = 3.0f;
         }
         settings.endGroup();
     }
@@ -2779,16 +2789,19 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  QmlVectorUn
     }
     else
     {
-        score += unitBuildData.loadingCount * 10;
+        score += unitBuildData.loadingCount * m_ProducingTransportLoadingBonus;
     }
-    if (unitBuildData.loadingCount > 0 && score > 20)
+    if (unitBuildData.loadingCount > 0)
     {
-        score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
-        score += calcCostScore(data);
-        score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
+        if (unitBuildData.transportCount <= 0 || static_cast<float>(unitBuildData.loadingCount) / static_cast<float>(unitBuildData.transportCount) < m_ProducingTransportMinLoadingTransportRatio)
+        {
+            score += calcCostScore(data);
+            score += unitBuildData.loadingPlace * m_additionalLoadingUnitBonus;
+            score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
+        }
     }
     // avoid building transporters if the score is low
-    if (score <= 10)
+    if (score <= 20)
     {
         score = std::numeric_limits<float>::lowest();
     }

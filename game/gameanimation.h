@@ -148,7 +148,15 @@ public slots:
      * @param soundFile sound file
      * @param loops amount of loops to play this sound -1 till the animation is over;
      */
-    void setSound(QString soundFile, qint32 loops = 1, QString folder = "resources/sounds/", float volume = 1.0f);
+    void setSound(QString soundFile, qint32 loops = 1, QString folder = "resources/sounds/", qint32 delayMs = 0, float volume = 1.0f);
+    /**
+     * @brief addSound
+     * @param soundFile
+     * @param loops
+     * @param folder
+     * @param volume
+     */
+    void addSound(QString soundFile, qint32 loops = 1, QString folder = "resources/sounds/", qint32 delayMs = 0, float volume = 1.0f);
     /**
      * @brief addTweenScale adds a tween to change the scale of this animation
      * @param endScale final scaling of the animation
@@ -338,11 +346,15 @@ private:
     QString jsPostActionFunction{""};
     bool m_stopSoundAtAnimationEnd{false};
 
-    QString m_soundFile;
-    QString m_soundFolder;
-    qint32 m_loops;
-    float m_volume{1.0f};
-
+    struct SoundData
+    {
+        QString soundFile;
+        QString soundFolder;
+        qint32 loops;
+        float volume{1.0f};
+        qint32 delayMs;
+    };
+    QVector<SoundData> m_SoundData;
     /**
      * @brief animation data needed to perform this action
      */

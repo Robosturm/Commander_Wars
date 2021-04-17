@@ -5775,42 +5775,47 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="208"/>
+        <location filename="../wiki/unitinfo.cpp" line="206"/>
+        <source>Costs:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="223"/>
         <source>Loading Place:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="220"/>
+        <location filename="../wiki/unitinfo.cpp" line="235"/>
         <source>Loadable Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="232"/>
+        <location filename="../wiki/unitinfo.cpp" line="247"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="243"/>
+        <location filename="../wiki/unitinfo.cpp" line="258"/>
         <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="252"/>
+        <location filename="../wiki/unitinfo.cpp" line="267"/>
         <source>Transporters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="268"/>
+        <location filename="../wiki/unitinfo.cpp" line="283"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="361"/>
+        <location filename="../wiki/unitinfo.cpp" line="376"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="372"/>
+        <location filename="../wiki/unitinfo.cpp" line="387"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

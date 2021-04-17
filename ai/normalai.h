@@ -475,6 +475,8 @@ private:
     float m_ProducingTransportSearchrange{6};
     float m_ProducingTransportSizeBonus{10};
     float m_ProducingTransportRatioBonus{1.7f};
+    float m_ProducingTransportLoadingBonus{15.0f};
+    float m_ProducingTransportMinLoadingTransportRatio{3.0f};
 };
 
 #endif // NORMALAI_H

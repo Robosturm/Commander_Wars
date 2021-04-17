@@ -199,6 +199,21 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         y += 40;
     }
 
+    // cpsts
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Costs:"));
+    pLabel->setPosition(0, y);
+    addChild(pLabel);
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText((QString::number(pUnit->getUnitCosts())));
+    pLabel->setPosition(xOffset, y);
+    addChild(pLabel);
+    y += 40;
+
     // loading place 2
     if (pUnit->getLoadingPlace() > 0)
     {

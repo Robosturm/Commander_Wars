@@ -36,7 +36,7 @@ void GameAnimation::restart()
 
     for (auto & tween : m_stageTweens)
     {
-       oxygine::getStage()->addTween(tween);
+        oxygine::getStage()->addTween(tween);
     }
     GameMap::getInstance()->addChild(this);
 }
@@ -110,10 +110,10 @@ void GameAnimation::update(const oxygine::UpdateState& us)
 
         if (!m_SoundStarted)
         {
-            if (!m_soundFile.isEmpty())
+            AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+            for (auto & data : m_SoundData)
             {
-                AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
-                pAudioThread->playSound(m_soundFile, m_loops, m_soundFolder, 0, m_volume);
+                pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs, data.volume);
             }
             m_SoundStarted = true;
         }
@@ -320,10 +320,14 @@ bool GameAnimation::onFinished(bool skipping)
     m_skipping |= skipping;
     if (m_skipping == skipping)
     {
-        if (m_stopSoundAtAnimationEnd || skipping || m_loops < 0)
+        for (auto & data : m_SoundData)
         {
-            Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
+            if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
+            {
+                Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile, data.soundFolder);
+            }
         }
+
         for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
         {
             GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
@@ -347,12 +351,33 @@ bool GameAnimation::onFinished(bool skipping)
     return true;
 }
 
-void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder, float volume)
+void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder, qint32 delayMs, float volume)
 {
-    m_soundFile = soundFile;
-    m_loops = loops;
-    m_soundFolder = folder;
-    m_volume = volume;
+    if (m_SoundData.size() == 0)
+    {
+        addSound(soundFile, loops, folder, delayMs, volume);
+    }
+    else
+    {
+        SoundData data;
+        data.soundFile = soundFile;
+        data.loops = loops;
+        data.soundFolder = folder;
+        data.volume = volume;
+        data.delayMs = delayMs;
+        m_SoundData[0] = data;
+    }
+}
+
+void GameAnimation::addSound(QString soundFile, qint32 loops, QString folder, qint32 delayMs, float volume)
+{
+    SoundData data;
+    data.soundFile = soundFile;
+    data.loops = loops;
+    data.soundFolder = folder;
+    data.volume = volume;
+    data.delayMs = delayMs;
+    m_SoundData.append(data);
 }
 
 void GameAnimation::addTweenScale(float endScale, qint32 duration)
@@ -415,7 +440,7 @@ void GameAnimation::emitFinished()
 void GameAnimation::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
     m_stageTweens.append(tween);
     oxygine::getStage()->addTween(tween);
 
