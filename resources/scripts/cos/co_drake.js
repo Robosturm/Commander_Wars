@@ -295,7 +295,7 @@ var Constructor = function()
     this.getVictorySentences = function(co)
     {
         return [qsTr("I'm just glad I survived that..."),
-                qsTr("That was some rough sailing!|Blow me down... we finally won.")];
+                qsTr("That was some rough sailing! Blow me down... we finally won.")];
     };
     this.getDefeatSentences = function(co)
     {

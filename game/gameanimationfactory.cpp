@@ -121,12 +121,12 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     return pAnim;
 }
 
-GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime)
+GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
 {
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false);
+        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false, uptimeMs);
         pGameMenue->addChild(pAnim);
         m_Animations.append(pAnim);
         

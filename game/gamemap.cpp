@@ -1805,7 +1805,7 @@ void GameMap::nextTurnPlayerTimeout()
     }
 }
 
-void GameMap::nextTurn()
+void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
     m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
@@ -1867,7 +1867,7 @@ void GameMap::nextTurn()
     }
     else
     {
-        GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
+        GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
     }
     m_Rules->startOfTurn(nextDay);
     m_CurrentPlayer->earnMoney();

@@ -1342,9 +1342,9 @@ QString CO::getVictorySentence()
     return sentence;
 }
 
-GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode)
+GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime)
 {
-    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, this);
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, this, frameTime);
     return pGameAnimationPower;
 }
 

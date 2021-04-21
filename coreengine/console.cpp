@@ -56,8 +56,11 @@ const QString Console::functions[] =
     QString("extendMaskImages"),
     QString("help"),
     QString("logActions"),
+    QString("version"),
     QString("")
 };
+const char* const Console::compileTime = __TIME__;
+const char* const Console::compileDate = __DATE__;
 
 Console::Console()
 {
@@ -303,6 +306,11 @@ void Console::help(qint32 start, qint32 end)
         }
         index++;
     }
+}
+
+void Console::version()
+{
+    print("Version: " + QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, Console::eINFO);
 }
 
 void Console::logActions(bool log)

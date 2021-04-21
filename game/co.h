@@ -509,7 +509,7 @@ public slots:
      * @brief createPowerScreen
      * @return
      */
-    GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode);
+    GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode, quint32 frameTime = 100);
     /**
      * @brief getIsCO0
      * @return

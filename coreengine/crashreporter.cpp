@@ -88,7 +88,7 @@ namespace crashReporter
     {
         const QStringList cReportHeader
         {
-            QStringLiteral("%1 v%2").arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion() ),
+            QStringLiteral("%1 v%2 Builddate: %3 %4").arg(QCoreApplication::applicationName(), QCoreApplication::applicationVersion(), Console::compileDate,  Console::compileTime ),
                     QDateTime::currentDateTime().toString("dd MMM yyyy @ HH:mm:ss"),
                     QString(),
                     inSignal,

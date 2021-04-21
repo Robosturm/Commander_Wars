@@ -14,7 +14,7 @@
 
 
 
-GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent)
+GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime),
       m_permanent(permanent)
 {
@@ -95,7 +95,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     if (!m_permanent)
     {
         endTimer.setSingleShot(true);
-        endTimer.setInterval(1000 / Settings::getAnimationSpeed());
+        endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
         connect(&endTimer, &QTimer::timeout, [=]()
         {
             emitFinished();

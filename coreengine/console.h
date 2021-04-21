@@ -21,6 +21,8 @@ class Console : public QObject, public oxygine::Actor
 public:
 
     static const QString functions[];
+    static const char* const compileTime;
+    static const char* const compileDate;
 
     enum eLogLevels
     {
@@ -115,6 +117,10 @@ public slots:
      * @param end
      */
     void help(qint32 start = 0, qint32 end = -1);
+    /**
+     * @brief version
+     */
+    void version();
     /**
      * @brief logActions
      * @param log

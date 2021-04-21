@@ -99,7 +99,7 @@ public slots:
      * @param frameTime
      * @return
      */
-    static GameAnimationNextDay* createGameAnimationNextDay(Player* pPlayer, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationNextDay* createGameAnimationNextDay(Player* pPlayer, quint32 frameTime = GameMap::frameTime, quint32 uptimeMs = 3000);
     /**
      * @brief getAnimationCount
      * @return the current amount of running animations
