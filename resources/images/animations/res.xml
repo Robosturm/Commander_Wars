@@ -41,6 +41,7 @@
 		
 		<!-- field marker -->
 		<image file="cursor+attack.png" cols = "4" />
+		<image file="map_marker.png"  cols = "3" />
 		
 		<!-- talon gun fire -->
 		<image file="talon+gun+hit.png" cols = "10" />

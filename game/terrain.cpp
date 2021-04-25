@@ -5,6 +5,7 @@
 #include "coreengine/mainapp.h"
 
 #include "resource_management/terrainmanager.h"
+#include "resource_management/gameanimationmanager.h"
 
 #include "game/terrain.h"
 #include "game/gamemap.h"
@@ -1034,6 +1035,17 @@ void Terrain::startOfTurn()
         args1 << obj1;
         pInterpreter->doFunction(terrainID, function1, args1);
     }
+    for (auto & item : m_terrainOverlay)
+    {
+        if (item.duration > 0)
+        {
+            item.duration -= 1;
+            if (item.duration <= 0)
+            {
+                removeTerrainOverlay(item.resAnim);
+            }
+        }
+    }
 }
 
 qint32 Terrain::getOffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
@@ -1086,6 +1098,67 @@ qint32 Terrain::getDeffensiveFieldBonus(Unit* pAttacker, QPoint atkPosition, Uni
     return ergValue;
 }
 
+void Terrain::addTerrainOverlay(QString id, qint32 x, qint32 y, QColor color, qint32 duration, float scale)
+{
+    bool found = false;
+    for (auto & item : m_terrainOverlay)
+    {
+        if (item.resAnim == id)
+        {
+            found = true;
+            if ((item.duration < 0 && duration > 0) ||
+                (duration < 0 && item.duration > 0) ||
+                (duration > item.duration))
+            {
+                item.duration = duration;
+            }
+        }
+    }
+    if (!found)
+    {
+        TerrainOverlay item;
+        item.duration = duration;
+        item.resAnim = id;
+        item.scale = scale;
+        item.offset = QPoint(x, y);
+        item.color = color;
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setPosition(x, y);
+        pSprite->setColor(color);
+        oxygine::ResAnim* pAnim = GameAnimationManager::getInstance()->getResAnim(id, oxygine::ep_ignore_error);
+        if (pAnim != nullptr)
+        {
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+        }
+        pSprite->setPriority(static_cast<qint32>(DrawPriority::TerrainMarker));
+        pSprite->setScale(scale);
+        pSprite->setResAnim(pAnim);
+        item.sprite = pSprite;
+        addChild(pSprite);
+        m_terrainOverlay.append(item);
+    }
+}
+
+void Terrain::removeTerrainOverlay(QString id)
+{
+    for (qint32 i = 0; i < m_terrainOverlay.size(); ++i)
+    {
+        if (m_terrainOverlay[i].resAnim == id)
+        {
+            m_terrainOverlay[i].sprite->detach();
+            m_terrainOverlay.removeAt(i);
+        }
+    }
+}
+
 void Terrain::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
@@ -1134,6 +1207,18 @@ void Terrain::serializeObject(QDataStream& pStream) const
     pStream << m_terrainDescription;
     pStream << m_hasStartOfTurn;
     m_Variables.serializeObject(pStream);
+
+    pStream << static_cast<qint32>(m_terrainOverlay.size());
+    for (auto & item : m_terrainOverlay)
+    {
+        pStream << item.duration;
+        pStream << item.resAnim;
+        pStream << item.scale;
+        pStream << static_cast<qint32>(item.offset.x());
+        pStream << static_cast<qint32>(item.offset.y());
+        quint32 color = item.color.rgba();
+        pStream << color;
+    }
 }
 
 void Terrain::deserializeObject(QDataStream& pStream)
@@ -1245,6 +1330,27 @@ void Terrain::deserializer(QDataStream& pStream, bool fast)
     if (version > 6)
     {
         m_Variables.deserializeObject(pStream);
+    }
+    if (version > 7)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; ++i)
+        {
+            TerrainOverlay item;
+            pStream >> item.duration;
+            pStream >> item.resAnim;
+            pStream >> item.scale;
+            qint32 value = 0;
+            pStream >> value;
+            item.offset.setX(value);
+            pStream >> value;
+            item.offset.setY(value);
+            quint32 color;
+            pStream >> color;
+            item.color = QColor::fromRgba(color);
+            addTerrainOverlay(item.resAnim, item.offset.x(), item.offset.y(), item.color, item.duration, item.scale);
+        }
     }
 }
 

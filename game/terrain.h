@@ -26,6 +26,17 @@ typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 class Terrain : public Tooltip, public FileSerializable
 {
     Q_OBJECT
+
+    struct TerrainOverlay
+    {
+        qint32 duration{-1};
+        QString resAnim;
+        QPoint offset;
+        float scale{1.0f};
+        QColor color;
+        oxygine::spSprite sprite;
+
+    };
 public:
     /**
      * @brief The DrawPriority enum z-priority for sprites
@@ -37,6 +48,7 @@ public:
         Shroud,
         Building,
         Fog,
+        TerrainMarker,
         MarkedField,
         Arrow
     };
@@ -93,7 +105,7 @@ public:
      */
     inline virtual qint32 getVersion() const override
     {
-        return 7;
+        return 8;
     }
     /**
      * @brief update
@@ -131,7 +143,17 @@ public:
      * @return
      */
     bool isValid();
+
+
 public slots:
+    /**
+     * @brief addTerrainOverlay
+     */
+    void addTerrainOverlay(QString id, qint32 x, qint32 y, QColor color = Qt::white, qint32 duration = -1, float scale = 1.0f);
+    /**
+     * @brief removeTerrainOverlay
+     */
+    void removeTerrainOverlay(QString id);
     /**
      * @brief getVariables
      * @return
@@ -468,6 +490,7 @@ private:
     bool m_hasStartOfTurn{false};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
+    QVector<TerrainOverlay> m_terrainOverlay;
 };
 
 #endif // TERRAIN_H

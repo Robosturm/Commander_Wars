@@ -1498,7 +1498,7 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename)
 {
-    
+    skipAllAnimations();
     if (filename.endsWith(".sav") || filename.endsWith(".msav"))
     {
         QFile file(filename);
