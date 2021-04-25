@@ -83,16 +83,16 @@ var Constructor = function()
 
     this.volcanFire = function(building, targets)
     {
-        var day2dayAnimation = GameAnimationFactory.getAnimation(0);
+        var animationCount = GameAnimationFactory.getAnimationCount();
         var targetOffset = building.getActionTargetOffset();
         var x = building.getX() + targetOffset.x;
         var y = building.getY() + targetOffset.y;
         var animation = GameAnimationFactory.createAnimation(x, y - 4);
         animation.addSprite("volcan_eruption", 0, 0, 0, 1.5);
         animation.setSound("volcan_eruption.wav");
-        if (day2dayAnimation !== null)
+        if (animationCount > 0)
         {
-            day2dayAnimation.queueAnimation(animation);
+            GameAnimationFactory.getAnimation(animationCount - 1).queueAnimation(animation);
         }
         var animation2 = null;
         var animation3 = null;

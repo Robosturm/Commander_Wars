@@ -26,6 +26,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
         m_frameTime = 1;
     }
     connect(this, &GameAnimation::sigFinished, this, &GameAnimation::onFinished, Qt::QueuedConnection);
+    connect(this, &GameAnimation::sigStart, this, &GameAnimation::start, Qt::QueuedConnection);
     buffer.open(QIODevice::ReadWrite);
 }
 
@@ -39,6 +40,34 @@ void GameAnimation::restart()
         oxygine::getStage()->addTween(tween);
     }
     GameMap::getInstance()->addChild(this);
+    start();
+}
+
+void GameAnimation::start()
+{
+    if (!m_started)
+    {
+        m_started = true;
+        doPreAnimationCall();
+        AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
+        for (auto & data : m_SoundData)
+        {
+            pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs, data.volume);
+        }
+    }
+}
+
+void GameAnimation::doPreAnimationCall()
+{
+    if ((!jsPreActionObject.isEmpty()) && (!jsPreActionObject.isEmpty()))
+    {
+        Console::print("Calling post Animation function " + jsPreActionObject + "." + jsPreActionFunction, Console::eDEBUG);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args1;
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args1 << obj1;
+        pInterpreter->doFunction(jsPreActionObject, jsPreActionFunction, args1);
+    }
 }
 
 void GameAnimation::stop()
@@ -108,16 +137,12 @@ void GameAnimation::update(const oxygine::UpdateState& us)
             }
         }
 
-        if (!m_SoundStarted)
-        {
-            AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
-            for (auto & data : m_SoundData)
-            {
-                pAudioThread->playSound(data.soundFile, data.loops, data.soundFolder, data.delayMs, data.volume);
-            }
-            m_SoundStarted = true;
-        }
+
         oxygine::Sprite::update(us);
+    }
+    if (!m_started)
+    {
+        emit sigStart();
     }
 }
 
@@ -320,14 +345,20 @@ bool GameAnimation::onFinished(bool skipping)
     m_skipping |= skipping;
     if (m_skipping == skipping)
     {
-        for (auto & data : m_SoundData)
+        if (!m_started)
+        {
+            doPreAnimationCall();
+        }
+        else
+        {
+            for (auto & data : m_SoundData)
         {
             if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
             {
                 Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile, data.soundFolder);
             }
         }
-
+        }
         for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
         {
             GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
@@ -427,6 +458,12 @@ void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString post
 {
     jsPostActionObject = postActionObject;
     jsPostActionFunction = postActionFunction;
+}
+
+void GameAnimation::setStartOfAnimationCall(QString preActionObject, QString preActionFunction)
+{
+    jsPreActionObject = preActionObject;
+    jsPreActionFunction = preActionFunction;
 }
 
 void GameAnimation::emitFinished()

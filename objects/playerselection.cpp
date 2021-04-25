@@ -356,14 +356,14 @@ void PlayerSelection::showPlayerSelection()
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
     QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")}; // // heavy ai disabled cause it's not finished
-    GameManager* pGameManager = GameManager::getInstance();
+//    GameManager* pGameManager = GameManager::getInstance();
     Interpreter* pInterpreter = Interpreter::getInstance();
-    for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
-    {
-        QString id = pGameManager->getHeavyAiID(i);
-        QJSValue aiName = pInterpreter->doFunction(id, "getName");
-        defaultAiList.append(aiName.toString());
-    }
+//    for (qint32 i = 0; i < pGameManager->getHeavyAiCount(); ++i)
+//    {
+//        QString id = pGameManager->getHeavyAiID(i);
+//        QJSValue aiName = pInterpreter->doFunction(id, "getName");
+//        defaultAiList.append(aiName.toString());
+//    }
     defaultAiList.append(tr("Closed"));
 
     QVector<QString> aiList = defaultAiList;

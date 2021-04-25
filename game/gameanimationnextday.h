@@ -10,7 +10,7 @@ class GameAnimationNextDay : public GameAnimation
 {
     Q_OBJECT
 public:
-    GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 3000);
+    GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs = 2000);
 
     virtual void restart() override;
     virtual void stop() override;

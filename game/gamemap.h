@@ -696,7 +696,7 @@ public slots:
     /**
      * @brief nextTurn next players turn.
      */
-    void nextTurn(quint32 dayToDayUptimeMs = 3000);
+    void nextTurn(quint32 dayToDayUptimeMs = 2000);
     /**
      * @brief nextTurnPlayerTimeout
      */

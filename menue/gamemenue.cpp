@@ -1019,7 +1019,7 @@ void GameMenue::finishActionPerformed()
 
 void GameMenue::actionPerformed()
 {
-    
+    Mainapp::getInstance()->pauseRendering();
     if (getParent() != nullptr)
     {
         Console::print("Action performed", Console::eDEBUG);
@@ -1062,7 +1062,7 @@ void GameMenue::actionPerformed()
     {
         Console::print("Skipping action performed due to exiting the game", Console::eDEBUG);
     }
-    
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)

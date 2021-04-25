@@ -1807,14 +1807,10 @@ void GameMap::nextTurnPlayerTimeout()
 
 void GameMap::nextTurn(quint32 dayToDayUptimeMs)
 {
+    Mainapp::getInstance()->pauseRendering();
     m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
     bool nextDay = nextPlayer();
-    if (nextDay)
-    {
-        startOfTurn(nullptr);
-        m_Recorder->newDay();
-    }
     bool permanent = false;
     bool found = false;
     if ((m_Rules->getDayToDayScreen() == GameRules::DayToDayScreen::Permanent ||
@@ -1869,6 +1865,11 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
     {
         GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, dayToDayUptimeMs);
     }
+    if (nextDay)
+    {
+        startOfTurn(nullptr);
+        m_Recorder->newDay();
+    }
     m_Rules->startOfTurn(nextDay);
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
@@ -1882,6 +1883,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         pMenu->updateMinimap();
     }
     playMusic();
+    Mainapp::getInstance()->continueRendering();
 }
 
 void GameMap::playMusic()

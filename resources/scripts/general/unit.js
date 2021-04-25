@@ -266,4 +266,12 @@ var UNIT =
         // WeaponType_Indirect
         return GameEnums.WeaponType_Both;
     },
+
+    onKilled : function(animation)
+    {
+        animation.seekBuffer();
+        var x = animation.readDataInt32();
+        var y = animation.readDataInt32();
+        map.getTerrain(x, y).getUnit().removeUnit();
+    },
 };

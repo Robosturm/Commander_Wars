@@ -211,7 +211,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 
 GameAnimationPower::~GameAnimationPower()
 {
-    if (!m_SoundStarted)
+    if (!m_started)
     {
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         pAudioThread->clearPlayList();
@@ -234,7 +234,7 @@ void GameAnimationPower::stop()
 
 void GameAnimationPower::update(const oxygine::UpdateState& us)
 {
-    if (!m_SoundStarted)
+    if (!m_started)
     {
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         pAudioThread->clearPlayList();

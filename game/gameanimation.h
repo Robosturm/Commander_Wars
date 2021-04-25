@@ -36,12 +36,12 @@ class GameAnimation : public QObject, public oxygine::Sprite
 public:
     explicit GameAnimation(quint32 frameTime);
     virtual ~GameAnimation() = default;
-
     virtual void restart();
     virtual void stop();
 
 signals:
     void sigFinished(bool skipping);
+    void sigStart();
 public slots:
     /**
      * @brief getStopSoundAtAnimationEnd
@@ -143,6 +143,12 @@ public slots:
      * @param postActionFunction java script function of the object that will be called
      */
     void setEndOfAnimationCall(QString postActionObject, QString postActionFunction);
+    /**
+     * @brief setStartOfAnimationCall calls a java script function when the animation is started. Note: no parameters can be used to call the function
+     * @param postActionObject java script object that will be used
+     * @param postActionFunction java script function of the object that will be called
+     */
+    void setStartOfAnimationCall(QString preActionObject, QString preActionFunction);
     /**
      * @brief setSound sets the sound to be played during this animation
      * @param soundFile sound file
@@ -330,13 +336,16 @@ private:
      * @param pGameAnimation
      */
     void removeQueuedAnimation(GameAnimation* pGameAnimation);
-
+protected slots:
+    virtual void start();
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
+    void doPreAnimationCall();
+protected:
     quint32 m_frameTime{1};
     bool m_stopped{false};
     bool finishQueued{false};
-    bool m_SoundStarted{false};
+    bool m_started{false};
     bool m_skipping{false};
 private:
 
@@ -344,6 +353,8 @@ private:
     GameAnimation* m_previousAnimation{nullptr};
     QString jsPostActionObject{""};
     QString jsPostActionFunction{""};
+    QString jsPreActionObject{""};
+    QString jsPreActionFunction{""};
     bool m_stopSoundAtAnimationEnd{false};
 
     struct SoundData

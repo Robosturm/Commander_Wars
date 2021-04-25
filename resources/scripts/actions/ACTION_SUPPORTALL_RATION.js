@@ -93,6 +93,12 @@ var Constructor = function()
         var animation = null;
         var refillUnit= null;
         var width = 0;
+        var animationCount = GameAnimationFactory.getAnimationCount();
+        var queueAnimation = null;
+        if (animationCount > 0)
+        {
+            queueAnimation = GameAnimationFactory.getAnimation(animationCount - 1);
+        }
         if (ACTION_SUPPORTALL_RATION.checkUnit(unit, x, y))
         {
             refillUnit = map.getTerrain(x, y).getUnit();
@@ -103,6 +109,11 @@ var Constructor = function()
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addSound("repair_1.wav");
+                if (queueAnimation !== null)
+                {
+                    queueAnimation.queueAnimation(animation);
+                }
             }
         }
         x = unit.getX() - 1;
@@ -116,6 +127,11 @@ var Constructor = function()
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addSound("repair_1.wav");
+                if (queueAnimation !== null)
+                {
+                    queueAnimation.queueAnimation(animation);
+                }
             }
         }
         x = unit.getX();
@@ -130,6 +146,11 @@ var Constructor = function()
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addSound("repair_1.wav");
+                if (queueAnimation !== null)
+                {
+                    queueAnimation.queueAnimation(animation);
+                }
             }
         }
         y = unit.getY() - 1;
@@ -143,6 +164,11 @@ var Constructor = function()
                 width = animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 25, 2, 1);
                 animation.addBox("info", map.getImageSize() / 2, 0, width + 32, map.getImageSize(), 400);
                 animation.addSprite("ration", map.getImageSize() / 2 + 8, 1, 400, 1.7);
+                animation.addSound("repair_1.wav");
+                if (queueAnimation !== null)
+                {
+                    queueAnimation.queueAnimation(animation);
+                }
             }
         }
 	};

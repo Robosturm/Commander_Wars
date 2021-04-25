@@ -2404,7 +2404,6 @@ void Unit::removeUnit(bool killed)
     {
         m_pTerrain->setUnit(nullptr);
     }
-    
 }
 
 GameAnimation* Unit::killUnit()
@@ -2421,6 +2420,9 @@ GameAnimation* Unit::killUnit()
     if (ret.isQObject())
     {
        pRet = dynamic_cast<GameAnimation*>(ret.toQObject());
+       pRet->writeDataInt32(getX());
+       pRet->writeDataInt32(getY());
+       pRet->setStartOfAnimationCall("UNIT", "onKilled");
     }
     // record destruction of this unit
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
@@ -2431,8 +2433,6 @@ GameAnimation* Unit::killUnit()
             GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID(), m_UnitID);
         }
     }
-    detach();
-    removeUnit();
     return pRet;
 }
 
