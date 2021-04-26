@@ -1584,9 +1584,11 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     qint32 playerId = pPlayer->getPlayerID();
-    for (qint32 y = 0; y < heigth; y++)
+    auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
+    auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
+    for (auto y : yValues)
     {
-        for (qint32 x = 0; x < width; x++)
+        for (auto x : xValues)
         {
             spUnit pUnit = fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)

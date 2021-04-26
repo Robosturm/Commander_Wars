@@ -120,6 +120,13 @@ public slots:
      * @return
      */
     static double distanceVector(const QVector<double>& v1, const QVector<double>& v2);
+    /**
+     * @brief getRandomizedArray
+     * @param min
+     * @param max
+     * @return
+     */
+    static QVector<qint32> getRandomizedArray(qint32 min, qint32 max);
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;

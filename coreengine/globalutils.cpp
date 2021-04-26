@@ -343,3 +343,27 @@ double GlobalUtils::distanceVector(const QVector<double>& v1, const QVector<doub
     }
     return d;
 }
+
+QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
+{
+    QVector<qint32> ret;
+    if (min < max)
+    {
+        QVector<qint32> temp(max - min);
+        for (qint32 i = min; i <= max; ++i)
+        {
+            temp.append(i);
+        }
+        while (temp.size() > 0)
+        {
+            qint32 value = GlobalUtils::randInt(0, temp.size() - 1);
+            ret.push_back(temp[value]);
+            temp.removeAt(value);
+        }
+    }
+    else
+    {
+        Console::print("getRandomizedArray(min, max) min " + QString::number(min) + " is not smaller than max " + QString::number(max), Console::eERROR);
+    }
+    return ret;
+}

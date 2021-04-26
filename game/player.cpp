@@ -617,7 +617,7 @@ void Player::setTeam(const qint32 &value)
     team = value;
 }
 
-void Player::defeatPlayer(Player* pPLayer, bool units)
+void Player::defeatPlayer(Player* pPlayer, bool units)
 {
     spGameMap pMap = GameMap::getInstance();
     QVector<GameAnimation*> pAnimations;
@@ -632,47 +632,47 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
             {
                 if (pBuilding->getOwner() == this)
                 {
-                    pBuilding->setOwner(pPLayer);
+                    pBuilding->setOwner(pPlayer);
                     // reset capturing for buildings we earned at this moment
                     if (pUnit.get() != nullptr &&
-                        pUnit->getOwner()->isAlly(pPLayer))
+                        pUnit->getOwner()->isAlly(pPlayer))
                     {
                         pUnit->setCapturePoints(0);
                     }
                 }
             }
 
-            if (pUnit.get() != nullptr)
+
+        }
+    }
+    spQmlVectorUnit pUnits = getUnits();
+    for (qint32 i = 0; i < pUnits->size(); ++i)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if ((pPlayer != nullptr) && units)
+        {
+            pUnit->setOwner(pPlayer);
+            pUnit->setCapturePoints(0);
+            if (pUnit->getUnitRank() < GameEnums::UnitRank_None)
             {
-                if (pUnit->getOwner() == this)
+                pUnit->setUnitRank(pUnit->getMaxUnitRang());
+            }
+        }
+        else
+        {
+            auto* pAnimation = pUnit->killUnit();
+            if (pAnimations.length() < 5)
+            {
+                pAnimations.append(pAnimation);
+            }
+            else
+            {
+                pAnimations[counter]->queueAnimation(pAnimation);
+                pAnimations[counter] = pAnimation;
+                counter++;
+                if (counter >= pAnimations.length())
                 {
-                    if ((pPLayer != nullptr) && units)
-                    {
-                        pUnit->setOwner(pPLayer);
-                        pUnit->setCapturePoints(0);
-                        if (pUnit->getUnitRank() < GameEnums::UnitRank_None)
-                        {
-                            pUnit->setUnitRank(pUnit->getMaxUnitRang());
-                        }
-                    }
-                    else
-                    {
-                        auto* pAnimation = pUnit->killUnit();
-                        if (pAnimations.length() < 5)
-                        {
-                            pAnimations.append(pAnimation);
-                        }
-                        else
-                        {
-                            pAnimations[counter]->queueAnimation(pAnimation);
-                            pAnimations[counter] = pAnimation;
-                            counter++;
-                            if (counter >= pAnimations.length())
-                            {
-                                counter = 0;
-                            }
-                        }
-                    }
+                    counter = 0;
                 }
             }
         }
@@ -744,6 +744,7 @@ qint32 Player::calcIncome(float modifier)
             }
         }
     }
+
     return ret;
 }
 

@@ -16,13 +16,18 @@ var Constructor = function()
     {
         var count = sprite.getUnitCount(BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount());
         var armyName = BATTLEANIMATION_LIGHT_TANK.getArmyName(unit);
-        sprite.loadMovingSprite("light_tank+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+        var startX = -70;
+        if (armyName === "ma")
+        {
+            startX = -90;
+        }
+        sprite.loadMovingSprite("light_tank+" + armyName + "+move", false, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
-        sprite.loadMovingSpriteV2("light_tank+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-70, 5),
+        sprite.loadMovingSpriteV2("light_tank+" + armyName + "+move+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(startX, 5),
                                   Qt.point(65, 0), 600, false,
                                   1, 1);
-        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(-90, 7),
+        sprite.loadMovingSprite("vehicle_dust", false, sprite.getMaxUnitCount(), Qt.point(startX - 20, 7),
                                 Qt.point(65, 0), 600, false,
                                 1, 1);
         for (var i = 0; i < count; i++)
