@@ -20,7 +20,6 @@ namespace oxygine
 
     void VideoDriverGLES20::restore()
     {
-        //_us.restore();
         setDefaultSettings();
     }
 
@@ -36,7 +35,6 @@ namespace oxygine
 
     void VideoDriverGLES20::reset()
     {
-        //_currentProgram = 0;
     }
 
 

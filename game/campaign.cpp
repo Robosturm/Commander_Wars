@@ -1,10 +1,13 @@
-#include "qfile.h"
-#include "qtextstream.h"
+#include <qfile.h>
+#include <qtextstream.h>
+#include <qdir.h>
+#include <qdiriterator.h>
 
 #include "game/campaign.h"
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
 
 const QString Campaign::scriptName = "campaignScript";
 
@@ -72,22 +75,47 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
     {
         folder = files[0];
         files.removeAt(0);
+        addDeveloperMaps(folder, files);
     }
     return std::tuple<QString, QStringList>(folder, files);
 }
 
+void Campaign::addDeveloperMaps(QString & folder, QStringList & files)
+{
+    if (Console::getDeveloperMode())
+    {
+        QStringList filter;
+        filter << "*.map";
+        QDirIterator dirIter(folder, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString file = dirIter.fileInfo().fileName();
+            if (!files.contains(file))
+            {
+                files.append(file);
+            }
+        }
+    }
+}
+
 QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx)
 {
-    Interpreter* pInterpreter = Interpreter::getInstance();
-    QJSValueList args;
-    QJSValue obj = pInterpreter->newQObject(this);
-    args << obj;
-    QJSValue obj1 = pInterpreter->newQObject(pMap);
-    args << obj1;
-    args << player;
-    args << coIdx;
-    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getSelectableCOs", args);
-    return value.toVariant().toStringList();
+    QStringList ret;
+    if (!Console::getDeveloperMode())
+    {
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        QJSValue obj = pInterpreter->newQObject(this);
+        args << obj;
+        QJSValue obj1 = pInterpreter->newQObject(pMap);
+        args << obj1;
+        args << player;
+        args << coIdx;
+        QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getSelectableCOs", args);
+        ret = value.toVariant().toStringList();
+    }
+    return ret;
 }
 
 bool Campaign::getCampaignFinished()

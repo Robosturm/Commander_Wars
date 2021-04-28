@@ -6,9 +6,9 @@
 namespace oxygine
 {    
     Object::Object(const Object& src)
-        : __name("")
+        : m_name("")
     {
-        setName(src.__name);
+        setName(src.m_name);
     }
 
     Object::Object()
@@ -17,16 +17,16 @@ namespace oxygine
 
     QString Object::getName() const
     {
-        return __name;
+        return m_name;
     }
 
     bool Object::isName(QString name) const
     {
-        return name == __name;
+        return name == m_name;
     }
 
     void Object::setName(QString name)
     {
-        __name = name;
+        m_name = name;
     }
 }

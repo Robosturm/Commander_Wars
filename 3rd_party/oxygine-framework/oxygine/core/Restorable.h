@@ -1,7 +1,7 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
-
+#include <qmutex.h>
 #include <qvector.h>
 
 namespace oxygine
@@ -28,6 +28,8 @@ namespace oxygine
         void unreg();
 
     protected:
+    private:
+        restorable::iterator findRestorable(Restorable* r);
 
     private:
         //non copyable
@@ -37,5 +39,8 @@ namespace oxygine
         RestoreCallback _cb;
         void* _userData;
         bool _registered;
+
+        static QMutex m_mutex;
+        static restorable m_restorable;
     };
 }

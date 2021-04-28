@@ -86,12 +86,7 @@ namespace oxygine
             window->glGenFramebuffers(1, &fbo);
             window->glBindFramebuffer(GL_FRAMEBUFFER, fbo);
             window->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
-
-            //printf("created fbo: %d\n", fbo);
-
             quint32 status = window->glCheckFramebufferStatus(GL_FRAMEBUFFER);
-            //qDebug("fbo status %d\n", status);
-            //GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
             if (status != GL_FRAMEBUFFER_COMPLETE)
             {
                 qCritical("status != GL_FRAMEBUFFER_COMPLETE_OES");
@@ -102,8 +97,6 @@ namespace oxygine
             window->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             window->glBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
-            //qDebug("fbo bind\n");
-
             window->glBindTexture(GL_TEXTURE_2D, 0);
 
             _fbo = fbo;
@@ -176,8 +169,6 @@ namespace oxygine
             window->glDeleteTextures(1, (GLuint*)&_id);
             _id = 0;
         }
-
-
         if (_fbo)
         {
             window->glDeleteFramebuffers(1, (GLuint*)&_fbo);
@@ -198,12 +189,11 @@ namespace oxygine
         std::swap(_width, nt->_width);
         std::swap(_height, nt->_height);
         std::swap(_format, nt->_format);
-
     }
 
     NativeTextureGLES::~NativeTextureGLES()
     {
-        release();
+        NativeTextureGLES::release();
     }
 
     qint32 NativeTextureGLES::getWidth() const

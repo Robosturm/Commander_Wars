@@ -3,6 +3,7 @@
 #include "3rd_party/oxygine-framework/oxygine/Material.h"
 #include "3rd_party/oxygine-framework/oxygine/core/Renderer.h"
 #include <functional>
+#include <vector>
 
 namespace oxygine
 {

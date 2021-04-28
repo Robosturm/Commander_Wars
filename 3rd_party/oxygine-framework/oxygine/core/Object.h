@@ -19,7 +19,7 @@ namespace oxygine
         void setName(QString name);
 
     protected:
-        QString __name;
+        QString m_name;
         QMutex m_Locked;
     };
 

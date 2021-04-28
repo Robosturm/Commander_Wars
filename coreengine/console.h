@@ -47,8 +47,22 @@ public:
     void init();
 
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
-
 public slots:
+    /**
+     * @brief getDeveloperMode
+     * @return
+     */
+    static bool getDeveloperMode();
+    /**
+     * @brief setDeveloperMode
+     * @param developerMode
+     */
+    static void setDeveloperMode(bool developerMode);
+    /**
+     * @brief print
+     * @param message
+     * @param LogLevel
+     */
     static void print(QString message, qint8 LogLevel);
     /**
      * @brief Print
@@ -56,19 +70,26 @@ public slots:
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
     static void print(QString message, eLogLevels LogLevel);
+    /**
+     * @brief createfunnymessage
+     * @param message
+     */
     static void createfunnymessage(qint32 message = -1);
-    // Lua Libs Functions
+    /**
+     * @brief setVolume
+     * @param volume
+     */
     void setVolume(qint32 volume);
     /**
      * @brief setLogLevel
      * @param newLogLevel
      */
-    void setLogLevel(eLogLevels newLogLevel);
+    static void setLogLevel(eLogLevels newLogLevel);
     /**
      * @brief getLogLevel
      * @return
      */
-    eLogLevels getLogLevel();
+    static eLogLevels getLogLevel();
     /**
      * @brief createSprites
      * @param input
@@ -150,7 +171,7 @@ public slots:
         return output;
     }
 private:
-    static eLogLevels LogLevel;
+    static eLogLevels m_LogLevel;
     static QString curmsg;
     static QList<QString> lastmsgs;
     static const qint32 lastMsgSize{10};
@@ -163,6 +184,7 @@ private:
     static QList<QString> output;
     static qint32 outputSize;
     static QMutex datalocker;
+    static bool m_developerMode;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
 

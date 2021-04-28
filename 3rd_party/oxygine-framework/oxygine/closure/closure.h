@@ -50,21 +50,11 @@ namespace oxygine
         {
             if constexpr(std::is_void<TRet>::value)
             {
-                if (m_callback)
-                {
-                    (m_callback)(args...);
-                }
+                (m_callback)(args...);
             }
             else
             {
-                if (m_callback)
-                {
-                    return (m_callback)(args...);
-                }
-                else
-                {
-                    return TRet();
-                }
+                return (m_callback)(args...);
             }
         }
 

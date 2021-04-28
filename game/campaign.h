@@ -54,7 +54,12 @@ public:
      * @return
      */
     QStringList getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx);
-
+    /**
+     * @brief addDeveloperMaps
+     * @param folder
+     * @param files
+     */
+    void addDeveloperMaps(QString & folder, QStringList & files);
 signals:
 
 public slots:

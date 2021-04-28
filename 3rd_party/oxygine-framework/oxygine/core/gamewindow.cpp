@@ -118,10 +118,6 @@ namespace oxygine
         {
             return false;
         }
-        //        if (!QWindow::isActive())
-        //        {
-        //           return false;
-        //        }
 
         bool ready = STDRenderer::isReady();
         if (ready)
@@ -151,7 +147,6 @@ namespace oxygine
     void GameWindow::swapDisplayBuffers()
     {
         IVideoDriver::_stats.duration = Clock::getTimeMS() - IVideoDriver::_stats.start;
-        //sleep(1000/50);
     }
 
     float GameWindow::getGamma() const

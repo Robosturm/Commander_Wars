@@ -5,6 +5,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/interpreter.h"
+#include "coreengine/console.h"
 
 const QString GameScript::scriptName = "gameScript";
 
@@ -44,7 +45,6 @@ void GameScript::deserializeObject(QDataStream& pStream)
         loaded = true;
     }
     m_Variables.deserializeObject(pStream);
-
 }
 
 void GameScript::init()
@@ -89,7 +89,7 @@ QString GameScript::getVictoryInfo()
 
 bool GameScript::immediateStart()
 {
-    if (loaded)
+    if (loaded && !Console::getDeveloperMode())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "immediateStart";

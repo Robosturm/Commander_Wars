@@ -11,6 +11,4 @@
 
 namespace oxygine
 {
-    //bool _restored = false;
-
 }

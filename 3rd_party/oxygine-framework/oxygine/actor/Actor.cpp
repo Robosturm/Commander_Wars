@@ -198,15 +198,14 @@ namespace oxygine
         }
 
         _overred = 0;
-        _getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
-
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
         up.bubbles = false;
         up.localPosition = stage2local(te->localPosition, _getStage());
         dispatchEvent(&up);
-
         updateStateOvered();
+        _getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
+        m_onGlobalTouchMoveEvent = -1;
     }
 
     void Actor::dispatchEvent(Event* event)
@@ -223,7 +222,6 @@ namespace oxygine
                 over.type = TouchEvent::OVER;
                 over.bubbles = false;
                 dispatchEvent(&over);
-
                 m_onGlobalTouchMoveEvent = _getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
         }

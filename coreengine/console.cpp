@@ -23,13 +23,14 @@
 
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
-Console::eLogLevels Console::LogLevel = Console::eDEBUG;
+Console::eLogLevels Console::m_LogLevel = Console::eDEBUG;
 #else
 Console::eLogLevels Console::LogLevel = Console::eINFO;
 #endif
 
 bool Console::show = false;
 bool Console::toggled = false;
+bool Console::m_developerMode = false;
 QList<QString> Console::output;
 Console* Console::m_pConsole = nullptr;
 QString Console::curmsg = nullptr;
@@ -57,6 +58,7 @@ const QString Console::functions[] =
     QString("help"),
     QString("logActions"),
     QString("version"),
+    QString("setDeveloperMode"),
     QString("")
 };
 const char* const Console::compileTime = __TIME__;
@@ -150,7 +152,8 @@ void Console::dotask(QString message)
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (message.startsWith("game:") &&
         pGameMenue.get() != nullptr &&
-        !pGameMenue->isNetworkGame())
+        !pGameMenue->isNetworkGame() &&
+        getDeveloperMode())
     {
         order = order.replace("GameConsole.game:", "");
         pInterpreter->doString(order);
@@ -170,13 +173,14 @@ void Console::dotask(QString message)
 
 void Console::print(QString message, qint8 LogLevel)
 {
-    print(message, static_cast<eLogLevels>(LogLevel));}
+    print(message, static_cast<eLogLevels>(LogLevel));
+}
 
 void Console::print(QString message, eLogLevels MsgLogLevel)
 {
     QMutexLocker locker(&datalocker);
 
-    if (MsgLogLevel >= Console::LogLevel)
+    if (MsgLogLevel >= Console::m_LogLevel)
     {
         QString msg = tr(message.toStdString().c_str());
         QString prefix = "";
@@ -279,9 +283,28 @@ void Console::toggleView()
     toggled = true;
 }
 
+bool Console::getDeveloperMode()
+{
+    if (m_developerMode)
+    {
+        print("Developer Mode enabled! And used for changing some data.", Console::eWARNING);
+    }
+    return m_developerMode;
+}
+
+void Console::setDeveloperMode(bool developerMode)
+{
+    m_developerMode = developerMode;
+    if (m_developerMode)
+    {
+        print("Developer Mode enabled! Note this may lead to crashes or weird behaviour.", Console::eWARNING);
+        setLogLevel(eLogLevels::eDEBUG);
+    }
+}
+
 Console::eLogLevels Console::getLogLevel()
 {
-    return LogLevel;
+    return m_LogLevel;
 }
 
 void Console::setVolume(qint32 volume)
@@ -291,7 +314,7 @@ void Console::setVolume(qint32 volume)
 
 void Console::setLogLevel(eLogLevels newLogLevel)
 {
-    Console::LogLevel = newLogLevel;
+    Console::m_LogLevel = newLogLevel;
 }
 
 void Console::help(qint32 start, qint32 end)
@@ -310,7 +333,7 @@ void Console::help(qint32 start, qint32 end)
 
 void Console::version()
 {
-    print("Version: " + QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, Console::eINFO);
+    print(QCoreApplication::applicationVersion() + " Builddate: " + compileDate + " " + compileTime, Console::eINFO);
 }
 
 void Console::logActions(bool log)
@@ -1485,7 +1508,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
     switch (type)
     {
         case QtDebugMsg:
-            if (Console::LogLevel <= Console::eLogLevels::eDEBUG)
+            if (Console::m_LogLevel <= Console::eLogLevels::eDEBUG)
             {
                 stream << "Debug: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
@@ -1493,7 +1516,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             }
             break;
         case QtInfoMsg:
-            if (Console::LogLevel <= Console::eLogLevels::eINFO)
+            if (Console::m_LogLevel <= Console::eLogLevels::eINFO)
             {
                 stream << "Info: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
@@ -1501,7 +1524,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             }
             break;
         case QtWarningMsg:
-            if (Console::LogLevel <= Console::eLogLevels::eWARNING)
+            if (Console::m_LogLevel <= Console::eLogLevels::eWARNING)
             {
                 stream << "Warning: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
@@ -1509,7 +1532,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             }
             break;
         case QtCriticalMsg:
-            if (Console::LogLevel <= Console::eLogLevels::eERROR)
+            if (Console::m_LogLevel <= Console::eLogLevels::eERROR)
             {
                 stream << "Critical: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
@@ -1517,7 +1540,7 @@ void Console::messageOutput(QtMsgType type, const QMessageLogContext &context, c
             }
             break;
         case QtFatalMsg:
-            if (Console::LogLevel <= Console::eLogLevels::eFATAL)
+            if (Console::m_LogLevel <= Console::eLogLevels::eFATAL)
             {
                 stream << "Fatal: " << msg << " File: " << context.file << " Line: " << context.line << " Function: " << context.function << "\n";
                 stream.flush();
