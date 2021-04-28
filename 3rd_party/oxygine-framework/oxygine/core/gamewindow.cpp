@@ -221,7 +221,7 @@ namespace oxygine
         emit sigLoadRessources();
     }
 
-    void GameWindow::resizeGL(int w, int h)
+    void GameWindow::resizeGL(qint32 w, qint32 h)
     {
         qDebug("core::restore()");
         IVideoDriver::instance->restore();

@@ -171,9 +171,13 @@ namespace oxygine
         float fActorHeight = getSize().y;
 
         if (_guideX[1] == 0.0f)
+        {
             _guideX[1] = fFrameWidth;
+        }
         if (_guideY[1] == 0.0f)
+        {
             _guideY[1] = fFrameHeight;
+        }
 
         RectF srcFrameRect = _frame.getSrcRect();
 
@@ -219,7 +223,9 @@ namespace oxygine
                         _pointsX.push_back(fActorWidth);
                     }
                     else
+                    {
                         _pointsX.push_back(curX - centerPart + (fFrameWidth - _guideX[1]));
+                    }
                     break;
                 }
             }
@@ -257,7 +263,9 @@ namespace oxygine
                         _pointsY.push_back(fActorHeight);
                     }
                     else
+                    {
                         _pointsY.push_back(curY - centerPart + (fFrameHeight - _guideY[1]));
+                    }
                     break;
                 }
             }
@@ -274,8 +282,9 @@ namespace oxygine
     void Box9Sprite::doRender(const RenderState& rs)
     {
         if (!_prepared)
+        {
             prepare();
-
+        }
 
         _mat->apply();
 
@@ -290,15 +299,15 @@ namespace oxygine
                 QColor color = rs.getFinalColor(getColor());
 
                 // number of vertical blocks
-                int vc = (int)_pointsX.size() - 1;
+                qint32 vc = (int)_pointsX.size() - 1;
                 // number of horizontal blocks
-                int hc = (int)_pointsY.size() - 1;
+                qint32 hc = (int)_pointsY.size() - 1;
 
-                int xgi = 0; // x guide index
-                int ygi = 0;
-                for (int yc = 0; yc < hc; yc++)
+                qint32 xgi = 0; // x guide index
+                qint32 ygi = 0;
+                for (qint32 yc = 0; yc < hc; yc++)
                 {
-                    for (int xc = 0; xc < vc; xc++)
+                    for (qint32 xc = 0; xc < vc; xc++)
                     {
                         if (xc == 0) // select correct index for _guides% arrays
                         {

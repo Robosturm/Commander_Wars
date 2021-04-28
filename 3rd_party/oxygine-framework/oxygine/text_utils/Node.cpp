@@ -12,7 +12,6 @@ namespace oxygine
     {
         Node::Node(): _firstChild(0), _lastChild(0), _nextSibling(0)
         {
-
         }
 
         Node::~Node()
@@ -33,12 +32,9 @@ namespace oxygine
             _lastChild = tn;
         }
 
-
-
         void Node::resize(Aligner& rd)
         {
             xresize(rd);
-
             resizeChildren(rd);
         }
 
@@ -55,7 +51,6 @@ namespace oxygine
         void Node::finalPass(Aligner& rd)
         {
             xfinalPass(rd);
-
             spNode child = _firstChild;
             while (child)
             {
@@ -92,8 +87,6 @@ namespace oxygine
             drawChildren(dc);
         }
 
-
-
         void Node::updateMaterial(const STDMaterial& mat)
         {
             spNode node = _firstChild;
@@ -104,7 +97,6 @@ namespace oxygine
             }
             xupdateMaterial(mat);
         }
-
 
         TextNode::TextNode(QString v)
         {
@@ -146,7 +138,7 @@ namespace oxygine
 
         void TextNode::xupdateMaterial(const STDMaterial& mat)
         {
-            for (int i = 0; i < _data.size(); ++i)
+            for (qint32 i = 0; i < _data.size(); ++i)
             {
                 size_t size = _data.size();
                 for (size_t i = 0; i < size; ++i)
@@ -161,8 +153,8 @@ namespace oxygine
             }
         }
 
-        int _defMissing = '?';
-        void TextNode::setDefaultMissingSymbol(int v)
+        qint32 _defMissing = '?';
+        void TextNode::setDefaultMissingSymbol(qint32 v)
         {
             _defMissing = v;
         }
@@ -171,7 +163,7 @@ namespace oxygine
         {
             if (!_data.empty())
             {
-                int i = 0;
+                qint32 i = 0;
                 const Font* font = rd._font;
 
                 const size_t opt = rd.options;
@@ -216,12 +208,14 @@ namespace oxygine
                     }
                     ++i;
                     if (i < 0)
+                    {
                         i = 0;
+                    }
                 }
             }
         }
 
-        float mlt(int x, float sf)
+        float mlt(qint32 x, float sf)
         {
             //return (x + 0.01f) / sf;
             return x / sf;
@@ -231,17 +225,21 @@ namespace oxygine
         {
             float scaleFactor = rd.getScale();
 
-            int offsetY = rd.bounds.pos.y;
+            qint32 offsetY = rd.bounds.pos.y;
 
-            for (int i = 0; i < _data.size(); ++i)
+            for (qint32 i = 0; i < _data.size(); ++i)
             {
                 Symbol& s = _data[i];
                 s.y += offsetY;
 
                 if (s.gl.texture)
+                {
                     s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));
+                }
                 else
+                {
                     s.destRect = RectF(0, 0, 0, 0);
+                }
             }
         }
 

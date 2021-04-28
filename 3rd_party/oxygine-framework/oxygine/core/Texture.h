@@ -9,7 +9,7 @@ namespace oxygine
 {
     DECLARE_SMART(Texture, spTexture);
 
-    inline unsigned int nextPOT(unsigned int v)
+    inline quint32 nextPOT(quint32 v)
     {
         v = v - 1;
         v = v | (v >> 1);
@@ -30,15 +30,15 @@ namespace oxygine
             lock_write_on_apply = 0x4,
         };
 
-        typedef int lock_flags;
+        typedef qint32 lock_flags;
 
-        virtual int getWidth() const = 0;
-        virtual int getHeight() const = 0;
+        virtual qint32 getWidth() const = 0;
+        virtual qint32 getHeight() const = 0;
         virtual ImageData::TextureFormat getFormat() const = 0;
 
         virtual ImageData lock(lock_flags, const Rect* src) = 0;
         virtual void unlock() = 0;
-        virtual void updateRegion(int x, int y, const ImageData& data) = 0;
+        virtual void updateRegion(qint32 x, qint32 y, const ImageData& data) = 0;
         virtual void apply(const Rect* rect = 0) = 0;
 
         timeMS getCreationTime()

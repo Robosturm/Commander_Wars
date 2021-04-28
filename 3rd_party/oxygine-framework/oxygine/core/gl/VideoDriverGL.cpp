@@ -13,7 +13,7 @@ namespace oxygine
         _rt->_fbo = fbo;
     }
 
-    unsigned int VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
+    quint32 VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
     {
         switch (pt)
         {
@@ -38,7 +38,7 @@ namespace oxygine
         return PT_POINTS;
     }
 
-    unsigned int VideoDriverGL::getBT(IVideoDriver::BLEND_TYPE pt)
+    quint32 VideoDriverGL::getBT(IVideoDriver::BLEND_TYPE pt)
     {
         switch (pt)
         {
@@ -144,7 +144,7 @@ namespace oxygine
         window->glBlendFunc(getBT(src), getBT(dest));
     }
 
-    void VideoDriverGL::setState(STATE state, unsigned int value)
+    void VideoDriverGL::setState(STATE state, quint32 value)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
         switch (state)

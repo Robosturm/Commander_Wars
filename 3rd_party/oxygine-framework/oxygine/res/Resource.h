@@ -23,7 +23,7 @@ namespace oxygine
         QString             getAttribute(QString attr) const;
         QDomElement         getNode() const {return _node;}
         bool                getUseLoadCounter() const {return _useLoadCounter;}
-        int                 getLoadCounter() const { return _loadCounter; }
+        qint32                 getLoadCounter() const { return _loadCounter; }
         Resource*           getParent() const {return _parent;}
 
 
@@ -49,7 +49,7 @@ namespace oxygine
 
         Resource* _parent;
 
-        int _loadCounter;
+        qint32 _loadCounter;
         bool _useLoadCounter;
 
         QDomElement _node;

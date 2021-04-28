@@ -16,7 +16,7 @@ namespace oxygine
             {
             }
             spShaderProgram program;
-            int flags;
+            qint32 flags;
         };
 
         UberShaderProgramBase();
@@ -26,7 +26,7 @@ namespace oxygine
 
         void release();
 
-        virtual ShaderProgram*         getShaderProgram(int flags) = 0;
+        virtual ShaderProgram*         getShaderProgram(qint32 flags) = 0;
 
 
     protected:
@@ -66,7 +66,7 @@ namespace oxygine
             SAMPLER_NUM,
         };
 
-        ShaderProgram*  getShaderProgram(int flags) override;
+        ShaderProgram*  getShaderProgram(qint32 flags) override;
 
         void apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
 

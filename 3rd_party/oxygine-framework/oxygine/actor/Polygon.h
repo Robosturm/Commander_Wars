@@ -14,13 +14,13 @@ namespace oxygine
         /**
         if *own* is true Polygon will delete[] data array;
         */
-        void setVertices(const void* data, int size, int bformat, bool own);
+        void setVertices(const void* data, qint32 size, qint32 bformat, bool own);
     protected:
         void doRender(const RenderState&) override;
 
         const VertexDeclaration* _vdecl;
         bool _own;
         const unsigned char* _verticesData;
-        int _verticesSize;
+        qint32 _verticesSize;
     };
 }

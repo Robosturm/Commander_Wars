@@ -90,7 +90,7 @@ namespace oxygine
             void draw(DrawContext& dc) override;
 
             QColor color;
-            unsigned int options;
+            quint32 options;
         };
 
         class BrNode: public Node

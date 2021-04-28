@@ -48,7 +48,7 @@ namespace oxygine
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
-        int tempFlags = 0;
+        qint32 tempFlags = 0;
         if (_table.get() != nullptr)
         {
             tempFlags |= UberShaderProgram::COLOR_TABLE;

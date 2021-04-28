@@ -23,10 +23,10 @@ namespace oxygine
         ResAtlas();
         ~ResAtlas();
 
-        void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, int w, int h);
+        void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, qint32 w, qint32 h);
 
-        const atlas& getAtlas(int i) const {return _atlasses[i];}
-        int          getNum() const { return (int)_atlasses.size(); }
+        const atlas& getAtlas(qint32 i) const {return _atlasses[i];}
+        qint32          getNum() const { return (int)_atlasses.size(); }
 
         virtual void setLinearFilter(quint32 linearFilter) override;
         virtual quint32 getLinearFilter() const override;

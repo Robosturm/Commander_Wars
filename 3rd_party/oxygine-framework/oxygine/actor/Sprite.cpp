@@ -20,7 +20,9 @@ namespace oxygine
         {
             ResAnim* rs = _frame.getResAnim();
             if (rs)
+            {
                 rs->getAtlas()->unload();
+            }
         }
     }
 
@@ -28,7 +30,9 @@ namespace oxygine
     {
         _flags &= ~flag_manageResAnim;
         if (manage)
+        {
             _flags |= flag_manageResAnim;
+        }
     }
 
     void Sprite::setAnimFrame(const AnimationFrame& f)
@@ -37,21 +41,24 @@ namespace oxygine
     }
 
 
-    extern int HIT_TEST_DOWNSCALE;
+    extern qint32 HIT_TEST_DOWNSCALE;
 
     bool Sprite::isOn(const Vector2& localPosition, float localScale)
     {
         if (!Actor::isOn(localPosition, localScale))
+        {
             return false;
-
+        }
         if (_extendedIsOn)
+        {
             return true;
-
+        }
         const HitTestData& ad = _frame.getHitTestData();
         if (!ad.data)
+        {
             return true;
-
-        const int BITS = (sizeof(int32_t) * 8);
+        }
+        const qint32 BITS = (sizeof(int32_t) * 8);
 
         const unsigned char* buff = ad.data;
         if (buff != nullptr)
@@ -64,8 +71,8 @@ namespace oxygine
             {
                 const int32_t* ints = reinterpret_cast<const int32_t*>(buff + lp.y * ad.pitch);
 
-                int n = lp.x / BITS;
-                int b = lp.x % BITS;
+                qint32 n = lp.x / BITS;
+                qint32 b = lp.x % BITS;
 
                 return (ints[n] >> b) & 1;
             }
@@ -160,23 +167,25 @@ namespace oxygine
         }
 
         if (fx || fy)
+        {
             animFrameChanged(_frame);
+        }
     }
 
-    void Sprite::setColumn(int column)
+    void Sprite::setColumn(qint32 column)
     {
         const ResAnim* rs = getResAnim();
         setAnimFrame(rs, column, getRow());
     }
 
-    void Sprite::setRow(int row)
+    void Sprite::setRow(qint32 row)
     {
         const ResAnim* rs = getResAnim();
         setAnimFrame(rs, getColumn(), row);
 
     }
 
-    void Sprite::setColumnRow(int column, int row)
+    void Sprite::setColumnRow(qint32 column, qint32 row)
     {
         const ResAnim* rs = getResAnim();
         setAnimFrame(rs, column, row);
@@ -188,7 +197,7 @@ namespace oxygine
         _setSize(_frame.getSize().mult(_localScale));
     }
 
-    void Sprite::setResAnim(const ResAnim* resanim, int col, int row)
+    void Sprite::setResAnim(const ResAnim* resanim, qint32 col, qint32 row)
     {
         setAnimFrame(resanim, col, row);
     }
@@ -213,7 +222,7 @@ namespace oxygine
         }
     }
 
-    void Sprite::setAnimFrame(const ResAnim* resanim, int col, int row)
+    void Sprite::setAnimFrame(const ResAnim* resanim, qint32 col, qint32 row)
     {
         //Q_ASSERT(resanim);
         if (!resanim)

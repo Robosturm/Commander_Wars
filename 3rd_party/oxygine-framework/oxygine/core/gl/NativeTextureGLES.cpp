@@ -12,8 +12,8 @@ namespace oxygine
 {
     struct glPixel
     {
-        int format;
-        int type;
+        qint32 format;
+        qint32 type;
         bool compressed;
     };
 
@@ -43,7 +43,7 @@ namespace oxygine
         window->glActiveTexture(GL_TEXTURE7);
         window->glBindTexture(GL_TEXTURE_2D, id);
 
-        unsigned int f = GL_LINEAR;
+        quint32 f = GL_LINEAR;
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
 
@@ -66,7 +66,7 @@ namespace oxygine
 
     }
 
-    void NativeTextureGLES::init(int w, int h, ImageData::TextureFormat tf, bool rt)
+    void NativeTextureGLES::init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool rt)
     {
         release();
 
@@ -79,17 +79,17 @@ namespace oxygine
 
         if (rt)
         {
-            int prevFBO = 0;
+            qint32 prevFBO = 0;
             window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
             window->glBindTexture(GL_TEXTURE_2D, 0);
-            unsigned int fbo = 0;
+            quint32 fbo = 0;
             window->glGenFramebuffers(1, &fbo);
             window->glBindFramebuffer(GL_FRAMEBUFFER, fbo);
             window->glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
 
             //printf("created fbo: %d\n", fbo);
 
-            unsigned int status = window->glCheckFramebufferStatus(GL_FRAMEBUFFER);
+            quint32 status = window->glCheckFramebufferStatus(GL_FRAMEBUFFER);
             //qDebug("fbo status %d\n", status);
             //GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
             if (status != GL_FRAMEBUFFER_COMPLETE)
@@ -115,7 +115,7 @@ namespace oxygine
         _format = tf;
     }
 
-    void NativeTextureGLES::init(GLuint id, int w, int h, ImageData::TextureFormat tf)
+    void NativeTextureGLES::init(GLuint id, qint32 w, qint32 h, ImageData::TextureFormat tf)
     {
         release();
         _id = id;
@@ -161,7 +161,7 @@ namespace oxygine
         window->glActiveTexture(GL_TEXTURE7);
         window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
-        unsigned int f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
+        quint32 f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
 
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, f);
         window->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, f);
@@ -206,12 +206,12 @@ namespace oxygine
         release();
     }
 
-    int NativeTextureGLES::getWidth() const
+    qint32 NativeTextureGLES::getWidth() const
     {
         return _width;
     }
 
-    int NativeTextureGLES::getHeight() const
+    qint32 NativeTextureGLES::getHeight() const
     {
         return _height;
     }
@@ -286,7 +286,7 @@ namespace oxygine
     }
 
 
-    void NativeTextureGLES::updateRegion(int x, int y, const ImageData& data_)
+    void NativeTextureGLES::updateRegion(qint32 x, qint32 y, const ImageData& data_)
     {
         if (data_.w == 0 || data_.h == 0)
             return;
@@ -326,7 +326,7 @@ namespace oxygine
         return reinterpret_cast<GLuint>(_id);
     }
 
-    unsigned int NativeTextureGLES::getFboID() const
+    quint32 NativeTextureGLES::getFboID() const
     {
         return (unsigned int) _fbo;
     }

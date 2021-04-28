@@ -13,9 +13,9 @@ namespace oxygine
 
         void setDriver(IVideoDriver* d);
 
-        const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
+        const spNativeTexture& getTexture(qint32 sampler) { return _textures[sampler]; }
 
-        void setTexture(int sampler, const spNativeTexture& t);
+        void setTexture(qint32 sampler, const spNativeTexture& t);
         void setBlendMode(blend_mode blend);
         bool setShader(ShaderProgram* prog);
 
@@ -89,13 +89,13 @@ namespace oxygine
         IVideoDriver*               getDriver();
         const AffineTransform&      getTransform() const { return _transform; }
         const VertexDeclaration*    getVertexDeclaration() const { return _vdecl; }
-        unsigned int                getBaseShaderFlags() const { return _baseShaderFlags; }
+        quint32                getBaseShaderFlags() const { return _baseShaderFlags; }
 
         void setShaderFlags(unsigned int);
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
-        void setBaseShaderFlags(unsigned int fl);
+        void setBaseShaderFlags(quint32 fl);
 
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
@@ -107,12 +107,12 @@ namespace oxygine
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
-        void initCoordinateSystem(int width, int height, bool flipU = false);
+        void initCoordinateSystem(qint32 width, qint32 height, bool flipU = false);
 
         /**Draws existing batch immediately.*/
         void flush();
 
-        virtual void addVertices(const void* data, unsigned int size);
+        virtual void addVertices(const void* data, quint32 size);
 
         void swapVerticesData(std::vector<unsigned char>& data);
         void swapVerticesData(STDRenderer& r);
@@ -132,7 +132,7 @@ namespace oxygine
         void xdrawBatch();
 
 
-        void xaddVertices(const void* data, unsigned int size);
+        void xaddVertices(const void* data, quint32 size);
         void checkDrawBatch();
 
         std::vector<unsigned char> _verticesData;
@@ -149,7 +149,7 @@ namespace oxygine
 
         UberShaderProgram* _uberShader;
 
-        unsigned int _baseShaderFlags;
+        quint32 _baseShaderFlags;
 
         spNativeTexture _prevRT;
     };

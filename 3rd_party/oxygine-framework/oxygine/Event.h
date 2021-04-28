@@ -21,11 +21,11 @@ namespace oxygine
         Event(eventType Type, bool Bubbles = false) : listenerID(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) { userData64 = 0; }
         virtual ~Event() {}
 
-        int listenerID;
+        qint32 listenerID;
         union
         {
             quint64 userData64;
-            int    userData32;
+            qint32    userData32;
             bool   userDataBool;
             void*  userData;
         };

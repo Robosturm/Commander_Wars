@@ -61,8 +61,9 @@ namespace oxygine
     void SlidingActor::snap()
     {
         if (!_content)
+        {
             return;
-
+        }
         updateDragBounds();
         _drag.snapClient2Bounds();
         _sliding = false;
@@ -87,7 +88,7 @@ namespace oxygine
         _lastIterTime = timeMS(0);
         _sliding = false;
 
-        for (int i = 0; i < NUM; ++i)
+        for (qint32 i = 0; i < NUM; ++i)
             _prev[i].tm = timeMS(0);
 
         _holded = nullptr; //event->target;
@@ -223,7 +224,7 @@ namespace oxygine
                 _prev[0].pos = _content->getPosition();
                 _prev[0].tm = tm;
 
-                for (int i = 1; i < NUM; ++i)
+                for (qint32 i = 1; i < NUM; ++i)
                 {
                     _prev[i].tm = timeMS(0);
                 }
@@ -253,9 +254,9 @@ namespace oxygine
                     const iter* mid = 0;
                     const iter* last = _prev + _current;
 
-                    for (int i = 1; i < NUM; ++i)
+                    for (qint32 i = 1; i < NUM; ++i)
                     {
-                        int n = (_current + NUM - i) % NUM;
+                        qint32 n = (_current + NUM - i) % NUM;
                         if (_prev[n].tm > timeMS(0))
                         {
                             last = _prev + n;
@@ -338,7 +339,7 @@ namespace oxygine
 
                         while (act && act.get() != _content.get())
                         {
-                            for (int i = 0; i < MouseButton_Num; ++i)
+                            for (qint32 i = 0; i < MouseButton_Num; ++i)
                             {
                                 act->setNotPressed((MouseButton)i);
 

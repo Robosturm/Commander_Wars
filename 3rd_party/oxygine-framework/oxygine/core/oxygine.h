@@ -24,7 +24,7 @@ namespace oxygine
         {
         public:
             PreCreateWindowEvent(): Event(EVENT_PRECREATEWINDOW) {}
-            int flags;
+            qint32 flags;
         };
 
         spEventDispatcher getDispatcher();

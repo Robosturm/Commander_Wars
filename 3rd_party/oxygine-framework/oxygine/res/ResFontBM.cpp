@@ -68,7 +68,7 @@ namespace oxygine
         cleanup();
     }
 
-    const oxygine::Font* ResFontBM::getClosestFont(float, int styleFontSize, float& resScale) const
+    const oxygine::Font* ResFontBM::getClosestFont(float, qint32 styleFontSize, float& resScale) const
     {
         if (!styleFontSize)
         {
@@ -147,7 +147,7 @@ namespace oxygine
         }
     }
 
-    void ResFontBM::addPage(int tw, int th, QString head, QString textureFile)
+    void ResFontBM::addPage(qint32 tw, qint32 th, QString head, QString textureFile)
     {
         page p;
         if (!head.isEmpty())
@@ -219,7 +219,7 @@ namespace oxygine
 
     }
 
-    void ResFontBM::_createFont(CreateResourceContext* context, bool, bool bmc, int downsample)
+    void ResFontBM::_createFont(CreateResourceContext* context, bool, bool bmc, qint32 downsample)
     {
         _sdf = false;
 
@@ -271,13 +271,13 @@ namespace oxygine
         QDomElement info = root.firstChildElement("info");
 
         //<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
-        int fontSize = info.attribute("size").toInt() / downsample;
+        qint32 fontSize = info.attribute("size").toInt() / downsample;
 
         QDomElement common = root.firstChildElement("common");
-        int lineHeight = common.attribute("lineHeight").toInt() / downsample;
-        int base = common.attribute("base").toInt() / downsample;
-        int tw = common.attribute("scaleW").toInt();
-        int th = common.attribute("scaleH").toInt();
+        qint32 lineHeight = common.attribute("lineHeight").toInt() / downsample;
+        qint32 base = common.attribute("base").toInt() / downsample;
+        qint32 tw = common.attribute("scaleW").toInt();
+        qint32 th = common.attribute("scaleH").toInt();
 
         QDomElement pages = root.firstChildElement("pages");
         tw /= downsample;
@@ -312,22 +312,22 @@ namespace oxygine
         QDomElement child = chars.firstChildElement();
         while (!child.isNull())
         {
-            int charID = 0;
-            int xpos = 0;
-            int ypos = 0;
-            int width = 0;
-            int height = 0;
-            int xoffset = 0;
-            int yoffset = 0;
-            int xadvance = 0;
-            int page = 0;
+            qint32 charID = 0;
+            qint32 xpos = 0;
+            qint32 ypos = 0;
+            qint32 width = 0;
+            qint32 height = 0;
+            qint32 xoffset = 0;
+            qint32 yoffset = 0;
+            qint32 xadvance = 0;
+            qint32 page = 0;
 
             auto attr = child.attributes();
             for (qint32 i = 0; i < attr.size(); i++)
             {
                 QDomNode attribute = attr.item(i);
                 QString attr_name = attribute.nodeName();
-                int value = attribute.nodeValue().toInt();
+                qint32 value = attribute.nodeValue().toInt();
 
                 if (attr_name == "id")
                     charID = value;

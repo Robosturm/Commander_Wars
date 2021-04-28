@@ -17,7 +17,7 @@ namespace oxygine
         _free.clear();
     }
 
-    void AtlasBuilder::init(int w, int h, int skipSize)
+    void AtlasBuilder::init(qint32 w, qint32 h, qint32 skipSize)
     {
         _skipSize = skipSize;
         _bounds = Rect(0, 0, 0, 0);
@@ -36,13 +36,17 @@ namespace oxygine
         if (dest)
         {
             if (src.w == dest->getWidth())
+            {
                 offset.x = 0;
+            }
             if (src.h == dest->getHeight())
+            {
                 offset.y = 0;
+            }
         }
 
-        int w = src.w + offset.x * 2;
-        int h = src.h + offset.y * 2;
+        qint32 w = src.w + offset.x * 2;
+        qint32 h = src.h + offset.y * 2;
 
         Point size(w, h);
 
@@ -123,7 +127,7 @@ namespace oxygine
         _bounds = Rect(0, 0, 0, 0);
     }
 
-    void MultiAtlas::init(int skipSize)
+    void MultiAtlas::init(qint32 skipSize)
     {
         _skipSize = skipSize;
     }
@@ -133,7 +137,7 @@ namespace oxygine
         return std::min(a.rct.size.x, a.rct.size.y) < std::min(b.rct.size.x, b.rct.size.y);
     }
 
-    void MultiAtlas::place(const rect& rct, int w, int h, const ImageData& src, spTexture& t, Rect& srcRect)
+    void MultiAtlas::place(const rect& rct, qint32 w, qint32 h, const ImageData& src, spTexture& t, Rect& srcRect)
     {
         const Rect& rc = rct.rct;
         srcRect.pos = rc.pos;
@@ -181,8 +185,8 @@ namespace oxygine
     {
         Point offset(2, 2);
 
-        int w = src.w + offset.x;
-        int h = src.h + offset.y;
+        qint32 w = src.w + offset.x;
+        qint32 h = src.h + offset.y;
 
         Point size(w, h);
 

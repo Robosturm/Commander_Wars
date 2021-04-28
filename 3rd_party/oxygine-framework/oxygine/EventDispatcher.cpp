@@ -13,7 +13,7 @@ namespace oxygine
     {
     }
 
-    int EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
+    qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
         _lastID++;
 
@@ -27,7 +27,7 @@ namespace oxygine
         return ls.id;
     }
 
-    void EventDispatcher::removeEventListener(int id)
+    void EventDispatcher::removeEventListener(qint32 id)
     {
 
         for (size_t size = _listeners.size(), i = 0; i != size; ++i)
@@ -41,22 +41,9 @@ namespace oxygine
         }
     }
 
-    void EventDispatcher::removeEventListener(eventType et, const EventCallback& cb)
+    void EventDispatcher::removeEventListeners(IClosureOwner* CallbackThis)
     {
-        for (size_t size = _listeners.size(), i = 0; i != size; ++i)
-        {
-            const listener& ls = _listeners.at(i);
-            if (ls.type == et && cb == ls.cb)
-            {
-                _listeners.erase(_listeners.begin() + i);
-                break;
-            }
-        }
-    }
-
-    void EventDispatcher::removeEventListeners(void* CallbackThis)
-    {
-        for (int i = 0; i < _listeners.size(); ++i)
+        for (qint32 i = 0; i < _listeners.size(); ++i)
         {
             const listener& ls = _listeners.at(i);
             if (ls.cb.isOwner(CallbackThis))
@@ -69,7 +56,7 @@ namespace oxygine
 
     void EventDispatcher::removeEventListenersByType(eventType et)
     {
-        for (int i = 0; i < _listeners.size(); ++i)
+        for (qint32 i = 0; i < _listeners.size(); ++i)
         {
             const listener& ls = _listeners.at(i);
             if (ls.type == et)
@@ -86,7 +73,6 @@ namespace oxygine
         _listeners.clear();
     }
 
-
     void EventDispatcher::dispatchEvent(Event* event)
     {
         if (!event->target)
@@ -98,8 +84,9 @@ namespace oxygine
         {
             return;
         }
-
-        for (auto & listener : _listeners)
+        // make sure listeners can be added/removed while processing the current event to this dispatcher
+        auto currentListener = _listeners;
+        for (auto & listener : currentListener)
         {
             if (listener.type == event->type)
             {
@@ -114,7 +101,7 @@ namespace oxygine
         }
     }
 
-    int EventDispatcher::getListenersCount() const
+    qint32 EventDispatcher::getListenersCount() const
     {
         return _listeners.size();
     }

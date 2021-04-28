@@ -105,7 +105,7 @@ namespace oxygine
         virtual void timerEvent(QTimerEvent *) override;
         virtual void paintGL() override;
 
-        virtual void resizeGL(int w, int h) override;
+        virtual void resizeGL(qint32 w, qint32 h) override;
         // input events
         virtual void mousePressEvent(QMouseEvent *event) override;
         virtual void mouseReleaseEvent(QMouseEvent *event) override;

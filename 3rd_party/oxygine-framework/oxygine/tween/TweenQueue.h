@@ -39,7 +39,7 @@ namespace oxygine
         spTween add(spTween t);
 
         template<class GS>
-        spTween add(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear);
+        spTween add(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear);
 
         template<class GS>
         spTween add(const GS& gs, const TweenOptions&);
@@ -53,12 +53,12 @@ namespace oxygine
         typedef intrusive_list<spTween> tweens;
         tweens _tweens;
         spTween _current;
-        int _loopsDone;
+        qint32 _loopsDone;
     };
 
 
     template<class GS>
-    spTween TweenQueue::add(const GS& gs, timeMS duration, int loops, bool twoSides, timeMS delay, Tween::EASE ease)
+    spTween TweenQueue::add(const GS& gs, timeMS duration, qint32 loops, bool twoSides, timeMS delay, Tween::EASE ease)
     {
         return add(createTween(gs, duration, loops, twoSides, delay, ease));
     }

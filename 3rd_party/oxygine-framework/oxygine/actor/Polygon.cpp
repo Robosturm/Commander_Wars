@@ -26,7 +26,7 @@ namespace oxygine
             delete[] _verticesData;
     }
 
-    void Polygon::setVertices(const void* data, int size, int bformat, bool own)
+    void Polygon::setVertices(const void* data, qint32 size, qint32 bformat, bool own)
     {
         if (_own && data != _verticesData)
         {
@@ -61,10 +61,10 @@ namespace oxygine
             buff.clear();
 
             buff.reserve(_verticesSize);
-            int num = _verticesSize / _vdecl->size;
+            qint32 num = _verticesSize / _vdecl->size;
 
             const unsigned char* ptr = (const unsigned char*)_verticesData;
-            for (int i = 0; i < num; ++i)
+            for (qint32 i = 0; i < num; ++i)
             {
                 const Vector2* pos = (Vector2*)ptr;
                 Vector2 t = rs.transform.transform(*pos);

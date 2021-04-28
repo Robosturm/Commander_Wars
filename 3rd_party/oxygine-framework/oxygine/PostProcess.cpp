@@ -23,7 +23,9 @@ namespace oxygine
     void PostProcess::initShaders()
     {
         if (_ppBuilt)
+        {
             return;
+        }
         _ppBuilt = true;
 
 
@@ -91,9 +93,9 @@ namespace oxygine
         shaderBlurV = nullptr;
     }
 
-    const int ALIGN_SIZE = 256;
+    const qint32 ALIGN_SIZE = 256;
     const timeMS TEXTURE_LIVE = timeMS(3000);
-    const int MAX_FREE_TEXTURES = 3;
+    const qint32 MAX_FREE_TEXTURES = 3;
 
     using namespace std;
 
@@ -102,19 +104,19 @@ namespace oxygine
     class PPTask;
     vector<PPTask*> postProcessItems;
 
-    int alignTextureSize(int v)
+    qint32 alignTextureSize(qint32 v)
     {
-        int n = (v - 1) / ALIGN_SIZE;
+        qint32 n = (v - 1) / ALIGN_SIZE;
         return (n + 1) * ALIGN_SIZE;
     }
 
     class NTP
     {
     public:
-        int _w;
-        int _h;
+        qint32 _w;
+        qint32 _h;
         ImageData::TextureFormat _tf;
-        NTP(int w, int h, ImageData::TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
+        NTP(qint32 w, qint32 h, ImageData::TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
 
         bool operator()(const spNativeTexture& t1, const spNativeTexture&) const
         {
@@ -159,7 +161,7 @@ namespace oxygine
             qDebug("texture %d %d", t->getWidth(), t->getHeight());
         }
     }
-    bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const
+    bool RenderTargetsManager::isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const
     {
         if (!t)
         {
@@ -178,7 +180,7 @@ namespace oxygine
         return false;
     }
 
-    spNativeTexture RenderTargetsManager::get(spNativeTexture current, int w, int h, ImageData::TextureFormat tf)
+    spNativeTexture RenderTargetsManager::get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf)
     {
         w = alignTextureSize(w);
         h = alignTextureSize(h);
@@ -251,7 +253,7 @@ namespace oxygine
 
     void RenderTargetsManager::reset()
     {
-        for (int i = 0; i < _rts.size(); ++i)
+        for (qint32 i = 0; i < _rts.size(); ++i)
         {
             _rts[i]->release();
         }
@@ -318,7 +320,9 @@ namespace oxygine
             postProcessItems.clear();
             driver->setRenderTarget(prevRT);
             if (sp)
+            {
                 driver->setShaderProgram(sp);
+            }
             _renderingPP = false;
         }
 
@@ -476,10 +480,6 @@ namespace oxygine
 
         Material::null->apply();
     }
-
-
-
-
 
     TweenPostProcess::TweenPostProcess(const PostProcessOptions& opt)
         : _actor(0),

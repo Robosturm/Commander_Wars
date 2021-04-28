@@ -6,7 +6,7 @@
 
 namespace oxygine
 {
-    const int MAX_TOUCHES = 17;
+    const qint32 MAX_TOUCHES = 17;
 
     class Input
     {
@@ -23,7 +23,7 @@ namespace oxygine
         /**index should be in range [1, MAX_TOUCHES]*/
         PointerState* getTouchByIndex(pointer_index index);
 
-        int touchID2index(qint64 id);
+        qint32 touchID2index(qint64 id);
         PointerState* getTouchByID(qint64 id);
 
 
@@ -34,7 +34,7 @@ namespace oxygine
         qint64 _ids[MAX_TOUCHES + 1];
 
 
-        void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);
+        void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState*);
         void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState*);
         void sendPointerWheelEvent(spStage, const Vector2& dir, PointerState*);
 

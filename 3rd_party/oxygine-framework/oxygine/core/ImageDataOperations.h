@@ -24,22 +24,22 @@ namespace oxygine
             const unsigned int& s = pS.rgba;
             unsigned int& d = pD.rgba;
 
-            unsigned int dst_rb = d        & 0xFF00FF;
-            unsigned int dst_ag = (d >> 8) & 0xFF00FF;
+            quint32 dst_rb = d        & 0xFF00FF;
+            quint32 dst_ag = (d >> 8) & 0xFF00FF;
 
-            unsigned int src_rb = s        & 0xFF00FF;
-            unsigned int src_ag = (s >> 8) & 0xFF00FF;
+            quint32 src_rb = s        & 0xFF00FF;
+            quint32 src_ag = (s >> 8) & 0xFF00FF;
 
-            unsigned int d_rb = src_rb - dst_rb;
-            unsigned int d_ag = src_ag - dst_ag;
+            quint32 d_rb = src_rb - dst_rb;
+            quint32 d_ag = src_ag - dst_ag;
 
             d_rb *= pS.a;
             d_ag *= pS.a;
             d_rb >>= 8;
             d_ag >>= 8;
 
-            const unsigned int rb  = (d_rb + dst_rb)        & 0x00FF00FF;
-            const unsigned int ag  = ((d_ag + dst_ag) << 8) & 0xFF00FF00;
+            const quint32 rb  = (d_rb + dst_rb)        & 0x00FF00FF;
+            const quint32 ag  = ((d_ag + dst_ag) << 8) & 0xFF00FF00;
 
             d = rb | ag;
         }
@@ -66,7 +66,7 @@ namespace oxygine
         class op_noise
         {
         public:
-            op_noise(int v): _v(v) {}
+            op_noise(qint32 v): _v(v) {}
 
             template<class Src, class Dest>
             void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const
@@ -77,7 +77,7 @@ namespace oxygine
                 p.g = 255;
                 p.b = 255;
 
-                int v = rand() % 1000;
+                qint32 v = rand() % 1000;
                 //p.r = p.g = p.b = p.a = v > 600 ? 255:0;//for add
                 p.r = p.g = p.b = p.a = v > _v ? 255 : 0; //for alpha
 
@@ -85,7 +85,7 @@ namespace oxygine
                 destPixelFormat.setPixel(destData, p);
             }
 
-            int _v;
+            qint32 _v;
         };
 
         class op_premultipliedAlpha
@@ -199,15 +199,15 @@ namespace oxygine
             const unsigned char* srcBuffer = (unsigned char*)src.data;
             unsigned char* destBuffer = (unsigned char*)dest.data;
 
-            int w = dest.w;
-            int h = dest.h;
+            qint32 w = dest.w;
+            qint32 h = dest.h;
 
-            for (int y = 0; y != h; ++y)
+            for (qint32 y = 0; y != h; ++y)
             {
                 const unsigned char* srcLine = srcBuffer;
                 unsigned char* destLine = destBuffer;
 
-                for (int x = 0; x != w; ++x)
+                for (qint32 x = 0; x != w; ++x)
                 {
                     op(srcPixelFormat, destPixelFormat, srcLine, destLine);
 
@@ -231,14 +231,14 @@ namespace oxygine
 
             unsigned char* destBuffer = (unsigned char*)dest.data;
 
-            int w = dest.w;
-            int h = dest.h;
+            qint32 w = dest.w;
+            qint32 h = dest.h;
 
-            for (int y = 0; y != h; ++y)
+            for (qint32 y = 0; y != h; ++y)
             {
                 unsigned char* destLine = destBuffer;
 
-                for (int x = 0; x != w; ++x)
+                for (qint32 x = 0; x != w; ++x)
                 {
                     op(destPixelFormat, destPixelFormat, destLine, destLine);
                     destLine += dest.bytespp;

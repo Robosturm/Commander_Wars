@@ -6,19 +6,19 @@
 
 namespace oxygine
 {
-    static constexpr int makefourcc(unsigned int a, unsigned int b,
-                                    unsigned int c, unsigned int d)
+    static constexpr qint32 makefourcc(quint32 a, quint32 b,
+                                       quint32 c, quint32 d)
     {
         return static_cast<int>(a | (b << 8) | (c << 16) | (d << 24));
     };
 
-    static constexpr int eventID(unsigned int a, unsigned int b,
-                                 unsigned int c, unsigned int d)
+    static constexpr qint32 eventID(quint32 a, quint32 b,
+                                    quint32 c, quint32 d)
     {
         return makefourcc(a, b, c, d);
     };
-    static constexpr int sysEventID(unsigned int b, unsigned int c,
-                                    unsigned int d)
+    static constexpr qint32 sysEventID(quint32 b, quint32 c,
+                                       quint32 d)
     {
         return makefourcc(0xA, b, c, d);
     };
@@ -36,16 +36,13 @@ namespace oxygine
         EventDispatcher();
         ~EventDispatcher();
 
-        int addEventListener(eventType, const EventCallback&);
-
-        /**remove event listener by event type with callback, not working with lambda functions, works only for Closure(...)*/
-        void removeEventListener(eventType, const EventCallback&);
+        qint32 addEventListener(eventType, const EventCallback&);
 
         /**remove by ID, where is ID returned from addEventListener*/
-        void removeEventListener(int id);
+        void removeEventListener(qint32 id);
 
         /**removes all added event listeners by THIS used in Closure(this, ...)*/
-        void removeEventListeners(void* CallbackThis);
+        void removeEventListeners(IClosureOwner* CallbackThis);
 
         /**removes all added event listeners by THIS used in Closure(this, ...)*/
         void removeEventListenersByType(eventType);
@@ -56,10 +53,10 @@ namespace oxygine
         virtual void dispatchEvent(Event* event);
         void dispatchEvent(Event& event) { dispatchEvent(&event); }
 
-        int getListenersCount() const;
-        int getLastListenerID() const { return _lastID; }
+        qint32 getListenersCount() const;
+        qint32 getLastListenerID() const { return _lastID; }
 
-        const EventCallback& getListenerByIndex(int index) const { return _listeners[index].cb; }
+        const EventCallback& getListenerByIndex(qint32 index) const { return _listeners[index].cb; }
 
 
         bool getEnabled() const;
@@ -70,7 +67,7 @@ namespace oxygine
         struct listenerbase
         {
             EventCallback cb;
-            int id;
+            qint32 id;
         };
 
         struct listener : public listenerbase
@@ -78,7 +75,7 @@ namespace oxygine
             eventType type;
         };
 
-        int _lastID;
+        qint32 _lastID;
 
         typedef QVector<listener> listeners;
         listeners _listeners;

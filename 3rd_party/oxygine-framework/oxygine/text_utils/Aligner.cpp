@@ -28,9 +28,9 @@ namespace oxygine
 
         }
 
-        int Aligner::_alignX(int rx)
+        qint32 Aligner::_alignX(qint32 rx)
         {
-            int tx = 0;
+            qint32 tx = 0;
             switch (getStyle().hAlign)
             {
                 case TextStyle::HALIGN_LEFT:
@@ -47,9 +47,9 @@ namespace oxygine
             return tx;
         }
 
-        int Aligner::_alignY(int ry)
+        qint32 Aligner::_alignY(qint32 ry)
         {
-            int ty = 0;
+            qint32 ty = 0;
 
             switch (getStyle().vAlign)
             {
@@ -85,7 +85,7 @@ namespace oxygine
 
         void Aligner::end()
         {
-            int ry = _y;
+            qint32 ry = _y;
 
             if (getStyle().multiline)
             {
@@ -101,12 +101,12 @@ namespace oxygine
             bounds.setHeight(ry);
         }
 
-        int Aligner::getLineWidth() const
+        qint32 Aligner::getLineWidth() const
         {
             return _lineWidth;
         }
 
-        int Aligner::getLineSkip() const
+        qint32 Aligner::getLineSkip() const
         {
             return _lineSkip;
         }
@@ -116,16 +116,16 @@ namespace oxygine
             if (!ln.empty())
             {
                 //calculate real text width
-                int rx = 0;
-                for (int i = 0; i < ln.size(); ++i)
+                qint32 rx = 0;
+                for (qint32 i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
                     rx = std::max(s.x + s.gl.advance_x, rx);
                 }
 
-                int tx = _alignX(rx);
+                qint32 tx = _alignX(rx);
 
-                for (int i = 0; i < ln.size(); ++i)
+                for (qint32 i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
                     s.x += tx;
@@ -162,30 +162,31 @@ namespace oxygine
             return _scale;
         }
 
-        int Aligner::putSymbol(Symbol& s)
+        qint32 Aligner::putSymbol(Symbol& s)
         {
             if (_line.empty() && s.code == ' ')
+            {
                 return 0;
-
+            }
             _line.push_back(&s);
 
             //optional.. remove?
             if (_line.size() == 1 && s.gl.offset_x < 0)
+            {
                 _x -= s.gl.offset_x;
+            }
 
             s.x = _x + s.gl.offset_x;
             s.y = _y + s.gl.offset_y;
             _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl.advance_x;
-
-
+            qint32 rx = s.x + s.gl.advance_x;
             _lineWidth = std::max(rx, _lineWidth);
 
             //
             if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)
             {
-                int lastWordPos = (int)_line.size() - 1;
+                qint32 lastWordPos = (int)_line.size() - 1;
                 for (; lastWordPos > 0; --lastWordPos)
                 {
                     if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
@@ -200,8 +201,7 @@ namespace oxygine
                         return 0;
                 }
 
-
-                int delta = (int)_line.size() - lastWordPos;
+                qint32 delta = (int)_line.size() - lastWordPos;
                 line leftPart;
                 leftPart.resize(delta + 1);
                 leftPart = line(_line.begin() + lastWordPos, _line.end());
@@ -210,7 +210,7 @@ namespace oxygine
 
                 //line = leftPart;
 
-                for (int i = 0; i < leftPart.size(); ++i)
+                for (qint32 i = 0; i < leftPart.size(); ++i)
                 {
                     putSymbol(*leftPart[i]);
                 }

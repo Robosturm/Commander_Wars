@@ -12,8 +12,8 @@ namespace oxygine
     {
     public:
         NativeTexture() {}
-        virtual void init(GLuint, int w, int h, ImageData::TextureFormat tf) = 0;
-        virtual void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget = false) = 0;
+        virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) = 0;
+        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) = 0;
         virtual void init(const ImageData& src, bool sysMemCopy = false) = 0;
         //virtual void release() = 0;
         virtual GLuint getId() = 0;
@@ -26,7 +26,7 @@ namespace oxygine
         virtual void setLinearFilter(quint32 filter) = 0;
         /**set wrap mode as clamp2edge or repeat (tiling)*/
         virtual void setClamp2Edge(bool clamp2edge) = 0;
-        virtual void updateRegion(int x, int y, const ImageData& data) = 0;
+        virtual void updateRegion(qint32 x, qint32 y, const ImageData& data) = 0;
         virtual void apply(const Rect* rect = 0) = 0;
 
         /**returns handle (ptr) to HW texture ID*/
@@ -34,14 +34,14 @@ namespace oxygine
 
         static QVector<spNativeTexture> getCreatedTextures();
         /**debug counter of created textures*/
-        static volatile int created;
+        static volatile qint32 created;
     };
 
     class NativeTextureNull: public NativeTexture
     {
     public:
-        virtual void init(GLuint, int w, int h, ImageData::TextureFormat tf) override;
-        virtual void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget = false) override;
+        virtual void init(GLuint, qint32 w, qint32 h, ImageData::TextureFormat tf) override;
+        virtual void init(qint32 w, qint32 h, ImageData::TextureFormat tf, bool renderTarget = false) override;
         virtual void init(const ImageData& src, bool sysMemCopy) override;
         virtual void release() override;
 
@@ -51,13 +51,13 @@ namespace oxygine
 
         virtual void setClamp2Edge(bool clamp2edge) override;
         virtual void setLinearFilter(quint32 filter) override;
-        virtual void updateRegion(int x, int y, const ImageData& data) override;
+        virtual void updateRegion(qint32 x, qint32 y, const ImageData& data) override;
         virtual void apply(const Rect* rect = 0) override;
 
         /**returns handle (ptr) to HW texture ID*/
         virtual GLuint getHandle() const override;
-        virtual int getWidth() const override;
-        virtual int getHeight() const override;
+        virtual qint32 getWidth() const override;
+        virtual qint32 getHeight() const override;
         virtual ImageData::TextureFormat getFormat() const override;
 
         virtual void* _getRestorableObject() override { return 0; }

@@ -10,8 +10,8 @@ namespace oxygine
     public:
         ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclarationGL* decl);
         ~ShaderProgramGL();
-        unsigned int    getID() const override;
-        int             getUniformLocation(const char* id) const;
+        quint32    getID() const override;
+        qint32             getUniformLocation(const char* id) const;
         virtual void bind() override;
     protected:
         void compileShader(QOpenGLShader& shader, QString data);

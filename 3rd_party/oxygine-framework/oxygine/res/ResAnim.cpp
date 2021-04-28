@@ -16,15 +16,15 @@ namespace oxygine
     {
     }
 
-    void ResAnim::init(spNativeTexture texture, const Point& originalSize, int columns, int rows, float scaleFactor)
+    void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;
         if (!texture)
         {
             return;
         }
-        int frame_width = originalSize.x / columns;
-        int frame_height = originalSize.y / rows;
+        qint32 frame_width = originalSize.x / columns;
+        qint32 frame_height = originalSize.y / rows;
         if (rows > 1 || columns > 1)
         {
             frame_height -= 1;
@@ -36,13 +36,13 @@ namespace oxygine
         float height = static_cast<float>(frame_height) / static_cast<float>(originalSize.y);
 
         animationFrames frames;
-        int frames_count = rows * columns;
+        qint32 frames_count = rows * columns;
         frames.reserve(frames_count);
 
         Vector2 frameSize(static_cast<float>(frame_width), static_cast<float>(frame_height));
-        for (int y = 0; y < rows; ++y)
+        for (qint32 y = 0; y < rows; ++y)
         {
-            for (int x = 0; x < columns; ++x)
+            for (qint32 x = 0; x < columns; ++x)
             {
                 RectF srcRect(x * iw, y * ih, width, height);
                 RectF destRect(Vector2(0, 0), frameSize * scaleFactor);
@@ -57,7 +57,7 @@ namespace oxygine
         init(frames, columns, scaleFactor);
     }
 
-    void ResAnim::init(QString file, int columns, int rows, float scaleFactor)
+    void ResAnim::init(QString file, qint32 columns, qint32 rows, float scaleFactor)
     {
         QImage img(file);
         SpriteCreator::addTransparentBorder(img, columns, rows);
@@ -66,7 +66,7 @@ namespace oxygine
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(QImage & img, int columns, int rows, float scaleFactor)
+    void ResAnim::init(QImage & img, qint32 columns, qint32 rows, float scaleFactor)
     {
         Image mt;
         SpriteCreator::addTransparentBorder(img, columns, rows);
@@ -74,7 +74,7 @@ namespace oxygine
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(Image* original, int columns, int rows, float scaleFactor)
+    void ResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;
         if (!original)
@@ -88,11 +88,11 @@ namespace oxygine
         init(texture, original->getSize(), columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(animationFrames& frames, int columns, float scaleFactor, float appliedScale)
+    void ResAnim::init(animationFrames& frames, qint32 columns, float scaleFactor, float appliedScale)
     {
         _columns = columns;
         _frames.swap(frames);
-        for (int i = 0; i < _frames.size(); ++i)
+        for (qint32 i = 0; i < _frames.size(); ++i)
         {
             _frames[i].setResAnim(this);
         }
@@ -149,13 +149,13 @@ namespace oxygine
         return p;
     }
 
-    const AnimationFrame& ResAnim::getFrame(int col, int row) const
+    const AnimationFrame& ResAnim::getFrame(qint32 col, qint32 row) const
     {
-        int i = row * _columns + col;
+        qint32 i = row * _columns + col;
         return getFrame(i);
     }
 
-    const AnimationFrame&   ResAnim::getFrame(int index) const
+    const AnimationFrame&   ResAnim::getFrame(qint32 index) const
     {
         if (index < (int)_frames.size())
         {
@@ -164,9 +164,9 @@ namespace oxygine
         return emptyFrame;
     }
 
-    void ResAnim::setFrame(int col, int row, const AnimationFrame& frame)
+    void ResAnim::setFrame(qint32 col, qint32 row, const AnimationFrame& frame)
     {
-        int i = row * _columns + col;
+        qint32 i = row * _columns + col;
         if (i < (int)_frames.size())
         {
             _frames[i] = frame;

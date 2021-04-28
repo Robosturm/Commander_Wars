@@ -28,7 +28,7 @@ namespace oxygine
 
 
 
-    const int TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
+    const qint32 TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
 
 
     DECLARE_SMART(Tween, spTween);
@@ -92,12 +92,12 @@ namespace oxygine
         Tween();
         ~Tween();
 
-        void init(timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
+        void init(timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
         void init2(const TweenOptions& opt);
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
 
-        int                     getLoops() const { return _loops; }
+        qint32                     getLoops() const { return _loops; }
         timeMS                  getDuration() const { return _duration; }
         void                    setElapsed(const timeMS &elapsed);
         timeMS                  getElapsed() const { return _elapsed; }
@@ -126,7 +126,7 @@ namespace oxygine
         /**set Delay before starting tween*/
         void setDelay(timeMS delay) { _delay = delay; }
         /** loops = -1 means infinity repeat cycles*/
-        void setLoops(int loops) { _loops = loops; }
+        void setLoops(qint32 loops) { _loops = loops; }
         /*set Duration of tween**/
         void setDuration(timeMS duration) { _duration = duration; }
         void setClient(Actor* client) { _client = client; }
@@ -178,8 +178,8 @@ namespace oxygine
 
         timeMS _duration;
         timeMS _delay;
-        int _loops;
-        int _loopsDone;
+        qint32 _loops;
+        qint32 _loopsDone;
         EASE _ease;
         EASE _globalEase;
         bool _twoSides;
@@ -231,7 +231,7 @@ namespace oxygine
 
 
     template <typename GS>
-    TweenT<GS>* createTween(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
+    TweenT<GS>* createTween(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
     {
         TweenT<GS>* p = new TweenT<GS>(gs);
         p->init(duration, loops, twoSides, delay, ease);

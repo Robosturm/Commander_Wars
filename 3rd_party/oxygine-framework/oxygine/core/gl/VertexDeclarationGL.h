@@ -13,11 +13,11 @@ namespace oxygine
         struct Element
         {
             QString name;
-            int index;
+            qint32 index;
             bool normalized;
             GLint size;
             GLenum elemType;
-            int offset;
+            qint32 offset;
         };
 
         Element elements[8];

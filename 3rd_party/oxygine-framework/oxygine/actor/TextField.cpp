@@ -59,7 +59,7 @@ namespace oxygine
         rebuildText();
     }
 
-    void TextField::setLinesOffset(int offset)
+    void TextField::setLinesOffset(qint32 offset)
     {
         _style.linesOffset = offset;
         rebuildText();
@@ -71,13 +71,13 @@ namespace oxygine
         rebuildText();
     }
 
-    void TextField::setKerning(int kerning)
+    void TextField::setKerning(qint32 kerning)
     {
         _style.kerning = kerning;
         rebuildText();
     }
 
-    void TextField::setFontSize(int size)
+    void TextField::setFontSize(qint32 size)
     {
         _style.fontSize = size;
         rebuildText();
@@ -127,7 +127,7 @@ namespace oxygine
     {
         TextStyle::HorizontalAlign halign = _style.hAlign;
         TextStyle::VerticalAlign valign = _style.vAlign;
-        int size = _style.fontSize;
+        qint32 size = _style.fontSize;
         _style = st;
 
         if (st.hAlign == TextStyle::HALIGN_DEFAULT)
@@ -191,12 +191,12 @@ namespace oxygine
         }
     }
 
-    int TextField::getFontSize() const
+    qint32 TextField::getFontSize() const
     {
         return _style.fontSize;
     }
 
-    int TextField::getLinesOffset() const
+    qint32 TextField::getLinesOffset() const
     {
         return _style.linesOffset;
     }
@@ -221,7 +221,7 @@ namespace oxygine
         return _style.breakLongWords;
     }
 
-    int TextField::getKerning() const
+    qint32 TextField::getKerning() const
     {
         return _style.kerning;
     }
@@ -241,7 +241,7 @@ namespace oxygine
         return _style.options;
     }
 
-    text::Symbol* TextField::getSymbolAt(int pos) const
+    text::Symbol* TextField::getSymbolAt(qint32 pos) const
     {
         return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
     }

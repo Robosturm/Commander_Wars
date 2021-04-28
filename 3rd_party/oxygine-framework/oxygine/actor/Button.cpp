@@ -48,7 +48,9 @@ namespace oxygine
                 {
                     _btnOvered = me->index;
                     if (!_btnPressed)
+                    {
                         setState(stateOvered);
+                    }
                 }
             }
             break;
@@ -57,7 +59,9 @@ namespace oxygine
                 if (_btnOvered == me->index)
                 {
                     if (!_btnPressed)
+                    {
                         setState(stateNormal);
+                    }
                     _btnOvered = 0;
                 }
             }
@@ -68,7 +72,7 @@ namespace oxygine
                 {
                     _btnPressed = me->index;
                     setState(statePressed);
-                    addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
+                    m_touchUpCbId = addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                 }
             }
             break;
@@ -77,7 +81,7 @@ namespace oxygine
                 if (_btnPressed == me->index)
                 {
                     setState(stateNormal);
-                    removeEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
+                    removeEventListener(m_touchUpCbId);
                     _btnPressed = 0;
                 }
             }
@@ -91,7 +95,7 @@ namespace oxygine
         updateButtonState(_state);
     }
 
-    void Button::setRow(int row)
+    void Button::setRow(qint32 row)
     {
         _row = row;
         updateButtonState(_state);
@@ -100,7 +104,9 @@ namespace oxygine
     void Button::setState(state s)
     {
         if (s == _state)
+        {
             return;
+        }
         //printf("set state: %d\n", (int)s);
         _state = s;
         updateButtonState(s);
@@ -109,12 +115,16 @@ namespace oxygine
     void Button::updateButtonState(state s)
     {
         if (!_resAnim)
+        {
             return;
-
+        }
         if (_resAnim->getColumns() > s)
+        {
             Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
+        }
         else
+        {
             Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
-
+        }
     }
 }

@@ -26,12 +26,12 @@ namespace oxygine
         void setRenderTarget(spNativeTexture rt);
 
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
-        void setState(STATE, unsigned int value);
+        void setState(STATE, quint32 value);
 
 
     protected:
-        unsigned int getPT(IVideoDriver::PRIMITIVE_TYPE pt);
-        unsigned int getBT(IVideoDriver::BLEND_TYPE pt);
+        quint32 getPT(IVideoDriver::PRIMITIVE_TYPE pt);
+        quint32 getBT(IVideoDriver::BLEND_TYPE pt);
 
         void _begin(const Rect& viewport, const QColor* clearColor);
         spNativeTextureGLES _rt;

@@ -64,16 +64,20 @@ namespace oxygine
 
     void RenderStateCache::resetTextures()
     {
-        for (int i = 0; i < MAX_TEXTURES; ++i)
+        for (qint32 i = 0; i < MAX_TEXTURES; ++i)
+        {
             _textures[i] = 0;
+        }
     }
 
-    void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
+    void RenderStateCache::setTexture(qint32 sampler, const spNativeTexture& t)
     {
         Q_ASSERT(sampler < MAX_TEXTURES);
 
         if (_textures[sampler] == t)
+        {
             return;
+        }
         _textures[sampler] = t;
         _driver->setTexture(sampler, t);
     }
@@ -82,11 +86,13 @@ namespace oxygine
     void RenderStateCache::setBlendMode(blend_mode blend)
     {
         if (_blend == blend)
+        {
             return;
-
-
+        }
         if (blend == 0)
+        {
             _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        }
         else
         {
             IVideoDriver::BLEND_TYPE src = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
@@ -107,8 +113,9 @@ namespace oxygine
     bool RenderStateCache::setShader(ShaderProgram* prog)
     {
         if (_program == prog)
+        {
             return false;
-
+        }
         _program = prog;
         _driver->setShaderProgram(prog);
         return true;
@@ -175,9 +182,9 @@ namespace oxygine
     void STDRenderer::initialize()
     {
         indices16.reserve(3000 * 6);
-        for (int t = 0; t < 3000; t += 1)
+        for (qint32 t = 0; t < 3000; t += 1)
         {
-            int i = t * 4;
+            qint32 i = t * 4;
             indices16.push_back(i + 0);
             indices16.push_back(i + 1);
             indices16.push_back(i + 2);
@@ -240,11 +247,15 @@ namespace oxygine
     {
         _restored = false;
         if (white)
+        {
             white->release();
+        }
         white = 0;
 
         if (invisible)
+        {
             invisible->release();
+        }
         invisible = 0;
 
         uberShader.release();
@@ -324,7 +335,7 @@ namespace oxygine
         _verticesData.clear();
     }
 
-    void STDRenderer::initCoordinateSystem(int width, int height, bool flipU)
+    void STDRenderer::initCoordinateSystem(qint32 width, qint32 height, bool flipU)
     {
         Matrix view = makeViewMatrix(width, height, flipU);
         Matrix proj;
@@ -347,8 +358,9 @@ namespace oxygine
         flush();
 
         if (!_driver->getShaderProgram())
+        {
             return;
-
+        }
         _driver->setUniform("mat", _vp);
     }
 
@@ -393,17 +405,19 @@ namespace oxygine
     void STDRenderer::setVertexDeclaration(const VertexDeclaration* decl)
     {
         if (_vdecl != decl)
+        {
             flush();
+        }
         _vdecl = decl;
     }
 
-    void STDRenderer::addVertices(const void* data, unsigned int size)
+    void STDRenderer::addVertices(const void* data, quint32 size)
     {
         xaddVertices(data, size);
         checkDrawBatch();
     }
 
-    void STDRenderer::xaddVertices(const void* data, unsigned int size)
+    void STDRenderer::xaddVertices(const void* data, quint32 size)
     {
         _verticesData.insert(_verticesData.end(), (const unsigned char*)data, (const unsigned char*)data + size);
     }
@@ -416,9 +430,8 @@ namespace oxygine
         }
     }
 
-    Matrix makeViewMatrix(int w, int h, bool flipU)
+    Matrix makeViewMatrix(qint32 w, qint32 h, bool flipU)
     {
-        //printf("s1\n");
         Matrix view, scale, tr;
         float offset = 0.5f;
 
@@ -435,7 +448,7 @@ namespace oxygine
 
 
 
-    bool checkT2P(const Rect& viewport, const Matrix& vp, const vertexPCT2* v1, const vertexPCT2* v2, int w, int h)
+    bool checkT2P(const Rect& viewport, const Matrix& vp, const vertexPCT2* v1, const vertexPCT2* v2, qint32 w, qint32 h)
     {
         Vector3 p1(v1->x, v1->y, 0);
         Vector3 p2(v2->x, v2->y, 0);
@@ -465,15 +478,17 @@ namespace oxygine
 
         Vector2 d = dp - dtc;
         if (qAbs(d.x) >= EPS || qAbs(d.y) >= EPS)
+        {
             return false;
-
+        }
         p1.x = qAbs(p1.x);
         p1.y = qAbs(p1.y);
 
         if (qAbs(p1.x - int(p1.x + EPS)) > EPS ||
-                qAbs(p1.y - int(p1.y + EPS)) > EPS)
+            qAbs(p1.y - int(p1.y + EPS)) > EPS)
+        {
             return false;
-
+        }
         return true;
     }
 
@@ -566,7 +581,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::setShaderFlags(unsigned int flags)
+    void STDRenderer::setShaderFlags(quint32 flags)
     {
         ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
         setShader(sp);
@@ -591,12 +606,13 @@ namespace oxygine
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {
         if (_uberShader == pr)
+        {
             return;
-
+        }
         _uberShader = pr;
     }
 
-    void STDRenderer::setBaseShaderFlags(unsigned int fl)
+    void STDRenderer::setBaseShaderFlags(quint32 fl)
     {
         _baseShaderFlags = fl;
     }

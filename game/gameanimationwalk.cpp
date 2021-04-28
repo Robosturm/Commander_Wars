@@ -129,7 +129,7 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
 
                 queueMoving->add(tween1);
 
-                int row = 0;
+                qint32 row = 0;
                 if (pAnim->getRows() > 1)
                 {
                     switch (direction)

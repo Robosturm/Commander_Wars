@@ -43,10 +43,10 @@ namespace oxygine
         HorizontalAlign hAlign;
         VerticalAlign vAlign;
 
-        int linesOffset;//vertical distance offset between lines
-        int kerning;//horizontal distance
+        qint32 linesOffset;//vertical distance offset between lines
+        qint32 kerning;//horizontal distance
         bool multiline;
-        int fontSize;
+        qint32 fontSize;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         QColor color{Qt::white};
         float baselineScale;//baseline distance multiplier
@@ -65,14 +65,14 @@ namespace oxygine
 
         TextStyle alignMiddle() const { TextStyle st = *this; st.vAlign = VALIGN_MIDDLE; st.hAlign = HALIGN_MIDDLE; return st; }
 
-        TextStyle withHOffset(int offset) const { TextStyle st = *this; st.linesOffset = offset; return st; }
+        TextStyle withHOffset(qint32 offset) const { TextStyle st = *this; st.linesOffset = offset; return st; }
         TextStyle withBaselineScale(float s) const { TextStyle st = *this; st.baselineScale = s; return st; }
 
-        TextStyle withKerning(int kerning) const { TextStyle st = *this; st.kerning = kerning; return st; }
+        TextStyle withKerning(qint32 kerning) const { TextStyle st = *this; st.kerning = kerning; return st; }
         TextStyle withMultiline(bool multiline = true) const { TextStyle st = *this; st.multiline = multiline; return st; }
         TextStyle withColor(const QColor& color) const { TextStyle st = *this; st.color = color; return st; }
 
-        TextStyle withFontSize(int size) const { TextStyle st = *this; st.fontSize = size; return st; }
+        TextStyle withFontSize(qint32 size) const { TextStyle st = *this; st.fontSize = size; return st; }
 
         TextStyle withOptions(size_t opt) const { TextStyle st = *this; st.options = opt; return st; }
     };

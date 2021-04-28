@@ -10,7 +10,7 @@ namespace oxygine
     {
     public:
         KeyEvent() = default;
-        KeyEvent(int k, QString text, Qt::KeyboardModifiers modifiers)
+        KeyEvent(qint32 k, QString text, Qt::KeyboardModifiers modifiers)
             : m_key(static_cast<Qt::Key>(k)),
               m_text(text),
               m_modifiers(modifiers)

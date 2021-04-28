@@ -20,16 +20,16 @@ namespace oxygine
             flag_fixedBounds = 1 << 3,
         };
 
-        PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0) {}
+        PostProcessOptions(qint32 flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0) {}
         PostProcessOptions& fullscreen(bool enable = true) { _flags = enable ? (_flags | flag_fullscreen) : (_flags  & (~flag_fullscreen)); return *this; }
         PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
         //loops -(2, 3, 4, ...),  final size: 2^loops
-        PostProcessOptions& downscale(int loops = 2) { _downscale = loops; return *this; }
+        PostProcessOptions& downscale(qint32 loops = 2) { _downscale = loops; return *this; }
         PostProcessOptions& clear(const QColor& c) { _clearColor = c; return *this; }
         PostProcessOptions& fixedBounds(const RectF& b) { _fixedBounds = b; _flags |= flag_fixedBounds; return *this; }
 
-        int _flags;
-        int _downscale;
+        qint32 _flags;
+        qint32 _downscale;
         RectF _fixedBounds;
         QColor _clearColor;
     };
@@ -105,13 +105,13 @@ namespace oxygine
     public:
         RenderTargetsManager();
 
-        spNativeTexture get(spNativeTexture current, int w, int h, ImageData::TextureFormat tf);
+        spNativeTexture get(spNativeTexture current, qint32 w, qint32 h, ImageData::TextureFormat tf);
         void update();
         void reset();
 
     protected:
         void print();
-        bool isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const;
+        bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
 
         typedef QVector<spNativeTexture> rts;
         rts _rts;

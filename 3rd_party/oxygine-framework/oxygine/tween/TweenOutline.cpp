@@ -10,7 +10,7 @@ namespace oxygine
     {
     public:
         QColor _color;
-        int _downsample;
+        qint32 _downsample;
         spSTDMaterial _matx;
 
         TweenOutlineImpl(const QColor& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
@@ -22,31 +22,24 @@ namespace oxygine
         void render(Actor* actor, const RenderState& rs) override
         {
             if (!_pp._rt)
+            {
                 return;
-
+            }
             spNativeTexture rt = _pp._rt;
 
             _matx->_base = rt;
             _matx->apply();
 
             STDRenderer* renderer = STDRenderer::getCurrent();
-
-
             RectF src(0, 0,
                       _pp._screen.getWidth() / (float)rt->getWidth(),
                       _pp._screen.getHeight() / (float)rt->getHeight());
             RectF dest = _pp._screen.cast<RectF>();
-
-
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-
-
             QColor color = Qt::white;
             color.setAlpha(255);
             renderer->addQuad(qRgba(premultiply(color)), src, dest);
-
-
             RenderState r = rs;
             actor->setRenderDelegate(_prevMaterial);
             actor->render(r);
@@ -56,10 +49,8 @@ namespace oxygine
         void _renderPP() override
         {
             PostProcess::initShaders();
-
-            int w = _pp._screen.size.x;
-            int h = _pp._screen.size.y;
-
+            qint32 w = _pp._screen.size.x;
+            qint32 h = _pp._screen.size.y;
             if (w < 0 || h < 0)
             {
                 return;
@@ -70,14 +61,12 @@ namespace oxygine
             spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
             Rect rc(0, 0, w, h);
-
-
             driver->setShaderProgram(PostProcess::shaderBlurH.get());
             driver->setUniform("step", 1.0f / rt->getWidth());
             pass(rt, rc, rt2, rc);
 
 
-            int alpha = lerp(0, 255, _progress);
+            qint32 alpha = lerp(0, 255, _progress);
             //qDebug("tween alpha %d", alpha);
 
             QColor c;

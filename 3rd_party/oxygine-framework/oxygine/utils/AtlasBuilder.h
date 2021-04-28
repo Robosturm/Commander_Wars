@@ -16,7 +16,7 @@ namespace oxygine
     public:
         AtlasBuilder();
 
-        void init(int w, int h, int skipSize = 3);
+        void init(qint32 w, qint32 h, qint32 skipSize = 3);
         void clean();
 
         bool add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset);
@@ -27,7 +27,7 @@ namespace oxygine
         typedef QQueue<Rect> rects;
         Rect _bounds;
         rects _free;
-        int _skipSize;
+        qint32 _skipSize;
     };
 
     typedef AtlasBuilder Atlas2;
@@ -39,7 +39,7 @@ namespace oxygine
 
         MultiAtlas(createTextureCallback);
 
-        void init(int skipSize = 3);
+        void init(qint32 skipSize = 3);
         void clean();
 
         bool add(const ImageData& src, Rect& srcRect, spTexture& t);
@@ -55,12 +55,12 @@ namespace oxygine
 
         createTextureCallback _cb;
 
-        void place(const rect& dest, int w, int h, const ImageData& src, spTexture& t, Rect& srcRect);
+        void place(const rect& dest, qint32 w, qint32 h, const ImageData& src, spTexture& t, Rect& srcRect);
 
         typedef QQueue<rect> rects;
         Rect _bounds;
         rects _free;
-        int _skipSize;
+        qint32 _skipSize;
         static bool sortRects(const rect& a, const rect& b);
     };
 }

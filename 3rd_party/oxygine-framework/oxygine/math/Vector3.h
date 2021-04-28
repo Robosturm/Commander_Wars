@@ -49,8 +49,8 @@ namespace oxygine
         T sqlength() const { return dot(*this); }
         T dot(const VectorT3& p)  const;
 
-        inline T& operator[](int i) {return m[i];}
-        inline const T& operator[](int i)const {return m[i];}
+        inline T& operator[](qint32 i) {return m[i];}
+        inline const T& operator[](qint32 i)const {return m[i];}
 
         //////////////////////////
         static VectorT3& cross(VectorT3& out, const VectorT3& v1, const VectorT3& v2);

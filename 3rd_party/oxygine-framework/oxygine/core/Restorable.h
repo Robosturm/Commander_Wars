@@ -6,7 +6,7 @@
 
 namespace oxygine
 {
-    class Restorable
+    class Restorable : public IClosureOwner
     {
     public:
         Restorable();
@@ -22,7 +22,7 @@ namespace oxygine
         virtual void release() = 0;
 
         void restore();
-        using RestoreCallback = Closure<void,Restorable*, void*>;
+        using RestoreCallback = OwnedClosure<void,Restorable*, void*>;
 
         void reg(RestoreCallback cb, void* user);
         void unreg();

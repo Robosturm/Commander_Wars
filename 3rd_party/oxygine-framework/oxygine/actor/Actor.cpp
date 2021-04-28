@@ -163,7 +163,7 @@ namespace oxygine
             Stage* stage = _getStage();
             if (stage)
             {
-                stage->removeEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                stage->removeEventListener(m_onGlobalTouchUpEvent);
             }
         }
 
@@ -198,7 +198,7 @@ namespace oxygine
         }
 
         _overred = 0;
-        _getStage()->removeEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+        _getStage()->removeEventListener(m_onGlobalTouchMoveEvent);
 
         TouchEvent up = *te;
         up.type = TouchEvent::OUTX;
@@ -224,7 +224,7 @@ namespace oxygine
                 over.bubbles = false;
                 dispatchEvent(&over);
 
-                _getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
+                m_onGlobalTouchMoveEvent = _getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Actor::_onGlobalTouchMoveEvent));
             }
         }
 
@@ -234,8 +234,9 @@ namespace oxygine
             if (!_pressedButton[te->mouseButton])
             {
                 if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
-                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
-
+                {
+                    m_onGlobalTouchUpEvent = _getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Actor::_onGlobalTouchUpEvent));
+                }
                 _pressedButton[te->mouseButton] = te->index;
                 updateStatePressed();
             }
@@ -831,7 +832,7 @@ namespace oxygine
 
         actor->detach();
 
-        int z = actor->getPriority();
+        qint32 z = actor->getPriority();
 
         spActor sibling = _children._last;
 
@@ -1418,7 +1419,7 @@ namespace oxygine
         return RectF(ntl, size);
     }
 
-    extern int HIT_TEST_DOWNSCALE;
+    extern qint32 HIT_TEST_DOWNSCALE;
 
     bool testIntersection(spActor objA, spActor objB, spActor parent, Vector2* contact)
     {
@@ -1460,13 +1461,13 @@ namespace oxygine
         */
 
 
-        int w = (int)objA->getWidth();
-        int h = (int)objA->getHeight();
+        qint32 w = (int)objA->getWidth();
+        qint32 h = (int)objA->getHeight();
 
 
-        for (int y = 0; y < h; y += HIT_TEST_DOWNSCALE)
+        for (qint32 y = 0; y < h; y += HIT_TEST_DOWNSCALE)
         {
-            for (int x = 0; x < w; x += HIT_TEST_DOWNSCALE)
+            for (qint32 x = 0; x < w; x += HIT_TEST_DOWNSCALE)
             {
                 Vector2 posA = Vector2(float(x), float(y));
 

@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    volatile int NativeTexture::created = 0;
+    volatile qint32 NativeTexture::created = 0;
 
     void NativeTextureNull::init(GLuint, int, int, ImageData::TextureFormat)
     {
@@ -67,12 +67,12 @@ namespace oxygine
         return 0;
     }
 
-    int NativeTextureNull::getWidth() const
+    qint32 NativeTextureNull::getWidth() const
     {
         return 0;
     }
 
-    int NativeTextureNull::getHeight() const
+    qint32 NativeTextureNull::getHeight() const
     {
         return 0;
     }

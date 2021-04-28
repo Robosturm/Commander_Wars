@@ -3,7 +3,7 @@
 #include "ai/neuralnetwork/neural/neuralnetwork.h"
 #include "coreengine/globalutils.h"
 
-Neuron::Neuron(int id_neuron, Layer* layer, ActivationFunction function, bool is_bias)
+Neuron::Neuron(qint32 id_neuron, Layer* layer, ActivationFunction function, bool is_bias)
     : m_layer(layer),
       m_id_neuron(id_neuron),
       m_activation_function(function),

@@ -2,6 +2,7 @@
 #include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 #include "3rd_party/oxygine-framework/oxygine/closure/closure.h"
 #include <chrono>
+#include <qglobal.h>
 
 #define DECLARE_SMART(class_name, spname) \
     class class_name;\
@@ -116,13 +117,13 @@ namespace oxygine
     struct deserializedata;
     struct serializedata;
 
-    const int cloneOptionsDoNotCloneClildren = 0x01;
-    const int cloneOptionsResetTransform = 0x02;
+    const qint32 cloneOptionsDoNotCloneClildren = 0x01;
+    const qint32 cloneOptionsResetTransform = 0x02;
 
-    using EventCallback = Closure<void, Event*>;
+    using EventCallback = OwnedClosure<void, Event*>;
 
-    typedef int cloneOptions;
-    typedef int copyOptions;//deprecated typedef
-    typedef int eventType;
-    typedef int glyphOptions;
+    typedef qint32 cloneOptions;
+    typedef qint32 copyOptions;//deprecated typedef
+    typedef qint32 eventType;
+    typedef qint32 glyphOptions;
 }

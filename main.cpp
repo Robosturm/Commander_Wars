@@ -60,7 +60,7 @@
 
 #include "ai/heavyai.h"
 
-int main(int argc, char* argv[])
+int main(qint32 argc, char* argv[])
 {
     qInstallMessageHandler(Console::messageOutput);
     srand(static_cast<unsigned>(time(nullptr)));

@@ -13,7 +13,7 @@ namespace oxygine
         spNativeTexture base;
         spNativeTexture alpha;
         //bool premultiplied;
-        int flags;
+        qint32 flags;
     };
 
     class HitTestData
@@ -60,8 +60,8 @@ namespace oxygine
         void            setSize(const Vector2& size) {_frameSize = size;}
         void            setSize(float w, float h) { setSize(Vector2(w, h)); }
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
-        void            setRow(int v) {_row = v;}
-        void            setColumn(int v) {_column = v;}
+        void            setRow(qint32 v) {_row = v;}
+        void            setColumn(qint32 v) {_column = v;}
 
         void            flipX();
         void            flipY();

@@ -2,7 +2,7 @@
 
 namespace oxygine
 {
-    const oxygine::Font* ResFont::getClosestFont(float, int styleFontSize, float& resScale) const
+    const oxygine::Font* ResFont::getClosestFont(float, qint32 styleFontSize, float& resScale) const
     {
         resScale = 1.0f;
         return getFont(0, styleFontSize);

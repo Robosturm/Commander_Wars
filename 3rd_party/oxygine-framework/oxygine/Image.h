@@ -16,30 +16,30 @@ namespace oxygine
 
         bool init(QImage bf, bool premultiplied);
         void init(const ImageData& src);
-        void init(int w, int h, ImageData::TextureFormat Format);
+        void init(qint32 w, qint32 h, ImageData::TextureFormat Format);
 
         void cleanup();
         void convert(Image& dest, ImageData::TextureFormat format);
 
         void fillZero() { fill(0); }
-        void fill(unsigned int val);
+        void fill(quint32 val);
 
-        unsigned int    getSizeVRAM() const {return (unsigned int)_buffer.size();}
-        int             getWidth() const;
-        int             getHeight() const;
+        quint32    getSizeVRAM() const {return (unsigned int)_buffer.size();}
+        qint32             getWidth() const;
+        qint32             getHeight() const;
         const Point&    getSize() const;
         ImageData::TextureFormat   getFormat() const;
 
         ImageData   lock(lock_flags f = 0, const Rect* pRect = 0);
         ImageData   lock(const Rect* pRect);
         ImageData   lock(const Rect& pRect);
-        ImageData   lock(int x, int y, int w, int h);
-        ImageData   lock(int x, int y);
+        ImageData   lock(qint32 x, qint32 y, qint32 w, qint32 h);
+        ImageData   lock(qint32 x, qint32 y);
 
         void        unlock();
         void        toPOT(Image& dest);
 
-        void        updateRegion(int x, int y, const ImageData& data);
+        void        updateRegion(qint32 x, qint32 y, const ImageData& data);
         void        apply(const Rect*);
 
         void        swap(Image& r);

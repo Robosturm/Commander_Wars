@@ -10,11 +10,11 @@ namespace oxygine
     public:
         ResFont(): _size(0) {}
 
-        virtual const Font* getFont(QString name = "", int size = 0) const = 0;
-        int getSize() const { return _size; }
+        virtual const Font* getFont(QString name = "", qint32 size = 0) const = 0;
+        qint32 getSize() const { return _size; }
 
-        virtual const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const;
+        virtual const Font* getClosestFont(float worldScale, qint32 styleFontSize, float& resScale) const;
     protected:
-        int _size;
+        qint32 _size;
     };
 }

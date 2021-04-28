@@ -40,7 +40,7 @@ namespace oxygine
         materials _materials;
 
         QMutex _lock;
-        int _addCounter;
+        qint32 _addCounter;
 
         Material* clone_(const Material& other);
         void removeUnusedNoLock();

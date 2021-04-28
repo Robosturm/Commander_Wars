@@ -148,13 +148,14 @@ namespace oxygine
 
 
 
-        int sflags = renderer->getBaseShaderFlags();
-        int baseShaderFlags = sflags;
+        qint32 sflags = renderer->getBaseShaderFlags();
+        qint32 baseShaderFlags = sflags;
 
         baseShaderFlags |= UberShaderProgram::MASK;
         if (rchannel)
+        {
             baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
-
+        }
         Vector3 msk[4];
 
         clipUV.get(msk);

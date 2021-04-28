@@ -4,7 +4,7 @@ const QString Layer::LAYER_PARAMETER_SIZE = "SIZE";
 const QString Layer::LAYER_PARAMETER_TYPE = "TYPE";
 const QString Layer::LAYER_PARAMETER_ACTIVATION = "ACTIVATION";
 
-Layer::Layer(int id_layer, NeuralNetwork* net, QMap<QString, double> parameters)
+Layer::Layer(qint32 id_layer, NeuralNetwork* net, QMap<QString, double> parameters)
 {
     m_id_layer = id_layer;
     m_net = net;
@@ -97,7 +97,7 @@ QVector<spNeuron> Layer::neurons() const
 
 void Layer::alterWeights(const QVector<QVector<double> >& weights)
 {
-    for(int i_neuron=0;i_neuron < weights.size(); ++i_neuron)
+    for(qint32 i_neuron=0;i_neuron < weights.size(); ++i_neuron)
     {
         m_neurons[i_neuron]->alterWeights(weights[i_neuron]);
     }
@@ -105,7 +105,7 @@ void Layer::alterWeights(const QVector<QVector<double> >& weights)
 
 void Layer::shiftBackWeights(const QVector<QVector<double> >& weights)
 {
-    for (int i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
+    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
     {
         m_neurons[i_neuron]->shiftBackWeights(weights[i_neuron]);
     }
@@ -115,7 +115,7 @@ QVector<QVector<double>> Layer::getWeights()
 {
     QVector<QVector<double>> w;
     w.reserve(m_neurons.size());
-    for (int i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
+    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
     {
         w.push_back(m_neurons[i_neuron]->getWeights());
     }
@@ -126,7 +126,7 @@ QVector<QVector<spEdge> > Layer::getEdges()
 {
     QVector<QVector<spEdge>> w;
     w.reserve(m_neurons.size());
-    for (int i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
+    for (qint32 i_neuron = 0; i_neuron < m_neurons.size(); ++i_neuron)
     {
         w.push_back(m_neurons[i_neuron]->getEdges());
     }

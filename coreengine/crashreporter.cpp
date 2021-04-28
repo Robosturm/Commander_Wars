@@ -170,7 +170,7 @@ namespace crashReporter
         QStringList frameList;
         try
         {
-            int         frameNumber = 0;
+            qint32         frameNumber = 0;
             while (StackWalk64(image, process, thread,
                                &stackFrame, context, nullptr,
                                SymFunctionTableAccess64, SymGetModuleBase64, nullptr))
@@ -182,7 +182,7 @@ namespace crashReporter
 
                 if (!cSymbol.isNull())
                 {
-                    int demangleStatus = 0;
+                    qint32 demangleStatus = 0;
                     const char *cFunctionName = abi::__cxa_demangle( cSymbol.toLatin1().constData(), nullptr, nullptr, &demangleStatus);
                     if ( demangleStatus == 0 )
                     {
@@ -286,21 +286,21 @@ namespace crashReporter
         return EXCEPTION_EXECUTE_HANDLER;
     }
 #else
-    constexpr int  MAX_STACK_FRAMES = 64;
+    constexpr qint32  MAX_STACK_FRAMES = 64;
     static void    *sStackTraces[MAX_STACK_FRAMES];
     static uint8_t sAlternateStack[SIGSTKSZ];
 
     QStringList  _stackTrace()
     {
-        int   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
+        qint32   traceSize = backtrace( sStackTraces, MAX_STACK_FRAMES );
         char  **messages = backtrace_symbols( sStackTraces, traceSize );
         // skip the first 2 stack frames (this function and our handler) and skip the last frame (always junk)
         QStringList frameList;
-        int         frameNumber = 0;
+        qint32         frameNumber = 0;
         try
         {
             frameList.reserve( traceSize );
-            for ( int i = 2; i < (traceSize - 1); ++i )
+            for ( qint32 i = 2; i < (traceSize - 1); ++i )
             {
                 QString  message( messages[i] );
 
@@ -315,7 +315,7 @@ namespace crashReporter
 
                     if ( !locationStr.isEmpty() )
                     {
-                        int   matchStart = match.capturedStart( 1 );
+                        qint32   matchStart = match.capturedStart( 1 );
 
                         message.replace( matchStart, message.length() - matchStart, locationStr );
                     }
@@ -343,12 +343,12 @@ namespace crashReporter
     }
 
     // prototype to prevent warning about not returning
-    void _posixSignalHandler( int inSig, siginfo_t *inSigInfo, void *inContext ) __attribute__ ((noreturn));
-    void _posixSignalHandler( int inSig, siginfo_t *inSigInfo, void *inContext )
+    void _posixSignalHandler( qint32 inSig, siginfo_t *inSigInfo, void *inContext ) __attribute__ ((noreturn));
+    void _posixSignalHandler( qint32 inSig, siginfo_t *inSigInfo, void *inContext )
     {
         Q_UNUSED( inContext )
 
-        const QString  cSignalType = [] ( int sig, int inSignalCode ) {
+        const QString  cSignalType = [] ( qint32 sig, qint32 inSignalCode ) {
             switch( sig )
             {
                 case SIGSEGV:

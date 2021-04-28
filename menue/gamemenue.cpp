@@ -579,7 +579,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
 
 void GameMenue::performAction(spGameAction pGameAction)
 {
-    
+    m_saveAllowed = false;
     if (pGameAction.get() != nullptr)
     {
         spGameMap pMap = GameMap::getInstance();
@@ -802,6 +802,7 @@ void GameMenue::skipAnimations()
 
 void GameMenue::skipAllAnimations()
 {
+    Console::print("skipAllAnimations()", Console::eDEBUG);
     qint32 i = 0;
     bool dialogEnabled = Settings::getDialogAnimation();
     while (i < GameAnimationFactory::getAnimationCount())
@@ -1061,6 +1062,11 @@ void GameMenue::actionPerformed()
     else
     {
         Console::print("Skipping action performed due to exiting the game", Console::eDEBUG);
+    }
+    m_saveAllowed = true;
+    if (m_saveMap)
+    {
+        doSaveMap();
     }
     Mainapp::getInstance()->continueRendering();
 }
@@ -1498,26 +1504,50 @@ void GameMenue::autoSaveMap()
 
 void GameMenue::saveMap(QString filename)
 {
-    skipAllAnimations();
-    if (filename.endsWith(".sav") || filename.endsWith(".msav"))
+    m_saveFile = filename;
+    m_saveMap = true;
+    if (m_saveAllowed)
     {
-        QFile file(filename);
-        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        QDataStream stream(&file);
-        spGameMap pMap = GameMap::getInstance();
-        pMap->serializeObject(stream);
-        file.close();
-        Settings::setLastSaveGame(filename);
+        doSaveMap();
     }
-    setFocused(true);
-    
+    else
+    {
+        skipAllAnimations();
+    }
+    setFocused(true);    
 }
 
 void GameMenue::saveMapAndExit(QString filename)
 {
-    finishActionPerformed();
+    m_exitAfterSave = true;
     saveMap(filename);
-    exitGame();
+}
+
+void GameMenue::doSaveMap()
+{
+    Console::print("Saving map under " + m_saveFile, Console::eDEBUG);
+    if (m_saveAllowed)
+    {
+        if (m_saveFile.endsWith(".sav") || m_saveFile.endsWith(".msav"))
+        {
+            QFile file(m_saveFile);
+            file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+            QDataStream stream(&file);
+            spGameMap pMap = GameMap::getInstance();
+            pMap->serializeObject(stream);
+            file.close();
+            Settings::setLastSaveGame(m_saveFile);
+        }
+        m_saveMap = false;
+        if (m_exitAfterSave)
+        {
+            exitGame();
+        }
+    }
+    else
+    {
+        Console::print("Save triggered while no saving is allowed. Game wasn't saved", Console::eERROR);
+    }
 }
 
 void GameMenue::exitGame()

@@ -46,7 +46,7 @@ public:
 
     void addPrevious(spEdge e);
 
-    int getNeuronId() const;
+    qint32 getNeuronId() const;
 
     void setAccumulated(double v);
 

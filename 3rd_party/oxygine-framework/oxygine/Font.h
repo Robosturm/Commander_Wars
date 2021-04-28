@@ -7,13 +7,13 @@
 namespace oxygine
 {
     struct glyph;
-    inline uint qHash(const oxygine::glyph& k, uint seed = 0) noexcept;
+    inline quint32 qHash(const oxygine::glyph& k, quint32 seed = 0) noexcept;
 
     struct glyph
     {
         RectF src;
 
-        int ch;
+        qint32 ch;
         glyphOptions opt;
 
         short sw;
@@ -39,7 +39,7 @@ namespace oxygine
         Font();
         ~Font();
 
-        void init(QString name, int size, int baselineDistance, int lineHeight, bool sdf = false);
+        void init(QString name, qint32 size, qint32 baselineDistance, qint32 lineHeight, bool sdf = false);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}
@@ -47,15 +47,15 @@ namespace oxygine
         void clear();
 
         void setScale(float scale) { _scale = scale; }
-        void setBaselineDistance(int d) { _baselineDistance = d; }
+        void setBaselineDistance(qint32 d) { _baselineDistance = d; }
 
-        const glyph*    getGlyph(int code, const glyphOptions& opt) const;
-        int             getBaselineDistance() const;
-        int             getSize() const;
+        const glyph*    getGlyph(qint32 code, const glyphOptions& opt) const;
+        qint32             getBaselineDistance() const;
+        qint32             getSize() const;
         float           getScale() const;
 
     protected:
-        const glyph* findGlyph(int code, const glyphOptions& opt) const;
+        const glyph* findGlyph(qint32 code, const glyphOptions& opt) const;
 
         virtual bool loadGlyph(int, glyph&, const glyphOptions&) { return false; }
 
@@ -67,7 +67,7 @@ namespace oxygine
         float _scale;
         bool _sdf;
 
-        int _size;
-        int _baselineDistance;
+        qint32 _size;
+        qint32 _baselineDistance;
     };
 }

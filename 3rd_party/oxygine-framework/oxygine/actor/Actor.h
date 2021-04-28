@@ -18,7 +18,7 @@ namespace oxygine
         explicit TweenOptions(timeMS duration = timeMS(500)) : _duration(duration), _delay(timeMS(0)), _ease(Tween::ease_linear), _globalEase(Tween::ease_linear), _loops(1), _twoSides(false), _detach(false) {}
         TweenOptions& duration(timeMS duration) { _duration = duration; return *this; }
         TweenOptions& delay(timeMS delay) { _delay = delay; return *this; }
-        TweenOptions& loops(int loops) { _loops = loops; return *this; }
+        TweenOptions& loops(qint32 loops) { _loops = loops; return *this; }
         TweenOptions& twoSides(bool enabled = true) { _twoSides = enabled; return *this; }
         TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
         TweenOptions& detach(bool detach_ = true) { _detach = detach_; return *this; }
@@ -31,7 +31,7 @@ namespace oxygine
         timeMS          _delay;
         Tween::EASE     _ease;
         Tween::EASE     _globalEase;
-        int             _loops;
+        qint32             _loops;
         bool            _twoSides;
         bool            _detach;
     };
@@ -219,7 +219,7 @@ namespace oxygine
         spTween addTween2(spTween, const TweenOptions& opt);
 
         template<class Prop>
-        spTween addTween(const Prop& prop, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
+        spTween addTween(const Prop& prop, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear)
         {return addTween(createTween(prop, duration, loops, twoSides, delay, ease));}
 
         template<class Prop>
@@ -227,11 +227,11 @@ namespace oxygine
         {return addTween(createTween2(prop, opt));}
 
         /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
-        int addClickListener(const EventCallback& cb) { return addEventListener(TouchEvent::CLICK, cb); }
+        qint32 addClickListener(const EventCallback& cb) { return addEventListener(TouchEvent::CLICK, cb); }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_DOWN, ...);*/
-        int addTouchDownListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_DOWN, cb); }
+        qint32 addTouchDownListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_DOWN, cb); }
         /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_UP, ...);*/
-        int addTouchUpListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_UP, cb); }
+        qint32 addTouchUpListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_UP, cb); }
 
         void removeTween(spTween);
         void removeTweensByName(QString name);
@@ -347,7 +347,7 @@ namespace oxygine
             flag_last                   = flag_reserved
         };
 
-        mutable unsigned int _flags;
+        mutable quint32 _flags;
         unsigned char   _alpha;
         char    _extendedIsOn;
 
@@ -379,6 +379,9 @@ namespace oxygine
         Vector2 _size;
         float   _rotation;
         qint32   _zOrder;
+
+        qint32 m_onGlobalTouchUpEvent{-1};
+        qint32 m_onGlobalTouchMoveEvent{-1};
     };
 
 

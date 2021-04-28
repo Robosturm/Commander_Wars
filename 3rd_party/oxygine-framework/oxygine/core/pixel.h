@@ -17,11 +17,11 @@ namespace oxygine
                 unsigned char r, g, b, a;
             };
 
-            unsigned int rgba;
+            quint32 rgba;
         };
     };
 
-    inline Pixel initPixel(unsigned int rgba)
+    inline Pixel initPixel(quint32 rgba)
     {
         Pixel p;
         p.rgba = rgba;

@@ -53,8 +53,8 @@ namespace oxygine
         bool operator == (const VectorT2& r) const;
         bool operator != (const VectorT2& r) const;
 
-        //inline T &operator[](int i){return m[i];}
-        //inline const T &operator[](int i)const{return m[i];}
+        //inline T &operator[](qint32 i){return m[i];}
+        //inline const T &operator[](qint32 i)const{return m[i];}
 
         T length() const {return (T)qSqrt(x * x + y * y);}
         T sqlength() const {return dot(*this);}

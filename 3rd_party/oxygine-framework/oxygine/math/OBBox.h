@@ -20,7 +20,7 @@ namespace oxygine
         /** Returns true if other overlaps one dimension of this. */
         bool overlaps1Way(const OBBox& other) const
         {
-            for (int a = 0; a < 2; ++a)
+            for (qint32 a = 0; a < 2; ++a)
             {
 
                 float t = other.corner[0].dot(axis[a]);
@@ -29,7 +29,7 @@ namespace oxygine
                 float tMin = t;
                 float tMax = t;
 
-                for (int c = 1; c < 4; ++c)
+                for (qint32 c = 1; c < 4; ++c)
                 {
                     t = other.corner[c].dot(axis[a]);
 
@@ -70,7 +70,7 @@ namespace oxygine
             // Make the length of each axis 1/edge length so we know any
             // dot product must be less than 1 to fall within the edge.
 
-            for (int a = 0; a < 2; ++a)
+            for (qint32 a = 0; a < 2; ++a)
             {
                 axis[a] /= axis[a].sqlength();
                 origin[a] = corner[0].dot(axis[a]);

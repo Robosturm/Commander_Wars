@@ -34,8 +34,8 @@ namespace oxygine
         VectorT3<T> xyz()const;
         bool operator == (const VectorT4& r) const;
 
-        inline T& operator[](int i) {return m[i];}
-        inline const T& operator[](int i)const {return m[i];}
+        inline T& operator[](qint32 i) {return m[i];}
+        inline const T& operator[](qint32 i)const {return m[i];}
 
         operator T* ()const;
         operator const T* () const;

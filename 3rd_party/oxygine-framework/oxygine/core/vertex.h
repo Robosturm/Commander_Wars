@@ -51,33 +51,33 @@ namespace oxygine
         return ((_n) << (TEX_COORD_SIZE_BIT + (3 * _stage)));
     }
 
-    typedef unsigned int bvertex_format;
+    typedef quint32 bvertex_format;
 
-    inline int vertexFlags(bvertex_format vertexFormat)
+    inline qint32 vertexFlags(bvertex_format vertexFormat)
     {
         return vertexFormat & ((1 << (VERTEX_LAST_BIT + 1)) - 1);
     }
 
-    inline int numTextureCoordinates(bvertex_format vertexFormat)
+    inline qint32 numTextureCoordinates(bvertex_format vertexFormat)
     {
         return (vertexFormat >> NUM_TEX_COORD_BIT) & 0x7;
     }
 
-    inline int userDataSize(bvertex_format vertexFormat)
+    inline qint32 userDataSize(bvertex_format vertexFormat)
     {
         return (vertexFormat >> USER_DATA_SIZE_BIT) & 0x7;
     }
 
-    inline int texCoordSize(int stage, bvertex_format vertexFormat)
+    inline qint32 texCoordSize(qint32 stage, bvertex_format vertexFormat)
     {
         return (vertexFormat >> (TEX_COORD_SIZE_BIT + 3 * stage)) & 0x7;
     }
 
 
 
-    inline unsigned int getVertexSize(bvertex_format fmt)
+    inline quint32 getVertexSize(bvertex_format fmt)
     {
-        int offset = 0;
+        qint32 offset = 0;
 
         if (fmt & VERTEX_POSITION)
         {
@@ -89,14 +89,14 @@ namespace oxygine
             offset += 4;
         }
 
-        int numTexCoords = numTextureCoordinates(fmt);
-        for (int j = 0; j < numTexCoords; ++j)
+        qint32 numTexCoords = numTextureCoordinates(fmt);
+        for (qint32 j = 0; j < numTexCoords; ++j)
         {
-            int coordSize = texCoordSize(j, fmt);
+            qint32 coordSize = texCoordSize(j, fmt);
             offset += sizeof(float) * coordSize;
         }
 
-        int ds = userDataSize(fmt);
+        qint32 ds = userDataSize(fmt);
         if (ds > 0)
         {
             offset += sizeof(float) * ds;
@@ -114,7 +114,7 @@ namespace oxygine
     struct vertexP2C
     {
         float x, y;
-        unsigned int color;
+        quint32 color;
 
         Vector2& getPos() {return *((Vector2*)&x);}
     };
@@ -123,7 +123,7 @@ namespace oxygine
     {
         enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(1) | VERTEX_TEXCOORD_SIZE(0, 2) };
         float x, y, z;
-        unsigned int color;
+        quint32 color;
         float u, v;
     };
 

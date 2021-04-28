@@ -23,8 +23,8 @@ namespace oxygine
         bool                    getManageResAnim() const {return (_flags & flag_manageResAnim) != 0;}
         const RectF&            getSrcRect() const {return _frame.getSrcRect();}
         const ResAnim*          getResAnim() const {return _frame.getResAnim();}
-        int                     getColumn() const {return _frame.getColumn();}
-        int                     getRow() const {return _frame.getRow();}
+        qint32                     getColumn() const {return _frame.getColumn();}
+        qint32                     getRow() const {return _frame.getRow();}
         const Vector2&          getLocalScale() const { return _localScale; }
 
         /**load/unload atlas automatically or not*/
@@ -32,12 +32,12 @@ namespace oxygine
         /**Changes sprite image*/
         void                    setAnimFrame(const AnimationFrame& f);
         /**Takes AnimationFrame from ResAnim and set it as current to Sprite. Shows assert is resanim is null. Using this method is more safe than 'setAnimFrame(const AnimationFrame &f)'*/
-        void                    setAnimFrame(const ResAnim* resanim, int col = 0, int row = 0);
+        void                    setAnimFrame(const ResAnim* resanim, qint32 col = 0, qint32 row = 0);
         void                    setColorTable(const oxygine::spResAnim pAnim);
-        virtual void            setResAnim(const ResAnim* resanim, int col = 0, int row = 0);
-        void                    setRow(int row);
-        void                    setColumn(int column);
-        void                    setColumnRow(int column, int row);
+        virtual void            setResAnim(const ResAnim* resanim, qint32 col = 0, qint32 row = 0);
+        void                    setRow(qint32 row);
+        void                    setColumn(qint32 column);
+        void                    setColumnRow(qint32 column, qint32 row);
         void                    setLocalScale(const Vector2& s);
 
         bool                    isOn(const Vector2& localPosition, float localScale) override;

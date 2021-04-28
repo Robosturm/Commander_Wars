@@ -19,7 +19,7 @@ namespace oxygine
             Symbol(): x(0), y(0), code(0) {}
 
             short x, y;
-            int code;
+            qint32 code;
             glyph gl;
             RectF destRect;
             spSTDMaterial mat;
@@ -38,14 +38,14 @@ namespace oxygine
             void begin();
             void end();
 
-            int putSymbol(Symbol& s);
+            qint32 putSymbol(Symbol& s);
             void nextLine();
 
 
             TextStyle style;
             Rect bounds;
-            int width;
-            int height;
+            qint32 width;
+            qint32 height;
             size_t options;
 
             spSTDMaterial mat;
@@ -53,22 +53,22 @@ namespace oxygine
             const Font* _font;
 
         private:
-            int getLineWidth()const;
-            int getLineSkip()const;
+            qint32 getLineWidth()const;
+            qint32 getLineSkip()const;
 
 
             typedef QVector<Symbol*> line;
 
             void _alignLine(line& ln);
-            int _alignX(int rx);
-            int _alignY(int ry);
+            qint32 _alignX(qint32 rx);
+            qint32 _alignY(qint32 ry);
             void _nextLine(line& ln);
 
             float _scale;
-            int _x, _y;
+            qint32 _x, _y;
             line _line;
-            int _lineWidth;
-            int _lineSkip;
+            qint32 _lineWidth;
+            qint32 _lineSkip;
         };
     }
 }

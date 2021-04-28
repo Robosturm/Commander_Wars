@@ -42,7 +42,7 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function()
     {
-        return "minimap_blackholebuilding";
+        return "minimap_pipeline";
     };
     this.getDescription = function()
     {

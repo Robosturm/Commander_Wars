@@ -35,7 +35,7 @@ namespace oxygine
         _loopsDone = 0;
     }
 
-    void Tween::init(timeMS duration, int loops, bool twoSides, timeMS delay, EASE ease)
+    void Tween::init(timeMS duration, qint32 loops, bool twoSides, timeMS delay, EASE ease)
     {
         _duration = duration;
         _ease = ease;
@@ -89,7 +89,9 @@ namespace oxygine
         if (_twoSides)
         {
             if (v > 0.5f)
+            {
                 v = 1.0f - v;
+            }
             v *= 2.0f;
         }
 
@@ -110,19 +112,18 @@ namespace oxygine
     void Tween::complete(timeMS deltaTime)
     {
         if (_loops == -1)
+        {
             return;
-
+        }
         //if already done
         if (_status >= status_done)
+        {
             return;
-
-        //Q_ASSERT(_client);
-
+        }
         if (!_client)
+        {
             return;
-
-        //Q_ASSERT(!"not implemented");
-
+        }
         //not started yet because has delay
         if (_status == status_delayed)
         {
@@ -130,19 +131,11 @@ namespace oxygine
             _status = status_started;
         }
 
-
         Q_ASSERT(_status == status_started);
-        //while (_status != status_remove)
-        {
-            UpdateState us;
-            us.dt = deltaTime;
-
-            update(*_client, us);
-        }
-
+        UpdateState us;
+        us.dt = deltaTime;
+        update(*_client, us);
         Q_ASSERT(_status == status_done);
-
-        //_client->removeTween(this);
     }
 
     void Tween::start(Actor& actor)
@@ -168,8 +161,8 @@ namespace oxygine
                     _status = status_started;
                     _start(*_client);
                 }
-            }
                 break;
+            }
             case status_started:
             {
                 if (_duration > timeMS(0))
@@ -183,7 +176,7 @@ namespace oxygine
                         localElapsed = nv;
                     }
 
-                    int loopsDone = localElapsed / _duration;
+                    qint32 loopsDone = localElapsed / _duration;
                     _percent = _calcEase(((float)(localElapsed.count() - loopsDone * _duration.count())) / _duration.count());
 
                     while(_loopsDone < loopsDone)
@@ -195,22 +188,27 @@ namespace oxygine
                     if (_loops > 0 && int(loopsDone) >= _loops)
                     {
                         if (_twoSides)
+                        {
                             _percent = 0;
+                        }
                         else
+                        {
                             _percent = 1;
-
+                        }
                         if (!_disabledStatusDone)
+                        {
                             _status = status_done;
+                        }
                     }
                 }
                 _update(*_client, us);
-            }
                 break;
+            }
             case status_done:
             {
                 done(*_client, us);
-            }
                 break;
+            }
             default:
                 break;
         }
@@ -359,7 +357,6 @@ namespace oxygine
                 return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
             default:
                 t = _customEaseHandler(ease, t);
-                //Q_ASSERT(!"unsupported ease");
                 break;
         }
         return t;

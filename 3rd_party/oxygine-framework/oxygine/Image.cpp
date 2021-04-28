@@ -30,10 +30,12 @@ namespace oxygine
         operations::blit(src, dst);
     }
 
-    void Image::fill(unsigned int val)
+    void Image::fill(quint32 val)
     {
         if (_buffer.empty())
+        {
             return;
+        }
         memset(&_buffer.front(), val, _buffer.size());
     }
 
@@ -47,7 +49,7 @@ namespace oxygine
             // resize image data and imahe
             init(buffer.width(), buffer.height(), ImageData::TF_R8G8B8A8);
             ImageData dest = lock();
-            int pitch = ImageData::getBytesPerPixel(ImageData::TF_R8G8B8A8) * buffer.width();
+            qint32 pitch = ImageData::getBytesPerPixel(ImageData::TF_R8G8B8A8) * buffer.width();
             ImageData src(buffer.width(), 1, pitch, ImageData::TF_R8G8B8A8,  nullptr);
             dest.h = 1;
             if (premultiplied)
@@ -86,22 +88,22 @@ namespace oxygine
         updateRegion(0, 0, src);
     }
 
-    void Image::init(int w, int h, ImageData::TextureFormat Format)
+    void Image::init(qint32 w, qint32 h, ImageData::TextureFormat Format)
     {
-        int bytesPerPixel = ImageData::getBytesPerPixel(Format);
-        int size = h * w * bytesPerPixel;
+        qint32 bytesPerPixel = ImageData::getBytesPerPixel(Format);
+        qint32 size = h * w * bytesPerPixel;
         _buffer.resize(size);
         _image = ImageData(w, h, w * bytesPerPixel, Format, size ? &_buffer.front() : 0);
     }
 
 
 
-    int Image::getWidth() const
+    qint32 Image::getWidth() const
     {
         return _image.w;
     }
 
-    int Image::getHeight() const
+    qint32 Image::getHeight() const
     {
         return _image.h;
     }
@@ -132,8 +134,9 @@ namespace oxygine
 
         void* ptr = nullptr;
         if (!_buffer.empty())//zero size image
+        {
             ptr = &_buffer.front() + rect.getX() * _image.bytespp + rect.getY() * _image.pitch + _offset;
-
+        }
         return ImageData(rect.getWidth(), rect.getHeight(), _image.pitch, _image.format, ptr);
     }
 
@@ -147,12 +150,12 @@ namespace oxygine
         return lock(lock_read | lock_write, &rect);
     }
 
-    ImageData Image::lock(int x, int y, int w, int h)
+    ImageData Image::lock(qint32 x, qint32 y, qint32 w, qint32 h)
     {
         return lock(Rect(x, y, w, h));
     }
 
-    ImageData Image::lock(int x, int y)
+    ImageData Image::lock(qint32 x, qint32 y)
     {
         return lock(Rect(x, y, _image.w - x, _image.h - y));
     }
@@ -170,7 +173,7 @@ namespace oxygine
         dest.updateRegion(0, 0, _image);
     }
 
-    void Image::updateRegion(int x, int y, const ImageData& src)
+    void Image::updateRegion(qint32 x, qint32 y, const ImageData& src)
     {
         Rect r(x, y, src.w, src.h);
         ImageData dest = lock(&r);
@@ -182,7 +185,6 @@ namespace oxygine
     {
 
     }
-
 
     void Image::swap(Image& r)
     {

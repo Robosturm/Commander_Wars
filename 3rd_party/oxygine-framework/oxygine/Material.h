@@ -107,7 +107,7 @@ namespace oxygine
         blend_mode         _blend;
         UberShaderProgram* _uberShader;
         QColor              _addColor;
-        int                _flags;
+        qint32                _flags;
 
         static bool cmp(const STDMaterial& a, const STDMaterial& b);
 

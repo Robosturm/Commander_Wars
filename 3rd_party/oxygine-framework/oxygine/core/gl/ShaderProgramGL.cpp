@@ -13,7 +13,7 @@ namespace oxygine
         compileShader(_fsShader, fsShader);
         _program.addShader(&_vsShader);
         _program.addShader(&_fsShader);
-        for (int i = 0; i < decl->numElements; ++i)
+        for (qint32 i = 0; i < decl->numElements; ++i)
         {
             _program.bindAttributeLocation(decl->elements[i].name, decl->elements[i].index);
         }
@@ -33,7 +33,7 @@ namespace oxygine
     {
     }
 
-    unsigned int ShaderProgramGL::getID() const
+    quint32 ShaderProgramGL::getID() const
     {
         return _program.programId();
     }
@@ -43,7 +43,7 @@ namespace oxygine
         _program.bind();
     }
 
-    int ShaderProgramGL::getUniformLocation(const char* id) const
+    qint32 ShaderProgramGL::getUniformLocation(const char* id) const
     {
         return _program.uniformLocation(id);
     }

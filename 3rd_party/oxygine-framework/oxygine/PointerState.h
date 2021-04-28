@@ -29,7 +29,7 @@ namespace oxygine
         friend class Input;
 
         Vector2 _position;
-        int _pressed;
+        qint32 _pressed;
         pointer_index _index;
     };
 }

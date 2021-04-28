@@ -10,8 +10,8 @@ namespace oxygine
         VertexDeclaration(): bformat(0), numElements(0), size(0) {}
 
         bvertex_format bformat;
-        int numElements;
-        int size;
+        qint32 numElements;
+        qint32 size;
     };
 
     template <class T>
@@ -20,7 +20,7 @@ namespace oxygine
     public:
         const T* get(bvertex_format bformat)
         {
-            for (int i = 0; i < NUM; ++i)
+            for (qint32 i = 0; i < NUM; ++i)
             {
                 T& decl = _declarations[i];
                 if (decl.bformat == 0)

@@ -30,7 +30,7 @@ void Optimizer::setNeuralNetwork(spNeuralNetwork net)
 }
 
 
-double Optimizer::getScore(Dataset::Datatype d, int limit)
+double Optimizer::getScore(Dataset::Datatype d, qint32 limit)
 {
     return m_n->predictAllForScore(m_d, d, limit);
 }

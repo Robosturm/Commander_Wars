@@ -13,8 +13,8 @@
 namespace oxygine
 {
 
-    int defaultAtlasWidth = 2048;
-    int defaultAtlasHeight = 2048;
+    qint32 defaultAtlasWidth = 2048;
+    qint32 defaultAtlasHeight = 2048;
 
 
     struct atlas_data
@@ -26,26 +26,26 @@ namespace oxygine
 
 
 
-    int roundUp(int numToRound, int multiple)
+    qint32 roundUp(qint32 numToRound, qint32 multiple)
     {
         if (multiple == 0)
             return numToRound;
 
-        int remainder = numToRound % multiple;
+        qint32 remainder = numToRound % multiple;
         if (remainder == 0)
             return numToRound;
         return numToRound + multiple - remainder;
     }
 
 
-    int HIT_TEST_DOWNSCALE = 4;
-    const int ALIGN = sizeof(int32_t);
-    const int BITS = ALIGN * 8;
+    qint32 HIT_TEST_DOWNSCALE = 4;
+    const qint32 ALIGN = sizeof(int32_t);
+    const qint32 BITS = ALIGN * 8;
 
     void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest)
     {
-        int w = srcImage.w;
-        int h = srcImage.h;
+        qint32 w = srcImage.w;
+        qint32 h = srcImage.h;
 
         size_t pos = alpha.size();
         adata.data = reinterpret_cast<unsigned char*>(pos);
@@ -53,18 +53,18 @@ namespace oxygine
         adata.h = roundUp(h, HIT_TEST_DOWNSCALE) / HIT_TEST_DOWNSCALE;
 
 
-        int lineInts = roundUp(adata.w, BITS) / BITS;
+        qint32 lineInts = roundUp(adata.w, BITS) / BITS;
 
-        int destPitch = lineInts * ALIGN;
+        qint32 destPitch = lineInts * ALIGN;
 
-        int size = adata.h * destPitch;
+        qint32 size = adata.h * destPitch;
 
         alpha.resize(pos + size + 10);
 
 
         const unsigned char* srcData = srcImage.data;
-        int srcStep = srcImage.bytespp;
-        int srcPitch = srcImage.pitch;
+        qint32 srcStep = srcImage.bytespp;
+        qint32 srcPitch = srcImage.pitch;
 
         unsigned char* destData = &alpha[pos];
 
@@ -74,14 +74,14 @@ namespace oxygine
         unsigned char* destRow = destData;
 
 
-        int minX = w;
-        int minY = h;
-        int maxX = 0;
-        int maxY = 0;
+        qint32 minX = w;
+        qint32 minY = h;
+        qint32 maxX = 0;
+        qint32 maxY = 0;
 
         bool hasAlpha = false;
 
-        for (int y = 0; y != h; y += 1)
+        for (qint32 y = 0; y != h; y += 1)
         {
             const unsigned char* srcLine = srcRow;
             int32_t* destLine = reinterpret_cast<int32_t*>(destRow);
@@ -89,7 +89,7 @@ namespace oxygine
             bool lineWithAlpha = false;
 
 
-            for (int x = 0; x != w; x += 1)
+            for (qint32 x = 0; x != w; x += 1)
             {
                 PixelR8G8B8A8 pd;
                 Pixel p;
@@ -100,9 +100,9 @@ namespace oxygine
                 {
                     hasAlpha = true;
 
-                    int dx = x / HIT_TEST_DOWNSCALE;
-                    int n = dx / BITS;
-                    int b = dx % BITS;
+                    qint32 dx = x / HIT_TEST_DOWNSCALE;
+                    qint32 n = dx / BITS;
+                    qint32 b = dx % BITS;
 
                     destLine[n] |= 1 << b;
 
@@ -169,10 +169,10 @@ namespace oxygine
 
 
 
-        int w = bounds.getRight();
-        int h = bounds.getBottom();
+        qint32 w = bounds.getRight();
+        qint32 h = bounds.getBottom();
 
-        int aw = w % 4;
+        qint32 aw = w % 4;
         aw = aw ? w + 4 - aw : w;
 
         ImageData reg = ad.mt.lock().getRect(Rect(0, 0, aw, h));
@@ -186,7 +186,7 @@ namespace oxygine
         LoadResourcesContext::get()->createTexture(task);
     }
 
-    void ResAtlasGeneric::nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, QString name)
+    void ResAtlasGeneric::nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad, QString name)
     {
         ad.mt.init(w, h, tf);
         ad.mt.fillZero();
@@ -237,12 +237,12 @@ namespace oxygine
         QDomElement node = context.walker.getNode();
 
         bool ok = false;
-        int w = node.attribute("width").toInt(&ok);
+        qint32 w = node.attribute("width").toInt(&ok);
         if (!ok)
         {
             w = defaultAtlasWidth;
         }
-        int h = node.attribute("height").toInt(&ok);
+        qint32 h = node.attribute("height").toInt(&ok);
         if (!ok)
         {
             h = defaultAtlasHeight;
@@ -361,7 +361,7 @@ namespace oxygine
                 frame_height = img.height() / rows;
             }
             animationFrames frames;
-            int frames_count = rows * columns;
+            qint32 frames_count = rows * columns;
             frames.reserve(frames_count);
             qint32 width = frame_width;
             qint32 height = frame_height;
@@ -379,9 +379,9 @@ namespace oxygine
 
             anims.push_back(ra);
 
-            for (int y = 0; y < rows; ++y)
+            for (qint32 y = 0; y < rows; ++y)
             {
-                for (int x = 0; x < columns; ++x)
+                for (qint32 x = 0; x < columns; ++x)
                 {
                     Rect frameRect;
                     frameRect.pos = Point(x * width, y * height);
@@ -482,9 +482,9 @@ namespace oxygine
         for (QVector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
         {
             ResAnim* rs = *i;
-            int num = rs->getTotalFrames();
+            qint32 num = rs->getTotalFrames();
 
-            for (int n = 0; n < num; ++n)
+            for (qint32 n = 0; n < num; ++n)
             {
                 AnimationFrame& frame = const_cast<AnimationFrame&>(rs->getFrame(n));
 

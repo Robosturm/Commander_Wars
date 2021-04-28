@@ -15,7 +15,7 @@ void GameData::serializeObject(QDataStream& pStream) const
     pStream << m_Version;
     pStream << password;
     pStream << static_cast<qint32>(modData.size());
-    for (int i = 0; i < modData.size(); ++i)
+    for (qint32 i = 0; i < modData.size(); ++i)
     {
         pStream << modData[i];
     }

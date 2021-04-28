@@ -15,6 +15,6 @@ namespace oxygine
         timeMS dt;
 
         /**current iteration, used with fixed Clock update */
-        int iteration;
+        qint32 iteration;
     };
 }

@@ -32,7 +32,9 @@ namespace oxygine
             {
                 Material* sec = it->get();
                 if (cm == sec->_compare && cm(sec, &other))
+                {
                     return sec;
+                }
             }
         }
         _addCounter++;

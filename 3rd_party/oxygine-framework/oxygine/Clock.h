@@ -13,9 +13,9 @@ namespace oxygine
         ~Clock();
 
         timeMS  getTime() const;
-        int     getPauseCounter() const;
-        int     getFixedStep() const;
-        int     getLastDT() const;
+        qint32     getPauseCounter() const;
+        qint32     getFixedStep() const;
+        qint32     getLastDT() const;
         timeMS  getLastUpdateTime() const;
         float   getMultiplier() const;
 
@@ -34,14 +34,14 @@ namespace oxygine
             return std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::system_clock::now().time_since_epoch()));
         }
     private:
-        int     _counter;
+        qint32     _counter;
         double  _destTime;
         double  _srcTime;
 
         float   _multiplier;
         float   _fixedStep;
 
-        int    _lastDT;
+        qint32    _lastDT;
         timeMS _lastUpdateTime;
 
 

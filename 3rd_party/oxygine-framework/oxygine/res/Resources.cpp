@@ -34,7 +34,7 @@ namespace oxygine
         for (it = _registeredResources.begin(); it != _registeredResources.end(); ++it)
         {
             registeredResource *q = &(*it);
-            int er =0 ;
+            qint32 er =0 ;
         }
         */
     }
@@ -163,8 +163,9 @@ namespace oxygine
             context.options = &opt;
             context.walker = walker.next();
             if (context.walker.empty())
+            {
                 break;
-
+            }
             QString type = context.walker.getType();
 
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
@@ -216,8 +217,9 @@ namespace oxygine
     {
         Q_ASSERT(r);
         if (!r)
+        {
             return;
-
+        }
         QString name = r->getName().toLower();
         r->setName(name);
         _resourcesMap[name] = r;
@@ -242,17 +244,6 @@ namespace oxygine
             spResource res = i.value();
             qDebug("%s", res->getName().toStdString().c_str());
         }
-
-        /*
-        unsigned n = _resourcesMap.bucket_count();
-
-        for (unsigned i=0; i<n; ++i) {
-            qDebug("bucket %d: ", i);
-            for (auto it = _resourcesMap.begin(i); it!=_resourcesMap.end(i); ++it)
-                qDebug("%s, ", it->first.c_str());
-            qDebug(" ");
-        }
-        */
     }
 
     Resources::resources& Resources::_getResources()

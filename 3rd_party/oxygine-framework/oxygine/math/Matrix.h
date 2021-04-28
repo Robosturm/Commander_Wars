@@ -28,7 +28,7 @@ namespace oxygine
         operator const T* () const;
 
         MatrixT operator * (const MatrixT& m) const;
-        vector4& operator[](int row);
+        vector4& operator[](qint32 row);
 
         void identity();
         void inverse();
@@ -115,7 +115,7 @@ namespace oxygine
     template <class T>
     MatrixT<T>::MatrixT(const T* p)
     {
-        for (int i = 0; i < 16; ++i)
+        for (qint32 i = 0; i < 16; ++i)
             ml[i] = p[i];
     }
 
@@ -255,7 +255,7 @@ namespace oxygine
     }
 
     template <class T>
-    VectorT4<T>& MatrixT<T>::operator [](int row)
+    VectorT4<T>& MatrixT<T>::operator [](qint32 row)
     {
         vector4* rows = (vector4*)ml;
         return rows[row];

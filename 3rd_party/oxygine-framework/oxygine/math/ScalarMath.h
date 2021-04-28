@@ -100,10 +100,10 @@ namespace oxygine
      * @param value
      * @return format RRGGBBAA
      */
-    static unsigned int qRgba(QColor value)
+    static quint32 qRgba(QColor value)
     {
         //return value;
-        unsigned int out = 0;
+        quint32 out = 0;
         unsigned char* pOut = (unsigned char*)(&out);
         pOut[0] = value.red();
         pOut[1] = value.green();

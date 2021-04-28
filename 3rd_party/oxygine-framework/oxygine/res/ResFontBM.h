@@ -22,8 +22,8 @@ namespace oxygine
 
         void cleanup();
 
-        const Font* getFont(QString name = "", int size = 0) const override;
-        const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const override;
+        const Font* getFont(QString name = "", qint32 size = 0) const override;
+        const Font* getClosestFont(float worldScale, qint32 styleFontSize, float& resScale) const override;
     private:
         void loadBase(QDomElement node);
     private:
@@ -33,13 +33,13 @@ namespace oxygine
             spNativeTexture texture;
         };
 
-        void addPage(int tw, int th, QString head, QString file);
+        void addPage(qint32 tw, qint32 th, QString head, QString file);
 
         void _loadPage(const page& p, LoadResourcesContext*);
         void _load(LoadResourcesContext*) override;
         void _unload() override;
         void _restore(Restorable*, void*);
-        void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
+        void _createFont(CreateResourceContext* context, bool sd, bool bmc, qint32 downsample);
         void _finalize();
 
         typedef QVector<page> pages;

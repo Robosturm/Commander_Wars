@@ -10,7 +10,7 @@ namespace oxygine
         return Input::instance.getTouchByIndex(index);
     }
 
-    void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, int type, PointerState* ps)
+    void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState* ps)
     {
         if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
         {
@@ -77,7 +77,7 @@ namespace oxygine
     Input::Input()
     {
         _pointerMouse.init(MAX_TOUCHES + 1);
-        for (int i = 0; i < MAX_TOUCHES; ++i)
+        for (qint32 i = 0; i < MAX_TOUCHES; ++i)
         {
             _pointers[i].init(i + 1);
         }
@@ -103,7 +103,7 @@ namespace oxygine
     {
         Q_ASSERT(index_ != 0);
 
-        int index = index_;
+        qint32 index = index_;
         if (index == MAX_TOUCHES + 1)
         {
             return &_pointerMouse;
@@ -114,11 +114,11 @@ namespace oxygine
         return &_pointers[index];
     }
 
-    int Input::touchID2index(qint64 id)
+    qint32 Input::touchID2index(qint64 id)
     {
         id += 1;
-        int firstEmptySlotIndex = -1;
-        for (int i = 0; i < MAX_TOUCHES; ++i)
+        qint32 firstEmptySlotIndex = -1;
+        for (qint32 i = 0; i < MAX_TOUCHES; ++i)
         {
             qint64& d = _ids[i];
 
@@ -142,7 +142,7 @@ namespace oxygine
 
     PointerState* Input::getTouchByID(qint64 id)
     {
-        int i = touchID2index(id);
+        qint32 i = touchID2index(id);
         if (i == -1)
         {
             return 0;

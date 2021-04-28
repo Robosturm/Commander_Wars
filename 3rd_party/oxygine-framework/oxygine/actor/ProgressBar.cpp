@@ -7,7 +7,7 @@
 
 namespace oxygine
 {
-    void fill_tex_coord(vertexPCT2& vt, unsigned int rgba, const Vector2& pnt, float nu, float nv)
+    void fill_tex_coord(vertexPCT2& vt, quint32 rgba, const Vector2& pnt, float nu, float nv)
     {
         vt.color = rgba;
         vt.z = 0;
@@ -37,7 +37,10 @@ namespace oxygine
             s.normalize(); t.normalize();
             return qCos(s.dot(t));
         }
-        else return qAtan2(current.y, current.x);
+        else
+        {
+            return qAtan2(current.y, current.x);
+        }
     }
 
     ProgressBar::ProgressBar(): _progress(1.0f), _direction(dir_0)
@@ -63,8 +66,9 @@ namespace oxygine
     void ProgressBar::_update()
     {
         if (!_frame.getDiffuse().base)
+        {
             return;
-
+        }
         RectF newSrc = _originalFrame.getSrcRect();
         RectF newDest = _originalFrame.getDestRect();
 
@@ -112,7 +116,7 @@ namespace oxygine
         if (df.base)
         {
 
-            unsigned int color = qRgba(rs.getFinalColor(getColor()));
+            quint32 color = qRgba(rs.getFinalColor(getColor()));
             //rsCache().setBlendMode(getBlendMode());
             //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
@@ -154,7 +158,7 @@ namespace oxygine
             float fA1 = Angle(vdiag, &vert);
             float fA2 = Angle(vdiag2, &vdiag);
 
-            const int MAX_TRI = 6;
+            const qint32 MAX_TRI = 6;
 
             float u1, v1, u2, v2, u3, v3;
             float result = 0.f;
@@ -167,11 +171,11 @@ namespace oxygine
             angles[ 4 ] = fA2;
             angles[ 5 ] = fA1;
 
-            for (int i = 0; i < MAX_TRI; i++)
+            for (qint32 i = 0; i < MAX_TRI; i++)
             {
                 float limitLo = 0.f;
                 float limitHi = 0.f;
-                for (int j = 0; j < i; j++)
+                for (qint32 j = 0; j < i; j++)
                     limitLo += angles[ j ];
 
                 limitHi = limitLo + angles[ i ];

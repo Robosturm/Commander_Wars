@@ -10,13 +10,13 @@ namespace oxygine
     {
     public:
 
-        int _current;
+        qint32 _current;
 
         //CreateResourceContext _copy;
 
         //std::string _xmlFolder;
 
-        void nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, QString name);
+        void nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad, QString name);
         void applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge);
 
         void loadAtlas(CreateResourceContext& context);

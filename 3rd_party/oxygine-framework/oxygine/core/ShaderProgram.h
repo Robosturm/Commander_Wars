@@ -13,6 +13,6 @@ namespace oxygine
     public:
         virtual void bind() = 0;
 
-        virtual unsigned int getID() const = 0;
+        virtual quint32 getID() const = 0;
     };
 }

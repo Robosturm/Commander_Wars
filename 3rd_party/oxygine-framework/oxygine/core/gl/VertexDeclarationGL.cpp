@@ -5,8 +5,8 @@ namespace oxygine
     void VertexDeclarationGL::init(bvertex_format fmt)
     {
         bformat = fmt;
-        int i = 0;
-        int offset = 0;
+        qint32 i = 0;
+        qint32 offset = 0;
         Element* dest = elements;
         if (fmt & VERTEX_POSITION)
         {
@@ -36,10 +36,10 @@ namespace oxygine
             ++dest;
         }
 
-        int numTexCoords = numTextureCoordinates(fmt);
-        for (int j = 0; j < numTexCoords; ++j)
+        qint32 numTexCoords = numTextureCoordinates(fmt);
+        for (qint32 j = 0; j < numTexCoords; ++j)
         {
-            int coordSize = texCoordSize(j, fmt);
+            qint32 coordSize = texCoordSize(j, fmt);
             if (j == 0)
             {
                 dest->name = "uv";
@@ -60,7 +60,7 @@ namespace oxygine
             ++dest;
         }
 
-        int userSize = userDataSize(fmt);
+        qint32 userSize = userDataSize(fmt);
         if (userSize > 0)
         {
             dest->elemType = GL_FLOAT;

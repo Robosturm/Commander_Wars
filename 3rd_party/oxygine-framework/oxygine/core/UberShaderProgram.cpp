@@ -36,7 +36,7 @@ namespace oxygine
         unreg();
     }
 
-    ShaderProgram* UberShaderProgram::getShaderProgram(int flags)
+    ShaderProgram* UberShaderProgram::getShaderProgram(qint32 flags)
     {
         shader& s = _shaders[flags];
 
@@ -100,7 +100,7 @@ namespace oxygine
 
     void UberShaderProgram::releaseShaders()
     {
-        for (int i = 0; i < _SIZE; ++i)
+        for (qint32 i = 0; i < _SIZE; ++i)
         {
             shader& s = _shaders[i];
             s.program = nullptr;

@@ -57,9 +57,9 @@ namespace oxygine
     {
         Q_ASSERT(t);
         if (!t)
+        {
             return 0;
-
-
+        }
         _tweens.append(t);
         return t;
     }
@@ -67,8 +67,9 @@ namespace oxygine
     void TweenQueue::complete(timeMS deltaTime)
     {
         if (_status == status_remove)
+        {
             return;
-
+        }
         UpdateState us;
         us.dt = deltaTime;
         while (_status != status_done)
@@ -81,8 +82,9 @@ namespace oxygine
     {
         _current = _tweens._first;
         if (!_current)
+        {
             return;
-
+        }
         Event ev(EVENT_LOOP_BEGIN);
         dispatchEvent(&ev);
 

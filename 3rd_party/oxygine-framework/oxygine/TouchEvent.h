@@ -38,7 +38,7 @@ namespace oxygine
 
         const PointerState* getPointer() const;
 
-        static bool isTouchEvent(int eventID) { return eventID > __FIRST && eventID < __LAST; }
+        static bool isTouchEvent(qint32 eventID) { return eventID > __FIRST && eventID < __LAST; }
 
         bool __clickDispatched;
         Vector2 wheelDirection;//actual only for WHEEL_DIR event

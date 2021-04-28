@@ -286,6 +286,7 @@ protected:
     QString getSaveFileEnding();
     void skipAllAnimations();
     void skipExceptBattle();
+    void doSaveMap();
 protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
@@ -310,6 +311,11 @@ protected:
 
     qint64 m_syncCounter{0};
     qint32 m_autoSaveCounter{0};
+
+    QString m_saveFile;
+    bool m_saveMap{false};
+    bool m_exitAfterSave{false};
+    bool m_saveAllowed{false};
 };
 
 #endif // GAMEMENUE_H

@@ -7,7 +7,7 @@
 namespace oxygine
 {
     DECLARE_SMART(Object, spObject);
-    class Object : public ref_counter
+    class Object : public ref_counter, public IClosureOwner
     {        
     public:
         Object(const Object& src);

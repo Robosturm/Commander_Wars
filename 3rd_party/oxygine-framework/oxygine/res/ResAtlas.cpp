@@ -74,7 +74,7 @@ namespace oxygine
         }
     }
 
-    void ResAtlas::addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, int w, int h)
+    void ResAtlas::addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, qint32 w, qint32 h)
     {
         atlas atl;
         atl.base = IVideoDriver::instance->createTexture();

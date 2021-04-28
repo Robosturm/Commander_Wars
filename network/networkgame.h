@@ -81,7 +81,7 @@ public slots:
      * @param exitCode
      * @param exitStatus
      */
-    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void processFinished(qint32 exitCode, QProcess::ExitStatus exitStatus);
     /**
      * @brief slaveRunning
      * @param stream

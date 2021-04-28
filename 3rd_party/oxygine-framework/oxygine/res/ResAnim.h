@@ -15,26 +15,26 @@ namespace oxygine
         ResAnim(Resource* atlas = 0);
         ~ResAnim();
 
-        void init(QString file, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
-        void init(QImage & img, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
-        virtual void init(Image* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
-        void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
+        void init(QString file, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
+        void init(QImage & img, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
+        virtual void init(Image* original, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
+        void init(animationFrames& frames, qint32 columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/
-        void init(spNativeTexture texture, const Point& originalSize, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
+        void init(spNativeTexture texture, const Point& originalSize, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
 
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);
 
         float                   getScaleFactor() const {return _scaleFactor;}
         float                   getAppliedScale() const { return _appliedScale; }
-        int                     getColumns() const {return _columns;}
-        int                     getRows() const {return (int)_frames.size() / _columns;}
-        int                     getTotalFrames() const {return (int)_frames.size();}
-        int                     getFrameRate() const { return _framerate; }
+        qint32                     getColumns() const {return _columns;}
+        qint32                     getRows() const {return (int)_frames.size() / _columns;}
+        qint32                     getTotalFrames() const {return (int)_frames.size();}
+        qint32                     getFrameRate() const { return _framerate; }
         const Resources*        getResources() const;
-        const AnimationFrame&   getFrame(int col, int row) const;
+        const AnimationFrame&   getFrame(qint32 col, qint32 row) const;
         /**returns frame by index ignoring cols and rows*/
-        const AnimationFrame&   getFrame(int index) const;
+        const AnimationFrame&   getFrame(qint32 index) const;
         /**Returns atlas where this ResAnim was created*/
         Resource*               getAtlas() {return _atlas;}
         /**Returns size of frame*/
@@ -42,8 +42,8 @@ namespace oxygine
         float                   getWidth() const;
         float                   getHeight() const;
 
-        void setFrame(int col, int row, const AnimationFrame& frame);
-        void setFrameRate(int v) { _framerate = v; }
+        void setFrame(qint32 col, qint32 row, const AnimationFrame& frame);
+        void setFrameRate(qint32 v) { _framerate = v; }
         void removeFrames();
 
         operator const AnimationFrame& ();
@@ -56,11 +56,11 @@ namespace oxygine
         void _load(LoadResourcesContext* ctx = 0) override;
         void _unload() override;
 
-        int         _columns;
+        qint32         _columns;
         Resource*   _atlas;
         float       _scaleFactor;
         float       _appliedScale;
-        int         _framerate;
+        qint32         _framerate;
 
         animationFrames _frames;
 

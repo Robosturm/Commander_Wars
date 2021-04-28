@@ -13,7 +13,7 @@ namespace oxygine
     {
     public:
         QColor _color;
-        int _downsample;
+        qint32 _downsample;
 
         TweenGlowImpl(const QColor& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
 
@@ -24,19 +24,13 @@ namespace oxygine
             actor->setRenderDelegate(_prevMaterial);
             actor->render(r);
             actor->setRenderDelegate(this);
-
-
             RectF src(0, 0,
                       _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
                       _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
             rsCache().setBlendMode(blend_premultiplied_alpha);
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-            //renderer->applySimpleMode(true);
-//            Color color = Color(Color::White).withAlpha(255).premultiplied();
-//            color = QColor::White;
             rsCache().setBlendMode(blend_add);
-            //renderer->draw(_pp._rt, color.rgba(), src, dest);
             renderer->flush();
         }
 
@@ -44,8 +38,8 @@ namespace oxygine
         {
             PostProcess::initShaders();
 
-            int w = _pp._screen.size.x;
-            int h = _pp._screen.size.y;
+            qint32 w = _pp._screen.size.x;
+            qint32 h = _pp._screen.size.y;
 
 
             spIVideoDriver driver = IVideoDriver::instance;

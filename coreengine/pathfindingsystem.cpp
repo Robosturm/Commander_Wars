@@ -30,7 +30,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     qint32 count = m_width * m_heigth;
-    for (int i = 0; i < count; ++i)
+    for (qint32 i = 0; i < count; ++i)
     {
         costs[i] = infinite;
         m_DirectionMap[i] = Directions::Unknown;

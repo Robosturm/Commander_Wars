@@ -1,9 +1,9 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Actor.h"
-#include "ClipRectActor.h"
-#include "../Draggable.h"
-#include "../math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/Draggable.h"
+#include "3rd_party/oxygine-framework/oxygine/math/Vector2.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/ClipRectActor.h"
 
 namespace oxygine
 {
@@ -81,7 +81,7 @@ namespace oxygine
         timeMS _lastTime;
         enum {NUM = 11};
         iter _prev[NUM];
-        int _current;
+        qint32 _current;
 
         timeMS _lastIterTime;
         pointer_index _finger;

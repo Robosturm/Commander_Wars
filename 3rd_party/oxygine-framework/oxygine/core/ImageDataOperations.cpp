@@ -37,7 +37,7 @@ namespace oxygine
 
             Q_ASSERT(src.format == dest.format);
 
-            int bppPitch = src.w * src.bytespp;
+            qint32 bppPitch = src.w * src.bytespp;
 
             if (src.pitch == dest.pitch && bppPitch == dest.pitch)
                 memcpy(dest.data, src.data, bppPitch * src.h);
@@ -46,10 +46,10 @@ namespace oxygine
                 const unsigned char* srcLine = src.data;
                 unsigned char* destLine = dest.data;
 
-                const int srch = src.h;
-                const int srcpitch = src.pitch;
-                const int destpitch = dest.pitch;
-                for (int h = 0; h < srch; h++)
+                const qint32 srch = src.h;
+                const qint32 srcpitch = src.pitch;
+                const qint32 destpitch = dest.pitch;
+                for (qint32 h = 0; h < srch; h++)
                 {
                     if (bppPitch >= 0)
                     {
@@ -68,7 +68,7 @@ namespace oxygine
 
             Q_ASSERT(src.format == dest.format);
 
-            int bppPitch = src.w * src.bytespp;
+            qint32 bppPitch = src.w * src.bytespp;
 
             if (src.pitch == dest.pitch && bppPitch == dest.pitch)
                 memmove(dest.data, src.data, bppPitch * src.h);
@@ -77,10 +77,10 @@ namespace oxygine
                 const unsigned char* srcLine = src.data;
                 unsigned char* destLine = dest.data;
 
-                const int srch = src.h;
-                const int srcpitch = src.pitch;
-                const int destpitch = dest.pitch;
-                for (int h = 0; h < srch; h++)
+                const qint32 srch = src.h;
+                const qint32 srcpitch = src.pitch;
+                const qint32 destpitch = dest.pitch;
+                for (qint32 h = 0; h < srch; h++)
                 {
                     memmove(destLine, srcLine, bppPitch);
                     srcLine += srcpitch;
@@ -132,14 +132,14 @@ namespace oxygine
             const unsigned char* srcLine = src.data;
             unsigned char* destLine = dest.data + dest.pitch * dest.h - dest.pitch;
 
-            int bppPitch = src.w * src.bytespp;
+            qint32 bppPitch = src.w * src.bytespp;
 
 
 
-            const int srch = src.h;
-            const int srcpitch = src.pitch;
-            const int destpitch = dest.pitch;
-            for (int h = 0; h < srch; h++)
+            const qint32 srch = src.h;
+            const qint32 srcpitch = src.pitch;
+            const qint32 destpitch = dest.pitch;
+            for (qint32 h = 0; h < srch; h++)
             {
                 memcpy(destLine, srcLine, bppPitch);
                 srcLine += srcpitch;

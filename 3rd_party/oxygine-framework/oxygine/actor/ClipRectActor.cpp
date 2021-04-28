@@ -24,7 +24,9 @@ namespace oxygine
             TouchEvent* te = safeCast<TouchEvent*>(event);
             Vector2 localPosition = parent2local(te->localPosition);
             if (!isOn(localPosition))
+            {
                 return;
+            }
         }
 
         Actor::handleEvent(event);

@@ -32,8 +32,8 @@ namespace oxygine
         {
         public:
             Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
-            int batches;
-            int elements[PT_COUNT];
+            qint32 batches;
+            qint32 elements[PT_COUNT];
             timeMS start;
             timeMS duration;
         };
@@ -78,8 +78,8 @@ namespace oxygine
 
         virtual void clear(const QColor& color) = 0;
         virtual void begin(const Rect& viewport, const QColor* color) = 0;
-        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) = 0;
-        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices) = 0;
+        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize) = 0;
+        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize, const unsigned short* indicesData, quint32 numIndices) = 0;
 
 
         virtual void            getViewport(Rect& r) const = 0;
@@ -93,16 +93,16 @@ namespace oxygine
         virtual void setViewport(const Rect& viewport) = 0;
         virtual void setRenderTarget(spNativeTexture) = 0;
         virtual void setShaderProgram(ShaderProgram*) = 0;
-        virtual void setTexture(int sampler, spNativeTexture) = 0;
-        virtual void setState(STATE, unsigned int value) = 0;
+        virtual void setTexture(qint32 sampler, spNativeTexture) = 0;
+        virtual void setState(STATE, quint32 value) = 0;
         virtual void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) = 0;
 
-        virtual void setUniform(const char* id, const Vector4* v, int num) = 0;
-        virtual void setUniform(const char* id, const Vector3* v, int num) = 0;
-        virtual void setUniform(const char* id, const Vector2* v, int num) = 0;
-        virtual void setUniform(const char* id, const Matrix* v, int num) = 0;
+        virtual void setUniform(const char* id, const Vector4* v, qint32 num) = 0;
+        virtual void setUniform(const char* id, const Vector3* v, qint32 num) = 0;
+        virtual void setUniform(const char* id, const Vector2* v, qint32 num) = 0;
+        virtual void setUniform(const char* id, const Matrix* v, qint32 num) = 0;
         virtual void setUniform(const char* id, float v) = 0;
-        virtual void setUniformInt(const char* id, int v) = 0;
+        virtual void setUniformInt(const char* id, qint32 v) = 0;
 
         void setUniform(const char* id, const Vector4& v);
         void setUniform(const char* id, const Vector3& v);
@@ -126,15 +126,15 @@ namespace oxygine
 
         const VertexDeclaration*    getVertexDeclaration(bvertex_format) const;
 
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) {}
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int indicesDataSize) {}
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize) {}
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize, const unsigned short* indicesData, quint32 indicesDataSize) {}
 
 
-        void setUniformInt(const char* id, int v) {}
-        void setUniform(const char* id, const Vector4* v, int num) {}
-        void setUniform(const char* id, const Vector3* v, int num) {}
-        void setUniform(const char* id, const Vector2* v, int num) {}
-        void setUniform(const char* id, const Matrix* mat, int num) {}
+        void setUniformInt(const char* id, qint32 v) {}
+        void setUniform(const char* id, const Vector4* v, qint32 num) {}
+        void setUniform(const char* id, const Vector3* v, qint32 num) {}
+        void setUniform(const char* id, const Vector2* v, qint32 num) {}
+        void setUniform(const char* id, const Matrix* mat, qint32 num) {}
         void setUniform(const char* id, float val) {}
 
         void setViewport(const Rect& viewport) {}
@@ -142,8 +142,8 @@ namespace oxygine
         void setDefaultSettings();
         void setRenderTarget(spNativeTexture);
         void setShaderProgram(ShaderProgram*);
-        void setTexture(int sampler, spNativeTexture);
-        void setState(STATE, unsigned int value) {}
+        void setTexture(qint32 sampler, spNativeTexture);
+        void setState(STATE, quint32 value) {}
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) {}
         void setDebugStats(bool enable) {}
 

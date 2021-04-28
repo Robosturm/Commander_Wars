@@ -17,12 +17,12 @@ namespace oxygine
         setObjectName("SingleResAnim");
     }
 
-    void SingleResAnim::init(QString file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)
+    void SingleResAnim::init(QString file, qint32 columns /* = 1 */, qint32 rows /* = 1 */, float scaleFactor /* = 1.0f */)
     {
         ResAnim::init(file, columns, rows, scaleFactor);
     }
 
-    void SingleResAnim::init(Image* original, int columns, int rows, float scaleFactor)
+    void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
     {
 
         _scaleFactor = scaleFactor;
@@ -41,14 +41,14 @@ namespace oxygine
 
         Point originalSize = original->getSize();
 
-        int frame_width = originalSize.x / columns;
-        int frame_height = originalSize.y / rows;
+        qint32 frame_width = originalSize.x / columns;
+        qint32 frame_height = originalSize.y / rows;
 
         Vector2 frameSize((float)frame_width, (float)frame_height);
-        int i = 0;
-        for (int y = 0; y < rows; ++y)
+        qint32 i = 0;
+        for (qint32 y = 0; y < rows; ++y)
         {
-            for (int x = 0; x < columns; ++x)
+            for (qint32 x = 0; x < columns; ++x)
             {
                 Rect src;
                 src.pos = Point(x * frame_width, y * frame_height);
@@ -66,9 +66,9 @@ namespace oxygine
         }
 
         i = 0;
-        for (int y = 0; y < rows; ++y)
+        for (qint32 y = 0; y < rows; ++y)
         {
-            for (int x = 0; x < columns; ++x)
+            for (qint32 x = 0; x < columns; ++x)
             {
                 HitTestData ht = _frames[i].getHitTestData();
                 if (_data.length() > 0)

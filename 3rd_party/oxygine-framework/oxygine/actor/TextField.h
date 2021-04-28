@@ -24,14 +24,14 @@ namespace oxygine
         QString              getText() const;
         const ResFont*              getFont() const;
 
-        int                         getFontSize() const;
-        int                         getLinesOffset() const;
-        int                         getKerning() const;
+        qint32                         getFontSize() const;
+        qint32                         getLinesOffset() const;
+        qint32                         getKerning() const;
         TextStyle::VerticalAlign    getVAlign() const;
         TextStyle::HorizontalAlign  getHAlign() const;
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
-        text::Symbol*               getSymbolAt(int pos) const;
+        text::Symbol*               getSymbolAt(qint32 pos) const;
         const QColor&                getStyleColor() const;
         float                       getBaselineScale() const;
         size_t                      getOptions() const;
@@ -49,13 +49,13 @@ namespace oxygine
         /**Overwrites TextStyle breakLongWords*/
         void setBreakLongWords(bool val);
         /**Overwrites TextStyle linesOffset*/
-        void setLinesOffset(int offset);
+        void setLinesOffset(qint32 offset);
         /**Overwrites TextStyle baselineScale*/
         void setBaselineScale(float scale);
         /**Overwrites TextStyle kerning*/
-        void setKerning(int kerning);
+        void setKerning(qint32 kerning);
         /**Overwrites TextStyle fontSize*/
-        void setFontSize(int size);
+        void setFontSize(qint32 size);
         /**Overwrites TextStyle color*/
         void setStyleColor(const QColor&);
         /**Overwrites TextStyle options*/
@@ -89,7 +89,7 @@ namespace oxygine
         text::spNode _root;
         Rect _textRect;
         float _rtscale;
-        int _realFontSize;
+        qint32 _realFontSize;
         bool m_htmlText = false;
         void sizeChanged(const Vector2& size) override;
         void matChanged() override;

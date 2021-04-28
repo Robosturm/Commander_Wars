@@ -9,8 +9,8 @@ namespace oxygine
         Q_OBJECT
     public:
         explicit SingleResAnim();
-        void init(QString file, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
-        void init(Image* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f) override;
+        void init(QString file, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f);
+        void init(Image* original, qint32 columns = 1, qint32 rows = 1, float scaleFactor = 1.0f) override;
 
         spNativeTexture getTexture() const;
 

@@ -20,7 +20,7 @@ namespace oxygine
             mat->_blend = blend_premultiplied_alpha;
             mat->apply();
 
-            int _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
+            qint32 _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
             STDRenderer* renderer = STDRenderer::getCurrent();
 
             spNativeTexture rt = _pp._rt;
@@ -28,13 +28,8 @@ namespace oxygine
                       _pp._screen.getWidth() / (float)rt->getWidth(),
                       _pp._screen.getHeight() / (float)rt->getHeight());
             RectF dest = _pp._screen.cast<RectF>();
-
-
-
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-
-
             QColor color = QColor(Qt::white);
             color.setAlpha(_a);
             renderer->addQuad(qRgba(premultiply(color)), src, dest);

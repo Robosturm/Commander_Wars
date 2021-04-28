@@ -2,7 +2,7 @@
 
 namespace oxygine
 {
-    int ImageData::getBytesPerPixel(TextureFormat tf)
+    qint32 ImageData::getBytesPerPixel(TextureFormat tf)
     {
         switch (tf)
         {
@@ -21,7 +21,7 @@ namespace oxygine
 
     }
 
-    ImageData::ImageData(int W, int H, int Pitch, TextureFormat Format, void* Data): w(W), h(H), pitch(Pitch), format(Format), data((unsigned char*)Data)
+    ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, void* Data): w(W), h(H), pitch(Pitch), format(Format), data((unsigned char*)Data)
     {
         bytespp = getBytesPerPixel(Format);
     }
@@ -48,17 +48,17 @@ namespace oxygine
         return buffer;
     }
 
-    ImageData ImageData::getRect(int x, int y, int w, int h) const
+    ImageData ImageData::getRect(qint32 x, qint32 y, qint32 w, qint32 h) const
     {
         return getRect(Rect(x, y, w, h));
     }
 
-    ImageData ImageData::getRect(int x, int y) const
+    ImageData ImageData::getRect(qint32 x, qint32 y) const
     {
         return getRect(x, y, w - x, h - y);
     }
 
-    unsigned char* ImageData::getPixelPtr(int x, int y) const
+    unsigned char* ImageData::getPixelPtr(qint32 x, qint32 y) const
     {
         return (unsigned char*)data + x * bytespp + y * pitch;
     }

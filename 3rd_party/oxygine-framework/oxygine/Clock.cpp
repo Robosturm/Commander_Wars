@@ -21,12 +21,12 @@ namespace oxygine
         return _multiplier;
     }
 
-    int Clock::getFixedStep() const
+    qint32 Clock::getFixedStep() const
     {
         return (int)_fixedStep;
     }
 
-    int Clock::getLastDT() const
+    qint32 Clock::getLastDT() const
     {
         return _lastDT;
     }
@@ -121,7 +121,7 @@ namespace oxygine
         return timeMS(static_cast<qint64>(_srcTime));
     }
 
-    int Clock::getPauseCounter() const
+    qint32 Clock::getPauseCounter() const
     {
         return _counter;
     }

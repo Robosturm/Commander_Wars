@@ -15,7 +15,7 @@ public:
 
         void setDataset(spDataset dataset);
 
-        double getScore(Dataset::Datatype d, int limit = -1);
+        double getScore(Dataset::Datatype d, qint32 limit = -1);
 
 protected:
         spNeuralNetwork m_n;

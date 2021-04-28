@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    uint qHash(const oxygine::glyph& k, uint seed) noexcept
+    quint32 qHash(const oxygine::glyph& k, quint32 seed) noexcept
     {
         return ::qHash(k.ch + k.opt, seed);
     }
@@ -21,7 +21,7 @@ namespace oxygine
     {
     }
 
-    void Font::init(QString name, int realSize, int baselineDistance, int, bool sdf)
+    void Font::init(QString name, qint32 realSize, qint32 baselineDistance, int, bool sdf)
     {
         setName(name);
         _sdf = sdf;
@@ -39,7 +39,7 @@ namespace oxygine
         _glyphs.clear();
     }
 
-    bool glyphFindPred(const glyph& g, int code)
+    bool glyphFindPred(const glyph& g, qint32 code)
     {
         return g.ch < code;
     }
@@ -49,7 +49,7 @@ namespace oxygine
         return ob1.ch < ob2.ch;
     }
 
-    const glyph* Font::findGlyph(int code, const glyphOptions& opt) const
+    const glyph* Font::findGlyph(qint32 code, const glyphOptions& opt) const
     {
         glyph g;
         g.ch = code;
@@ -63,7 +63,7 @@ namespace oxygine
         return 0;
     }
 
-    const glyph* Font::getGlyph(int code, const glyphOptions& opt) const
+    const glyph* Font::getGlyph(qint32 code, const glyphOptions& opt) const
     {
         const glyph* g = findGlyph(code, opt);
         if (g)
@@ -83,12 +83,12 @@ namespace oxygine
         return g;
     }
 
-    int Font::getBaselineDistance() const
+    qint32 Font::getBaselineDistance() const
     {
         return _baselineDistance;
     }
 
-    int Font::getSize() const
+    qint32 Font::getSize() const
     {
         return _size;
     }
