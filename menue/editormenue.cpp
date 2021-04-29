@@ -1296,12 +1296,14 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         pMap->updateSprites();
     }
-
+    if (Settings::getSyncAnimations())
+    {
+        GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+    }
 }
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
-
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -1341,7 +1343,10 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             
         }
     }
-
+    if (Settings::getSyncAnimations())
+    {
+       GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+    }
 }
 
 void EditorMenue::saveMap(QString filename)

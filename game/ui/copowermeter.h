@@ -43,7 +43,7 @@ public:
 signals:
 
 private:
-    CO* _pCO;
+    CO* m_pCO;
     bool m_flippedX{false};
 
 };

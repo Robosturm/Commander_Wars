@@ -43,9 +43,9 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
     addChild(pBox);
     connect(this, &CloseablePopUp::sigClosed, this, &CloseablePopUp::close, Qt::QueuedConnection);
 
-    _drag.init(this);
-    _drag.setDragEnabled(true);
-    _drag.setDragBounds(oxygine::RectF(0, 0, Settings::getWidth() - width, Settings::getHeight() - heigth));
+    m_drag.init(this);
+    m_drag.setDragEnabled(true);
+    m_drag.setDragBounds(oxygine::RectF(0, 0, Settings::getWidth() - width, Settings::getHeight() - heigth));
     QSize size(width - 10, heigth - 4 - pSprite->getScaledHeight());
     m_pPanel = new Panel(true, size, size);
     m_pPanel->setPosition(5, pSprite->getScaledHeight());
@@ -54,7 +54,7 @@ CloseablePopUp::CloseablePopUp(qint32 width, qint32 heigth)
 
 void CloseablePopUp::setLocked(bool locked)
 {
-    _drag.setDragEnabled(!locked);
+    m_drag.setDragEnabled(!locked);
 }
 
 void CloseablePopUp::close()

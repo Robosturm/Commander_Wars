@@ -148,7 +148,11 @@ public:
      * @return
      */
     bool isValid();
-
+    /**
+     * @brief syncAnimation
+     * @param syncTime
+     */
+    void syncAnimation(oxygine::timeMS syncTime);
 
 signals:
 

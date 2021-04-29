@@ -188,9 +188,9 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
                 queueAnimating->add(tween4);
                 oxygine::spTween tween5 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(m_frameTime), 1);
                 queueAnimating->add(tween5);
-                if(!finishQueued)
+                if(!m_finishQueued)
                 {
-                    finishQueued = true;
+                    m_finishQueued = true;
                     tween5->addDoneCallback([=](oxygine::Event *)->void
                     {
                         emitFinished();
@@ -199,9 +199,9 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
             }
             else
             {
-                if(!finishQueued)
+                if(!m_finishQueued)
                 {
-                    finishQueued = true;
+                    m_finishQueued = true;
                     tween3->addDoneCallback([=](oxygine::Event *)->void
                     {
                         emitFinished();

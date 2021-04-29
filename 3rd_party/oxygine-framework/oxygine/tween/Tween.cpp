@@ -8,7 +8,7 @@ namespace oxygine
 {
     Tween::Tween()
         : _status(status_not_started),
-          _elapsed(0),
+          m_elapsed(0),
           _duration(0),
           _delay(0),
           _loops(1),
@@ -19,7 +19,7 @@ namespace oxygine
           _disabledStatusDone(false),
           _percent(0),
           _detach(false),
-          _client(0)
+          m_client(0)
     {
 
     }
@@ -30,7 +30,7 @@ namespace oxygine
 
     void Tween::reset()
     {
-        _elapsed = timeMS(0);
+        m_elapsed = timeMS(0);
         _status = status_not_started;
         _loopsDone = 0;
     }
@@ -59,7 +59,7 @@ namespace oxygine
         _delay = opt._delay;
         _detach = opt._detach;
         _globalEase = opt._globalEase;
-        _cbDone = opt._callback;
+        m_cbDone = opt._callback;
 
         if (_duration == timeMS(0))
         {
@@ -74,15 +74,13 @@ namespace oxygine
 
     void Tween::setDoneCallback(const EventCallback& cb)
     {
-        _cbDone = cb;
+        m_cbDone = cb;
     }
 
     void Tween::addDoneCallback(const EventCallback& cb)
     {
         addEventListener(TweenEvent::DONE, cb);
     }
-
-
 
     float Tween::_calcEase(float v)
     {
@@ -101,7 +99,7 @@ namespace oxygine
 
     void Tween::setElapsed(const timeMS &elapsed)
     {
-        _elapsed = elapsed;
+        m_elapsed = elapsed;
     }
 
     void Tween::remove()
@@ -120,27 +118,27 @@ namespace oxygine
         {
             return;
         }
-        if (!_client)
+        if (!m_client)
         {
             return;
         }
         //not started yet because has delay
         if (_status == status_delayed)
         {
-            _start(*_client);
+            _start(*m_client);
             _status = status_started;
         }
 
         Q_ASSERT(_status == status_started);
         UpdateState us;
         us.dt = deltaTime;
-        update(*_client, us);
+        update(*m_client, us);
         Q_ASSERT(_status == status_done);
     }
 
     void Tween::start(Actor& actor)
     {
-        _client = &actor;
+        m_client = &actor;
         _status = status_delayed;
         if (_delay == timeMS(0))
         {
@@ -151,15 +149,15 @@ namespace oxygine
 
     void Tween::update(Actor& actor, const UpdateState& us)
     {
-        _elapsed += us.dt;
+        m_elapsed += us.dt;
         switch (_status)
         {
             case status_delayed:
             {
-                if (_elapsed >= _delay)
+                if (m_elapsed >= _delay)
                 {
                     _status = status_started;
-                    _start(*_client);
+                    _start(*m_client);
                 }
                 break;
             }
@@ -167,7 +165,7 @@ namespace oxygine
             {
                 if (_duration > timeMS(0))
                 {
-                    timeMS localElapsed = _elapsed - _delay;
+                    timeMS localElapsed = m_elapsed - _delay;
 
                     if (_globalEase != ease_linear)
                     {
@@ -185,7 +183,7 @@ namespace oxygine
                         _loopsDone++;
                     }
 
-                    if (_loops > 0 && int(loopsDone) >= _loops)
+                    if (_loops > 0 && static_cast<qint32>(loopsDone) >= _loops)
                     {
                         if (_twoSides)
                         {
@@ -201,12 +199,12 @@ namespace oxygine
                         }
                     }
                 }
-                _update(*_client, us);
+                _update(*m_client, us);
                 break;
             }
             case status_done:
             {
-                done(*_client, us);
+                done(*m_client, us);
                 break;
             }
             default:
@@ -227,9 +225,9 @@ namespace oxygine
         ev.target = ev.currentTarget = &actor;
         ev.tween = this;
 
-        if (_cbDone.isSet())
+        if (m_cbDone.isSet())
         {
-            _cbDone(&ev);
+            m_cbDone(&ev);
         }
 
         dispatchEvent(&ev);
@@ -241,7 +239,6 @@ namespace oxygine
     {
         return safeCast<Actor*>(currentTarget.get());
     }
-
 
     static float outBounce(float t)
     {
@@ -262,7 +259,6 @@ namespace oxygine
         t = t - 0.954545454545f;
         return 7.5625f * t * t + 0.984375f;
     }
-
 
     Tween::easeHandler _customEaseHandler = nullptr;
 

@@ -164,9 +164,9 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
                 queueAnimating->add(tween);
                 if (i == 0)
                 {
-                    if(!finishQueued)
+                    if(!m_finishQueued)
                     {
-                        finishQueued = true;
+                        m_finishQueued = true;
                         queueMoving->addDoneCallback([=](oxygine::Event *)->void
                         {
                             emitFinished();
@@ -178,9 +178,9 @@ void GameAnimationWalk::loadSpriteV2(QString spriteID, GameEnums::Recoloring mod
         //
         if (m_movePath.size() <= 1)
         {
-            if(!finishQueued)
+            if(!m_finishQueued)
             {
-                finishQueued = true;
+                m_finishQueued = true;
                 queueMoving->addDoneCallback([=](oxygine::Event *)->void
                 {
                     emitFinished();

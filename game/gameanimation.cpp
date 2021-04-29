@@ -27,7 +27,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
     }
     connect(this, &GameAnimation::sigFinished, this, &GameAnimation::onFinished, Qt::QueuedConnection);
     connect(this, &GameAnimation::sigStart, this, &GameAnimation::start, Qt::QueuedConnection);
-    buffer.open(QIODevice::ReadWrite);
+    m_buffer.open(QIODevice::ReadWrite);
 }
 
 void GameAnimation::restart()
@@ -59,14 +59,14 @@ void GameAnimation::start()
 
 void GameAnimation::doPreAnimationCall()
 {
-    if ((!jsPreActionObject.isEmpty()) && (!jsPreActionObject.isEmpty()))
+    if ((!m_jsPreActionObject.isEmpty()) && (!m_jsPreActionObject.isEmpty()))
     {
-        Console::print("Calling post Animation function " + jsPreActionObject + "." + jsPreActionFunction, Console::eDEBUG);
+        Console::print("Calling post Animation function " + m_jsPreActionObject + "." + m_jsPreActionFunction, Console::eDEBUG);
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        pInterpreter->doFunction(jsPreActionObject, jsPreActionFunction, args1);
+        pInterpreter->doFunction(m_jsPreActionObject, m_jsPreActionFunction, args1);
     }
 }
 
@@ -243,9 +243,9 @@ void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint3
     }
     this->addChild(pBox);
     pBox->setPosition(offsetX, offsetY);
-    if(!finishQueued)
+    if(!m_finishQueued)
     {
-        finishQueued = true;
+        m_finishQueued = true;
         queuedAnim->setDoneCallback([=](oxygine::Event *)->void
         {
             emitFinished();
@@ -280,9 +280,9 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
         }
         this->addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);
-        if(!finishQueued)
+        if(!m_finishQueued)
         {
-            finishQueued = true;
+            m_finishQueued = true;
             queuedAnim->setDoneCallback([=](oxygine::Event *)->void
             {
                 emitFinished();
@@ -312,9 +312,9 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
     }
     this->addChild(pSprite);
     pSprite->setPosition(offsetX, offsetY);
-    if(!finishQueued)
+    if(!m_finishQueued)
     {
-        finishQueued = true;
+        m_finishQueued = true;
         queuedAnim->setDoneCallback([=](oxygine::Event *)->void
         {
             emitFinished();
@@ -363,14 +363,14 @@ bool GameAnimation::onFinished(bool skipping)
         {
             GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
         }
-        if ((!jsPostActionObject.isEmpty()) && (!jsPostActionObject.isEmpty()))
+        if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
         {
-            Console::print("Calling post Animation function " + jsPostActionObject + "." + jsPostActionFunction, Console::eDEBUG);
+            Console::print("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);
             Interpreter* pInterpreter = Interpreter::getInstance();
             QJSValueList args1;
             QJSValue obj1 = pInterpreter->newQObject(this);
             args1 << obj1;
-            pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
+            pInterpreter->doFunction(m_jsPostActionObject, m_jsPostActionFunction, args1);
         }
     }
     for (auto & tween : m_stageTweens)
@@ -444,9 +444,9 @@ void GameAnimation::addTweenWait(qint32 duration)
 {
     oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1);
     addTween(tween1);
-    if(!finishQueued)
+    if(!m_finishQueued)
     {
-        finishQueued = true;
+        m_finishQueued = true;
         tween1->setDoneCallback([=](oxygine::Event *)->void
         {
             emitFinished();
@@ -456,14 +456,14 @@ void GameAnimation::addTweenWait(qint32 duration)
 
 void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString postActionFunction)
 {
-    jsPostActionObject = postActionObject;
-    jsPostActionFunction = postActionFunction;
+    m_jsPostActionObject = postActionObject;
+    m_jsPostActionFunction = postActionFunction;
 }
 
 void GameAnimation::setStartOfAnimationCall(QString preActionObject, QString preActionFunction)
 {
-    jsPreActionObject = preActionObject;
-    jsPreActionFunction = preActionFunction;
+    m_jsPreActionObject = preActionObject;
+    m_jsPreActionFunction = preActionFunction;
 }
 
 void GameAnimation::emitFinished()

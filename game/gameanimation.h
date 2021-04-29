@@ -194,7 +194,7 @@ public slots:
      */
     void seekBuffer()
     {
-        buffer.seek(0);
+        m_buffer.seek(0);
     }
     /**
      * @brief writeDataString adds a string to the action data
@@ -202,7 +202,7 @@ public slots:
      */
     void writeDataString(QString data)
     {
-        actionData << data;
+        m_actionData << data;
     }
     /**
      * @brief readDataString
@@ -211,9 +211,9 @@ public slots:
     QString readDataString()
     {
         QString data;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -223,7 +223,7 @@ public slots:
      */
     void writeDataInt32(qint32 data)
     {
-        actionData << data;
+        m_actionData << data;
     }
     /**
      * @brief readDataInt32
@@ -232,9 +232,9 @@ public slots:
     qint32 readDataInt32()
     {
         qint32 data = 0;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -244,7 +244,7 @@ public slots:
      */
     void writeDataFloat(float data)
     {
-        actionData << data;
+        m_actionData << data;
     }
     /**
      * @brief readDataFloat
@@ -253,9 +253,9 @@ public slots:
     float readDataFloat()
     {
         float data = 0.0f;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -265,7 +265,7 @@ public slots:
      */
     void writeDataBool(bool data)
     {
-        actionData << data;
+        m_actionData << data;
     }
     /**
      * @brief readDataBool
@@ -274,9 +274,9 @@ public slots:
     bool readDataBool()
     {
         bool data = false;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -344,17 +344,17 @@ protected:
 protected:
     quint32 m_frameTime{1};
     bool m_stopped{false};
-    bool finishQueued{false};
+    bool m_finishQueued{false};
     bool m_started{false};
     bool m_skipping{false};
 private:
 
     QVector<GameAnimation*> m_QueuedAnimations;
     GameAnimation* m_previousAnimation{nullptr};
-    QString jsPostActionObject{""};
-    QString jsPostActionFunction{""};
-    QString jsPreActionObject{""};
-    QString jsPreActionFunction{""};
+    QString m_jsPostActionObject{""};
+    QString m_jsPostActionFunction{""};
+    QString m_jsPreActionObject{""};
+    QString m_jsPreActionFunction{""};
     bool m_stopSoundAtAnimationEnd{false};
 
     struct SoundData
@@ -369,8 +369,8 @@ private:
     /**
      * @brief animation data needed to perform this action
      */
-    QBuffer buffer;
-    QDataStream actionData{&buffer};
+    QBuffer m_buffer;
+    QDataStream m_actionData{&m_buffer};
 
     QVector<SpriteData> sprites;
 

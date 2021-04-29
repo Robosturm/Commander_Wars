@@ -581,6 +581,10 @@ public slots:
      */
     void updateSprites(qint32 xInput = -1, qint32 yInput = -1, bool editor = false, bool showLoadingScreen = false);
     /**
+     * @brief syncUnitsAndBuildings
+     */
+    void syncUnitsAndBuildingAnimations();
+    /**
      * @brief getField changes the coordinates into the given direction
      * @param x x-coordinates
      * @param y y-coordinates

@@ -449,6 +449,9 @@ set(${PROJECT_NAME}_SRCS
 
         # spriting support
         spritingsupport/spritecreator.cpp
+
+        # ui
+        ui_reader/uifactory.cpp
 )
 
 #######################################################

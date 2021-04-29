@@ -477,6 +477,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     }
 
     Console::print("synchronizing animations", Console::eDEBUG);
+    auto timeMs = oxygine::getStage()->getClock()->getTime();
     for (qint32 y = 0; y < heigth; y++)
     {
         if (showLoadingScreen)
@@ -485,7 +486,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
         }
         for (qint32 x = 0; x < width; x++)
         {
-            fields[y][x]->syncAnimation();
+            fields[y][x]->syncAnimation(timeMs);
         }
     }
     
@@ -500,6 +501,30 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
     if (showLoadingScreen)
     {
         pLoadingScreen->hide();
+    }
+}
+
+void GameMap::syncUnitsAndBuildingAnimations()
+{
+    Console::print("Synchronizing units and building animations", Console::eDEBUG);
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    auto timeMs = oxygine::getStage()->getClock()->getTime();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            auto * pBuilding = fields[y][x]->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                pBuilding->syncAnimation(timeMs);
+            }
+            auto * pUnit = fields[y][x]->getUnit();
+            if (pUnit != nullptr)
+            {
+                pUnit->syncAnimation(timeMs);
+            }
+        }
     }
 }
 
@@ -1315,6 +1340,10 @@ void GameMap::startGame()
             pInterpreter->openScript(mod + "/scripts/mapstart.js", true);
             pInterpreter->doFunction("MapStart", "gameStart");
         }
+    }
+    if (Settings::getSyncAnimations())
+    {
+        syncUnitsAndBuildingAnimations();
     }
 }
 

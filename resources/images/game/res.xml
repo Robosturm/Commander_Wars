@@ -185,6 +185,7 @@
 		<image file="minimap/minimap_snow_mountain.png" />
 		<image file="minimap/minimap_snow_wasteland.png" />
 		<image file="minimap/minimap_teleport.png" />
+		<image file="minimap/minimap_volcan.png" />
 		
 		<!-- dialogue stuff -->
 		<image file="dialogfield.png" />	

@@ -153,9 +153,6 @@ namespace oxygine
         }
     }
 
-
-
-
     void ResAtlasGeneric::applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge)
     {
         if (!ad.texture)
@@ -212,22 +209,16 @@ namespace oxygine
         _current++;
     }
 
-
     void ResAtlasGeneric::_unload()
     {
     }
 
     void ResAtlasGeneric::_load(LoadResourcesContext*)
     {
-        //CreateResourceContext copy2 = _copy;
-        //loadAtlas2(copy2);
     }
 
     void ResAtlasGeneric::loadAtlas(CreateResourceContext& context)
     {
-        //_xmlFolder = context.walker.getXmlFolder();
-        //_copy = context;
-        //_copy.walker.setXmlFolder(&_xmlFolder);
         loadAtlas2(context);
     }
 

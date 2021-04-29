@@ -74,7 +74,7 @@ namespace oxygine
         us.dt = deltaTime;
         while (_status != status_done)
         {
-            update(*_client, us);
+            update(*m_client, us);
         }
     }
 
@@ -93,7 +93,7 @@ namespace oxygine
 
     void TweenQueue::_update(Actor& actor, const UpdateState& us)
     {
-        _elapsed += us.dt;
+        m_elapsed += us.dt;
 
         if (_current)
         {

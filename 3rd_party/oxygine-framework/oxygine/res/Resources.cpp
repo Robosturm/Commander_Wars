@@ -153,7 +153,6 @@ namespace oxygine
         Q_ASSERT(loaded);
 
         QDomElement resources = doc.documentElement();
-        QString id;
         qDebug("loading xml resources");
         XmlWalker walker("", 1.0f, opt._loadCompletely, true, resources);
 

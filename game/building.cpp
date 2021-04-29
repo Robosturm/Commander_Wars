@@ -233,6 +233,19 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
     }
 }
 
+void Building::syncAnimation(oxygine::timeMS syncTime)
+{
+    for (auto & sprite : m_pBuildingSprites)
+    {
+        oxygine::spTween pTween = sprite->getFirstTween();
+        while (pTween.get() != nullptr)
+        {
+            pTween->setElapsed(syncTime);
+            pTween = pTween->getNextSibling();
+        }
+    }
+}
+
 void Building::updatePlayerColor(bool visible)
 {
     if (m_pOwner != nullptr)

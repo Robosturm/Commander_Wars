@@ -367,6 +367,19 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
 
     pTextfield = new Label(sliderOffset - 10);
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Synchronize Animations: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pSyncAnimations = new Checkbox();
+    pSyncAnimations->setChecked(Settings::getSyncAnimations());
+    pSyncAnimations->setPosition(sliderOffset - 130, y);
+    pSyncAnimations->setTooltipText(tr("If checked units and building animations on the map are synchronized. Note: changing this doesn't have an immediate effect, while playing."));
+    m_pOptions->addItem(pSyncAnimations);
+    connect(pSyncAnimations.get(), &Checkbox::checkChanged, Settings::getInstance(), Settings::setSyncAnimations, Qt::QueuedConnection);
+    y += 40;
+
+    pTextfield = new Label(sliderOffset - 10);
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

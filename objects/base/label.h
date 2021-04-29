@@ -33,7 +33,7 @@ public:
      */
     const oxygine::Rect& getTextRect()
     {
-        return _textField->getTextRect();
+        return m_textField->getTextRect();
     }
     /**
      * @brief setWidth
@@ -48,8 +48,8 @@ public:
 public slots:
     virtual void focusedLost() override {}
 protected:
-    oxygine::spTextField _textField;
-    oxygine::spClipRectActor _clipRect;
+    oxygine::spTextField m_textField;
+    oxygine::spClipRectActor m_clipRect;
 };
 
 #endif // LABEL_H

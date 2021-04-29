@@ -180,21 +180,20 @@ void Terrain::setTerrainName(const QString &value)
     terrainName = value;
 }
 
-void Terrain::syncAnimation()
+void Terrain::syncAnimation(oxygine::timeMS syncTime)
 {
     if (m_pTerrainSprite.get() != nullptr)
     {
         oxygine::spTween pTween = m_pTerrainSprite->getFirstTween();
         while (pTween.get() != nullptr)
         {
-            pTween->reset();
-            pTween->start(*m_pTerrainSprite);
+            pTween->setElapsed(syncTime);
             pTween = pTween->getNextSibling();
         }
     }
     if (m_pBaseTerrain.get() != nullptr)
     {
-        m_pBaseTerrain->syncAnimation();
+        m_pBaseTerrain->syncAnimation(syncTime);
     }
 }
 

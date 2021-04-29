@@ -34,16 +34,17 @@ public:
 
     static void setUsername(const QString &Username);
 
+public slots:
     static QStringList getActiveModVersions();
-
-
     static QStringList getActiveMods();
     static void setActiveMods(const QStringList &activeMods);
 
     static QString getSlaveServerName();
     static void setSlaveServerName(const QString &slaveServerName);
 
-public slots:
+    static bool getSyncAnimations();
+    static void setSyncAnimations(bool syncAnimations);
+
     static bool getCenterOnMarkedField();
     static void setCenterOnMarkedField(bool centerOnMarkedField);
 
@@ -496,6 +497,7 @@ private:
     static bool m_autoCamera;
     static GameEnums::AutoFocusing m_autoFocusing;
     static bool m_centerOnMarkedField;
+    static bool m_syncAnimations;
 
     // internal members
     static Settings* m_pInstance;

@@ -6,7 +6,7 @@
 
 CoPowermeter::CoPowermeter(CO* pCO)
     : QObject(),
-      _pCO(pCO)
+      m_pCO(pCO)
 {
     setObjectName("CoPowermeter");
 }
@@ -16,16 +16,16 @@ void CoPowermeter::drawPowerMeter()
     removeChildren();
     if ((GameMap::getInstance() == nullptr ||
         !GameMap::getInstance()->getGameRules()->getNoPower()) &&
-        _pCO != nullptr)
+        m_pCO != nullptr)
     {
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = nullptr;
-        qint32 power = _pCO->getPowerStars();
-        qint32 superpower = _pCO->getSuperpowerStars();
-        bool usePower = _pCO->canUsePower();
-        bool useSuperpower = _pCO->canUseSuperpower();
-        float powerFilled = _pCO->getPowerFilled();
-        switch (_pCO->getPowerMode())
+        qint32 power = m_pCO->getPowerStars();
+        qint32 superpower = m_pCO->getSuperpowerStars();
+        bool usePower = m_pCO->canUsePower();
+        bool useSuperpower = m_pCO->canUseSuperpower();
+        float powerFilled = m_pCO->getPowerFilled();
+        switch (m_pCO->getPowerMode())
         {
             case GameEnums::PowerMode_Unknown:
             case GameEnums::PowerMode_Off:
@@ -210,12 +210,12 @@ void CoPowermeter::drawPowerMeter()
 
 CO *CoPowermeter::getCO() const
 {
-    return _pCO;
+    return m_pCO;
 }
 
 void CoPowermeter::setCO(CO *pCO)
 {
-    _pCO = pCO;
+    m_pCO = pCO;
 }
 
 bool CoPowermeter::getFlippedX() const

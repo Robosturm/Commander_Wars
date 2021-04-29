@@ -9,7 +9,7 @@ Viewplayer::Viewplayer()
 bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
-    switch (_ViewType)
+    switch (m_ViewType)
     {
         case ViewType::CurrentTeam:
         {
@@ -34,7 +34,7 @@ bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
         {
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
-                if (pMap->getPlayer(i)->getTeam() == _ViewType)
+                if (pMap->getPlayer(i)->getTeam() == m_ViewType)
                 {
                     return pMap->getPlayer(i)->getFieldVisible(x, y);
                 }
@@ -47,7 +47,7 @@ bool Viewplayer::getFieldVisible(qint32 x, qint32 y)
 GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
-    switch (_ViewType)
+    switch (m_ViewType)
     {
         case ViewType::CurrentTeam:
         {
@@ -74,7 +74,7 @@ GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
         {
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
-                if (pMap->getPlayer(i)->getTeam() == _ViewType)
+                if (pMap->getPlayer(i)->getTeam() == m_ViewType)
                 {
                     return pMap->getPlayer(i)->getFieldVisibleType(x, y);
                 }
@@ -87,7 +87,7 @@ GameEnums::VisionType Viewplayer::getFieldVisibleType(qint32 x, qint32 y)
 bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
 {
     spGameMap pMap = GameMap::getInstance();
-    switch (_ViewType)
+    switch (m_ViewType)
     {
         case ViewType::CurrentTeam:
         {
@@ -112,7 +112,7 @@ bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
         {
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
-                if (pMap->getPlayer(i)->getTeam() == _ViewType)
+                if (pMap->getPlayer(i)->getTeam() == m_ViewType)
                 {
                     return pMap->getPlayer(i)->getFieldDirectVisible(x, y);
                 }
@@ -124,10 +124,10 @@ bool Viewplayer::getFieldDirectVisible(qint32 x, qint32 y)
 
 qint32 Viewplayer::getViewType() const
 {
-    return _ViewType;
+    return m_ViewType;
 }
 
 void Viewplayer::setViewType(const qint32 &ViewType)
 {
-    _ViewType = ViewType;
+    m_ViewType = ViewType;
 }

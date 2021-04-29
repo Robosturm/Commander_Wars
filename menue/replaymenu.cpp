@@ -32,7 +32,7 @@ ReplayMenu::ReplayMenu(QString filename)
         m_Viewplayer = new Viewplayer();
         // store animation modes
         m_storedAnimMode = Settings::getShowAnimations();
-        _storedBatteAnimMode = Settings::getBattleAnimations();
+        m_storedBatteAnimMode = Settings::getBattleAnimations();
         m_storedAnimationSpeed = Settings::getAnimationSpeedValue();
         m_storedBattleAnimationSpeed = Settings::getBattleAnimationSpeedValue();
         spGameMap pMap = GameMap::getInstance();
@@ -42,8 +42,8 @@ ReplayMenu::ReplayMenu(QString filename)
         loadHandling();
         loadGameMenue();
         loadUIButtons();
-        _HumanInput = new HumanPlayerInput();
-        _HumanInput->init();
+        m_HumanInput = new HumanPlayerInput();
+        m_HumanInput->init();
         gameStarted = true;
         Console::print("emitting sigActionPerformed()", Console::eDEBUG);
         emit sigActionPerformed();
@@ -57,7 +57,7 @@ ReplayMenu::ReplayMenu(QString filename)
 ReplayMenu::~ReplayMenu()
 {
     Settings::setShowAnimations(m_storedAnimMode);
-    Settings::setBattleAnimations(_storedBatteAnimMode);
+    Settings::setBattleAnimations(m_storedBatteAnimMode);
     Settings::setAnimationSpeed(m_storedAnimationSpeed);
     Settings::setBattleAnimationSpeed(m_storedBattleAnimationSpeed);
 }
@@ -104,7 +104,7 @@ void ReplayMenu::nextReplayAction()
     if (!m_paused)
     {
         spGameAction pAction = m_ReplayRecorder.nextAction();
-        _HumanInput->cleanUpInput();
+        m_HumanInput->cleanUpInput();
         float progress = 0.0f;
         if (m_ReplayRecorder.getRecordSize() > 0)
         {
@@ -260,17 +260,17 @@ void ReplayMenu::loadSeekUi()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    _seekDayLabel = new Label(140);
-    _seekDayLabel->setStyle(style);
-    _seekDayLabel->setHtmlText(tr("Day: "));
-    _seekDayLabel->setPosition(8, 8);
-    pDayBox->addChild(_seekDayLabel);
+    m_seekDayLabel = new Label(140);
+    m_seekDayLabel->setStyle(style);
+    m_seekDayLabel->setHtmlText(tr("Day: "));
+    m_seekDayLabel->setPosition(8, 8);
+    pDayBox->addChild(m_seekDayLabel);
     pDayBox->setSize(160, 50);
     pDayBox->setPosition(0, Settings::getHeight() - pDayBox->getHeight() + 6 - pDayBox->getHeight());
     pDayBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     addChild(pDayBox);
-    _seekActor = pDayBox;
-    _seekActor->setVisible(false);
+    m_seekActor = pDayBox;
+    m_seekActor->setVisible(false);
     
 }
 
@@ -282,13 +282,13 @@ void ReplayMenu::startSeeking()
         swapPlay();
     }
     
-    _StoredShowAnimations = Settings::getShowAnimations();
+    m_StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    Settings::setShowAnimations(_StoredShowAnimations);
+    Settings::setShowAnimations(m_StoredShowAnimations);
     m_seeking = true;
     
 }
@@ -296,14 +296,14 @@ void ReplayMenu::startSeeking()
 void ReplayMenu::seekChanged(float value)
 {
     
-    _seekActor->setVisible(true);
+    m_seekActor->setVisible(true);
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = 0;
     if (m_ReplayRecorder.getRecordSize() > 0)
     {
         day = m_ReplayRecorder.getDayFromPosition(count);
     }
-    _seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
+    m_seekDayLabel->setHtmlText(tr("Day: ") + QString::number(day));
     
 }
 
@@ -314,7 +314,7 @@ void ReplayMenu::seekRecord(float value)
     qint32 count = static_cast<qint32>(static_cast<float>(m_ReplayRecorder.getRecordSize()) * value);
     qint32 day = m_ReplayRecorder.getDayFromPosition(count);
     seekToDay(day);
-    _seekActor->setVisible(false);
+    m_seekActor->setVisible(false);
     m_seeking = false;
     
 }
@@ -384,7 +384,7 @@ void ReplayMenu::startFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
     
-    _StoredShowAnimations = Settings::getShowAnimations();
+    m_StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
@@ -396,7 +396,7 @@ void ReplayMenu::startFastForward()
 void ReplayMenu::stopFastForward()
 {
     QMutexLocker locker(&m_replayMutex);
-    Settings::setShowAnimations(_StoredShowAnimations);
+    Settings::setShowAnimations(m_StoredShowAnimations);
 }
 
 void ReplayMenu::showConfig()

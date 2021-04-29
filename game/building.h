@@ -91,7 +91,11 @@ public:
      * @brief scaleAndShowOnSingleTile
      */
     void scaleAndShowOnSingleTile();
-
+    /**
+     * @brief syncAnimation
+     * @param syncTime
+     */
+    void syncAnimation(oxygine::timeMS syncTime);
 signals:
 
 public slots:

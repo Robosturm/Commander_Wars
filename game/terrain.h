@@ -60,7 +60,12 @@ public:
     /**
      * @brief syncAnimation call this on all terrains to make their animation synchronized.
      */
-    void syncAnimation();
+    void syncAnimation(oxygine::timeMS syncTime);
+    /**
+     * @brief getTweenElapsed
+     * @return
+     */
+    oxygine::timeMS getTweenElapsed();
     /**
      * @brief setBaseTerrain replace base terrain
      * @param terrain

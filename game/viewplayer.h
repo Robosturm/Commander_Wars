@@ -50,7 +50,7 @@ public slots:
      */
     void setViewType(const qint32 &ViewType);
 private:
-    qint32 _ViewType{static_cast<qint32>(ViewType::CurrentTeam)};
+    qint32 m_ViewType{static_cast<qint32>(ViewType::CurrentTeam)};
 };
 
 #endif // VIEWPLAYER_H

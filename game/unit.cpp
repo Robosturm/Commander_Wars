@@ -218,10 +218,10 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
         oxygine::spSprite pWaitSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);                        
             pSprite->addTween(tween);
 
-            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
+            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);            
             pWaitSprite->addTween(tweenWait);
         }
         else
@@ -266,6 +266,28 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
     else
     {
         Console::print("Unable to load unit sprite: " + spriteID, Console::eERROR);
+    }
+}
+
+void Unit::syncAnimation(oxygine::timeMS syncTime)
+{
+    for (auto & sprite : m_pUnitSprites)
+    {
+        oxygine::spTween pTween = sprite->getFirstTween();
+        while (pTween.get() != nullptr)
+        {
+            pTween->setElapsed(syncTime);
+            pTween = pTween->getNextSibling();
+        }
+    }
+    for (auto & sprite : m_pUnitWaitSprites)
+    {
+        oxygine::spTween pTween = sprite->getFirstTween();
+        while (pTween.get() != nullptr)
+        {
+            pTween->setElapsed(syncTime);
+            pTween = pTween->getNextSibling();
+        }
     }
 }
 

@@ -111,6 +111,7 @@ bool Settings::m_autoCamera = true;
 bool Settings::m_showIngameCoordinates  = true;
 GameEnums::AutoFocusing Settings::m_autoFocusing = GameEnums::AutoFocusing_LastPos;
 bool Settings::m_centerOnMarkedField = false;
+bool Settings::m_syncAnimations = false;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -135,6 +136,16 @@ Settings::Settings()
 {
     setObjectName("Settings");
     Interpreter::setCppOwnerShip(this);
+}
+
+bool Settings::getSyncAnimations()
+{
+    return m_syncAnimations;
+}
+
+void Settings::setSyncAnimations(bool syncAnimations)
+{
+    m_syncAnimations = syncAnimations;
 }
 
 bool Settings::getCenterOnMarkedField()
@@ -1195,6 +1206,7 @@ void Settings::loadSettings()
     m_autoCamera = settings.value("AutoCamera", true).toBool();    
     m_showIngameCoordinates = settings.value("ShowIngameCoordinates", true).toBool();
     m_centerOnMarkedField = settings.value("CenterOnMarkedField", false).toBool();
+    m_syncAnimations = settings.value("SyncAnimations", false).toBool();
 
     coInfoPosition  = static_cast<GameEnums::COInfoPosition>(settings.value("COInfoPosition", 0).toInt(&ok));
     if (!ok || coInfoPosition < GameEnums::COInfoPosition_Flipping || coInfoPosition > GameEnums::COInfoPosition_Right)
@@ -1365,6 +1377,7 @@ void Settings::saveSettings()
         settings.setValue("AutoFocusing",                   m_autoFocusing);
         settings.setValue("DialogAnimation",                m_dialogAnimation);
         settings.setValue("CenterOnMarkedField",            m_centerOnMarkedField);
+        settings.setValue("SyncAnimations",                 m_syncAnimations);
         settings.endGroup();
 
         // network

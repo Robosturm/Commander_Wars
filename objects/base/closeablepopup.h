@@ -31,7 +31,7 @@ public slots:
 protected slots:
     void close();
 private:
-     oxygine::Draggable _drag;
+     oxygine::Draggable m_drag;
      spPanel m_pPanel;
 };
 

@@ -41,7 +41,7 @@ namespace oxygine
 
     XmlWalker XmlWalker::next()
     {
-        while (1)
+        while (true)
         {
             QDomNode node;
             if (_notStarted)

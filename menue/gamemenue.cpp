@@ -1025,7 +1025,10 @@ void GameMenue::actionPerformed()
     {
         Console::print("Action performed", Console::eDEBUG);
         finishActionPerformed();
-
+        if (Settings::getSyncAnimations())
+        {
+            GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+        }
         m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
         m_IngameInfoBar->updateMinimap();
         m_IngameInfoBar->updatePlayerInfo();
@@ -1063,6 +1066,7 @@ void GameMenue::actionPerformed()
     {
         Console::print("Skipping action performed due to exiting the game", Console::eDEBUG);
     }
+
     m_saveAllowed = true;
     if (m_saveMap)
     {

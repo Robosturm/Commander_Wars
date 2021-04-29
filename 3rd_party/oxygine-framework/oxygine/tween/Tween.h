@@ -97,19 +97,19 @@ namespace oxygine
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
 
-        qint32                     getLoops() const { return _loops; }
+        qint32                  getLoops() const { return _loops; }
         timeMS                  getDuration() const { return _duration; }
         void                    setElapsed(const timeMS &elapsed);
-        timeMS                  getElapsed() const { return _elapsed; }
+        timeMS                  getElapsed() const { return m_elapsed; }
         EASE                    getEase() const { return _ease; }
         EASE                    getGlobalEase() const { return _globalEase; }
         timeMS                  getDelay() const { return _delay; }
-        Actor*                  getClient() const { return _client; }
+        Actor*                  getClient() const { return m_client; }
         float                   getPercent() const { return _percent; }
         spObject                getDataObject() const { return _data; }
         spTween                 getNextSibling() { return intr_list::getNextSibling(); }
         spTween                 getPrevSibling() { return intr_list::getPrevSibling(); }
-        const EventCallback&    getDoneCallback() const { return _cbDone; }
+        const EventCallback&    getDoneCallback() const { return m_cbDone; }
 
         bool        isStarted() const { return _status != status_not_started; }
         bool        isDone() const { return _status == status_remove; }
@@ -129,7 +129,7 @@ namespace oxygine
         void setLoops(qint32 loops) { _loops = loops; }
         /*set Duration of tween**/
         void setDuration(timeMS duration) { _duration = duration; }
-        void setClient(Actor* client) { _client = client; }
+        void setClient(Actor* client) { m_client = client; }
         void setTwoSides(bool ts) { _twoSides = ts; }
 
         /** remove actor from parent node when tween done*/
@@ -159,10 +159,10 @@ namespace oxygine
     protected:
         void done(Actor&, const UpdateState& us);
 
-        virtual void _start(Actor& actor) {}
-        virtual void _update(Actor& actor, const UpdateState& us) {}
-        virtual void _done(Actor& actor, const UpdateState& us) {}
-        virtual void _loopDone(Actor& actor, const UpdateState& us) {}
+        virtual void _start(Actor&) {}
+        virtual void _update(Actor&, const UpdateState&) {}
+        virtual void _done(Actor&, const UpdateState&) {}
+        virtual void _loopDone(Actor&, const UpdateState&) {}
         virtual float _calcEase(float v);
 
         enum status
@@ -174,7 +174,7 @@ namespace oxygine
             status_remove,
         };
         status _status;
-        timeMS _elapsed;
+        timeMS m_elapsed;
 
         timeMS _duration;
         timeMS _delay;
@@ -188,8 +188,8 @@ namespace oxygine
         float _percent;
         bool _detach;
 
-        EventCallback _cbDone;
-        Actor* _client;
+        EventCallback m_cbDone;
+        Actor* m_client;
 
         spObject _data;
     };
@@ -200,33 +200,33 @@ namespace oxygine
     public:
         typedef typename GS::type type;
 
-        TweenT(const GS& gs) : _gs(gs) {}
+        TweenT(const GS& gs) : m_gs(gs) {}
 
         void _update(Actor& actor, const UpdateState& us)
         {
             type& t = *safeCast<type*>(&actor);
-            _gs.update(t, _percent, us);//todo fix cast
+            m_gs.update(t, _percent, us);//todo fix cast
         }
 
         void _start(Actor& actor)
         {
             type& t = *safeCast<type*>(&actor);
-            _gs.init(t);
+            m_gs.init(t);
             UpdateState us;
             us.iteration = -1;
-            _gs.update(t, _calcEase(0.0f), us);
+            m_gs.update(t, _calcEase(0.0f), us);
         }
 
-        void _done(Actor& actor, const UpdateState& us)
+        void _done(Actor& actor, const UpdateState&)
         {
             type& t = *safeCast<type*>(&actor);
-            _gs.done(t);
+            m_gs.done(t);
         }
 
-        GS& getGS() { return _gs; }
+        GS& getGS() { return m_gs; }
 
     private:
-        GS _gs;
+        GS m_gs;
     };
 
 

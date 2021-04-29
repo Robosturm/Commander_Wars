@@ -75,16 +75,18 @@ namespace oxygine
             : Closure<TRet, TArgs...>(pOwner, callback),
               m_pOwner(pOwner)
         {
+            m_isSet = true;
         }
 
         template<class TLambda>
         OwnedClosure(TLambda lambda)
             : Closure<TRet, TArgs...>(lambda)
         {
+            m_isSet = true;
         }
         bool isSet()
         {
-            return (m_pOwner != nullptr);
+            return m_isSet;
         }
         bool isOwner(void* pOwner) const
         {
@@ -93,6 +95,7 @@ namespace oxygine
 
     private:
         IClosureOwner* m_pOwner{nullptr};
+        bool m_isSet{false};
     };
 
 }

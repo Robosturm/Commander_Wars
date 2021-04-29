@@ -34,15 +34,15 @@ namespace oxygine
             return std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::system_clock::now().time_since_epoch()));
         }
     private:
-        qint32     _counter;
-        double  _destTime;
-        double  _srcTime;
+        qint32     m_counter;
+        double  m_destTime;
+        double  m_srcTime;
 
-        float   _multiplier;
-        float   _fixedStep;
+        float   m_multiplier;
+        float   m_fixedStep;
 
-        qint32    _lastDT;
-        timeMS _lastUpdateTime;
+        qint32    m_lastDT;
+        timeMS m_lastUpdateTime;
 
 
     };

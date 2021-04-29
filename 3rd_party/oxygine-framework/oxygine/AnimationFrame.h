@@ -29,7 +29,7 @@ namespace oxygine
     class AnimationFrame
     {
     public:
-        AnimationFrame() : _srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _resAnim(0), _row(0), _column(0) {}
+        AnimationFrame() : m_srcRect(0, 0, 1, 1), m_destRect(0, 0, 1, 1), m_resAnim(0), m_row(0), m_column(0) {}
         AnimationFrame(spNativeTexture t);
 
         void init(ResAnim* rs, const Diffuse& df,
@@ -41,27 +41,27 @@ namespace oxygine
         AnimationFrame getFlipped(bool vertical, bool horizontal) const;
 
         /**Returns size of frame in pixels*/
-        const Vector2&  getSize() const {return _frameSize;}
-        float           getWidth() const {return _frameSize.x;}
-        float           getHeight() const {return _frameSize.y;}
+        const Vector2&  getSize() const {return m_frameSize;}
+        float           getWidth() const {return m_frameSize.x;}
+        float           getHeight() const {return m_frameSize.y;}
 
-        ResAnim*        getResAnim() const {return _resAnim;}
-        short           getColumn() const {return _column;}
-        short           getRow() const {return _row;}
-        const RectF&    getSrcRect() const {return _srcRect;}
-        const RectF&    getDestRect() const {return _destRect;}
-        const Diffuse&  getDiffuse() const {return _diffuse;}
-        const HitTestData& getHitTestData()const { return _hittest; }
+        ResAnim*        getResAnim() const {return m_resAnim;}
+        short           getColumn() const {return m_column;}
+        short           getRow() const {return m_row;}
+        const RectF&    getSrcRect() const {return m_srcRect;}
+        const RectF&    getDestRect() const {return m_destRect;}
+        const Diffuse&  getDiffuse() const {return m_diffuse;}
+        const HitTestData& getHitTestData()const { return m_hittest; }
 
-        void            setSrcRect(const RectF& r) {_srcRect = r;}
-        void            setDestRect(const RectF& r) {_destRect = r;}
-        void            setResAnim(ResAnim* rs) {_resAnim = rs;}
-        void            setDiffuse(const Diffuse& d) { _diffuse = d; }
-        void            setSize(const Vector2& size) {_frameSize = size;}
+        void            setSrcRect(const RectF& r) {m_srcRect = r;}
+        void            setDestRect(const RectF& r) {m_destRect = r;}
+        void            setResAnim(ResAnim* rs) {m_resAnim = rs;}
+        void            setDiffuse(const Diffuse& d) { m_diffuse = d; }
+        void            setSize(const Vector2& size) {m_frameSize = size;}
         void            setSize(float w, float h) { setSize(Vector2(w, h)); }
-        void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
-        void            setRow(qint32 v) {_row = v;}
-        void            setColumn(qint32 v) {_column = v;}
+        void            setHitTestData(const HitTestData& ad) { m_hittest = ad; }
+        void            setRow(qint32 v) {m_row = v;}
+        void            setColumn(qint32 v) {m_column = v;}
 
         void            flipX();
         void            flipY();
@@ -72,16 +72,15 @@ namespace oxygine
             clipped = 0x01,
         };
 
-        Diffuse         _diffuse;
+        Diffuse         m_diffuse;
 
-        RectF           _srcRect;
-        RectF           _destRect;
-        Vector2         _frameSize;//real size without clipping
-        ResAnim*        _resAnim;
-        short           _row;
-        short           _column;
+        RectF           m_srcRect;
+        RectF           m_destRect;
+        Vector2         m_frameSize;//real size without clipping
+        ResAnim*        m_resAnim;
+        short           m_row;
+        short           m_column;
 
-        HitTestData       _hittest;
-        //unsigned short    _flags;
+        HitTestData       m_hittest;
     };
 }
