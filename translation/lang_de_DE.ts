@@ -2370,87 +2370,87 @@ Fullscreen  - Animations are upscaled based on the resolution
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="65"/>
+        <location filename="../menue/mainwindow.cpp" line="67"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="77"/>
+        <location filename="../menue/mainwindow.cpp" line="79"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="88"/>
+        <location filename="../menue/mainwindow.cpp" line="90"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="99"/>
+        <location filename="../menue/mainwindow.cpp" line="101"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="110"/>
+        <location filename="../menue/mainwindow.cpp" line="112"/>
         <source>Load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="121"/>
+        <location filename="../menue/mainwindow.cpp" line="123"/>
         <source>Replay Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="132"/>
+        <location filename="../menue/mainwindow.cpp" line="134"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="143"/>
+        <location filename="../menue/mainwindow.cpp" line="145"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="154"/>
+        <location filename="../menue/mainwindow.cpp" line="156"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="165"/>
+        <location filename="../menue/mainwindow.cpp" line="167"/>
         <source>Shop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="176"/>
+        <location filename="../menue/mainwindow.cpp" line="178"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="187"/>
+        <location filename="../menue/mainwindow.cpp" line="189"/>
         <source>Achievements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="198"/>
+        <location filename="../menue/mainwindow.cpp" line="200"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="209"/>
+        <location filename="../menue/mainwindow.cpp" line="211"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="221"/>
+        <location filename="../menue/mainwindow.cpp" line="223"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="238"/>
+        <location filename="../menue/mainwindow.cpp" line="240"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="238"/>
+        <location filename="../menue/mainwindow.cpp" line="240"/>
         <source>Imports all data from an other Commander Wars release to the current release.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5992,67 +5992,67 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WorkerThread</name>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="76"/>
+        <location filename="../coreengine/workerthread.cpp" line="77"/>
         <source>Loading Buildings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="79"/>
+        <location filename="../coreengine/workerthread.cpp" line="80"/>
         <source>Loading COs...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="82"/>
+        <location filename="../coreengine/workerthread.cpp" line="83"/>
         <source>Loading Gamescripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="85"/>
+        <location filename="../coreengine/workerthread.cpp" line="86"/>
         <source>Loading Gamerules...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="88"/>
+        <location filename="../coreengine/workerthread.cpp" line="89"/>
         <source>Loading Movements...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="91"/>
+        <location filename="../coreengine/workerthread.cpp" line="92"/>
         <source>Loading Terrains...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="94"/>
+        <location filename="../coreengine/workerthread.cpp" line="95"/>
         <source>Loading Units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="97"/>
+        <location filename="../coreengine/workerthread.cpp" line="98"/>
         <source>Loading Weapons...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="100"/>
+        <location filename="../coreengine/workerthread.cpp" line="101"/>
         <source>Loading Battleanimation scripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="103"/>
+        <location filename="../coreengine/workerthread.cpp" line="104"/>
         <source>Loading CO-Perks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="106"/>
+        <location filename="../coreengine/workerthread.cpp" line="107"/>
         <source>Loading Wikiscripts...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="108"/>
+        <location filename="../coreengine/workerthread.cpp" line="109"/>
         <source>Loading Shop items...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/workerthread.cpp" line="111"/>
+        <location filename="../coreengine/workerthread.cpp" line="112"/>
         <source>Loading Achievements...</source>
         <translation type="unfinished"></translation>
     </message>
