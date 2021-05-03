@@ -24,7 +24,7 @@ InGameMenue::InGameMenue()
     loadBackground();
 }
 
-InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
+InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame)
 {
     setObjectName("InGameMenue");
     Mainapp* pApp = Mainapp::getInstance();
@@ -42,7 +42,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     }
     else
     {
-        oxygine::Actor::addChild(new GameMap(map, false, false));
+        oxygine::Actor::addChild(new GameMap(map, false, false, savegame));
     }
     loadHandling();
 

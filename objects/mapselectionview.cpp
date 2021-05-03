@@ -225,7 +225,8 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap->deleteMap();
             m_pCurrentMap = nullptr;
         }
-        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast);
+        bool savegame = info.fileName().endsWith(".msav");
+        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast, savegame);
         m_pCurrentMap->setMapPath(info.absoluteFilePath().replace(QCoreApplication::applicationDirPath(), ""));
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->clear();

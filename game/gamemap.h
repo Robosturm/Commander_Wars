@@ -45,12 +45,12 @@ public:
      * @brief GameMap
      * @param stream
      */
-    explicit GameMap(QDataStream& stream);
+    explicit GameMap(QDataStream& stream, bool savegame);
     /**
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
-    explicit GameMap(QString map, bool onlyLoad, bool fast);
+    explicit GameMap(QString map, bool onlyLoad, bool fast, bool savegame);
     virtual ~GameMap();
     /**
      * @brief deleteMap
@@ -353,6 +353,12 @@ public:
      * @brief playMusic
      */
     void playMusic();
+    /**
+     * @brief getSavegame
+     * @return
+     */
+    bool getSavegame() const;
+
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -838,6 +844,7 @@ private:
     QString m_loadedMapMusic;
     qint32 m_startLoopMs{-1};
     qint32 m_endLoopMs{-1};
+    bool m_savegame{false};
     static qint32 m_imagesize;
     void loadMapData();
 };

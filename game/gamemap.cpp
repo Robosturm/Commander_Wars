@@ -60,9 +60,10 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     loaded = true;
 }
 
-GameMap::GameMap(QDataStream& stream)
+GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(new GameRules())
+      m_Rules(new GameRules()),
+      m_savegame(savegame)
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -72,9 +73,10 @@ GameMap::GameMap(QDataStream& stream)
     loaded = true;
 }
 
-GameMap::GameMap(QString map, bool onlyLoad, bool fast)
+GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(new GameRules())
+      m_Rules(new GameRules()),
+      m_savegame(savegame)
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -551,6 +553,11 @@ void GameMap::addScreenshake(qint32 startIntensity, float decay, qint32 duration
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
     oxygine::getStage()->addTween(tween);
+}
+
+bool GameMap::getSavegame() const
+{
+    return m_savegame;
 }
 
 QString GameMap::getMapMusic() const

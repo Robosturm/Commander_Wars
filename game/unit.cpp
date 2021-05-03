@@ -3034,6 +3034,15 @@ void Unit::serializeObject(QDataStream& pStream) const
         pStream << iconInfo.duration;
         pStream << iconInfo.player;
     }
+
+    pStream << weapon1ID;
+    pStream << weapon2ID;
+    pStream << maxAmmo1;
+    pStream << maxAmmo2;
+    pStream << vision;
+    pStream << minRange;
+    pStream << maxRange;
+    pStream << maxFuel;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3043,6 +3052,13 @@ void Unit::deserializeObject(QDataStream& pStream)
 
 void Unit::deserializer(QDataStream& pStream, bool fast)
 {
+    GameMap* pMap = GameMap::getInstance();
+    bool savegame = false;
+    if (pMap != nullptr)
+    {
+        savegame = pMap->getSavegame();
+    }
+
     qint32 version = 0;
     pStream >> version;
     if (version > 10)
@@ -3095,9 +3111,6 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         initUnit();
     }
     setHp(hp);
-    setAmmo1(bufAmmo1);
-    setAmmo2(bufAmmo2);
-    setFuel(bufFuel);
     if (version > 1)
     {
         pStream >> m_Moved;
@@ -3136,7 +3149,15 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 5)
     {
-        pStream >> m_IgnoreUnitCollision;
+        if (savegame)
+        {
+            pStream >> m_IgnoreUnitCollision;
+        }
+        else
+        {
+            bool dummy;
+            pStream >> dummy;
+        }
     }
     if (version > 6)
     {
@@ -3262,6 +3283,36 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             }
         }
     }
+    if (version > 17)
+    {
+        if (savegame)
+        {
+            pStream >> weapon1ID;
+            pStream >> weapon2ID;
+            pStream >> maxAmmo1;
+            pStream >> maxAmmo2;
+            pStream >> vision;
+            pStream >> minRange;
+            pStream >> maxRange;
+            pStream >> maxFuel;
+        }
+        else
+        {
+            QString dummy;
+            pStream >> dummy;
+            pStream >> dummy;
+            qint32 dummy2;
+            pStream >> dummy2;
+            pStream >> dummy2;
+            pStream >> dummy2;
+            pStream >> dummy2;
+            pStream >> dummy2;
+            pStream >> dummy2;
+        }
+    }
+    setAmmo1(bufAmmo1);
+    setAmmo2(bufAmmo2);
+    setFuel(bufFuel);
 }
 
 void Unit::showCORange()

@@ -19,7 +19,7 @@ class InGameMenue : public Basemenu, public oxygine::Actor
     Q_OBJECT
 public:
     explicit InGameMenue();
-    explicit InGameMenue(qint32 width, qint32 heigth, QString map = "");
+    explicit InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame);
     virtual ~InGameMenue();
 
     Cursor* getCursor();

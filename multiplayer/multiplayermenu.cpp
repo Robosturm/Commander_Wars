@@ -513,7 +513,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             m_pPlayerSelection->setSaveGame(m_saveGame);
             if (m_saveGame)
             {
-                m_pMapSelectionView->setCurrentMap(new GameMap(stream));
+                m_pMapSelectionView->setCurrentMap(new GameMap(stream, m_saveGame));
                 loadMultiplayerMap();
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -682,7 +682,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
-            pNewMap = new GameMap(stream);
+            pNewMap = new GameMap(stream, m_saveGame);
         }
         else
         {
@@ -714,7 +714,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                     Filesupport::writeBytes(scriptFilestream, scriptData);
                     script.close();
                 }
-                pNewMap = new GameMap(mapFile, true, false);
+                pNewMap = new GameMap(mapFile, true, false, m_saveGame);
             }
             else
             {
@@ -736,7 +736,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
-    GameMap* pMap = new GameMap(stream);
+    GameMap* pMap = new GameMap(stream, m_saveGame);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
@@ -794,7 +794,7 @@ GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFil
     mapData = Filesupport::readByteArray(stream);
     Filesupport::writeBytes(mapFilestream, mapData);
     map.close();
-    pNewMap = new GameMap(mapFile, true, false);
+    pNewMap = new GameMap(mapFile, true, false, m_saveGame);
     if (!scriptFile.isEmpty())
     {
         QFile script(scriptFile);
@@ -904,7 +904,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
         QByteArray myHashArray = myHash.result();
         if (hash == myHashArray)
         {
-            m_pMapSelectionView->setCurrentMap(new GameMap(file, true, false));
+            m_pMapSelectionView->setCurrentMap(new GameMap(file, true, false, m_saveGame));
             loadMultiplayerMap();
             found = true;
         }

@@ -103,7 +103,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
 }
 
 GameMenue::GameMenue(QString map, bool saveGame)
-    : InGameMenue(-1, -1, map),
+    : InGameMenue(-1, -1, map, saveGame),
       gameStarted(false),
       m_SaveGame(saveGame)
 

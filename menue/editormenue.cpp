@@ -39,7 +39,7 @@
 EditorMenue* EditorMenue::m_pInstance = nullptr;
 
 EditorMenue::EditorMenue()
-    : InGameMenue (20, 20)
+    : InGameMenue (20, 20, "", false)
 {
     setObjectName("EditorMenue");
     Mainapp* pApp = Mainapp::getInstance();
