@@ -8,10 +8,12 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("duster",  false,
-                          BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
+                          BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20), -1, 1.0, 0, 0,
+                          false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
         sprite.loadSpriteV2("duster+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));
+                            BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20), -1, 1.0, 0, 0,
+                            false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -3, 1200);
     };
 

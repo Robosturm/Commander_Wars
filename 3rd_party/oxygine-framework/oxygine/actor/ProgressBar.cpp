@@ -108,7 +108,7 @@ namespace oxygine
             return;
         }
 
-        _mat->apply();
+        m_mat->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 

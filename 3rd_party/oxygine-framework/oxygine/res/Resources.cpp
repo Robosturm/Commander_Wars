@@ -29,14 +29,6 @@ namespace oxygine
             }
         }
         _registeredResources.insert(it, r);
-
-        /*
-        for (it = _registeredResources.begin(); it != _registeredResources.end(); ++it)
-        {
-            registeredResource *q = &(*it);
-            qint32 er =0 ;
-        }
-        */
     }
 
     void Resources::unregisterResourceType(QString resTypeID)
@@ -92,10 +84,7 @@ namespace oxygine
         for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
         {
             Resource* res = (*i).get();
-            //qDebug("loading res: %s", res->getName().c_str());
             res->load(context);
-            //if (cb)
-            //  cb(res);
         }
     }
 
@@ -130,8 +119,6 @@ namespace oxygine
     {
         _name = xmlFile;
         _loadCounter = opt._loadCompletely ? 1 : 0;
-
-
         qDebug("step0");
         QFile file(xmlFile);
 

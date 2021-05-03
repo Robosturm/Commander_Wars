@@ -45,7 +45,7 @@ var Constructor = function()
                                 ["REAF", 3],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
     {
         var id = terrain.getID();
         var currentId = currentTerrain.getID();

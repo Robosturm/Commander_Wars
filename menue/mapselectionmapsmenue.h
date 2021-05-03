@@ -1,7 +1,6 @@
 #ifndef MAPSELECTIONMAPSMENUE_H
 #define MAPSELECTIONMAPSMENUE_H
 
-#include <QObject>
 #include <QFileInfo>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
@@ -19,10 +18,11 @@
 #include "game/campaign.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
+#include "menue/basemenu.h"
 
 class GameMap;
 
-class MapSelectionMapsMenue : public QObject, public oxygine::Actor
+class MapSelectionMapsMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

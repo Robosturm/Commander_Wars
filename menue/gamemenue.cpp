@@ -51,7 +51,6 @@
 
 #include "ingamescriptsupport/genericbox.h"
 
-
 spGameMenue GameMenue::m_pInstance = nullptr;
 
 GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
@@ -610,64 +609,8 @@ void GameMenue::performAction(spGameAction pGameAction)
             {
                 pGameAction = doMultiTurnMovement(pGameAction);
             }
-            QVector<QPoint> path = pGameAction->getMovePath();
             Unit * pMoveUnit = pGameAction->getTargetUnit();
-            if (path.size() > 1 && pMoveUnit != nullptr)
-            {
-                QVector<QPoint> trapPath;
-                qint32 trapPathCost = 0;
-                for (qint32 i = path.size() - 1; i >= 0; i--)
-                {
-                    // check the movepath for a trap
-                    QPoint point = path[i];
-                    QPoint prevPoint = path[i];
-                    if (i > 0)
-                    {
-                        prevPoint = path[i - 1];
-                    }
-                    qint32 moveCost = pMoveUnit->getMovementCosts(point.x(), point.y(),
-                                                                  prevPoint.x(), prevPoint.y());
-                    if (isTrap("isTrap", pGameAction, pMoveUnit, point, prevPoint, moveCost))
-                    {
-                        while (trapPath.size() > 1)
-                        {
-                            QPoint currentPoint = trapPath[0];
-                            QPoint previousPoint = trapPath[1];
-                            moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
-                                                                   previousPoint.x(), previousPoint.y());
-                            if (isTrap("isStillATrap", pGameAction, pMoveUnit, currentPoint, previousPoint, moveCost))
-                            {
-                                trapPathCost -= moveCost;
-                                trapPath.pop_front();
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        spGameAction pTrapAction = new GameAction("ACTION_TRAP");
-                        pTrapAction->setMovepath(trapPath, trapPathCost);
-                        pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
-                        pTrapAction->writeDataInt32(point.x());
-                        pTrapAction->writeDataInt32(point.y());
-                        pTrapAction->setTarget(pGameAction->getTarget());
-                        pGameAction = pTrapAction;
-                        break;
-                    }
-                    else
-                    {
-                        trapPath.push_front(point);
-                        qint32 x = pMoveUnit->Unit::getX();
-                        qint32 y = pMoveUnit->Unit::getY();
-                        if (point.x() != x ||
-                            point.y() != y)
-                        {
-                            QPoint previousPoint = path[i + 1];
-                            trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
-                        }
-                    }
-                }
-            }
+            doTrapping(pGameAction);
             // send action to other players if needed
             if (multiplayer &&
                 pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
@@ -717,6 +660,106 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->continueRendering();
     }
     
+}
+
+void GameMenue::doTrapping(spGameAction & pGameAction)
+{
+    QVector<QPoint> path = pGameAction->getMovePath();
+    spGameMap pMap = GameMap::getInstance();
+    Unit * pMoveUnit = pGameAction->getTargetUnit();
+    if (path.size() > 1 && pMoveUnit != nullptr)
+    {
+        if (pGameAction->getRequiresEmptyField())
+        {
+            QVector<QPoint> trapPathNotEmptyTarget = path;
+            qint32 trapPathCostNotEmptyTarget = pGameAction->getCosts();
+            QPoint trapPoint = path[0];
+            for (qint32 i = 0; i < path.size() - 1; i++)
+            {
+                QPoint point = path[i];
+                QPoint prevPoint = path[i + 1];
+                if (pMap->getTerrain(point.x(), point.y())->getUnit() == nullptr)
+                {
+                    if (i > 0)
+                    {
+                        spGameAction pTrapAction = new GameAction("ACTION_TRAP");
+                        pTrapAction->setMovepath(trapPathNotEmptyTarget, trapPathCostNotEmptyTarget);
+                        pTrapAction->writeDataInt32(trapPoint.x());
+                        pTrapAction->writeDataInt32(trapPoint.y());
+                        pTrapAction->setTarget(pGameAction->getTarget());
+                        pGameAction = pTrapAction;
+                    }
+                    break;
+                }
+                else
+                {
+                    trapPoint = point;
+                    qint32 moveCost = pMoveUnit->getMovementCosts(point.x(), point.y(),
+                                                                  prevPoint.x(), prevPoint.y(), true);
+                    trapPathCostNotEmptyTarget -= moveCost;
+                    trapPathNotEmptyTarget.removeFirst();
+                }
+            }
+        }
+        path = pGameAction->getMovePath();
+        QVector<QPoint> trapPath;
+        qint32 trapPathCost = 0;
+        for (qint32 i = path.size() - 1; i >= 0; i--)
+        {
+            // check the movepath for a trap
+            QPoint point = path[i];
+            QPoint prevPoint = path[i];
+            if (i > 0)
+            {
+                prevPoint = path[i - 1];
+            }
+            qint32 moveCost = pMoveUnit->getMovementCosts(point.x(), point.y(),
+                                                          prevPoint.x(), prevPoint.y(), true);
+            if (isTrap("isTrap", pGameAction, pMoveUnit, point, prevPoint, moveCost))
+            {
+                while (trapPath.size() > 1)
+                {
+                    QPoint currentPoint = trapPath[0];
+                    QPoint previousPoint = trapPath[1];
+                    moveCost = pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
+                                                           previousPoint.x(), previousPoint.y());
+                    if (isTrap("isStillATrap", pGameAction, pMoveUnit, currentPoint, previousPoint, moveCost))
+                    {
+                        trapPathCost -= moveCost;
+                        trapPath.pop_front();
+                        if (pMap->getTerrain(point.x(), point.y())->getUnit() != nullptr)
+                        {
+                            point = currentPoint;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                spGameAction pTrapAction = new GameAction("ACTION_TRAP");
+                pTrapAction->setMovepath(trapPath, trapPathCost);
+                pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
+                pTrapAction->writeDataInt32(point.x());
+                pTrapAction->writeDataInt32(point.y());
+                pTrapAction->setTarget(pGameAction->getTarget());
+                pGameAction = pTrapAction;
+                break;
+            }
+            else
+            {
+                trapPath.push_front(point);
+                qint32 x = pMoveUnit->Unit::getX();
+                qint32 y = pMoveUnit->Unit::getY();
+                if (point.x() != x ||
+                    point.y() != y)
+                {
+                    QPoint previousPoint = path[i + 1];
+                    trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
+                }
+            }
+        }
+    }
 }
 
 bool GameMenue::isTrap(QString function, spGameAction pAction, Unit* pMoveUnit, QPoint currentPoint, QPoint previousPoint, qint32 moveCost)

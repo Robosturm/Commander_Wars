@@ -32,12 +32,12 @@ namespace oxygine
 
         void clear();
         void removeUnused();
-        size_t getTotalMaterials() const { return _materials.size(); }
+        size_t getTotalMaterials() const { return m_materials.size(); }
 
         static MaterialCache& mc();
     protected:
         typedef QMultiMap<size_t, spMaterialX> materials;
-        materials _materials;
+        materials m_materials;
 
         QMutex _lock;
         qint32 _addCounter;

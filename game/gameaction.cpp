@@ -307,6 +307,20 @@ QString GameAction::getStepInputType()
     return "";
 }
 
+bool GameAction::getRequiresEmptyField()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getRequiresEmptyField";
+    QJSValueList args1;
+    args1 << pInterpreter->newQObject(this);
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return true;
+}
+
 CursorData* GameAction::getStepCursor()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

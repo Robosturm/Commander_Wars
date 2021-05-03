@@ -349,7 +349,7 @@ QVector<qint32> GlobalUtils::getRandomizedArray(qint32 min, qint32 max)
     QVector<qint32> ret;
     if (min < max)
     {
-        QVector<qint32> temp(max - min);
+        QVector<qint32> temp;
         for (qint32 i = min; i <= max; ++i)
         {
             temp.append(i);

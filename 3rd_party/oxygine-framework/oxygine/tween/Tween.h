@@ -16,6 +16,7 @@ namespace oxygine
     public:
         enum
         {
+            START = sysEventID('S', 'T', 'A'),
             DONE = Event::COMPLETE,
         };
 
@@ -150,11 +151,13 @@ namespace oxygine
 
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setDoneCallback(const EventCallback& cb);
-
+        /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
+        void setStartCallback(const EventCallback& cb);
 
         /** tween will freeze on 100% and never complete  */
         void setDisabledStatusDone(bool disabled) { _disabledStatusDone = disabled; }
-
+    private:
+        void __start(Actor& actor, const UpdateState& us);
 
     protected:
         void done(Actor&, const UpdateState& us);
@@ -188,6 +191,7 @@ namespace oxygine
         float _percent;
         bool _detach;
 
+        EventCallback m_cbStart;
         EventCallback m_cbDone;
         Actor* m_client;
 

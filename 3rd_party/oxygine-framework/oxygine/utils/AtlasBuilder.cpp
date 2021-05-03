@@ -110,7 +110,6 @@ namespace oxygine
             }
         }
         return false;
-        ///Rect a = re
     }
 
     MultiAtlas::MultiAtlas(createTextureCallback cb)
@@ -149,8 +148,6 @@ namespace oxygine
 
         Point ds = rc.size - size;
         rct.texture->updateRegion(rc.pos.x, rc.pos.y, src);
-
-
         rect a = rct;
         rect b = rct;
 

@@ -54,6 +54,10 @@ var Constructor = function()
     {
         return qsTr("Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.");
     };
+    this.getRequiresEmptyField = function(action)
+    {
+        return false;
+    };
 }
 
 Constructor.prototype = ACTION;

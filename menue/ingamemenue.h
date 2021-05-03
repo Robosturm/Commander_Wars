@@ -1,7 +1,6 @@
 #ifndef INGAMEMENUE_H
 #define INGAMEMENUE_H
 
-#include <QObject>
 #include <QPoint>
 #include <qrect.h>
 #include <QTimer>
@@ -11,10 +10,11 @@
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
 #include "game/cursor.h"
+#include "menue/basemenu.h"
 
 #include "gameinput/mapmover.h"
 
-class InGameMenue : public QObject, public oxygine::Actor
+class InGameMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

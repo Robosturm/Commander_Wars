@@ -76,6 +76,13 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * jumpSprites * jumpingCount + m_frameTime * ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - startPercent), jumpingDuration, 1);
+        dummyTween->setDoneCallback([=](oxygine::Event *)
+        {
+            if (mode == GameEnums::Recoloring_Table)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("capture_down.wav");
+            }
+        });
         queueAnimating->add(dummyTween);
         oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(capturingFactor * m_frameTime), 1);
         queueAnimating->add(tween);
@@ -102,14 +109,14 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
                 if (mode == GameEnums::Recoloring_Table)
                 {
                     pSprite->setColorTable(capturedPlayer->getColorTableAnim());
-                }
-                if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
-                {
-                    Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
-                }
-                else
-                {
-                    Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
+                    if (pMap->getCurrentViewPlayer()->isEnemy(capturedPlayer))
+                    {
+                        Mainapp::getInstance()->getAudioThread()->playSound("capture_enemy.wav");
+                    }
+                    else
+                    {
+                        Mainapp::getInstance()->getAudioThread()->playSound("capture_ally.wav");
+                    }
                 }
             });
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);

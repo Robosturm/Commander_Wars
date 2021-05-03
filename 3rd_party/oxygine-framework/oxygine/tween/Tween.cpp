@@ -77,6 +77,11 @@ namespace oxygine
         m_cbDone = cb;
     }
 
+    void Tween::setStartCallback(const EventCallback& cb)
+    {
+        m_cbStart = cb;
+    }
+
     void Tween::addDoneCallback(const EventCallback& cb)
     {
         addEventListener(TweenEvent::DONE, cb);
@@ -142,9 +147,24 @@ namespace oxygine
         _status = status_delayed;
         if (_delay == timeMS(0))
         {
-            _status = status_started;
-            _start(actor);
+            const UpdateState us;
+            __start(actor, us);
         }
+    }
+
+    void Tween::__start(Actor& actor, const UpdateState& us)
+    {
+        _status = status_started;
+        TweenEvent ev(this, &us);
+        ev.target = ev.currentTarget = &actor;
+        ev.tween = this;
+        ev.type = TweenEvent::START;
+        if (m_cbStart.isSet())
+        {
+            m_cbStart(&ev);
+        }
+        dispatchEvent(&ev);
+        _start(*m_client);
     }
 
     void Tween::update(Actor& actor, const UpdateState& us)
@@ -156,8 +176,7 @@ namespace oxygine
             {
                 if (m_elapsed >= _delay)
                 {
-                    _status = status_started;
-                    _start(*m_client);
+                    __start(actor, us);
                 }
                 break;
             }

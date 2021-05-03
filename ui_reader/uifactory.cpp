@@ -1,11 +1,10 @@
 #include "ui_reader/uifactory.h"
 
-#include "coreengine/console.h"
-#include "coreengine/interpreter.h"
-
 #include "resource_management/fontmanager.h"
 
 #include "objects/base/label.h"
+#include "objects/base/checkbox.h"
+#include "objects/base/spinbox.h"
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -16,6 +15,8 @@ UiFactory::UiFactory()
     : QObject()
 {
     m_factoryItems.append({QString("Label"), std::bind(&UiFactory::createLabel, this, _1, _2, _3)});
+    m_factoryItems.append({QString("Checkbox"), std::bind(&UiFactory::createCheckbox, this, _1, _2, _3)});
+    m_factoryItems.append({QString("Spinbox"), std::bind(&UiFactory::createSpinbox, this, _1, _2, _3)});
 }
 
 QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
@@ -85,10 +86,10 @@ bool UiFactory::createItem(oxygine::spActor parent, QDomElement element, oxygine
 
 bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor item)
 {
-    qint32 x = getValue(element.attribute("x"));
-    qint32 y = getValue(element.attribute("y"));
-    qint32 width = getValue(element.attribute("width"));
-    qint32 height = getValue(element.attribute("height"));
+    qint32 x = getIntValue(element.attribute("x"));
+    qint32 y = getIntValue(element.attribute("y"));
+    qint32 width = getIntValue(element.attribute("width"));
+    qint32 height = getIntValue(element.attribute("height"));
     QString text = element.attribute("text");
     QString tooltip = element.attribute("tooltip");
     auto style = getStyle(element.attribute("font"));
@@ -104,7 +105,54 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
     return true;
 }
 
-qint32 UiFactory::getValue(QString line)
+bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item)
+{
+    qint32 x = getIntValue(element.attribute("x"));
+    qint32 y = getIntValue(element.attribute("y"));
+    QString tooltip = element.attribute("tooltip");
+    QString onEventLine = element.attribute("onEvent");
+    bool value = getBoolValue(element.attribute("startValue"));
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setX(x);
+    pCheckbox->setY(y);
+    pCheckbox->setChecked(value);
+    pCheckbox->setTooltipText(tooltip);
+    parent->addChild(pCheckbox);
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        onEvent(onEventLine, value);
+    });
+    item = pCheckbox;
+    return true;
+}
+
+bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item)
+{
+    qint32 x = getIntValue(element.attribute("x"));
+    qint32 y = getIntValue(element.attribute("y"));
+    qint32 width = getIntValue(element.attribute("width"));
+    qint32 min = getIntValue(element.attribute("min"));
+    qint32 max = getIntValue(element.attribute("max"));
+    qint32 infinite = getIntValue(element.attribute("infinite"));
+    QString tooltip = element.attribute("tooltip");
+    QString onEventLine = element.attribute("onEvent");
+    qint32 value = getBoolValue(element.attribute("startValue"));
+    spSpinBox pSpinBox = new SpinBox(width, min, max, SpinBox::Mode::Int);
+    pSpinBox->setX(x);
+    pSpinBox->setY(y);
+    pSpinBox->setInfinityValue(infinite);
+    pSpinBox->setTooltipText(tooltip);
+    pSpinBox->setCurrentValue(value);
+    connect(pSpinBox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+    {
+        onEvent(onEventLine, value);
+    });
+    parent->addChild(pSpinBox);
+    item = pSpinBox;
+    return true;
+}
+
+qint32 UiFactory::getIntValue(QString line)
 {
     QJSValue erg = Interpreter::getInstance()->evaluate(line);
     qint32 value = 0;
@@ -119,6 +167,40 @@ qint32 UiFactory::getValue(QString line)
     else
     {
         Console::print("Unable to determine a int value while interpreting. Line: " + line, Console::eERROR);
+    }
+    return value;
+}
+
+bool UiFactory::getBoolValue(QString line)
+{
+    QJSValue erg = Interpreter::getInstance()->evaluate(line);
+    bool value = false;
+    if (erg.isBool())
+    {
+        value = erg.toBool();
+    }
+    else if (erg.isError())
+    {
+        Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+    }
+    else
+    {
+        Console::print("Unable to determine a bool value while interpreting. Line: " + line, Console::eERROR);
+    }
+    return value;
+}
+
+QString UiFactory::getStringValue(QString line)
+{
+    QJSValue erg = Interpreter::getInstance()->evaluate(line);
+    QString value;
+    if (erg.isError())
+    {
+        Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+    }
+    else
+    {
+        value = erg.toString();
     }
     return value;
 }
@@ -148,3 +230,4 @@ oxygine::TextStyle UiFactory::getStyle(QString styleName)
     style.multiline = false;
     return style;
 }
+

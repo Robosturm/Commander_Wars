@@ -67,8 +67,6 @@ namespace oxygine
 
 
             qint32 alpha = lerp(0, 255, _progress);
-            //qDebug("tween alpha %d", alpha);
-
             QColor c;
             if (_pp._options._flags & PostProcessOptions::flag_singleR2T)
             {

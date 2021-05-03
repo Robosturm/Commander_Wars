@@ -47,9 +47,9 @@ namespace oxygine
         virtual ~Actor() override;
 
         /**returns first child*/
-        spActor             getFirstChild() const {return _children._first;}
+        spActor             getFirstChild() const {return m_children._first;}
         /**returns last child*/
-        spActor             getLastChild() const {return _children._last;}
+        spActor             getLastChild() const {return m_children._last;}
         /**returns next sibling*/
         spActor             getNextSibling()const {return intr_list::_next;}
         /**returns previous sibling*/
@@ -70,35 +70,35 @@ namespace oxygine
         /**search tween by name*/
         spTween             getTween(QString name, error_policy ep = ep_show_error);
         /**returns first tween in actor*/
-        spTween             getFirstTween() const {return _tweens._first;}
+        spTween             getFirstTween() const {return m_tweens._first;}
         /**returns last tween in actor*/
-        spTween             getLastTween() const {return _tweens._last;}
+        spTween             getLastTween() const {return m_tweens._last;}
 
         const Vector2&      getAnchor() const {return _anchor;}
         float               getAnchorX() const {return _anchor.x;}
         float               getAnchorY() const {return _anchor.y;}
-        bool                getIsAnchorInPixels() {return (_flags & flag_anchorInPixels) != 0;}
-        const Vector2&      getPosition() const {return _pos;}
-        float               getX() const {return _pos.x;}
-        float               getY() const {return _pos.y;}
-        const Vector2&      getScale() const {return _scale;}
-        float               getScaleX() const {return _scale.x;}
-        float               getScaleY() const {return _scale.y;}
+        bool                getIsAnchorInPixels() {return (m_flags & flag_anchorInPixels) != 0;}
+        const Vector2&      getPosition() const {return m_pos;}
+        float               getX() const {return m_pos.x;}
+        float               getY() const {return m_pos.y;}
+        const Vector2&      getScale() const {return m_scale;}
+        float               getScaleX() const {return m_scale.x;}
+        float               getScaleY() const {return m_scale.y;}
         /**Returns rotation angle in radians*/
-        float               getRotation() const {return _rotation;}
+        float               getRotation() const {return m_rotation;}
         /**Returns rotation angle in degrees*/
-        float               getRotationDegrees() const {return _rotation / M_PI * 180.0f;}
-        qint32              getPriority() const {return _zOrder;}
-        virtual bool        getVisible() const {return (_flags & flag_visible) != 0;}
-        Actor*              getParent() {return _parent;}
-        const Actor*        getParent() const {return _parent;}
-        const Vector2&      getSize() const {return _size;}
+        float               getRotationDegrees() const {return m_rotation / M_PI * 180.0f;}
+        qint32              getPriority() const {return m_zOrder;}
+        virtual bool        getVisible() const {return (m_flags & flag_visible) != 0;}
+        Actor*              getParent() {return m_parent;}
+        const Actor*        getParent() const {return m_parent;}
+        const Vector2&      getSize() const {return m_size;}
         /**Returns Size*Scale*/
-        Vector2             getScaledSize() const { return _size.mult(_scale); }
+        Vector2             getScaledSize() const { return m_size.mult(m_scale); }
         float               getWidth() const;
-        float               getScaledWidth() const {return _size.x * _scale.x;}
+        float               getScaledWidth() const {return m_size.x * m_scale.x;}
         float               getHeight() const;
-        float               getScaledHeight() const {return _size.y * _scale.y;}
+        float               getScaledHeight() const {return m_size.y * m_scale.y;}
         unsigned char       getAlpha() const;
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
@@ -106,9 +106,9 @@ namespace oxygine
         pointer_index       getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
         pointer_index       getOvered() const;
-        bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
-        bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
-        RenderDelegate*     getRenderDelegate() { return _rdelegate; }
+        bool                getTouchEnabled() const { return (m_flags & flag_touchEnabled) != 0; }
+        bool                getTouchChildrenEnabled() const { return (m_flags & flag_touchChildrenEnabled) != 0; }
+        RenderDelegate*     getRenderDelegate() { return m_rdelegate; }
 
         /**return local actor transformation*/
         const Transform&      getTransform() const;
@@ -165,22 +165,22 @@ namespace oxygine
         void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
-        virtual void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
+        virtual void setVisible(bool vis) {m_flags &= ~flag_visible; if (vis) m_flags |= flag_visible;}
         /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
-        void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
+        void setCull(bool enable) {m_flags &= ~flag_cull; if (enable) m_flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
         /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
-        void setHasOwnBounds(bool enable = true) { _flags &= ~flag_actorHasBounds; if (enable) _flags |= flag_actorHasBounds; }
+        void setHasOwnBounds(bool enable = true) { m_flags &= ~flag_actorHasBounds; if (enable) m_flags |= flag_actorHasBounds; }
         /**by default actor with Alpha = 0 not clickable*/
-        void setClickableWithZeroAlpha(bool enable) { _flags &= ~flag_clickableWithZeroAlpha; if (enable) _flags |= flag_clickableWithZeroAlpha; }
+        void setClickableWithZeroAlpha(bool enable) { m_flags &= ~flag_clickableWithZeroAlpha; if (enable) m_flags |= flag_clickableWithZeroAlpha; }
 
 
         /**Enables/Disables Touch events for Actor.*/
-        void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
+        void setTouchEnabled(bool enabled) { m_flags &= ~flag_touchEnabled; if (enabled) m_flags |= flag_touchEnabled; }
         /**Enables/Disables Touch events for children of Actor.*/
-        void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
+        void setTouchChildrenEnabled(bool enabled) { m_flags &= ~flag_touchChildrenEnabled; if (enabled) m_flags |= flag_touchChildrenEnabled; }
         /**setTouchEnabled + setTouchChildrenEnabled*/
         void setTouchEnabled(bool enabled, bool childrenEnabled) { setTouchEnabled(enabled); setTouchChildrenEnabled(childrenEnabled); }
 
@@ -272,7 +272,7 @@ namespace oxygine
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
-        Stage*              _getStage();
+        Stage*              __getStage();
 
         void setNotPressed(MouseButton b);
 
@@ -285,7 +285,7 @@ namespace oxygine
 
     protected:
 
-        RenderDelegate* _rdelegate;
+        RenderDelegate* m_rdelegate;
         Stage* _stage;
 
         void added2stage(Stage*);
@@ -300,19 +300,19 @@ namespace oxygine
 
         typedef intrusive_list<spActor> children;
         static void setParent(Actor* actor, Actor* parent);
-        static children& getChildren(spActor& actor) { return actor->_children; }
-        static unsigned int& _getFlags(Actor* actor) { return actor->_flags; }
+        static children& getChildren(spActor& actor) { return actor->m_children; }
+        static unsigned int& _getFlags(Actor* actor) { return actor->m_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchUpEvent1(Event*);
         void _onGlobalTouchUpEvent2(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
-        const Vector2& _getSize() const { return _size; }
-        void _setSize(const Vector2&);
+        const Vector2& _getSize() const { return m_size; }
+        void __setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
-        Actor*  _getDescendant(QString name);
-        spTween _addTween(spTween tween, bool rel);
+        Actor*  __getDescendant(QString name);
+        spTween __addTween(spTween tween, bool rel);
 
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         bool onScreen(RenderState& rs);
@@ -326,8 +326,8 @@ namespace oxygine
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
 
-        mutable Transform _transform;
-        mutable Transform _transformInvert;
+        mutable Transform m_transform;
+        mutable Transform m_transformInvert;
 
 
         enum flags
@@ -347,38 +347,38 @@ namespace oxygine
             flag_last                   = flag_reserved
         };
 
-        mutable quint32 _flags;
-        unsigned char   _alpha;
+        mutable quint32 m_flags;
+        unsigned char   m_alpha;
         char    _extendedIsOn;
 
-        spClock _clock;
-        Actor* _parent;
+        spClock m_clock;
+        Actor* m_parent;
 
         typedef intrusive_list<spTween> tweens;
-        tweens _tweens;
+        tweens m_tweens;
 
-        children _children;
+        children m_children;
 
         union
         {
             //dont change order!!! or brake statements: if (_pressedOvered == _overred)
             struct
             {
-                pointer_index _overred;
-                pointer_index _pressedButton[MouseButton_Num];
+                pointer_index m_overred;
+                pointer_index m_pressedButton[MouseButton_Num];
             };
-            int32_t _pressedOvered;
+            int32_t m_pressedOvered;
         };
 
 
     private:
 
-        Vector2 _pos;
+        Vector2 m_pos;
         Vector2 _anchor;
-        Vector2 _scale;
-        Vector2 _size;
-        float   _rotation;
-        qint32   _zOrder;
+        Vector2 m_scale;
+        Vector2 m_size;
+        float   m_rotation;
+        qint32   m_zOrder;
 
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};

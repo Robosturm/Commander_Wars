@@ -154,8 +154,8 @@
 		<image file="destroyer/destroyer+mask.png" />
 		
 		<!-- duster -->
-		<image file="duster/duster.png" />
-		<image file="duster/duster+mask.png" />
+		<image file="duster/duster.png"  cols = "2" />
+		<image file="duster/duster+mask.png" cols = "2" />
 		
 		<!-- fighter -->
 		<image file="fighter/fighter+bh.png" />

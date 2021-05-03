@@ -1,9 +1,9 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Actor.h"
-#include "../TextStyle.h"
-#include "../VisualStyle.h"
-#include "../text_utils/Node.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Actor.h"
+#include "3rd_party/oxygine-framework/oxygine/TextStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/VisualStyle.h"
+#include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 
 namespace oxygine
 {
@@ -17,7 +17,7 @@ namespace oxygine
         ~TextField();
 
         /**Returns current text style*/
-        const TextStyle&            getStyle() const {return _style;}
+        const TextStyle&            getStyle() const {return m_style;}
         /**Returns text bounds*/
         const Rect&                 getTextRect() const;
         /**Returns current text*/
@@ -83,8 +83,8 @@ namespace oxygine
 
         text::Node* getRootNode();
     protected:
-        QString  _text;
-        TextStyle _style;
+        QString  m_text;
+        TextStyle m_style;
 
         text::spNode _root;
         Rect _textRect;

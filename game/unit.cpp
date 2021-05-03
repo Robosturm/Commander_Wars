@@ -1561,13 +1561,6 @@ qint32 Unit::getBonusLuck(QPoint position)
 
 void Unit::startOfTurn()
 {
-    m_cloaked--;
-    updateBonus(m_OffensiveBonus);
-    updateBonus(m_DefensiveBonus);
-    updateBonus(m_VisionBonus);
-    updateBonus(m_MovementBonus);
-    updateBonus(m_FirerangeBonus);
-
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args1;
@@ -1614,7 +1607,17 @@ void Unit::updateIconDuration(qint32 player)
         {
             unloadIcon(item);
         }
-    }
+    }    
+}
+
+void Unit::updateUnitStatus()
+{
+    m_cloaked--;
+    updateBonus(m_OffensiveBonus);
+    updateBonus(m_DefensiveBonus);
+    updateBonus(m_VisionBonus);
+    updateBonus(m_MovementBonus);
+    updateBonus(m_FirerangeBonus);
 }
 
 qint32 Unit::getCapturePoints() const
@@ -1649,7 +1652,7 @@ void Unit::setBaseMovementPoints(const qint32 &value)
     baseMovementPoints = value;
 }
 
-qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
+qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool trapChecking)
 {
     spGameMap pMap = GameMap::getInstance();
     Terrain* pCurTerrain = nullptr;
@@ -1661,12 +1664,12 @@ qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
     {
         pCurTerrain = pMap->getTerrain(x, y);
     }
-    return MovementTableManager::getInstance()->getBaseMovementPoints(m_MovementType, pMap->getTerrain(x, y), pCurTerrain, this);
+    return MovementTableManager::getInstance()->getBaseMovementPoints(m_MovementType, pMap->getTerrain(x, y), pCurTerrain, this, trapChecking);
 }
 
-qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
+qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool trapChecking)
 {
-    qint32 baseCosts = getBaseMovementCosts(x, y, curX, curY);
+    qint32 baseCosts = getBaseMovementCosts(x, y, curX, curY, trapChecking);
     if (baseCosts == 0)
     {
         return baseCosts;

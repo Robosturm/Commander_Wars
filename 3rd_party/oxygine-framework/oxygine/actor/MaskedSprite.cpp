@@ -32,6 +32,6 @@ namespace oxygine
 
     void MaskedSprite::render(const RenderState& parentRS)
     {
-        _rdelegate->render(this, parentRS);
+        m_rdelegate->render(this, parentRS);
     }
 }

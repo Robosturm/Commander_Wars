@@ -21,7 +21,6 @@ namespace oxygine
     {
         glPixel pixel;
         pixel.compressed = false;
-        //ADD_SF - dont remove this comment
         switch (format)
         {
             case ImageData::TF_R8G8B8A8:
@@ -220,8 +219,9 @@ namespace oxygine
         Rect r(0, 0, _width, _height);
 
         if (src)
+        {
             r = *src;
-
+        }
         Q_ASSERT(r.getX() + r.getWidth() <= _width);
         Q_ASSERT(r.getY() + r.getHeight() <= _height);
 
@@ -235,11 +235,6 @@ namespace oxygine
             return ImageData();
         }
 
-        if (_data.empty())
-        {
-            //_data.resize(_width)
-        }
-
         ImageData im =  ImageData(_width, _height, (int)(_data.size() / _height), _format, &_data.front());
         return im.getRect(_lockRect);
     }
@@ -248,8 +243,9 @@ namespace oxygine
     void NativeTextureGLES::unlock()
     {
         if (!_lockFlags)
+        {
             return;
-
+        }
         if (_lockFlags & lock_write)
         {
             GameWindow* window = oxygine::GameWindow::getWindow();
@@ -289,9 +285,6 @@ namespace oxygine
         window->glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         glPixel glp = SurfaceFormat2GL(_format);
-        //saveImage(data, "test1.png");
-
-
         Image mt;
         if (_format != data.format)
         {

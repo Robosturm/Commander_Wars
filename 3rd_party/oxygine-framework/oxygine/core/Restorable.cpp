@@ -72,8 +72,9 @@ namespace oxygine
     void Restorable::reg(RestoreCallback cb, void* user)
     {
         if (_registered)
+        {
             return;
-
+        }
         QMutexLocker al(&m_mutex);
 
         Q_ASSERT(m_restoring == false);
@@ -96,7 +97,6 @@ namespace oxygine
         QMutexLocker al(&m_mutex);
         Q_ASSERT(m_restoring == false);
         restorable::iterator i = findRestorable(this);
-        //Q_ASSERT(i != _restorable.end());
         if (i != m_restorable.end())
         {
             m_restorable.erase(i);

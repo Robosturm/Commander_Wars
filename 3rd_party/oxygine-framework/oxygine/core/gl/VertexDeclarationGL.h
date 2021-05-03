@@ -1,6 +1,6 @@
 #pragma once
-#include "../../oxygine-include.h"
-#include "../VertexDeclaration.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/VertexDeclaration.h"
 #include <qopengl.h>
 
 namespace oxygine

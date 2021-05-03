@@ -1,6 +1,8 @@
-#include "tooltip.h"
+#include "objects/base/tooltip.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
@@ -14,7 +16,10 @@ Tooltip::Tooltip()
     m_TooltipTimer.setSingleShot(true);
     addEventListener(oxygine::TouchEvent::MOVE, [ = ](oxygine::Event*)
     {
-        emit sigStartTooltip();
+        if (m_mouseHovered)
+        {
+            emit sigStartTooltip();
+        }
     });
     addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -49,9 +54,13 @@ Tooltip::~Tooltip()
 
 void Tooltip::restartTooltiptimer()
 {
-    if (!m_disabled)
+    if (!m_disabled && m_mouseHovered)
     {
         m_TooltipTimer.start(std::chrono::milliseconds(1000));
+    }
+    else
+    {
+        m_TooltipTimer.stop();
     }
     removeTooltip();
 }
@@ -82,6 +91,7 @@ void Tooltip::showTooltip()
         {
             if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
             {
+                Console::print("Showing tooltip", Console::eDEBUG);
                 QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
 
                 m_Tooltip = new oxygine::Actor();

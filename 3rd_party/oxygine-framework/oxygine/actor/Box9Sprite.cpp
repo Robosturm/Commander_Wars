@@ -162,11 +162,6 @@ namespace oxygine
         float fFrameWidth = _frame.getWidth();
         float fFrameHeight = _frame.getHeight();
 
-        /*
-        float fActorWidth = max((float)getSize().x, fFrameWidth);
-        float fActorHeight = max((float)getSize().y, fFrameHeight);
-        */
-
         float fActorWidth = getSize().x;
         float fActorHeight = getSize().y;
 
@@ -286,11 +281,11 @@ namespace oxygine
             prepare();
         }
 
-        _mat->apply();
+        m_mat->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        if (_mat->_base)
+        if (m_mat->_base)
         {
             if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
             {

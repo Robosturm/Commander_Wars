@@ -15,7 +15,7 @@ public:
      */
     virtual void loadAll() override;
 public slots:
-    qint32 getBaseMovementPoints(QString movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit);
+    qint32 getBaseMovementPoints(QString movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit, bool trapChecking = false);
 protected:
     friend RessourceManagement<MovementTableManager>;
     MovementTableManager();

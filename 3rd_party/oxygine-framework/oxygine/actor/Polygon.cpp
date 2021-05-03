@@ -52,7 +52,7 @@ namespace oxygine
         {
             return;
         }
-        _mat->apply2([ = ]()
+        m_mat->apply2([ = ]()
         {
 
             STDRenderer* renderer = STDRenderer::getCurrent();

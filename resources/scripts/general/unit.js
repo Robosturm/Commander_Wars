@@ -212,7 +212,7 @@ var UNIT =
     unitTypeToGround : function(unitType)
     {
         if (unitType === GameEnums.UnitType_Hovercraft ||
-                unitType === GameEnums.UnitType_Ground)
+            unitType === GameEnums.UnitType_Ground)
         {
             return GameEnums.UnitType_Ground;
         }

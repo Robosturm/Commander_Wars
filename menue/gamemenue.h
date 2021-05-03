@@ -84,6 +84,11 @@ public:
      * @brief autoScroll
      */
     virtual void autoScroll() override;
+    /**
+     * @brief doTrapping
+     * @param pGameAction
+     */
+    void doTrapping(spGameAction & pGameAction);
 signals:
     void sigActionPerformed();
     void sigGameStarted();

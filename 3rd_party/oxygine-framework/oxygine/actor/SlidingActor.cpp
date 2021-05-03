@@ -89,8 +89,9 @@ namespace oxygine
         _sliding = false;
 
         for (qint32 i = 0; i < NUM; ++i)
+        {
             _prev[i].tm = timeMS(0);
-
+        }
         _holded = nullptr; //event->target;
         _finger = 0;
         _speed = Vector2(0, 0);
@@ -140,11 +141,9 @@ namespace oxygine
         if (_drag.isDragging())
         {
             Vector2 pos = _content->getPosition();
-            //qDebug("%d) pos %.2f %.2f", _current, pos.x, pos.y);
             _prev[_current].pos = pos;
             _prev[_current].tm = ct;
             _current = (_current + 1) % NUM;
-
             return;
         }
 
@@ -176,8 +175,6 @@ namespace oxygine
                     newpos.y = bounds.getBottom();
                     _speed.y = 0;
                 }
-
-
                 _speed *= 0.97f;
                 _content->setPosition(newpos);
 

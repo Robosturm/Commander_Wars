@@ -14,7 +14,7 @@ namespace oxygine
               mat(mt),
               _font(font),
               _scale(gscale),
-              _x(0),
+              m_x(0),
               _y(0),
               _lineWidth(0)
         {
@@ -72,7 +72,7 @@ namespace oxygine
 
         void Aligner::begin()
         {
-            _x = 0;
+            m_x = 0;
             _y = 0;
 
             width = int(width * _scale);
@@ -146,13 +146,11 @@ namespace oxygine
 
             _lineWidth = 0;
 
-            _x = 0;
+            m_x = 0;
         }
 
         void Aligner::nextLine()
         {
-            //assert(multiline == true); commented, becase even if multiline is false - there are breakLine markers, they could be used anyway
-
             _nextLine(_line);
             _line.clear();
         }
@@ -170,35 +168,40 @@ namespace oxygine
             }
             _line.push_back(&s);
 
-            //optional.. remove?
+            //optional remove?
             if (_line.size() == 1 && s.gl.offset_x < 0)
             {
-                _x -= s.gl.offset_x;
+                m_x -= s.gl.offset_x;
             }
 
-            s.x = _x + s.gl.offset_x;
+            s.x = m_x + s.gl.offset_x;
             s.y = _y + s.gl.offset_y;
-            _x += s.gl.advance_x + getStyle().kerning;
+            m_x += s.gl.advance_x + getStyle().kerning;
 
             qint32 rx = s.x + s.gl.advance_x;
             _lineWidth = std::max(rx, _lineWidth);
 
-            //
             if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)
             {
                 qint32 lastWordPos = (int)_line.size() - 1;
                 for (; lastWordPos > 0; --lastWordPos)
                 {
                     if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
+                    {
                         break;
+                    }
                 }
 
                 if (!lastWordPos)
                 {
                     if (style.breakLongWords)
+                    {
                         lastWordPos = (int)_line.size() - 1;
+                    }
                     else
+                    {
                         return 0;
+                    }
                 }
 
                 qint32 delta = (int)_line.size() - lastWordPos;
@@ -207,9 +210,6 @@ namespace oxygine
                 leftPart = line(_line.begin() + lastWordPos, _line.end());
                 _line.resize(lastWordPos);
                 nextLine();
-
-                //line = leftPart;
-
                 for (qint32 i = 0; i < leftPart.size(); ++i)
                 {
                     putSymbol(*leftPart[i]);
@@ -217,9 +217,7 @@ namespace oxygine
 
                 return 0;
             }
-
-            assert(_x > -1000);
-
+            assert(m_x > -1000);
             return 0;
         }
     }

@@ -103,7 +103,9 @@ namespace oxygine
             {
                 _current = next;
                 if (_current)
+                {
                     _current->start(actor);
+                }
             }
         }
 

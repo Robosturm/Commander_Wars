@@ -34,6 +34,6 @@ namespace oxygine
 
     void ClipRectActor::render(const RenderState& parentRS)
     {
-        _rdelegate->render(this, parentRS);
+        m_rdelegate->render(this, parentRS);
     }
 }

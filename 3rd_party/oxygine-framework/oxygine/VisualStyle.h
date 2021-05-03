@@ -45,7 +45,7 @@ namespace oxygine
 
         void                    setMaterial(spSTDMaterial mat);
         void                    resetMaterial();
-        spSTDMaterial _mat;
+        spSTDMaterial m_mat;
 
         QColor getDisableColor() const;
         void setDisableColor(const QColor &value);

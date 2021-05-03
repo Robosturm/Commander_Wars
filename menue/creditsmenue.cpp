@@ -13,7 +13,7 @@
 #include "resource_management/fontmanager.h"
 
 CreditsMenue::CreditsMenue()
-    : QObject()
+    : Basemenu()
 {
     setObjectName("CreditsMenue");
     Mainapp* pApp = Mainapp::getInstance();

@@ -1108,7 +1108,14 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
 
 bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 {
-    return std::get<2>(m_FogVisionFields[x][y]);
+    if (m_FogVisionFields.size() > 0)
+    {
+        return std::get<2>(m_FogVisionFields[x][y]);
+    }
+    else
+    {
+        return true;
+    }
 }
 
 qint32 Player::getCosts(QString id)

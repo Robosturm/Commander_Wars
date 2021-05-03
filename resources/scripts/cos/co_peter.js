@@ -18,18 +18,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/peter.mp3", 45424, 90079);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/peter.mp3", 45424, 90079);
+            break;
         }
     };
 
@@ -73,7 +73,7 @@ var Constructor = function()
                 }
             }
         }
-        units.remove();		
+        units.remove();
     };
 
     this.peterDamage = function(co, value, animation2)
@@ -88,7 +88,7 @@ var Constructor = function()
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+                    (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
 
                 var units = enemyPlayer.getUnits();
@@ -146,7 +146,7 @@ var Constructor = function()
         return "GE";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         if (defender === null)
         {
@@ -205,6 +205,17 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
+        {
+            return ["ZCOUNIT_ROYAL_GUARD"];
+        }
+        return [];
+    };
     // CO - Intel
     this.getBio = function(co)
     {
@@ -224,8 +235,10 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
-               qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
+        var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
+                qsTr("\nGlobal Effect: \nDirect Units have increased firepower and loose additional firepower per terrain star.") +
+                qsTr("\n\nCO Zone Effect: \nDirect Units have increased firepower.");
+        return text;
     };
     this.getPowerDescription = function(co)
     {
@@ -246,22 +259,22 @@ var Constructor = function()
     this.getPowerSentences = function(co)
     {
         return [qsTr("We're going in, boys. Wait for the signal, then strike!"),
-				qsTr("You won't even have time to take cover."),
-				qsTr("It's time to tear through their tanks."),
-				qsTr("Bogged down? Me? Ha! You seriously overestimate yourself."),
-				qsTr("I've been down there with the grunts... I know what's feasible and what's not."),
-				qsTr("I may not be unbeatable, but you're obviously not either.")];
+                qsTr("You won't even have time to take cover."),
+                qsTr("It's time to tear through their tanks."),
+                qsTr("Bogged down? Me? Ha! You seriously overestimate yourself."),
+                qsTr("I've been down there with the grunts... I know what's feasible and what's not."),
+                qsTr("I may not be unbeatable, but you're obviously not either.")];
     };
     this.getVictorySentences = function(co)
     {
         return [qsTr("Experience is the key to my success."),
-				qsTr("I hope you learned something from this."),
-				qsTr("What did you think you were doing with those tanks?")];
+                qsTr("I hope you learned something from this."),
+                qsTr("What did you think you were doing with those tanks?")];
     };
     this.getDefeatSentences = function(co)
     {
         return [qsTr("Your tanks were better than mine."),
-				qsTr("You're never to old to learn some new moves.")];
+                qsTr("You're never to old to learn some new moves.")];
     };
     this.getName = function()
     {

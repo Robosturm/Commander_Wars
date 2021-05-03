@@ -49,12 +49,12 @@ var Constructor = function()
                                 ["SNOW_WASTELAND", 1],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit, currentTerrain)
+    this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
     {
         var id = terrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
-            (unit !== null) &&
-            (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+                (unit !== null) &&
+                (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
         {
             return 1;
         }

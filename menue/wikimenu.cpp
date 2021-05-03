@@ -13,7 +13,7 @@
 #include "wiki/wikiview.h"
 
 Wikimenu::Wikimenu()
-    : QObject()
+    : Basemenu()
 {
     setObjectName("Wikimenu");
     Mainapp* pApp = Mainapp::getInstance();

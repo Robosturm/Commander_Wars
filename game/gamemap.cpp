@@ -531,7 +531,7 @@ void GameMap::syncUnitsAndBuildingAnimations()
 void GameMap::killDeadUnits()
 {
     qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();    
+    qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -549,7 +549,7 @@ void GameMap::killDeadUnits()
 void GameMap::addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs, qint32 shakePauseMs)
 {
     oxygine::spTween tween = oxygine::createTween(TweenScreenshake(startIntensity, decay / Settings::getAnimationSpeed(), oxygine::timeMS(shakePauseMs)),
-                                                                   oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
+                                                  oxygine::timeMS(static_cast<qint64>(durationMs / Settings::getAnimationSpeed())), 1, false, oxygine::timeMS(static_cast<qint64>(delayMs / Settings::getAnimationSpeed())));
     oxygine::getStage()->addTween(tween);
 }
 
@@ -1588,11 +1588,14 @@ void GameMap::startOfTurn(Player* pPlayer)
 
 void GameMap::startOfTurnNeutral()
 {
+    Console::print("Doing start of turn for neutrals", Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
-    for (qint32 y = 0; y < heigth; y++)
+    auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
+    auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
+    for (auto y : yValues)
     {
-        for (qint32 x = 0; x < width; x++)
+        for (auto x : xValues)
         {
             spTerrain pTerrain = fields[y][x];
             pTerrain->startOfTurn();
@@ -1610,11 +1613,13 @@ void GameMap::startOfTurnNeutral()
 
 void GameMap::startOfTurnPlayer(Player* pPlayer)
 {
+    Console::print("Doing start of turn for player " + QString::number(pPlayer->getPlayerID()), Console::eDEBUG);
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     qint32 playerId = pPlayer->getPlayerID();
     auto xValues = GlobalUtils::getRandomizedArray(0, width - 1);
     auto yValues = GlobalUtils::getRandomizedArray(0, heigth - 1);
+    // update icons
     for (auto y : yValues)
     {
         for (auto x : xValues)
@@ -1625,9 +1630,24 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                 if (pUnit->getOwner() == pPlayer)
                 {
                     pUnit->removeShineTween();
-                    pUnit->startOfTurn();
+                    pUnit->updateUnitStatus();
                 }
                 pUnit->updateIconDuration(playerId);
+            }
+        }
+    }
+    // update start of turn
+    for (auto y : yValues)
+    {
+        for (auto x : xValues)
+        {
+            spUnit pUnit = fields[y][x]->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->startOfTurn();
+                }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
             spBuilding pBuilding = fields[y][x]->getSpBuilding();

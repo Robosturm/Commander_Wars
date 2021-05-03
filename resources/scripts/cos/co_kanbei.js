@@ -18,18 +18,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/kanbei.mp3", 4783, 60483);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/kanbei.mp3", 4783, 60483);
+            break;
         }
     };
 
@@ -139,44 +139,44 @@ var Constructor = function()
     this.globalBonus = 20;
     this.costIncrease = 20;
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (isDefender)
-                {
-                    return 140;
-                }
-                return 70;
-            case GameEnums.PowerMode_Power:
-                return 60;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return CO_KANBEI.coZoneBonus;
-                }
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (isDefender)
+            {
+                return 140;
+            }
+            return 70;
+        case GameEnums.PowerMode_Power:
+            return 60;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return CO_KANBEI.coZoneBonus;
+            }
+            break;
         }
         return CO_KANBEI.globalBonus;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 70;
-            case GameEnums.PowerMode_Power:
-                return 60;
-            default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
-                {
-                    return CO_KANBEI.coZoneBonus;
-                }
-                break;
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            return 70;
+        case GameEnums.PowerMode_Power:
+            return 60;
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                return CO_KANBEI.coZoneBonus;
+            }
+            break;
         }
         return CO_KANBEI.globalBonus;
     };
@@ -184,6 +184,18 @@ var Constructor = function()
     this.getAiCoUnitBonus = function(co, unit)
     {
         return 1;
+    };
+
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+                buildingId === "TOWN" ||
+                buildingId === "HQ")
+        {
+            return ["ZCOUNIT_ROYAL_GUARD"];
+        }
+        return [];
     };
 
     // CO - Intel
@@ -205,8 +217,9 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        var text = qsTr("\nGlobal Effect: \nUnits have %0% stronger firepower and defense, but are %1% more expensive.") +
-               qsTr("\n\nCO Zone Effect: \nUnits have %2% stronger firepower and defense.");
+        var text = qsTr("\nSpecial Unit:\nRoyal Guard\n") +
+                qsTr("\nGlobal Effect: \nUnits have %0% stronger firepower and defense, but are %1% more expensive.") +
+                qsTr("\n\nCO Zone Effect: \nUnits have %2% stronger firepower and defense.");
         text = replaceTextArgs(text, [CO_KANBEI.globalBonus, CO_KANBEI.costIncrease , CO_KANBEI.coZoneBonus]);
         return text;
     };

@@ -16,13 +16,11 @@ namespace oxygine
     qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
         _lastID++;
-
-
         listener ls;
         ls.type = et;
         ls.cb = cb;
         ls.id = _lastID;
-        _listeners.push_back(ls);
+        m_listeners.push_back(ls);
 
         return ls.id;
     }
@@ -30,12 +28,12 @@ namespace oxygine
     void EventDispatcher::removeEventListener(qint32 id)
     {
 
-        for (size_t size = _listeners.size(), i = 0; i != size; ++i)
+        for (size_t size = m_listeners.size(), i = 0; i != size; ++i)
         {
-            const listener& ls = _listeners.at(i);
+            const listener& ls = m_listeners.at(i);
             if (ls.id == id)
             {
-                _listeners.erase(_listeners.begin() + i);
+                m_listeners.erase(m_listeners.begin() + i);
                 break;
             }
         }
@@ -43,12 +41,12 @@ namespace oxygine
 
     void EventDispatcher::removeEventListeners(IClosureOwner* CallbackThis)
     {
-        for (qint32 i = 0; i < _listeners.size(); ++i)
+        for (qint32 i = 0; i < m_listeners.size(); ++i)
         {
-            const listener& ls = _listeners.at(i);
+            const listener& ls = m_listeners.at(i);
             if (ls.cb.isOwner(CallbackThis))
             {
-                _listeners.erase(_listeners.begin() + i);
+                m_listeners.erase(m_listeners.begin() + i);
                 --i;
             }
         }
@@ -56,12 +54,12 @@ namespace oxygine
 
     void EventDispatcher::removeEventListenersByType(eventType et)
     {
-        for (qint32 i = 0; i < _listeners.size(); ++i)
+        for (qint32 i = 0; i < m_listeners.size(); ++i)
         {
-            const listener& ls = _listeners.at(i);
+            const listener& ls = m_listeners.at(i);
             if (ls.type == et)
             {
-                _listeners.erase(_listeners.begin() + i);
+                m_listeners.erase(m_listeners.begin() + i);
                 --i;
             }
         }
@@ -70,7 +68,7 @@ namespace oxygine
 
     void EventDispatcher::removeAllEventListeners()
     {
-        _listeners.clear();
+        m_listeners.clear();
     }
 
     void EventDispatcher::dispatchEvent(Event* event)
@@ -85,7 +83,7 @@ namespace oxygine
             return;
         }
         // make sure listeners can be added/removed while processing the current event to this dispatcher
-        auto currentListener = _listeners;
+        auto currentListener = m_listeners;
         for (auto & listener : currentListener)
         {
             if (listener.type == event->type)
@@ -103,7 +101,7 @@ namespace oxygine
 
     qint32 EventDispatcher::getListenersCount() const
     {
-        return _listeners.size();
+        return m_listeners.size();
     }
 
     bool EventDispatcher::getEnabled() const

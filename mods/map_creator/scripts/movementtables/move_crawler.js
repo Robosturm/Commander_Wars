@@ -1,4 +1,4 @@
-MOVE_CRAWLER.getMovementpoints = function(terrain, unit, currentTerrain)
+MOVE_CRAWLER.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking)
 {
     return 1;
 };

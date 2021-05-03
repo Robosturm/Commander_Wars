@@ -15,7 +15,7 @@ namespace oxygine
         size_t hash;
         Material::compare cm;
         other.update(hash, cm);
-        auto items = _materials.values(hash);
+        auto items = m_materials.values(hash);
         if (items.size() > 0)
         {
             Material* sec = items[0].get();
@@ -23,7 +23,6 @@ namespace oxygine
             {
                 return sec;
             }
-
             //hash collision?
             auto it = items.begin();
             it++; //skip first, already checked
@@ -46,7 +45,7 @@ namespace oxygine
         Material* copy = other.clone();
         copy->_hash = hash;
         copy->_compare = cm;
-        _materials.insert(hash, copy);
+        m_materials.insert(hash, copy);
 
         return copy;
     }
@@ -55,7 +54,7 @@ namespace oxygine
     {
         _addCounter = 0;
         materials fresh;
-        for (auto it = _materials.begin(); it != _materials.end(); it++)
+        for (auto it = m_materials.begin(); it != m_materials.end(); it++)
         {
             if (it.value()->_ref_counter > 1)
             {
@@ -63,7 +62,7 @@ namespace oxygine
             }
         }
 
-        std::swap(fresh, _materials);
+        std::swap(fresh, m_materials);
     }
 
     void MaterialCache::removeUnused()
@@ -81,7 +80,7 @@ namespace oxygine
     {
         QMutexLocker alock(&_lock);
         _addCounter = 0;
-        _materials.clear();
+        m_materials.clear();
     }
 
     MaterialCache& MaterialCache::mc()

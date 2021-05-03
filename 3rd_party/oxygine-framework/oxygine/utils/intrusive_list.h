@@ -1,5 +1,5 @@
 #pragma once
-#include "../oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
 
 namespace oxygine
 {
@@ -44,10 +44,13 @@ namespace oxygine
             child->_list = this;
 
             if (after->_next)
+            {
                 after->_next->_prev = child;
+            }
             else
+            {
                 _last = child;
-
+            }
             child->_next = after->_next;
             child->_prev = after;
             after->_next = child;
@@ -61,10 +64,13 @@ namespace oxygine
             child->_list = this;
 
             if (before->_prev)
+            {
                 before->_prev->_next = child;
+            }
             else
+            {
                 _first = child;
-
+            }
             child->_prev = before->_prev;
             child->_next = before;
             before->_prev = child;
@@ -119,8 +125,9 @@ namespace oxygine
         {
             return;
             if (!_first)
+            {
                 return;
-
+            }
             T v = _first;
             do
             {
@@ -135,8 +142,6 @@ namespace oxygine
                 {
                     Q_ASSERT(p == _last);
                 }
-
-                //Q_ASSERT(v == _last && v->_next == 0);
             }
             while (v);
 

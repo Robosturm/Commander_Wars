@@ -18,7 +18,7 @@
 #include "objects/base/progressinfobar.h"
 
 Achievementmenu::Achievementmenu()
-    : QObject()
+    : Basemenu()
 {
     setObjectName("Achievementmenu");
     Mainapp* pApp = Mainapp::getInstance();

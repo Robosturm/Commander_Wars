@@ -47,7 +47,7 @@ var Constructor = function()
                                 ["SNOW_WASTELAND", 2],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit)
+    this.getMovementpoints = function(terrain, unit, trapChecking = false)
     {
         var id = terrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&

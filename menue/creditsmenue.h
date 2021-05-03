@@ -1,16 +1,16 @@
 #ifndef CREDITSMENUE_H
 #define CREDITSMENUE_H
 
-#include <QObject>
-
-
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
+#include "menue/basemenu.h"
 
-#include <QObject>
 #include <QVector>
 #include <QElapsedTimer>
 
-class CreditsMenue : public QObject, public oxygine::Actor
+#include <QObject>
+
+
+class CreditsMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

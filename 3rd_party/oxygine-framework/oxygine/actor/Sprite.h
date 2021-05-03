@@ -20,12 +20,12 @@ namespace oxygine
         const AnimationFrame&   getAnimFrame() const {return _frame;}
         RectF                   getDestRect() const override;
         const Diffuse&          getDiffuse() const {return _frame.getDiffuse();}
-        bool                    getManageResAnim() const {return (_flags & flag_manageResAnim) != 0;}
+        bool                    getManageResAnim() const {return (m_flags & flag_manageResAnim) != 0;}
         const RectF&            getSrcRect() const {return _frame.getSrcRect();}
         const ResAnim*          getResAnim() const {return _frame.getResAnim();}
         qint32                     getColumn() const {return _frame.getColumn();}
         qint32                     getRow() const {return _frame.getRow();}
-        const Vector2&          getLocalScale() const { return _localScale; }
+        const Vector2&          getLocalScale() const { return m_localScale; }
 
         /**load/unload atlas automatically or not*/
         void                    setManageResAnim(bool manage);
@@ -42,8 +42,8 @@ namespace oxygine
 
         bool                    isOn(const Vector2& localPosition, float localScale) override;
 
-        bool                    isFlippedX() const {return (_flags & flag_flipX) != 0;}
-        bool                    isFlippedY() const {return (_flags & flag_flipY) != 0;}
+        bool                    isFlippedX() const {return (m_flags & flag_flipX) != 0;}
+        bool                    isFlippedY() const {return (m_flags & flag_flipY) != 0;}
         void                    setFlippedX(bool flippedX);
         virtual void            flipActorsX(bool flippedX){flipActorsX(this, flippedX);}
         static void             flipActorsX(oxygine::spActor pActor, bool flippedX);
@@ -70,7 +70,7 @@ namespace oxygine
         virtual void animFrameChanged(const AnimationFrame& f);
         void sizeChanged(const Vector2& size) override;
 
-        Vector2 _localScale;
+        Vector2 m_localScale;
         AnimationFrame _frame;
         oxygine::spResAnim m_colorTable;
 

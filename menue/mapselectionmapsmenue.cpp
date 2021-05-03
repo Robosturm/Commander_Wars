@@ -25,7 +25,7 @@
 #include "multiplayer/networkcommands.h"
 
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
-    : QObject()
+    : Basemenu()
 {
     setObjectName("MapSelectionMapsMenue");
     Mainapp* pApp = Mainapp::getInstance();

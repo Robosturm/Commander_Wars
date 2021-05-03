@@ -111,7 +111,6 @@ namespace oxygine
 
     void ResAnim::_unload()
     {
-        //Q_ASSERT(!"can't unload resanim");
     }
 
     QString ResAnim::getResPath() const
@@ -128,13 +127,6 @@ namespace oxygine
     {
         _frames.clear();
     }
-
-    /*
-    void ResAnim::addFrame(const AnimationFrame &frame)
-    {
-        _frames.push_back(frame);
-    }
-    */
 
     ResAnim::operator const AnimationFrame& ()
     {

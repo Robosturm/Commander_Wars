@@ -119,9 +119,13 @@ namespace oxygine
         {
             atlas& atl = *i;
             if (atl.base)
+            {
                 atl.base->release();
+            }
             if (atl.alpha)
+            {
                 atl.alpha->release();
+            }
         }
     }
 
@@ -186,8 +190,9 @@ namespace oxygine
         {
             atlas& atl = *i;
             if (!load_context->isNeedProceed(atl.base))
+            {
                 continue;
-
+            }
             load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
             atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
 
@@ -205,10 +210,13 @@ namespace oxygine
         {
             atlas& atl = *i;
             if (atl.base)
+            {
                 atl.base->release();
-
+            }
             if (atl.alpha)
+            {
                 atl.alpha->release();
+            }
         }
     }
 

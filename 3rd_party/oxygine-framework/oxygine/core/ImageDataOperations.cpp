@@ -25,22 +25,26 @@ namespace oxygine
                     !dest.pitch ||
                     !src.bytespp ||
                     !dest.bytespp)
+            {
                 return false;
-
+            }
             return true;
         }
 
         void copy(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
+            {
                 return;
-
+            }
             Q_ASSERT(src.format == dest.format);
 
             qint32 bppPitch = src.w * src.bytespp;
 
             if (src.pitch == dest.pitch && bppPitch == dest.pitch)
+            {
                 memcpy(dest.data, src.data, bppPitch * src.h);
+            }
             else
             {
                 const unsigned char* srcLine = src.data;
@@ -64,14 +68,17 @@ namespace oxygine
         void move(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
+            {
                 return;
-
+            }
             Q_ASSERT(src.format == dest.format);
 
             qint32 bppPitch = src.w * src.bytespp;
 
             if (src.pitch == dest.pitch && bppPitch == dest.pitch)
+            {
                 memmove(dest.data, src.data, bppPitch * src.h);
+            }
             else
             {
                 const unsigned char* srcLine = src.data;
@@ -127,15 +134,13 @@ namespace oxygine
         void flipY(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
+            {
                 return;
-
+            }
             const unsigned char* srcLine = src.data;
             unsigned char* destLine = dest.data + dest.pitch * dest.h - dest.pitch;
 
             qint32 bppPitch = src.w * src.bytespp;
-
-
-
             const qint32 srch = src.h;
             const qint32 srcpitch = src.pitch;
             const qint32 destpitch = dest.pitch;

@@ -25,7 +25,7 @@
 
 
 VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
-    : QObject(),
+    : Basemenu(),
       m_pNetworkInterface(pNetworkInterface)
 {
     setObjectName("VictoryMenue");

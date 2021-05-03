@@ -19,7 +19,7 @@
 #include "objects/dialogs/filedialog.h"
 
 CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
-    : QObject(),
+    : Basemenu(),
       m_Multiplayer(multiplayer)
 {
     setObjectName("CampaignMenu");

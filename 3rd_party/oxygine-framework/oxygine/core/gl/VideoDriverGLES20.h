@@ -1,8 +1,8 @@
 #pragma once
-#include "../../oxygine-include.h"
-#include "VideoDriverGL.h"
-#include "../../core/Restorable.h"
-#include "../ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGL.h"
+#include "3rd_party/oxygine-framework/oxygine/core/Restorable.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 
 #include <qopengl.h>
 

@@ -3,12 +3,12 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include <QObject>
+#include "menue/basemenu.h"
 
 #include "objects/base/panel.h"
 #include "objects/base/textbox.h"
 
-class Achievementmenu : public QObject, public oxygine::Actor
+class Achievementmenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

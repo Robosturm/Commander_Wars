@@ -1,4 +1,4 @@
-MOVE_HOELLIUM.getMovementpoints = function(terrain, unit, currentTerrain)
+MOVE_HOELLIUM.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking)
 {
     return 1;
 };

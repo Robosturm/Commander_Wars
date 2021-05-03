@@ -33,6 +33,9 @@
 #include "objects/dialogs/folderdialog.h"
 #include "objects/loadingscreen.h"
 
+
+#include "ui_reader/uifactory.h"
+
 Mainwindow::Mainwindow()
 {
     setObjectName("Mainwindow");
@@ -247,6 +250,14 @@ Mainwindow::Mainwindow()
 
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
     emit sigOnEnter();
+
+//    bool success;
+//    auto ui = UiFactory::getInstance().createUi("resources/ui.xml", success);
+//    if (success)
+//    {
+//        addChild(ui);
+//    }
+
     pApp->continueRendering();
 }
 

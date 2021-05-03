@@ -1,6 +1,5 @@
 #pragma  once
-#include "../oxygine-include.h"
-#include <string>
+#include "3rd_party/oxygine-framework/oxygine-include.h"
 
 class QDomNode;
 

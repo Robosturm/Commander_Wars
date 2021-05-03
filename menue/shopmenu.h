@@ -9,8 +9,9 @@
 #include "objects/base/panel.h"
 #include "coreengine/userdata.h"
 #include "objects/base/label.h"
+#include "menue/basemenu.h"
 
-class Shopmenu : public QObject, public oxygine::Actor
+class Shopmenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

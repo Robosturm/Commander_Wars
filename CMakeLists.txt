@@ -231,6 +231,7 @@ set(${PROJECT_NAME}_SRCS
         modding/csvtableimporter.cpp
 
         #menues
+        menue/basemenu.cpp
         menue/mainwindow.cpp
         menue/ingamemenue.cpp
         menue/editormenue.cpp

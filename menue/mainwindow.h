@@ -2,9 +2,9 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include <QObject>
+#include "menue/basemenu.h"
 
-class Mainwindow : public QObject, public oxygine::Actor
+class Mainwindow : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

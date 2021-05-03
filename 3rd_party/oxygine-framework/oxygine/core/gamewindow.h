@@ -1,8 +1,8 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-#include "../oxygine-include.h"
-#include "../PointerState.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/PointerState.h"
 
 #include <qopenglwindow.h>
 #include <qopenglfunctions.h>

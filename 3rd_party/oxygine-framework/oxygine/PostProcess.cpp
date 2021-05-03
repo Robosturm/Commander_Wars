@@ -28,8 +28,6 @@ namespace oxygine
         }
         _ppBuilt = true;
 
-
-
         spIVideoDriver driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
@@ -148,8 +146,6 @@ namespace oxygine
 
     RenderTargetsManager::RenderTargetsManager()
     {
-        //get(10, 15, TF_R8G8B8A8);
-        //get(10, 15, TF_R8G8B8A8);
     }
 
     void RenderTargetsManager::print()

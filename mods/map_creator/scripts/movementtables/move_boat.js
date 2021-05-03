@@ -1,4 +1,4 @@
-MOVE_BOAT.getMovementpoints = function(terrain, unit, currentTerrain)
+MOVE_BOAT.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking)
 {
     return 1;
 };

@@ -1,7 +1,6 @@
 #ifndef OPTIONMENUE_H
 #define OPTIONMENUE_H
 
-#include <QObject>
 #include <QVector>
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
@@ -10,7 +9,9 @@
 #include "objects/gameplayandkeys.h"
 #include "objects/base/checkbox.h"
 
-class OptionMenue : public QObject, public oxygine::Actor
+#include "menue/basemenu.h"
+
+class OptionMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

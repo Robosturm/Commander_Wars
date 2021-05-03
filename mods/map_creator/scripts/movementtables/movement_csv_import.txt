@@ -7,7 +7,7 @@ var Constructor = function()
     {
         return qsTr("@name");
     };
-    this.getMovementpoints = function(unit)
+    this.getMovementpoints = function(unit, trapChecking)
     {
 		var id = terrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&

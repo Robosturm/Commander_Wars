@@ -56,7 +56,7 @@ namespace oxygine
         qint32 getListenersCount() const;
         qint32 getLastListenerID() const { return _lastID; }
 
-        const EventCallback& getListenerByIndex(qint32 index) const { return _listeners[index].cb; }
+        const EventCallback& getListenerByIndex(qint32 index) const { return m_listeners[index].cb; }
 
 
         bool getEnabled() const;
@@ -78,7 +78,7 @@ namespace oxygine
         qint32 _lastID;
 
         typedef QVector<listener> listeners;
-        listeners _listeners;
+        listeners m_listeners;
 
         bool m_enabled{true};
     };

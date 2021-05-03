@@ -15,8 +15,8 @@ namespace oxygine
         STDMaterial mat;
         mat._blend = blend_premultiplied_alpha;
         mat._base = STDRenderer::white;
-        _flags |= flag_actorHasBounds;
-        _mat = MaterialCache::mc().cache(mat);
+        m_flags |= flag_actorHasBounds;
+        m_mat = MaterialCache::mc().cache(mat);
     }
 
     void VisualStyle::setColor(const QColor& color)
@@ -36,7 +36,7 @@ namespace oxygine
 
     const QColor& VStyleActor::getAddColor() const
     {
-        return _mat->_addColor;
+        return m_mat->_addColor;
     }
 
     void VStyleActor::setColor(const QColor& color)
@@ -56,9 +56,9 @@ namespace oxygine
             return;
         }
 
-        _mat = _mat->clone();
-        _mat->_addColor = color;
-        _mat = MaterialCache::mc().cache(*_mat.get());
+        m_mat = m_mat->clone();
+        m_mat->_addColor = color;
+        m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
     }
 
@@ -75,9 +75,9 @@ namespace oxygine
         }
         _vstyle.setBlendMode(mode);
 
-        _mat = _mat->clone();
-        _mat->_blend = mode;
-        _mat = MaterialCache::mc().cache(*_mat.get());
+        m_mat = m_mat->clone();
+        m_mat->_blend = mode;
+        m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
     }
 
@@ -85,13 +85,13 @@ namespace oxygine
     {
         //if (_mat == mat)
         //    return;
-        _mat = mat;
+        m_mat = mat;
         matChanged();
     }
 
     void VStyleActor::resetMaterial()
     {
-        setMaterial(_mat->cloneDefaultShader());
+        setMaterial(m_mat->cloneDefaultShader());
     }
 
     QColor VStyleActor::getDisableColor() const

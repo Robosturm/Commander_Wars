@@ -1,6 +1,6 @@
 #pragma once
 #include <QOpenGLShader>
-#include "../ShaderProgram.h"
+#include "3rd_party/oxygine-framework/oxygine/core/ShaderProgram.h"
 
 namespace oxygine
 {

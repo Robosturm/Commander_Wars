@@ -59,7 +59,7 @@ var Constructor = function()
         {
             // check all units if they can move over this terrain
             if (buildlist.includes(units[i]) &&
-                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
                 return true;
@@ -79,7 +79,7 @@ var Constructor = function()
         {
             // check all units if they can move over this terrain
             if (buildlist.includes(units[i]) &&
-                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0 &&
+                Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y), true) > 0 &&
                 Global[units[i]].getCOSpecificUnit() === false)
             {
                 var name = Global[units[i]].getName();

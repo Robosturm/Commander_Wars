@@ -17,7 +17,7 @@
 #include "coreengine/userdata.h"
 
 COStyleMenu::COStyleMenu()
-    : QObject()
+    : Basemenu()
 {
     setObjectName("COStyleMenu");
     Mainapp* pApp = Mainapp::getInstance();

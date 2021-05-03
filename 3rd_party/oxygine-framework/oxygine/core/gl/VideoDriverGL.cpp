@@ -96,7 +96,6 @@ namespace oxygine
         window->glGetIntegerv(GL_VIEWPORT, vp);
 
         r = Rect(vp[0], vp[1], vp[2], vp[3]);;
-        //qDebug("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
     }
 
     void VideoDriverGL::setScissorRect(const Rect* rect)
@@ -123,7 +122,6 @@ namespace oxygine
     void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        //  qDebug("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
         window->glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
         window->glDisable(GL_SCISSOR_TEST);
         if (clearColor)

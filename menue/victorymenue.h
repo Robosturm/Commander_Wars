@@ -1,7 +1,6 @@
 #ifndef VICTORYMENUE_H
 #define VICTORYMENUE_H
 
-#include <QObject>
 #include <QVector>
 #include <QTimer>
 #include <QColor>
@@ -18,8 +17,9 @@
 #include "network/NetworkInterface.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
+#include "menue/basemenu.h"
 
-class VictoryMenue : public QObject, public oxygine::Actor
+class VictoryMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

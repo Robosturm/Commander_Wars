@@ -65,7 +65,7 @@ namespace oxygine
             void _nextLine(line& ln);
 
             float _scale;
-            qint32 _x, _y;
+            qint32 m_x, _y;
             line _line;
             qint32 _lineWidth;
             qint32 _lineSkip;

@@ -11,14 +11,11 @@ namespace oxygine
         Vector2 locPos = pos;
         AffineTransform t;
         t.identity();
-        //t = src->getTransform();
         while (src != dest && src)
         {
             t = src->getTransform() * t;
             src = src->getParent();
         }
-
-
         if (direction)
         {
             t.x = 0;
@@ -74,9 +71,9 @@ namespace oxygine
     {
         if (_actor && !_singleDrag)
         {
-            if (_actor->_getStage())
+            if (_actor->__getStage())
             {
-                _actor->_getStage()->removeEventListeners(this);
+                _actor->__getStage()->removeEventListeners(this);
             }
             _actor->removeEventListeners(this);
             _actor = 0;
@@ -103,7 +100,7 @@ namespace oxygine
         _actor = actor;
         _dragClient = actor;
 
-        _actor->_getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
+        _actor->__getStage()->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Draggable::onEvent));
 
         Vector2 src = pointer->getPosition().cast<Vector2>();
         Vector2 pos = actor->getParent()->stage2local(src);
@@ -118,11 +115,7 @@ namespace oxygine
         _pressed = true;
         _dragPos = localCenter;
         _clientPos = _dragClient->getPosition();
-
-        //why I did add it?
-        //event->stopPropagation();
-
-        _actor->_getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
+        _actor->__getStage()->addEventListener(TouchEvent::MOVE, EventCallback(this, &Draggable::onEvent));
     }
 
     void Draggable::onMove(const Vector2& position)
@@ -130,12 +123,8 @@ namespace oxygine
         if (_pressed && _dragEnabled)
         {
             Actor* client = _dragClient;
-
-
             Vector2 localPos = client->stage2local(position);
-
             Vector2 dragOffset = localPos - _dragPos;
-
             Vector2 converted = convertPosUp(client, client->getParent(), dragOffset, true);
             Vector2 np;
             bool _clientIsParent = true;
@@ -148,8 +137,6 @@ namespace oxygine
                 np = client->getPosition() + converted;
             }
             client->setPosition(np);
-
-
             snapClient2Bounds();
         }
     }
@@ -169,7 +156,7 @@ namespace oxygine
                 if (!_ignoreTouchUp)
                 {
                     _pressed = false;
-                    _actor->_getStage()->removeEventListeners(this);
+                    _actor->__getStage()->removeEventListeners(this);
                     if (Clock::getTimeMS() - _startTm < timeMS(2))
                     {
                         _actor->setPosition(_clientPos);

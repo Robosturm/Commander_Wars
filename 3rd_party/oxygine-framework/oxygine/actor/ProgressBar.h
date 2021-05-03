@@ -1,6 +1,6 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "Sprite.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/actor/Sprite.h"
 
 namespace oxygine
 {

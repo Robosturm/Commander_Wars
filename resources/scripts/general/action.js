@@ -69,4 +69,9 @@ var ACTION =
     {
         return "";
     },
+
+    getRequiresEmptyField : function(action)
+    {
+        return true;
+    },
 };

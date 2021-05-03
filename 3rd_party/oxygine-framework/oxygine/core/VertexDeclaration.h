@@ -1,6 +1,6 @@
 #pragma once
-#include "../oxygine-include.h"
-#include "vertex.h"
+#include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/vertex.h"
 
 namespace oxygine
 {
@@ -24,10 +24,13 @@ namespace oxygine
             {
                 T& decl = _declarations[i];
                 if (decl.bformat == 0)
+                {
                     decl.init(bformat);
-
+                }
                 if (decl.bformat == bformat)
+                {
                     return &decl;
+                }
             }
 
             return 0;

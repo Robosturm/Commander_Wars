@@ -219,6 +219,11 @@ public slots:
      */
     QString getStepInputType();
     /**
+     * @brief getRequiresEmptyField
+     * @return
+     */
+    bool getRequiresEmptyField();
+    /**
      * @brief getStepCursor
      * @return the cursor we want to show during this step. Needs to be deleted by the reciever
      */

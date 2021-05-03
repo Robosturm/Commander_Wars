@@ -4,9 +4,9 @@
 
 
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
-#include <QObject>
+#include "menue/basemenu.h"
 
-class COStyleMenu : public QObject, public oxygine::Actor
+class COStyleMenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT
 public:

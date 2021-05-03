@@ -330,13 +330,13 @@ public slots:
      * @param x
      * @param y
      */
-    qint32 getBaseMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1);
+    qint32 getBaseMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1, bool trapChecking = false);
     /**
      * @brief getMovementCosts
      * @param x
      * @param y
      */
-    qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1);
+    qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1, bool trapChecking = false);
 
     float getHp() const;
     void setHp(const float &value);
@@ -593,6 +593,10 @@ public slots:
      * @param player
      */
     void updateIconDuration(qint32 player);
+    /**
+     * @brief updateUnitStatus updates unit buffs
+     */
+    void updateUnitStatus();
     /**
      * @brief getTerrain
      * @return

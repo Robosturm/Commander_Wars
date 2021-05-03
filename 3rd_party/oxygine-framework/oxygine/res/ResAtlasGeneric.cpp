@@ -13,9 +13,8 @@
 namespace oxygine
 {
 
-    qint32 defaultAtlasWidth = 2048;
-    qint32 defaultAtlasHeight = 2048;
-
+    constexpr qint32 defaultAtlasWidth = 2048;
+    constexpr qint32 defaultAtlasHeight = 2048;
 
     struct atlas_data
     {
@@ -24,16 +23,17 @@ namespace oxygine
         AtlasBuilder atlas;
     };
 
-
-
     qint32 roundUp(qint32 numToRound, qint32 multiple)
     {
         if (multiple == 0)
+        {
             return numToRound;
-
+        }
         qint32 remainder = numToRound % multiple;
         if (remainder == 0)
+        {
             return numToRound;
+        }
         return numToRound + multiple - remainder;
     }
 
@@ -94,8 +94,6 @@ namespace oxygine
                 PixelR8G8B8A8 pd;
                 Pixel p;
                 pd.getPixel(srcLine, p);
-
-
                 if (p.a > 5)
                 {
                     hasAlpha = true;
@@ -108,9 +106,13 @@ namespace oxygine
 
                     lineWithAlpha = true;
                     if (x > maxX)
+                    {
                         maxX = x;
+                    }
                     else if (x < minX)
+                    {
                         minX = x;
+                    }
                 }
                 srcLine += srcStep;
             }
@@ -156,16 +158,11 @@ namespace oxygine
     void ResAtlasGeneric::applyAtlas(atlas_data& ad, quint32 filter, bool clamp2edge)
     {
         if (!ad.texture)
+        {
             return;
-
+        }
         spImage mt = new Image;
         Rect bounds = ad.atlas.getBounds();
-
-        //int w = nextPOT(bounds.getRight());
-        //int h = nextPOT(bounds.getBottom());
-
-
-
         qint32 w = bounds.getRight();
         qint32 h = bounds.getBottom();
 

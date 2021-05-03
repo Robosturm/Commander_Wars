@@ -26,7 +26,7 @@ namespace oxygine
         _textRect(0, 0, 0, 0),
         _rtscale(1.0f)
     {
-        _style.font = _defaultFont;
+        m_style.font = _defaultFont;
         setText("");
     }
 
@@ -43,110 +43,110 @@ namespace oxygine
 
     void TextField::setVAlign(TextStyle::VerticalAlign align)
     {
-        _style.vAlign = align;
+        m_style.vAlign = align;
         rebuildText();
     }
 
     void TextField::setMultiline(bool multiline)
     {
-        _style.multiline = multiline;
+        m_style.multiline = multiline;
         rebuildText();
     }
 
     void TextField::setBreakLongWords(bool val)
     {
-        _style.breakLongWords = val;
+        m_style.breakLongWords = val;
         rebuildText();
     }
 
     void TextField::setLinesOffset(qint32 offset)
     {
-        _style.linesOffset = offset;
+        m_style.linesOffset = offset;
         rebuildText();
     }
 
     void TextField::setBaselineScale(float s)
     {
-        _style.baselineScale = s;
+        m_style.baselineScale = s;
         rebuildText();
     }
 
     void TextField::setKerning(qint32 kerning)
     {
-        _style.kerning = kerning;
+        m_style.kerning = kerning;
         rebuildText();
     }
 
     void TextField::setFontSize(qint32 size)
     {
-        _style.fontSize = size;
+        m_style.fontSize = size;
         rebuildText();
     }
 
     void TextField::setStyleColor(const QColor& color)
     {
-        _style.color = color;
+        m_style.color = color;
         rebuildText();
     }
 
     void TextField::setOptions(size_t opt)
     {
-        _style.options = opt;
+        m_style.options = opt;
         rebuildText();
     }
 
     const ResFont* TextField::getFont() const
     {
-        return _style.font;
+        return m_style.font;
     }
 
     void TextField::setFont(const ResFont* font)
     {
-        _style.font = font;
-        if (!_style.font)
+        m_style.font = font;
+        if (!m_style.font)
         {
-            _style.font = _defaultFont;
+            m_style.font = _defaultFont;
         }
         rebuildText();
     }
 
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
     {
-        _style.hAlign = align;
+        m_style.hAlign = align;
         rebuildText();
     }
 
     void TextField::setAlign(TextStyle::VerticalAlign vAlign, TextStyle::HorizontalAlign hAlign)
     {
-        _style.vAlign = vAlign;
-        _style.hAlign = hAlign;
+        m_style.vAlign = vAlign;
+        m_style.hAlign = hAlign;
         rebuildText();
     }
 
     void TextField::setStyle(const TextStyle& st)
     {
-        TextStyle::HorizontalAlign halign = _style.hAlign;
-        TextStyle::VerticalAlign valign = _style.vAlign;
-        qint32 size = _style.fontSize;
-        _style = st;
+        TextStyle::HorizontalAlign halign = m_style.hAlign;
+        TextStyle::VerticalAlign valign = m_style.vAlign;
+        qint32 size = m_style.fontSize;
+        m_style = st;
 
         if (st.hAlign == TextStyle::HALIGN_DEFAULT)
         {
-            _style.hAlign = halign;
+            m_style.hAlign = halign;
         }
         if (st.vAlign == TextStyle::VALIGN_DEFAULT)
         {
-            _style.vAlign = valign;
+            m_style.vAlign = valign;
         }
 
         if (st.fontSize == 0)
         {
-            _style.fontSize = size;
+            m_style.fontSize = size;
         }
 
-        if (!_style.font)
+        if (!m_style.font)
         {
-            _style.font = _defaultFont;
+            m_style.font = _defaultFont;
         }
         rebuildText();
     }
@@ -162,83 +162,83 @@ namespace oxygine
         {
             return;
         }
-        _root->updateMaterial(*_mat.get());
+        _root->updateMaterial(*m_mat.get());
     }
 
     void TextField::setText(QString str)
     {
         m_htmlText = false;
-        if (_text != str)
+        if (m_text != str)
         {
-            _text = str;
+            m_text = str;
             rebuildText();
         }
     }
 
     QString TextField::getText() const
     {
-         QString ret = _text;
+         QString ret = m_text;
          return ret;
     }
 
     void TextField::setHtmlText(QString str)
     {
         m_htmlText = true;
-        if (_text != str)
+        if (m_text != str)
         {
-            _text = str;
+            m_text = str;
             rebuildText();
         }
     }
 
     qint32 TextField::getFontSize() const
     {
-        return _style.fontSize;
+        return m_style.fontSize;
     }
 
     qint32 TextField::getLinesOffset() const
     {
-        return _style.linesOffset;
+        return m_style.linesOffset;
     }
 
     TextStyle::VerticalAlign    TextField::getVAlign() const
     {
-        return _style.vAlign;
+        return m_style.vAlign;
     }
 
     TextStyle::HorizontalAlign  TextField::getHAlign() const
     {
-        return _style.hAlign;
+        return m_style.hAlign;
     }
 
     bool TextField::getMultiline() const
     {
-        return _style.multiline;
+        return m_style.multiline;
     }
 
     bool TextField::getBreakLongWords() const
     {
-        return _style.breakLongWords;
+        return m_style.breakLongWords;
     }
 
     qint32 TextField::getKerning() const
     {
-        return _style.kerning;
+        return m_style.kerning;
     }
 
     const QColor& TextField::getStyleColor() const
     {
-        return _style.color;
+        return m_style.color;
     }
 
     float TextField::getBaselineScale() const
     {
-        return _style.baselineScale;
+        return m_style.baselineScale;
     }
 
     size_t TextField::getOptions() const
     {
-        return _style.options;
+        return m_style.options;
     }
 
     text::Symbol* TextField::getSymbolAt(qint32 pos) const
@@ -261,7 +261,7 @@ namespace oxygine
 
     text::Node* TextField::getRootNode()
     {
-        if (!_style.font)
+        if (!m_style.font)
         {
             return _root.get();
         }
@@ -271,9 +271,9 @@ namespace oxygine
     void TextField::rebuildText()
     {
         float scale = 1.0f;
-        if (_style.font != nullptr)
+        if (m_style.font != nullptr)
         {
-            const Font* font = _style.font->getClosestFont(scale, _style.fontSize, scale);
+            const Font* font = m_style.font->getClosestFont(scale, m_style.fontSize, scale);
             if (font)
             {
                 m_Locked.lock();
@@ -283,13 +283,13 @@ namespace oxygine
                 if (m_htmlText)
                 {
                     text::TextBuilder b;
-                    _root = b.parse(_text);
+                    _root = b.parse(m_text);
                 }
                 else
                 {
-                    _root = new text::TextNode(_text);
+                    _root = new text::TextNode(m_text);
                 }
-                text::Aligner rd(_style, _mat, font, scale, getSize());
+                text::Aligner rd(m_style, m_mat, font, scale, getSize());
                 rd.begin();
                 _root->resize(rd);
                 rd.end();
@@ -303,6 +303,6 @@ namespace oxygine
 
     void TextField::doRender(RenderState const& rs)
     {
-        _rdelegate->doRender(this, rs);
+        m_rdelegate->doRender(this, rs);
     }
 }

@@ -95,7 +95,7 @@ namespace oxygine
 
     UberShaderProgram::~UberShaderProgram()
     {
-        releaseShaders();
+        UberShaderProgram::releaseShaders();
     }
 
     void UberShaderProgram::releaseShaders()
@@ -110,7 +110,6 @@ namespace oxygine
     void UberShaderProgram::apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha)
     {
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
-
         if (alpha)
         {
             driver->setTexture(UberShaderProgram::SAMPLER_ALPHA, alpha);

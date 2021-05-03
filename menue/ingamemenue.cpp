@@ -25,7 +25,6 @@ InGameMenue::InGameMenue()
 }
 
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
-    : QObject()
 {
     setObjectName("InGameMenue");
     Mainapp* pApp = Mainapp::getInstance();

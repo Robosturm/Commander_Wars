@@ -11,7 +11,7 @@ namespace oxygine
         STDMaterial mat;
         mat._base = STDRenderer::white;
 
-        _mat = MaterialCache::mc().cache(mat);
+        m_mat = MaterialCache::mc().cache(mat);
     }
 
     ColorRectSprite::~ColorRectSprite()
@@ -21,7 +21,7 @@ namespace oxygine
 
     void ColorRectSprite::doRender(const RenderState& rs)
     {
-        _rdelegate->doRender(this, rs);
+        m_rdelegate->doRender(this, rs);
     }
 
     void ColorRectSprite::sizeChanged(const Vector2& size)

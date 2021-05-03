@@ -91,18 +91,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/minamoto.mp3", 7779, 61530)
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/minamoto.mp3", 7779, 61530)
+            break;
         }
     };
 
@@ -115,7 +115,7 @@ var Constructor = function()
         return "GS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         var nearMountains = false;
         if (typeof map !== 'undefined')
@@ -137,35 +137,35 @@ var Constructor = function()
         }
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (nearMountains === true)
-                {
-                    return 80;
-                }
-                else
-                {
-                    return 10;
-                }
-            case GameEnums.PowerMode_Power:
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (nearMountains === true)
+            {
+                return 80;
+            }
+            else
+            {
+                return 10;
+            }
+        case GameEnums.PowerMode_Power:
+            if (nearMountains === true)
+            {
+                return 70;
+            }
+            else
+            {
+                return 10;
+            }
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
                 if (nearMountains === true)
                 {
                     return 70;
                 }
-                else
-                {
-                    return 10;
-                }
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    if (nearMountains === true)
-                    {
-                        return 70;
-                    }
-                    return 10;
-                }
-                break;
+                return 10;
+            }
+            break;
         }
         return 0;
     };
@@ -182,7 +182,7 @@ var Constructor = function()
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 2;
         }
@@ -196,21 +196,21 @@ var Constructor = function()
             var blowRange = 0;
             switch (co.getPowerMode())
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    if (atkDamage >= 3.5)
-                    {
-                        blowRange = 4;
-                    }
-                    break;
-                case GameEnums.PowerMode_Power:
-                    if (atkDamage >= 4.5)
-                    {
-                        blowRange = 2;
-                    }
-                    break;
-                default:
-                    break;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (atkDamage >= 3.5)
+                {
+                    blowRange = 4;
+                }
+                break;
+            case GameEnums.PowerMode_Power:
+                if (atkDamage >= 4.5)
+                {
+                    blowRange = 2;
+                }
+                break;
+            default:
+                break;
             }
             var distX = defender.getX() - attacker.getX();
             var distY = defender.getY() - attacker.getY();
@@ -226,7 +226,7 @@ var Constructor = function()
                     {
                         var terrain = map.getTerrain(testPosition.x, testPosition.y);
                         if (terrain.getUnit() === null &&
-                            defender.canMoveOver(testPosition.x, testPosition.y) === true)
+                                defender.canMoveOver(testPosition.x, testPosition.y) === true)
                         {
                             newPosition = testPosition;
                         }
@@ -244,6 +244,17 @@ var Constructor = function()
     this.getAiCoUnitBonus = function(co, unit)
     {
         return 1;
+    };
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_ROYAL_GUARD"];
+        }
+        return [];
     };
     // CO - Intel
     this.getBio = function(co)
@@ -264,7 +275,8 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: \nNo Effects.") +
+        return qsTr("\nSpecial Unit:\nRoyal Guard\n") +
+               qsTr("\nGlobal Effect: \nNo Effects.") +
                qsTr("\n\nCO Zone Effect: \nUnits near Mountains gain additional firepower.");
     };
     this.getPowerDescription = function(co)
