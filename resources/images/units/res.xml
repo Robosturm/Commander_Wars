@@ -449,5 +449,70 @@
 		<image file="royal_guard+walk+mask.png" cols = "4" rows = "4"  />
 		<image file="royal_guard+walk.png" cols = "4"  rows = "4"  />
 		
+		<!-- at cycle -->
+		<image file="at_cycle.png" cols = "4"  />
+		<image file="at_cycle+mask.png" cols = "4"  />
+		<image file="at_cycle+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="at_cycle+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- auto tank -->
+		<image file="auto_tank.png" cols = "4"  />
+		<image file="auto_tank+mask.png" cols = "4"  />
+		<image file="auto_tank+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="auto_tank+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- chaperon -->
+		<image file="chaperon.png" cols = "4"  />
+		<image file="chaperon+mask.png" cols = "4"  />
+		<image file="chaperon+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="chaperon+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- commando -->
+		<image file="commando.png" cols = "4"  />
+		<image file="commando+mask.png" cols = "4"  />
+		<image file="commando+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="commando+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- hot tank -->
+		<image file="hot_tank.png" cols = "4"  />
+		<image file="hot_tank+mask.png" cols = "4"  />
+		<image file="hot_tank+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="hot_tank+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- intel truck -->
+		<image file="intel_truck.png" cols = "4"  />
+		<image file="intel_truck+mask.png" cols = "4"  />
+		<image file="intel_truck+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="intel_truck+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- partisan -->
+		<image file="partisan.png" cols = "4"  />
+		<image file="partisan+mask.png" cols = "4"  />
+		<image file="partisan+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="partisan+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- smuggler -->
+		<image file="smuggler.png" cols = "4"  />
+		<image file="smuggler+mask.png" cols = "4"  />
+		<image file="smuggler+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="smuggler+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- tank hunter -->
+		<image file="tank_hunter.png" cols = "4"  />
+		<image file="tank_hunter+mask.png" cols = "4"  />
+		<image file="tank_hunter+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="tank_hunter+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- siege cannon -->
+		<image file="siege_cannon.png" cols = "4"  />
+		<image file="siege_cannon+mask.png" cols = "4"  />
+		<image file="siege_cannon+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="siege_cannon+walk.png" cols = "4"  rows = "4"  />
+		
+		<!-- logi truck -->
+		<image file="logi_truck.png" cols = "4"  />
+		<image file="logi_truck+mask.png" cols = "4"  />
+		<image file="logi_truck+walk+mask.png" cols = "4" rows = "4"  />
+		<image file="logi_truck+walk.png" cols = "4"  rows = "4"  />
 	</atlas>
 </resources>

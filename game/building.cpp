@@ -179,7 +179,7 @@ void Building::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode)
     oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);

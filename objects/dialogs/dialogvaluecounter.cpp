@@ -16,7 +16,7 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -41,12 +41,12 @@ DialogValueCounter::DialogValueCounter(qint32 totalPoints, qint32 pointsToAdd)
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    m_pointsAddedLabel = new Label(Settings::getWidth() / 2 + 3 * 50 - 30);
+    m_pointsAddedLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
     m_pointsAddedLabel->setStyle(style);
     m_pointsAddedLabel->setText("Score: " + QString::number(m_pointsToAdd));
     m_pointsAddedLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 - 50);
     pSpriteBox->addChild(m_pointsAddedLabel);
-    m_totalPointsLabel = new Label(Settings::getWidth() / 2 + 3 * 50 - 30);
+    m_totalPointsLabel = spLabel::create(Settings::getWidth() / 2 + 3 * 50 - 30);
     m_totalPointsLabel->setStyle(style);
     m_totalPointsLabel->setText("Total: " + QString::number(m_totalPoints));
     m_totalPointsLabel->setPosition(Settings::getWidth() / 2 - 3 * 50, Settings::getHeight() / 2 + 10);

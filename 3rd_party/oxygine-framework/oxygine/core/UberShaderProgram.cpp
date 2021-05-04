@@ -77,8 +77,8 @@ namespace oxygine
             QString vs = prepend + _vertexShader;
             VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance.get());
             const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
-            ShaderProgramGL* pgl = new ShaderProgramGL(vs, fs, decl);
-            driver->setShaderProgram(pgl);
+            spShaderProgramGL pgl = spShaderProgramGL::create(vs, fs, decl);
+            driver->setShaderProgram(pgl.get());
             driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
             driver->setUniformInt("colorTable", UberShaderProgram::SAMPLER_TABLE);
             driver->setUniformInt("alpha_texture", UberShaderProgram::SAMPLER_ALPHA);

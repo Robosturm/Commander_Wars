@@ -35,7 +35,7 @@ PlayerSelection::PlayerSelection(qint32 width, qint32 heigth)
     this->moveToThread(pApp->getWorkerthread());
 
 
-    m_pPlayerSelection = new Panel(true,
+    m_pPlayerSelection = spPanel::create(true,
                                    QSize(width,
                                          heigth),
                                    QSize(Settings::getWidth() - 70, 100));
@@ -182,7 +182,7 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     if (cos.size() == 0 ||
         cos[0] != "")
     {
-        spCOSelectionDialog dialog = new COSelectionDialog(coid, pMap->getPlayer(player)->getColor(), player, cos);
+        spCOSelectionDialog dialog = spCOSelectionDialog::create(coid, pMap->getPlayer(player)->getColor(), player, cos);
         oxygine::getStage()->addChild(dialog);
         m_pPlayerSelection->setVisible(false);
         if (co == 0)
@@ -235,7 +235,7 @@ void PlayerSelection::showPlayerSelection()
     for (qint32 i = 0; i < items.size(); i++)
     {
         xPositions.append(curPos);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setStyle(style);
         pLabel->setHtmlText(items[i]);
         qint32 width = pLabel->getTextRect().getWidth() + 10;
@@ -251,7 +251,7 @@ void PlayerSelection::showPlayerSelection()
     m_pPlayerSelection->setContentWidth(curPos + 50);
     qint32 y = pLabel->getTextRect().getHeight() + 10 + 25;
     // all player
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("All"));
     pLabel->setPosition(xPositions[0], y);
@@ -298,7 +298,7 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 3;
-    spSpinBox allStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+    spSpinBox allStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
     allStartFundsSpinBox->setTooltipText(tr("Select with how much funds all player start the game."));
     allStartFundsSpinBox->setSpinSpeed(500);
     allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
@@ -313,7 +313,7 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 4;
-    spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+    spSpinBox allIncomeSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
     allIncomeSpinBox->setTooltipText(tr("Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
     allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
     allIncomeSpinBox->setCurrentValue(1.0f);
@@ -328,7 +328,7 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 5;
-    spSpinBox teamSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 2, pMap->getPlayerCount(), SpinBox::Mode::Int);
+    spSpinBox teamSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 2, pMap->getPlayerCount(), SpinBox::Mode::Int);
     teamSpinBox->setTooltipText(tr("Automatically changes the teams of all players so the teams are equally distributed, according to the team count."
                                    "Teams are assigned in a way that the first turn advantage is the least relevant."));
     teamSpinBox->setPosition(xPositions[itemIndex], y);
@@ -456,7 +456,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex = 0;
-        oxygine::spSprite spriteCO1 = new oxygine::Sprite();
+        oxygine::spSprite spriteCO1 = oxygine::spSprite::create();
         spriteCO1->setPosition(xPositions[itemIndex], y);
         spriteCO1->setSize(32, 12);
         spriteCO1->setScale(2.0f);
@@ -488,7 +488,7 @@ void PlayerSelection::showPlayerSelection()
             }
         }
 
-        oxygine::spSprite spriteCO2 = new oxygine::Sprite();
+        oxygine::spSprite spriteCO2 = oxygine::spSprite::create();
         spriteCO2->setPosition(xPositions[itemIndex], y + 24);
         spriteCO2->setSize(32, 12);
         spriteCO2->setScale(2.0f);
@@ -543,7 +543,7 @@ void PlayerSelection::showPlayerSelection()
 
 
         itemIndex++;
-        spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
+        spDropDownmenuColor playerColor = spDropDownmenuColor::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
         playerColor->setTooltipText(tr("Select the Color for this players army."));
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(pMap->getPlayer(i)->getColor());
@@ -561,7 +561,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList);
+        spDropDownmenu playerAi = spDropDownmenu::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList);
         playerAi->setTooltipText(tr("Select who controls this player."));
         playerAi->setPosition(xPositions[itemIndex], y);
         if (isCampaign)
@@ -640,7 +640,7 @@ void PlayerSelection::showPlayerSelection()
         m_PlayerSockets.append(0);
 
         itemIndex++;
-        spSpinBox playerStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+        spSpinBox playerStartFundsSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
         playerStartFundsSpinBox->setTooltipText(tr("Select with how much funds this player starts the game."));
         playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
         playerStartFundsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFunds());
@@ -659,7 +659,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+        spSpinBox playerIncomeSpinBox = spSpinBox::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
         playerIncomeSpinBox->setTooltipText(tr("Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
         playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
         playerIncomeSpinBox->setCurrentValue(pMap->getPlayer(i)->getFundsModifier());
@@ -678,7 +678,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList);
+        spDropDownmenu playerTeam = spDropDownmenu::create(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList);
         playerTeam->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
@@ -714,7 +714,7 @@ void PlayerSelection::showPlayerSelection()
         itemIndex++;
         if (m_pNetworkInterface.get() != nullptr)
         {
-            spCheckbox pCheckbox = new Checkbox();
+            spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setTooltipText(tr("Shows which player is ready to start the game. All players need to be checked in order to start a game."));
             pCheckbox->setPosition(xPositions[itemIndex] + labelminStepSize / 2 - pCheckbox->getWidth(), y);
             pCheckbox->setEnabled(false);
@@ -734,12 +734,12 @@ void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPosition
     {
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("icon_" + army.toLower());
-        oxygine::spSprite ret = new oxygine::Sprite();
+        oxygine::spSprite ret = oxygine::spSprite::create();
         ret->setResAnim(pAnim);
         return ret;
     };
     QStringList armies = getSelectableArmies();
-    spDropDownmenuSprite pArmy = new DropDownmenuSprite(105, armies, creator);
+    spDropDownmenuSprite pArmy = spDropDownmenuSprite::create(105, armies, creator);
     pArmy->setTooltipText(tr("Selects the army for the player. CO means the army of the first CO is selected."));
     m_pPlayerSelection->addItem(pArmy);
     m_playerArmy.append(pArmy);
@@ -829,7 +829,7 @@ void PlayerSelection::slotShowAllBuildList()
     // use player 0 as default for showing all
     
     spGameMap pMap = GameMap::getInstance();
-    spBuildListDialog dialog = new BuildListDialog(0, pMap->getPlayer(0)->getBuildList());
+    spBuildListDialog dialog = spBuildListDialog::create(0, pMap->getPlayer(0)->getBuildList());
     oxygine::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangeAllBuildList, Qt::QueuedConnection);
     
@@ -839,7 +839,7 @@ void PlayerSelection::slotShowPlayerBuildList(qint32 player)
 {
     
     spGameMap pMap = GameMap::getInstance();
-    spBuildListDialog dialog = new BuildListDialog(player, pMap->getPlayer(player)->getBuildList());
+    spBuildListDialog dialog = spBuildListDialog::create(player, pMap->getPlayer(player)->getBuildList());
     oxygine::getStage()->addChild(dialog);
     connect(dialog.get(), &BuildListDialog::editFinished, this , &PlayerSelection::slotChangePlayerBuildList, Qt::QueuedConnection);
     
@@ -1112,7 +1112,7 @@ void PlayerSelection::showSelectCOPerks(qint32 player)
     {
         Userdata* pUserdata = Userdata::getInstance();
         auto hiddenList = pUserdata->getShopItemsList(GameEnums::ShopItemType_Perk, false);
-        spPerkSelectionDialog pPerkSelectionDialog = new PerkSelectionDialog(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
+        spPerkSelectionDialog pPerkSelectionDialog = spPerkSelectionDialog::create(pPlayer, pMap->getGameRules()->getMaxPerkCount(), false, hiddenList);
         oxygine::getStage()->addChild(pPerkSelectionDialog);
         connect(pPerkSelectionDialog.get(), &PerkSelectionDialog::sigFinished, [=]()
         {

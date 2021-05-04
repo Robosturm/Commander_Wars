@@ -13,6 +13,8 @@
 #include "game/GameEnums.h"
 
 class Unit;
+class GameAnimationWalk;
+using spGameAnimationWalk = oxygine::intrusive_ptr<GameAnimationWalk>;
 
 class GameAnimationWalk : public GameAnimation
 {

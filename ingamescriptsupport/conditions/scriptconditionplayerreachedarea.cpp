@@ -170,7 +170,7 @@ void ScriptConditionPlayerReachedArea::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -181,12 +181,12 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     qint32 width = 300;
 
     qint32 y = 30;
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 0, 99999);
+    spSpinBox spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area X Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_x);
@@ -198,12 +198,12 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area Y Position which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_y);
@@ -215,12 +215,12 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 99999);
+    spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area width which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
@@ -232,12 +232,12 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 99999);
+    spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
@@ -249,19 +249,19 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
-    spLabel pTextInfo = new Label(width - 10);
+    spLabel pTextInfo = spLabel::create(width - 10);
     pTextInfo->setStyle(style);
     pTextInfo->setHtmlText(getPlayerInfo());
     pTextInfo->setPosition(30, y);
     pBox->addItem(pTextInfo);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Add Player: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 99999);
+    spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("Player to add to the Player reached Area list."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(1);

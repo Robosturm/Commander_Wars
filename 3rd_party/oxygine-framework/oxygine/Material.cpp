@@ -106,7 +106,9 @@ namespace oxygine
         _compare = other._compare;
     }
 
-    Material::Material(compare cmp) : _hash(0), _compare(cmp)
+    Material::Material(compare cmp)
+        : _hash(0),
+          _compare(cmp)
     {
 
     }

@@ -11,8 +11,10 @@
 #include "game/GameEnums.h"
 
 class GLGraphicsView;
+class Settings;
+using spSettings = oxygine::intrusive_ptr<Settings>;
 
-class Settings : public QObject
+class Settings : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -389,9 +391,11 @@ public slots:
      */
     static bool getIsCosmetic(QString mod);
 private:
+    friend class oxygine::intrusive_ptr<Settings>;
     Settings();
     virtual ~Settings() = default;
 
+private:
     // setting variables
     static qint32 m_x;
     static qint32 m_y;
@@ -500,7 +504,7 @@ private:
     static bool m_syncAnimations;
 
     // internal members
-    static Settings* m_pInstance;
+    static spSettings m_pInstance;
     static const QString m_settingFile;
     static QStringList m_activeMods;
     static QStringList m_activeModVersions;

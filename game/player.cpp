@@ -19,6 +19,11 @@
 
 oxygine::spResAnim Player::m_neutralTableAnim = nullptr;
 
+void Player::releaseStaticData()
+{
+    m_neutralTableAnim = nullptr;
+}
+
 Player::Player()
 {
     setObjectName("Player");
@@ -364,7 +369,7 @@ oxygine::spResAnim Player::getNeutralTableAnim()
 {
     if (m_neutralTableAnim.get() == nullptr)
     {
-        m_neutralTableAnim = new oxygine::SingleResAnim();
+        m_neutralTableAnim = oxygine::spSingleResAnim::create();
         QStringList searchPaths;
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
@@ -1343,7 +1348,7 @@ void Player::updateVisualCORange()
     }
 }
 
-void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
+void Player::setBaseGameInput(spBaseGameInputIF pBaseGameInput)
 {
     m_pBaseGameInput = pBaseGameInput;
     if (m_pBaseGameInput.get() != nullptr)
@@ -1386,7 +1391,7 @@ void Player::setCO(QString coId, quint8 idx)
         }
         else
         {
-            playerCOs[idx] = new CO(coId, this);
+            playerCOs[idx] = spCO::create(coId, this);
         }
 
     }
@@ -1676,7 +1681,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> hasC0;
         if (hasC0)
         {
-            playerCOs[0] = new CO("", this);
+            playerCOs[0] = spCO::create("", this);
             playerCOs[0]->deserializer(pStream, fast);
             if (!playerCOs[0]->isValid())
             {
@@ -1687,7 +1692,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         pStream >> hasC1;
         if (hasC1)
         {
-            playerCOs[1] = new CO("", this);
+            playerCOs[1] = spCO::create("", this);
             playerCOs[1]->deserializer(pStream, fast);
             if (!playerCOs[1]->isValid())
             {
@@ -1709,7 +1714,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_pBaseGameInput = new HumanPlayerInput();
+            m_pBaseGameInput = spHumanPlayerInput::create();
             m_pBaseGameInput->setPlayer(this);
         }
         m_FogVisionFields.clear();

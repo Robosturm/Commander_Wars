@@ -16,33 +16,33 @@ namespace oxygine
 
         }
 
-        text::Node* TextBuilder::create(QDomNode& reader)
+        text::spNode TextBuilder::create(QDomNode& reader)
         {
             QDomElement element = reader.toElement();
             if (!element.isNull())
             {
-                text::Node* tn = nullptr;
+                text::spNode tn = nullptr;
                 QString name = element.tagName();
                 if (name == "div")
                 {
-                    tn = new text::DivNode(element);
+                    tn = text::spDivNode::create(element);
                     QString text = element.text();
-                    tn->appendNode(new text::TextNode(text));
+                    tn->appendNode(text::spTextNode::create(text));
                 }
                 else if (name == "br")
                 {
-                    tn = new text::BrNode();
+                    tn = text::spBrNode::create();
                     QString text = element.text();
-                    tn->appendNode(new text::TextNode(text));
+                    tn->appendNode(text::spTextNode::create(text));
                 }
                 else if (name == "r")
                 {
                     QString text = element.text();
-                    tn = new text::TextNode(text);
+                    tn = text::spTextNode::create(text);
                 }
                 else if (name == "data")
                 {
-                    tn = new text::Node;
+                    tn = text::spNode::create();
                 }
                 else
                 {
@@ -56,8 +56,8 @@ namespace oxygine
                 QDomNode child = reader.firstChild();
                 while(!child.isNull())
                 {
-                    text::Node* tnchild = create(child);
-                    if (tnchild != nullptr)
+                    text::spNode tnchild = create(child);
+                    if (tnchild.get() != nullptr)
                     {
                         tn->appendNode(tnchild);
                     }
@@ -67,11 +67,11 @@ namespace oxygine
             }
             else
             {
-                return new text::Node;
+                return text::spNode::create();
             }
         }
 
-        text::Node* TextBuilder::parse(QString st)
+        text::spNode TextBuilder::parse(QString st)
         {
             QString str;
             if (st.startsWith("<"))
@@ -87,11 +87,11 @@ namespace oxygine
             QDomElement root = doc.documentElement();
             QDomNode node = root.firstChild();
             // loop through root childs
-            auto tn = new text::Node;
+            auto tn = text::spNode::create();
             while(!node.isNull())
             {
-                text::Node* tnchild = create(node);
-                if (tnchild != nullptr)
+                text::spNode tnchild = create(node);
+                if (tnchild.get() != nullptr)
                 {
                     tn->appendNode(tnchild);
                 }

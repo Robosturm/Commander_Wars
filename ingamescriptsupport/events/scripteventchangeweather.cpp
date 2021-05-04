@@ -60,7 +60,7 @@ void ScriptEventChangeWeather::writeEvent(QTextStream& rStream)
 
 void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -70,12 +70,12 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Days: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 1, 9999);
+    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("The amount of days the new weather appears."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(turns);
@@ -86,7 +86,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Weather: "));
     pText->setPosition(30, 70);
@@ -100,7 +100,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
         weatherStrings.append(pWeather->getWeatherName());
     }
 
-    spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
+    spDropDownmenu startWeather = spDropDownmenu::create(200, weatherStrings);
     startWeather->setTooltipText(tr("The new weather that appears."));
     startWeather->setPosition(150, 70);
     startWeather->setCurrentItem(weatherID);

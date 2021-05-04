@@ -35,7 +35,6 @@ namespace oxygine
 
     spNativeTexture VideoDriverNull::createTexture()
     {
-        //return new NativeTextureNull;
         return nullptr;
     }
 

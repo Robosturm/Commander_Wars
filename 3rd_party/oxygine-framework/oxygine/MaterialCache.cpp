@@ -8,7 +8,7 @@ namespace oxygine
 {
     MaterialCache MaterialCache::mcache;
 
-    Material* MaterialCache::clone_(const Material& other)
+    spMaterial MaterialCache::clone_(const Material& other)
     {
         QMutexLocker alock(&_lock);
 
@@ -42,7 +42,7 @@ namespace oxygine
             removeUnusedNoLock();
         }
 
-        Material* copy = other.clone();
+        spMaterial copy = other.clone();
         copy->_hash = hash;
         copy->_compare = cm;
         m_materials.insert(hash, copy);

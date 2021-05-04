@@ -4,6 +4,9 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
+class ScriptEventModifyVariable;
+using spScriptEventModifyVariable = oxygine::intrusive_ptr<ScriptEventModifyVariable>;
+
 class ScriptEventModifyVariable : public ScriptEvent
 {
     Q_OBJECT

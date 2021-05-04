@@ -18,11 +18,11 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
-    m_Textbox = new oxygine::Box9Sprite();
+    m_Textbox = oxygine::spBox9Sprite::create();
     m_Textbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setResAnim(pAnim);
-    m_Textfield = new oxygine::TextField();
+    m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -32,7 +32,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_Textfield->setHtmlText("");
 
 
-    oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
+    oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
 
     m_Textfield->attachTo(pClipActor);
     m_Textbox->addChild(pClipActor);
@@ -45,14 +45,14 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pClipActor->setY(5);
     this->addChild(m_Textbox);
 
-    m_pSpinBox = new oxygine::Box9Sprite();
+    m_pSpinBox = oxygine::spBox9Sprite::create();
     m_pSpinBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pSpinBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pSpinBox->setResAnim(pAnim);
     m_pSpinBox->setSize(width - m_Textbox->getWidth(), 40);
     m_pSpinBox->setX(m_Textbox->getWidth());
 
-    m_pArrowDown = new oxygine::Button();
+    m_pArrowDown = oxygine::spButton::create();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
     m_pArrowDown->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
@@ -79,7 +79,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pSpinBox->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(9, m_pSpinBox->getHeight() - m_pArrowDown->getHeight() - 8);
 
-    m_pArrowUp = new oxygine::Button();
+    m_pArrowUp = oxygine::spButton::create();
     // pButton->setPosition(200, 200);
     m_pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
     m_pArrowUp->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));

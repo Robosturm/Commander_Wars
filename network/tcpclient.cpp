@@ -50,12 +50,12 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     m_pSocket->connectToHost(adress, port);
 
     // Start RX-Task
-    m_pRXTask = new RxTask(m_pSocket, 0, this, false);
+    m_pRXTask = spRxTask::create(m_pSocket, 0, this, false);
     m_pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(m_pSocket, &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
-    m_pTXTask = new TxTask(m_pSocket, 0, this, false);
+    m_pTXTask = spTxTask::create(m_pSocket, 0, this, false);
     m_pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 

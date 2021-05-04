@@ -12,7 +12,7 @@ namespace oxygine
 
     Stage::Stage() : _statUpdate(0), _clipOuter(false), _viewport(0, 0, 0, 0) //, _active(true)
     {
-        spClock clock = new Clock();
+        spClock clock = spClock::create();
         setClock(clock);
         setName("Stage");
         _stage = this;

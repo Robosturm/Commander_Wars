@@ -45,7 +45,7 @@ void VictoryRulePopup::updateInfo()
         styleSmall.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         styleSmall.multiline = true;
 
-        spLabel pTextfield = new Label(getHeight() - 20);
+        spLabel pTextfield = spLabel::create(getHeight() - 20);
         pTextfield->setStyle(styleSmall);
         pTextfield->setHtmlText(pVictoryRule->getRuleName());
         pTextfield->setPosition(10, y);
@@ -69,13 +69,13 @@ void VictoryRulePopup::updateInfo()
                     ruleValue = 0;
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
-                spBuilding building = new Building("HQ");
+                spBuilding building = spBuilding::create("HQ");
                 // building->setScale(1.5f);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 addItem(building);
                 QString info = QString::number(playerValue) + "/" + QString::number(ruleValue);
-                spLabel pTextfield = new Label(getWidth() - 20);
+                spLabel pTextfield = spLabel::create(getWidth() - 20);
                 pTextfield->setStyle(style);
                 pTextfield->setHtmlText(info);
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);

@@ -29,14 +29,14 @@ LobbyMenu::LobbyMenu()
 
     if (!Settings::getServer())
     {
-        m_pTCPClient = new TCPClient();
+        m_pTCPClient = spTCPClient::create();
         connect(m_pTCPClient.get(), &TCPClient::recieveData, this, &LobbyMenu::recieveData, Qt::QueuedConnection);
         emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
     }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("lobbymenu");
     sprite->setResAnim(pBackground);
@@ -95,7 +95,7 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    m_pGamesPanel = new Panel(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 420),
+    m_pGamesPanel = spPanel::create(true, QSize(Settings::getWidth() - 20, Settings::getHeight() - 420),
                               QSize(Settings::getWidth() - 20, Settings::getHeight() - 420));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
@@ -106,7 +106,7 @@ LobbyMenu::LobbyMenu()
         pInterface = MainServer::getInstance()->getGameServer();
     }
 
-    spChat pChat = new Chat(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
+    spChat pChat = spChat::create(pInterface, QSize(Settings::getWidth() - 20, 300), NetworkInterface::NetworkSerives::LobbyChat);
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
     addChild(pChat);
 
@@ -123,21 +123,17 @@ LobbyMenu::~LobbyMenu()
 }
 
 void LobbyMenu::exitMenue()
-{
-    
+{    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void LobbyMenu::hostLocal()
-{
-    
+{    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu("", "", true));
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void LobbyMenu::hostServer()
@@ -148,8 +144,7 @@ void LobbyMenu::hostServer()
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, "", true));
-        oxygine::Actor::detach();
-        
+        oxygine::Actor::detach();        
     }
 }
 
@@ -159,7 +154,7 @@ void LobbyMenu::joinGame()
     {
         if (m_currentGame->getLocked())
         {
-            spDialogPassword pDialogTextInput = new DialogPassword(tr("Enter Password"), true, "");
+            spDialogPassword pDialogTextInput = spDialogPassword::create(tr("Enter Password"), true, "");
             addChild(pDialogTextInput);
             connect(pDialogTextInput.get(), &DialogPassword::sigTextChanged, this, &LobbyMenu::joinGamePassword, Qt::QueuedConnection);
             
@@ -195,8 +190,7 @@ void LobbyMenu::joinGamePassword(QString password)
         stream << NetworkCommands::SERVERJOINGAME;
         stream << m_currentGame->getSlaveName();
         emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
-        oxygine::Actor::detach();
-        
+        oxygine::Actor::detach();        
     }
 }
 
@@ -204,7 +198,7 @@ void LobbyMenu::joinAdress()
 {
     
 
-    spDialogPasswordAndAdress pDialogTextInput = new DialogPasswordAndAdress(tr("Enter Host Adress"));
+    spDialogPasswordAndAdress pDialogTextInput = spDialogPasswordAndAdress::create(tr("Enter Host Adress"));
     addChild(pDialogTextInput);
     connect(pDialogTextInput.get(), &DialogPasswordAndAdress::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
 
@@ -276,7 +270,7 @@ void LobbyMenu::updateGamesView()
         data.append(QString(lockChar));
         items.append(data);
     }
-    m_Gamesview = new TableView(widths, items, header, true);
+    m_Gamesview = spTableView::create(widths, items, header, true);
     connect(m_Gamesview.get(), &TableView::sigItemClicked, this, &LobbyMenu::selectGame, Qt::QueuedConnection);
     m_pGamesPanel->addItem(m_Gamesview);
     m_pGamesPanel->setContentHeigth(m_Gamesview->getHeight() + 40);

@@ -11,7 +11,7 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -28,24 +28,24 @@ DialogPasswordAndAdress::DialogPasswordAndAdress(QString text)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText = new oxygine::TextField();
+    oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setHtmlText(text);
     pText->setStyle(style);
     pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 80);
     pSpriteBox->addChild(pText);
 
-    m_pTextbox = new Textbox(300);
+    m_pTextbox = spTextbox::create(300);
     m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2 - 40);
     m_pTextbox->setCurrentText("");
     pSpriteBox->addChild(m_pTextbox);
 
-    pText = new oxygine::TextField();
+    pText = oxygine::spTextField::create();
     pText->setHtmlText(tr("Password"));
     pText->setStyle(style);
     pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2);
     pSpriteBox->addChild(pText);
 
-    m_pPasswordbox = new Passwordbox(300);
+    m_pPasswordbox = spPasswordbox::create(300);
     m_pPasswordbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2 + 40);
     m_pPasswordbox->setCurrentText("");
     pSpriteBox->addChild(m_pPasswordbox);

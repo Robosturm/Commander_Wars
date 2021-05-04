@@ -47,7 +47,7 @@ void ScriptEventVictoryInfo::setInfo(const QString &value)
 
 void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -57,13 +57,13 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Victory Info: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
 
-    spTextbox pTextBox = new Textbox(Settings::getWidth() - width - 40, Settings::getHeight() - 100);
+    spTextbox pTextBox = spTextbox::create(Settings::getWidth() - width - 40, Settings::getHeight() - 100);
     pTextBox->setCurrentText(info);
     pTextBox->setPosition(width, 30);
     pTextBox->setTooltipText("Additional info text shown in the victory info screen. Replaces the last set text with this one.");

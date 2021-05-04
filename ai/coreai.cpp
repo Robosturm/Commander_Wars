@@ -173,8 +173,9 @@ qint32 CoreAI::index(QVector<QVector3D>& points, QPoint point)
     return -1;
 }
 
-bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
+bool CoreAI::useCOPower(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
 {
+    Console::print("CoreAI::useCOPower()", Console::eDEBUG);
     QVector<float> data;
     data.append(-1);
     data.append(0);
@@ -237,7 +238,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 
             if (result == GameEnums::PowerMode_Power)
             {
-                spGameAction pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
+                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_POWER_CO_0);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_POWER_CO_1);
@@ -250,7 +251,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             }
             else if (result == GameEnums::PowerMode_Superpower)
             {
-                spGameAction pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                spGameAction pAction = spGameAction::create(ACTION_ACTIVATE_SUPERPOWER_CO_0);
                 if (i == 1)
                 {
                     pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_1);
@@ -310,7 +311,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
     return counterDamage;
 }
 
-void CoreAI::createMovementMap(QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+void CoreAI::createMovementMap(spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
@@ -591,7 +592,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
 }
 
 
-bool CoreAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
+bool CoreAI::moveAwayFromProduction(spQmlVectorUnit pUnits)
 {
     aiStep = AISteps::moveAway;
     spGameMap pMap = GameMap::getInstance();
@@ -627,7 +628,7 @@ bool CoreAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
             }
             if (target.x() >= 0 && target.y() >= 0)
             {
-                spGameAction pAction = new GameAction(ACTION_WAIT);
+                spGameAction pAction = spGameAction::create(ACTION_WAIT);
                 pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                 QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
@@ -817,6 +818,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
 
 void CoreAI::addMenuItemData(spGameAction pGameAction, QString itemID, qint32 cost)
 {
+    Console::print("CoreAI::addMenuItemData()", Console::eDEBUG);
     pGameAction->writeDataString(itemID);
     // increase costs and input step
     pGameAction->setCosts(pGameAction->getCosts() + cost);
@@ -825,14 +827,15 @@ void CoreAI::addMenuItemData(spGameAction pGameAction, QString itemID, qint32 co
 
 void CoreAI::addSelectedFieldData(spGameAction pGameAction, QPoint point)
 {
+    Console::print("CoreAI::addSelectedFieldData()", Console::eDEBUG);
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }
 
 
-QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
-                                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
+                                            spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                             bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
                                             bool all)
 {
@@ -917,7 +920,7 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
     return transportUnits;
 }
 
-bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                         qint32 loadingIslandIdx, qint32 loadingIsland)
 {
     bool found = false;
@@ -955,7 +958,7 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEne
     return found;
 }
 
-void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
 {
     spQmlVectorPoint unitFields = GlobalUtils::getCircle(1, 1);
     spGameMap pMap = GameMap::getInstance();
@@ -1006,7 +1009,7 @@ void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVe
     }
 }
 
-void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     if (actions.contains(ACTION_CAPTURE) ||
         actions.contains(ACTION_MISSILE))
@@ -1028,7 +1031,7 @@ void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBui
     }
 }
 
-void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendAttackTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1069,7 +1072,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
     }
 }
 
-void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
+void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets)
 {
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
@@ -1113,7 +1116,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnem
 }
 
 
-void CoreAI::appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendRepairTargets(Unit* pUnit, spQmlVectorBuilding pBuildings, QVector<QVector3D>& targets)
 {
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i2 = 0; i2 < pBuildings->size(); i2++)
@@ -1128,7 +1131,7 @@ void CoreAI::appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVe
     }
 }
 
-void CoreAI::appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets)
+void CoreAI::appendSupplyTargets(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1145,7 +1148,7 @@ void CoreAI::appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVe
     }
 }
 
-void CoreAI::appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets)
+void CoreAI::appendTransporterTargets(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1160,7 +1163,7 @@ void CoreAI::appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVecto
     }
 }
 
-void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit pUnits, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -1205,7 +1208,7 @@ void CoreAI::appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits,
     }
 }
 
-void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     QVector<QVector<qint32>> checkedIslands;
     QVector<qint32> loadedUnitIslandIdx;
@@ -1424,7 +1427,7 @@ void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qin
     }
 }
 
-void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     spGameMap pMap = GameMap::getInstance();
 
@@ -1493,7 +1496,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
     }
 }
 
-void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets)
 {
     spGameMap pMap = GameMap::getInstance();
     qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
@@ -1578,9 +1581,9 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* 
     }
 }
 
-void CoreAI::rebuildIsland(QmlVectorUnit* pUnits)
+void CoreAI::rebuildIsland(spQmlVectorUnit pUnits)
 {
-    // and create a new one
+    // and create one
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -1722,7 +1725,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
 void CoreAI::finishTurn()
 {
     usedTransportSystem = false;
-    spGameAction pAction = new GameAction(ACTION_NEXT_PLAYER);
+    spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);
     if (pCO0 != nullptr &&
@@ -1756,7 +1759,7 @@ void CoreAI::finishTurn()
     emit performAction(pAction);
 }
 
-bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
+bool CoreAI::useBuilding(spQmlVectorBuilding pBuildings)
 {
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pBuildings->size(); i++)
@@ -1770,7 +1773,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
             {
                 if (actions[i] != ACTION_BUILD_UNITS)
                 {
-                    spGameAction pAction = new GameAction(actions[i]);
+                    spGameAction pAction = spGameAction::create(actions[i]);
                     pAction->setTarget(QPoint(pBuilding->Building::getX(), pBuilding->Building::getY()));
                     if (pAction->canBePerformed())
                     {
@@ -1873,7 +1876,7 @@ float CoreAI::getAiCoUnitMultiplier(CO* pCO, Unit* pUnit)
     return multiplier;
 }
 
-void CoreAI::GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                               qint32 & infantryUnits, qint32 & indirectUnits,
                               qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets)
 {
@@ -1907,9 +1910,9 @@ void CoreAI::GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
     }
 }
 
-bool CoreAI::buildCOUnit(QmlVectorUnit* pUnits)
+bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
 {
-    spGameAction pAction = new GameAction();
+    spGameAction pAction = spGameAction::create();
     for (quint8 i2 = 0; i2 < 2; i2++)
     {
         if (i2 == 0)

@@ -6,10 +6,13 @@
 
 namespace oxygine
 {
+    class ResAtlas;
+    using spResAtlas = intrusive_ptr<ResAtlas>;
+
     class ResAtlas: public Resource
     {
     public:
-        static Resource* create(CreateResourceContext& context);
+        static spResource create(CreateResourceContext& context);
         struct atlas
         {
             spNativeTexture base;
@@ -38,8 +41,8 @@ namespace oxygine
         void _unload() override;
 
         //void loadAtlas(CreateResourceContext& context);
-        ResAnim* createEmpty(const XmlWalker& walker, CreateResourceContext& context);
-        static void init_resAnim(ResAnim* rs, QString file, QDomElement node);
+        spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
+        static void init_resAnim(spResAnim rs, QString file, QDomElement node);
 
     protected:
         //settings from xml

@@ -19,9 +19,10 @@
 
 class Player;
 class TerrainFindingSystem;
+using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
 
 class Terrain;
-typedef oxygine::intrusive_ptr<Terrain> spTerrain;
+using spTerrain = oxygine::intrusive_ptr<Terrain>;
 
 class Terrain : public Tooltip, public FileSerializable
 {
@@ -113,12 +114,6 @@ public:
         return 8;
     }
     /**
-     * @brief update
-     * @param us
-     */
-    virtual void update(const oxygine::UpdateState& us) override;
-
-    /**
      * @brief getFixedSprite only avaible for ingame editor
      * @return
      */
@@ -148,7 +143,11 @@ public:
      * @return
      */
     bool isValid();
-
+    /**
+     * @brief createTerrainFindingSystem
+     * @return a path finding system that contains
+     */
+    spTerrainFindingSystem createTerrainFindingSystem();
 
 public slots:
     /**
@@ -390,11 +389,6 @@ public slots:
      */
     bool getVisionHide(Player* pPlayer);
     /**
-     * @brief createTerrainFindingSystem
-     * @return a path finding system that contains
-     */
-    TerrainFindingSystem* createTerrainFindingSystem();
-    /**
      * @brief getTerrainAnimationBase
      * @return
      */
@@ -429,7 +423,10 @@ protected:
      */
     void removeDownstream();
 private:
+    friend class oxygine::intrusive_ptr<Terrain>;
     explicit Terrain(QString terrainID, qint32 x, qint32 y);
+
+private:
     /**
      * @brief terrainName terrain name shown in the game
      */
@@ -462,10 +459,6 @@ private:
      * @brief m_SpriteAnim
      */
     oxygine::spResAnim m_SpriteAnim;
-    /**
-     * @brief loadSprite
-     */
-    bool loadSprite{false};
     /**
      * @brief m_pBaseTerrain base terrain of this terrain
      */

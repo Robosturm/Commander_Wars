@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QTimer>
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class QMediaPlaylist;
 
@@ -93,7 +94,7 @@ public slots:
      */
     void stopAllSounds();
 protected slots:
-    // stops current Music and launches new one.
+    // stops current Music and launches another one.
     void SlotPlayMusic(qint32 File);
     void SlotSetVolume(qint32 value);
     void SlotAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);

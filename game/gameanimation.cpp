@@ -95,7 +95,7 @@ void GameAnimation::queueAnimationBefore(GameAnimation* pGameAnimation)
 {
     if (m_previousAnimation != nullptr)
     {
-        // remove ourself from previous animation and add our new ancestor
+        // remove ourself from previous animation and add our ancestor
         m_previousAnimation->removeQueuedAnimation(this);
         m_previousAnimation->queueAnimation(pGameAnimation);
     }
@@ -123,21 +123,6 @@ void GameAnimation::update(const oxygine::UpdateState& us)
 {
     if (!m_stopped)
     {
-        for (SpriteData& data : sprites)
-        {
-            if (!data.loaded)
-            {
-                data.pAnim = new oxygine::SingleResAnim();
-                data.pAnim->setResPath(data.file);
-                data.pAnim->init(data.file, data.frames, 1, 1.0f);
-                loadSpriteAnim(data.pAnim.get(), data.offsetX, data.offsetY,
-                               data.color, data.sleepAfterFinish, data.scaleX, data.scaleY,
-                               data.delay, 1);
-                data.loaded = true;
-            }
-        }
-
-
         oxygine::Sprite::update(us);
     }
     if (!m_started)
@@ -204,17 +189,11 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     }
     else if (QFile::exists(spriteID))
     {
-        sprites.append(SpriteData());
-        qint32 index = sprites.size() - 1;
-        sprites[index].frames = frames;
-        sprites[index].file = spriteID;
-        sprites[index].offsetX = offsetX;
-        sprites[index].offsetY = offsetY;
-        sprites[index].color = color;
-        sprites[index].sleepAfterFinish = sleepAfterFinish;
-        sprites[index].scaleX = scaleX;
-        sprites[index].scaleY = scaleY;
-        sprites[index].delay = delay;
+        QImage img(spriteID);
+        oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+        Mainapp::getInstance()->loadResAnim(pAnim, img);
+        m_resAnims.append(pAnim);
+        loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops);
     }
     else
     {
@@ -224,8 +203,8 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
 
 void GameAnimation::addBox(QString spriteID, float offsetX, float offsetY, qint32 width, qint32 heigth,  qint32 sleepAfterFinish, QColor color)
 {
-    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
-    oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
+    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
+    oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     pBox->setResAnim(pAnim);
@@ -258,8 +237,8 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
 {
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
         queuedAnim->add(tween);
         if (sleepAfterFinish > 0)
@@ -293,8 +272,8 @@ void GameAnimation::loadSpriteAnimTable(oxygine::ResAnim* pAnim, float offsetX, 
 
 void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 loops)
 {
-    oxygine::spSprite pSprite = new oxygine::Sprite();
-    oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
+    oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
     oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
     queuedAnim->add(tween);
     if (sleepAfterFinish > 0)
@@ -330,7 +309,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(text);
     pTextfield->setPosition(offsetX, offsetY);

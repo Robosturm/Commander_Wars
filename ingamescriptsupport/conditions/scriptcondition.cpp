@@ -88,127 +88,126 @@ ScriptCondition::ConditionType ScriptCondition::getType() const
     return m_Type;
 }
 
-ScriptCondition* ScriptCondition::createCondition(ConditionType type)
+spScriptCondition ScriptCondition::createCondition(ConditionType type)
 {
     switch (type)
     {
         case ConditionType::victory:
         {
-            return new ScriptConditionVictory();
+            return spScriptConditionVictory::create();
         }
         case ConditionType::startOfTurn:
         {
-            return new ScriptConditionStartOfTurn();
+            return spScriptConditionStartOfTurn::create();
         }
         case ConditionType::eachDay:
         {
-            return new ScriptConditionEachDay();
+            return spScriptConditionEachDay::create();
         }
         case ConditionType::unitDestroyed:
         {
-            return new ScriptConditionUnitDestroyed();
+            return spScriptConditionUnitDestroyed::create();
         }
         case ConditionType::buildingDestroyed:
         {
-            return new ScriptConditionBuildingDestroyed();
+            return spScriptConditionBuildingDestroyed::create();
         }
         case ConditionType::buildingCaptured:
         {
-            return new ScriptConditionBuildingCaptured();
+            return spScriptConditionBuildingCaptured::create();
         }
         case ConditionType::playerDefeated:
         {
-            return new ScriptConditionPlayerDefeated();
+            return spScriptConditionPlayerDefeated::create();
         }
         case ConditionType::unitsDestroyed:
         {
-            return new ScriptConditionUnitsDestroyed();
+            return spScriptConditionUnitsDestroyed::create();
         }
         case ConditionType::buildingsOwned:
         {
-            return new ScriptConditionBuildingsOwned();
+            return spScriptConditionBuildingsOwned::create();
         }
-
         case ConditionType::playerReachedArea:
         {
-            return new ScriptConditionPlayerReachedArea();
+            return spScriptConditionPlayerReachedArea::create();
         }
         case ConditionType::unitReachedArea:
         {
-            return new ScriptConditionUnitReachedArea();
+            return spScriptConditionUnitReachedArea::create();
         }
         case ConditionType::terrainDestroyed:
         {
-            return new ScriptConditionTerrainDestroyed();
+            return spScriptConditionTerrainDestroyed::create();
         }
         case ConditionType::checkVariable:
         {
-            return new ScriptConditionCheckVariable();
+            return spScriptConditionCheckVariable::create();
         }
     }
     return nullptr;
 }
 
 
-ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
+spScriptCondition ScriptCondition::createReadCondition(QTextStream& rStream)
 {
     qint64 pos = rStream.pos();
     QString line = rStream.readLine().simplified();
     rStream.seek(pos);
-    ScriptCondition* ret = nullptr;
+    spScriptCondition ret = nullptr;
     if (line.endsWith(ConditionEachDay))
     {
-         ret = new ScriptConditionEachDay();
+         ret = spScriptConditionEachDay::create();
     }
     else if (line.endsWith(ConditionStartOfTurn))
     {
-        ret = new ScriptConditionStartOfTurn();
+        ret = spScriptConditionStartOfTurn::create();
     }
     else if (line.endsWith(ConditionVictory))
     {
-        ret = new ScriptConditionVictory();
+        ret = spScriptConditionVictory::create();
     }
     else if (line.endsWith(ConditionUnitDestroyed))
     {
-        ret = new ScriptConditionUnitDestroyed();
+        ret = spScriptConditionUnitDestroyed::create();
     }
     else if (line.endsWith(ConditionBuildingDestroyed))
     {
-        ret = new ScriptConditionBuildingDestroyed();
+        ret = spScriptConditionBuildingDestroyed::create();
     }
     else if (line.endsWith(ConditionBuildingCaptured))
     {
-        ret = new ScriptConditionBuildingCaptured();
+        ret = spScriptConditionBuildingCaptured::create();
     }
     else if (line.endsWith(ConditionPlayerDefeated))
     {
-        ret = new ScriptConditionPlayerDefeated();
+        ret = spScriptConditionPlayerDefeated::create();
     }
     else if (line.endsWith(ConditionUnitsDestroyed))
     {
-        ret = new ScriptConditionUnitsDestroyed();
+        ret = spScriptConditionUnitsDestroyed::create();
     }
     else if (line.endsWith(ConditionBuildingsOwned))
     {
-        ret = new ScriptConditionBuildingsOwned();
+        ret = spScriptConditionBuildingsOwned::create();
     }
     else if (line.endsWith(ConditionUnitReachedArea))
     {
-        ret = new ScriptConditionUnitReachedArea();
+        ret = spScriptConditionUnitReachedArea::create();
     }
     else if (line.endsWith(ConditionPlayerReachedArea))
     {
-        ret = new ScriptConditionPlayerReachedArea();
+        ret = spScriptConditionPlayerReachedArea::create();
     }
     else if (line.endsWith(ConditionTerrainDestroyed))
     {
-        ret = new ScriptConditionTerrainDestroyed();
+        ret = spScriptConditionTerrainDestroyed::create();
     }
     else if (line.endsWith(ConditionCheckVariable))
     {
-        ret = new ScriptConditionCheckVariable();
+        ret = spScriptConditionCheckVariable::create();
     }
-    if (ret != nullptr)
+    if (ret.get() != nullptr)
     {
         ret->readCondition(rStream);
     }

@@ -23,7 +23,7 @@ Wikimenu::Wikimenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("wikimenu");
     sprite->setResAnim(pBackground);
@@ -54,6 +54,5 @@ void Wikimenu::exitMenue()
     // save changed settings :)
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }

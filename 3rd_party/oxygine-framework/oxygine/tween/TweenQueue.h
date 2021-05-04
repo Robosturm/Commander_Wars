@@ -35,11 +35,11 @@ namespace oxygine
         /**short syntax for easy tween queue creation*/
         static spTweenQueue create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5, spTween t6, spTween t7);
 
-        /*Add new new tween to Queue, returns added tween*/
+        /*Add tween to Queue, returns added tween*/
         spTween add(spTween t);
 
         template<class GS>
-        spTween add(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear);
+        spTween add(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = timeMS(0), Tween::EASE ease = Tween::ease_linear);
 
         template<class GS>
         spTween add(const GS& gs, const TweenOptions&);

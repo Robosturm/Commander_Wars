@@ -6,10 +6,10 @@
 Label::Label(qint32 width)
 {
     setObjectName("Label");
-    m_clipRect = new oxygine::ClipRectActor();
+    m_clipRect = oxygine::spClipRectActor::create();
     m_clipRect->setWidth(width);
     m_clipRect->setHeight(28);
-    m_textField = new oxygine::TextField();
+    m_textField = oxygine::spTextField::create();
     m_textField->setWidth(width);
     setWidth(width);
     m_clipRect->addChild(m_textField);

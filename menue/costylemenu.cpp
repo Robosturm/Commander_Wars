@@ -27,7 +27,7 @@ COStyleMenu::COStyleMenu()
     Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("costylemenu");
     sprite->setResAnim(pBackground);
@@ -65,7 +65,7 @@ COStyleMenu::COStyleMenu()
     {
         bannList.removeAll(item);
     }
-    spCOSelection pCOSelection = new COSelection(QSize(Settings::getWidth(), Settings::getHeight() - 100), bannList);
+    spCOSelection pCOSelection = spCOSelection::create(QSize(Settings::getWidth(), Settings::getHeight() - 100), bannList);
     pCOSelection->colorChanged(QColor(248, 88, 0));
     addChild(pCOSelection);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
@@ -73,21 +73,17 @@ COStyleMenu::COStyleMenu()
 }
 
 void COStyleMenu::exitMenue()
-{
-    
+{    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void COStyleMenu::reloadMenue()
-{
-    
+{    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new COStyleMenu());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void COStyleMenu::selectedCOIDChanged(QString coid)
@@ -102,7 +98,7 @@ void COStyleMenu::editCOStyle()
     
     if (!m_currentCOID.isEmpty())
     {
-        spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);
+        spDialogCOStyle pDialogCOStyle = spDialogCOStyle::create(m_currentCOID);
         addChild(pDialogCOStyle);
         connect(pDialogCOStyle.get(), &DialogCOStyle::sigFinished, this, &COStyleMenu::reloadMenue, Qt::QueuedConnection);
     }

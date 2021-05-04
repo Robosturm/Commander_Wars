@@ -7,6 +7,9 @@
 #include "game/GameEnums.h"
 #include "game/player.h"
 
+class GameAnimationCapture;
+using spGameAnimationCapture = oxygine::intrusive_ptr<GameAnimationCapture>;
+
 class GameAnimationCapture : public GameAnimation
 {
     Q_OBJECT

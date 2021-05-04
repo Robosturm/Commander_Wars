@@ -26,7 +26,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -70,7 +70,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         }
     });
     auto items = getNameList();
-    m_PredefinedLists = new DropDownmenu(300, items);
+    m_PredefinedLists = spDropDownmenu::create(300, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
@@ -92,7 +92,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
+    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
                                      QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
@@ -102,7 +102,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    spLabel pLabel = new Label(pPanel->getWidth() - 60);
+    spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Build List"));
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
@@ -118,16 +118,16 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     {
         QString unitID = m_UnitList[i];
 
-        spUnit pUnit = new Unit(unitID, pMap->getPlayer(player), false);
+        spUnit pUnit = spUnit::create(unitID, pMap->getPlayer(player), false);
 
-        pLabel = new Label(250);
+        pLabel = spLabel::create(250);
         pLabel->setStyle(style);
         pLabel->setHtmlText(pUnit->getName());
 
         pLabel->setPosition(x + 80, y);
         pUnit->setPosition(x + 45, y);
         pUnit->setScale(pUnit->getScale() * 1.25f);
-        spCheckbox pCheckbox = new Checkbox();
+        spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setPosition(x, y);
         m_Checkboxes.append(pCheckbox);
 
@@ -229,7 +229,7 @@ void BuildListDialog::setBuildlist(qint32 item)
 void BuildListDialog::showSaveBannlist()
 {
     
-    spDialogTextInput pSaveInput = new DialogTextInput(tr("Banlist Name"), true, "");
+    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Banlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);
     

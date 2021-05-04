@@ -93,16 +93,16 @@ void LocalServer::onConnect()
         QObject::connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
-        RxTask* pRXTask = new RxTask(nextSocket, m_idCounter, this, true);
+        spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, true);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
-        QObject::connect(nextSocket, &QLocalSocket::readyRead, pRXTask, &RxTask::recieveData, Qt::QueuedConnection);
+        QObject::connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
-        TxTask* pTXTask = new TxTask(nextSocket, m_idCounter, this, true);
+        spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, true);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
-        QObject::connect(this, &LocalServer::sig_sendData, pTXTask, &TxTask::send, Qt::QueuedConnection);
+        QObject::connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;
         QObject::connect(nextSocket, &QLocalSocket::disconnected, [=]()
         {
@@ -148,7 +148,7 @@ void LocalServer::changeThread(quint64 socketID, QThread*)
 
 void LocalServer::addSocket(quint64 socket)
 {
-    Console::print("Local Server added new socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
+    Console::print("Local Server added socket " + QString::number(socket), Console::eLogLevels::eDEBUG);
     m_SocketIDs.append(socket);
 }
 

@@ -17,14 +17,14 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     this->setSize(width, 33);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
-    m_pBox = new oxygine::Box9Sprite();
+    m_pBox = oxygine::spBox9Sprite::create();
     m_pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBox->setResAnim(pAnim);
     m_pBox->setSize(width, 33);
     this->addChild(m_pBox);
 
-    m_pArrowRigth = new oxygine::Button();
+    m_pArrowRigth = oxygine::spButton::create();
     m_pArrowRigth->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
     m_pArrowRigth->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     m_pArrowRigth->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
@@ -64,7 +64,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->addChild(m_pArrowRigth);
     m_pArrowRigth->setPosition(width - m_pArrowRigth->getWidth() - 8, 9);
 
-    m_pArrowLeft = new oxygine::Button();
+    m_pArrowLeft = oxygine::spButton::create();
     // pButton->setPosition(200, 200);
     m_pArrowLeft->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+right"));
     m_pArrowLeft->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -106,7 +106,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     m_pBox->addChild(m_pArrowLeft);
     m_pArrowLeft->setPosition(9, 8);
 
-    m_slider = new oxygine::Box9Sprite();
+    m_slider = oxygine::spBox9Sprite::create();
     pAnim = pObjectManager->getResAnim("v_scrollbar");
     m_slider->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_slider->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
@@ -205,7 +205,7 @@ void V_Scrollbar::scroll(oxygine::Event* pEvent)
                 x = m_Width - m_slider->getWidth() - 20;
             }
             m_slider->setX(x);
-            // calc new scroll value :)
+            // calc scroll value :)
             if (static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20) > 0)
             {
                 m_Scrollvalue = static_cast<float>(x - 20) / static_cast<float>(m_Width - m_slider->getWidth() - 20 - 20);

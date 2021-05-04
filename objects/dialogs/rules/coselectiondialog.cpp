@@ -21,7 +21,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -32,7 +32,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_COSelection = new COSelection(QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
+    m_COSelection = spCOSelection::create(QSize(Settings::getWidth() - 60, Settings::getHeight() - 100), coids);
     m_COSelection->colorChanged(color);
     m_COSelection->setPosition(30, 30);
     pSpriteBox->addChild(m_COSelection);
@@ -78,7 +78,7 @@ void COSelectionDialog::showCOInfo()
         coid = COSpriteManager::getInstance()->getID(0);
     }
     Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
-    spCO co = new CO(coid, pPlayer);
+    spCO co = spCO::create(coid, pPlayer);
     addChild(new COInfoDialog(co, pPlayer, [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
@@ -97,7 +97,7 @@ void COSelectionDialog::showCOInfo()
         {
             coid = pCOSpriteManager->getID(index);
         }
-        pCurrentCO = new CO(coid, pPlayer);
+        pCurrentCO = spCO::create(coid, pPlayer);
     }, false));
 }
 

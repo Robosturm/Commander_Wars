@@ -6,9 +6,9 @@ RotatingSprite::RotatingSprite()
 {
     speedTimer.start();
 
-    m_SecondRect = new oxygine::ClipRectActor();
+    m_SecondRect = oxygine::spClipRectActor::create();
     addChild(m_SecondRect);
-    m_FirstRect = new oxygine::ClipRectActor();
+    m_FirstRect = oxygine::spClipRectActor::create();
     addChild(m_FirstRect);
 }
 

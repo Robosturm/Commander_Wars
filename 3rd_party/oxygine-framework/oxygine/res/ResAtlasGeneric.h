@@ -6,6 +6,9 @@ namespace oxygine
 
     struct atlas_data;
 
+    class ResAtlasGeneric;
+    using spResAtlasGeneric = intrusive_ptr<ResAtlasGeneric>;
+
     class ResAtlasGeneric : public ResAtlas
     {
     public:

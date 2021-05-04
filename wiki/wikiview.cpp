@@ -20,12 +20,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = new Label(width - 10);
+    spLabel pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_SearchString = new Textbox(viewWidth - 380);
+    m_SearchString = spTextbox::create(viewWidth - 380);
     m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &WikiView::searchChanged, Qt::QueuedConnection);
@@ -40,12 +40,12 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     connect(this, &WikiView::sigSearch, this, &WikiView::search, Qt::QueuedConnection);
     y += 50;
 
-    pTextfield = new Label(width - 10);
+    pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Tags: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_Tags = new DropDownmenu(300, WikiDatabase::getInstance()->getTags());
+    m_Tags = spDropDownmenu::create(300, WikiDatabase::getInstance()->getTags());
     m_Tags->setTooltipText(tr("Shows all pages grouped under a given tag. A page can be grouped in several groups at once."));
     m_Tags->setPosition(150, y);
     connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &WikiView::tagChanged, Qt::QueuedConnection);
@@ -54,7 +54,7 @@ WikiView::WikiView(qint32 viewWidth, qint32 viewHeigth)
     y += 50;
 
     QSize size(viewWidth - 20, viewHeigth - y - 50);
-    m_MainPanel = new Panel(true, size, size);
+    m_MainPanel = spPanel::create(true, size, size);
     m_MainPanel->setPosition(10, y);
     addChild(m_MainPanel);
     y += 50;
@@ -78,11 +78,11 @@ void WikiView::search(bool onlyTag)
     {
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
-        oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = new oxygine::TextField();
+        oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = FontManager::getMainFont24();
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;

@@ -19,6 +19,9 @@ namespace oxygine
     class Material;
     typedef intrusive_ptr<Material> spMaterialX;
 
+    class Material;
+    typedef intrusive_ptr<Material> spMaterial;
+
     class MaterialCache
     {
     public:
@@ -27,7 +30,7 @@ namespace oxygine
         template<class T>
         intrusive_ptr<T> cache(const T& other)
         {
-            return (T*)clone_(other);
+            return dynamic_pointer_cast<T>(clone_(other));
         }
 
         void clear();
@@ -42,7 +45,7 @@ namespace oxygine
         QMutex _lock;
         qint32 _addCounter;
 
-        Material* clone_(const Material& other);
+        spMaterial clone_(const Material& other);
         void removeUnusedNoLock();
     private:
         static MaterialCache mcache;

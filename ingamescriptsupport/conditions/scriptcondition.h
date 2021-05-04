@@ -56,13 +56,13 @@ public:
      * @param type
      * @return
      */
-    static ScriptCondition* createCondition(ConditionType type);
+    static spScriptCondition createCondition(ConditionType type);
     /**
      * @brief createReadCondition
      * @param rStream
      * @return
      */
-    static ScriptCondition* createReadCondition(QTextStream& rStream);
+    static spScriptCondition createReadCondition(QTextStream& rStream);
     /**
      * @brief readCondition
      * @param rStream

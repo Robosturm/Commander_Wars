@@ -5,6 +5,11 @@
 namespace oxygine
 {
     class VertexDeclarationGL;
+
+
+    class ShaderProgramGL;
+    typedef oxygine::intrusive_ptr<ShaderProgramGL> spShaderProgramGL;
+
     class ShaderProgramGL : public ShaderProgram
     {
     public:

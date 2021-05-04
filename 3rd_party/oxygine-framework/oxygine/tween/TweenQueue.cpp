@@ -4,7 +4,7 @@ namespace oxygine
 {
     spTweenQueue TweenQueue::create(spTween t1)
     {
-        spTweenQueue t = new TweenQueue;
+        spTweenQueue t = spTweenQueue::create();
         t->add(t1);
         return t;
     }

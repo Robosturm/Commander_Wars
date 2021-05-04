@@ -3,6 +3,9 @@
 
 #include "coreengine/pathfindingsystem.h"
 
+class TerrainFindingSystem;
+using spTerrainFindingSystem = oxygine::intrusive_ptr<TerrainFindingSystem>;
+
 class TerrainFindingSystem : public PathFindingSystem
 {
     Q_OBJECT

@@ -6,6 +6,9 @@
 #include "game/gameanimation.h"
 #include "game/player.h"
 
+class GameAnimationNextDay;
+using spGameAnimationNextDay = oxygine::intrusive_ptr<GameAnimationNextDay>;
+
 class GameAnimationNextDay : public GameAnimation
 {
     Q_OBJECT

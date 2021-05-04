@@ -32,7 +32,7 @@ void CoPowermeter::drawPowerMeter()
             {
                 for (qint32 i2 = 0; i2 < power + superpower; i2++)
                 {
-                    oxygine::spSprite pSprite = new oxygine::Sprite();
+                    oxygine::spSprite pSprite = oxygine::spSprite::create();
                     if (i2 >= power)
                     {
                         if (powerFilled >= static_cast<float>(i2 + 1))
@@ -115,7 +115,7 @@ void CoPowermeter::drawPowerMeter()
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = new oxygine::TextField();
+                oxygine::spTextField Text = oxygine::spTextField::create();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Power"));
                 Text->setY(0);
@@ -127,7 +127,7 @@ void CoPowermeter::drawPowerMeter()
                 {
                     Text->setX(0);
                 }
-                oxygine::spTweenQueue queue = new oxygine::TweenQueue();
+                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
@@ -146,7 +146,7 @@ void CoPowermeter::drawPowerMeter()
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = new oxygine::TextField();
+                oxygine::spTextField Text = oxygine::spTextField::create();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Superpower"));
                 Text->setY(0);
@@ -158,7 +158,7 @@ void CoPowermeter::drawPowerMeter()
                 {
                     Text->setX(0);
                 }
-                oxygine::spTweenQueue queue = new oxygine::TweenQueue();
+                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(200), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
@@ -177,7 +177,7 @@ void CoPowermeter::drawPowerMeter()
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = new oxygine::TextField();
+                oxygine::spTextField Text = oxygine::spTextField::create();
                 Text->setStyle(style);
                 Text->setHtmlText(tr("Tagpower"));
                 Text->setY(- 4);
@@ -189,7 +189,7 @@ void CoPowermeter::drawPowerMeter()
                 {
                     Text->setX(0);
                 }
-                oxygine::spTweenQueue queue = new oxygine::TweenQueue();
+                oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));

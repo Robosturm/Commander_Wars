@@ -192,7 +192,7 @@ namespace oxygine
         // init oxygine engine
         qDebug("initialize oxygine");
         qDebug("Qt build");
-        IVideoDriver::instance = new VideoDriverGLES20();
+        IVideoDriver::instance = spVideoDriverGLES20::create();
 
         IVideoDriver::instance->setDefaultSettings();
 
@@ -202,15 +202,15 @@ namespace oxygine
 
         registerResourceTypes();
 
-        STDRenderer::instance = new STDRenderer;
-        STDRenderDelegate::instance = new STDRenderDelegate;
-        Material::null       = new NullMaterialX;
+        STDRenderer::instance = spSTDRenderer::create();
+        STDRenderDelegate::instance = spSTDRenderDelegate::create();
+        Material::null       = spNullMaterialX::create();
         Material::current = Material::null;
 
         STDRenderer::current = STDRenderer::instance;
 
         // Create the stage. Stage is a root node for all updateable and drawable objects
-        oxygine::Stage::instance = new oxygine::Stage();
+        oxygine::Stage::instance = oxygine::spStage::create();
         QSize size = GameWindow::size();
         oxygine::getStage()->setSize(size.width(), size.height());
         emit sigLoadRessources();
@@ -226,7 +226,7 @@ namespace oxygine
         qDebug("core::restore() done");
     }
 
-    void GameWindow::loadResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         if (QThread::currentThreadId() == m_mainHandle)
         {
@@ -238,7 +238,7 @@ namespace oxygine
         }
     }
 
-    void GameWindow::loadSingleResAnim(oxygine::ResAnim* pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
+    void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
         pAnim->init(image, columns, rows, scaleFactor);
     }

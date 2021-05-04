@@ -14,12 +14,12 @@ ObjectManager::ObjectManager()
 
 oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QString tooltip, QString resAnim)
 {
-    oxygine::spButton pButton = new oxygine::Button();
+    oxygine::spButton pButton = oxygine::spButton::create();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim(resAnim));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
 
     //Create Actor with Text and add it to button as child
-    spLabel textField = new Label(width - 10);
+    spLabel textField = spLabel::create(width - 10);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -43,7 +43,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
     }
     textField->setTooltipText(tooltip);
     pButton->setSize(width, 40);
-    oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
+    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     clipRect->setSize(pButton->getSize());
     textField->setSize(pButton->getSize());
     textField->attachTo(clipRect);
@@ -69,12 +69,12 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width, QStrin
 
 oxygine::spButton ObjectManager::createIconButton(QString icon)
 {
-    oxygine::spButton pButton = new oxygine::Button();
+    oxygine::spButton pButton = oxygine::spButton::create();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(30, 30);
 
-    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(ObjectManager::getInstance()->getResAnim(icon));
     pButton->addChild(pSprite);
 
@@ -97,7 +97,7 @@ oxygine::spButton ObjectManager::createIconButton(QString icon)
 
 oxygine::spButton ObjectManager::createIconButton(oxygine::spSprite pSprite)
 {
-    oxygine::spButton pButton = new oxygine::Button();
+    oxygine::spButton pButton = oxygine::spButton::create();
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button_square"));
     pButton->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     pButton->setSize(37, 37);

@@ -24,7 +24,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     Interpreter::setCppOwnerShip(this);
     setSize(Settings::getWidth(), Settings::getHeight());
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
-    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setScaleX((Settings::getWidth() + 8.0f) / pAnim->getWidth());
     pSprite->setScaleY((Settings::getHeight() + 8.0f) / pAnim->getHeight());
@@ -43,7 +43,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     addChild(pSprite);
 
     CO* pCO = pPlayer->getCO(0);
-    oxygine::spSprite m_CO = new oxygine::Sprite();
+    oxygine::spSprite m_CO = oxygine::spSprite::create();
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
@@ -64,7 +64,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         oxygine::ResAnim* pAnim = pCO->getResAnim(resAnim);
         if (pAnim != nullptr)
         {
-            m_CO = new oxygine::Sprite();
+            m_CO = oxygine::spSprite::create();
             m_CO->setResAnim(pAnim);
             m_CO->setScale((Settings::getHeight() - 300) / pAnim->getHeight());
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
@@ -78,7 +78,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
-    oxygine::spTextField textField = new oxygine::TextField();
+    oxygine::spTextField textField = oxygine::spTextField::create();
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {

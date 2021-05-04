@@ -16,7 +16,7 @@ DialogRandomMap::DialogRandomMap()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -27,7 +27,7 @@ DialogRandomMap::DialogRandomMap()
     pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
-    m_pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+    m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
                          QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -37,12 +37,12 @@ DialogRandomMap::DialogRandomMap()
     float y = 30;
     qint32 width = 250;
 
-    spLabel text = new Label(width - 10);
+    spLabel text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Generator:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_GeneratorFile = new Textbox(Settings::getWidth() - 300 - width);
+    m_GeneratorFile = spTextbox::create(Settings::getWidth() - 300 - width);
     m_GeneratorFile->setTooltipText(tr("Selects the generator script used to generate the random map."));
     m_GeneratorFile->setPosition(text->getX() + width, text->getY());
     m_GeneratorFile->setCurrentText("data/randommaps/commanderwarsgenerator.js");
@@ -59,12 +59,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Name:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapName = new Textbox(Settings::getWidth() - 150 - width);
+    m_MapName = spTextbox::create(Settings::getWidth() - 150 - width);
     m_MapName->setTooltipText(tr("Selects the name of the new map."));
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText("");
@@ -72,12 +72,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Author:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapAuthor = new Textbox(Settings::getWidth() - 150 - width);
+    m_MapAuthor = spTextbox::create(Settings::getWidth() - 150 - width);
     m_MapAuthor->setTooltipText(tr("Selects the author of the new map."));
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(Settings::getUsername());
@@ -85,12 +85,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Description:"));
     text->setPosition(30, y);
     m_pPanel->addItem(text);
-    m_MapDescription = new Textbox(Settings::getWidth() - 150 - width);
+    m_MapDescription = spTextbox::create(Settings::getWidth() - 150 - width);
     m_MapDescription->setTooltipText(tr("Selects the description for the new map."));
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText("");
@@ -98,12 +98,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Width:"));
     text->setPosition(30, 5 + y );
     m_pPanel->addItem(text);
-    m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapWidth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
     m_MapWidth->setTooltipText(tr("Selects the width for the new map."));
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(20);
@@ -111,12 +111,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Heigth:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapHeigth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
     m_MapHeigth->setTooltipText(tr("Selects the heigth for the new map."));
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(20);
@@ -124,12 +124,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Player:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
+    m_MapPlayerCount = spSpinBox::create(300, 2, 40, SpinBox::Mode::Int);
     m_MapPlayerCount->setTooltipText(tr("Selects the amount of players for the new map."));
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(4);
@@ -138,12 +138,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Seed:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
+    m_Seed = spSpinBox::create(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
     m_Seed->setTooltipText(tr("The seed to generate the new map. Same map settings with the same seed generate the same map."));
     m_Seed->setPosition(text->getX() + width, text->getY());
     m_Seed->setCurrentValue(GlobalUtils::randInt(0, std::numeric_limits<qint32>::max() - 1));
@@ -151,12 +151,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Create Road:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_CreateRoad = new Checkbox();
+    m_CreateRoad = spCheckbox::create();
     m_CreateRoad->setTooltipText(tr("If selected roads are created between the HQ's of the players."));
     m_CreateRoad->setChecked(false);
     m_CreateRoad->setPosition(text->getX() + width, text->getY());
@@ -164,12 +164,12 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Base Size:"));
     text->setPosition(30, 5 + y + text->getHeight());
     m_pPanel->addItem(text);
-    m_BaseSize = new Slider(Settings::getWidth() - 220 - width, 0, 100);
+    m_BaseSize = spSlider::create(Settings::getWidth() - 220 - width, 0, 100);
     m_BaseSize->setCurrentValue(33);
     m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
     m_BaseSize->setPosition(text->getX() + width, y);
@@ -177,19 +177,19 @@ DialogRandomMap::DialogRandomMap()
 
     // Label
     y += 40;
-    m_TerrainChanceLabel = new oxygine::TextField();
+    m_TerrainChanceLabel = oxygine::spTextField::create();
     m_TerrainChanceLabel->setStyle(style);
     m_TerrainChanceLabel->setHtmlText(tr("Terrain Distribution"));
     m_TerrainChanceLabel->setPosition(30, 5 + y + m_TerrainChanceLabel->getHeight());
     m_pPanel->addItem(m_TerrainChanceLabel);
     y += 40;
-    m_BuildingChanceLabel = new oxygine::TextField();
+    m_BuildingChanceLabel = oxygine::spTextField::create();
     m_BuildingChanceLabel->setStyle(style);
     m_BuildingChanceLabel->setHtmlText(tr("Building Distribution"));
     m_BuildingChanceLabel->setPosition(30, 5 + y + m_BuildingChanceLabel->getHeight());
     m_pPanel->addItem(m_BuildingChanceLabel);
     y += 40;
-    m_OwnerDistributionLabel = new oxygine::TextField();
+    m_OwnerDistributionLabel = oxygine::spTextField::create();
     m_OwnerDistributionLabel->setStyle(style);
     m_OwnerDistributionLabel->setHtmlText(tr("Owner Distribution"));
     m_OwnerDistributionLabel->setPosition(30, 5 + y + m_OwnerDistributionLabel->getHeight());
@@ -197,12 +197,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    m_unitCountLabel = new Label(width - 10);
+    m_unitCountLabel = spLabel::create(width - 10);
     m_unitCountLabel->setStyle(style);
     m_unitCountLabel->setHtmlText(tr("Unit Count:"));
     m_unitCountLabel->setPosition(30, 5 + y );
     m_pPanel->addItem(m_unitCountLabel);
-    m_unitCount = new SpinBox(300, 0, 9999, SpinBox::Mode::Int);
+    m_unitCount = spSpinBox::create(300, 0, 9999, SpinBox::Mode::Int);
     m_unitCount->setTooltipText(tr("Total amount of units that get spawned. If no valid position for a unit is found no unit gets spawned instead"));
     m_unitCount->setPosition(m_unitCountLabel->getX() + width, m_unitCountLabel->getY());
     m_unitCount->setCurrentValue(0);
@@ -210,12 +210,12 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
 
     // Label
-    m_unitsNearHqLabel = new Label(width - 10);
+    m_unitsNearHqLabel = spLabel::create(width - 10);
     m_unitsNearHqLabel->setStyle(style);
     m_unitsNearHqLabel->setHtmlText(tr("Units near HQ:"));
     m_unitsNearHqLabel->setPosition(30, 5 + y );
     m_pPanel->addItem(m_unitsNearHqLabel);
-    m_unitsNearHq = new SpinBox(300, 0, 100, SpinBox::Mode::Int);
+    m_unitsNearHq = spSpinBox::create(300, 0, 100, SpinBox::Mode::Int);
     m_unitsNearHq->setUnit("%");
     m_unitsNearHq->setTooltipText(tr("The percantage of units which get spawned near the HQ of the player."));
     m_unitsNearHq->setPosition(text->getX() + width, text->getY());
@@ -223,25 +223,25 @@ DialogRandomMap::DialogRandomMap()
     m_pPanel->addItem(m_unitsNearHq);
     y += 40;
     // Label
-    m_unitDistributionLabel = new Label(width - 10);
+    m_unitDistributionLabel = spLabel::create(width - 10);
     m_unitDistributionLabel->setStyle(style);
     m_unitDistributionLabel->setHtmlText(tr("Units spawn mode:"));
     m_unitDistributionLabel->setPosition(30, 5 + y );
     m_pPanel->addItem(m_unitDistributionLabel);
     QVector<QString> items = {tr("Random"), tr("Distributed")};
-    m_unitDistributionSelection = new DropDownmenu(300, items);
+    m_unitDistributionSelection = spDropDownmenu::create(300, items);
     m_unitDistributionSelection->setTooltipText(tr("Random for units getting spawned at random.\nDistributed for units beeing spawned at the given rate."));
     m_unitDistributionSelection->setPosition(text->getX() + width, text->getY());
     m_unitDistributionSelection->setCurrentItem(1);
     m_pPanel->addItem(m_unitDistributionSelection);
     y += 40;
-    m_UnitDistributionLabel = new oxygine::TextField();
+    m_UnitDistributionLabel = oxygine::spTextField::create();
     m_UnitDistributionLabel->setStyle(style);
     m_UnitDistributionLabel->setHtmlText(tr("Unit distribution:"));
     m_UnitDistributionLabel->setPosition(30, 5 + y + m_UnitDistributionLabel->getHeight());
     m_pPanel->addItem(m_UnitDistributionLabel);
     y += 40;
-    m_UnitChanceLabel = new oxygine::TextField();
+    m_UnitChanceLabel = oxygine::spTextField::create();
     m_UnitChanceLabel->setStyle(style);
     m_UnitChanceLabel->setHtmlText(tr("Unit spawn chance"));
     m_UnitChanceLabel->setPosition(30, 5 + y + m_UnitChanceLabel->getHeight());
@@ -315,7 +315,7 @@ void DialogRandomMap::showGeneratorSelection()
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/data/randomMaps";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &DialogRandomMap::generatorChanged, Qt::QueuedConnection);
     
@@ -363,7 +363,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 terrainChances.append(terrainChancesVariant[i].toInt());
             }
         }
-        m_TerrainChances = new Multislider(terrainStrings, Settings::getWidth() - 150, terrainChances);
+        m_TerrainChances = spMultislider::create(terrainStrings, Settings::getWidth() - 150, terrainChances);
         m_TerrainChances->setTooltipText(QObject::tr("The percent distribution between the different terrains when a terrain is placed."));
         m_TerrainChances->setPosition(30, m_TerrainChanceLabel->getY() + 40);
         m_pPanel->addItem(m_TerrainChances);
@@ -380,7 +380,7 @@ void DialogRandomMap::DialogRandomMap::generatorChanged(QString filename)
                 buildingChances.append(buildingChancesVariant[i].toInt());
             }
         }
-        m_BuildingChances = new Multislider(buildingStrings, Settings::getWidth() - 150, buildingChances);
+        m_BuildingChances = spMultislider::create(buildingStrings, Settings::getWidth() - 150, buildingChances);
         m_BuildingChances->setTooltipText(tr("The percent distribution between the different buildings when a building is placed."));
         m_BuildingChances->setPosition(30, m_BuildingChanceLabel->getY() + 40);
         m_pPanel->addItem(m_BuildingChances);
@@ -412,7 +412,7 @@ void DialogRandomMap::playerChanged(qreal)
         playerStrings.append(tr("Player ") + QString::number(i + 1));
         playerChances.append(0);
     }
-    m_OwnerDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
+    m_OwnerDistribution = spMultislider::create(playerStrings, Settings::getWidth() - 150, playerChances);
     m_OwnerDistribution->setTooltipText(tr("The percent building distribution between the players. Note buildings close to an Player HQ may be ignored."));
     m_OwnerDistribution->setPosition(30, m_OwnerDistributionLabel->getY() + 40);
     m_pPanel->addItem(m_OwnerDistribution);
@@ -455,14 +455,14 @@ void DialogRandomMap::createUnitChances()
         playerChances.append(0);
     }
     qint32 y = m_UnitDistributionLabel->getY() + 40;
-    m_unitDistribution = new Multislider(playerStrings, Settings::getWidth() - 150, playerChances);
+    m_unitDistribution = spMultislider::create(playerStrings, Settings::getWidth() - 150, playerChances);
     m_unitDistribution->setTooltipText(tr("The percent unit distribution between the players. Note units that can't be spawned still count to the distribution."));
     m_unitDistribution->setPosition(30, y);
     m_pPanel->addItem(m_unitDistribution);
 
     y = m_unitDistribution->getY() + 40 * (player - 1);
     m_UnitChanceLabel->setY(y);
-    m_UnitChances = new Multislider(unitStrings, Settings::getWidth() - 150, m_UnitChanceValues);
+    m_UnitChances = spMultislider::create(unitStrings, Settings::getWidth() - 150, m_UnitChanceValues);
     m_UnitChances->setTooltipText(tr("The percent distribution between the units that will be spawned. Note units that can't be spawned still count to the distribution."));
     m_UnitChances->setPosition(30, m_UnitChanceLabel->getY() + 40);
     m_pPanel->addItem(m_UnitChances);

@@ -25,7 +25,7 @@ Shopmenu::Shopmenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("shopmenu");
     sprite->setResAnim(pBackground);
@@ -40,7 +40,7 @@ Shopmenu::Shopmenu()
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
@@ -60,7 +60,7 @@ Shopmenu::Shopmenu()
 
     ShopLoader* pShopLoader = ShopLoader::getInstance();
     oxygine::ResAnim* pHachi = pShopLoader->getResAnim("hachi_shop");
-    sprite = new oxygine::Sprite();
+    sprite = oxygine::spSprite::create();
     sprite->setResAnim(pHachi);
     sprite->setScaleX(Settings::getWidth() * (1.0f / 2.0f) / pHachi->getWidth());
     sprite->setScaleY((Settings::getHeight() - 60) / pHachi->getWidth());
@@ -68,17 +68,17 @@ Shopmenu::Shopmenu()
     addChild(sprite);
 
     QSize size = QSize(Settings::getWidth() /2, Settings::getHeight() - 110);
-    m_pPanel = new Panel(true, size, size);
+    m_pPanel = spPanel::create(true, size, size);
     m_pPanel->setY(50);
     addChild(m_pPanel);
 
     const qint32 width = 150;
-    spLabel pLabel = new Label(width);
+    spLabel pLabel = spLabel::create(width);
     pLabel->setText(tr("Filter:"));
     pLabel->setPosition(10, 10);
     addChild(pLabel);
     QVector<QString> list = {tr("All"), tr("CO's"), tr("CO Skins"), tr("Maps"), tr("Units"), tr("Perks")};
-    spDropDownmenu pDropDownmenu = new DropDownmenu(300, list);
+    spDropDownmenu pDropDownmenu = spDropDownmenu::create(300, list);
     pDropDownmenu->setPosition(10 + width, + 10);
     addChild(pDropDownmenu);
     connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &Shopmenu::filterChanged, Qt::QueuedConnection);
@@ -95,22 +95,22 @@ Shopmenu::Shopmenu()
     connect(this, &Shopmenu::sigBuy, this, &Shopmenu::buy, Qt::QueuedConnection);
     connect(this, &Shopmenu::sigShowWikipage, this, &Shopmenu::showWikipage, Qt::QueuedConnection);
 
-    pLabel = new Label(width - 30);
+    pLabel = spLabel::create(width - 30);
     pLabel->setText(tr("Points:"));
     pLabel->setPosition(10, 10);
     pButtonBox->addChild(pLabel);
 
     qint32 pointsSize = Settings::getWidth() - 10 * 7 - m_buyButton->getWidth() - pButtonExit->getWidth() - width * 2;
-    m_points = new Label(pointsSize / 2);
+    m_points = spLabel::create(pointsSize / 2);
     m_points->setText(QString::number(Userdata::getInstance()->getCredtis()));
     m_points->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
     pButtonBox->addChild(m_points);
 
-    pLabel = new Label(width + 30);
+    pLabel = spLabel::create(width + 30);
     pLabel->setText(tr("Total Price:"));
     pLabel->setPosition(m_points->getX() + m_points->getWidth() + 10, 10);
     pButtonBox->addChild(pLabel);
-    m_costs = new Label(pointsSize / 2);
+    m_costs = spLabel::create(pointsSize / 2);
     m_costs->setText(QString::number(0));
     m_costs->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 10);
     pButtonBox->addChild(m_costs);
@@ -144,7 +144,7 @@ void Shopmenu::filterChanged(qint32 item)
     for (const auto & item : items)
     {
         m_shoppingList.append(false);
-        spCheckbox pCheckbox = new Checkbox();
+        spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setPosition(10, y);
         pCheckbox->setTooltipText(tr("Check to but the item on the buy list. Afterwards click buy to confirm your shopping."));
         qint32 costs = item.price;
@@ -168,7 +168,7 @@ void Shopmenu::filterChanged(qint32 item)
         loadWikiInfo(pButton, item.itemType, item.key);
         pButton->setPosition(55, y);
         m_pPanel->addItem(pButton);
-        spLabel pLabel = new Label(width);
+        spLabel pLabel = spLabel::create(width);
         pLabel->setPosition(95, y);
         pLabel->setText(QString::number(costs) + " " + item.name);
         m_pPanel->addItem(pLabel);

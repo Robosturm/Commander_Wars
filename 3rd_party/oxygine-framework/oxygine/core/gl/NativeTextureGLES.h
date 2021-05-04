@@ -5,7 +5,9 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(NativeTextureGLES, spNativeTextureGLES);
+    class NativeTextureGLES;
+    using spNativeTextureGLES = intrusive_ptr<NativeTextureGLES>;
+
     class NativeTextureGLES : public NativeTexture
     {
     public:
@@ -40,6 +42,7 @@ namespace oxygine
         virtual void* _getRestorableObject() override {return this;}
         friend class VideoDriverGL;
         friend class VideoDriverGLES20;
+        friend class intrusive_ptr<NativeTextureGLES>;
         NativeTextureGLES();
 
         GLuint _id;

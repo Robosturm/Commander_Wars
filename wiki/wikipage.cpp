@@ -21,7 +21,7 @@ Wikipage::Wikipage()
     Interpreter::setCppOwnerShip(this);
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -43,7 +43,7 @@ Wikipage::Wikipage()
     });
 
     // no the fun begins create checkboxes and stuff and a panel down here
-    m_pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+    m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
                                      QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
@@ -74,7 +74,7 @@ void Wikipage::loadText(QString text)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
@@ -91,7 +91,7 @@ void Wikipage::loadHeadline(QString text)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);

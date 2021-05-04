@@ -207,7 +207,7 @@ void InfluenceFrontMap::show()
             if (m_InfluenceMap[x][y].owners.size() == 1)
             {
                 qint32 owner = m_InfluenceMap[x][y].owners[0];
-                oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
                 sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
                 QColor color = pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
@@ -239,7 +239,7 @@ void InfluenceFrontMap::showFrontlines()
             for (qint32 i = 0; i < info.frontOwners.size(); ++i)
             {
                 qint32 owner = info.frontOwners[i];
-                oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+                oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
                 sprite->setSize(size, GameMap::getImageSize());
                 QColor color = pMap->getPlayer(owner)->getColor();
                 color.setAlphaF(0.5f);
@@ -249,7 +249,7 @@ void InfluenceFrontMap::showFrontlines()
                 pMap->addChild(sprite);
                 m_info.append(sprite);
             }
-            oxygine::spTextField pTextfield = new oxygine::TextField();
+            oxygine::spTextField pTextfield = oxygine::spTextField::create();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(QString::number(count));
             pTextfield->setPosition(field.x() * GameMap::getImageSize(), field.y() * GameMap::getImageSize());

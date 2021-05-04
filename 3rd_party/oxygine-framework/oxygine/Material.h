@@ -7,6 +7,9 @@ namespace oxygine
 {
     class MaterialCache;
 
+    class Material;
+    using spMaterial = oxygine::intrusive_ptr<Material>;
+
     class Material : public ref_counter
     {
     public:
@@ -31,7 +34,7 @@ namespace oxygine
         virtual void xapply() {}
         virtual void xflush() {}
 
-        virtual Material* clone() const = 0;
+        virtual spMaterial clone() const = 0;
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
@@ -52,6 +55,8 @@ namespace oxygine
 
     typedef intrusive_ptr<Material> spMaterialX;
 
+    class NullMaterialX;
+    typedef intrusive_ptr<NullMaterialX> spNullMaterialX;
 
     class NullMaterialX : public Material
     {
@@ -65,7 +70,7 @@ namespace oxygine
         }
         void copyTo(NullMaterialX &d) const{d = *this;}
         void copyFrom(const NullMaterialX &d) {*this = d;}
-        NullMaterialX* clone() const override {return new NullMaterialX(*this);}
+        spMaterial clone() const override {return spNullMaterialX::create(*this);}
         virtual void update(size_t &hash, compare &cm) const override
         {
             typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
@@ -79,7 +84,7 @@ namespace oxygine
     };
 
     DECLARE_SMART(STDMaterial, spSTDMaterial);
-    class STDMaterial: public Material
+    class STDMaterial : public Material
     {
     public:
         STDMaterial()
@@ -91,7 +96,7 @@ namespace oxygine
         }
         void copyTo(STDMaterial &d) const{d = *this;}
         void copyFrom(const STDMaterial &d) {*this = d;}
-        STDMaterial* clone() const override {return new STDMaterial(*this);}
+        spMaterial clone() const override {return spSTDMaterial::create(*this);}
         virtual void update(size_t &hash, compare &cm) const override
         {
             typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
@@ -106,8 +111,8 @@ namespace oxygine
         spNativeTexture    _alpha;
         blend_mode         _blend;
         UberShaderProgram* _uberShader;
-        QColor              _addColor;
-        qint32                _flags;
+        QColor             _addColor;
+        qint32             _flags;
 
         static bool cmp(const STDMaterial& a, const STDMaterial& b);
 
@@ -121,6 +126,5 @@ namespace oxygine
         virtual void render(const QColor& c, const RectF& src, const RectF& dest) override;
 
         spSTDMaterial cloneDefaultShader() const;
-    };
-    
+    };    
 }

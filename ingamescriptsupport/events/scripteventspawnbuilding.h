@@ -3,6 +3,9 @@
 
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
+class ScriptEventSpawnBuilding;
+using spScriptEventSpawnBuilding = oxygine::intrusive_ptr<ScriptEventSpawnBuilding>;
+
 class ScriptEventSpawnBuilding : public ScriptEventGeneric
 {
     Q_OBJECT

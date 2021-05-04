@@ -39,7 +39,7 @@ namespace oxygine
         typedef QVector<spResource> resources;
         typedef QMap<QString, spResource> resourcesMap;
 
-        typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
+        typedef spResource (*createResourceCallback)(CreateResourceContext& context);
 
         /**Registers your own resource type.
         @param creation callback
@@ -59,7 +59,7 @@ namespace oxygine
         bool loadXML(const QString xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
-        void add(Resource* r, bool accessByShortenID = false);
+        void add(spResource r, bool accessByShortenID = false);
 
         /**Calls Resource::load for each resource in the list*/
         void load();

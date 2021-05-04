@@ -5,8 +5,8 @@ namespace oxygine
 
     SlidingSprite::SlidingSprite()
     {
-        m_sprites[0] = new Sprite();
-        m_sprites[1] = new Sprite();
+        m_sprites[0] = spSprite::create();
+        m_sprites[1] = spSprite::create();
         addChild(m_sprites[0]);
         addChild(m_sprites[1]);
     }

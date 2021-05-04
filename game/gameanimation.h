@@ -18,21 +18,6 @@ typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
 class GameAnimation : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
-    struct SpriteData
-    {
-        QString file;
-        qint32 frames = 0;
-        bool loaded = false;
-        float offsetX;
-        float offsetY;
-        QColor color;
-        qint32 sleepAfterFinish;
-        float scaleX;
-        float scaleY;
-        qint32 delay;
-        oxygine::spResAnim pAnim;
-    };
-
 public:
     explicit GameAnimation(quint32 frameTime);
     virtual ~GameAnimation() = default;
@@ -366,14 +351,12 @@ private:
         qint32 delayMs;
     };
     QVector<SoundData> m_SoundData;
+    QVector<oxygine::spSingleResAnim> m_resAnims;
     /**
      * @brief animation data needed to perform this action
      */
     QBuffer m_buffer;
     QDataStream m_actionData{&m_buffer};
-
-    QVector<SpriteData> sprites;
-
     QVector<oxygine::spTween> m_stageTweens;
 
 };

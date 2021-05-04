@@ -8,6 +8,7 @@ namespace oxygine
     namespace text
     {
         class Node;
+        using spNode = intrusive_ptr<Node>;
 
         class TextBuilder
         {
@@ -15,10 +16,10 @@ namespace oxygine
             TextBuilder();
             virtual ~TextBuilder();
 
-            text::Node* parse(QString str);
+            text::spNode parse(QString str);
 
         private:
-            text::Node*  create(QDomNode& reader);
+            text::spNode  create(QDomNode& reader);
         };
     }
 }

@@ -51,84 +51,84 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     qint64 pos = rStream.pos();
     QString line = rStream.readLine().simplified();
     rStream.seek(pos);
-    ScriptEvent* ret = nullptr;
+    spScriptEvent ret = nullptr;
     if (line.endsWith(EventDialog))
     {
-         ret = new ScriptEventDialog();
+         ret = spScriptEventDialog::create();
     }
     else if (line.endsWith(EventSpawnUnit))
     {
-         ret = new ScriptEventSpawnUnit();
+         ret = spScriptEventSpawnUnit::create();
     }
     else if (line.endsWith(EventDefeatPlayer))
     {
-         ret = new ScriptEventDefeatPlayer();
+         ret = spScriptEventDefeatPlayer::create();
     }
     else if (line.endsWith(EventAddFunds))
     {
-         ret = new ScriptEventAddFunds();
+         ret = spScriptEventAddFunds::create();
     }
     else if (line.endsWith(EventChangeBuildlist))
     {
-         ret = new ScriptEventChangeBuildlist();
+         ret = spScriptEventChangeBuildlist::create();
     }
     else if (line.endsWith(EventChangeWeather))
     {
-         ret = new ScriptEventChangeWeather();
+         ret = spScriptEventChangeWeather::create();
     }
     else if (line.endsWith(EventChangeCOBar))
     {
-         ret = new ScriptEventChangeCOBar();
+         ret = spScriptEventChangeCOBar::create();
     }
     else if (line.endsWith(EventModifyTerrain))
     {
-         ret = new ScriptEventModifyTerrain();
+         ret = spScriptEventModifyTerrain::create();
     }
     else if (line.endsWith(EventModifyUnit))
     {
-         ret = new ScriptEventModifyUnit();
+         ret = spScriptEventModifyUnit::create();
     }
     else if (line.endsWith(EventAnimation))
     {
-         ret = new ScriptEventAnimation();
+         ret = spScriptEventAnimation::create();
     }
     else if (line.endsWith(EventVictoryInfo))
     {
-         ret = new ScriptEventVictoryInfo();
+         ret = spScriptEventVictoryInfo::create();
     }
     else if (line.endsWith(EventModifyVariable))
     {
-         ret = new ScriptEventModifyVariable();
+         ret = spScriptEventModifyVariable::create();
     }
     else if (line.endsWith(EventChangeUnitAI))
     {
-        ret = new ScriptEventChangeUnitAI();
+        ret = spScriptEventChangeUnitAI::create();
     }
     else if (line.endsWith(EventChangeBuildingOwner))
     {
-        ret = new ScriptEventChangeBuildingOwner();
+        ret = spScriptEventChangeBuildingOwner::create();
     }
     else if (line.endsWith(EventChangeUnitOwner))
     {
-        ret = new ScriptEventChangeUnitOwner();
+        ret = spScriptEventChangeUnitOwner::create();
     }
     else if (line.endsWith(EventChangePlayerTeam))
     {
-        ret = new ScriptEventChangePlayerTeam();
+        ret = spScriptEventChangePlayerTeam::create();
     }
     else if (line.endsWith(EventSpawnBuilding))
     {
-        ret = new ScriptEventSpawnBuilding();
+        ret = spScriptEventSpawnBuilding::create();
     }
     else if (line.endsWith(EventCenterMap))
     {
-        ret = new ScriptEventCenterMap();
+        ret = spScriptEventCenterMap::create();
     }
     else if (line.endsWith(EventPlaySound))
     {
-        ret = new ScriptEventPlaySound();
+        ret = spScriptEventPlaySound::create();
     }
-    if (ret != nullptr)
+    if (ret.get() != nullptr)
     {
         ret->readEvent(rStream);
     }
@@ -146,79 +146,79 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
     {
         case EventType::dialog:
         {
-            return new ScriptEventDialog();
+            return spScriptEventDialog::create();
         }
         case EventType::spawnUnit:
         {
-            return new ScriptEventSpawnUnit();
+            return spScriptEventSpawnUnit::create();
         }
         case EventType::defeatPlayer:
         {
-            return new ScriptEventDefeatPlayer();
+            return spScriptEventDefeatPlayer::create();
         }
         case EventType::addFunds:
         {
-            return new ScriptEventAddFunds();
+            return spScriptEventAddFunds::create();
         }
         case EventType::changeCOBar:
         {
-            return new ScriptEventChangeCOBar();
+            return spScriptEventChangeCOBar::create();
         }
         case EventType::changeWeather:
         {
-            return new ScriptEventChangeWeather();
+            return spScriptEventChangeWeather::create();
         }
         case EventType::changeBuildlist:
         {
-            return new ScriptEventChangeBuildlist();
+            return spScriptEventChangeBuildlist::create();
         }
         case EventType::modifyTerrain:
         {
-            return new ScriptEventModifyTerrain();
+            return spScriptEventModifyTerrain::create();
         }
         case EventType::modifyUnit:
         {
-            return new ScriptEventModifyUnit();
+            return spScriptEventModifyUnit::create();
         }
         case EventType::animation:
         {
-            return new ScriptEventAnimation();
+            return spScriptEventAnimation::create();
         }
         case EventType::victoryInfo:
         {
-            return new ScriptEventVictoryInfo();
+            return spScriptEventVictoryInfo::create();
         }
         case EventType::modifyVariable:
         {
-            return new ScriptEventModifyVariable();
+            return spScriptEventModifyVariable::create();
         }
         case EventType::ChangeUnitAI:
         {
-            return new ScriptEventChangeUnitAI();
+            return spScriptEventChangeUnitAI::create();
         }
         case EventType::ChangeBuildingOwner:
         {
-            return new ScriptEventChangeBuildingOwner();
+            return spScriptEventChangeBuildingOwner::create();
         }
         case EventType::ChangeUnitOwner:
         {
-            return new ScriptEventChangeUnitOwner();
+            return spScriptEventChangeUnitOwner::create();
         }
         case EventType::ChangePlayerTeam:
         {
-            return new ScriptEventChangePlayerTeam();
+            return spScriptEventChangePlayerTeam::create();
         }
         case EventType::SpawnBuilding:
         {
-            return new ScriptEventSpawnBuilding();
+            return spScriptEventSpawnBuilding::create();
         }
         case EventType::CenterMap:
         {
-            return new ScriptEventCenterMap();
+            return spScriptEventCenterMap::create();
         }
         case EventType::PlayGameSound:
         {
-            return new ScriptEventPlaySound();
+            return spScriptEventPlaySound::create();
         }
     }
     return nullptr;

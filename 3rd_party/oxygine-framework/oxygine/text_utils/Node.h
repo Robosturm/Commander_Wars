@@ -43,7 +43,7 @@ namespace oxygine
             Node();
             virtual ~Node();
 
-            void appendNode(Node* tn);
+            void appendNode(spNode tn);
             virtual void resize(Aligner& rd);
             void finalPass(Aligner& rd);
 
@@ -65,6 +65,9 @@ namespace oxygine
             spNode _nextSibling;
         };
 
+        class TextNode;
+        typedef oxygine::intrusive_ptr<TextNode> spTextNode;
+
         class TextNode: public Node
         {
         public:
@@ -81,6 +84,9 @@ namespace oxygine
             Symbol* getSymbol(int& pos) override;
         };
 
+        class DivNode;
+        using spDivNode = intrusive_ptr<DivNode>;
+
         class DivNode: public Node
         {
         public:
@@ -92,6 +98,9 @@ namespace oxygine
             QColor color;
             quint32 options;
         };
+
+        class BrNode;
+        using spBrNode = intrusive_ptr<BrNode>;
 
         class BrNode: public Node
         {

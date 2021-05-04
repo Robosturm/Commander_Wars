@@ -43,14 +43,14 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     }
     // no the fun begins create checkboxes and stuff and a panel down here
     qint32 y = 0;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Terrain Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
     y += 60;
 
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(description);
@@ -60,13 +60,13 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
 
     qint32 xOffset = 200;
     // Income
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Defense:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
@@ -77,13 +77,13 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     if (pBuilding != nullptr)
     {
         // Income
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Income:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
@@ -94,7 +94,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         QStringList productionList = pBuilding->getConstructionList();
         if (productionList.size() > 0)
         {
-            pLabel = new oxygine::TextField();
+            pLabel = oxygine::spTextField::create();
             pLabel->setStyle(headerStyle);
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
@@ -109,7 +109,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         if (productionList.size() > 0 ||
             repairList.size() > 0)
         {
-            pLabel = new oxygine::TextField();
+            pLabel = oxygine::spTextField::create();
             pLabel->setStyle(headerStyle);
             pLabel->setHtmlText(tr("Supplies"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -129,7 +129,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         }
     }
 
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Movement Costs"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -143,13 +143,13 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         QString name = pMovementTableManager->getName(pMovementTableManager->getID(i));
         qint32 costs = pMovementTableManager->getBaseMovementPoints(pMovementTableManager->getID(i), pTerrain, pTerrain, nullptr);
 
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         pLabel->setHtmlText((name + ":"));
         pLabel->setPosition(x, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         if (costs >= 0)
@@ -191,12 +191,12 @@ void TerrainInfo::showUnitList(QStringList productionList, qint32& y, qint32 wid
     }
     if (m_pPlayer.get() == nullptr)
     {
-        m_pPlayer = new Player();
+        m_pPlayer = spPlayer::create();
         m_pPlayer->init();
     }
     for (qint32 i = 0; i < productionList.size(); i++)
     {
-        spUnit pDummy = new Unit(productionList[i], m_pPlayer.get(), false);
+        spUnit pDummy = spUnit::create(productionList[i], m_pPlayer.get(), false);
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {

@@ -51,10 +51,10 @@ EditorMenue::EditorMenue()
 
     autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
 
-    m_EditorSelection = new EditorSelection();
+    m_EditorSelection = spEditorSelection::create();
     this->addChild(m_EditorSelection);
 
-    m_Topbar = new Topbar(0, Settings::getWidth() -  m_EditorSelection->getWidth());
+    m_Topbar = spTopbar::create(0, Settings::getWidth() -  m_EditorSelection->getWidth());
 
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
@@ -100,7 +100,7 @@ EditorMenue::EditorMenue()
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
@@ -109,7 +109,7 @@ EditorMenue::EditorMenue()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = new Label(180);
+    xyTextInfo = spLabel::create(180);
     xyTextInfo->setStyle(style);
     xyTextInfo->setHtmlText("X: 0 Y: 0");
     xyTextInfo->setPosition(8, 8);
@@ -261,7 +261,7 @@ void EditorMenue::editorUndo()
             file.close();
             spGameMap pMap = GameMap::getInstance();
             Mainapp::getInstance()->pauseRendering();
-            pMap->updateSprites();            
+            pMap->updateSprites();
             Mainapp::getInstance()->continueRendering();
             m_EditorSelection->createPlayerSelection();
         }
@@ -298,7 +298,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     if (itemID == "EXIT")
     {
         m_Focused = false;
-        spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the map editor?"), true);
+        spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the map editor?"), true);
         connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
         connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
         {
@@ -311,7 +311,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.map");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -323,7 +323,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.map");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -339,14 +339,14 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "EDITSCRIPT")
     {
-        spScriptEditor scriptEditor = new ScriptEditor();
+        spScriptEditor scriptEditor = spScriptEditor::create();
         this->addChild(scriptEditor);
         connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
         setFocused(false);
     }
     else if (itemID == "EDITCAMPAIGN")
     {
-        spCampaignEditor campaignEditor = new CampaignEditor();
+        spCampaignEditor campaignEditor = spCampaignEditor::create();
         this->addChild(campaignEditor);
         connect(campaignEditor.get(),  &CampaignEditor::sigFinished, this, &EditorMenue::campaignFinished, Qt::QueuedConnection);
         setFocused(false);
@@ -356,7 +356,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.txt");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -367,7 +367,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.aws");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -378,7 +378,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.aws");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -389,7 +389,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.aw4");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -400,7 +400,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.txt");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        spFileDialog fileDialog = spFileDialog::create(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -408,7 +408,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "NEWMAP")
     {
-        spMapEditDialog mapEditDialog = new MapEditDialog("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
+        spMapEditDialog mapEditDialog = spMapEditDialog::create("", Settings::getUsername(), "", "", 20, 20, 2, 0, 0);
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
@@ -417,10 +417,10 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "EDITMAP")
     {
         GameMap* pGameMap = GameMap::getInstance();
-        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
-                                                          pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
-                                                          pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
-                                                          pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
+        spMapEditDialog mapEditDialog = spMapEditDialog::create(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
+                                                                pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
+                                                                pGameMap->getMapHeight(), pGameMap->getPlayerCount(),
+                                                                pGameMap->getGameRecorder()->getMapTime(), pGameMap->getGameRecorder()->getDeployLimit());
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
@@ -448,7 +448,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "RANDOMMAP")
     {
-        spDialogRandomMap pDialogRandomMap = new DialogRandomMap();
+        spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
         addChild(pDialogRandomMap);
         connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
         setFocused(false);
@@ -479,14 +479,14 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "EDITPLAYERS")
     {
-        spPlayerSelectionDialog pDialog = new PlayerSelectionDialog();
+        spPlayerSelectionDialog pDialog = spPlayerSelectionDialog::create();
         addChild(pDialog);
         connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
         setFocused(false);
     }
     else if (itemID == "EDITRULES")
     {
-        spRuleSelectionDialog pDialog = new RuleSelectionDialog(RuleSelection::Mode::Editor);
+        spRuleSelectionDialog pDialog = spRuleSelectionDialog::create(RuleSelection::Mode::Editor);
         addChild(pDialog);
         connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
         setFocused(false);
@@ -517,7 +517,7 @@ void EditorMenue::showResizeMap()
 
     Console::print("showResizeMap()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    spGenericBox pBox = new GenericBox(true);
+    spGenericBox pBox = spGenericBox::create(true);
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -528,12 +528,12 @@ void EditorMenue::showResizeMap()
     qint32 width = 300;
     qint32 y = 30;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Left: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox leftBox = new SpinBox(150, -pMap->getMapWidth() + 1, 9999);
+    spSpinBox leftBox = spSpinBox::create(150, -pMap->getMapWidth() + 1, 9999);
     leftBox->setTooltipText(tr("Change of the map size on the left map border."));
     leftBox->setPosition(width, y);
     leftBox->setInfinityValue(-pMap->getMapWidth());
@@ -541,12 +541,12 @@ void EditorMenue::showResizeMap()
     pBox->addItem(leftBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Top: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox topBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
+    spSpinBox topBox = spSpinBox::create(150, -pMap->getMapHeight() + 1, 999999);
     topBox->setTooltipText(tr("Change of the map size on the top map border."));
     topBox->setPosition(width, y);
     topBox->setInfinityValue(-pMap->getMapHeight());
@@ -554,12 +554,12 @@ void EditorMenue::showResizeMap()
     pBox->addItem(topBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Right: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox rightBox = new SpinBox(150, -pMap->getMapWidth() + 1, 999999);
+    spSpinBox rightBox = spSpinBox::create(150, -pMap->getMapWidth() + 1, 999999);
     rightBox->setTooltipText(tr("Change of the map size on the right map border."));
     rightBox->setPosition(width, y);
     rightBox->setInfinityValue(-pMap->getMapWidth());
@@ -567,12 +567,12 @@ void EditorMenue::showResizeMap()
     pBox->addItem(rightBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Bottom: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spSpinBox bottomBox = new SpinBox(150, -pMap->getMapHeight() + 1, 999999);
+    spSpinBox bottomBox = spSpinBox::create(150, -pMap->getMapHeight() + 1, 999999);
     bottomBox->setTooltipText(tr("Change of the map size on the bottom map border."));
     bottomBox->setPosition(width, y);
     bottomBox->setInfinityValue(-pMap->getMapHeight());
@@ -633,7 +633,7 @@ void EditorMenue::playersChanged()
     Mainapp::getInstance()->pauseRendering();
     pMap->updateSprites();
     Mainapp::getInstance()->continueRendering();
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::rulesChanged()
@@ -751,11 +751,11 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-               spGameMap pMap = GameMap::getInstance();
+                spGameMap pMap = GameMap::getInstance();
                 if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
                 {
                     Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-                    spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
+                    spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pTerrain->getUnit());
                     this->addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                     {
@@ -1040,7 +1040,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             if (pUnit != nullptr)
             {
                 createTempFile();
-                spDialogModifyUnit pDialog = new DialogModifyUnit(pUnit);
+                spDialogModifyUnit pDialog = spDialogModifyUnit::create(pUnit);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1053,7 +1053,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             if (pTerrain->getBuilding() == nullptr)
             {
                 createTempFile();
-                spDialogModifyTerrain pDialog = new DialogModifyTerrain(pTerrain);
+                spDialogModifyTerrain pDialog = spDialogModifyTerrain::create(pTerrain);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1061,7 +1061,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             else
             {
                 createTempFile();
-                spDialogModifyBuilding pDialog = new DialogModifyBuilding(pTerrain->getBuilding());
+                spDialogModifyBuilding pDialog = spDialogModifyBuilding::create(pTerrain->getBuilding());
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyBuilding::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
@@ -1280,9 +1280,9 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             if (pCurrentBuilding->getBuildingID() != pMap->getTerrain(curX, curY)->getTerrainID())
             {
-                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+                pMap->getTerrain(curX, curY)->setBuilding(pBuilding.get());
                 if (points.size() < 14)
                 {
                     pMap->updateTerrain(points.at(i).x(), points.at(i).y());
@@ -1336,7 +1336,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
-            spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+            spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             spGameMap pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
@@ -1345,7 +1345,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     }
     if (Settings::getSyncAnimations())
     {
-       GameMap::getInstance()->syncUnitsAndBuildingAnimations();
+        GameMap::getInstance()->syncUnitsAndBuildingAnimations();
     }
 }
 
@@ -1418,7 +1418,7 @@ void EditorMenue::importAWByWeb(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::importAWDSAwsMap(QString filename)
@@ -1433,7 +1433,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::exportAWDSAwsMap(QString filename)
@@ -1442,7 +1442,7 @@ void EditorMenue::exportAWDSAwsMap(QString filename)
     {
         GameMap::getInstance()->exportAWDSMap(filename);
     }
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::importCoWTxTMap(QString filename)
@@ -1457,7 +1457,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::newMap(QString mapName, QString author, QString description, QString scriptFile,
@@ -1494,7 +1494,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     pMap->getGameRecorder()->setDeployLimit(buildLimit);
     pMap->getGameRecorder()->setMapTime(turnLimit);
     m_EditorSelection->createPlayerSelection();
-    setFocused(true);    
+    setFocused(true);
 }
 
 void EditorMenue::selectionChanged()
@@ -1557,7 +1557,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
             }
             for (qint32 i = p1.x(); i != p2.x() + xDir; i += xDir)
             {
-                oxygine::spSprite pSprite = new oxygine::Sprite();
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
                 qint32 y = p1.y();
                 if (p2.y() < p1.y())
                 {
@@ -1574,7 +1574,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 {
                     y = p1.y();
                 }
-                pSprite = new oxygine::Sprite();
+                pSprite = oxygine::spSprite::create();
                 pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
@@ -1584,7 +1584,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
             }
             for (qint32 i = p1.y(); i != p2.y() + yDir; i += yDir)
             {
-                oxygine::spSprite pSprite = new oxygine::Sprite();
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
                 qint32 x = p1.x();
                 if (p2.x() < p1.x())
                 {
@@ -1601,7 +1601,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 {
                     x = p1.x();
                 }
-                pSprite = new oxygine::Sprite();
+                pSprite = oxygine::spSprite::create();
                 pAnim = pObjectManager->getResAnim("cursor+border+right");
                 pSprite->setResAnim(pAnim);
                 pSprite->setColor(color);
@@ -1622,7 +1622,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                     QPoint point = pPoints->at(i);
                     if (point.x() >= 0)
                     {
-                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::spSprite pSprite = oxygine::spSprite::create();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+right");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
@@ -1632,7 +1632,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                     }
                     if (point.x() <= 0)
                     {
-                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::spSprite pSprite = oxygine::spSprite::create();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
@@ -1642,7 +1642,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                     }
                     if (point.y() >= 0)
                     {
-                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::spSprite pSprite = oxygine::spSprite::create();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
@@ -1652,7 +1652,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                     }
                     if (point.y() <= 0)
                     {
-                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::spSprite pSprite = oxygine::spSprite::create();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
                         pSprite->setResAnim(pAnim);
                         pSprite->setColor(color);
@@ -1748,9 +1748,9 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                         QString baseTerrain = pBuilding->getBaseTerrain()[0];
                                         pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
                                     }
-                                    Building* pCopyBuilding = new Building(pBuilding->getBuildingID());
+                                    spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID());
                                     pCopyBuilding->setOwner(pBuilding->getOwner());
-                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
+                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding.get());
                                 }
                                 if (selection != EditorSelection::EditorMode::All)
                                 {
@@ -1766,7 +1766,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                     QString movementType = pUnit->getMovementType();
                                     if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
-                                        Unit* pCopyUnit = new Unit(pUnit->getUnitID(), pUnit->getOwner(), false);
+                                        spUnit pCopyUnit = spUnit::create(pUnit->getUnitID(), pUnit->getOwner(), false);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(nullptr);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
                                         pCopyUnit->setHp(pUnit->getHp());
@@ -1793,12 +1793,10 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 }
 
 void EditorMenue::exitEditor()
-{
-    
+{    
     Console::print("Leaving Editor Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
-    
 }
 
 void EditorMenue::autosave()

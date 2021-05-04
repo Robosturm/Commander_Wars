@@ -8,11 +8,15 @@
 #include <qvector.h>
 #include <qmap.h>
 
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 #include "coreengine/fileserializable.h"
 #include "game/GameEnums.h"
 
-class Userdata : public QObject, public FileSerializable
+class Userdata;
+using spUserdata = oxygine::intrusive_ptr<Userdata>;
+
+class Userdata : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -238,9 +242,11 @@ private:
     void showAchieved();
 
 private:
+    friend class oxygine::intrusive_ptr<Userdata>;
     explicit Userdata();
+private:
 
-    static Userdata* m_pInstance;
+    static spUserdata m_pInstance;
 
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<Achievement> m_achievements;

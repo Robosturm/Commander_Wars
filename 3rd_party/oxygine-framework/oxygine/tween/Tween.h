@@ -199,6 +199,11 @@ namespace oxygine
     };
 
     template<class GS>
+    class TweenT;
+    template<class GS>
+    using spTweenT = oxygine::intrusive_ptr<TweenT<GS>>;
+
+    template<class GS>
     class TweenT : public Tween
     {
     public:
@@ -235,17 +240,17 @@ namespace oxygine
 
 
     template <typename GS>
-    TweenT<GS>* createTween(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
+    spTweenT<GS> createTween(const GS& gs, timeMS duration, qint32 loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
     {
-        TweenT<GS>* p = new TweenT<GS>(gs);
+        spTweenT<GS> p = spTweenT<GS>::create(gs);
         p->init(duration, loops, twoSides, delay, ease);
         return p;
     }
 
     template <typename GS>
-    TweenT<GS>* createTween2(const GS& gs, const TweenOptions& opt)
+    spTweenT<GS> createTween2(const GS& gs, const TweenOptions& opt)
     {
-        TweenT<GS>* p = new TweenT<GS>(gs);
+        spTweenT<GS> p = spTweenT<GS>::create(gs);
         p->init2(opt);
         return p;
     }
@@ -259,7 +264,7 @@ namespace oxygine
 
         virtual void init(Actor&) {}
         virtual void done(Actor&) {}
-        virtual void update(Actor&, float p, const UpdateState& us) {}
+        virtual void update(Actor&, float, const UpdateState&) {}
     };
 
 

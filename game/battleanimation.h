@@ -10,6 +10,9 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class BattleAnimation;
+using spBattleAnimation = oxygine::intrusive_ptr<BattleAnimation>;
+
 class BattleAnimation : public GameAnimation
 {
     Q_OBJECT

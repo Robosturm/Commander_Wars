@@ -40,62 +40,62 @@ MapSelectionView::MapSelectionView()
         width = Settings::getWidth() / 2;
     }
 
-    m_pMapSelection = new MapSelection(Settings::getHeight() - 70, width, "");
+    m_pMapSelection = spMapSelection::create(Settings::getHeight() - 70, width, "");
     m_pMapSelection->setPosition(10, 10);
     this->addChild(m_pMapSelection);
-    m_pMinimap = new Minimap();
+    m_pMinimap = spMinimap::create();
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
 
     QSize size(Settings::getWidth() - width - 80,
                Settings::getHeight() / 2 - 135);
-    m_MinimapPanel = new Panel(true, size, size);
+    m_MinimapPanel = spPanel::create(true, size, size);
     m_MinimapPanel->setPosition(width + 50, 10);
     m_MinimapPanel->addItem(m_pMinimap);
     addChild(m_MinimapPanel);
 
     // map info text
-    m_MapInfo = new Panel(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
+    m_MapInfo = spPanel::create(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
                           QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     this->addChild(m_MapInfo);
 
     qint32 y = 10;
 
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Name: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapName = new oxygine::TextField();
+    m_MapName = oxygine::spTextField::create();
     m_MapName->setStyle(style);
     m_MapName->setPosition(150, y);
     m_MapInfo->addItem(m_MapName);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Author: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapAuthor = new oxygine::TextField();
+    m_MapAuthor = oxygine::spTextField::create();
     m_MapAuthor->setStyle(style);
     m_MapAuthor->setPosition(150, y);
     m_MapInfo->addItem(m_MapAuthor);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Player: "));
     m_MapInfo->addItem(pTextfield);
-    m_MapPlayerCount = new oxygine::TextField();
+    m_MapPlayerCount = oxygine::spTextField::create();
     m_MapPlayerCount->setStyle(style);
     m_MapPlayerCount->setPosition(150, y);
     m_MapInfo->addItem(m_MapPlayerCount);
     y += 40;
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, y);
     pTextfield->setHtmlText(tr("Description "));
@@ -103,14 +103,14 @@ MapSelectionView::MapSelectionView()
     y += 40;
 
     style.multiline = true;
-    m_MapDescription = new oxygine::TextField();
+    m_MapDescription = oxygine::spTextField::create();
     m_MapDescription->setStyle(style);
     m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 80);
     m_MapDescription->setPosition(10, y);
     m_MapInfo->addItem(m_MapDescription);
     y += 40;
 
-    m_pVictoryInfo = new oxygine::Actor();
+    m_pVictoryInfo = oxygine::spActor::create();
     m_pVictoryInfo->setPosition(10, y);
     m_MapInfo->addItem(m_pVictoryInfo);
     loadMapVictoryInfo();
@@ -118,7 +118,7 @@ MapSelectionView::MapSelectionView()
 
     // building count
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
-    m_pBuildingBackground = new oxygine::Box9Sprite();
+    m_pBuildingBackground = oxygine::spBox9Sprite::create();
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(Settings::getWidth() - width - 100, 60);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
@@ -131,18 +131,18 @@ MapSelectionView::MapSelectionView()
     styleMain16.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleMain16.multiline = false;
 
-    m_contentSlider = new oxygine::SlidingActor();
+    m_contentSlider = oxygine::spSlidingActor::create();
     m_contentSlider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
-    m_content = new oxygine::Actor();
+    m_content = oxygine::spActor::create();
     m_content->setSize(pBuildingSpriteManager->getCount()* (GameMap::getImageSize() + 12), 100);
     for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
     {
-        spBuilding building = new Building(pBuildingSpriteManager->getID(i));
+        spBuilding building = spBuilding::create(pBuildingSpriteManager->getID(i));
         building->updateBuildingSprites(false);
         building->setVisible(false);
         m_content->addChild(building);
         m_BuildingCountSprites.push_back(building);
-        oxygine::spTextField pText = new oxygine::TextField();
+        oxygine::spTextField pText = oxygine::spTextField::create();
         pText->setHtmlText("0");
         pText->setPosition(2 + i * (GameMap::getImageSize() + 12), 12 + GameMap::getImageSize() * 1.2f);
         pText->setStyle(styleMain16);
@@ -155,7 +155,7 @@ MapSelectionView::MapSelectionView()
     m_pBuildingBackground->addChild(m_contentSlider);
     addChild(m_pBuildingBackground);
 
-    oxygine::spButton pButtonTop = new oxygine::Button();
+    oxygine::spButton pButtonTop = oxygine::spButton::create();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     oxygine::Sprite* ptr = pButtonTop.get();
@@ -182,7 +182,7 @@ MapSelectionView::MapSelectionView()
     pButtonTop->setPosition(m_MapInfo->getX() - 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
     addChild(pButtonTop);
 
-    pButtonTop = new oxygine::Button();
+    pButtonTop = oxygine::spButton::create();
     pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
     pButtonTop->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ptr = pButtonTop.get();
@@ -226,7 +226,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
             m_pCurrentMap = nullptr;
         }
         bool savegame = info.fileName().endsWith(".msav");
-        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true, fast, savegame);
+        m_pCurrentMap = spGameMap::create(info.absoluteFilePath(), true, fast, savegame);
         m_pCurrentMap->setMapPath(info.absoluteFilePath().replace(QCoreApplication::applicationDirPath(), ""));
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->clear();
@@ -280,7 +280,7 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         }
         m_pMinimap->updateMinimap(nullptr);
         m_CurrentCampaign = nullptr;
-        m_CurrentCampaign = new Campaign(info.absoluteFilePath());
+        m_CurrentCampaign = spCampaign::create(info.absoluteFilePath());
         m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription());
         m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor());
         m_MapPlayerCount->setVisible(false);
@@ -312,7 +312,7 @@ void MapSelectionView::loadMapVictoryInfo()
     qint32 posY = 0;
     for (qint32 i = 0; i < Userdata::MAX_VICTORY_INFO_PER_MAP; ++i)
     {
-        oxygine::spTextField pText = new oxygine::TextField();
+        oxygine::spTextField pText = oxygine::spTextField::create();
         pText->setHtmlText(QString::number(i + 1) + ".");
         pText->setPosition(10, posY + 10);
         pText->setStyle(style);
@@ -327,13 +327,13 @@ void MapSelectionView::loadMapVictoryInfo()
                 qint32 score = info->score[i];
                 oxygine::ResAnim* pAnim = nullptr;
                 COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-                oxygine::spSprite pSprite = new oxygine::Sprite();
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
                 pSprite->setPosition(110, posY + 10);
                 auto rank = GameRecorder::getRank(score);
                 pAnim = GameRecorder::getRankAnim(rank);
                 pSprite->setResAnim(pAnim);
                 m_pVictoryInfo->addChild(pSprite);
-                pSprite = new oxygine::Sprite();
+                pSprite = oxygine::spSprite::create();
                 if (!co1.isEmpty())
                 {
                     pAnim = pCOSpriteManager->getResAnim(co1 + "+info");
@@ -362,7 +362,7 @@ void MapSelectionView::loadMapVictoryInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
-                pSprite = new oxygine::Sprite();
+                pSprite = oxygine::spSprite::create();
                 pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
                 pSprite->setResAnim(pAnim);
                 pSprite->setPosition(150, posY + pAnim->getHeight() * 2.0f);

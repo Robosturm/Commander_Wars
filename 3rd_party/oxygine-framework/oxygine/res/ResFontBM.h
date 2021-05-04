@@ -6,12 +6,15 @@
 
 namespace oxygine
 {
+    class ResFontBM;
+    using spResFontBM = intrusive_ptr<ResFontBM>;
+
     class ResFontBM: public ResFont
     {
     public:
-        static Resource* create(CreateResourceContext& context);
-        static Resource* createBM(CreateResourceContext& context);
-        static Resource* createSD(CreateResourceContext& context);
+        static spResource create(CreateResourceContext& context);
+        static spResource createBM(CreateResourceContext& context);
+        static spResource createSD(CreateResourceContext& context);
 
         ResFontBM();
         ~ResFontBM();

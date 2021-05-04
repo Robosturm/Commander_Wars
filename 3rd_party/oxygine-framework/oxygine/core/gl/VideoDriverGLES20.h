@@ -8,6 +8,9 @@
 
 namespace oxygine
 {
+    class VideoDriverGLES20;
+    DECLARE_SMART(VideoDriverGLES20, spVideoDriverGLES20);
+
     class VideoDriverGLES20: public VideoDriverGL
     {
     public:

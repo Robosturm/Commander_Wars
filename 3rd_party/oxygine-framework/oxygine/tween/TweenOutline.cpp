@@ -15,7 +15,7 @@ namespace oxygine
 
         TweenOutlineImpl(const QColor& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
         {
-            _matx = new STDMaterial;
+            _matx = spSTDMaterial::create();
             _matx->_blend = blend_premultiplied_alpha;
         }
 

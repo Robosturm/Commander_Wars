@@ -20,7 +20,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     this->moveToThread(pApp->getWorkerthread());
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -50,7 +50,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     CO* firstCO = nullptr;
     if (!banning)
     {
-        spLabel pLabel = new Label(200);
+        spLabel pLabel = spLabel::create(200);
         pLabel->setStyle(style);
         pLabel->setText("Perk's of CO:");
         pLabel->setPosition(30, 30);
@@ -72,17 +72,17 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
                 firstCO = pCO;
             }
         }
-        spDropDownmenu pDropDownmenu = new DropDownmenu(250, list);
+        spDropDownmenu pDropDownmenu = spDropDownmenu::create(250, list);
         pDropDownmenu->setPosition(210, 30);
         pSpriteBox->addChild(pDropDownmenu);
         connect(pDropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &PerkSelectionDialog::changeCO, Qt::QueuedConnection);
 
-        pLabel = new Label(100);
+        pLabel = spLabel::create(100);
         pLabel->setStyle(style);
         pLabel->setText("Fill:");
         pLabel->setPosition(pDropDownmenu->getX() + pDropDownmenu->getWidth() + 10, 30);
         pSpriteBox->addChild(pLabel);
-        m_randomFillCheckbox = new Checkbox();
+        m_randomFillCheckbox = spCheckbox::create();
         m_randomFillCheckbox->setTooltipText(tr("If checked clicking the random button. The selected perks are filled up to the maximum."));
         m_randomFillCheckbox->setPosition(pLabel->getX() + pLabel->getWidth() + 10, 30);
         pSpriteBox->addChild(m_randomFillCheckbox);
@@ -97,7 +97,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     }
 
     QSize size(Settings::getWidth() - 60, Settings::getHeight() - 40 * 3 - m_OkButton->getHeight());
-    m_pPanel = new  Panel(true, size, size);
+    m_pPanel = spPanel::create(true, size, size);
     if (banning)
     {
         m_pPanel->setPosition(30, 30);
@@ -106,7 +106,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
     {
         m_pPanel->setPosition(30, 75);
     }
-    m_pPerkSelection = new PerkSelection(firstCO, Settings::getWidth() - 80, maxPerkcount, banning, hiddenList);
+    m_pPerkSelection = spPerkSelection::create(firstCO, Settings::getWidth() - 80, maxPerkcount, banning, hiddenList);
     m_pPanel->addItem(m_pPerkSelection);
     m_pPanel->setContentHeigth(m_pPerkSelection->getHeight() + 40);
     m_pPanel->setContentWidth(m_pPerkSelection->getWidth());
@@ -135,7 +135,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         });
         connect(this, &PerkSelectionDialog::sigToggleAll, m_pPerkSelection.get(), &PerkSelection::toggleAll, Qt::QueuedConnection);
         auto items = getNameList("data/perkbannlist/");
-        m_PredefinedLists = new DropDownmenu(260, items);
+        m_PredefinedLists = spDropDownmenu::create(260, items);
 
         m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
         pSpriteBox->addChild(m_PredefinedLists);
@@ -163,7 +163,7 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         pSpriteBox->addChild(pSave);
         connect(this, &PerkSelectionDialog::sigShowSavePerklist, this, &PerkSelectionDialog::showSavePerklist, Qt::QueuedConnection);
         auto items = getNameList("data/perkselection/");
-        m_PredefinedLists = new DropDownmenu(260, items);
+        m_PredefinedLists = spDropDownmenu::create(260, items);
 
         m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - pSave->getHeight());
         pSpriteBox->addChild(m_PredefinedLists);
@@ -226,7 +226,7 @@ void PerkSelectionDialog::changeCO(qint32 index)
 
 void PerkSelectionDialog::showSavePerklist()
 {    
-    spDialogTextInput pSaveInput = new DialogTextInput(tr("Perklist Name"), true, "");
+    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Perklist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &PerkSelectionDialog::savePerklist, Qt::QueuedConnection);
     addChild(pSaveInput);
 }

@@ -18,7 +18,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -32,14 +32,14 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     float y = 30;
     qint32 width = 250;
     // Label
-    spLabel text = new Label(width - 10);
+    spLabel text = spLabel::create(width - 10);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     text->setStyle(style);
     text->setHtmlText(tr("Name:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
-    m_MapName = new Textbox(Settings::getWidth() - 60 - width);
+    m_MapName = spTextbox::create(Settings::getWidth() - 60 - width);
     m_MapName->setTooltipText(tr("The name of the map."));
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText(mapName);
@@ -47,12 +47,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Author:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
-    m_MapAuthor = new Textbox(Settings::getWidth() - 60 - width);
+    m_MapAuthor = spTextbox::create(Settings::getWidth() - 60 - width);
     m_MapAuthor->setTooltipText(tr("The author of the map."));
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(author);
@@ -60,12 +60,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Description:"));
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
-    m_MapDescription = new Textbox(Settings::getWidth() - 60 - width);
+    m_MapDescription = spTextbox::create(Settings::getWidth() - 60 - width);
     m_MapName->setTooltipText(tr("The description for the map."));
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText(description);
@@ -73,7 +73,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Script:"));
     text->setPosition(30, y);
@@ -81,7 +81,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_ScriptButton = pObjectManager->createButton(tr("Select File"), 150);
     m_ScriptButton->setPosition(Settings::getWidth() - m_ScriptButton->getWidth() - 30, y);
     pSpriteBox->addChild(m_ScriptButton);
-    m_MapScriptFile = new Textbox(m_ScriptButton->getX() - text->getX() - width);
+    m_MapScriptFile = spTextbox::create(m_ScriptButton->getX() - text->getX() - width);
     m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));
     m_MapScriptFile->setPosition(text->getX() + width, text->getY());
     m_MapScriptFile->setCurrentText(scriptFile);
@@ -94,12 +94,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     connect(this, &MapEditDialog::sigshowSelectScript, this, &MapEditDialog::showSelectScript, Qt::QueuedConnection);
 
     // Label
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Width:"));
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
-    m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapWidth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
     m_MapWidth->setTooltipText(tr("The width of the map."));
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(mapWidth);
@@ -107,12 +107,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Heigth:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapHeigth = spSpinBox::create(300, 1, 999, SpinBox::Mode::Int);
     m_MapWidth->setTooltipText(tr("The heigth of the map."));
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(mapHeigth);
@@ -120,12 +120,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Player:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
+    m_MapPlayerCount = spSpinBox::create(300, 2, 40, SpinBox::Mode::Int);
     m_MapWidth->setTooltipText(tr("The amount of players for this map."));
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(playerCount);
@@ -133,12 +133,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Turn Limit:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_MapTurnLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_MapTurnLimit = spSpinBox::create(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
     m_MapTurnLimit->setTooltipText(tr("The amount of turns in which the map needs to be finished to get a maximum score."));
     m_MapTurnLimit->setPosition(text->getX() + width, text->getY());
     m_MapTurnLimit->setCurrentValue(turnLimit);
@@ -146,12 +146,12 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
 
     // Label
     y += 40;
-    text = new Label(width - 10);
+    text = spLabel::create(width - 10);
     text->setStyle(style);
     text->setHtmlText(tr("Deploy Limit:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_UnitBuildLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_UnitBuildLimit = spSpinBox::create(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
     m_UnitBuildLimit->setTooltipText(tr("The amount of units allowed to be deploayed to get a maximum score."));
     m_UnitBuildLimit->setPosition(text->getX() + width, text->getY());
     m_UnitBuildLimit->setCurrentValue(buildLimit);
@@ -195,7 +195,7 @@ void MapEditDialog::showSelectScript()
     QVector<QString> wildcards;
     wildcards.append("*.js");
     QString path = QCoreApplication::applicationDirPath() + "/maps";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
     

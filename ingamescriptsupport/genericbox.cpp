@@ -12,7 +12,7 @@ GenericBox::GenericBox(bool cancel)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = new oxygine::Box9Sprite();
+    m_pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     m_pSpriteBox->setResAnim(pAnim);
     m_pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());

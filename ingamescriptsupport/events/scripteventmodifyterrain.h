@@ -3,6 +3,9 @@
 
 #include "ingamescriptsupport/events/scriptevent.h"
 
+class ScriptEventModifyTerrain;
+using spScriptEventModifyTerrain = oxygine::intrusive_ptr<ScriptEventModifyTerrain>;
+
 class ScriptEventModifyTerrain  : public ScriptEvent
 {
     Q_OBJECT

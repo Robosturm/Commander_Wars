@@ -15,6 +15,13 @@ namespace oxygine
     public:
         typedef T element_type;
 
+
+        template<typename ...TArgs>
+        static intrusive_ptr<T> create(TArgs... args)
+        {
+            return new T(args...);
+        }
+
         intrusive_ptr()
             : _ptr(nullptr)
         {
@@ -97,6 +104,7 @@ namespace oxygine
             if (_ptr != nullptr)
             {
                 _ptr->releaseRef();
+                _ptr = nullptr;
             }
         }
     };

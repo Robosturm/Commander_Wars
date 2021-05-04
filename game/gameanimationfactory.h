@@ -15,7 +15,10 @@ class GameAnimationNextDay;
 class GameAction;
 class CO;
 
-class GameAnimationFactory : public QObject
+class GameAnimationFactory;
+using spGameAnimationFactory = oxygine::intrusive_ptr<GameAnimationFactory>;
+
+class GameAnimationFactory : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -42,7 +45,7 @@ signals:
     void animationsFinished();
 public slots:
     /**
-     * @brief createAnimation creates a new animation and returns it
+     * @brief createAnimation creates an animation and returns it
      * @param x in map coordinates
      * @param y in map coordinates
      * @param frameTime in ms
@@ -121,9 +124,11 @@ public slots:
      */
     static void finishAllAnimations();
 private:
+    friend class oxygine::intrusive_ptr<GameAnimationFactory>;
     explicit GameAnimationFactory();
 
-    static GameAnimationFactory* m_pInstance;
+private:
+    static spGameAnimationFactory m_pInstance;
     static QVector<spGameAnimation> m_Animations;
 };
 

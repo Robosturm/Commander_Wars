@@ -26,19 +26,19 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     {
         emitFinished();
     });
-    m_BackgroundSprite = new oxygine::Sprite();
+    m_BackgroundSprite = oxygine::spSprite::create();
     m_BackgroundSprite->setPriority(-1);
     addChild(m_BackgroundSprite);
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
-    m_TextMask = new oxygine::Sprite();
+    m_TextMask = oxygine::spSprite::create();
     m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
-    m_TextBackground = new oxygine::Sprite();
+    m_TextBackground = oxygine::spSprite::create();
     m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
     m_TextBackground->setResAnim(pAnim);
     m_TextBackground->setPriority(1);
@@ -50,11 +50,11 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
 
-    oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
+    oxygine::spClipRectActor pRect = oxygine::spClipRectActor::create();
     pRect->setPosition(48 * 2 + 5, 6);
     pRect->setSize(Settings::getWidth() - pRect->getX() - 5, 96);
 
-    m_TextField = new oxygine::TextField();
+    m_TextField = oxygine::spTextField::create();
     m_TextField->setPosition(0, -10);
     m_TextField->setSize(pRect->getWidth() - 5, pRect->getHeight());
     m_TextField->setStyle(style);
@@ -62,7 +62,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     pRect->setPriority(1);
     addChild(pRect);
 
-    m_COSprite = new oxygine::Sprite();
+    m_COSprite = oxygine::spSprite::create();
     m_COSprite->setScale(2);
     m_COSprite->setY(6);
     m_COSprite->setPriority(1);
@@ -83,8 +83,8 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
             {
                 emit sigLeftClick();
             }
+            pTouchEvent->stopPropagation();
         }
-        pTouchEvent->stopPropagation();
     });
     connect(this, &GameAnimationDialog::sigRightClick, [=]()
     {
@@ -156,11 +156,6 @@ void GameAnimationDialog::startFinishTimer()
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
-    // update background if wanted
-    if (!m_BackgroundFile.isEmpty())
-    {
-        _loadBackground();
-    }
     if (textTimer.elapsed() > textSpeed && !paused)
     {
         writePosition += 1;
@@ -301,28 +296,18 @@ void GameAnimationDialog::restart()
 
 void GameAnimationDialog::loadBackground(QString file)
 {
-    m_BackgroundFile = file;
-}
-
-void GameAnimationDialog::_loadBackground()
-{
-    if (QFile::exists(m_BackgroundFile))
-    {
-        oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
-        pAnim->setResPath(m_BackgroundFile);
-        pAnim->init(m_BackgroundFile, 1, 1, 1.0f);
-        m_BackgroundAnim = pAnim;
-        m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
-        // m_BackgroundSprite->setPosition(-1, -1);
-        m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
-        m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
-    }
-    m_BackgroundFile = "";
+    QImage img(file);
+    oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+    Mainapp::getInstance()->loadResAnim(pAnim, img);
+    m_BackgroundAnim = pAnim;
+    m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
+    m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
 }
 
 void GameAnimationDialog::loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale)
 {
-    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(coid + "+nrm", oxygine::error_policy::ep_ignore_error);
     pSprite->setSize(pAnim->getSize());
     pSprite->setFlippedX(flippedX);

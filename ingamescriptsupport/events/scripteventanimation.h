@@ -5,6 +5,9 @@
 
 #include "objects/base/textbox.h"
 
+class ScriptEventAnimation;
+using spScriptEventAnimation = oxygine::intrusive_ptr<ScriptEventAnimation>;
+
 class ScriptEventAnimation : public ScriptEvent
 {
     Q_OBJECT

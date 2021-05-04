@@ -246,7 +246,7 @@ void Neuron::deserializeObject(QDataStream& pStream)
         {
             previous = m_layer->getPreviousLayer()->getNeuron(id);
         }
-        spEdge pEdge = new Edge(previous, this, 0);
+        spEdge pEdge = spEdge::create(previous, this, 0);
         pEdge->deserializeObject(pStream);
         m_next.append(pEdge);
         if (previous != nullptr)

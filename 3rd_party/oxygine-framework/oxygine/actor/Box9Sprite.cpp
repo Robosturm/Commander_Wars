@@ -201,7 +201,7 @@ namespace oxygine
             float rightB = fActorWidth - (fFrameWidth - _guideX[1]); // right bound (in px)
             float centerPart = _guideX[1] - _guideX[0]; // length of the center piece (in px)
 
-            // now we add a new center piece every time until we reach right bound
+            // now we add a center piece every time until we reach right bound
             while (1)
             {
                 curX += centerPart;
@@ -241,7 +241,7 @@ namespace oxygine
             float bottomB = fActorHeight - (fFrameHeight - _guideY[1]); // bottom bound (in px)
             float centerPart = _guideY[1] - _guideY[0]; // length of the center piece (in px)
 
-            // now we add a new center piece every time until we reach right bound
+            // now we add a center piece every time until we reach right bound
             while (1)
             {
                 curY += centerPart;

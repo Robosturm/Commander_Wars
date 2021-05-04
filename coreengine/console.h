@@ -15,6 +15,9 @@ class QMutex;
 class QKeyEvent;
 class Interpreter;
 
+class Console;
+using spConsole = oxygine::intrusive_ptr<Console>;
+
 class Console : public QObject, public oxygine::Actor
 {
     Q_OBJECT
@@ -178,7 +181,7 @@ private:
     static qint32 curlastmsgpos;
     static qint32 curmsgpos;
     static QElapsedTimer toggle;
-    static Console* m_pConsole;
+    static spConsole m_pConsole;
     static bool show;
     static bool toggled;
     static QList<QString> output;
@@ -187,7 +190,7 @@ private:
     static bool m_developerMode;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
-
+    friend class oxygine::intrusive_ptr<Console>;
     Console();
     virtual  ~Console() = default;
 

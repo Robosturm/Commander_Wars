@@ -37,7 +37,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("mapselectionmenu");
     sprite->setResAnim(pBackground);
@@ -52,7 +52,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
 
     if (pMapSelectionView.get() == nullptr)
     {
-        m_pMapSelectionView = new MapSelectionView();
+        m_pMapSelectionView = spMapSelectionView::create();
     }
     else
     {
@@ -135,13 +135,13 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     {
         heigth = Settings::getHeight() - 40 * 2;
     }
-    m_pPlayerSelection = new PlayerSelection(Settings::getWidth() - 20,
-                                             heigth);
+    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 20,
+                                                   heigth);
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 40 * 2);
-    m_pRuleSelection = new  Panel(true,  size, size);
+    m_pRuleSelection = spPanel::create(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
     if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
@@ -269,7 +269,7 @@ void MapSelectionMapsMenue::slotButtonNext()
         {
             break;
         }
-    }    
+    }
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
@@ -330,7 +330,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelectionView = new RuleSelection(Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
+    m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Singleplayer);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
@@ -367,7 +367,7 @@ void MapSelectionMapsMenue::startGame()
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(false, nullptr));
-    oxygine::Actor::detach();    
+    oxygine::Actor::detach();
 }
 
 void MapSelectionMapsMenue::defeatClosedPlayers()
@@ -389,7 +389,7 @@ void MapSelectionMapsMenue::defeatClosedPlayers()
 
 void MapSelectionMapsMenue::showRandomMap()
 {
-    spDialogRandomMap pDialogRandomMap = new DialogRandomMap();
+    spDialogRandomMap pDialogRandomMap = spDialogRandomMap::create();
     addChild(pDialogRandomMap);
     connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &MapSelectionMapsMenue::selectRandomMap, Qt::QueuedConnection);
 }
@@ -408,7 +408,7 @@ void MapSelectionMapsMenue::selectRandomMap(QString mapName, QString author, QSt
                                             bool unitsDistributed)
 {
     
-    spGameMap pGameMap = new GameMap(width, heigth, playerCount);
+    spGameMap pGameMap = spGameMap::create(width, heigth, playerCount);
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         terrains, buildings, ownedBaseSize,
                         startBaseSize / 100.0f,
@@ -432,7 +432,7 @@ void MapSelectionMapsMenue::showLoadRules()
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::loadRules, Qt::QueuedConnection);
     
@@ -443,9 +443,9 @@ void MapSelectionMapsMenue::showSaveRules()
     QVector<QString> wildcards;
     wildcards.append("*.grl");
     QString path = QCoreApplication::applicationDirPath() + "/data/gamerules";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveRules, Qt::QueuedConnection);
 }
 
 void MapSelectionMapsMenue::loadRules(QString filename)
@@ -463,7 +463,7 @@ void MapSelectionMapsMenue::loadRules(QString filename)
             hideRuleSelection();
             showRuleSelection();
         }
-    }    
+    }
 }
 
 void MapSelectionMapsMenue::saveRules(QString filename)
@@ -476,7 +476,7 @@ void MapSelectionMapsMenue::saveRules(QString filename)
         spGameMap pMap = GameMap::getInstance();
         pMap->getGameRules()->serializeObject(stream);
         file.close();
-    }    
+    }
 }
 
 void MapSelectionMapsMenue::showSaveMap()
@@ -484,9 +484,9 @@ void MapSelectionMapsMenue::showSaveMap()
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/maps/";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
-    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);    
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapSelectionMapsMenue::saveMap, Qt::QueuedConnection);
 }
 
 void MapSelectionMapsMenue::saveMap(QString filename)

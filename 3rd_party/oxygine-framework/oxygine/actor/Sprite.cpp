@@ -210,7 +210,7 @@ namespace oxygine
             const auto & frame = pAnim->getFrame(0, 0);
             if (m_mat->_table != frame.getDiffuse().base)
             {
-                m_mat = m_mat->clone();
+                m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
                 m_mat->_table = frame.getDiffuse().base;
                 m_mat = MaterialCache::mc().cache(*m_mat.get());
                 matChanged();
@@ -278,7 +278,7 @@ namespace oxygine
         if (df.base  != m_mat->_base ||
             df.alpha != m_mat->_alpha)
         {
-            spSTDMaterial mat = m_mat->clone();
+            spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
 
             mat->_base  = df.base;
             mat->_alpha = df.alpha;

@@ -17,7 +17,7 @@ namespace oxygine
     void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
-        spImage mt = new Image;
+        spImage mt = spImage::create();
 
         qDebug("loading atlas: %s", file.toStdString().c_str());
         QImage img (file);
@@ -46,7 +46,7 @@ namespace oxygine
     }
 
 
-    void ResAtlas::init_resAnim(ResAnim* rs, QString file, QDomElement node)
+    void ResAtlas::init_resAnim(spResAnim rs, QString file, QDomElement node)
     {
         rs->setName(Resource::extractID(node, file, ""));
         setNode(rs, node);
@@ -93,11 +93,11 @@ namespace oxygine
         _atlasses.push_back(atl);
     }
 
-    Resource* ResAtlas::create(CreateResourceContext& context)
+    spResource ResAtlas::create(CreateResourceContext& context)
     {
         context.walker.checkSetAttributes();
-        ResAtlas* ra = nullptr;
-        ResAtlasGeneric* rs = new ResAtlasGeneric();
+        spResAtlas ra = nullptr;
+        spResAtlasGeneric rs = spResAtlasGeneric::create();
         rs->loadAtlas(context);
         ra = rs;
 
@@ -220,9 +220,9 @@ namespace oxygine
         }
     }
 
-    ResAnim* ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
+    spResAnim ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
-        ResAnim* ra = new ResAnim(this);
+        spResAnim ra = spResAnim::create(this);
         ra->init(nullptr, 0, 0, walker.getScaleFactor());
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);

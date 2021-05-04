@@ -13,7 +13,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -29,13 +29,13 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pText = new oxygine::TextField();
+    oxygine::spTextField pText = oxygine::spTextField::create();
     pText->setHtmlText(text);
     pText->setStyle(style);
     pText->setPosition(Settings::getWidth() / 2 - pText->getTextRect().getWidth() / 2, Settings::getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);
 
-    m_pTextbox = new Textbox(300);
+    m_pTextbox = spTextbox::create(300);
     m_pTextbox->setPosition(Settings::getWidth() / 2 - m_pTextbox->getWidth() / 2, Settings::getHeight() / 2);
     m_pTextbox->setCurrentText(startInput);
     pSpriteBox->addChild(m_pTextbox);

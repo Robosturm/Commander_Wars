@@ -50,7 +50,7 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
     }
     else
     {
-        iconList.append(new oxygine::Sprite());
+        iconList.append(oxygine::spSprite::create());
     }
 
 }

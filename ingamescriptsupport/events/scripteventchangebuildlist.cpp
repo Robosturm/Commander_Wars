@@ -73,7 +73,7 @@ void ScriptEventChangeBuildlist::setPlayer(const qint32 &value)
 
 void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -83,12 +83,12 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 1, 9999);
+    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("Player who's buildlist will be modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
@@ -99,7 +99,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit ID: "));
     pText->setPosition(30, 70);
@@ -116,7 +116,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     {
         items.append(curUnitId);
     }
-    spDropDownmenu pMenu = new DropDownmenu(300, items);
+    spDropDownmenu pMenu = spDropDownmenu::create(300, items);
     pMenu->setTooltipText(tr("The unit id that will be changed in the build list of the player."));
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
@@ -126,13 +126,13 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
         unitID = pMenu->getCurrentItemText();
     });
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Remove: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
 
-    spCheckbox checkBox = new Checkbox();
+    spCheckbox checkBox = spCheckbox::create();
     checkBox->setTooltipText(tr("If the checked the unit will be forbidden to be build, else it gets allowed to be build."));
     checkBox->setPosition(width, 110);
     checkBox->setChecked(remove);

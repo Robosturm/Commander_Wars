@@ -23,7 +23,7 @@ CreditsMenue::CreditsMenue()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("creditsmenu");
     sprite->setResAnim(pBackground);
@@ -79,7 +79,7 @@ CreditsMenue::CreditsMenue()
             }
         }
     }
-    creditsActor = new oxygine::Actor();
+    creditsActor = oxygine::spActor::create();
     addChild(creditsActor);
     creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
@@ -99,7 +99,7 @@ CreditsMenue::CreditsMenue()
     oxygine::spTextField pTextfield;
     for (qint32 i = 0; i < m_Headlines.size(); i++)
     {
-        pTextfield = new oxygine::TextField();
+        pTextfield = oxygine::spTextField::create();
         pTextfield->setStyle(headstyle);
         pTextfield->setHtmlText(m_Headlines[i]);
         pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2, y);
@@ -107,7 +107,7 @@ CreditsMenue::CreditsMenue()
         y += pTextfield->getTextRect().getHeight() + 10;
         for (qint32 i2 = 0; i2 < m_Authors[i].size(); i2++)
         {
-            pTextfield = new oxygine::TextField();
+            pTextfield = oxygine::spTextField::create();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(m_Authors[i][i2]);
             pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2.0f, y);
@@ -134,10 +134,8 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
 }
 
 void CreditsMenue::exitMenue()
-{
-    
+{    
     Console::print("Leaving Credits Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }

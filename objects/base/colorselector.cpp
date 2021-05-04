@@ -39,13 +39,13 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     {
         setWidth(space * 3 + 30);
     }
-    spLabel pLabel = new Label(space);
+    spLabel pLabel = spLabel::create(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Red: "));
     pLabel->setPosition(space * 0, y);
     addChild(pLabel);
 
-    m_SpinBoxRed = new SpinBox(space - 20, 0, 255);
+    m_SpinBoxRed = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxRed->setPosition(space * 0, y + 40);
     addChild(m_SpinBoxRed);
     connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -53,12 +53,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         emit sigSelecetedColorChanged(QColor(value, m_CurrentColor.green(), m_CurrentColor.blue()));
     });
 
-    pLabel = new Label(space);
+    pLabel = spLabel::create(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Green: "));
     pLabel->setPosition(space * 1, y);
     addChild(pLabel);
-    m_SpinBoxGreen = new SpinBox(space - 20, 0, 255);
+    m_SpinBoxGreen = spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxGreen->setPosition(space * 1, y + 40);
     addChild(m_SpinBoxGreen);
     connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -66,12 +66,12 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), value, m_CurrentColor.blue()));
     });
 
-    pLabel = new Label(space);
+    pLabel = spLabel::create(space);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Blue: "));
     pLabel->setPosition(space * 2, y);
     addChild(pLabel);
-    m_SpinBoxBlue= new SpinBox(space - 20, 0, 255);
+    m_SpinBoxBlue= spSpinBox::create(space - 20, 0, 255);
     m_SpinBoxBlue->setPosition(space * 2, y + 40);
     addChild(m_SpinBoxBlue);
     connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -81,7 +81,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 
     connect(this, &ColorSelector::sigSelecetedColorChanged, this, &ColorSelector::selecetedColorChanged);
 
-    m_ColorDialog = new oxygine::Actor();
+    m_ColorDialog = oxygine::spActor::create();
     m_ColorDialog->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event* pEvent)
     {
         pEvent->stopPropagation();
@@ -134,7 +134,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         m_RedGreenField.append(QVector<oxygine::spColorRectSprite>());
         for (qint32 green = 0; green <= 255; green += pixelCount)
         {
-            oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
+            oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
             m_RedGreenField[m_RedGreenField.size() - 1].append(pSprite);
             pSprite->setPosition(red * pixelSize, green * pixelSize);
             pSprite->setSize(pixelSize * pixelCount + 1, pixelSize * pixelCount + 1);
@@ -142,7 +142,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             m_ColorDialog->addChild(pSprite);
         }
     }
-    m_Cursor1 = new oxygine::Sprite();
+    m_Cursor1 = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_1");
     m_Cursor1->setResAnim(pAnim);
     m_Cursor1->setPriority(5);
@@ -150,11 +150,11 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     m_Cursor1->setPosition(m_CurrentColor.red() * pixelSize - pAnim->getWidth() * m_Cursor1->getScaleX() / 2, m_CurrentColor.green() * pixelSize - pAnim->getHeight()  * m_Cursor1->getScaleY() / 2);
     m_ColorDialog->addChild(m_Cursor1);
 
-    oxygine::spActor bar = new oxygine::Actor();
+    oxygine::spActor bar = oxygine::spActor::create();
     m_ColorDialog->addChild(bar);
     for (qint32 blue = 0; blue <= 255; blue += pixelCount)
     {
-        oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
+        oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
         m_BlueField.append(pSprite);
         pSprite->setPosition(x, blue * pixelSize);
         pSprite->setSize(barWidth, pixelSize * pixelCount + 1);
@@ -196,7 +196,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         }
     });
 
-    m_Cursor2 = new oxygine::Sprite();
+    m_Cursor2 = oxygine::spSprite::create();
     pAnim = ObjectManager::getInstance()->getResAnim("colordialogcursor_2");
     m_Cursor2->setResAnim(pAnim);
     m_Cursor2->setScale(3);

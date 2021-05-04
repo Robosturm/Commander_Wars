@@ -17,15 +17,15 @@
 #include "game/player.h"
 #include "game/co.h"
 
-GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
+spGameAnimationPower GameAnimationPower::m_pGameAnimationPower = nullptr;
 
 GameAnimationPower* GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
 {
-    if (m_pGameAnimationPower == nullptr)
+    if (m_pGameAnimationPower.get() == nullptr)
     {
-        m_pGameAnimationPower = new GameAnimationPower(frameTime, color, powerMode, pCO);
+        m_pGameAnimationPower = spGameAnimationPower::create(frameTime, color, powerMode, pCO);
     }
-    return m_pGameAnimationPower;
+    return m_pGameAnimationPower.get();
 }
 
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
@@ -45,7 +45,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     }
     setSize(Settings::getWidth(), Settings::getHeight());
     // first sprite for rotating
-    oxygine::spBox9Sprite firstSpriteMask = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite firstSpriteMask = oxygine::spBox9Sprite::create();
     firstSpriteMask->setResAnim(pAnimMask);
     firstSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
@@ -53,7 +53,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     firstSpriteMask->setColor(color);
 
     // second sprite for rotating
-    oxygine::spBox9Sprite secondSpriteMask = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite secondSpriteMask = oxygine::spBox9Sprite::create();
     secondSpriteMask->setResAnim(pAnimMask);
     secondSpriteMask->setSize(Settings::getWidth(), Settings::getHeight());
     secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
@@ -61,7 +61,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     secondSpriteMask->setColor(color);
 
     // rotating sprite
-    spRotatingSprite rotSprite = new RotatingSprite();
+    spRotatingSprite rotSprite = spRotatingSprite::create();
     rotSprite->setSize(Settings::getWidth(), Settings::getHeight());
     rotSprite->setSprite(firstSpriteMask, secondSpriteMask);
     rotSprite->setDirection(3);
@@ -70,7 +70,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     QString coid = m_pCO->getCoID();
     QString resAnim = coid.toLower() + "+nrm";
     oxygine::ResAnim* pAnim = m_pCO->getResAnim(resAnim);
-    oxygine::spSprite m_CO = new oxygine::Sprite();
+    oxygine::spSprite m_CO = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
         m_CO->setResAnim(pAnim);
@@ -107,7 +107,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         {
             resAnim = pCO1->getCoID().toLower() + "+nrm";
             pAnim = pCO1->getResAnim(resAnim);
-            m_CO = new oxygine::Sprite();
+            m_CO = oxygine::spSprite::create();
             if (pAnim != nullptr)
             {
                 m_CO->setResAnim(pAnim);
@@ -142,7 +142,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     headline.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headline.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headline.multiline = false;
-    oxygine::spTextField testField = new oxygine::TextField();
+    oxygine::spTextField testField = oxygine::spTextField::create();
     testField->setHtmlText(text);
     qint32 textSize = testField->getTextRect().getWidth();
     if (textSize > Settings::getWidth() - 20)
@@ -158,7 +158,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     qint32 xPos = 10;
     for (qint32 i = 0; i < text.size(); i++)
     {
-        oxygine::spTextField textField = new oxygine::TextField();
+        oxygine::spTextField textField = oxygine::spTextField::create();
         textField->setHtmlText(QString(text[i]));
         textField->setPosition(xPos, 0);
         textField->setStyle(headline);
@@ -174,7 +174,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         {
             textField->setY(Settings::getHeight());
         }
-        oxygine::spTweenQueue queue = new oxygine::TweenQueue();
+        oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
         oxygine::spTween tween2 = oxygine::createTween(TweenWait(), oxygine::timeMS(m_frameTime * 2 * i + 1));
         oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1));
         oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(Settings::getHeight() / 2 - heigth / 2), oxygine::timeMS(m_frameTime * 4));

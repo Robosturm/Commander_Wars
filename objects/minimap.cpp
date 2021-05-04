@@ -47,7 +47,7 @@ void Minimap::clear()
 void Minimap::updateMinimap(spGameMap pMap, bool useVision)
 {
     
-    // load new minimap
+    // load minimap
     if (pMap.get() != nullptr)
     {
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
@@ -83,7 +83,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                 {
                     if (m_Items[item].terrainId != "||SHROUDED||")
                     {
-                        oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
+                        oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
                         pSprite->setColor(Qt::black);
                         pSprite->setPosition(x * ImageSize, y * ImageSize);
                         pSprite->setSize(ImageSize, ImageSize);
@@ -127,7 +127,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             oxygine::ResAnim* pAnim = pGameManager->getResAnim(pBuilding->getMinimapIcon());
                             if (pAnim != nullptr)
                             {
-                                oxygine::spSprite pSprite = new oxygine::Sprite();
+                                oxygine::spSprite pSprite = oxygine::spSprite::create();
                                 if (pAnim->getTotalFrames() > 1)
                                 {
                                     oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -160,7 +160,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                         oxygine::ResAnim* pAnim = pGameManager->getResAnim(pTerrain->getMinimapIcon());
                         if (pAnim != nullptr)
                         {
-                            oxygine::spSprite pSprite = new oxygine::Sprite();
+                            oxygine::spSprite pSprite = oxygine::spSprite::create();
                             if (pAnim->getTotalFrames() > 1)
                             {
                                 oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -195,7 +195,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                 oxygine::ResAnim* pAnim = pGameManager->getResAnim("minimap_unit");
                                 if (pAnim != nullptr)
                                 {
-                                    oxygine::spSprite pSprite = new oxygine::Sprite();
+                                    oxygine::spSprite pSprite = oxygine::spSprite::create();
                                     if (pAnim->getTotalFrames() > 1)
                                     {
                                         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);

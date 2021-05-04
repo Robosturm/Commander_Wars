@@ -27,12 +27,17 @@ var Constructor = function()
                                   BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(0, 20), movement, moveTime, false, -1);
         if (armyName !== "ma")
         {
+            var frameTime = 100;
+            if (typeof map !== 'undefined')
+            {
+                frameTime = map.getFrameTime();
+            }
             sprite.loadMovingSprite("battleship+" + armyName + "+fire",  false,
                                     BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
-                                    movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
+                                    movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames);
             sprite.loadMovingSpriteV2("battleship+" + armyName + "+fire+mask", GameEnums.Recoloring_Table,
                                       BATTLEANIMATION_BATTLESHIP.getMaxUnitCount(), Qt.point(47, 20 + 64),
-                                      movement, moveTime, false, 1, 1.0, 0, 0, false, map.getFrameTime() , fireFrames);
+                                      movement, moveTime, false, 1, 1.0, 0, 0, false, frameTime, fireFrames);
         }
     };
 

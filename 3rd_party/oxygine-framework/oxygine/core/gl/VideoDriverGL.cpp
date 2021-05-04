@@ -6,7 +6,7 @@ namespace oxygine
 {
     VideoDriverGL::VideoDriverGL()
     {
-        _rt = new NativeTextureGLES;
+        _rt = spNativeTextureGLES::create();
         GLint fbo = 0;
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);

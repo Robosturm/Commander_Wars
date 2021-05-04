@@ -10,15 +10,15 @@
 
 #include "objects/achievementbanner.h"
 
-Userdata* Userdata::m_pInstance = nullptr;
+spUserdata Userdata::m_pInstance = nullptr;
 
 Userdata* Userdata::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new Userdata();
+        m_pInstance = spUserdata::create();
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 Userdata::Userdata()
@@ -128,7 +128,7 @@ void Userdata::increaseAchievement(QString id, qint32 value)
             achievement.progress += value;
             if (!achieved && (achievement.progress >= achievement.targetValue))
             {
-                spAchievementBanner banner = new AchievementBanner(achievement);
+                spAchievementBanner banner = spAchievementBanner::create(achievement);
                 oxygine::getStage()->addChild(banner);
                 
             }

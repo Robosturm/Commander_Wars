@@ -45,7 +45,7 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
     m_nextFrameTimer.setSingleShot(true);
     setUnitFrameDelay(75);
 
-    m_Actor = new oxygine::ClipRectActor();
+    m_Actor = oxygine::spClipRectActor::create();
     m_Actor->setSize(127, 192);
     setSize(m_Actor->getWidth(), m_Actor->getHeight());
     addChild(m_Actor);
@@ -492,7 +492,7 @@ void BattleAnimationSprite::loadSingleMovingSpriteV2(QString spriteID, GameEnums
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
             if (frames < 0)

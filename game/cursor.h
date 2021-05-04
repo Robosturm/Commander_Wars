@@ -45,7 +45,7 @@ signals:
     void sigUpdatePosition(qint32 x, qint32 y);
 public slots:
     /**
-     * @brief updatePosition calculates the new cursor point based on the mouse x and y coordinates
+     * @brief updatePosition calculates the cursor point based on the mouse x and y coordinates
      * @param mousePosX
      * @param mousePosY
      */

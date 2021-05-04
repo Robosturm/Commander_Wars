@@ -136,8 +136,8 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             continue;
         }
 
-        ScriptCondition* pCondition = ScriptCondition::createReadCondition(rStream);
-        if (pCondition != nullptr)
+        spScriptCondition pCondition = ScriptCondition::createReadCondition(rStream);
+        if (pCondition.get() != nullptr)
         {
             rVector->append(pCondition);
         }

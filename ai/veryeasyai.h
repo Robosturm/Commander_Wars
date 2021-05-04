@@ -11,6 +11,9 @@ class QmlVectorBuilding;
 class QmlVectorPoint;
 class Building;
 
+class VeryEasyAI;
+using spVeryEasyAI = oxygine::intrusive_ptr<VeryEasyAI>;
+
 class VeryEasyAI : public CoreAI
 {
     Q_OBJECT
@@ -36,26 +39,26 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
-                            QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    bool performActionSteps(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits,
+                            spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
     /**
      * @brief captureBuildings
      * @param pUnits
      * @return
      */
-    bool captureBuildings(QmlVectorUnit* pUnits);
+    bool captureBuildings(spQmlVectorUnit pUnits);
     /**
      * @brief fireWithIndirectUnits
      * @param pUnits
      * @return
      */
-    bool fireWithIndirectUnits(QmlVectorUnit* pUnits);
+    bool fireWithIndirectUnits(spQmlVectorUnit pUnits);
     /**
      * @brief fireWithDirectUnits
      * @param pUnits
      * @return
      */
-    bool fireWithDirectUnits(QmlVectorUnit* pUnits);
+    bool fireWithDirectUnits(spQmlVectorUnit pUnits);
     /**
      * @brief attack
      * @param pUnit
@@ -70,17 +73,17 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
-                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool supportUnits = false);
+    bool moveUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuildings,
+                    spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings, bool supportUnits = false);
 
-    bool moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    bool moveTransporters(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
 
     /**
      * @brief loadUnits
      * @param pUnits
      * @return
      */
-    bool loadUnits(QmlVectorUnit* pUnits);
+    bool loadUnits(spQmlVectorUnit pUnits);
     /**
      * @brief VeryEasyAI::moveUnit
      * @param pAction
@@ -98,7 +101,7 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits);
+    bool buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits);
     /**
      * @brief finishTurn
      */

@@ -19,7 +19,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items)
     this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
-    m_Colorfield = new oxygine::ColorRectSprite();
+    m_Colorfield = oxygine::spColorRectSprite::create();
     m_Colorfield->addClickListener([=](oxygine::Event* event)
     {
         event->stopPropagation();
@@ -70,7 +70,7 @@ QColor DropDownmenuColor::getCurrentItemColor()
 
 void DropDownmenuColor::addDropDownColor(QColor color, qint32 id)
 {
-    oxygine::spColorRectSprite colorField = new oxygine::ColorRectSprite();
+    oxygine::spColorRectSprite colorField = oxygine::spColorRectSprite::create();
     colorField->setColor(color.red(), color.green(), color.blue(), 255);
     auto size = addDropDownItem(colorField, id);
     colorField->setSize(size.x - 20, size.y - 20);
@@ -90,7 +90,7 @@ void DropDownmenuColor::showColorDialog()
 {
     if (getEnabled())
     {
-        spColorSelectionDialog pDialog = new ColorSelectionDialog(m_currentColor);
+        spColorSelectionDialog pDialog = spColorSelectionDialog::create(m_currentColor);
         oxygine::getStage()->addChild(pDialog);
         connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
         

@@ -32,7 +32,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         float endPoints = m_endPoints;
         if (m_endPoints == 0)
         {
@@ -44,8 +44,8 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         float movingHeight = pAnim->getHeight();
         float startPosition = buildingOffsetY + (startPercent) * movingHeight;
 
-        oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
-        oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
+        oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
+        oxygine::spTweenQueue queueMoving = oxygine::spTweenQueue::create();
         // hit test to get building heigth
         pSprite->setResAnim(pAnim);
         pSprite->setPosition(0, startPosition);
@@ -174,11 +174,11 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         float buildingHigh = m_BuildingEndPos - m_BuildingStartPos;
         float percentDone = static_cast<float>(endPoints) / static_cast<float>(m_maxPoints);
         float startPosition = unitOffsetY + (static_cast<float>(m_startPoints) / static_cast<float>(m_maxPoints)) * buildingHigh;
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
             // jumping
-            oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
+            oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, jumpSprites - 1), oxygine::timeMS(jumpSprites * m_frameTime), jumpingCount);
             queueAnimating->add(tween);
             // cool aye aye sir
@@ -247,7 +247,7 @@ void GameAnimationCapture::addBackgroundSprite(QString spriteID)
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(0);
         this->addChild(pSprite);

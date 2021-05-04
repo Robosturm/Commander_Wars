@@ -25,9 +25,22 @@ class Player : public QObject, public oxygine::Actor, public FileSerializable
     Q_OBJECT
 
 public:
+    /**
+     * @brief Player
+     */
     explicit Player();
+    /**
+     * @brief init
+     */
     void init();
-    virtual ~Player() override;
+    /**
+     * @brief ~Player
+     */
+    virtual ~Player();
+    /**
+     * @brief releaseStaticData
+     */
+    static void releaseStaticData();
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -56,7 +69,7 @@ public:
      * @brief setBaseGameInput sets the player input
      * @param pBaseGameInput
      */
-    void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
+    void setBaseGameInput(spBaseGameInputIF pBaseGameInput);
     /**
      * @brief getCO
      * @param id index of the co 0 or 1
@@ -489,11 +502,41 @@ public slots:
         return &m_Variables;
     }
 private:
+    /**
+     * @brief loadTable
+     * @param table
+     * @return
+     */
     bool loadTable(qint32 table);
+    /**
+     * @brief loadTableFromFile
+     * @param tablename
+     * @return
+     */
     bool loadTableFromFile(QString tablename);
+    /**
+     * @brief colorToTable
+     * @param baseColor
+     * @return
+     */
     bool colorToTable(QColor baseColor);
+    /**
+     * @brief createTable
+     * @param baseColor
+     */
     void createTable(QColor baseColor);
+    /**
+     * @brief getAverageCost
+     * @return
+     */
     qint32 getAverageCost();
+    /**
+     * @brief addVisionFieldInternal
+     * @param x
+     * @param y
+     * @param duration
+     * @param directView
+     */
     void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
 private:
     qint32 funds{0};

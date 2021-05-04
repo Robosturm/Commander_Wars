@@ -25,7 +25,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -69,7 +69,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
         }
     });
     auto items = getNameList();
-    m_PredefinedLists = new DropDownmenu(300, items);
+    m_PredefinedLists = spDropDownmenu::create(300, items);
 
     m_PredefinedLists->setPosition(Settings::getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), Settings::getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
@@ -91,7 +91,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
+    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
@@ -101,7 +101,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
     headerStyle.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = false;
-    spLabel pLabel = new Label(pPanel->getWidth() - 60);
+    spLabel pLabel = spLabel::create(pPanel->getWidth() - 60);
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Action List"));
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
@@ -122,13 +122,13 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
         QString icon = pGameManager->getActionIcon(actionId);
         if (!icon.isEmpty())
         {
-            pLabel = new Label(250);
+            pLabel = spLabel::create(250);
             pLabel->setStyle(style);
             pLabel->setHtmlText(pGameManager->getName(i));
             pLabel->setPosition(x + 80, y);
             QString tooltip = pGameManager->getDescription(i);
 
-            spTooltip pTooltip = new Tooltip();
+            spTooltip pTooltip = spTooltip::create();
 
             oxygine::spSprite pSprite = pGameManager->getIcon(icon);
             pSprite->setScale(1.25f * pSprite->getScaleX());
@@ -136,7 +136,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
             pTooltip->setPosition(x + 45, y);
             pTooltip->setTooltipText(tooltip);
 
-            spCheckbox pCheckbox = new Checkbox();
+            spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setPosition(x, y);
             pCheckbox->setTooltipText(tooltip);
             m_Checkboxes.append(pCheckbox);
@@ -203,7 +203,7 @@ void ActionListDialog::setBuildlist(qint32)
 
 void ActionListDialog::showSaveBannlist()
 {    
-    spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
+    spDialogTextInput pSaveInput = spDialogTextInput::create(tr("Bannlist Name"), true, "");
     connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &ActionListDialog::saveBannlist, Qt::QueuedConnection);
     addChild(pSaveInput);    
 }

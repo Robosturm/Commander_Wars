@@ -15,7 +15,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -27,17 +27,17 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
 
     // current folder
-    m_CurrentFolder = new Textbox(Settings::getWidth() - 60);
+    m_CurrentFolder = spTextbox::create(Settings::getWidth() - 60);
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
     connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
-    m_MainPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 210), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
+    m_MainPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 210), QSize(Settings::getWidth() - 60, Settings::getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
     pSpriteBox->addChild(m_MainPanel);
     // file folder
-    m_CurrentFile = new Textbox(Settings::getWidth() - 60 - 160);
+    m_CurrentFile = spTextbox::create(Settings::getWidth() - 60 - 160);
     m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getHeight() + 10);
     m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
@@ -75,7 +75,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
         detach();
     });
     // drop down menu
-    m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards);
+    m_DropDownmenu = spDropDownmenu::create(m_CurrentFile->getWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
@@ -91,11 +91,11 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
 
     // go folder up
     pAnim = pObjectManager->getResAnim("filedialogitems");
-    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
-    oxygine::spTextField textField = new oxygine::TextField();
+    oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -170,7 +170,6 @@ void FileDialog::showFolder(QString folder)
     folder = folder.replace("\\", "/");
     m_Items.clear();
     m_ResAnims.clear();
-    m_UpdateList.clear();
 
     QDir dir(folder);
     if (!dir.exists())
@@ -202,11 +201,11 @@ void FileDialog::showFolder(QString folder)
         }
         ObjectManager* pObjectManager = ObjectManager::getInstance();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
-        oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+        oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
         pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pBox->setResAnim(pAnim);
-        oxygine::spTextField textField = new oxygine::TextField();
+        oxygine::spTextField textField = oxygine::spTextField::create();
         oxygine::TextStyle style = FontManager::getMainFont24();
         style.color = FontManager::getFontColor();
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -252,7 +251,16 @@ void FileDialog::showFolder(QString folder)
             });
             if (m_preview)
             {
-                m_UpdateList.append(std::tuple<oxygine::spSprite, QString>(pBox, infoList[i].filePath()));
+                QImage img(infoList[i].filePath());
+                oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
+                Mainapp::getInstance()->loadResAnim(pAnim, img);
+                m_ResAnims.append(pAnim);
+                oxygine::spSprite pSprite = oxygine::spSprite::create();
+                pSprite->setResAnim(pAnim.get());
+                pSprite->setScaleX(30.0f / pAnim->getWidth());
+                pSprite->setScaleY(30.0f / pAnim->getHeight());
+                pSprite->setPosition(8, 5);
+                pBox->addChild(pSprite);
                 textField->setX(53);
             }
         }
@@ -266,24 +274,6 @@ void FileDialog::showFolder(QString folder)
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
     pApp->continueRendering();
-}
-
-void FileDialog::update(const oxygine::UpdateState& us)
-{
-    for (qint32 i = 0; i < m_UpdateList.size(); i++)
-    {
-        oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
-        pAnim->init(std::get<1>(m_UpdateList[i]), 1, 1, 1.0f);
-        m_ResAnims.append(pAnim);
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        pSprite->setResAnim(pAnim);
-        pSprite->setScaleX(30.0f / pAnim->getWidth());
-        pSprite->setScaleY(30.0f / pAnim->getHeight());
-        pSprite->setPosition(8, 5);
-        std::get<0>(m_UpdateList[i])->addChild(pSprite);
-    }
-    m_UpdateList.clear();
-    oxygine::Actor::update(us);
 }
 
 void FileDialog::deleteItem()
@@ -310,8 +300,8 @@ void FileDialog::KeyInput(oxygine::KeyEvent event)
                                   m_CurrentFile->getCurrentText()))
                 {
                     m_focused = false;
-                    spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
-                                                                         m_CurrentFile->getCurrentText() + "?", true);
+                    spDialogMessageBox pSurrender = spDialogMessageBox::create(tr("Do you want to delete the item ") + m_CurrentFolder->getCurrentText() + "/" +
+                                                                               m_CurrentFile->getCurrentText() + "?", true);
                     connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &FileDialog::deleteItem, Qt::QueuedConnection);
                     connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
                     {

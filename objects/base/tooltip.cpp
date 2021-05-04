@@ -94,7 +94,7 @@ void Tooltip::showTooltip()
                 Console::print("Showing tooltip", Console::eDEBUG);
                 QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
 
-                m_Tooltip = new oxygine::Actor();
+                m_Tooltip = oxygine::spActor::create();
                 m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
 
                 oxygine::TextStyle style = FontManager::getMainFont24();
@@ -104,7 +104,7 @@ void Tooltip::showTooltip()
                 style.multiline = true;
 
                 ObjectManager* pObjectManager = ObjectManager::getInstance();
-                oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+                oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
                 pSpriteBox->setResAnim(pAnim);
 
@@ -113,7 +113,7 @@ void Tooltip::showTooltip()
                 m_Tooltip->addChild(pSpriteBox);
                 pSpriteBox->setPosition(0, 0);
                 pSpriteBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-                oxygine::spTextField pText = new oxygine::TextField();
+                oxygine::spTextField pText = oxygine::spTextField::create();
                 pText->setHtmlText(m_tooltipText);
                 pText->setWidth(Settings::getWidth() / 3);
                 pText->setStyle(style);

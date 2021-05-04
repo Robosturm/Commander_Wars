@@ -170,7 +170,7 @@ namespace oxygine
             context.resources = this;
 
             qDebug("resource: %s ", context.xml_name.toStdString().c_str());
-            Resource* res = r.cb(context);
+            spResource res = r.cb(context);
             Q_ASSERT(res);
             res->setUseLoadCounter(opt._useLoadCounter);
 
@@ -199,7 +199,7 @@ namespace oxygine
 
     }
 
-    void Resources::add(Resource* r, bool accessByShortenID)
+    void Resources::add(spResource r, bool accessByShortenID)
     {
         Q_ASSERT(r);
         if (!r)

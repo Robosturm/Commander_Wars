@@ -50,7 +50,7 @@ void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSer
         if (m_pPlayer->getPlayerID() == player)
         {
             QMutexLocker locker(&m_ActionMutex);
-            spGameAction pAction = new GameAction();
+            spGameAction pAction = spGameAction::create();
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);
             if (actionRunning == false &&

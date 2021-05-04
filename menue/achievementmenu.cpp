@@ -28,7 +28,7 @@ Achievementmenu::Achievementmenu()
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("achievementmenu");
     sprite->setResAnim(pBackground);
@@ -60,12 +60,12 @@ Achievementmenu::Achievementmenu()
 
     qint32 y = 10;
     qint32 width = 150;
-    spLabel pTextfield = new Label(width - 10);
+    spLabel pTextfield = spLabel::create(width - 10);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
-    m_SearchString = new Textbox(Settings::getWidth() - 380);
+    m_SearchString = spTextbox::create(Settings::getWidth() - 380);
     m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &Achievementmenu::searchChanged, Qt::QueuedConnection);
@@ -81,7 +81,7 @@ Achievementmenu::Achievementmenu()
     y += 50;
 
     QSize size(Settings::getWidth() - 20, Settings::getHeight() - 150);
-    m_MainPanel = new Panel(true, size, size);
+    m_MainPanel = spPanel::create(true, size, size);
     m_MainPanel->setPosition(10, 90);
     addChild(m_MainPanel);
 
@@ -96,7 +96,7 @@ Achievementmenu::Achievementmenu()
             achieveCount += 1;
         }
     }
-    pTextfield = new Label(singleWidth);
+    pTextfield = spLabel::create(singleWidth);
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Achievement Progress: ") + QString::number(achieveCount) + " / " + QString::number(achievements->length()));
     pTextfield->setPosition(10, 50);
@@ -107,12 +107,10 @@ Achievementmenu::Achievementmenu()
 }
 
 void Achievementmenu::exitMenue()
-{
-    
+{    
     Console::print("Leaving Achievement Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void Achievementmenu::search()
@@ -166,14 +164,14 @@ void Achievementmenu::searchChanged(QString text)
                     //                    oxygine::spSprite pIcon = pWikiDatabase->getIcon(achievement.icon, GameMap::defaultImageSize * 2);
                     //                    pIcon->setPosition(x + pIcon->getPosition().x, y + 16 + pIcon->getPosition().y);
                     //                    m_MainPanel->addItem(pIcon);
-                    spLabel pTextfield = new Label(50);
+                    spLabel pTextfield = spLabel::create(50);
                     pTextfield->setStyle(styleLarge);
                     pTextfield->setText("?");
                     pTextfield->setPosition(x, y + 8);
                     m_MainPanel->addItem(pTextfield);
                 }
 
-                spLabel pTextfield = new Label(singleWidth - 60);
+                spLabel pTextfield = spLabel::create(singleWidth - 60);
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
@@ -186,7 +184,7 @@ void Achievementmenu::searchChanged(QString text)
                 pTextfield->setPosition(x + 60, y);
                 m_MainPanel->addItem(pTextfield);
 
-                pTextfield = new Label(singleWidth - 60);
+                pTextfield = spLabel::create(singleWidth - 60);
                 pTextfield->setStyle(style);
                 if (achievement.hide && !achieved)
                 {
@@ -200,7 +198,7 @@ void Achievementmenu::searchChanged(QString text)
                 m_MainPanel->addItem(pTextfield);
 
                 QString info = QString::number(achievement.progress) + " / " + QString::number(achievement.targetValue);
-                spProgressInfoBar pProgressInfoBar = new ProgressInfoBar(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
+                spProgressInfoBar pProgressInfoBar = spProgressInfoBar::create(singleWidth, 32, info, static_cast<float>(achievement.progress) / static_cast<float>(achievement.targetValue));
                 pProgressInfoBar->setPosition(x, y + 80);
                 m_MainPanel->addItem(pProgressInfoBar);
                 y += 120;

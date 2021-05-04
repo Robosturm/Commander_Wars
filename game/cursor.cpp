@@ -14,7 +14,7 @@ Cursor::Cursor()
     this->moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Cursor));
-    m_cursorRangeOutline = new oxygine::Actor();
+    m_cursorRangeOutline = oxygine::spActor::create();
     addChild(m_cursorRangeOutline);
     connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
 }
@@ -29,7 +29,7 @@ void Cursor::changeCursor(QString spriteID, qint32 xOffset, qint32 yOffset, floa
         m_CurrentCursor = nullptr;
     }
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);
-    m_CurrentCursor = new oxygine::Sprite();
+    m_CurrentCursor = oxygine::spSprite::create();
     if (pAnim != nullptr)
     {
         if (pAnim->getTotalFrames() > 1)

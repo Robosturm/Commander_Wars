@@ -42,7 +42,7 @@ namespace oxygine
             return 0;
         }
     protected:
-        static void setNode(Resource* res, const QDomElement& node) {res->_node = node;}
+        static void setNode(spResource res, const QDomElement& node) {res->_node = node;}
 
         virtual void _load(LoadResourcesContext* context = 0) = 0;
         virtual void _unload() = 0;

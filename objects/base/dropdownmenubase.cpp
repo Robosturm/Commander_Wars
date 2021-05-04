@@ -13,12 +13,12 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     setHeight(40);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
-    m_Box = new oxygine::Box9Sprite();
+    m_Box = oxygine::spBox9Sprite::create();
     m_Box->setResAnim(pAnim);
     m_Box->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_Box->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Box->setSize(width, 40);
-    m_pClipActor = new oxygine::ClipRectActor();
+    m_pClipActor = oxygine::spClipRectActor::create();
     m_Box->addChild(m_pClipActor);
     m_pClipActor->setSize(m_Box->getWidth() - 20 - 45, m_Box->getHeight());
     m_pClipActor->setX(10);
@@ -38,11 +38,11 @@ DropDownmenuBase::DropDownmenuBase(qint32 width, qint32 itemcount)
     {
         scrollHeigth = (itemcount + 1) * 40;
     }
-    m_Panel = new Panel(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
+    m_Panel = spPanel::create(false, QSize(width, scrollHeigth), QSize(width, itemcount * 40));
     m_Panel->setSubComponent(true);
     m_Panel->setVisible(false);
     this->addChild(m_Panel);
-    m_pArrowDown = new oxygine::Button();
+    m_pArrowDown = oxygine::spButton::create();
     m_Box->addChild(m_pArrowDown);
     m_pArrowDown->setPosition(m_Box->getWidth() - 45, 10);
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
@@ -155,7 +155,7 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
-    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     pBox->setResAnim(pAnim);
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);

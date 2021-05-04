@@ -16,7 +16,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/globalutils.h"
 
-GameAnimationFactory* GameAnimationFactory::m_pInstance = nullptr;
+spGameAnimationFactory GameAnimationFactory::m_pInstance = nullptr;
 QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 
 GameAnimationFactory::GameAnimationFactory()
@@ -55,17 +55,17 @@ void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
 
 GameAnimationFactory* GameAnimationFactory::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new GameAnimationFactory();
+        m_pInstance = spGameAnimationFactory::create();
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
 {
     
-    spGameAnimation animation = new GameAnimation(frameTime);
+    spGameAnimation animation = spGameAnimation::create(frameTime);
     if (mapPosition)
     {
         animation->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
@@ -84,12 +84,12 @@ GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, GameAction* pAction)
 {
     
-    GameAnimationWalk* pGameAnimationWalk = new GameAnimationWalk(pUnit, pAction->getMovePath());
+    spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, pAction->getMovePath());
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
     m_Animations.append(pGameAnimationWalk);
     
-    return pGameAnimationWalk;
+    return pGameAnimationWalk.get();
 }
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
@@ -110,7 +110,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     
-    GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
+    spGameAnimationDialog pAnim = spGameAnimationDialog::create(frameTime);
     pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
     pAnim->setDialog(text);
     pAnim->setCO(coid, mood);
@@ -118,7 +118,7 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     oxygine::getStage()->addChild(pAnim);
     m_Animations.append(pAnim);
     
-    return pAnim;
+    return pAnim.get();
 }
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime, quint32 uptimeMs)
@@ -126,11 +126,10 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false, uptimeMs);
+        spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pPlayer, frameTime, false, uptimeMs);
         pGameMenue->addChild(pAnim);
-        m_Animations.append(pAnim);
-        
-        return pAnim;
+        m_Animations.append(pAnim);        
+        return pAnim.get();
     }
     return nullptr;
 }
@@ -138,20 +137,19 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
     
-    GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints, maxPoints);
+    spGameAnimationCapture pGameAnimationCapture = spGameAnimationCapture::create(startPoints, endPoints, maxPoints);
     pGameAnimationCapture->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     GameMap::getInstance()->addChild(pGameAnimationCapture);
     m_Animations.append(pGameAnimationCapture);
     
-    return pGameAnimationCapture;
+    return pGameAnimationCapture.get();
 }
 
 GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
                                                            Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
-{
-    
-    GameAnimation* pRet = nullptr;
+{    
+    spGameAnimation pRet = nullptr;
     spGameMap pMap = GameMap::getInstance();
     if (pDefUnit != nullptr && pMap.get() != nullptr)
     {
@@ -181,12 +179,12 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 pRet = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY(), 70);
                 pRet->addSprite("blackhole_shot", -GameMap::getImageSize() * 0.5f, -GameMap::getImageSize() * 0.5f, 0, 1.5f);
                 pRet->setSound("talongunhit.wav", 1);
-                pDmgTextAtk->queueAnimation(pRet);
-                GameAnimation* pDmgTextDef = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY());
+                pDmgTextAtk->queueAnimation(pRet.get());
+                spGameAnimation pDmgTextDef = createAnimation(pAtkTerrain->Terrain::getX(), pAtkTerrain->Terrain::getY());
                 pDmgTextDef->addText(QString::number(defDamage) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
                 pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->Terrain::getX() * GameMap::getImageSize(), (pAtkTerrain->Terrain::getY() - 2) * GameMap::getImageSize()), 1000);
                 pDmgTextDef->addTweenWait(1500);
-                pRet->queueAnimation(pDmgTextDef);
+                pRet->queueAnimation(pDmgTextDef.get());
                 pRet = pDmgTextDef;
             }
             else
@@ -196,7 +194,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         }
         else
         {
-            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+            pRet = spBattleAnimation::create(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
                                        pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             oxygine::spSprite pBack = nullptr;
 
@@ -207,7 +205,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("fullscreen_battlebackground", oxygine::ep_ignore_error);
                 if (pAnim != nullptr)
                 {
-                    pBack = new oxygine::Sprite();
+                    pBack = oxygine::spSprite::create();
                     pBack->setResAnim(pAnim);
                     pBack->setScaleX(Settings::getWidth() / pAnim->getWidth());
                     pBack->setScaleY(Settings::getHeight() / pAnim->getHeight());
@@ -215,7 +213,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 }
                 else
                 {
-                    oxygine::spColorRectSprite pRect = new oxygine::ColorRectSprite();
+                    oxygine::spColorRectSprite pRect = oxygine::spColorRectSprite::create();
                     pRect->setSize(Settings::getWidth(), Settings::getHeight());
                     pRect->setColor(pAtkUnit->getOwner()->getColor().darker(120));
                     pBack = pRect;
@@ -272,7 +270,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         pRet->setSound("talongunhit.wav", 1);
     }
 
-    return pRet;
+    return pRet.get();
 }
 
 qint32 GameAnimationFactory::getAnimationCount()

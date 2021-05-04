@@ -4,6 +4,9 @@
 
 #include "scriptevent.h"
 
+class ScriptEventAddFunds;
+using spScriptEventAddFunds = oxygine::intrusive_ptr<ScriptEventAddFunds>;
+
 class ScriptEventAddFunds : public ScriptEvent
 {
     Q_OBJECT

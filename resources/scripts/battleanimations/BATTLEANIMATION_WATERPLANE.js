@@ -8,10 +8,12 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("waterplane",  false,
-                          BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20));
+                          BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20), -1, 1.0, 0, 0,
+                          false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
         sprite.loadSpriteV2("waterplane+mask", GameEnums.Recoloring_Table,
-                            BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20));
+                            BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20), -1, 1.0, 0, 0,
+                            false, false, 30);
         sprite.addMoveTweenToLastLoadedSprites(0, -5, 1200);
     };
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

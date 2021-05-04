@@ -107,7 +107,7 @@ void HeavyAi::process()
     {
         m_timer.stop();
     }
-    if (useBuilding(pBuildings.get())){}
+    if (useBuilding(pBuildings)){}
     else if (useCOPower(m_pPlayer->getUnits(), m_pPlayer->getEnemyUnits())){}
     else
     {
@@ -120,7 +120,7 @@ void HeavyAi::process()
             if (!selectActionToPerform())
             {
                 scoreProduction();
-                if (!buildUnits(pBuildings.get(), m_pUnits.get(), m_pEnemyUnits.get(), pEnemyBuildings.get()))
+                if (!buildUnits(pBuildings, m_pUnits, m_pEnemyUnits, pEnemyBuildings))
                 {
                     endTurn();
                 }
@@ -178,13 +178,13 @@ void HeavyAi::setupTurn(const spQmlVectorBuilding & buildings)
     {
         m_pUnits = m_pPlayer->getUnits();
         m_pUnits->sortShortestMovementRange(true);
-        initUnits(m_pUnits.get(), m_ownUnits, false);
+        initUnits(m_pUnits, m_ownUnits, false);
     }
     if (m_pEnemyUnits.get() == nullptr)
     {
         m_pEnemyUnits = m_pPlayer->getEnemyUnits();
         m_pEnemyUnits->randomize();
-        initUnits(m_pEnemyUnits.get(), m_enemyUnits, true);
+        initUnits(m_pEnemyUnits, m_enemyUnits, true);
     }
     if (startOfTurn)
     {
@@ -232,14 +232,14 @@ void HeavyAi::createIslandMaps()
     }
 }
 
-void HeavyAi::initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits)
+void HeavyAi::initUnits(spQmlVectorUnit pUnits, QVector<UnitData> & units, bool enemyUnits)
 {
     units.clear();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         UnitData data;
         data.m_pUnit = pUnits->at(i);
-        data.m_pPfs = new UnitPathFindingSystem(pUnits->at(i));
+        data.m_pPfs = spUnitPathFindingSystem::create(pUnits->at(i));
         data.m_movepoints = data.m_pUnit->getMovementpoints(data.m_pUnit->getPosition());
         data.m_pPfs->setMovepoints(data.m_movepoints * 2);
         data.m_pPfs->setIgnoreEnemies(enemyUnits);
@@ -276,7 +276,7 @@ void HeavyAi::updateUnits(QVector<UnitData> & units, bool enemyUnits)
                     qAbs(m_updatePoints[i].y() - units[i2].m_pUnit->Unit::getY()) <=
                     units[i2].m_pUnit->getMovementpoints(QPoint(units[i2].m_pUnit->Unit::getX(), units[i2].m_pUnit->Unit::getY())) + 2)
                 {
-                    units[i2].m_pPfs = new UnitPathFindingSystem(units[i2].m_pUnit);
+                    units[i2].m_pPfs = spUnitPathFindingSystem::create(units[i2].m_pUnit);
                     units[i2].m_pPfs->setIgnoreEnemies(enemyUnits);
                     units[i2].m_pPfs->explore();
                     if (!enemyUnits)
@@ -407,7 +407,7 @@ void HeavyAi::prepareWaitPfs(UnitData & unitData, QStringList & actions)
     {
         QVector<QVector3D> targets;
         getMoveTargets(unitData, actions, targets);
-        m_currentTargetedfPfs = new TargetedUnitPathFindingSystem(unitData.m_pUnit, targets, &m_MoveCostMap);
+        m_currentTargetedfPfs = spTargetedUnitPathFindingSystem::create(unitData.m_pUnit, targets, &m_MoveCostMap);
         m_currentTargetedfPfs->explore();
     }
 }
@@ -426,7 +426,7 @@ void HeavyAi::mutateActionForFields(UnitData & unitData, const QVector<QPoint> &
         while (mutate)
         {
             qint32 step = 0;
-            spGameAction pAction  = new GameAction();
+            spGameAction pAction  = spGameAction::create();
             pAction->setActionID(action);
             pAction->setMovepath(path, costs);
             pAction->setTarget(QPoint(unitData.m_pUnit->Unit::getX(), unitData.m_pUnit->Unit::getY()));
@@ -547,7 +547,7 @@ bool HeavyAi::mutateAction(spGameAction pAction, UnitData & unitData, FunctionTy
         }
         else if (stepType.toUpper() == "FIELD")
         {
-            MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+            spMarkedFieldData pData = pAction->getMarkedFieldStepData();
             QVector<QPoint>* pFields = pData->getPoints();
             qint32 nextStep = 0;
             if (step < stepPosition.size())
@@ -831,8 +831,8 @@ void HeavyAi::scoreProduction()
     // todo
 }
 
-bool HeavyAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                         QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+bool HeavyAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                         spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
     scoreUnitBuildings(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings);
     float bestScore = std::numeric_limits<float>::min();
@@ -857,8 +857,8 @@ bool HeavyAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     return false;
 }
 
-void HeavyAi::scoreUnitBuildings(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                                 QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+void HeavyAi::scoreUnitBuildings(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                                 spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
     QVector<double> data = getGlobalBuildInfo(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings);
     // do the actual scoring
@@ -883,7 +883,7 @@ void HeavyAi::scoreUnitBuildings(QmlVectorBuilding* pBuildings, QmlVectorUnit* p
 void HeavyAi::createUnitBuildData(BuildingData & building, QVector<double> & data, qint32 funds)
 {
     // create new
-    spGameAction pAction = new GameAction(ACTION_BUILD_UNITS);
+    spGameAction pAction = spGameAction::create(ACTION_BUILD_UNITS);
     qint32 x = building.m_pBuilding->Building::getX();
     qint32 y = building.m_pBuilding->Building::getY();
     pAction->setTarget(QPoint(x, y));
@@ -957,8 +957,8 @@ void HeavyAi::getProductionInputVector(Building* pBuilding, Unit* pUnit, QVector
 
 }
 
-QVector<double> HeavyAi::getGlobalBuildInfo(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                                   QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+QVector<double> HeavyAi::getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                                   spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings)
 {
     QVector<double> data(BuildingEntry::MaxSize, 0.0);
     spGameMap pMap = GameMap::getInstance();

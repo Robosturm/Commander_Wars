@@ -30,12 +30,12 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // first vertical line
-    oxygine::spColorRectSprite firstLine = new oxygine::ColorRectSprite();
+    oxygine::spColorRectSprite firstLine = oxygine::spColorRectSprite::create();
     firstLine->setSize(width, 5);
     firstLine->setColor(color);
     addChild(firstLine);
     // first horizontal line
-    oxygine::spColorRectSprite secondLine = new oxygine::ColorRectSprite();
+    oxygine::spColorRectSprite secondLine = oxygine::spColorRectSprite::create();
     secondLine->setSize(5, 40);
     secondLine->setColor(color);
     secondLine->setY(5);
@@ -44,7 +44,7 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
     for (qint32 i = 0; i < header.size(); i++)
     {
         // header label
-        spLabel pTextfield = new Label(m_widths[i] - 10);
+        spLabel pTextfield = spLabel::create(m_widths[i] - 10);
         pTextfield->setPosition(x + 5, 13);
         pTextfield->setStyle(style);
         pTextfield->setHtmlText(header[i]);
@@ -52,14 +52,14 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
         m_Labels.append(pTextfield);
         x += widths[i];
         // following horizintal line
-        oxygine::spColorRectSprite line = new oxygine::ColorRectSprite();
+        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(x, 5);
         addChild(line);
     }
     // vertical line after header
-    oxygine::spColorRectSprite line = new oxygine::ColorRectSprite();
+    oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
     line->setSize(width, 5);
     line->setColor(color);
     line->setY(5 + 40);
@@ -68,22 +68,22 @@ TableView::TableView(QVector<qint32> widths, QVector<QStringList> data, QStringL
     x = 0;
     for (qint32 i = 0; i < data.size(); i++)
     {
-        // vertical line below the new item
-        line = new oxygine::ColorRectSprite();
+        // vertical line below the item
+        line = oxygine::spColorRectSprite::create();
         line->setSize(width, 5);
         line->setColor(color);
         line->setY(5 + 40 * (i + 2));
         addChild(line);
         m_VLines.append(line);
         // initial horizontal line
-        line = new oxygine::ColorRectSprite();
+        line = oxygine::spColorRectSprite::create();
         line->setSize(5, 40);
         line->setColor(color);
         line->setY(5 + (i + 1) * 40);
         addChild(line);
         m_HLines.append(line);
         // final horizontal line
-        oxygine::spColorRectSprite line = new oxygine::ColorRectSprite();
+        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(width - 5, 5 + (i + 1) * 40);
@@ -110,7 +110,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
 
     if (i2 < m_data[i].size() - 1)
     {
-        oxygine::spColorRectSprite line = new oxygine::ColorRectSprite();
+        oxygine::spColorRectSprite line = oxygine::spColorRectSprite::create();
         line->setSize(5, 40);
         line->setColor(color);
         line->setPosition(x + m_widths[i2], 5 + (i + 1) * 40);
@@ -124,7 +124,7 @@ void TableView::addRow(qint32 i, qint32 i2, qint32 x, bool selectable)
             });
         }
     }
-    spLabel pTextfield = new Label(m_widths[i2] - 10);
+    spLabel pTextfield = spLabel::create(m_widths[i2] - 10);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(m_data[i][i2]);
     pTextfield->setPosition(x + 5, 13 + (i + 1) * 40);

@@ -29,14 +29,14 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    m_Panel = new Panel(true, QSize(size.width(), size.height() - 50), QSize(size.width(), size.height() - 50));
+    m_Panel = spPanel::create(true, QSize(size.width(), size.height() - 50), QSize(size.width(), size.height() - 50));
     addChild(m_Panel);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    m_Chat = new oxygine::TextField();
+    m_Chat = oxygine::spTextField::create();
     m_Chat->setStyle(style);
     m_Chat->setPosition(10, 10);
     m_Chat->setWidth(size.width() - 10 - 60);
@@ -52,7 +52,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     connect(this, &Chat::sigSendText, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_Send);
 
-    m_ChatInput = new Textbox(size.width() - m_Send->getWidth() - 10);
+    m_ChatInput = spTextbox::create(size.width() - m_Send->getWidth() - 10);
     setVisible(true);
 
     m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());

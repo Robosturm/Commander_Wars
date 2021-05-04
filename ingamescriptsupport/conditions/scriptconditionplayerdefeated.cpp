@@ -101,7 +101,7 @@ void ScriptConditionPlayerDefeated::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -111,12 +111,12 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 1, 99999);
+    spSpinBox spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("The player that has to be defeated in order to executed the events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_player + 1);

@@ -73,13 +73,13 @@ namespace oxygine
             fs_blit = stream.readAll();
         }
         // create shaders
-        shaderBlurV = new ShaderProgramGL(vs_v, fs_blur, decl);
+        shaderBlurV = spShaderProgramGL::create(vs_v, fs_blur, decl);
         driver->setShaderProgram(shaderBlurV.get());
         driver->setUniformInt("s_texture", 0);
-        shaderBlurH = new ShaderProgramGL(vs_h, fs_blur, decl);
+        shaderBlurH = spShaderProgramGL::create(vs_h, fs_blur, decl);
         driver->setShaderProgram(shaderBlurH.get());
         driver->setUniformInt("s_texture", 0);
-        shaderBlit = new ShaderProgramGL(vs_blit, fs_blit, decl);
+        shaderBlit = spShaderProgramGL::create(vs_blit, fs_blit, decl);
         driver->setShaderProgram(shaderBlit.get());
         driver->setUniformInt("s_texture", 0);
     }

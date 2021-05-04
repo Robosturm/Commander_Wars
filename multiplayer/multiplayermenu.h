@@ -15,6 +15,9 @@
 
 #include "multiplayer/password.h"
 
+class Multiplayermenu;
+using spMultiplayermenu = oxygine::intrusive_ptr<Multiplayermenu>;
+
 class Multiplayermenu : public MapSelectionMapsMenue
 {
     Q_OBJECT
@@ -78,7 +81,7 @@ protected:
     void initClientGame(quint64 socketID, QDataStream &stream);
     void loadMultiplayerMap();
     void showIPs();
-    GameMap* createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
+    spGameMap createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream);
     QString getNewFileName(QString filename);
     void clientMapInfo(QDataStream & stream, quint64 socketID);
     /**

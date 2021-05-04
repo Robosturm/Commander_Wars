@@ -66,7 +66,7 @@ void PlayerInfo::updateData()
         if (!pPlayer->getIsDefeated())
         {
             playerShown++;
-            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
             oxygine::ResAnim* pAnim = nullptr;
             if (pPlayer->getCO(1) == nullptr)
             {
@@ -96,7 +96,7 @@ void PlayerInfo::updateData()
             {
                 pAnim = pCOSpriteManager->getResAnim("no_co+info");
             }
-            pSprite = new oxygine::Sprite();
+            pSprite = oxygine::spSprite::create();
             pSprite->setResAnim(pAnim);
             pSprite->setY(yPos);
             if (pAnim != nullptr)
@@ -115,7 +115,7 @@ void PlayerInfo::updateData()
             this->addChild(pSprite);
             if (pCO != nullptr)
             {
-                spCoPowermeter pCoPowermeter = new CoPowermeter(pCO);
+                spCoPowermeter pCoPowermeter = spCoPowermeter::create(pCO);
                 pCoPowermeter->setY(pSprite->getY());
                 pCoPowermeter->setFlippedX(m_flippedX);
                 if (m_flippedX)
@@ -134,10 +134,10 @@ void PlayerInfo::updateData()
             {
                 pCO = pPlayer->getCO(1);
                 pAnim = pCO->getResAnim(QString(pCO->getCoID() + "+info").toLower());
-                pSprite = new oxygine::Sprite();
+                pSprite = oxygine::spSprite::create();
                 pSprite->setResAnim(pAnim);
                 pSprite->setY(yPos + 62);
-                spCoPowermeter pCoPowermeter = new CoPowermeter(pCO);
+                spCoPowermeter pCoPowermeter = spCoPowermeter::create(pCO);
                 pCoPowermeter->setY(pSprite->getY());
                 pCoPowermeter->setFlippedX(m_flippedX);
                 pCoPowermeter->drawPowerMeter();
@@ -164,7 +164,7 @@ void PlayerInfo::updateData()
             }
             oxygine::TextStyle style = FontManager::getMainFont24();
 
-            oxygine::spTextField Text = new oxygine::TextField();
+            oxygine::spTextField Text = oxygine::spTextField::create();
 
             Text->setStyle(style);
             QString number = QString::number(pPlayer->getFunds());

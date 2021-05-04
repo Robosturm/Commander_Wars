@@ -41,7 +41,7 @@ Multiplayermenu::Multiplayermenu(QString adress, QString password, bool host)
     init();
     if (!host)
     {
-        m_NetworkInterface = new TCPClient();
+        m_NetworkInterface = spTCPClient::create();
         m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
         initClientAndWaitForConnection();
         emit m_NetworkInterface->sig_connect(adress, Settings::getGamePort());
@@ -93,7 +93,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
     connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
     connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
     // wait 10 minutes till timeout
-    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"), 1000 * 60 * 5);
+    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Connecting"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -117,27 +117,27 @@ void Multiplayermenu::init()
 
 void Multiplayermenu::showIPs()
 {
-    spGenericBox pGenericBox = new GenericBox();
+    spGenericBox pGenericBox = spGenericBox::create();
     QStringList items = NetworkInterface::getIPAdresses();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
-    oxygine::spTextField info = new oxygine::TextField();
+    oxygine::spTextField info = oxygine::spTextField::create();
     info->setStyle(style);
     info->setHtmlText((tr("Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses") +
-                      tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")));
+                       tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")));
     info->setSize(Settings::getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
     qint32 starty = 10 + info->getTextRect().getHeight();
     for (qint32 i = 0; i < items.size(); i++)
     {
-        oxygine::spTextField text = new oxygine::TextField();
+        oxygine::spTextField text = oxygine::spTextField::create();
         text->setStyle(style);
         text->setHtmlText((tr("Host Adress: ") + items[i]));
         text->setPosition(10, starty + i * 40);
@@ -155,7 +155,7 @@ void Multiplayermenu::showLoadSaveGameDialog()
     QVector<QString> wildcards;
     wildcards.append("*.msav");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
-    spFileDialog saveDialog = new FileDialog(path, wildcards);
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Multiplayermenu::loadSaveGame, Qt::QueuedConnection);
     
@@ -449,7 +449,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
         {
             Console::print("Incorrect Password found.", Console::eDEBUG);
             // quit game with wrong version
-            slotButtonBack();            
+            slotButtonBack();
         }
         else
         {
@@ -513,7 +513,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             m_pPlayerSelection->setSaveGame(m_saveGame);
             if (m_saveGame)
             {
-                m_pMapSelectionView->setCurrentMap(new GameMap(stream, m_saveGame));
+                m_pMapSelectionView->setCurrentMap(spGameMap::create<QDataStream &, bool>(stream, m_saveGame));
                 loadMultiplayerMap();
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -557,11 +557,11 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
             spDialogMessageBox pDialogMessageBox = nullptr;
             if (sameMods)
             {
-                pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version. Leaving the game again."));
+                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different game version. Leaving the game again."));
             }
             else if (differentHash)
             {
-                pDialogMessageBox = new DialogMessageBox(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
+                pDialogMessageBox = spDialogMessageBox::create(tr("Host has a different version of a mod or the game resource folder has been modified by one of the games."));
             }
             else
             {
@@ -576,7 +576,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 {
                     myMods += Settings::getModName(mod) + "\n";
                 }
-                pDialogMessageBox = new DialogMessageBox(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
+                pDialogMessageBox = spDialogMessageBox::create(tr("Host has  different mods. Leaving the game again.\nHost mods: ") + hostMods + "\nYour Mods:" + myMods);
             }
 
             connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
@@ -678,11 +678,11 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         stream >> mapFile;
         QString scriptFile;
         stream >> scriptFile;
-        GameMap* pNewMap = nullptr;
+        spGameMap pNewMap = nullptr;
         if (mapFile.startsWith(NetworkCommands::RANDOMMAPIDENTIFIER) ||
             mapFile.startsWith(NetworkCommands::SERVERMAPIDENTIFIER))
         {
-            pNewMap = new GameMap(stream, m_saveGame);
+            pNewMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
         }
         else
         {
@@ -714,7 +714,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
                     Filesupport::writeBytes(scriptFilestream, scriptData);
                     script.close();
                 }
-                pNewMap = new GameMap(mapFile, true, false, m_saveGame);
+                pNewMap = spGameMap::create(mapFile, true, false, m_saveGame);
             }
             else
             {
@@ -736,7 +736,7 @@ void Multiplayermenu::launchGameOnServer(QDataStream & stream)
     hideMapSelection();
     QStringList mods;
     mods = Filesupport::readVectorList<QString, QList>(stream);
-    GameMap* pMap = new GameMap(stream, m_saveGame);
+    spGameMap pMap = spGameMap::create<QDataStream &, bool>(stream, m_saveGame);
     m_pMapSelectionView->setCurrentMap(pMap);
     m_pMapSelectionView->setCurrentFile(NetworkCommands::SERVERMAPIDENTIFIER);
     m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
@@ -779,9 +779,9 @@ void Multiplayermenu::slotHostGameLaunched()
     MapSelectionMapsMenue::slotButtonNext();
 }
 
-GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
+spGameMap Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFile, QDataStream &stream)
 {
-    GameMap* pNewMap = nullptr;
+    spGameMap pNewMap = nullptr;
     mapFile = getNewFileName(mapFile);
     QFile map(mapFile);
     QFileInfo mapInfo(mapFile);
@@ -794,7 +794,7 @@ GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFil
     mapData = Filesupport::readByteArray(stream);
     Filesupport::writeBytes(mapFilestream, mapData);
     map.close();
-    pNewMap = new GameMap(mapFile, true, false, m_saveGame);
+    pNewMap = spGameMap::create(mapFile, true, false, m_saveGame);
     if (!scriptFile.isEmpty())
     {
         QFile script(scriptFile);
@@ -810,7 +810,7 @@ GameMap* Multiplayermenu::createMapFromStream(QString mapFile, QString scriptFil
         script.close();
         scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath() + "/", "");
         scriptFile = scriptFile.replace(QCoreApplication::applicationDirPath(), "");
-        // save new script file
+        // save script file
         pNewMap->getGameScript()->setScriptFile(scriptFile);
         map.open(QIODevice::WriteOnly);
         QDataStream stream(&map);
@@ -904,7 +904,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
         QByteArray myHashArray = myHash.result();
         if (hash == myHashArray)
         {
-            m_pMapSelectionView->setCurrentMap(new GameMap(file, true, false, m_saveGame));
+            m_pMapSelectionView->setCurrentMap(spGameMap::create(file, true, false, m_saveGame));
             loadMultiplayerMap();
             found = true;
         }
@@ -937,7 +937,7 @@ void Multiplayermenu::showRuleSelection()
     m_pButtonSaveRules->setVisible(true);
     m_pButtonLoadRules->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelectionView = new RuleSelection(Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
+    m_pRuleSelectionView = spRuleSelection::create(Settings::getWidth() - 80, RuleSelection::Mode::Multiplayer);
     m_pRuleSelection->addItem(m_pRuleSelectionView);
     m_pRuleSelection->setContentHeigth(m_pRuleSelectionView->getHeight() + 40);
     m_pRuleSelection->setContentWidth(m_pRuleSelectionView->getWidth());
@@ -998,7 +998,7 @@ void Multiplayermenu::slotButtonNext()
         if (m_local)
         {
             m_pHostAdresse->setVisible(true);
-            m_NetworkInterface = new TCPServer();
+            m_NetworkInterface = spTCPServer::create();
             m_pPlayerSelection->attachNetworkInterface(m_NetworkInterface);
             createChat();
             emit m_NetworkInterface->sig_connect("", Settings::getGamePort());
@@ -1036,7 +1036,7 @@ void Multiplayermenu::startGameOnServer()
     pMap->serializeObject(sendStream);
     m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
-    spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Launching game on server"), 1000 * 60 * 5);
+    spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
     connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotCancelHostConnection, Qt::QueuedConnection);
     connect(this, &Multiplayermenu::sigHostGameLaunched, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
@@ -1046,9 +1046,9 @@ void Multiplayermenu::startGameOnServer()
 void Multiplayermenu::createChat()
 {
     
-    m_Chat = new Chat(m_NetworkInterface,
-                      QSize(Settings::getWidth() - 20, 300),
-                      NetworkInterface::NetworkSerives::GameChat);
+    m_Chat = spChat::create(m_NetworkInterface,
+                            QSize(Settings::getWidth() - 20, 300),
+                            NetworkInterface::NetworkSerives::GameChat);
     m_Chat->setPosition(10, Settings::getHeight() - 360);
     addChild(m_Chat);
     
@@ -1243,7 +1243,6 @@ void Multiplayermenu::countdown()
             Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             oxygine::Actor::detach();
-            
         }
     }
     else

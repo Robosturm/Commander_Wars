@@ -265,7 +265,7 @@ void NeuralNetwork::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        spLayer layer = new Layer(i, this, m_configuration[i]);
+        spLayer layer = spLayer::create(i, this, m_configuration[i]);
         if (i > 0)
         {
             layer->setPreviousLayer(m_layers[i - 1].get());

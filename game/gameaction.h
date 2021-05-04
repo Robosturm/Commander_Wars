@@ -90,8 +90,21 @@ public:
      * @param roundTimerTime
      */
     void setRoundTimerTime(const qint64 &roundTimerTime);
-
-
+    /**
+     * @brief getStepCursor
+     * @return the cursor we want to show during this step. Needs to be deleted by the reciever
+     */
+    spCursorData getStepCursor();
+    /**
+     * @brief getMenuStepData
+     * @return the data needed to create an input menu. the data needs to be deleted by the caller
+     */
+    spMenuData getMenuStepData();
+    /**
+     * @brief getMarkedFieldStepData
+     * @return
+     */
+    spMarkedFieldData getMarkedFieldStepData();
 signals:
 
 public slots:
@@ -223,21 +236,6 @@ public slots:
      * @return
      */
     bool getRequiresEmptyField();
-    /**
-     * @brief getStepCursor
-     * @return the cursor we want to show during this step. Needs to be deleted by the reciever
-     */
-    CursorData* getStepCursor();
-    /**
-     * @brief getMenuStepData
-     * @return the data needed to create an input menu. the data needs to be deleted by the caller
-     */
-    MenuData* getMenuStepData();
-    /**
-     * @brief getMarkedFieldStepData
-     * @return
-     */
-    MarkedFieldData* getMarkedFieldStepData();
     /************** reading and writing data to the action buffer *****************/
     /**
      * @brief writeDataString adds a string to the action data

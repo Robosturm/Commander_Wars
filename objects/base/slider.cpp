@@ -15,7 +15,7 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     this->moveToThread(pApp->getWorkerthread());
     V_Scrollbar::setScrollspeed( width / (maxValue - minValue));
 
-    m_spinBox = new SpinBox(150, minValue, maxValue);
+    m_spinBox = spSpinBox::create(150, minValue, maxValue);
     m_spinBox->setUnit(" " + unit);
     m_spinBox->setInfinityValue(std::numeric_limits<qreal>::lowest());
     addChild(m_spinBox);

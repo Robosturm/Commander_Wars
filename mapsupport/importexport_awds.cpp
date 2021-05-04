@@ -32,7 +32,7 @@ void GameMap::importAWDSMap(QString file)
         // load 5 players :)
         for (qint32 i = 0; i < 5; i++)
         {
-            players.append(new Player());
+            players.append(spPlayer::create());
             players[i]->init();
         }
         // read byte for terrain style which we ignore
@@ -65,9 +65,9 @@ void GameMap::importAWDSMap(QString file)
                         {
                             case 4: // monolith
                             {
-                                Building* pBuilding = new Building("ZMONOLITH");
+                                spBuilding pBuilding = spBuilding::create("ZMONOLITH");
                                 pBuilding->setOwner(getPlayer(4));
-                                getTerrain(x + 1, y + 1)->setBuilding(pBuilding);
+                                getTerrain(x + 1, y + 1)->setBuilding(pBuilding.get());
                                 break;
                             }
                             default:
@@ -107,9 +107,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 4: // Fortress
                     {
-                        Building* pBuilding = new Building("ZFORTRESS");
+                        spBuilding pBuilding = spBuilding::create("ZFORTRESS");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 5:
@@ -199,93 +199,93 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 44:
                     {
-                        Building* pBuilding = new Building("HQ");
+                        spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 45:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 46:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 47:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 48:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 49:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 50:
                     {
-                        Building* pBuilding = new Building("LABOR");
+                        spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(0));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 54:
                     {
-                        Building* pBuilding = new Building("HQ");
+                        spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 55:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 56:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 57:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 58:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 59:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(1));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 60:
@@ -299,9 +299,9 @@ void GameMap::importAWDSMap(QString file)
                             }
                             case 1:
                             {
-                                Building* pBuilding = new Building("LABOR");
+                                spBuilding pBuilding = spBuilding::create("LABOR");
                                 pBuilding->setOwner(getPlayer(1));
-                                getTerrain(x, y)->setBuilding(pBuilding);
+                                getTerrain(x, y)->setBuilding(pBuilding.get());
                                 break;
                             }
                         }
@@ -309,142 +309,142 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 64:
                     {
-                        Building* pBuilding = new Building("HQ");
+                        spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 65:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 66:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 67:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 68:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 69:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 70:
                     {
-                        Building* pBuilding = new Building("LABOR");
+                        spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(2));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 74:
                     {
-                        Building* pBuilding = new Building("HQ");
+                        spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 75:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 76:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 77:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 78:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 79:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 80:
                     {
-                        Building* pBuilding = new Building("LABOR");
+                        spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(getPlayer(3));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 84:
                     {
-                        Building* pBuilding = new Building("HQ");
+                        spBuilding pBuilding = spBuilding::create("HQ");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 85:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 86:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 87:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 88:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 89:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 90:
@@ -458,9 +458,9 @@ void GameMap::importAWDSMap(QString file)
                             }
                             case 1:
                             {
-                                Building* pBuilding = new Building("LABOR");
+                                spBuilding pBuilding = spBuilding::create("LABOR");
                                 pBuilding->setOwner(getPlayer(4));
-                                getTerrain(x, y)->setBuilding(pBuilding);
+                                getTerrain(x, y)->setBuilding(pBuilding.get());
                                 break;
                             }
                         }
@@ -469,72 +469,72 @@ void GameMap::importAWDSMap(QString file)
 
                     case 94:
                     {
-                        Building* pBuilding = new Building("SILO_ROCKET");
+                        spBuilding pBuilding = spBuilding::create("SILO_ROCKET");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 95:
                     {
-                        Building* pBuilding = new Building("TOWN");
+                        spBuilding pBuilding = spBuilding::create("TOWN");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 96:
                     {
-                        Building* pBuilding = new Building("FACTORY");
+                        spBuilding pBuilding = spBuilding::create("FACTORY");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 97:
                     {
-                        Building* pBuilding = new Building("AIRPORT");
+                        spBuilding pBuilding = spBuilding::create("AIRPORT");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 98:
                     {
-                        Building* pBuilding = new Building("HARBOUR");
+                        spBuilding pBuilding = spBuilding::create("HARBOUR");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 99:
                     {
-                        Building* pBuilding = new Building("TOWER");
+                        spBuilding pBuilding = spBuilding::create("TOWER");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 100:
                     {
-                        Building* pBuilding = new Building("LABOR");
+                        spBuilding pBuilding = spBuilding::create("LABOR");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 132:
                     {
-                        Building* pBuilding = new Building("ZMINICANNON_N");
+                        spBuilding pBuilding = spBuilding::create("ZMINICANNON_N");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 133:
                     {
-                        Building* pBuilding = new Building("ZMINICANNON_W");
+                        spBuilding pBuilding = spBuilding::create("ZMINICANNON_W");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 134:
                     {
-                        Building* pBuilding = new Building("ZLASER");
+                        spBuilding pBuilding = spBuilding::create("ZLASER");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 139:
@@ -556,23 +556,23 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 152:
                     {
-                        Building* pBuilding = new Building("ZMINICANNON_E");
+                        spBuilding pBuilding = spBuilding::create("ZMINICANNON_E");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 153:
                     {
-                        Building* pBuilding = new Building("ZMINICANNON_S");
+                        spBuilding pBuilding = spBuilding::create("ZMINICANNON_S");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 155:
                     {
-                        Building* pBuilding = new Building("ZCRYSTALL");
+                        spBuilding pBuilding = spBuilding::create("ZCRYSTALL");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x, y)->setBuilding(pBuilding);
+                        getTerrain(x, y)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 159:
@@ -608,9 +608,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 180:
                     {
-                        Building* pBuilding = new Building("ZVOLCAN");
+                        spBuilding pBuilding = spBuilding::create("ZVOLCAN");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 181:
@@ -622,9 +622,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 184:
                     {
-                        Building* pBuilding = new Building("ZOMEGA_BASE");
+                        spBuilding pBuilding = spBuilding::create("ZOMEGA_BASE");
                         pBuilding->setOwner(nullptr);
-                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 2, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 185:
@@ -636,9 +636,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 193:
                     {
-                        Building* pBuilding = new Building("ZBLACKHOLE_CANNON_S");
+                        spBuilding pBuilding = spBuilding::create("ZBLACKHOLE_CANNON_S");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 194:
@@ -649,9 +649,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 196:
                     {
-                        Building* pBuilding = new Building("ZBLACKHOLE_CANNON_N");
+                        spBuilding pBuilding = spBuilding::create("ZBLACKHOLE_CANNON_N");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 197: // Black Hole Cannon
@@ -729,9 +729,9 @@ void GameMap::importAWDSMap(QString file)
                     }
                     case 253:
                     {
-                        Building* pBuilding = new Building("ZDEATHRAY_S");
+                        spBuilding pBuilding = spBuilding::create("ZDEATHRAY_S");
                         pBuilding->setOwner(getPlayer(4));
-                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding);
+                        getTerrain(x + 1, y + 1)->setBuilding(pBuilding.get());
                         break;
                     }
                     case 254:
@@ -760,785 +760,785 @@ void GameMap::importAWDSMap(QString file)
                     // Orange Star
                     case 244:
                     {
-                        spUnit pUnit = new Unit("INFANTRY", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("INFANTRY", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 245:
                     {
-                        spUnit pUnit = new Unit("HEAVY_TANK", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("HEAVY_TANK", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 246:
                     {
-                        spUnit pUnit = new Unit("RECON", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("RECON", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 247:
                     {
-                        spUnit pUnit = new Unit("ARTILLERY", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("ARTILLERY", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 248:
                     {
-                        spUnit pUnit = new Unit("FLAK", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("FLAK", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 249:
                     {
-                        spUnit pUnit = new Unit("FIGHTER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("FIGHTER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 250:
                     {
-                        spUnit pUnit = new Unit("K_HELI", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("K_HELI", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 251:
                     {
-                        spUnit pUnit = new Unit("BATTLESHIP", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("BATTLESHIP", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 252:
                     {
-                        spUnit pUnit = new Unit("LANDER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("LANDER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 253:
                     {
-                        spUnit pUnit = new Unit("NEOTANK", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("NEOTANK", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 254:
                     {
-                        spUnit pUnit = new Unit("MEGATANK", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("MEGATANK", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 255:
                     {
-                        spUnit pUnit = new Unit("PIPERUNNER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("PIPERUNNER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 0:
                     {
-                        spUnit pUnit = new Unit("HOELLIUM", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("HOELLIUM", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 8:
                     {
-                        spUnit pUnit = new Unit("MECH", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("MECH", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 9:
                     {
-                        spUnit pUnit = new Unit("LIGHT_TANK", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("LIGHT_TANK", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 10:
                     {
-                        spUnit pUnit = new Unit("APC", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("APC", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 11:
                     {
-                        spUnit pUnit = new Unit("ROCKETTHROWER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("ROCKETTHROWER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 12:
                     {
-                        spUnit pUnit = new Unit("MISSILE", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("MISSILE", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 13:
                     {
-                        spUnit pUnit = new Unit("BOMBER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("BOMBER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 14:
                     {
-                        spUnit pUnit = new Unit("T_HELI", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("T_HELI", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 15:
                     {
-                        spUnit pUnit = new Unit("CRUISER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("CRUISER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 16:
                     {
-                        spUnit pUnit = new Unit("SUBMARINE", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("SUBMARINE", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 17:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOAT", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOAT", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 18:
                     {
-                        spUnit pUnit = new Unit("AIRCRAFTCARRIER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("AIRCRAFTCARRIER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 19:
                     {
-                        spUnit pUnit = new Unit("STEALTHBOMBER", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("STEALTHBOMBER", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 20:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOMB", getPlayer(0), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOMB", getPlayer(0), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                         // Blue Moon
                     case 28:
                     {
-                        spUnit pUnit = new Unit("INFANTRY", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("INFANTRY", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 29:
                     {
-                        spUnit pUnit = new Unit("HEAVY_TANK", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("HEAVY_TANK", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 30:
                     {
-                        spUnit pUnit = new Unit("RECON", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("RECON", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 31:
                     {
-                        spUnit pUnit = new Unit("ARTILLERY", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("ARTILLERY", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 32:
                     {
-                        spUnit pUnit = new Unit("FLAK", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("FLAK", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 33:
                     {
-                        spUnit pUnit = new Unit("FIGHTER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("FIGHTER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 34:
                     {
-                        spUnit pUnit = new Unit("K_HELI", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("K_HELI", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 35:
                     {
-                        spUnit pUnit = new Unit("BATTLESHIP", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("BATTLESHIP", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 36:
                     {
-                        spUnit pUnit = new Unit("LANDER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("LANDER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 37:
                     {
-                        spUnit pUnit = new Unit("NEOTANK", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("NEOTANK", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 38:
                     {
-                        spUnit pUnit = new Unit("MEGATANK", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("MEGATANK", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 39:
                     {
-                        spUnit pUnit = new Unit("PIPERUNNER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("PIPERUNNER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 40:
                     {
-                        spUnit pUnit = new Unit("HOELLIUM", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("HOELLIUM", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 48:
                     {
-                        spUnit pUnit = new Unit("MECH", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("MECH", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 49:
                     {
-                        spUnit pUnit = new Unit("LIGHT_TANK", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("LIGHT_TANK", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 50:
                     {
-                        spUnit pUnit = new Unit("APC", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("APC", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 51:
                     {
-                        spUnit pUnit = new Unit("ROCKETTHROWER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("ROCKETTHROWER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 52:
                     {
-                        spUnit pUnit = new Unit("MISSILE", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("MISSILE", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 53:
                     {
-                        spUnit pUnit = new Unit("BOMBER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("BOMBER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 54:
                     {
-                        spUnit pUnit = new Unit("T_HELI", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("T_HELI", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 55:
                     {
-                        spUnit pUnit = new Unit("CRUISER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("CRUISER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 56:
                     {
-                        spUnit pUnit = new Unit("SUBMARINE", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("SUBMARINE", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 57:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOAT", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOAT", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 58:
                     {
-                        spUnit pUnit = new Unit("AIRCRAFTCARRIER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("AIRCRAFTCARRIER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 59:
                     {
-                        spUnit pUnit = new Unit("STEALTHBOMBER", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("STEALTHBOMBER", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 60:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOMB", getPlayer(1), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOMB", getPlayer(1), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                         // Green Earth
                     case 68:
                     {
-                        spUnit pUnit = new Unit("INFANTRY", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("INFANTRY", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 69:
                     {
-                        spUnit pUnit = new Unit("HEAVY_TANK", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("HEAVY_TANK", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 70:
                     {
-                        spUnit pUnit = new Unit("RECON", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("RECON", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 71:
                     {
-                        spUnit pUnit = new Unit("ARTILLERY", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("ARTILLERY", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 72:
                     {
-                        spUnit pUnit = new Unit("FLAK", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("FLAK", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 73:
                     {
-                        spUnit pUnit = new Unit("FIGHTER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("FIGHTER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 74:
                     {
-                        spUnit pUnit = new Unit("K_HELI", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("K_HELI", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 75:
                     {
-                        spUnit pUnit = new Unit("BATTLESHIP", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("BATTLESHIP", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 76:
                     {
-                        spUnit pUnit = new Unit("LANDER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("LANDER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 77:
                     {
-                        spUnit pUnit = new Unit("NEOTANK", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("NEOTANK", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 78:
                     {
-                        spUnit pUnit = new Unit("MEGATANK", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("MEGATANK", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 79:
                     {
-                        spUnit pUnit = new Unit("PIPERUNNER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("PIPERUNNER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 80:
                     {
-                        spUnit pUnit = new Unit("HOELLIUM", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("HOELLIUM", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 88:
                     {
-                        spUnit pUnit = new Unit("MECH", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("MECH", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 89:
                     {
-                        spUnit pUnit = new Unit("LIGHT_TANK", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("LIGHT_TANK", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 90:
                     {
-                        spUnit pUnit = new Unit("APC", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("APC", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 91:
                     {
-                        spUnit pUnit = new Unit("ROCKETTHROWER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("ROCKETTHROWER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 92:
                     {
-                        spUnit pUnit = new Unit("MISSILE", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("MISSILE", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 93:
                     {
-                        spUnit pUnit = new Unit("BOMBER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("BOMBER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 94:
                     {
-                        spUnit pUnit = new Unit("T_HELI", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("T_HELI", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 95:
                     {
-                        spUnit pUnit = new Unit("CRUISER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("CRUISER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 96:
                     {
-                        spUnit pUnit = new Unit("SUBMARINE", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("SUBMARINE", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 97:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOAT", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOAT", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 98:
                     {
-                        spUnit pUnit = new Unit("AIRCRAFTCARRIER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("AIRCRAFTCARRIER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 99:
                     {
-                        spUnit pUnit = new Unit("STEALTHBOMBER", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("STEALTHBOMBER", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 100:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOMB", getPlayer(2), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOMB", getPlayer(2), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                         // Yellow Comet
                     case 108:
                     {
-                        spUnit pUnit = new Unit("INFANTRY", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("INFANTRY", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 109:
                     {
-                        spUnit pUnit = new Unit("HEAVY_TANK", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("HEAVY_TANK", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 110:
                     {
-                        spUnit pUnit = new Unit("RECON", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("RECON", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 111:
                     {
-                        spUnit pUnit = new Unit("ARTILLERY", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("ARTILLERY", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 112:
                     {
-                        spUnit pUnit = new Unit("FLAK", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("FLAK", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 113:
                     {
-                        spUnit pUnit = new Unit("FIGHTER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("FIGHTER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 114:
                     {
-                        spUnit pUnit = new Unit("K_HELI", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("K_HELI", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 115:
                     {
-                        spUnit pUnit = new Unit("BATTLESHIP", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("BATTLESHIP", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 116:
                     {
-                        spUnit pUnit = new Unit("LANDER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("LANDER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 117:
                     {
-                        spUnit pUnit = new Unit("NEOTANK", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("NEOTANK", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 118:
                     {
-                        spUnit pUnit = new Unit("MEGATANK", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("MEGATANK", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 119:
                     {
-                        spUnit pUnit = new Unit("PIPERUNNER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("PIPERUNNER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 120:
                     {
-                        spUnit pUnit = new Unit("HOELLIUM", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("HOELLIUM", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 128:
                     {
-                        spUnit pUnit = new Unit("MECH", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("MECH", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 129:
                     {
-                        spUnit pUnit = new Unit("LIGHT_TANK", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("LIGHT_TANK", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 130:
                     {
-                        spUnit pUnit = new Unit("APC", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("APC", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 131:
                     {
-                        spUnit pUnit = new Unit("ROCKETTHROWER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("ROCKETTHROWER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 132:
                     {
-                        spUnit pUnit = new Unit("MISSILE", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("MISSILE", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 133:
                     {
-                        spUnit pUnit = new Unit("BOMBER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("BOMBER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 134:
                     {
-                        spUnit pUnit = new Unit("T_HELI", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("T_HELI", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 135:
                     {
-                        spUnit pUnit = new Unit("CRUISER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("CRUISER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 136:
                     {
-                        spUnit pUnit = new Unit("SUBMARINE", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("SUBMARINE", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 137:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOAT", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOAT", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 138:
                     {
-                        spUnit pUnit = new Unit("AIRCRAFTCARRIER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("AIRCRAFTCARRIER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 139:
                     {
-                        spUnit pUnit = new Unit("STEALTHBOMBER", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("STEALTHBOMBER", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 140:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOMB", getPlayer(3), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOMB", getPlayer(3), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                         // Black Hole
                     case 148:
                     {
-                        spUnit pUnit = new Unit("INFANTRY", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("INFANTRY", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 149:
                     {
-                        spUnit pUnit = new Unit("HEAVY_TANK", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("HEAVY_TANK", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 150:
                     {
-                        spUnit pUnit = new Unit("RECON", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("RECON", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 151:
                     {
-                        spUnit pUnit = new Unit("ARTILLERY", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("ARTILLERY", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 152:
                     {
-                        spUnit pUnit = new Unit("FLAK", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("FLAK", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 153:
                     {
-                        spUnit pUnit = new Unit("FIGHTER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("FIGHTER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 154:
                     {
-                        spUnit pUnit = new Unit("K_HELI", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("K_HELI", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 155:
                     {
-                        spUnit pUnit = new Unit("BATTLESHIP", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("BATTLESHIP", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 156:
                     {
-                        spUnit pUnit = new Unit("LANDER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("LANDER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 157:
                     {
-                        spUnit pUnit = new Unit("NEOTANK", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("NEOTANK", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 158:
                     {
-                        spUnit pUnit = new Unit("MEGATANK", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("MEGATANK", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 159:
                     {
-                        spUnit pUnit = new Unit("PIPERUNNER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("PIPERUNNER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 160:
                     {
-                        spUnit pUnit = new Unit("HOELLIUM", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("HOELLIUM", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 168:
                     {
-                        spUnit pUnit = new Unit("MECH", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("MECH", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 169:
                     {
-                        spUnit pUnit = new Unit("LIGHT_TANK", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("LIGHT_TANK", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 170:
                     {
-                        spUnit pUnit = new Unit("APC", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("APC", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 171:
                     {
-                        spUnit pUnit = new Unit("ROCKETTHROWER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("ROCKETTHROWER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 172:
                     {
-                        spUnit pUnit = new Unit("MISSILE", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("MISSILE", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 173:
                     {
-                        spUnit pUnit = new Unit("BOMBER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("BOMBER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 174:
                     {
-                        spUnit pUnit = new Unit("T_HELI", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("T_HELI", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 175:
                     {
-                        spUnit pUnit = new Unit("CRUISER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("CRUISER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 176:
                     {
-                        spUnit pUnit = new Unit("SUBMARINE", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("SUBMARINE", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 177:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOAT", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOAT", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 178:
                     {
-                        spUnit pUnit = new Unit("AIRCRAFTCARRIER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("AIRCRAFTCARRIER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 179:
                     {
-                        spUnit pUnit = new Unit("STEALTHBOMBER", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("STEALTHBOMBER", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
                     case 180:
                     {
-                        spUnit pUnit = new Unit("BLACK_BOMB", getPlayer(4), false);
+                        spUnit pUnit = spUnit::create("BLACK_BOMB", getPlayer(4), false);
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
@@ -1636,9 +1636,9 @@ void GameMap::exportAWDSMap(QString file)
         {
             for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
             {
-                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                spBuilding pBuilding = pMap->getTerrain(x, y)->getBuilding();
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                if (pBuilding != nullptr)
+                if (pBuilding.get() != nullptr)
                 {
                     if (pBuilding->getBuildingID() == "HQ")
                     {

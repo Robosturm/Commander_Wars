@@ -8,6 +8,9 @@
 #include "game/gameanimation.h"
 #include "game/GameEnums.h"
 
+class GameAnimationDialog;
+using spGameAnimationDialog = oxygine::intrusive_ptr<GameAnimationDialog>;
+
 class GameAnimationDialog : public GameAnimation
 {
     Q_OBJECT
@@ -91,8 +94,6 @@ public slots:
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();
-
-    void _loadBackground();
 private:
     QString m_Text;
     qint32 writePosition{0};
@@ -108,7 +109,6 @@ private:
     qint32 textSpeed;
 
     // background sprite handling
-    QString m_BackgroundFile;
     oxygine::spSprite m_BackgroundSprite;
     oxygine::spResAnim m_BackgroundAnim;
 

@@ -6,7 +6,7 @@ namespace oxygine
     /** A TweenAnim class
     *   use for playing per frame animation
     \code
-    spSprite sprite = new Sprite();
+    spSprite sprite = spSprite::create();
     sprite->addTween(TweenAnim(res.getResAnim("anim")), 500, -1);
     \endcode
     */

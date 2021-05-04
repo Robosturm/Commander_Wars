@@ -5,9 +5,9 @@
 
 namespace oxygine
 {
-    Resource* ResBuffer::create(CreateResourceContext& context)
+    spResource ResBuffer::create(CreateResourceContext& context)
     {
-        ResBuffer* rs = new ResBuffer();
+        spResBuffer rs = spResBuffer::create();
         QDomElement node = context.walker.getNode();
         QString file = node.attribute("file");
 

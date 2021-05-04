@@ -113,7 +113,7 @@ void ScriptConditionBuildingsOwned::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -123,12 +123,12 @@ void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEdit
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Count: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 0, 99999);
+    spSpinBox spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Amount of Buildings that has to be owned."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
@@ -139,12 +139,12 @@ void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEdit
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 99999);
+    spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("Player that has to own the given amount of buildings."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_player + 1);

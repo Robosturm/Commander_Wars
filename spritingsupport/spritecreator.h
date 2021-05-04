@@ -52,7 +52,7 @@ public:
      * @param scaleFactor
      * @return
      */
-    static oxygine::ResAnim* createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
+    static oxygine::spResAnim createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
                                         qint32 columns, qint32  rows, float scaleFactor);
     /**
      * @brief createAnim
@@ -64,7 +64,7 @@ public:
      * @param scaleFactor
      * @return
      */
-    static oxygine::ResAnim* createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
+    static oxygine::spResAnim createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
                                         bool useColorBox, qint32 columns, qint32  rows, float scaleFactor);
     /**
      * @brief createSprite

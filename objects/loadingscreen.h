@@ -8,7 +8,7 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 
 class LoadingScreen;
-typedef oxygine::intrusive_ptr<LoadingScreen> spLoadingScreen;
+using spLoadingScreen = oxygine::intrusive_ptr<LoadingScreen>;
 
 class LoadingScreen : public QObject, public oxygine::Actor
 {
@@ -36,6 +36,7 @@ public:
     void hide();
 
 private:
+    friend class oxygine::intrusive_ptr<LoadingScreen>;
     explicit LoadingScreen();
 private:
     bool loaded = false;

@@ -214,8 +214,8 @@ void Unit::loadSpriteV2(QString spriteID, GameEnums::Recoloring mode, bool flipS
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        oxygine::spSprite pWaitSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
+        oxygine::spSprite pWaitSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);                        
@@ -1010,7 +1010,7 @@ void Unit::loadUnit(Unit* pUnit)
 
 void Unit::loadSpawnedUnit(QString unitId)
 {
-    spUnit pUnit = new Unit(unitId, m_pOwner, true);
+    spUnit pUnit = spUnit::create(unitId, m_pOwner, true);
     if (canTransportUnit(pUnit.get()))
     {
         loadUnit(pUnit.get());
@@ -1028,7 +1028,7 @@ Unit* Unit::spawnUnit(QString unitID)
         {
             return nullptr;
         }
-        spUnit pUnit = new Unit(unitID, m_pOwner, true);
+        spUnit pUnit = spUnit::create(unitID, m_pOwner, true);
         m_TransportUnits.append(pUnit);
         updateIcons(pMap->getCurrentViewPlayer());
         return pUnit.get();
@@ -2506,7 +2506,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::spSprite pSprite = oxygine::spSprite::create();
         if (pAnim->getTotalFrames() > 1)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -3119,7 +3119,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
         pStream >> units;
         for (qint32 i = 0; i < units; i++)
         {
-            m_TransportUnits.append(new Unit());
+            m_TransportUnits.append(spUnit::create());
             m_TransportUnits[m_TransportUnits.size() - 1]->deserializer(pStream, fast);
             if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
             {
@@ -3338,7 +3338,7 @@ void Unit::createCORange(qint32 coRange)
     spGameMap pMap = GameMap::getInstance();
     if (m_CORange.get() == nullptr)
     {
-        m_CORange = new oxygine::Actor();
+        m_CORange = oxygine::spActor::create();
     }
     m_CORange->removeChildren();
     m_CORange->setPriority(static_cast<qint32>(Mainapp::ZOrder::CORange));

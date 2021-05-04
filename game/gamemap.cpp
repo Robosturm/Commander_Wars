@@ -49,7 +49,7 @@ qint32 GameMap::getFrameTime()
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
-      m_Rules(new GameRules())
+      m_Rules(spGameRules::create())
 {
     setObjectName("GameMap");
     Mainapp* pApp = Mainapp::getInstance();
@@ -62,7 +62,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(new GameRules()),
+      m_Rules(spGameRules::create()),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -75,7 +75,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     : m_CurrentPlayer(nullptr),
-      m_Rules(new GameRules()),
+      m_Rules(spGameRules::create()),
       m_savegame(savegame)
 {
     setObjectName("GameMap");
@@ -341,7 +341,7 @@ QStringList GameMap::getAllUnitIDs()
 
 spGameAction GameMap::createAction()
 {
-    return new GameAction();
+    return spGameAction::create();
 }
 
 void GameMap::queueAction(spGameAction pAction)
@@ -632,7 +632,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             Console::print("Didn't spawn unit " + unitID + " cause unit limit is reached", Console::eDEBUG);
             return nullptr;
         }
-        spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
+        spUnit pUnit = spUnit::create(unitID, pPlayer.get(), true);
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = pUnit->getMovementType();
         if (onMap(x, y))
@@ -966,7 +966,7 @@ void GameMap::replaceBuilding(QString buildingID, qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        spBuilding pBuilding = new Building(buildingID);
+        spBuilding pBuilding = spBuilding::create(buildingID);
         Terrain* pTerrain = getTerrain(x, y);
         if (pBuilding->canBuildingBePlaced(pTerrain))
         {
@@ -1120,8 +1120,8 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     }
     for (qint32 i = 0; i < playerCount; i++)
     {
-        // create new player
-        players.append(new Player());
+        // create player
+        players.append(spPlayer::create());
         // get player data from stream
         players[i]->deserializer(pStream, fast);
     }
@@ -1162,7 +1162,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
     }
     setCurrentPlayer(currentPlayerIdx);
-    m_Rules = new  GameRules();
+    m_Rules = spGameRules::create();
     if (showLoadingScreen)
     {
         pLoadingScreen->setProgress(tr("Loading Rules"), 80);
@@ -1191,7 +1191,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         }
         else
         {
-            m_GameScript = new GameScript();
+            m_GameScript = spGameScript::create();
         }
         if (showLoadingScreen)
         {
@@ -1203,7 +1203,7 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
             pStream >> exists;
             if (exists)
             {
-                m_Campaign = new Campaign();
+                m_Campaign = spCampaign::create();
                 m_Campaign->deserializeObject(pStream);
             }
         }
@@ -1302,7 +1302,7 @@ void GameMap::showUnitStatistics()
 
 void GameMap::startGame()
 {
-    m_Recorder = new GameRecorder();
+    m_Recorder = spGameRecorder::create();
     for (qint32 y = 0; y < fields.size(); y++)
     {
         for (qint32 x = 0; x < fields[y].size(); x++)
@@ -1915,7 +1915,7 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
         spGameMenue pMenu = GameMenue::getInstance();
         if (pMenu.get() != nullptr)
         {
-            GameAnimationNextDay* pAnim = new GameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, true);
+            spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(m_CurrentPlayer.get(), GameMap::frameTime, true);
             pMenu->addChild(pAnim);
         }
     }

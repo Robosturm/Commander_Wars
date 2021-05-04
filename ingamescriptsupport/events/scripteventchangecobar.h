@@ -1,8 +1,10 @@
 #ifndef SCRIPTEVENTCHANGECOBAR_H
 #define SCRIPTEVENTCHANGECOBAR_H
 
-
 #include "ingamescriptsupport/events/scriptevent.h"
+
+class ScriptEventChangeCOBar;
+using spScriptEventChangeCOBar = oxygine::intrusive_ptr<ScriptEventChangeCOBar>;
 
 class ScriptEventChangeCOBar : public ScriptEvent
 {

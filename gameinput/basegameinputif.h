@@ -29,9 +29,9 @@ public:
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
 
-    static BaseGameInputIF* deserializeInterface(QDataStream& pStream, qint32 version);
+    static spBaseGameInputIF deserializeInterface(QDataStream& pStream, qint32 version);
 
-    static BaseGameInputIF* createAi(GameEnums::AiTypes type);
+    static spBaseGameInputIF createAi(GameEnums::AiTypes type);
 
     virtual void centerCameraOnAction(GameAction* pAction);
 signals:

@@ -15,11 +15,11 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
-    m_Textbox = new oxygine::Box9Sprite();
+    m_Textbox = oxygine::spBox9Sprite::create();
     m_Textbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setResAnim(pAnim);
-    m_Textfield = new oxygine::TextField();
+    m_Textfield = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -29,7 +29,7 @@ Textbox::Textbox(qint32 width, qint32 heigth)
     m_Textfield->setHtmlText("");
 
 
-    oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
+    oxygine::spClipRectActor pClipActor = oxygine::spClipRectActor::create();
 
     if (heigth < 0)
     {

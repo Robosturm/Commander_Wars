@@ -32,7 +32,6 @@ public:
     bool getPreview() const;
     void setPreview(bool preview);
 
-    virtual void update(const oxygine::UpdateState& us);
 signals:
     void sigFileSelected(QString file);
     void sigCancel();
@@ -56,7 +55,6 @@ private:
     bool m_preview{false};
     bool m_focused{true};
     QVector<oxygine::spResAnim> m_ResAnims;
-    QVector<std::tuple<oxygine::spSprite, QString>> m_UpdateList;
 };
 
 #endif // FILEDIALOG_H

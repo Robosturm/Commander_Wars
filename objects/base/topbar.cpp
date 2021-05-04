@@ -12,7 +12,7 @@ Topbar::Topbar(qint32 x, qint32 width)
     this->moveToThread(pApp->getWorkerthread());
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    m_pSpriteBox = new oxygine::Box9Sprite();
+    m_pSpriteBox = oxygine::spBox9Sprite::create();
     m_pSpriteBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     this->addChild(m_pSpriteBox);
@@ -47,16 +47,16 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
 
-    spTooltip pTooltip = new Tooltip();
+    spTooltip pTooltip = spTooltip::create();
     pTooltip->setTooltipText(tooltip);
     pTooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
-    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pBox = oxygine::spBox9Sprite::create();
     pBox->setVerticalMode(oxygine::Box9Sprite::TILING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
     pBox->setResAnim(pAnim);
-    oxygine::spClipRectActor clipRect = new oxygine::ClipRectActor();
+    oxygine::spClipRectActor clipRect = oxygine::spClipRectActor::create();
     clipRect->setSize(280, 40);
-    oxygine::spTextField textField = new oxygine::TextField();
+    oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -105,7 +105,7 @@ void Topbar::addGroup(QString text)
     
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    oxygine::spTextField textField = new oxygine::TextField();
+    oxygine::spTextField textField = oxygine::spTextField::create();
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;

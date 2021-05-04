@@ -5,6 +5,7 @@
 #include <QClipboard>
 #include <QGuiApplication>
 #include <qlogging.h>
+#include <qdatetime.h>
 
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
@@ -32,7 +33,7 @@ bool Console::show = false;
 bool Console::toggled = false;
 bool Console::m_developerMode = false;
 QList<QString> Console::output;
-Console* Console::m_pConsole = nullptr;
+spConsole Console::m_pConsole = nullptr;
 QString Console::curmsg = nullptr;
 qint32 Console::curmsgpos = 0;
 QElapsedTimer Console::toggle;
@@ -72,13 +73,13 @@ Console::Console()
     this->moveToThread(pApp->getWorkerthread());
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint32>(Mainapp::ZOrder::Console));
-    m_pBackgroundsprite = new oxygine::ColorRectSprite();
+    m_pBackgroundsprite = oxygine::spColorRectSprite::create();
     m_pBackgroundsprite->setPosition(0, 0);
     m_pBackgroundsprite->setSize(Settings::getWidth(), Settings::getHeight());
     m_pBackgroundsprite->attachTo(this);
     m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
-    m_text = new oxygine::TextField();
+    m_text = oxygine::spTextField::create();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getMainFont16()).withColor(QColor(255,127,39)).alignLeft();
     m_text->setStyle(style);
 
@@ -89,11 +90,11 @@ Console::Console()
 
 Console* Console::getInstance()
 {
-    if (m_pConsole == nullptr)
+    if (m_pConsole.get() == nullptr)
     {
-        m_pConsole = new Console();
+        m_pConsole = spConsole::create();
     }
-    return m_pConsole;
+    return m_pConsole.get();
 }
 
 void Console::init()
@@ -101,7 +102,7 @@ void Console::init()
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole.get(), &Console::KeyInput, Qt::QueuedConnection);
     // Print some Info
 
     Console::print("Enter \"help()\" for console info.", Console::eLogLevels::eINFO);
@@ -182,7 +183,7 @@ void Console::print(QString message, eLogLevels MsgLogLevel)
 
     if (MsgLogLevel >= Console::m_LogLevel)
     {
-        QString msg = tr(message.toStdString().c_str());
+        QString msg = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss") + ": " + message;
         QString prefix = "";
         switch (MsgLogLevel)
         {

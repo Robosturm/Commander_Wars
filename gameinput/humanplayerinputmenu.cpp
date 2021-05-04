@@ -34,7 +34,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
     style.fontSize = 20;
-    oxygine::spTextField testText = new oxygine::TextField();
+    oxygine::spTextField testText = oxygine::spTextField::create();
     for (qint32 i = 0; i < texts.size(); i++)
     {
 
@@ -54,7 +54,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
 
     qint32 y = heigth;
     startY = y;
-    m_Cursor = new oxygine::Sprite();
+    m_Cursor = oxygine::spSprite::create();
     pAnim = pGameManager->getResAnim("cursor+menu");
     if (pAnim->getTotalFrames() > 1)
     {
@@ -94,7 +94,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             costs = costList[i];
         }
 
-        oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
+        oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
         pAnim = pGameManager->getResAnim("menu+middle");
         pItemBox->setResAnim(pAnim);
         pItemBox->setSize(pAnim->getSize());
@@ -109,7 +109,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         pItemBox->setWidth(width);
 
         // text for the item
-        oxygine::spTextField textField = new oxygine::TextField();
+        oxygine::spTextField textField = oxygine::spTextField::create();
 
         // set color font based
         if (!enabled)
@@ -186,7 +186,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         {
             for (qint32 i = 0; i < emptyItems; i++)
             {
-                oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
+                oxygine::spBox9Sprite pItemBox = oxygine::spBox9Sprite::create();
                 pAnim = pGameManager->getResAnim("menu+middle");
                 pItemBox->setResAnim(pAnim);
                 pItemBox->setSize(pAnim->getSize());
@@ -226,7 +226,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
 {
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
-    oxygine::spBox9Sprite pBottomBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pBottomBox = oxygine::spBox9Sprite::create();
     pAnim = pGameManager->getResAnim("menu+bottom");
     pBottomBox->setResAnim(pAnim);
     pBottomBox->setSize(pAnim->getSize());
@@ -242,7 +242,7 @@ qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width
 qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pTopBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
     pTopBox->setResAnim(pAnim);
     pTopBox->setSize(pAnim->getSize());
@@ -378,8 +378,8 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                 if (pUnitSpriteManager->exists(id))
                 {
-                    spUnit pDummy = new Unit(id, GameMap::getInstance()->getCurrentPlayer(), false);
-                    spFieldInfo fieldinfo = new FieldInfo(nullptr, pDummy.get());
+                    spUnit pDummy = spUnit::create(id, GameMap::getInstance()->getCurrentPlayer(), false);
+                    spFieldInfo fieldinfo = spFieldInfo::create(nullptr, pDummy.get());
                     pMenu->addChild(fieldinfo);
                     connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                     {

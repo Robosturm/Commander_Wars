@@ -11,6 +11,9 @@
 #include "game/viewplayer.h"
 #include "game/GameEnums.h"
 
+class ReplayMenu;
+using spReplayMenu = oxygine::intrusive_ptr<ReplayMenu>;
+
 class ReplayMenu : public GameMenue
 {
     Q_OBJECT

@@ -13,11 +13,11 @@
 
 namespace oxygine
 {
-    Resource* ResFontBM::create(CreateResourceContext& context)
+    spResource ResFontBM::create(CreateResourceContext& context)
     {
-        ResFontBM* font = nullptr;
+        spResFontBM font = nullptr;
 
-        font = new ResFontBM();
+        font = spResFontBM::create();
         font->_createFont(&context, false, false, 1);
         setNode(font, context.walker.getNode());
         context.resources->add(font);
@@ -27,11 +27,11 @@ namespace oxygine
         return font;
     }
 
-    Resource* ResFontBM::createBM(CreateResourceContext& context)
+    spResource ResFontBM::createBM(CreateResourceContext& context)
     {
-        ResFontBM* font = nullptr;
+        spResFontBM font = nullptr;
 
-        font = new ResFontBM();
+        font = spResFontBM::create();
         font->_createFont(&context, false, true, 1);
         setNode(font, context.walker.getNode());
         context.resources->add(font);
@@ -39,11 +39,10 @@ namespace oxygine
         return font;
     }
 
-    Resource* ResFontBM::createSD(CreateResourceContext& context)
+    spResource ResFontBM::createSD(CreateResourceContext& context)
     {
-        ResFontBM* font = nullptr;
-
-        font = new ResFontBM();
+        spResFontBM font = nullptr;
+        font = spResFontBM::create();
         font->_createFont(&context, true, false, 1);
         setNode(font, context.walker.getNode());
         context.resources->add(font);
@@ -119,7 +118,7 @@ namespace oxygine
             return;
         }
 
-        spImage mt = new Image;
+        spImage mt = spImage::create();
 
         QImage img(p.file);
         mt->init(img, !_premultipliedAlpha);
@@ -297,7 +296,7 @@ namespace oxygine
         }
 
         fontSize = qAbs(fontSize);
-        Font* font = new Font();
+        spFont font = spFont::create();
         font->init(getName(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
         _size = fontSize;
         _font = font;

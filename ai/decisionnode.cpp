@@ -44,7 +44,7 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    m_pQuestion = new DecisionQuestion;
+    m_pQuestion = spDecisionQuestion::create();
     m_pQuestion->deserializeObject(pStream);
     qint32 size = 0;
     pStream >> size;

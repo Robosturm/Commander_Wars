@@ -45,14 +45,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     QString description = pUnit->getDescription();
     // no the fun begins create checkboxes and stuff and a panel down here
     qint32 y = 0;
-    oxygine::spTextField pLabel = new oxygine::TextField();
+    oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Unit Information ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, 0);
     addChild(pLabel);
     y += 60;
 
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(description);
@@ -64,7 +64,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     qint32 xOffset = 230;
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
@@ -72,19 +72,19 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setPosition(width - 210, y);
     this->addChild(pSpriteBox);
 
-    spBattleAnimationSprite pBattleAnimationSprite = new BattleAnimationSprite(pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
+    spBattleAnimationSprite pBattleAnimationSprite = spBattleAnimationSprite::create(pUnit, nullptr, BattleAnimationSprite::standingAnimation, -1, false);
     pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
     pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
     addChild(pBattleAnimationSprite);
 
     // movement
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Unit Type:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(UnitSpriteManager::getUnitTypeText(pUnit->getUnitType()));
@@ -97,13 +97,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     if ((pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID())) ||
         (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID())))
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Firerange:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pUnit->getBaseMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())));
@@ -113,13 +113,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
 
     // movement
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Movepoints: "));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pUnit->getBaseMovementPoints())));
@@ -128,13 +128,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     y += 40;
 
     // vision
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Vision:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pUnit->getBaseVision())));
@@ -143,13 +143,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     y += 40;
 
     // fuel
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Fuel:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     if (pUnit->getMaxFuel() > 0)
@@ -167,13 +167,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     // ammo 1
     if (pUnit->getMaxAmmo1() > 0)
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 1:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pUnit->getAmmo1()) + " / " + QString::number(pUnit->getMaxAmmo1())));
@@ -184,13 +184,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     // ammo 2
     if (pUnit->getMaxAmmo2() > 0)
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 2:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pUnit->getAmmo2()) + " / " + QString::number(pUnit->getMaxAmmo2())));
@@ -200,13 +200,13 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
 
     // cpsts
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Costs:"));
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
     pLabel->setHtmlText((QString::number(pUnit->getUnitCosts())));
@@ -217,20 +217,20 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     // loading place 2
     if (pUnit->getLoadingPlace() > 0)
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Loading Place:"));
         pLabel->setPosition(0, y);
         addChild(pLabel);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
         pLabel->setHtmlText((QString::number(pUnit->getLoadedUnitCount()) + " / " + QString::number(pUnit->getLoadingPlace())));
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
         y += 40;
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setStyle(headerStyle);
         pLabel->setHtmlText(tr("Loadable Units"));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -242,7 +242,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 
         if (pUnit->getLoadedUnitCount() > 0)
         {
-            pLabel = new oxygine::TextField();
+            pLabel = oxygine::spTextField::create();
             pLabel->setStyle(headerStyle);
             pLabel->setHtmlText(tr("Loaded Units"));
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -253,7 +253,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         }
     }
 
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Actions"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -262,7 +262,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     createActionTable(pUnit, y, width);
     y += 40;
 
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Transporters"));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -278,7 +278,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString id = pUnit->getMovementType();
     name = pMovementTableManager->getName(id);
-    pLabel = new oxygine::TextField();
+    pLabel = oxygine::spTextField::create();
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText((tr("Movement ") + name));
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -300,7 +300,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         });
         addChild(pTerrain);
 
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         if (costs >= 0)
@@ -324,7 +324,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
         pTerrain->loadSprites();
-        Building* pBuilding = new Building(pBuildingSpriteManager->getID(i));
+        spBuilding pBuilding = spBuilding::create(pBuildingSpriteManager->getID(i));
         // pBuilding->setOwner(pUnit->getOwner());
         pBuilding->updateBuildingSprites(false);
         qint32 buildingWidth = pBuilding->getBuildingWidth();
@@ -339,7 +339,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         {
             pBuilding->setY(GameMap::getImageSize() * (buildingHeigth - 1) / (buildingHeigth));
         }
-        pTerrain->setBuilding(pBuilding);
+        pTerrain->setBuilding(pBuilding.get());
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
         pTerrain->addClickListener([=](oxygine::Event*)
@@ -347,7 +347,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
             emit sigShowLink(pBuildingSpriteManager->getID(i));
         });
         addChild(pTerrain);
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
         if (costs > 0)
@@ -371,7 +371,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
 
     if (pUnit->getWeapon1ID() != "" && pWeaponManager->exists(pUnit->getWeapon1ID()))
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setStyle(headerStyle);
         pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getName(pUnit->getWeapon1ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -382,7 +382,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     }
     if (pUnit->getWeapon2ID() != "" && pWeaponManager->exists(pUnit->getWeapon2ID()))
     {
-        pLabel = new oxygine::TextField();
+        pLabel = oxygine::spTextField::create();
         pLabel->setStyle(headerStyle);
         pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getName(pUnit->getWeapon2ID())));
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth() / 2, y);
@@ -408,7 +408,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
     for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
-        spUnit pDummy = new Unit(sortedUnits[i], pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(sortedUnits[i], pUnit->getOwner(), false);
         pDummy->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(sortedUnits[i]);
@@ -416,7 +416,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
         addChild(pDummy);
-        spLabel pLabel = new Label(width);
+        spLabel pLabel = spLabel::create(width);
         pLabel->setStyle(style);
         if (damage > 0)
         {
@@ -442,7 +442,7 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
     qint32 x = 0;
     for (const auto& unitID : loadables)
     {
-        spUnit pDummy = new Unit(unitID, pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false);
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {
@@ -464,7 +464,7 @@ void UnitInfo::createLoadedUnits(Unit* pUnit, qint32& y, qint32 width)
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
     {
         spUnit loadedUnit = pUnit->getLoadedUnit(i);
-        spUnit pDummy = new Unit(loadedUnit->getUnitID(), pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(loadedUnit->getUnitID(), pUnit->getOwner(), false);
         pDummy->setPosition(x, y);
         pDummy->setHasMoved(loadedUnit->getHasMoved());
         pDummy->setHp(loadedUnit->getHp());
@@ -493,7 +493,7 @@ void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
     qint32 x = 0;
     for (const auto& unitID : sortedUnits)
     {
-        spUnit pDummy = new Unit(unitID, pUnit->getOwner(), false);
+        spUnit pDummy = spUnit::create(unitID, pUnit->getOwner(), false);
         if (pDummy->canTransportUnit(pUnit, true))
         {
             pDummy->setPosition(x, y);

@@ -23,7 +23,7 @@ namespace oxygine
         _lastTime(0), _current(0), _lastIterTime(0),
         _finger(0)
     {
-        _clip = new ClipRectActor;
+        _clip = spClipRectActor::create();
         _clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
         _clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
         _clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));

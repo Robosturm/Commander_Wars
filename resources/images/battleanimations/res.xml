@@ -914,5 +914,48 @@
 		<image file="royal_guard/royal_guard.png" />
 		<image file="royal_guard/royal_guard+mask.png" />	
 		
+		<!-- at cycle -->
+		<image file="at_cycle/at_cycle.png" />
+		<image file="at_cycle/at_cycle+mask.png" />
+		
+		<!-- auto tank -->
+		<image file="auto_tank/auto_tank.png" />
+		<image file="auto_tank/auto_tank+mask.png" />
+		
+		<!-- chaperon -->
+		<image file="chaperon/chaperon.png" />
+		<image file="chaperon/chaperon+mask.png" />
+		
+		<!-- commando -->
+		<image file="commando/commando.png" />
+		<image file="commando/commando+mask.png" />
+		
+		<!-- hot tank -->
+		<image file="hot_tank/hot_tank.png" />
+		<image file="hot_tank/hot_tank+mask.png" />
+		
+		<!-- intel truck -->
+		<image file="intel_truck/intel_truck.png" />
+		<image file="intel_truck/intel_truck+mask.png" />
+		
+		<!-- partisan -->
+		<image file="partisan/partisan.png" />
+		<image file="partisan/partisan+mask.png" />
+		
+		<!-- smuggler -->
+		<image file="smuggler/smuggler.png" />
+		<image file="smuggler/smuggler+mask.png" />
+		
+		<!-- tank hunter -->
+		<image file="tank_hunter/tank_hunter.png" />
+		<image file="tank_hunter/tank_hunter+mask.png" />
+		
+		<!-- siege cannon -->
+		<image file="siege_cannon/siege_cannon.png" />
+		<image file="siege_cannon/siege_cannon+mask.png" />
+		
+		<!-- logi truck -->
+		<image file="logi_truck/logi_truck.png" />
+		<image file="logi_truck/logi_truck+mask.png" />
 	</atlas>
 </resources>

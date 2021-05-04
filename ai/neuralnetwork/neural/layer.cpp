@@ -234,7 +234,7 @@ void Layer::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; ++i)
     {
-        spNeuron pNeuron = new Neuron(i, this, m_activation, false);
+        spNeuron pNeuron = spNeuron::create(i, this, m_activation, false);
         pNeuron->deserializeObject(pStream);
         m_neurons.append(pNeuron);
     }

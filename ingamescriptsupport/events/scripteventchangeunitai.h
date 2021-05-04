@@ -3,6 +3,9 @@
 
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
+class ScriptEventChangeUnitAI;
+using spScriptEventChangeUnitAI = oxygine::intrusive_ptr<ScriptEventChangeUnitAI>;
+
 class ScriptEventChangeUnitAI : public ScriptEventGeneric
 {
     Q_OBJECT

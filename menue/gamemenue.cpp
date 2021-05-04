@@ -83,13 +83,13 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
             m_PlayerSockets = m_pNetworkInterface.get()->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
-        spDialogConnecting pDialogConnecting = new DialogConnecting(QObject::tr("Waiting for Players"), 1000 * 60 * 5);
+        spDialogConnecting pDialogConnecting = spDialogConnecting::create(QObject::tr("Waiting for Players"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, this, &GameMenue::startGame, Qt::QueuedConnection);
 
-        m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
+        m_pChat = spChat::create(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100), NetworkInterface::NetworkSerives::GameChat);
         m_pChat->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
         m_pChat->setVisible(false);
         addChild(m_pChat);
@@ -285,7 +285,7 @@ void GameMenue::disconnected(quint64 socketID)
         if (showDisconnect)
         {
             gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(QObject::tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+            spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(QObject::tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
             addChild(pDialogMessageBox);
         }
         if (Mainapp::getSlave())
@@ -324,8 +324,8 @@ void GameMenue::loadGameMenue()
     pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 
     // back to normal code
-    m_pPlayerinfo = new PlayerInfo();
-    m_IngameInfoBar = new IngameInfoBar();
+    m_pPlayerinfo = spPlayerInfo::create();
+    m_IngameInfoBar = spIngameInfoBar::create();
     m_IngameInfoBar->updateMinimap();
     m_pPlayerinfo->updateData();
     addChild(m_IngameInfoBar);
@@ -376,7 +376,7 @@ void GameMenue::loadUIButtons()
     spGameMap pMap = GameMap::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
@@ -386,7 +386,7 @@ void GameMenue::loadUIButtons()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    m_CurrentRoundTime = new oxygine::TextField();
+    m_CurrentRoundTime = oxygine::spTextField::create();
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
@@ -419,7 +419,7 @@ void GameMenue::loadUIButtons()
     pButtonBox->addChild(exitGame);
 
     pAnim = pObjectManager->getResAnim("panel");
-    pButtonBox = new oxygine::Box9Sprite();
+    pButtonBox = oxygine::spBox9Sprite::create();
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
@@ -427,7 +427,7 @@ void GameMenue::loadUIButtons()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = new Label(180);
+    xyTextInfo = spLabel::create(180);
     xyTextInfo->setStyle(style);
     xyTextInfo->setHtmlText("X: 0 Y: 0");
     xyTextInfo->setPosition(8, 8);
@@ -452,7 +452,7 @@ void GameMenue::loadUIButtons()
 
     if (m_pNetworkInterface.get() != nullptr)
     {
-        pButtonBox = new oxygine::Box9Sprite();
+        pButtonBox = oxygine::spBox9Sprite::create();
         pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pButtonBox->setResAnim(pAnim);
@@ -532,7 +532,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
                         {
                             // replace current action with auto moving none moved units
                             m_pStoredAction = pGameAction;
-                            spGameAction multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
+                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_WAIT);
                             if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
                             {
                                 multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
@@ -564,7 +564,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
                         else if (pUnit->getCapturePoints() > 0 && pUnit->getActionList().contains(CoreAI::ACTION_CAPTURE))
                         {
                             m_pStoredAction = pGameAction;
-                            spGameAction multiTurnMovement = new GameAction(CoreAI::ACTION_CAPTURE);
+                            spGameAction multiTurnMovement = spGameAction::create(CoreAI::ACTION_CAPTURE);
                             multiTurnMovement->setTarget(pUnit->getPosition());
                             return multiTurnMovement;
                         }
@@ -591,7 +591,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             m_syncCounter + 1 != pGameAction->getSyncCounter())
         {
             gameStarted = false;
-            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(QObject::tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
+            spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(QObject::tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
             addChild(pDialogMessageBox);
         }
         else
@@ -652,7 +652,7 @@ void GameMenue::performAction(spGameAction pGameAction)
             else if (pMap->getCurrentPlayer()->getIsDefeated())
             {
                 Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = new GameAction();
+                spGameAction pAction = spGameAction::create();
                 pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
             }
@@ -682,7 +682,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
                 {
                     if (i > 0)
                     {
-                        spGameAction pTrapAction = new GameAction("ACTION_TRAP");
+                        spGameAction pTrapAction = spGameAction::create("ACTION_TRAP");
                         pTrapAction->setMovepath(trapPathNotEmptyTarget, trapPathCostNotEmptyTarget);
                         pTrapAction->writeDataInt32(trapPoint.x());
                         pTrapAction->writeDataInt32(trapPoint.y());
@@ -737,7 +737,7 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
                         break;
                     }
                 }
-                spGameAction pTrapAction = new GameAction("ACTION_TRAP");
+                spGameAction pTrapAction = spGameAction::create("ACTION_TRAP");
                 pTrapAction->setMovepath(trapPath, trapPathCost);
                 pMoveUnit->getOwner()->addVisionField(point.x(), point.y(), 1, true);
                 pTrapAction->writeDataInt32(point.x());
@@ -1086,7 +1086,7 @@ void GameMenue::actionPerformed()
             else if (pMap->getCurrentPlayer()->getIsDefeated())
             {
                 Console::print("Triggering next player cause current player is defeated", Console::eDEBUG);
-                spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+                spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
                 performAction(pAction);
             }
             else if (m_pStoredAction.get() != nullptr)
@@ -1243,8 +1243,8 @@ void GameMenue::victory(qint32 team)
         AchievementManager::getInstance()->onVictory(team, humanWin);
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue(m_pNetworkInterface));
-        oxygine::Actor::detach();
         m_pInstance = nullptr;
+        oxygine::Actor::detach();
     }
     
 }
@@ -1253,7 +1253,7 @@ void GameMenue::showAttackLog(qint32 player)
 {    
     m_Focused = false;
     Console::print("showAttackLog() for player " + QString::number(player), Console::eDEBUG);
-    spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getPlayer(player));
+    spDialogAttackLog pAttackLog = spDialogAttackLog::create(GameMap::getInstance()->getPlayer(player));
     connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
     {
         m_Focused = true;
@@ -1265,7 +1265,7 @@ void GameMenue::showRules()
 {
     m_Focused = false;
     Console::print("showRuleSelection()", Console::eDEBUG);
-    spRuleSelectionDialog pRuleSelection = new RuleSelectionDialog(RuleSelection::Mode::Singleplayer, false);
+    spRuleSelectionDialog pRuleSelection = spRuleSelectionDialog::create(RuleSelection::Mode::Singleplayer, false);
     connect(pRuleSelection.get(), &RuleSelectionDialog::sigOk, [=]()
     {
         m_Focused = true;
@@ -1277,7 +1277,7 @@ void GameMenue::showUnitInfo(qint32 player)
 {    
     m_Focused = false;
     Console::print("showUnitInfo() for player " + QString::number(player), Console::eDEBUG);
-    spDialogUnitInfo pDialogUnitInfo = new DialogUnitInfo(GameMap::getInstance()->getPlayer(player));
+    spDialogUnitInfo pDialogUnitInfo = spDialogUnitInfo::create(GameMap::getInstance()->getPlayer(player));
     connect(pDialogUnitInfo.get(), &DialogUnitInfo::sigFinished, [=]()
     {
         m_Focused = true;
@@ -1290,9 +1290,9 @@ void GameMenue::showUnitStatistics()
     m_Focused = false;
     spGameMap pMap = GameMap::getInstance();
     Console::print("showUnitStatistics()", Console::eDEBUG);
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
     Player* pPlayer = pMap->getCurrentViewPlayer();
-    spUnitStatisticView view = new UnitStatisticView(pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
+    spUnitStatisticView view = spUnitStatisticView::create(pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
                                     Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);
     pBox->addItem(view);
@@ -1307,8 +1307,8 @@ void GameMenue::showOptions()
 {    
     m_Focused = false;
     Console::print("showOptions()", Console::eDEBUG);
-    spGenericBox pDialogOptions = new GenericBox();
-    spGameplayAndKeys pGameplayAndKeys = new GameplayAndKeys(Settings::getHeight() - 80);
+    spGenericBox pDialogOptions = spGenericBox::create();
+    spGameplayAndKeys pGameplayAndKeys = spGameplayAndKeys::create(Settings::getHeight() - 80);
     pGameplayAndKeys->setY(0);
     pDialogOptions->addItem(pGameplayAndKeys);
     connect(pDialogOptions.get(), &GenericBox::sigFinished, [=]()
@@ -1322,10 +1322,10 @@ void GameMenue::showChangeSound()
 {
     m_Focused = false;
     Console::print("showChangeSound()", Console::eDEBUG);
-    spGenericBox pDialogOptions = new GenericBox();
+    spGenericBox pDialogOptions = spGenericBox::create();
     QSize size(Settings::getWidth() - 20,
                Settings::getHeight() - 100);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     qint32 y = 10;
     qint32 sliderOffset = 400;
     OptionMenue::showSoundOptions(pPanel, sliderOffset, y);
@@ -1384,7 +1384,7 @@ void GameMenue::showGameInfo(qint32 player)
         }
         data.append({tr("Neutral"), "", "", "", "", "", "", QString::number(totalBuildings)});
 
-        spGenericBox pGenericBox = new GenericBox();
+        spGenericBox pGenericBox = spGenericBox::create();
         QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
         qint32 width = (Settings::getWidth() - 20) / header.size();
         if (width < 150)
@@ -1392,14 +1392,14 @@ void GameMenue::showGameInfo(qint32 player)
             width = 150;
         }
         QSize contentSize(header.size() * width + 40, size.height());
-        spPanel pPanel = new Panel(true, size, contentSize);
+        spPanel pPanel = spPanel::create(true, size, contentSize);
         pPanel->setPosition(20, 20);
         QVector<qint32> widths;
         for (auto value : header)
         {
             widths.append(width);
         }
-        spTableView pTableView = new TableView(widths, data, header, false);
+        spTableView pTableView = spTableView::create(widths, data, header, false);
         pTableView->setPosition(20, 20);
         pPanel->addItem(pTableView);
         pPanel->setContentHeigth(pTableView->getHeight() + 40);
@@ -1417,7 +1417,7 @@ void GameMenue::showCOInfo()
     
     Console::print("showCOInfo()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
-    spCOInfoDialog pCOInfoDialog = new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
+    spCOInfoDialog pCOInfoDialog = spCOInfoDialog::create(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
         if (direction > 0)
         {
@@ -1483,7 +1483,7 @@ void GameMenue::saveGame()
     QVector<QString> wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
-    spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
     setFocused(false);
@@ -1519,7 +1519,7 @@ void GameMenue::showSaveAndExitGame()
         wildcards.append("*.sav");
     }
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
-    spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+    spFileDialog saveDialog = spFileDialog::create(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
@@ -1531,7 +1531,7 @@ void GameMenue::victoryInfo()
 {
     
     Console::print("victoryInfo()", Console::eDEBUG);
-    spDialogVictoryConditions pVictoryConditions = new DialogVictoryConditions();
+    spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create();
     addChild(pVictoryConditions);
     setFocused(false);
     connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -1624,7 +1624,7 @@ void GameMenue::startGame()
         updatePlayerinfo();
         m_ReplayRecorder.startRecording();
         Console::print("Triggering action next player in order to start the game.", Console::eDEBUG);
-        spGameAction pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        spGameAction pAction = spGameAction::create(CoreAI::ACTION_NEXT_PLAYER);
         if (m_pNetworkInterface.get() != nullptr)
         {
             pAction->setSeed(GlobalUtils::getSeed());
@@ -1677,7 +1677,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     Mainapp* pApp = Mainapp::getInstance();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
                     oxygine::Actor::detach();
-                    GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                    spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
@@ -1689,13 +1689,12 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 if (QFile::exists("savegames/quicksave2.sav"))
                 {
                     Console::print("Leaving Game Menue", Console::eDEBUG);
-                    GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                    spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
-                    oxygine::Actor::detach();
-                    
+                    oxygine::Actor::detach();                    
                 }
             }
             else
@@ -1731,7 +1730,7 @@ void GameMenue::keyInputAll(Qt::Key cur)
             {
                 pUnit = nullptr;
             }
-            spFieldInfo fieldinfo = new FieldInfo(pTerrain, pUnit);
+            spFieldInfo fieldinfo = spFieldInfo::create(pTerrain, pUnit);
             this->addChild(fieldinfo);
             connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
             {
@@ -1758,7 +1757,7 @@ void GameMenue::showExitGame()
     
     Console::print("showExitGame()", Console::eDEBUG);
     m_Focused = false;
-    spDialogMessageBox pExit = new DialogMessageBox(QObject::tr("Do you want to exit the current game?"), true);
+    spDialogMessageBox pExit = spDialogMessageBox::create(QObject::tr("Do you want to exit the current game?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
     {
@@ -1772,8 +1771,8 @@ void GameMenue::showWiki()
 {
     Console::print("showWiki()", Console::eDEBUG);
     m_Focused = false;
-    spGenericBox pBox = new GenericBox(false);
-    spWikiView pView = new WikiView(Settings::getWidth() - 40, Settings::getHeight() - 60);
+    spGenericBox pBox = spGenericBox::create(false);
+    spWikiView pView = spWikiView::create(Settings::getWidth() - 40, Settings::getHeight() - 60);
     pView->setPosition(20, 20);
     pBox->addItem(pView);
     connect(pBox.get(), &GenericBox::sigFinished, [=]()
@@ -1790,7 +1789,7 @@ void GameMenue::showSurrenderGame()
     {
         Console::print("showSurrenderGame()", Console::eDEBUG);
         m_Focused = false;
-        spDialogMessageBox pSurrender = new DialogMessageBox(QObject::tr("Do you want to surrender the current game?"), true);
+        spDialogMessageBox pSurrender = spDialogMessageBox::create(QObject::tr("Do you want to surrender the current game?"), true);
         connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
         connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
         {
@@ -1804,7 +1803,7 @@ void GameMenue::showSurrenderGame()
 void GameMenue::surrenderGame()
 {
     
-    spGameAction pAction = new GameAction();
+    spGameAction pAction = spGameAction::create();
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
     m_Focused = true;
@@ -1818,7 +1817,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
     if (pUnit.get() != nullptr)
     {
         Console::print("showNicknameUnit()", Console::eDEBUG);
-        spDialogTextInput pDialogTextInput = new DialogTextInput(QObject::tr("Nickname for the Unit:"), true, pUnit->getName());
+        spDialogTextInput pDialogTextInput = spDialogTextInput::create(QObject::tr("Nickname for the Unit:"), true, pUnit->getName());
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, [=](QString value)
         {
             emit sigNicknameUnit(x, y, value);
@@ -1836,7 +1835,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
     
-    spGameAction pAction = new GameAction();
+    spGameAction pAction = spGameAction::create();
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);

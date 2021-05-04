@@ -170,7 +170,7 @@ void ScriptConditionUnitReachedArea::writePostCondition(QTextStream& rStream)
 
 void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -180,12 +180,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 0, 99999);
+    spSpinBox spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Start X of the unit that should reach the area."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_UnitX);
@@ -196,12 +196,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Unit Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Start Y of the unit that should reach the area."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_UnitY);
@@ -212,12 +212,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target X: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area X Position which the unit needs to reach."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_x);
@@ -228,12 +228,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 0, 99999);
+    spinBox = spSpinBox::create(300, 0, 99999);
     spinBox->setTooltipText(tr("Target Area Y Position which the unit needs to reach."));
     spinBox->setPosition(width, 150);
     spinBox->setCurrentValue(m_y);
@@ -244,12 +244,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
     pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = new SpinBox(190, 1, 99999);
+    spinBox = spSpinBox::create(190, 1, 99999);
     spinBox->setTooltipText(tr("Target Area width which the unit needs to reach."));
     spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(m_width);
@@ -260,12 +260,12 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
     pText->setPosition(30, 230);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 99999);
+    spinBox = spSpinBox::create(300, 1, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the unit needs to reach."));
     spinBox->setPosition(width, 230);
     spinBox->setCurrentValue(m_heigth);

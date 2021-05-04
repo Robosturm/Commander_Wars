@@ -9,6 +9,9 @@
 
 #include "wiki/wikipage.h"
 
+class WikiDatabase;
+using spWikiDatabase = oxygine::intrusive_ptr<WikiDatabase>;
+
 /**
  * @brief The WikiDatabase class
  */
@@ -81,8 +84,11 @@ signals:
 public slots:
 
 private:
+    friend class oxygine::intrusive_ptr<WikiDatabase>;
     explicit WikiDatabase();
-    static WikiDatabase* m_pInstance;
+
+private:
+    static spWikiDatabase m_pInstance;
     QVector<pageData> m_Entries;
 };
 

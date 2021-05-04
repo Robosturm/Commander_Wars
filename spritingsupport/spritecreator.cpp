@@ -252,7 +252,7 @@ void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskT
     maskImg.save(maskFile);
 }
 
-oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
+oxygine::spResAnim SpriteCreator::createAnim(QString input, QString colorTable, QString newTable, bool useColorBox,
                                             qint32 columns, qint32  rows, float scaleFactor)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
@@ -275,14 +275,14 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, Q
     return createAnim(input, colorTableImg, maskTableImg, useColorBox, columns, rows, scaleFactor);
 }
 
-oxygine::ResAnim* SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg, bool useColorBox,
+oxygine::spResAnim SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg, bool useColorBox,
                                             qint32 columns, qint32  rows, float scaleFactor)
 {
     QFileInfo inputInfo(input);
     if (inputInfo.isFile() && inputInfo.exists())
     {
         QImage img = createSprite(input, colorTableImg, maskTableImg, useColorBox, false);
-        oxygine::SingleResAnim* pRet = new oxygine::SingleResAnim();
+        oxygine::spSingleResAnim pRet = oxygine::spSingleResAnim::create();
         pRet->setResPath(input);
         Mainapp::getInstance()->loadResAnim(pRet, img, columns, rows, scaleFactor);
         return pRet;

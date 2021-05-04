@@ -35,7 +35,7 @@ public:
     {
         return m_pCurrentMap.get();
     }
-    inline void setCurrentMap(GameMap* pMap)
+    inline void setCurrentMap(spGameMap pMap)
     {
         m_pCurrentMap = pMap;
     }

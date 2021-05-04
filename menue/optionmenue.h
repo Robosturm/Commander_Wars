@@ -11,6 +11,9 @@
 
 #include "menue/basemenu.h"
 
+class OptionMenue;
+using spOptionMenue = oxygine::intrusive_ptr<OptionMenue>;
+
 class OptionMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

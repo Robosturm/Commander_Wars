@@ -30,7 +30,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
-    oxygine::spSprite sprite = new oxygine::Sprite();
+    oxygine::spSprite sprite = oxygine::spSprite::create();
     addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("campaignmenu");
     sprite->setResAnim(pBackground);
@@ -72,7 +72,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     connect(this, &CampaignMenu::sigShowSaveCampaign, this, &CampaignMenu::showSaveCampaign, Qt::QueuedConnection);
 
 
-    m_pMapSelectionView = new MapSelectionView();
+    m_pMapSelectionView = spMapSelectionView::create();
     m_pMapSelectionView->setCurrentCampaign(campaign);
     addChild(m_pMapSelectionView);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
@@ -84,12 +84,10 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 }
 
 void CampaignMenu::exitMenue()
-{
-    
+{    
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
-    oxygine::Actor::detach();
-    
+    oxygine::Actor::detach();    
 }
 
 void CampaignMenu::mapSelectionItemClicked(QString item)
@@ -112,8 +110,7 @@ void CampaignMenu::mapSelectionItemChanged(QString item)
 }
 
 void CampaignMenu::slotButtonNext()
-{
-    
+{    
     m_pMapSelectionView->loadCurrentMap();
     if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
     {
@@ -136,8 +133,7 @@ void CampaignMenu::slotButtonNext()
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new MapSelectionMapsMenue(-1, m_pMapSelectionView));
         oxygine::Actor::detach();
-    }
-    
+    }    
 }
 
 void CampaignMenu::showSaveCampaign()
@@ -146,7 +142,7 @@ void CampaignMenu::showSaveCampaign()
     QVector<QString> wildcards;
     wildcards.append("*.camp");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
-    spFileDialog fileDialog = new FileDialog(path, wildcards);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards);
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignMenu::saveCampaign, Qt::QueuedConnection);
     

@@ -309,7 +309,7 @@ public:
     void removePlayer(qint32 index);
     /**
      * @brief getUniqueIdCounter
-     * @return a new unique id
+     * @return a unique id
      */
     qint32 getUniqueIdCounter();
     /**

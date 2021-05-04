@@ -17,7 +17,7 @@ UnitStatisticView::UnitStatisticView(const GameRecorder::PlayerData & data, qint
     moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     QSize size(width, heigth);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     addChild(pPanel);
     qint32 y = 10;
     addStatistic(pPanel, tr("Produced"), data.producedUnits, pPlayer, y, width);
@@ -49,7 +49,7 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     style.multiline = false;
 
     auto iter = view.constBegin();
-    spLabel headlineLabel = new Label(width - 50);
+    spLabel headlineLabel = spLabel::create(width - 50);
     headlineLabel->setStyle(styleHeadline);
     headlineLabel->setHtmlText(headline);
     headlineLabel->setPosition(x, y);
@@ -58,14 +58,14 @@ void UnitStatisticView::addStatistic(spPanel & pPanel, QString headline, const Q
     while (iter != view.constEnd())
     {
         QString unitId = iter.key();
-        spUnit pDummy = new Unit(unitId, pPlayer, false);
+        spUnit pDummy = spUnit::create(unitId, pPlayer, false);
         pDummy->setPosition(x, y);
         pDummy->addClickListener([=](oxygine::Event*)
         {
             emit sigShowLink(unitId);
         });
         pPanel->addItem(pDummy);
-        spLabel pLabel = new Label(textWidth);
+        spLabel pLabel = spLabel::create(textWidth);
         pLabel->setStyle(style);
         pLabel->setHtmlText("x " + QString::number(iter.value()));
         pLabel->setPosition(x + 30, y - 5);

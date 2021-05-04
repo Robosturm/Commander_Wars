@@ -12,20 +12,20 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     this->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
-    m_HScrollbar = new H_Scrollbar(size.height() - sliderSize, contentSize.height());
+    m_HScrollbar = spH_Scrollbar::create(size.height() - sliderSize, contentSize.height());
     this->addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
     connect(m_HScrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledY, Qt::QueuedConnection);
 
-    m_VScrollbar = new V_Scrollbar(size.width() - sliderSize, contentSize.width());
+    m_VScrollbar = spV_Scrollbar::create(size.width() - sliderSize, contentSize.width());
     this->addChild(m_VScrollbar);
     m_VScrollbar->setY(size.height() - m_VScrollbar->getHeight());
     connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
 
-    m_ClipRect = new oxygine::ClipRectActor();
+    m_ClipRect = oxygine::spClipRectActor::create();
     if (useBox)
     {
-        m_Panelbox = new oxygine::Box9Sprite();
+        m_Panelbox = oxygine::spBox9Sprite::create();
         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
         m_Panelbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
         m_Panelbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
@@ -43,7 +43,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
         m_ClipRect->setSize(size.width() - m_HScrollbar->getWidth(),
                             size.height() - m_VScrollbar->getHeight());
     }
-    m_ContentRect = new oxygine::Actor();
+    m_ContentRect = oxygine::spActor::create();
     m_ContentRect->setSize(contentSize.width(), contentSize.height());
     m_ClipRect->addChild(m_ContentRect);
 

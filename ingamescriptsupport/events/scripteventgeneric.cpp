@@ -56,7 +56,7 @@ void ScriptEventGeneric::writeEvent(QTextStream& rStream)
 
 void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -68,7 +68,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
     qint32 y = 30;
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
-        spLabel pText = new Label(width - 10);
+        spLabel pText = spLabel::create(width - 10);
         pText->setStyle(style);
         pText->setHtmlText(m_Items[i].labelText);
         pText->setPosition(30, y);
@@ -77,7 +77,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
         {
             case EditTypes::Float:
             {
-                spSpinBox spinBox = new SpinBox(300, m_Items[i].min, m_Items[i].max, SpinBox::Mode::Float);
+                spSpinBox spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max, SpinBox::Mode::Float);
                 spinBox->setInfinityValue(m_Items[i].infinite);
                 spinBox->setTooltipText(m_Items[i].tooltip);
                 spinBox->setPosition(width, y);
@@ -93,7 +93,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             case EditTypes::Integer:
             {
 
-                spSpinBox spinBox = new SpinBox(300, m_Items[i].min, m_Items[i].max);
+                spSpinBox spinBox = spSpinBox::create(300, m_Items[i].min, m_Items[i].max);
                 spinBox->setInfinityValue(m_Items[i].infinite);
                 spinBox->setTooltipText(m_Items[i].tooltip);
                 spinBox->setPosition(width, y);
@@ -108,7 +108,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             }
             case EditTypes::String:
             {
-                spTextbox textBox = new Textbox(300);
+                spTextbox textBox = spTextbox::create(300);
                 textBox->setTooltipText(m_Items[i].tooltip);
                 textBox->setPosition(width, y);
                 textBox->setCurrentText(m_Items[i].item);
@@ -122,7 +122,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             }
             case EditTypes::Bool:
             {
-                spCheckbox checkBox = new Checkbox();
+                spCheckbox checkBox = spCheckbox::create();
                 checkBox->setTooltipText(m_Items[i].tooltip);
                 checkBox->setPosition(width, y);
                 QVariant var = m_Items[i].item;
@@ -139,7 +139,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             }
             case EditTypes::Selection:
             {
-                spDropDownmenu dropDown = new DropDownmenu(300, m_Items[i].items);
+                spDropDownmenu dropDown = spDropDownmenu::create(300, m_Items[i].items);
                 dropDown->setTooltipText(m_Items[i].tooltip);
                 dropDown->setPosition(width, y);
                 for (qint32 i2  = 0; i2 < m_Items[i].data.size(); i2++)
@@ -158,7 +158,7 @@ void ScriptEventGeneric::showEditEvent(spScriptEditor pScriptEditor)
             }
             case EditTypes::File:
             {
-                spTextbox pTextbox = new Textbox(Settings::getWidth() - 220 - width);
+                spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 220 - width);
                 pTextbox->setTooltipText(m_Items[i].tooltip);
                 pTextbox->setCurrentText(m_Items[i].item);
                 pTextbox->setPosition(width, y);
@@ -190,7 +190,7 @@ void ScriptEventGeneric::showSelectFile (QString filter, QString startFolder, QS
     QVector<QString> wildcards;
     wildcards.append(filter);
     QString path = QCoreApplication::applicationDirPath() + startFolder;
-    spFileDialog fileDialog = new FileDialog(path, wildcards, currentFile);
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, currentFile);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, [=](QString id)
     {
         QString file = id.replace(QCoreApplication::applicationDirPath() + "/", "");

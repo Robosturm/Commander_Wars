@@ -26,7 +26,7 @@ QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
 
 oxygine::spActor UiFactory::createUi(QString uiXmlFile, bool & success)
 {
-    oxygine::spActor root = new oxygine::Actor();
+    oxygine::spActor root = oxygine::spActor::create();
     success = false;
     if (QFile::exists(uiXmlFile))
     {
@@ -93,7 +93,7 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
     QString text = element.attribute("text");
     QString tooltip = element.attribute("tooltip");
     auto style = getStyle(element.attribute("font"));
-    spLabel pLabel = new Label(width);
+    spLabel pLabel = spLabel::create(width);
     pLabel->setHeight(height);
     pLabel->setX(x);
     pLabel->setY(y);
@@ -112,7 +112,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
     QString tooltip = element.attribute("tooltip");
     QString onEventLine = element.attribute("onEvent");
     bool value = getBoolValue(element.attribute("startValue"));
-    spCheckbox pCheckbox = new Checkbox();
+    spCheckbox pCheckbox = spCheckbox::create();
     pCheckbox->setX(x);
     pCheckbox->setY(y);
     pCheckbox->setChecked(value);
@@ -137,7 +137,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
     QString tooltip = element.attribute("tooltip");
     QString onEventLine = element.attribute("onEvent");
     qint32 value = getBoolValue(element.attribute("startValue"));
-    spSpinBox pSpinBox = new SpinBox(width, min, max, SpinBox::Mode::Int);
+    spSpinBox pSpinBox = spSpinBox::create(width, min, max, SpinBox::Mode::Int);
     pSpinBox->setX(x);
     pSpinBox->setY(y);
     pSpinBox->setInfinityValue(infinite);

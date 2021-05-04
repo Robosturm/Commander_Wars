@@ -18,7 +18,7 @@ namespace oxygine
         {
         }
 
-        void Node::appendNode(Node* tn)
+        void Node::appendNode(spNode tn)
         {
             if (!_firstChild)
             {
@@ -145,7 +145,7 @@ namespace oxygine
                 {
                     Symbol& s = _data[i];
 
-                    spSTDMaterial m = mat.clone();
+                    spSTDMaterial m = dynamic_pointer_cast<STDMaterial>(mat.clone());
                     m->_base = s.mat->_base;
 
                     s.mat = MaterialCache::mc().cache(*m.get());
@@ -199,10 +199,10 @@ namespace oxygine
                         }
                         else
                         {
-                            spSTDMaterial mat = rd.mat->clone();
+                            spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(rd.mat->clone());
                             mat->_base = gl->texture;
 
-                            s.mat = MaterialCache::mc().cache(*mat.get());
+                            s.mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(*mat.get()));
                             rd.mat = s.mat;
                         }
                     }

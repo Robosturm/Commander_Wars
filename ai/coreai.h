@@ -138,7 +138,7 @@ public slots:
      * @param pEnemyUnits
      * @return
      */
-    bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    bool useCOPower(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits);
     /**
      * @brief calcBuildingDamage
      * @param pUnit
@@ -149,7 +149,7 @@ public slots:
     /**
      * @brief createMovementMap
      */
-    void createMovementMap(QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    void createMovementMap(spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings);
     /**
      * @brief addMovementMap
      * @param pBuilding
@@ -161,32 +161,32 @@ public slots:
      * @param pBuildings
      * @return
      */
-    bool useBuilding(QmlVectorBuilding* pBuildings);
+    bool useBuilding(spQmlVectorBuilding pBuildings);
     /**
      * @brief moveOoziums moves all those sweet nice ooziums :)
      * @param pUnits
      * @param pEnemyUnits
      */
-    bool moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    bool moveOoziums(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits);
     /**
      * @brief moveFlares
      * @param pUnits
      * @return
      */
-    bool moveFlares(QmlVectorUnit* pUnits);
+    bool moveFlares(spQmlVectorUnit pUnits);
     /**
      * @brief moveBlackBombs
      * @param pUnits
      * @param pEnemyUnits
      * @return
      */
-    bool moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    bool moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits);
     /**
      * @brief moveSupport
      * @param pUnits
      * @return
      */
-    bool moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporters);
+    bool moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransporters);
     /**
      * @brief nextAction
      */
@@ -249,7 +249,7 @@ public slots:
      * @param pUnits
      * @return
      */
-    bool moveAwayFromProduction(QmlVectorUnit* pUnits);
+    bool moveAwayFromProduction(spQmlVectorUnit pUnits);
     /**
      * @brief CoreAI::calcFundsDamage
      * @param damage
@@ -264,7 +264,7 @@ public slots:
      * @param pEnemyUnits
      * @param targets
      */
-    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
+    void appendAttackTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
 
     /**
      * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
@@ -301,21 +301,21 @@ protected:
     bool processPredefinedAi();
     void processPredefinedAiHold(Unit* pUnit);
     void processPredefinedAiDefensive(Unit* pUnit);
-    void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
+    void processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit pEnemyUnits);
     void processPredefinedAiPatrol(Unit* pUnit);
     bool processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem & pfs);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
-    void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
-    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings,  QVector<QVector3D>& targets);
-    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
-    void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);
-    void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
-    void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
-    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits,
-                                         QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    QVector<Unit*> appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
-                                        QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+    void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
+    void appendCaptureTargets(QStringList actions, Unit* pUnit, spQmlVectorBuilding pEnemyBuildings,  QVector<QVector3D>& targets);
+    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, spQmlVectorUnit pEnemyUnits, QVector<QVector3D>& targets);
+    void appendRepairTargets(Unit* pUnit, spQmlVectorBuilding pBuildings, QVector<QVector3D>& targets);
+    void appendSupplyTargets(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendTransporterTargets(Unit* pUnit, spQmlVectorUnit pUnits, QVector<QVector3D>& targets);
+    void appendCaptureTransporterTargets(Unit* pUnit, spQmlVectorUnit pUnits,
+                                         spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets);
+    QVector<Unit*> appendLoadingTargets(Unit* pUnit, spQmlVectorUnit pUnits,
+                                        spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                         bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets,
                                         bool all = false);
     /**
@@ -326,7 +326,7 @@ protected:
      * @param pEnemyBuildings
      * @return
      */
-    bool hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+    bool hasTargets(Unit* pLoadingUnit, bool canCapture, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                     qint32 loadingIslandIdx, qint32 loadingIsland);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
@@ -334,20 +334,20 @@ protected:
      * @param pEnemyUnits
      * @param pEnemyBuildings
      */
-    void appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendNearestUnloadTargets(Unit* pUnit, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets);
     /**
      * @brief appendUnloadTargetsForCapturing searches unload fields near enemy buildings
      * @param pUnit
      * @param pEnemyBuildings
      */
-    void appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendUnloadTargetsForCapturing(Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets);
     /**
      * @brief appendTerrainBuildingAttackTargets
      * @param pUnit
      * @param pEnemyBuildings
      * @param targets
      */
-    void appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding pEnemyBuildings, QVector<QVector3D>& targets);
     /**
      * @brief checkIslandForUnloading
      * @param pUnit
@@ -392,7 +392,7 @@ protected:
      * @brief createIslandMap
      * @param pUnits
      */
-    void rebuildIsland(QmlVectorUnit* pUnits);
+    void rebuildIsland(spQmlVectorUnit pUnits);
     /**
      * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
      * @param pUnit1
@@ -474,14 +474,14 @@ protected:
      * @param directUnits
      * @param transportTargets
      */
-    void GetOwnUnitCounts(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+    void GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                           qint32 & infantryUnits, qint32 & indirectUnits,
                           qint32 & directUnits, QVector<std::tuple<Unit*, Unit*>> & transportTargets);
     /**
      * @brief buildCOUnit
      * @return
      */
-    bool buildCOUnit(QmlVectorUnit* pUnits);
+    bool buildCOUnit(spQmlVectorUnit pUnits);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

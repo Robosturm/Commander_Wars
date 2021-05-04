@@ -161,7 +161,7 @@ namespace oxygine
         {
             return;
         }
-        spImage mt = new Image;
+        spImage mt = spImage::create();
         Rect bounds = ad.atlas.getBounds();
         qint32 w = bounds.getRight();
         qint32 h = bounds.getBottom();
@@ -241,7 +241,7 @@ namespace oxygine
         atlas_data ad;
 
         ImageData::TextureFormat tf = ImageData::TF_R8G8B8A8;
-        QVector<ResAnim*> anims;
+        QVector<spResAnim> anims;
         while (true)
         {
             XmlWalker walker = context.walker.next();
@@ -362,7 +362,7 @@ namespace oxygine
             mt.init(img, true);
             im = mt.lock();
 
-            ResAnim* ra = new ResAnim(this);
+            spResAnim ra = spResAnim::create(this);
             ra->setResPath(walker.getPath("file"));
 
             anims.push_back(ra);
@@ -449,7 +449,7 @@ namespace oxygine
                     df.base = ad.texture;
 
                     Vector2 fsize = Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor();
-                    frame.init2(ra, x, y, df,
+                    frame.init2(ra.get(), x, y, df,
                                 srcRect, destRect, fsize);
 
                     frame.setHitTestData(adata);
@@ -467,9 +467,9 @@ namespace oxygine
 
         applyAtlas(ad, _linearFilter, _clamp2edge);
 
-        for (QVector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
+        for (QVector<spResAnim>::iterator i = anims.begin(); i != anims.end(); ++i)
         {
-            ResAnim* rs = *i;
+            spResAnim rs = *i;
             qint32 num = rs->getTotalFrames();
 
             for (qint32 n = 0; n < num; ++n)

@@ -13,7 +13,9 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 class WorkerThread;
+using spWorkerThread = oxygine::intrusive_ptr<WorkerThread>;
 class AudioThread;
+using spAudioThread = oxygine::intrusive_ptr<AudioThread>;
 
 class Mainapp : public oxygine::GameWindow
 {
@@ -49,24 +51,24 @@ public:
     ENUM_CLASS ZOrder
     {
         Background = std::numeric_limits<qint32>::min(),
-                Map,
-                Terrain,
-                // gap for stacking the terrain sprites
-                CORange = std::numeric_limits<qint32>::max() - 200,
-                FogFields,
-                MarkedFields,
-                Weather,
-                Cursor,
-                Animation,
-                Objects,
-                FocusedObjects,
-                AnimationFullScreen,
-                Dialogs,
-                DropDownList,
-                Tooltip,
-                Loadingscreen,
-                Achievement,
-                Console
+        Map,
+        Terrain,
+        // gap for stacking the terrain sprites
+        CORange = std::numeric_limits<qint32>::max() - 200,
+        FogFields,
+        MarkedFields,
+        Weather,
+        Cursor,
+        Animation,
+        Objects,
+        FocusedObjects,
+        AnimationFullScreen,
+        Dialogs,
+        DropDownList,
+        Tooltip,
+        Loadingscreen,
+        Achievement,
+        Console,
     };
 
     explicit Mainapp();

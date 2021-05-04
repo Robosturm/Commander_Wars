@@ -30,7 +30,7 @@ namespace oxygine
 
     spNativeTexture VideoDriverGLES20::createTexture()
     {
-        return new NativeTextureGLES;
+        return spNativeTextureGLES::create();
     }
 
     void VideoDriverGLES20::reset()

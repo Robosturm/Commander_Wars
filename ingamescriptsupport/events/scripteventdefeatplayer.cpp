@@ -42,7 +42,7 @@ void ScriptEventDefeatPlayer::setPlayer(const qint32 &value)
 
 void ScriptEventDefeatPlayer::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -52,12 +52,12 @@ void ScriptEventDefeatPlayer::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 1, 9999);
+    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("The player that gets defeated."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);

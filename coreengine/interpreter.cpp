@@ -35,7 +35,7 @@ Interpreter::Interpreter()
 void Interpreter::reloadInterpreter(QString runtime)
 {
     m_pInstance = nullptr;
-    m_pInstance = new Interpreter();
+    m_pInstance = spInterpreter::create();
     m_pInstance->loadScript(runtime, "Interpreter Runtime");
 }
 

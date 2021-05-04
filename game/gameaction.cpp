@@ -321,14 +321,14 @@ bool GameAction::getRequiresEmptyField()
     return true;
 }
 
-CursorData* GameAction::getStepCursor()
+spCursorData GameAction::getStepCursor()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepCursor";
-    CursorData* data = new CursorData();
+    spCursorData data = spCursorData::create();
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
-    args1 << pInterpreter->newQObject(data);
+    args1 << pInterpreter->newQObject(data.get());
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
@@ -337,30 +337,29 @@ CursorData* GameAction::getStepCursor()
     return data;
 }
 
-MenuData* GameAction::getMenuStepData()
+spMenuData GameAction::getMenuStepData()
 {
     Console::print("Reading menu step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
     
     Interpreter* pInterpreter = Interpreter::getInstance();
-    MenuData* data = new MenuData;
+    spMenuData data = spMenuData::create();
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
-    args1 << pInterpreter->newQObject(data);
-    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
-    
+    args1 << pInterpreter->newQObject(data.get());
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);    
     return data;
 }
 
-MarkedFieldData* GameAction::getMarkedFieldStepData()
+spMarkedFieldData GameAction::getMarkedFieldStepData()
 {
     Console::print("Reading field step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
-    MarkedFieldData* data = new MarkedFieldData;
+    spMarkedFieldData data = spMarkedFieldData::create();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
-    args1 << pInterpreter->newQObject(data);
+    args1 << pInterpreter->newQObject(data.get());
     QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     return data;
 }

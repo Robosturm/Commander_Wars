@@ -38,7 +38,7 @@ CampaignEditor::CampaignEditor()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -55,12 +55,12 @@ CampaignEditor::CampaignEditor()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    oxygine::spTextField pText = new  oxygine::TextField();
+    oxygine::spTextField pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Folder:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_CampaignFolder = new Textbox(Settings::getWidth() - 500);
+    m_CampaignFolder = spTextbox::create(Settings::getWidth() - 500);
     m_CampaignFolder->setTooltipText(tr("Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp"));
     m_CampaignFolder->setPosition(300, y);
     m_CampaignFolder->setCurrentText("maps/");
@@ -75,36 +75,36 @@ CampaignEditor::CampaignEditor()
     });
 
     y += 40;
-    pText = new  oxygine::TextField();
+    pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Name:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Name = new Textbox(Settings::getWidth() - 500);
+    m_Name = spTextbox::create(Settings::getWidth() - 500);
     m_Name->setTooltipText(tr("Name of the campaign shown in the map selection screen."));
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
     pSpriteBox->addChild(m_Name);
 
     y += 40;
-    pText = new  oxygine::TextField();
+    pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Author:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Author = new Textbox(Settings::getWidth() - 500);
+    m_Author = spTextbox::create(Settings::getWidth() - 500);
     m_Author->setTooltipText(tr("Name of the author shown in the map selection screen."));
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
     pSpriteBox->addChild(m_Author);
 
     y += 40;
-    pText = new  oxygine::TextField();
+    pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Description:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_Description = new Textbox(Settings::getWidth() - 500);
+    m_Description = spTextbox::create(Settings::getWidth() - 500);
     m_Description->setTooltipText(tr("Description of the campaign shown in the map selection screen."));
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
@@ -112,7 +112,7 @@ CampaignEditor::CampaignEditor()
 
     y += 40;
     QSize size(Settings::getWidth() - 80, Settings::getHeight() - 280);
-    m_Panel = new Panel(true, size, size);
+    m_Panel = spPanel::create(true, size, size);
     m_Panel->setPosition(40, y);
     pSpriteBox->addChild(m_Panel);
 
@@ -166,7 +166,7 @@ CampaignEditor::CampaignEditor()
 void CampaignEditor::showExitBox()
 {
     
-    spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the campaign editor?"), true);
+    spDialogMessageBox pExit = spDialogMessageBox::create(tr("Do you want to exit the campaign editor?"), true);
     connect(pExit.get(), &DialogMessageBox::sigOk, this, &CampaignEditor::exitEditor, Qt::QueuedConnection);
     addChild(pExit);
     
@@ -186,7 +186,7 @@ void CampaignEditor::showAddCampaign()
     QVector<QString> wildcards;
     wildcards.append("*.map");
     QString path = QCoreApplication::applicationDirPath() + "/" + m_CampaignFolder->getCurrentText();
-    spFileDialog fileDialog = new FileDialog(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
     
@@ -198,7 +198,7 @@ void CampaignEditor::showSaveCampaign()
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
-    spFileDialog fileDialog = new FileDialog(path, wildcards, m_Name->getCurrentText());
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, m_Name->getCurrentText());
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
     
@@ -210,7 +210,7 @@ void CampaignEditor::showLoadCampaign()
     QVector<QString> wildcards;
     wildcards.append("*.jsm");
     QString path = "maps/";
-    spFileDialog fileDialog = new FileDialog(path, wildcards, "");
+    spFileDialog fileDialog = spFileDialog::create(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);
     
@@ -245,7 +245,7 @@ void CampaignEditor::showSelectFolder()
 {
     
     QString path = QCoreApplication::applicationDirPath() + "/maps";
-    spFolderDialog folderDialog = new FolderDialog(path);
+    spFolderDialog folderDialog = spFolderDialog::create(path);
     this->addChild(folderDialog);
     connect(folderDialog.get(),  &FolderDialog::sigFolderSelected, this, &CampaignEditor::selectFolder, Qt::QueuedConnection);
     
@@ -282,7 +282,7 @@ void CampaignEditor::updateCampaignData()
         style.vAlign = oxygine::TextStyle::VALIGN_TOP;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
-        oxygine::spTextField pText = new  oxygine::TextField();
+        oxygine::spTextField pText =  oxygine::spTextField::create();
         pText->setStyle(style);
         pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 10 + i * 40);
@@ -321,13 +321,13 @@ void CampaignEditor::updateCampaignData()
             emit sigUpdateCampaignData();
         });
 
-        pText = new  oxygine::TextField();
+        pText =  oxygine::spTextField::create();
         pText->setStyle(style);
         pText->setHtmlText(tr("Last Map"));
         pText->setPosition(835, 10 + i * 40);
         m_Panel->addItem(pText);
 
-        spCheckbox pBox = new Checkbox();
+        spCheckbox pBox = spCheckbox::create();
         pBox->setChecked(mapDatas[i].lastMap);
         pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign"));
         pBox->setPosition(940, 10 + i * 40);
@@ -689,9 +689,9 @@ void CampaignEditor::saveCampaign(QString filename)
 void CampaignEditor::showEditEnableMaps(qint32 index)
 {
     
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -700,12 +700,12 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText = new  oxygine::TextField();
+    oxygine::spTextField pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Enable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, mapDatas.size() - 1);
+    spSpinBox spinBox = spSpinBox::create(150, 0, mapDatas.size() - 1);
     spinBox->setTooltipText(tr("Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].previousCount);
@@ -721,13 +721,13 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     {
         if (i != index)
         {
-            pText = new  oxygine::TextField();
+            pText =  oxygine::spTextField::create();
             pText->setStyle(style);
             pText->setHtmlText(mapDatas[i].mapName);
             pText->setPosition(10, 50 + counter * 40);
             pPanel->addItem(pText);
 
-            spCheckbox pCheckbox = new Checkbox();
+            spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setTooltipText(tr("If checked this map leads to the selected map. Also see \"Enable Map Count\""));
             pCheckbox->setPosition(300, 50 + counter * 40);
             if (mapDatas[index].previousMaps.contains(mapDatas[i].mapName))
@@ -760,9 +760,9 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
 void CampaignEditor::showEditDisableMaps(qint32 index)
 {
     
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -771,12 +771,12 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    oxygine::spTextField pText = new  oxygine::TextField();
+    oxygine::spTextField pText =  oxygine::spTextField::create();
     pText->setStyle(style);
     pText->setHtmlText(tr("Disable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 1, mapDatas.size() - 1);
+    spSpinBox spinBox = spSpinBox::create(150, 1, mapDatas.size() - 1);
     spinBox->setTooltipText(tr("Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
@@ -790,13 +790,13 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     qint32 counter = 0;
     for (qint32 i = 0; i < mapDatas.size(); i++)
     {
-        pText = new  oxygine::TextField();
+        pText =  oxygine::spTextField::create();
         pText->setStyle(style);
         pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 50 + counter * 40);
         pPanel->addItem(pText);
 
-        spCheckbox pCheckbox = new Checkbox();
+        spCheckbox pCheckbox = spCheckbox::create();
         pCheckbox->setTooltipText(tr("If checked this map disables the selected map. Also see \"Disable Map Count\""));
         pCheckbox->setPosition(300, 50 + counter * 40);
         if (mapDatas[index].disableMaps.contains(mapDatas[i].mapName))
@@ -828,9 +828,9 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
 void CampaignEditor::showEditScriptVariables(qint32 index)
 {
     
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
     QSize size(Settings::getWidth() - 40, Settings::getHeight() - 100);
-    spPanel pPanel = new Panel(true, size, size);
+    spPanel pPanel = spPanel::create(true, size, size);
     pPanel->setPosition(20, 20);
     pBox->addChild(pPanel);
     oxygine::TextStyle style = FontManager::getMainFont24();
@@ -847,7 +847,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 
     qint32 y = 10;
     qint32 width = 300;
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Enable Variable"));
     pText->setPosition(10, y);
@@ -856,12 +856,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
 
 
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    spTextbox textBox = new Textbox(300);
+    spTextbox textBox = spTextbox::create(300);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableEnableName);
@@ -873,14 +873,14 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(textBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
 
     QVector<QString> items = {"===", "!==", "&gt;=", "&lt;="};
-    spDropDownmenu dropDown = new DropDownmenu(150, items);
+    spDropDownmenu dropDown = spDropDownmenu::create(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableEnableCompare);
@@ -892,12 +892,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(dropDown);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, -999999, 999999);
+    spSpinBox spinBox = spSpinBox::create(150, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableEnableValue);
@@ -909,12 +909,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(spinBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Use Variable: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    spCheckbox checkBox = new Checkbox();
+    spCheckbox checkBox = spCheckbox::create();
     checkBox->setTooltipText(tr("If checked the enable variable needs to fullfil the condition to allow this map to be playable."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableEnableActive);
@@ -926,19 +926,19 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(checkBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(headerStyle);
     pText->setHtmlText(tr("Disable Variable"));
     pText->setPosition(10, y);
     pPanel->addItem(pText);
     y += 60;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    textBox = new Textbox(300);
+    textBox = spTextbox::create(300);
     textBox->setTooltipText(tr("Name of the Variable that should be checked. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, y);
     textBox->setCurrentText(mapDatas[index].scriptVariableDisableName);
@@ -950,12 +950,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(textBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Compare: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    dropDown = new DropDownmenu(150, items);
+    dropDown = spDropDownmenu::create(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableDisableCompare);
@@ -967,12 +967,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(dropDown);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    spinBox = new SpinBox(150, -999999, 999999);
+    spinBox = spSpinBox::create(150, -999999, 999999);
     spinBox->setTooltipText(tr("The value that the variable gets checked against."));
     spinBox->setPosition(width, y);
     spinBox->setCurrentValue(mapDatas[index].scriptVariableDisableValue);
@@ -984,12 +984,12 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     pPanel->addItem(spinBox);
     y += 40;
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Use Variable: "));
     pText->setPosition(30, y);
     pPanel->addItem(pText);
-    checkBox = new Checkbox();
+    checkBox = spCheckbox::create();
     checkBox->setTooltipText(tr("If checked and if the disable variable fullfil the condition this map can't be played."));
     checkBox->setPosition(width, y);
     checkBox->setChecked(mapDatas[index].scriptVariableDisableActive);

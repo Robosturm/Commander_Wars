@@ -117,7 +117,7 @@ bool Settings::m_syncAnimations = false;
 QStringList Settings::m_activeMods;
 QStringList Settings::m_activeModVersions;
 // this Object
-Settings* Settings::m_pInstance = nullptr;
+spSettings Settings::m_pInstance = nullptr;
 QTranslator Settings::m_Translator;
 
 // logging
@@ -125,11 +125,11 @@ bool Settings::m_LogActions = false;
 
 Settings* Settings::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new Settings();
+        m_pInstance = spSettings::create();
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 Settings::Settings()

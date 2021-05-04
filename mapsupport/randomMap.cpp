@@ -519,7 +519,7 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
     qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue erg = pInterpreter->doFunction(RANDOMMAPGENERATORNAME, "getHQBaseTerrainID");
-    spUnit pUnit = new Unit("INFANTRY", players[0].get(), false);
+    spUnit pUnit = spUnit::create("INFANTRY", players[0].get(), false);
     pUnit->setIgnoreUnitCollision(true);
     qint32 days = minimalDistance / 2;
     LoadingScreen::getInstance()->setWorktext(QObject::tr("Generating ") + "HQ's");
@@ -557,9 +557,9 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
         }
         replaceTerrain(erg.toString(), position.x(), position.y());
         playerPositions.push_back(position);
-        Building* pBuilding = new Building("HQ");
+        spBuilding pBuilding = spBuilding::create("HQ");
         pBuilding->setOwner(getPlayer(i));
-        getTerrain(position.x(), position.y())->setBuilding(pBuilding);
+        getTerrain(position.x(), position.y())->setBuilding(pBuilding.get());
     }
 
     buildings -= playerPositions.size();
@@ -587,9 +587,9 @@ QVector<QPoint> GameMap::randomMapCreateBuildings(qint32 buildings, QRandomGener
         if ((x >= 0) && (y >= 0))
         {
             replaceTerrain(erg.toString(), x, y);
-            Building* pBuilding = new Building("FACTORY");
+            spBuilding pBuilding = spBuilding::create("FACTORY");
             pBuilding->setOwner(getPlayer(i));
-            getTerrain(x, y)->setBuilding(pBuilding);
+            getTerrain(x, y)->setBuilding(pBuilding.get());
         }
     }
     buildings -= playerPositions.size();
@@ -665,7 +665,7 @@ void GameMap::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID,
         if (onMap(x, y))
         {
             replaceTerrain(baseTerrainID, x, y);
-            Building* pBuilding = new Building(buildingId);
+            spBuilding pBuilding = spBuilding::create(buildingId);
             for (qint32 i2 = 0; i2 < ownedBaseSize.size(); i2++)
             {
                 if ((i < playerBuldings && i2 == 0) ||
@@ -684,7 +684,7 @@ void GameMap::randomMapPlaceBuildings(QString buildingId, QString baseTerrainID,
                     break;
                 }
             }
-            getTerrain(x, y)->setBuilding(pBuilding);
+            getTerrain(x, y)->setBuilding(pBuilding.get());
             if (innerBase > 0)
             {
                 innerBase--;
@@ -796,7 +796,7 @@ void GameMap::randomMapSpawnUnit(QString unitId, qint32 owner, bool nearHq, QVec
     qint32 mapHeigth = getMapHeight();
     qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
     qint32 maximumUnitTry = 2000;
-    spUnit pUnit = new Unit(unitId, players[owner].get(), false);
+    spUnit pUnit = spUnit::create(unitId, players[owner].get(), false);
     qint32 x = 0;
     qint32 y = 0;
     for (qint32 i2 = 0; i2 < maximumUnitTry; ++i2)

@@ -12,7 +12,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -44,7 +44,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     });
     qint32 pixelSize = (Settings::getHeight() - 220) / 256;
     // add spin boxes for red green and blue
-    m_pColorSelector = new ColorSelector(color, pixelSize);
+    m_pColorSelector = spColorSelector::create(color, pixelSize);
     m_pColorSelector->setY(30);
     m_pColorSelector->setX(Settings::getWidth() / 2 - m_pColorSelector->getWidth() / 2);
     pSpriteBox->addChild(m_pColorSelector);

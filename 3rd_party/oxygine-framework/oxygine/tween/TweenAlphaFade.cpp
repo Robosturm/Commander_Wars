@@ -15,7 +15,7 @@ namespace oxygine
             {
                 return;
             }
-            spSTDMaterial mat = new STDMaterial;
+            spSTDMaterial mat = spSTDMaterial::create();
             mat->_base = _pp._rt;
             mat->_blend = blend_premultiplied_alpha;
             mat->apply();

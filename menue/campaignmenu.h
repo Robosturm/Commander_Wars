@@ -12,6 +12,9 @@
 
 #include "menue/basemenu.h"
 
+class CampaignMenu;
+using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
+
 class CampaignMenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

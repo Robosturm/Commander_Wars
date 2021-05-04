@@ -8,7 +8,7 @@ namespace oxygine
     class ResBuffer: public Resource
     {
     public:
-        static Resource* create(CreateResourceContext&);
+        static spResource create(CreateResourceContext&);
 
         ResBuffer();
         ~ResBuffer();

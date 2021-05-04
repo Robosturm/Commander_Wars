@@ -69,7 +69,7 @@ void GameRules::addGameRule(QString rule)
     }
     if (!found)
     {
-        m_GameRules.append(new GameRule(rule));
+        m_GameRules.append(spGameRule::create(rule));
     }
 }
 
@@ -127,7 +127,7 @@ void GameRules::addVictoryRule(QString rule)
     }
     if (!found)
     {
-        m_VictoryRules.append(new VictoryRule(rule));
+        m_VictoryRules.append(spVictoryRule::create(rule));
     }
 }
 
@@ -339,7 +339,7 @@ void GameRules::startOfTurn(bool newDay)
         // increase weather prediction till enough data is avaiable
         while(m_WeatherDays.size() < predictionSize)
         {
-            Console::print("Adding new weather for weather prediction.", Console::eDEBUG);
+            Console::print("Adding weather for weather prediction.", Console::eDEBUG);
             if (m_randomWeather)
             {
                 qint32 totalWeatherChances = 0;
@@ -510,7 +510,7 @@ void GameRules::createWeatherSprites()
                 {
                     for (qint32 y = 0; y < heigth; y++)
                     {
-                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::spSprite pSprite = oxygine::spSprite::create();
                         if (pAnim->getTotalFrames() > 1)
                         {
                             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -662,7 +662,7 @@ void GameRules::createFieldFogWar(qint32 x, qint32 y, Player* pPlayer)
         if (m_FogSprites[x][y].get() == nullptr)
         {
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(70, 70, 70, 100);
             sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
@@ -720,7 +720,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
                 pBuilding->updatePlayerColor(false);
             }
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(70, 70, 70, 100);
             sprite->setDestRecModifier(oxygine::RectF(0.5f, 0.5f, 0.5f, 0.5f));
@@ -739,7 +739,7 @@ void GameRules::createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer)
                 pBuilding->setVisible(false);
             }
             // create fog of war sprite
-            oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+            oxygine::spColorRectSprite sprite = oxygine::spColorRectSprite::create();
             sprite->setSize(GameMap::getImageSize(), GameMap::getImageSize());
             sprite->setColor(0, 0, 0, 255);
             sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Shroud));
@@ -1088,7 +1088,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        m_VictoryRules.append(new VictoryRule());
+        m_VictoryRules.append(spVictoryRule::create());
         m_VictoryRules[i]->deserializeObject(pStream);
     }
     qint32 ruleItem = 0;
@@ -1106,7 +1106,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        spWeather pWeather = new Weather();
+        spWeather pWeather = spWeather::create();
         pWeather->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;
@@ -1175,7 +1175,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         // loop while remaining counter >= 0
         while (weatherDuration > 0)
         {
-            // add new day
+            // add day
             m_WeatherDays.append(QVector<qint32>(playerCount, -1));
             if (day == 0)
             {
@@ -1322,7 +1322,7 @@ void GameRules::deserializer(QDataStream& pStream, bool)
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
-            m_GameRules.append(new GameRule());
+            m_GameRules.append(spGameRule::create());
             m_GameRules[i]->deserializeObject(pStream);
         }
     }

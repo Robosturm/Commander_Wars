@@ -3,6 +3,9 @@
 
 #include "ingamescriptsupport/events/scripteventgeneric.h"
 
+class ScriptEventPlaySound;
+using spScriptEventPlaySound = oxygine::intrusive_ptr<ScriptEventPlaySound>;
+
 class ScriptEventPlaySound : public ScriptEventGeneric
 {
     Q_OBJECT

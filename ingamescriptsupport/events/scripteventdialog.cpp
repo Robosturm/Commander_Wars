@@ -16,7 +16,7 @@ ScriptEventDialog::ScriptEventDialog()
 
 void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood mood, QColor color)
 {
-    spDialogEntry dialog = new DialogEntry();
+    spDialogEntry dialog = spDialogEntry::create();
     dialog->text = text;
     dialog->coid = coid;
     dialog->mood = mood;
@@ -26,7 +26,7 @@ void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood 
 
 void ScriptEventDialog::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spScriptDialogDialog pScriptDialogDialog = new ScriptDialogDialog(this);
+    spScriptDialogDialog pScriptDialogDialog = spScriptDialogDialog::create(this);
     pScriptEditor->addChild(pScriptDialogDialog);
     connect(pScriptDialogDialog.get(), &ScriptDialogDialog::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
 }
@@ -80,7 +80,7 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
 
             if (items.size() >= 4)
             {
-                spDialogEntry dialog = new DialogEntry();
+                spDialogEntry dialog = spDialogEntry::create();
                 dialog->text = items[0].replace("\\\"", "\"");
                 dialog->coid = items[1];
                 if (items[2] == "Sad")

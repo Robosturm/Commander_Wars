@@ -90,7 +90,7 @@ void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
 
 void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -99,36 +99,36 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     style.multiline = false;
 
     qint32 width = 300;
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Each Day: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 1, 9999);
+    spSpinBox spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("Periodic cycle in which this condition is executing it's events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(intervall);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setIntervall, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Start Day: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 9999);
+    spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("The first day at which the events get executed."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(day);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setDay, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spinBox = new SpinBox(300, 1, 9999);
+    spinBox = spSpinBox::create(300, 1, 9999);
     spinBox->setTooltipText(tr("The first day at which the events get executed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);

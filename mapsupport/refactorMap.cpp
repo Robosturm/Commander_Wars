@@ -24,7 +24,7 @@ void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount, QString ba
     // add two players to a default map :)
     for (qint32 i = 0; i < playerCount; i++)
     {
-        players.append(new Player());
+        players.append(spPlayer::create());
         players[players.size() - 1]->init();
     }
 
@@ -98,7 +98,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
     {
         while (playerCount > players.size())
         {
-            players.append(new Player());
+            players.append(spPlayer::create());
             players[players.size() - 1]->init();
         }
     }
@@ -297,18 +297,18 @@ void GameMap::flipX()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            Building* pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
-                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding);
+                pTerrain->setBuilding(pBuilding.get());
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -340,18 +340,18 @@ void GameMap::rotateX()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            Building* pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
-                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding);
+                pTerrain->setBuilding(pBuilding.get());
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -383,18 +383,18 @@ void GameMap::flipY()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            Building* pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
-                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding);
+                pTerrain->setBuilding(pBuilding.get());
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -426,18 +426,18 @@ void GameMap::rotateY()
             pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
-            Building* pCurrentBuilding = flipTerrain->getBuilding();
+            spBuilding pCurrentBuilding = flipTerrain->getBuilding();
             if (flipTerrain->getBuilding() != nullptr)
             {
-                Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
+                spBuilding pBuilding = spBuilding::create(pCurrentBuilding->getBuildingID());
                 pBuilding->setOwner(pCurrentBuilding->getOwner());
-                pTerrain->setBuilding(pBuilding);
+                pTerrain->setBuilding(pBuilding.get());
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
+                spUnit pUnit = spUnit::create(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }

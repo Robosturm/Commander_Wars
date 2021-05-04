@@ -27,15 +27,15 @@
 
 #include "coreengine/interpreter.h"
 
-WikiDatabase* WikiDatabase::m_pInstance = nullptr;
+spWikiDatabase WikiDatabase::m_pInstance = nullptr;
 
 WikiDatabase* WikiDatabase::getInstance()
 {
-    if (m_pInstance == nullptr)
+    if (m_pInstance.get() == nullptr)
     {
-        m_pInstance = new WikiDatabase();
+        m_pInstance = spWikiDatabase::create();
     }
-    return m_pInstance;
+    return m_pInstance.get();
 }
 
 WikiDatabase::WikiDatabase()
@@ -229,11 +229,11 @@ spWikipage WikiDatabase::getPage(pageData data)
     // select page loader and create wiki page
     if (pCOSpriteManager->exists(id))
     {
-        spPlayer pPlayer = new Player();
+        spPlayer pPlayer = spPlayer::create();
         pPlayer->init();
-        spCO pCO = new CO(id, pPlayer.get());
-        ret = new Wikipage();
-        spCOInfoActor pInfo = new COInfoActor(ret->getPanel()->getWidth());
+        spCO pCO = spCO::create(id, pPlayer.get());
+        ret = spWikipage::create();
+        spCOInfoActor pInfo = spCOInfoActor::create(ret->getPanel()->getWidth());
         pInfo->showCO(pCO, pPlayer);
         ret->getPanel()->addItem(pInfo);
         ret->getPanel()->setContentHeigth(pInfo->getHeight());
@@ -241,25 +241,26 @@ spWikipage WikiDatabase::getPage(pageData data)
     else if (pTerrainManager->exists(id))
     {
         spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "");
-        ret = new FieldInfo(pTerrain.get(), nullptr);
+        ret = spFieldInfo::create(pTerrain.get(), nullptr);
     }
     else if (pBuildingSpriteManager->exists(id))
     {
         spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
-        pTerrain->setBuilding(new Building(id));
-        ret = new FieldInfo(pTerrain.get(), nullptr);
+        spBuilding pBuilding = spBuilding::create(id);
+        pTerrain->setBuilding(pBuilding.get());
+        ret = spFieldInfo::create(pTerrain.get(), nullptr);
     }
     else if (pUnitSpriteManager->exists(id))
     {
-        spPlayer pPlayer = new Player();
+        spPlayer pPlayer = spPlayer::create();
         pPlayer->init();
-        spUnit pUnit = new Unit(id, pPlayer.get(), false);
-        ret = new FieldInfo(nullptr, pUnit.get());
+        spUnit pUnit = spUnit::create(id, pPlayer.get(), false);
+        ret = spFieldInfo::create(nullptr, pUnit.get());
     }
     else if (QFile::exists(id))
     {
         // default loader
-        ret = new Wikipage();
+        ret = spWikipage::create();
         Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(id, false);
         QJSValueList args;
@@ -269,7 +270,7 @@ spWikipage WikiDatabase::getPage(pageData data)
     }
     else
     {
-        ret = new DefaultWikipage(id);
+        ret = spDefaultWikipage::create(id);
     }
     
     return ret;
@@ -278,7 +279,7 @@ spWikipage WikiDatabase::getPage(pageData data)
 
 oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
 {
-    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
@@ -312,9 +313,9 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
         TerrainManager* pTerrainManager = TerrainManager::getInstance();
         if (pUnitSpriteManager->exists(file))
         {
-            spPlayer pPlayer = new Player();
+            spPlayer pPlayer = spPlayer::create();
             pPlayer->init();
-            spUnit pUnit = new Unit(file, pPlayer.get(), false);
+            spUnit pUnit = spUnit::create(file, pPlayer.get(), false);
             pUnit->setScale(size / GameMap::getImageSize());
             pUnit->setOwner(nullptr);
             pSprite = pUnit.get();
@@ -328,7 +329,7 @@ oxygine::spSprite WikiDatabase::getIcon(QString file, qint32 size)
             {
                 pPlayer = pMap->getCurrentPlayer();
             }
-            Building* pBuilding = new Building(file);
+            spBuilding pBuilding = spBuilding::create((file));
             pBuilding->setOwner(pPlayer.get());
             pBuilding->scaleAndShowOnSingleTile();
             return pBuilding;

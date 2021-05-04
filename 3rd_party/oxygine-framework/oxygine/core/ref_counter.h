@@ -3,6 +3,7 @@
 
 #include <atomic>
 #include <qobject.h>
+#include <qthread.h>
 
 namespace oxygine
 {
@@ -31,6 +32,10 @@ namespace oxygine
             {
                 QObject* pObj = dynamic_cast<QObject*>(this);
                 if (pObj == nullptr)
+                {
+                    delete this;
+                }
+                else if (pObj->thread() == QThread::currentThread())
                 {
                     delete this;
                 }

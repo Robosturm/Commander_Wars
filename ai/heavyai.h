@@ -12,6 +12,8 @@
 #include "coreengine/LUPDATE_MACROS.h"
 
 class GameMap;
+class HeavyAi;
+using spHeavyAi = oxygine::intrusive_ptr<HeavyAi>;
 
 class HeavyAi : public CoreAI
 {
@@ -110,7 +112,7 @@ private:
     void setupTurn(const spQmlVectorBuilding & buildings);
     void endTurn();
     void createIslandMaps();
-    void initUnits(QmlVectorUnit* pUnits, QVector<UnitData> & units, bool enemyUnits);
+    void initUnits(spQmlVectorUnit pUnits, QVector<UnitData> & units, bool enemyUnits);
     void updateUnits();
     void updateUnits(QVector<UnitData> & units, bool enemyUnits);
     void findHqThreads(const spQmlVectorBuilding & buildings);
@@ -211,13 +213,13 @@ private:
      * @brief buildUnits
      * @return
      */
-    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    bool buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                    spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
     /**
      * @brief scoreUnitBuilding
      */
-    void scoreUnitBuildings(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    void scoreUnitBuildings(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                            spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
     /**
      * @brief getGlobalBuildInfo
      * @param pBuildings
@@ -226,8 +228,8 @@ private:
      * @param pEnemyBuildings
      * @return
      */
-    QVector<double> getGlobalBuildInfo(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
-                                       QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    QVector<double> getGlobalBuildInfo(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits,
+                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings);
     /**
      * @brief createUnitBuildData
      * @param building

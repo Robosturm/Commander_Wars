@@ -7,6 +7,9 @@
 #include "ai/decisionnode.h"
 #include "coreengine/fileserializable.h"
 
+class Leaf;
+using spLeaf = oxygine::intrusive_ptr<Leaf>;
+
 class Leaf : public DecisionNode
 {
     Q_OBJECT

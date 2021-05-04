@@ -59,7 +59,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
             QString description = pCOPerkManager->getDescription(i);
 
-            spCheckbox pCheckbox = new Checkbox();
+            spCheckbox pCheckbox = spCheckbox::create();
             pCheckbox->setPosition(x, y + 5);
             pCheckbox->setTooltipText(description);
             pCheckbox->setChecked(m_perks.contains(id));
@@ -89,7 +89,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             m_Checkboxes.append(pCheckbox);
             addChild(pCheckbox);
 
-            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::spSprite pSprite = oxygine::spSprite::create();
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)
             {
@@ -97,7 +97,7 @@ void PerkSelection::updatePerksView(CO* pCO)
             }
             pSprite->setPosition(x + 45, y);
             addChild(pSprite);
-            spLabel pLabel = new Label(250);
+            spLabel pLabel = spLabel::create(250);
             pLabel->setStyle(style);
             pLabel->setText(name);
             pLabel->setPosition(x + GameMap::getImageSize() * 2 + 50, y + 10);

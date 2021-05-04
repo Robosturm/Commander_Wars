@@ -78,7 +78,7 @@ void ScriptEventModifyVariable::writeEvent(QTextStream& rStream)
 
 void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
 {
-    spGenericBox pBox = new GenericBox();
+    spGenericBox pBox = spGenericBox::create();
 
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -88,12 +88,12 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
 
     qint32 width = 300;
 
-    spLabel pText = new Label(width - 10);
+    spLabel pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Variable: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spTextbox textBox = new Textbox(300);
+    spTextbox textBox = spTextbox::create(300);
     textBox->setTooltipText(tr("Name of the Variable that should be changed. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
     textBox->setCurrentText(m_variable);
@@ -104,13 +104,13 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(textBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Modifier: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     QVector<QString> items = {"=", "+", "-", "*", "/", "%"};
-    spDropDownmenu dropDown = new DropDownmenu(150, items);
+    spDropDownmenu dropDown = spDropDownmenu::create(150, items);
     dropDown->setTooltipText(tr("The way how the variable gets modified."));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Modifier);
@@ -121,12 +121,12 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(dropDown);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(300, 0, 999999);
+    spSpinBox spinBox = spSpinBox::create(300, 0, 999999);
     spinBox->setTooltipText(tr("The value modifying the variable."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);
@@ -137,12 +137,12 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     });
     pBox->addItem(spinBox);
 
-    pText = new Label(width - 10);
+    pText = spLabel::create(width - 10);
     pText->setStyle(style);
     pText->setHtmlText(tr("Campaign Variable: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
-    spCheckbox checkBox = new Checkbox();
+    spCheckbox checkBox = spCheckbox::create();
     checkBox->setTooltipText(tr("If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign."));
     checkBox->setPosition(width, 150);
     checkBox->setChecked(m_CampaignVariable);

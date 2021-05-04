@@ -11,7 +11,7 @@ PlayerSelectionDialog::PlayerSelectionDialog()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -32,7 +32,7 @@ PlayerSelectionDialog::PlayerSelectionDialog()
         detach();
     });
 
-    m_pPlayerSelection = new PlayerSelection(Settings::getWidth() - 60,
+    m_pPlayerSelection = spPlayerSelection::create(Settings::getWidth() - 60,
                                              Settings::getHeight() - 80 - m_OkButton->getHeight());
     m_pPlayerSelection->setPosition(30, 30);
     m_pPlayerSelection->showPlayerSelection();

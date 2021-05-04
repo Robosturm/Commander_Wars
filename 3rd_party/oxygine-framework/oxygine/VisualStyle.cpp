@@ -5,7 +5,9 @@
 
 namespace oxygine
 {
-    VisualStyle::VisualStyle(): _color(Qt::white), _blend(blend_premultiplied_alpha)
+    VisualStyle::VisualStyle()
+        : _color(Qt::white),
+          _blend(blend_premultiplied_alpha)
     {
 
     }
@@ -16,7 +18,7 @@ namespace oxygine
         mat._blend = blend_premultiplied_alpha;
         mat._base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
-        m_mat = MaterialCache::mc().cache(mat);
+        m_mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(mat));
     }
 
     void VisualStyle::setColor(const QColor& color)
@@ -56,7 +58,7 @@ namespace oxygine
             return;
         }
 
-        m_mat = m_mat->clone();
+        m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
         m_mat->_addColor = color;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
@@ -75,7 +77,7 @@ namespace oxygine
         }
         _vstyle.setBlendMode(mode);
 
-        m_mat = m_mat->clone();
+        m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
         m_mat->_blend = mode;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();

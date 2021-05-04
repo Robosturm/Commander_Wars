@@ -20,7 +20,7 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     style.multiline = false;
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        m_Textfields.append(new oxygine::TextField());
+        m_Textfields.append(oxygine::spTextField::create());
         m_Textfields[i]->setStyle(style);
         m_Textfields[i]->setHtmlText(texts[i]);
         m_Textfields[i]->setY(i * 40);
@@ -36,7 +36,7 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        m_Slider.append(new Slider(width, 0, 100));
+        m_Slider.append(spSlider::create(width, 0, 100));
         m_Slider[i]->setX(textWidth + 10);
         m_Slider[i]->setY(i * 40);
         if (values.size() != texts.size())

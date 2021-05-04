@@ -89,6 +89,7 @@ public slots:
 
 
 private:
+    friend class oxygine::intrusive_ptr<Interpreter>;
     explicit Interpreter();    
     /**
      * @brief init

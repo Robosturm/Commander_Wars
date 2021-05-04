@@ -459,7 +459,7 @@ namespace crashReporter
         sLogWrittenCallback = inLogWrittenCallback;
         if ( sProcess == nullptr )
         {
-            sProcess = new QProcess;
+            sProcess = new QProcess();
             sProcess->setObjectName("CrashreporterProcess");
             sProcess->setProcessChannelMode( QProcess::MergedChannels );
         }

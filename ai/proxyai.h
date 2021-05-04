@@ -11,6 +11,9 @@
 
 #include "network/NetworkInterface.h"
 
+class ProxyAi;
+using spProxyAi = oxygine::intrusive_ptr<ProxyAi>;
+
 class ProxyAi : public CoreAI
 {
     Q_OBJECT

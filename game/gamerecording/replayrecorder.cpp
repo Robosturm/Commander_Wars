@@ -128,7 +128,7 @@ bool ReplayRecorder::loadRecord(QString filename)
             m_stream >> _dailyMapPos;
             // load map
             _mapPos = m_recordFile.pos();
-            GameMap* pMap = new GameMap(m_stream, true);
+            spGameMap pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
             _progress = 0;
             // swap out all ai's / or players with a proxy ai.
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -150,7 +150,7 @@ spGameAction ReplayRecorder::nextAction()
             _progress < _count)
         {
             _progress++;
-            spGameAction pAction = new GameAction();
+            spGameAction pAction = spGameAction::create();
             pAction->deserializeObject(m_stream);
             return pAction;
         }
@@ -188,7 +188,7 @@ void ReplayRecorder::seekToDay(qint32 day)
                 qint64 seekPos = 0;
                 m_stream >> seekPos;
                 _progress = curCount;
-                pMap = new GameMap(m_stream, true);
+                pMap = spGameMap::create<QDataStream &, bool>(m_stream, true);
                 for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
                 {
                     pMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes::AiTypes_ProxyAi));
@@ -211,7 +211,7 @@ void ReplayRecorder::seekToStart()
     m_recordFile.seek(_mapPos);
     spGameMap pMap = GameMap::getInstance();
     pMap->deleteMap();
-    new GameMap(m_stream, true);
+    spGameMap::create<QDataStream &, bool>(m_stream, true);
     _progress = 0;
     // swap out all ai's / or players with a proxy ai.
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

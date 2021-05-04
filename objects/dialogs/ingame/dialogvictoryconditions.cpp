@@ -24,7 +24,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::spBox9Sprite pSpriteBox = oxygine::spBox9Sprite::create();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(Settings::getWidth(), Settings::getHeight());
@@ -57,7 +57,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     headerStyle.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     headerStyle.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
+    spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),
                                      QSize(Settings::getWidth() - 60, Settings::getHeight() - 110));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
@@ -66,7 +66,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     GameRules* pRules = pMap->getGameRules();
 
     qint32 y = 10;
-    oxygine::spTextField pTextfield = new oxygine::TextField();
+    oxygine::spTextField pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(headerStyle);
     pTextfield->setHtmlText(tr("Victory Info"));
     pTextfield->setPosition(Settings::getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
@@ -74,7 +74,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     y += 60;
     QString info = pMap->getGameScript()->getVictoryInfo();
 
-    pTextfield = new oxygine::TextField();
+    pTextfield = oxygine::spTextField::create();
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(info);
     pTextfield->setWidth(Settings::getWidth() - 90);
@@ -86,7 +86,7 @@ DialogVictoryConditions::DialogVictoryConditions()
         VictoryRule* pVictoryRule = pRules->getVictoryRule(i);
         info = pVictoryRule->getRuleDescription();
 
-        pTextfield = new oxygine::TextField();
+        pTextfield = oxygine::spTextField::create();
         pTextfield->setStyle(style);
         pTextfield->setWidth(Settings::getWidth() - 90);
         pTextfield->setHtmlText(info);
@@ -108,13 +108,13 @@ DialogVictoryConditions::DialogVictoryConditions()
                 }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
-                spBuilding building = new Building("HQ");
+                spBuilding building = spBuilding::create("HQ");
                 // building->setScale(1.5f);
                 building->setOwner(pPlayer);
                 building->setPosition(x, y);
                 pPanel->addItem(building);
 
-                pTextfield = new oxygine::TextField();
+                pTextfield = oxygine::spTextField::create();
                 pTextfield->setStyle(style);
                 pTextfield->setHtmlText(info);
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
@@ -147,7 +147,7 @@ void DialogVictoryConditions::showPopup(QString rule)
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr && !VictoryRulePopup::exists(rule))
     {
-        spVictoryRulePopup pPopup = new VictoryRulePopup(rule, 180, 250);
+        spVictoryRulePopup pPopup = spVictoryRulePopup::create(rule, 180, 250);
         pPopup->setY(Settings::getHeight() - pPopup->getHeight());
         pMenu->addChild(pPopup);
     }

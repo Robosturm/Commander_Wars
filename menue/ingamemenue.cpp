@@ -18,7 +18,7 @@ InGameMenue::InGameMenue()
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    m_MapMover = new MapMover(this);
+    m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     loadBackground();
@@ -31,18 +31,18 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map, bool savegame
     pApp->pauseRendering();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    m_MapMover = new MapMover(this);
+    m_MapMover = spMapMover::create(this);
     m_MapMover->moveToThread(&m_MapMoveThread);
     m_MapMoveThread.start();
     loadBackground();
     // check for map creation
     if ((width > 0) && (heigth > 0))
     {
-        oxygine::Actor::addChild(new GameMap(width, heigth, 4));
+        oxygine::Actor::addChild(spGameMap::create(width, heigth, 4));
     }
     else
     {
-        oxygine::Actor::addChild(new GameMap(map, false, false, savegame));
+        oxygine::Actor::addChild(spGameMap::create(map, false, false, savegame));
     }
     loadHandling();
 
@@ -52,7 +52,7 @@ void InGameMenue::loadBackground()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
     // load background
-    m_backgroundSprite = new oxygine::Sprite();
+    m_backgroundSprite = oxygine::spSprite::create();
     oxygine::Actor::addChild(m_backgroundSprite);
     changeBackground("gamemenu");
 }
