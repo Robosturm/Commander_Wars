@@ -94,6 +94,11 @@ var Constructor = function()
         unit.addOffensiveBonus(ZCOUNIT_ROYAL_GUARD.offBonus);
         unit.loadIcon("arrow_up", map.getImageSize() / 2, map.getImageSize() / 2, 1, playerId);
     }
+
+    this.getCOSpecificUnit = function(building)
+    {
+        return true;
+    };
 }
 
 Constructor.prototype = UNIT;

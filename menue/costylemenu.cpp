@@ -75,14 +75,14 @@ COStyleMenu::COStyleMenu()
 void COStyleMenu::exitMenue()
 {    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();    
 }
 
 void COStyleMenu::reloadMenue()
 {    
     Console::print("Leaving CO Style Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new COStyleMenu());
+    oxygine::getStage()->addChild(spCOStyleMenu::create());
     oxygine::Actor::detach();    
 }
 

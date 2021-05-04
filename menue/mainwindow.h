@@ -4,6 +4,9 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
+class Mainwindow;
+using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
+
 class Mainwindow : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

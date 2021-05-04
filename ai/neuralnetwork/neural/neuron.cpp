@@ -88,7 +88,7 @@ void Neuron::addAccumulated(double v)
 
 void Neuron::addNext(spNeuron n)
 {
-    m_next.push_back(new Edge(n.get(), this, GlobalUtils::randDouble(-5, 5)));
+    m_next.push_back(spEdge::create(n.get(), this, GlobalUtils::randDouble(-5, 5)));
     n->addPrevious(m_next.back());
 }
 

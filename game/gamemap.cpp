@@ -1992,7 +1992,7 @@ void GameMap::initPlayersAndSelectCOs()
         if (pPlayer->getBaseGameInput() == nullptr)
         {
             Console::print("Forcing AI for player " + QString::number(i) + " to human.", Console::eDEBUG);
-            pPlayer->setBaseGameInput(new HumanPlayerInput());
+            pPlayer->setBaseGameInput(spHumanPlayerInput::create());
         }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&

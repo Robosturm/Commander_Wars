@@ -13,7 +13,7 @@ class GameAnimationPower : public GameAnimation
 {
     Q_OBJECT
 public:
-    static GameAnimationPower* createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
+    static spGameAnimationPower createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
 
     virtual ~GameAnimationPower();
 
@@ -32,7 +32,7 @@ private:
 private:
     QTimer endTimer;
     CO* m_pCO{nullptr};
-    static spGameAnimationPower m_pGameAnimationPower;
+    static GameAnimationPower* m_pGameAnimationPower;
 };
 
 #endif // GAMEANIMATIONPOWER_H

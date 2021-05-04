@@ -11,6 +11,9 @@
 #include "objects/base/label.h"
 #include "menue/basemenu.h"
 
+class Shopmenu;
+using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
+
 class Shopmenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

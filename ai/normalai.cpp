@@ -552,6 +552,7 @@ void NormalAi::process()
 
 void NormalAi::finishTurn()
 {
+    Console::print("NormalAi::finishTurn()", Console::eDEBUG);
     m_productionData.clear();
     CoreAI::finishTurn();
 }
@@ -2109,7 +2110,6 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
                     auto actionIds = pData->getActionIDs();
                     qint32 index = getIndexInProductionData(pBuilding);
                     auto & buildingData = m_productionData[index];
-                    QVector<qint32> actions;
                     for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                     {
                         if (enableList[i2])
@@ -2245,6 +2245,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
 
 qint32 NormalAi::getIndexInProductionData(Building* pBuilding)
 {
+    Console::print("NormalAi::getIndexInProductionData()", Console::eDEBUG);
     qint32 x = pBuilding->Building::getX();
     qint32 y = pBuilding->Building::getY();
     qint32 ret = -1;
@@ -2272,6 +2273,7 @@ qint32 NormalAi::getUnitProductionIdx(qint32 index, QString unitId,
                                       spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                       QVector<QVector4D> & attackCount, QVector<float> & buildData)
 {
+    Console::print("NormalAi::getUnitProductionIdx()", Console::eDEBUG);
     qint32 ret = -1;
     auto & data = m_productionData[index];
     for (qint32 i = 0; i < data.m_buildData.length(); ++i)
@@ -2317,6 +2319,7 @@ void NormalAi::createUnitBuildData(qint32 x, qint32 y, UnitBuildData & unitBuild
                                    spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                    QVector<QVector4D> & attackCount, QVector<float> & buildData)
 {
+    Console::print("NormalAi::createUnitBuildData()", Console::eDEBUG);
     Unit dummy(unitBuildData.unitId, m_pPlayer, false);
     dummy.setVirtuellX(x);
     dummy.setVirtuellY(y);
@@ -2446,6 +2449,7 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
 
 std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, spQmlVectorUnit pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor)
 {
+    Console::print("NormalAi::calcExpectedFundsDamage() find enemies", Console::eDEBUG);
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 notAttackableCount = 0;
     float damageCount = 0;
@@ -2647,6 +2651,7 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
         }
         counter++;
     }
+    Console::print("NormalAi::calcExpectedFundsDamage() calc damage", Console::eDEBUG);
     if (attacksCount <= 0)
     {
         attacksCount = 1;
@@ -2685,6 +2690,7 @@ void NormalAi::getTransporterData(UnitBuildData & unitBuildData, Unit& dummy, sp
                                   spQmlVectorUnit pEnemyUnits, spQmlVectorBuilding pEnemyBuildings,
                                   QVector<std::tuple<Unit*, Unit*>>& transportTargets)
 {
+    Console::print("NormalAi::getTransporterData()", Console::eDEBUG);
     QVector<QVector3D> targets;
     spQmlVectorUnit relevantUnits = spQmlVectorUnit::create();
     QPoint position = dummy.getPosition();

@@ -33,7 +33,7 @@ void Layer::initLayer()
         m_neurons.reserve(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
         for (qint32 i_neuron = 0; i_neuron <m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
-            m_neurons.push_back(new Neuron(i_neuron, this, m_activation, i_neuron == m_neurons.capacity() - 1));
+            m_neurons.push_back(spNeuron::create(i_neuron, this, m_activation, i_neuron == m_neurons.capacity() - 1));
         }
 	}
     else if (m_type == LayerType::OUTPUT)
@@ -41,7 +41,7 @@ void Layer::initLayer()
         m_neurons.reserve(static_cast<int>(m_parameters[LAYER_PARAMETER_SIZE]));
         for (qint32 i_neuron = 0; i_neuron < m_parameters[LAYER_PARAMETER_SIZE]; ++i_neuron)
         {
-            m_neurons.push_back(new Neuron(i_neuron, this, m_activation));
+            m_neurons.push_back(spNeuron::create(i_neuron, this, m_activation));
         }
 	}
 }

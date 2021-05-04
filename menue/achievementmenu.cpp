@@ -109,7 +109,7 @@ Achievementmenu::Achievementmenu()
 void Achievementmenu::exitMenue()
 {    
     Console::print("Leaving Achievement Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();    
 }
 

@@ -19,7 +19,7 @@ DayToDayRecord::DayToDayRecord(qint32 playerCount)
     Interpreter::setCppOwnerShip(this);
     for (qint32 i = 0; i < playerCount; i++)
     {
-        m_PlayerRecords.append(new PlayerRecord());
+        m_PlayerRecords.append(spPlayerRecord::create());
     }
 }
 
@@ -47,21 +47,21 @@ void DayToDayRecord::deserializeObject(QDataStream& pStream)
     m_SpecialEvents.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        m_SpecialEvents.append(new SpecialEvent());
+        m_SpecialEvents.append(spSpecialEvent::create());
         m_SpecialEvents[i]->deserializeObject(pStream);
     }
     pStream >> size;
     m_PlayerRecords.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        m_PlayerRecords.append(new PlayerRecord());
+        m_PlayerRecords.append(spPlayerRecord::create());
         m_PlayerRecords[i]->deserializeObject(pStream);
     }
 }
 
 void DayToDayRecord::addSpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_SpecialEvents event)
 {
-    m_SpecialEvents.append(new SpecialEvent(player, day, event));
+    m_SpecialEvents.append(spSpecialEvent::create(player, day, event));
 }
 
 PlayerRecord* DayToDayRecord::getPlayerRecord(qint32 player)

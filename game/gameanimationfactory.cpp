@@ -82,29 +82,25 @@ GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint
 }
 
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, GameAction* pAction)
-{
-    
+{    
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, pAction->getMovePath());
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
-    m_Animations.append(pGameAnimationWalk);
-    
+    m_Animations.append(pGameAnimationWalk);    
     return pGameAnimationWalk.get();
 }
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
-{
-    
-    GameAnimationPower* pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
+{    
+    spGameAnimationPower pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
     pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
         pGameMenue->addChild(pAnim);
     }
-    m_Animations.append(pAnim);
-    
-    return pAnim;
+    m_Animations.append(pAnim);    
+    return pAnim.get();
 }
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
@@ -289,7 +285,6 @@ GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
 {
-
     qint32 i = 0;
     while (i < m_Animations.size())
     {

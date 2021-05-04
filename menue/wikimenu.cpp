@@ -44,7 +44,7 @@ Wikimenu::Wikimenu()
     {
         emit sigExitMenue();
     });
-    addChild(new WikiView(Settings::getWidth(), Settings::getHeight()));
+    addChild(spWikiView::create(Settings::getWidth(), Settings::getHeight()));
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
     pApp->continueRendering();
 }
@@ -53,6 +53,6 @@ void Wikimenu::exitMenue()
 {    
     // save changed settings :)
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();    
 }

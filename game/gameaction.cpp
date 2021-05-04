@@ -339,28 +339,25 @@ spCursorData GameAction::getStepCursor()
 
 spMenuData GameAction::getMenuStepData()
 {
-    Console::print("Reading menu step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
-    
     Interpreter* pInterpreter = Interpreter::getInstance();
     spMenuData data = spMenuData::create();
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data.get());
-    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);    
+    pInterpreter->doFunction(m_actionID, function1, args1);
     return data;
 }
 
 spMarkedFieldData GameAction::getMarkedFieldStepData()
 {
-    Console::print("Reading field step data for action " + getActionID() + " at step " + QString::number(getInputStep()), Console::eDEBUG);
     spMarkedFieldData data = spMarkedFieldData::create();
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepData";
     QJSValueList args1;
     args1 << pInterpreter->newQObject(this);
     args1 << pInterpreter->newQObject(data.get());
-    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
+    pInterpreter->doFunction(m_actionID, function1, args1);
     return data;
 }
 

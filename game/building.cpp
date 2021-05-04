@@ -566,14 +566,14 @@ QList<qint32> Building::getRepairTypes()
     return retList;
 }
 
-QStringList  Building::getConstructionList()
+QStringList Building::getConstructionList()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getConstructionList";
-    QJSValueList args1;
+    QJSValueList args;
     QJSValue obj1 = pInterpreter->newQObject(this);
-    args1 << obj1;
-    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args1);
+    args << obj1;
+    QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
     QStringList buildList = ret.toVariant().toStringList();
     QStringList coUnits;
     if (m_pOwner != nullptr)
@@ -602,9 +602,14 @@ QStringList  Building::getConstructionList()
         for (qint32 i = 0; i < buildList.size(); i++)
         {
             QString unitID = buildList[i];
-            QJSValue erg = pInterpreter->doFunction(unitID, "getCOSpecificUnit", args1);
+            QJSValue erg = pInterpreter->doFunction(unitID, "getCOSpecificUnit", args);
+            bool isCoUnit = false;
+            if (erg.isBool())
+            {
+                isCoUnit = erg.toBool();
+            }
             if (playerBuildList.contains(unitID) &&
-                (!erg.toBool() || pMap->getGameRules()->getCoUnits()))
+                (!isCoUnit || pMap->getGameRules()->getCoUnits()))
             {
                 returnList.append(unitID);
             }

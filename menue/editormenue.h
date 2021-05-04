@@ -12,6 +12,9 @@
 
 #include "coreengine/LUPDATE_MACROS.h"
 
+class EditorMenue;
+using spEditorMenue = oxygine::intrusive_ptr<EditorMenue>;
+
 class EditorMenue : public InGameMenue
 {
     Q_OBJECT

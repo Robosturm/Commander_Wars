@@ -14,6 +14,9 @@
 
 #include "gameinput/mapmover.h"
 
+class InGameMenue;
+using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
+
 class InGameMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

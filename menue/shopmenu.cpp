@@ -122,7 +122,7 @@ Shopmenu::Shopmenu()
 void Shopmenu::exitMenue()
 {
     Console::print("Leaving Shop Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();
 }
 

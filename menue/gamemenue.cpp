@@ -854,7 +854,12 @@ void GameMenue::skipAllAnimations()
         GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
         if (pDialogAnimation == nullptr || !dialogEnabled)
         {
-            while (!pAnimation->onFinished(true));
+            if (pAnimation != nullptr)
+            {
+                while (!pAnimation->onFinished(true))
+                {
+                }
+            }
         }
         else
         {
@@ -1242,7 +1247,7 @@ void GameMenue::victory(qint32 team)
         }
         AchievementManager::getInstance()->onVictory(team, humanWin);
         Console::print("Leaving Game Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new VictoryMenue(m_pNetworkInterface));
+        oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
         m_pInstance = nullptr;
         oxygine::Actor::detach();
     }

@@ -329,14 +329,14 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {    
-    oxygine::getStage()->addChild(new MapSelectionMapsMenue());
+    oxygine::getStage()->addChild(spMapSelectionMapsMenue::create());
     leaveMenue();    
 }
 
 void Mainwindow::enterMultiplayer()
 {
     
-    oxygine::getStage()->addChild(new LobbyMenu());
+    oxygine::getStage()->addChild(spLobbyMenu::create());
     leaveMenue();
     
 }
@@ -344,7 +344,7 @@ void Mainwindow::enterMultiplayer()
 void Mainwindow::enterEditor()
 {
     
-    oxygine::getStage()->addChild(new EditorMenue());
+    oxygine::getStage()->addChild(spEditorMenue::create());
     leaveMenue();
     
 }
@@ -352,7 +352,7 @@ void Mainwindow::enterEditor()
 void Mainwindow::enterOptionmenue()
 {
     
-    oxygine::getStage()->addChild(new OptionMenue());
+    oxygine::getStage()->addChild(spOptionMenue::create());
     leaveMenue();
     
 }
@@ -360,7 +360,7 @@ void Mainwindow::enterOptionmenue()
 void Mainwindow::enterWikimenue()
 {
     
-    oxygine::getStage()->addChild(new Wikimenu());
+    oxygine::getStage()->addChild(spWikimenu::create());
     leaveMenue();
     
 }
@@ -368,20 +368,20 @@ void Mainwindow::enterWikimenue()
 void Mainwindow::enterCreditsmenue()
 {
     
-    oxygine::getStage()->addChild(new CreditsMenue());
+    oxygine::getStage()->addChild(spCreditsMenue::create());
     leaveMenue();
     
 }
 
 void Mainwindow::enterAchievementmenue()
 {    
-    oxygine::getStage()->addChild(new Achievementmenu());
+    oxygine::getStage()->addChild(spAchievementmenu::create());
     leaveMenue();    
 }
 
 void Mainwindow::enterShopMenu()
 {
-    oxygine::getStage()->addChild(new Shopmenu());
+    oxygine::getStage()->addChild(spShopmenu::create());
     leaveMenue();
 }
 
@@ -492,7 +492,7 @@ void Mainwindow::leaveMenue()
 void Mainwindow::enterCOStyleMenu()
 {
     
-    oxygine::getStage()->addChild(new COStyleMenu());
+    oxygine::getStage()->addChild(spCOStyleMenu::create());
     leaveMenue();
     
 }

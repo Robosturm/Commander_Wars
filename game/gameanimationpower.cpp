@@ -17,15 +17,21 @@
 #include "game/player.h"
 #include "game/co.h"
 
-spGameAnimationPower GameAnimationPower::m_pGameAnimationPower = nullptr;
+GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
 
-GameAnimationPower* GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
+spGameAnimationPower GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)
 {
-    if (m_pGameAnimationPower.get() == nullptr)
+    spGameAnimationPower animation;
+    if (m_pGameAnimationPower == nullptr)
     {
-        m_pGameAnimationPower = spGameAnimationPower::create(frameTime, color, powerMode, pCO);
+        animation = spGameAnimationPower::create(frameTime, color, powerMode, pCO);
+        m_pGameAnimationPower = animation.get();
     }
-    return m_pGameAnimationPower.get();
+    else
+    {
+        animation = m_pGameAnimationPower;
+    }
+    return animation;
 }
 
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO)

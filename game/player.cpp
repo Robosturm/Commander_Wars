@@ -1785,6 +1785,7 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     }
     if (!m_BuildlistChanged)
     {
+        m_BuildList.clear();
         // for older versions we allow all loaded units to be buildable
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
         for (qint32 i = 0; i < pUnitSpriteManager->getCount(); i++)

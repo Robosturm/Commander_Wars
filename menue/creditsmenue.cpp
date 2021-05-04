@@ -136,6 +136,6 @@ void CreditsMenue::doUpdate(const oxygine::UpdateState&)
 void CreditsMenue::exitMenue()
 {    
     Console::print("Leaving Credits Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();    
 }

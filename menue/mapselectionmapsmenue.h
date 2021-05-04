@@ -21,6 +21,8 @@
 #include "menue/basemenu.h"
 
 class GameMap;
+class MapSelectionMapsMenue;
+using spMapSelectionMapsMenue = oxygine::intrusive_ptr<MapSelectionMapsMenue>;
 
 class MapSelectionMapsMenue : public Basemenu, public oxygine::Actor
 {

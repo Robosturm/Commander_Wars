@@ -702,9 +702,6 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                 {
                     case Qt::Key_Escape:
                     {
-                        //                Console::print("Leaving Editor Menue", Console::eDEBUG);
-                        //                oxygine::getStage()->addChild(new Mainwindow());
-                        //                oxygine::Actor::detach();
                         break;
                     }
                     case Qt::Key_Y:
@@ -1795,7 +1792,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
 void EditorMenue::exitEditor()
 {    
     Console::print("Leaving Editor Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();
 }
 

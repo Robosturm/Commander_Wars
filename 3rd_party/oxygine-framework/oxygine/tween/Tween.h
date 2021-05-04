@@ -255,30 +255,33 @@ namespace oxygine
         return p;
     }
 
-
     DECLARE_SMART(TweenObj, spTweenObj);
-    class TweenObj : public Object
+    class TweenBase
     {
     public:
         typedef Actor type;
-
         virtual void init(Actor&) {}
         virtual void done(Actor&) {}
         virtual void update(Actor&, float, const UpdateState&) {}
     };
 
+    DECLARE_SMART(TweenObj, spTweenObj);
+    class TweenObj : public TweenBase, public Object
+    {
+    };
 
+    template<class TTween>
     class TweenProxy
     {
     public:
         typedef Actor type;
 
-        TweenProxy(spTweenObj o) { _obj = o; }
+        TweenProxy(intrusive_ptr<TTween> o) { _obj = o; }
         void init(Actor& a) { _obj->init(a); }
         void done(Actor& a) { _obj->done(a); }
         void update(Actor& a, float p, const UpdateState& us) { _obj->update(a, p, us); }
 
-        spTweenObj _obj;
+        intrusive_ptr<TTween> _obj;
     };
 }
 

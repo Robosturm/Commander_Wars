@@ -25,7 +25,7 @@ public:
     {
         if (m_pInstance.get() == nullptr)
         {
-            m_pInstance = new Interpreter();
+            m_pInstance = spInterpreter::create();
         }
         return m_pInstance.get();
     }

@@ -19,6 +19,9 @@
 #include "coreengine/LUPDATE_MACROS.h"
 #include "menue/basemenu.h"
 
+class VictoryMenue;
+using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
+
 class VictoryMenue : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

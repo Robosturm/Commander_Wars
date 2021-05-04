@@ -154,7 +154,7 @@ void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 
 void WorkerThread::showMainwindow()
 {
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
 }
 
 bool WorkerThread::getStarted() const

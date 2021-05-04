@@ -125,14 +125,14 @@ LobbyMenu::~LobbyMenu()
 void LobbyMenu::exitMenue()
 {    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();    
 }
 
 void LobbyMenu::hostLocal()
 {    
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Multiplayermenu("", "", true));
+    oxygine::getStage()->addChild(spMultiplayermenu::create("", "", true));
     oxygine::Actor::detach();    
 }
 
@@ -143,7 +143,7 @@ void LobbyMenu::hostServer()
     {
         m_usedForHosting = true;
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, "", true));
+        oxygine::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, "", true));
         oxygine::Actor::detach();        
     }
 }
@@ -184,7 +184,7 @@ void LobbyMenu::joinGamePassword(QString password)
     {
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
         m_usedForHosting = true;
-        oxygine::getStage()->addChild(new Multiplayermenu(m_pTCPClient, password, false));
+        oxygine::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, false));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
         stream << NetworkCommands::SERVERJOINGAME;
@@ -209,7 +209,7 @@ void LobbyMenu::join(QString adress, QString password)
 {
     
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Multiplayermenu(adress, password, false));
+    oxygine::getStage()->addChild(spMultiplayermenu::create(adress, password, false));
     oxygine::Actor::detach();
     
 }
@@ -228,7 +228,7 @@ void LobbyMenu::recieveData(quint64, QByteArray data, NetworkInterface::NetworkS
             stream >> size;
             for (qint32 i = 0; i < size; i++)
             {
-                m_games.append(new NetworkGameData());
+                m_games.append(spNetworkGameData::create());
                 m_games[i]->deserializeObject(stream);
             }
             emit sigUpdateGamesView();

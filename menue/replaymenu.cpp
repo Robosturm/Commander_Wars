@@ -88,7 +88,7 @@ void ReplayMenu::exitReplay()
         GameAnimationFactory::finishAllAnimations();
     }
     Console::print("Leaving Replay Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(spMainwindow::create());
     oxygine::Actor::detach();
     
 }

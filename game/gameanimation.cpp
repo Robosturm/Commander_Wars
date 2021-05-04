@@ -191,7 +191,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
     {
         QImage img(spriteID);
         oxygine::spSingleResAnim pAnim = oxygine::spSingleResAnim::create();
-        Mainapp::getInstance()->loadResAnim(pAnim, img);
+        Mainapp::getInstance()->loadResAnim(pAnim, img, 1, frames);
         m_resAnims.append(pAnim);
         loadSpriteAnim(pAnim.get(), offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay, loops);
     }
@@ -320,7 +320,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 }
 
 bool GameAnimation::onFinished(bool skipping)
-{    
+{
     m_skipping |= skipping;
     if (m_skipping == skipping)
     {

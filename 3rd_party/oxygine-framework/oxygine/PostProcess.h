@@ -74,7 +74,7 @@ namespace oxygine
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
-    class TweenPostProcess : public TweenObj, public RenderDelegate, public PPTask
+    class TweenPostProcess : public TweenBase, public RenderDelegate, public PPTask
     {
     public:
         TweenPostProcess(const PostProcessOptions& opt);

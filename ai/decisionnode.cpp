@@ -55,12 +55,12 @@ void DecisionNode::deserializeObject(QDataStream& pStream)
         pStream >> isNode;
         if (isNode)
         {
-            m_pNodes.append(new DecisionNode());
+            m_pNodes.append(spDecisionNode::create());
             m_pNodes[i]->deserializeObject(pStream);
         }
         else
         {
-            m_pNodes.append(new Leaf());
+            m_pNodes.append(spLeaf::create());
             m_pNodes[i]->deserializeObject(pStream);
         }
     }

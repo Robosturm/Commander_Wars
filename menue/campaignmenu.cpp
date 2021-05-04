@@ -86,7 +86,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 void CampaignMenu::exitMenue()
 {    
     Console::print("Leaving Option Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new MapSelectionMapsMenue());
+    oxygine::getStage()->addChild(spMapSelectionMapsMenue::create());
     oxygine::Actor::detach();    
 }
 
@@ -121,7 +121,7 @@ void CampaignMenu::slotButtonNext()
         pMap->updateSprites();
         // start game
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new GameMenue(false, nullptr));
+        oxygine::getStage()->addChild(spGameMenue::create(false, nullptr));
         oxygine::Actor::detach();
     }
     else if (m_Multiplayer)
@@ -131,7 +131,7 @@ void CampaignMenu::slotButtonNext()
     else
     {
         Console::print("Leaving Campaign Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new MapSelectionMapsMenue(-1, m_pMapSelectionView));
+        oxygine::getStage()->addChild(spMapSelectionMapsMenue::create(-1, m_pMapSelectionView));
         oxygine::Actor::detach();
     }    
 }

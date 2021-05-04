@@ -426,7 +426,7 @@ void PlayerSelection::showPlayerSelection()
             }
             else
             {
-                pPlayer->setBaseGameInput(new HumanPlayerInput());
+                pPlayer->setBaseGameInput(spHumanPlayerInput::create());
             }
         }
     }

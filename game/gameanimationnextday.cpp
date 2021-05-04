@@ -12,8 +12,6 @@
 
 #include "menue/gamemenue.h"
 
-
-
 GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent, quint32 uptimeMs)
     : GameAnimation(frameTime),
       m_permanent(permanent)

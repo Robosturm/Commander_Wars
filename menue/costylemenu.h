@@ -6,6 +6,9 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
+class COStyleMenu;
+using spCOStyleMenu = oxygine::intrusive_ptr<COStyleMenu>;
+
 class COStyleMenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

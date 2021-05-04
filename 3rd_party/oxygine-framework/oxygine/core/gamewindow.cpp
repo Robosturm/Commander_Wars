@@ -31,7 +31,7 @@ namespace oxygine
     GameWindow* GameWindow::_window = nullptr;
 
     GameWindow::GameWindow()
-        : _dispatcher(new EventDispatcher())
+        : _dispatcher(spEventDispatcher::create())
     {
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();

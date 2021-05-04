@@ -242,7 +242,7 @@ void GameRules::addWeather(QString weatherId, qint32 weatherChance)
     }
     if (!found)
     {
-        m_Weathers.append(new Weather(weatherId));
+        m_Weathers.append(spWeather::create(weatherId));
         m_WeatherChances.append(weatherChance);
     }
 }

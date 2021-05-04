@@ -136,7 +136,7 @@ void OptionMenue::exitMenue()
     else
     {
         Console::print("Leaving Option Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Mainwindow());
+        oxygine::getStage()->addChild(spMainwindow::create());
         oxygine::Actor::detach();
     }    
 }

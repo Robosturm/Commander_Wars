@@ -457,7 +457,7 @@ void Multiplayermenu::sendInitUpdate(QDataStream & stream, quint64 socketID)
             stream >> campaign;
             if (campaign)
             {
-                m_pMapSelectionView->getCurrentMap()->setCampaign(new Campaign());
+                m_pMapSelectionView->getCurrentMap()->setCampaign(spCampaign::create());
                 m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
             }
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
@@ -871,7 +871,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     m_NetworkInterface->setIsServer(false);
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));
+    oxygine::getStage()->addChild(spGameMenue::create(m_saveGame, m_NetworkInterface));
     // send game started
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -954,7 +954,7 @@ void Multiplayermenu::disconnected(quint64)
     {
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new LobbyMenu());
+        oxygine::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
 }
@@ -967,7 +967,7 @@ void Multiplayermenu::slotButtonBack()
     {
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new LobbyMenu());
+        oxygine::getStage()->addChild(spLobbyMenu::create());
         oxygine::Actor::detach();
     }
     else if (m_Host)
@@ -1238,7 +1238,7 @@ void Multiplayermenu::countdown()
             pMap->updateSprites(-1, -1, false, true);
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(new GameMenue(m_saveGame, m_NetworkInterface));
+            oxygine::getStage()->addChild(spGameMenue::create(m_saveGame, m_NetworkInterface));
             QThread::msleep(200);
             Console::print("Sending init game to clients", Console::eDEBUG);
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);

@@ -12,6 +12,9 @@
 #include "network/tcpclient.h"
 #include "network/networkgamedata.h"
 
+class LobbyMenu;
+using spLobbyMenu = oxygine::intrusive_ptr<LobbyMenu>;
+
 class LobbyMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT

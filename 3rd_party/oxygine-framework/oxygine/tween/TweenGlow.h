@@ -4,7 +4,21 @@
 
 namespace oxygine
 {
-    class TweenGlow : public TweenProxy
+    class TweenGlowImpl;
+    using spTweenGlowImpl = intrusive_ptr<TweenGlowImpl>;
+
+    class TweenGlowImpl : public TweenPostProcess
+    {
+    public:
+        TweenGlowImpl(const QColor& c, const PostProcessOptions& opt);
+        virtual void render(Actor* actor, const RenderState& rs) override;
+        virtual void _renderPP() override;
+    private:
+        QColor _color;
+        qint32 _downsample;
+    };
+
+    class TweenGlow : public TweenProxy<TweenGlowImpl>
     {
     public:
         TweenGlow(const QColor& color, const PostProcessOptions& opt = PostProcessOptions());

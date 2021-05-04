@@ -4,6 +4,9 @@
 #include "3rd_party/oxygine-framework/oxygine-framework.h"
 #include "menue/basemenu.h"
 
+class Wikimenu;
+using spWikimenu = oxygine::intrusive_ptr<Wikimenu>;
+
 class Wikimenu : public Basemenu, public oxygine::Actor
 {
     Q_OBJECT

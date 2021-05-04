@@ -5,7 +5,20 @@
 
 namespace oxygine
 {
-    class TweenAlphaFade: public TweenProxy
+
+    class TweenAlphaFadeImpl;
+    using spTweenAlphaFadeImpl = intrusive_ptr<TweenAlphaFadeImpl>;
+
+    class TweenAlphaFadeImpl : public TweenPostProcess
+    {
+    public:
+        TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt);
+        void render(Actor*, const RenderState&);
+    private:
+        bool _fadeIn;
+    };
+
+    class TweenAlphaFade: public TweenProxy<TweenAlphaFadeImpl>
     {
     public:
         TweenAlphaFade(bool fadeIn, const PostProcessOptions& opt = PostProcessOptions());

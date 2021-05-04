@@ -75,7 +75,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
     m_Record.clear();
     for (qint32 i = 0; i < size; i++)
     {
-        m_Record.append(new DayToDayRecord());
+        m_Record.append(spDayToDayRecord::create());
         m_Record[i]->deserializeObject(pStream);
     }
     pStream >> size;
@@ -127,7 +127,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
-            m_Attackreports.append(new AttackReport());
+            m_Attackreports.append(spAttackReport::create());
             pStream >> m_Attackreports[i]->day;
             pStream >> m_Attackreports[i]->attackerKilled;
             pStream >> m_Attackreports[i]->attackerDamage;
@@ -180,7 +180,7 @@ void GameRecorder::newDay()
             m_playerDataRecords.append(PlayerData());
         }
     }
-    m_Record.append(new DayToDayRecord(playerCount));
+    m_Record.append(spDayToDayRecord::create(playerCount));
 }
 
 void GameRecorder::lostUnit(qint32 player, QString unitId)
@@ -303,7 +303,7 @@ void GameRecorder::logAttack(qint32 day,
                              qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
                              qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled, bool defenderSeesAttacker)
 {
-    m_Attackreports.append(new AttackReport());
+    m_Attackreports.append(spAttackReport::create());
     m_Attackreports[m_Attackreports.size() - 1]->day = day;
     m_Attackreports[m_Attackreports.size() - 1]->attackerKilled = attackerKilled;
     m_Attackreports[m_Attackreports.size() - 1]->attackerDamage = attackerDamage;

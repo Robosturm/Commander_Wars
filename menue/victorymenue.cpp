@@ -403,22 +403,22 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
                     }
                     style.multiline = false;
                     m_VictoryTexts.append(QVector<oxygine::spTextField>());
-                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i].append(oxygine::spTextField::create());
                     m_VictoryTexts[i][0]->setPosition(startX, y - 48 * scale);
                     m_VictoryTexts[i][0]->setStyle(style48);
                     m_VictoryTexts[i][0]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][0]);
-                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i].append(oxygine::spTextField::create());
                     m_VictoryTexts[i][1]->setPosition(startX + 160 * 1, y - 48 * scale);
                     m_VictoryTexts[i][1]->setStyle(style48);
                     m_VictoryTexts[i][1]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][1]);
-                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i].append(oxygine::spTextField::create());
                     m_VictoryTexts[i][2]->setPosition(startX + 160 * 2, y - 48 * scale);
                     m_VictoryTexts[i][2]->setStyle(style48);
                     m_VictoryTexts[i][2]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][2]);
-                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i].append(oxygine::spTextField::create());
                     m_VictoryTexts[i][3]->setPosition(startX + 160 * 3, y - 48 * scale);
                     m_VictoryTexts[i][3]->setStyle(style48);
                     m_VictoryTexts[i][3]->setHtmlText("0");
@@ -656,13 +656,13 @@ void VictoryMenue::exitMenue()
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         bool multiplayer = m_pNetworkInterface.get() != nullptr;
-        oxygine::getStage()->addChild(new CampaignMenu(campaign, multiplayer));
+        oxygine::getStage()->addChild(spCampaignMenu::create(campaign, multiplayer));
     }
     else
     {
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Mainwindow());
+        oxygine::getStage()->addChild(spMainwindow::create());
     }
     oxygine::Actor::detach();
 }

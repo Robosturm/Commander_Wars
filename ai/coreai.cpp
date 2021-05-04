@@ -690,7 +690,7 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                 QStringList items = line.split(" ");
                 for (qint32 i = 1; i < items.size(); i++)
                 {
-                    readQuestions.append(new DecisionQuestion());
+                    readQuestions.append(spDecisionQuestion::create());
                     qint32 index = types.size();
                     QString typeLine = items[i];
                     if (typeLine.startsWith("NUMBER:"))
@@ -711,22 +711,22 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                                 float value = questionData[0].toFloat();
                                 if (questionData[1] == "<")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Greater));
+                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Greater));
                                 }
                                 else if (questionData[1] == ">")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Smaler));
+                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Smaler));
                                 }
                                 else if (questionData[1] == "=")
                                 {
-                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Equal));
+                                    readQuestions[i - 1]->appendQuestion(spQuestion::create(value, index, GameEnums::AIQuestionType_Equal));
                                 }
                             }
                             else if (questionData.size() == 3)
                             {
                                 float value1 = questionData[0].toFloat();
                                 float value2 = questionData[2].toFloat();
-                                readQuestions[i - 1]->appendQuestion(new Question(value1, value2, index, GameEnums::AIQuestionType_Between));
+                                readQuestions[i - 1]->appendQuestion(spQuestion::create(value1, value2, index, GameEnums::AIQuestionType_Between));
                             }
                         }
                         types.append("NUMBER");
@@ -737,25 +737,25 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                         {
                             for (qint32 i2 = 0; i2 < pCOSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "BUILDING")
                         {
                             for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "UNIT")
                         {
                             for (qint32 i2 = 0; i2 < pUnitSpriteManager->getCount(); i2++)
                             {
-                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                                readQuestions[i - 1]->appendQuestion(spQuestion::create(i2, index, GameEnums::AIQuestionType_Equal));
                             }
-                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
+                            readQuestions[i - 1]->appendQuestion(spQuestion::create(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         types.append(items[i]);
                     }
@@ -1637,7 +1637,7 @@ void CoreAI::createIslandMap(QString movementType, QString unitID)
     }
     if (!found)
     {
-        m_IslandMaps.append(new IslandMap(unitID, m_pPlayer));
+        m_IslandMaps.append(spIslandMap::create(unitID, m_pPlayer));
     }
 }
 
@@ -1724,6 +1724,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
 
 void CoreAI::finishTurn()
 {
+    Console::print("CoreAI::finishTurn(()", Console::eDEBUG);
     usedTransportSystem = false;
     spGameAction pAction = spGameAction::create(ACTION_NEXT_PLAYER);
     CO* pCO0 = m_pPlayer->getCO(0);
