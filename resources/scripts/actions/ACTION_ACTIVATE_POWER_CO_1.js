@@ -31,7 +31,7 @@ var Constructor = function()
     this.perform = function(action)
     {
         var player = map.getCurrentPlayer();
-        var co = player.getCO(0);
+        var co = player.getCO(1);
         co.activatePower();
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_Power);
