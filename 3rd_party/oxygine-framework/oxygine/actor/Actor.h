@@ -38,9 +38,9 @@ namespace oxygine
 
     DECLARE_SMART(Actor, spActor);
 
-    class Actor: public EventDispatcher, public intrusive_list_item<spActor>
+    class Actor: public EventDispatcher, public intrusive_list_item<Actor>
     {
-        typedef intrusive_list_item<spActor> intr_list;
+        typedef intrusive_list_item<Actor> intr_list;
 
     public:
         Actor();
@@ -298,7 +298,7 @@ namespace oxygine
         void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
 
 
-        typedef intrusive_list<spActor> children;
+        typedef intrusive_list<Actor> children;
         static void setParent(Actor* actor, Actor* parent);
         static children& getChildren(spActor& actor) { return actor->m_children; }
         static unsigned int& _getFlags(Actor* actor) { return actor->m_flags; }
@@ -354,7 +354,7 @@ namespace oxygine
         spClock m_clock;
         Actor* m_parent;
 
-        typedef intrusive_list<spTween> tweens;
+        typedef intrusive_list<Tween> tweens;
         tweens m_tweens;
 
         children m_children;

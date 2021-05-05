@@ -33,9 +33,9 @@ namespace oxygine
 
 
     DECLARE_SMART(Tween, spTween);
-    class Tween : public EventDispatcher, public intrusive_list_item<spTween>
+    class Tween : public EventDispatcher, public intrusive_list_item<Tween>
     {
-        typedef intrusive_list_item<spTween> intr_list;
+        typedef intrusive_list_item<Tween> intr_list;
     public:
         enum EASE
         {

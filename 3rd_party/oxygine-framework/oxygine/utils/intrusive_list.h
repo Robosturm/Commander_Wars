@@ -1,5 +1,6 @@
 #pragma once
 #include "3rd_party/oxygine-framework/oxygine-include.h"
+#include "3rd_party/oxygine-framework/oxygine/core/intrusive_ptr.h"
 
 namespace oxygine
 {
@@ -7,8 +8,8 @@ namespace oxygine
     class intrusive_list
     {
     public:
-        T _first;
-        T _last;
+        intrusive_ptr<T> _first;
+        intrusive_ptr<T> _last;
 
         ~intrusive_list()
         {
@@ -17,28 +18,28 @@ namespace oxygine
 
         bool empty() const
         {
-            return _first == 0;
+            return _first == nullptr;
         }
 
         void clear()
         {
-            T item = _first;
+            intrusive_ptr<T> item = _first;
             while (item)
             {
-                T copy = item;
+                intrusive_ptr<T> copy = item;
                 item = item->_next;
                 if (copy)
                 {
-                    copy->_list = 0;
-                    copy->_next = 0;
-                    copy->_prev = 0;
+                    copy->_list = nullptr;
+                    copy->_next = nullptr;
+                    copy->_prev = nullptr;
                 }
             }
-            _first = 0;
-            _last = 0;
+            _first = nullptr;
+            _last = nullptr;
         }
 
-        void insert_after(T& child, T& after)
+        void insert_after(intrusive_ptr<T>& child, intrusive_ptr<T>& after)
         {
             Q_ASSERT(after->_list == this);
             child->_list = this;
@@ -54,12 +55,9 @@ namespace oxygine
             child->_next = after->_next;
             child->_prev = after;
             after->_next = child;
-
-
-            checkList();
         }
 
-        void insert_before(T& child, T& before)
+        void insert_before(intrusive_ptr<T>& child, intrusive_ptr<T>& before)
         {
             child->_list = this;
 
@@ -74,12 +72,9 @@ namespace oxygine
             child->_prev = before->_prev;
             child->_next = before;
             before->_prev = child;
-
-
-            checkList();
         }
 
-        void append(T& child)
+        void append(intrusive_ptr<T>& child)
         {
             child->_list = this;
 
@@ -91,16 +86,14 @@ namespace oxygine
             else
             {
                 _first = child;
-                child->_prev = 0;
+                child->_prev = nullptr;
             }
 
             _last = child;
-            child->_next = 0;
-
-            checkList();
+            child->_next = nullptr;
         }
 
-        void prepend(T& child)
+        void prepend(intrusive_ptr<T>& child)
         {
             child->_list = this;
 
@@ -112,44 +105,14 @@ namespace oxygine
             else
             {
                 _last = child;
-                child->_next = 0;
+                child->_next = nullptr;
             }
 
             _first = child;
-            child->_prev = 0;
-
-            checkList();
+            child->_prev = nullptr;
         }
 
-        void checkList()
-        {
-            return;
-            if (!_first)
-            {
-                return;
-            }
-            T v = _first;
-            do
-            {
-                T p = v;
-                v = v->_next;
-
-                if (v)
-                {
-                    Q_ASSERT(v->_prev == p);
-                }
-                else
-                {
-                    Q_ASSERT(p == _last);
-                }
-            }
-            while (v);
-
-        }
-
-
-
-        void removeItem(T& child)
+        void removeItem(intrusive_ptr<T>& child)
         {
             Q_ASSERT(child->_list == this);
             child->_list = nullptr;
@@ -179,8 +142,6 @@ namespace oxygine
 
             child->_prev = nullptr;
             child->_next = nullptr;
-
-            checkList();
         }
     };
 
@@ -193,13 +154,18 @@ namespace oxygine
         intrusive_list<T>* getParentList() {return _list;}
 
     protected:
-        T& getNextSibling() {return _next;}
-        T& getPrevSibling() {return _prev;}
+        intrusive_ptr<T>& getNextSibling() {return _next;}
+        intrusive_ptr<T>& getPrevSibling() {return _prev;}
 
 
-        intrusive_list_item(): _prev(T(0)), _next(T(0)), _list(0) {}
-        T _prev;
-        T _next;
+        intrusive_list_item()
+            : _prev(nullptr),
+              _next(nullptr),
+              _list(nullptr)
+        {
+        }
+        intrusive_ptr<T> _prev;
+        intrusive_ptr<T> _next;
 
         intrusive_list<T>* _list;
 

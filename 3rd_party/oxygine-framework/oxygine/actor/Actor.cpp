@@ -1178,8 +1178,7 @@ namespace oxygine
     void Actor::removeTween(spTween pTween)
     {
         QMutexLocker lock(&m_Locked);
-        Q_ASSERT(pTween);
-        if (pTween.get() != nullptr)
+        if (pTween.get() == nullptr)
         {
             return;
         }

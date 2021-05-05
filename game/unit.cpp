@@ -186,15 +186,21 @@ void Unit::addShineTween()
 void Unit::removeShineTween()
 {
     QColor addColor(0, 0, 0, 0);
-    for (auto & shineTween : m_ShineTweens)
+    for (qint32 i = 0; i < m_ShineTweens.size(); ++i)
     {
-        oxygine::spActor pActor = shineTween->getClient();
-        oxygine::spVStyleActor pVStyle = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
-        if (pVStyle.get() != nullptr)
+        if (m_ShineTweens[i].get() != nullptr)
         {
-            pVStyle->setAddColor(addColor);
+            oxygine::spActor pActor = m_ShineTweens[i]->getClient();
+            if (pActor.get() != nullptr)
+            {
+                m_ShineTweens[i]->removeFromActor();
+                oxygine::spVStyleActor pVStyle = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
+                if (pVStyle.get() != nullptr)
+                {
+                    pVStyle->setAddColor(addColor);
+                }
+            }
         }
-        shineTween->removeFromActor();
     }
     m_ShineTweens.clear();
 }
