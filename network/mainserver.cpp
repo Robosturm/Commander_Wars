@@ -39,7 +39,7 @@ MainServer::MainServer()
 
 MainServer::~MainServer()
 {
-    m_pGameServer->sig_close();
+    emit m_pGameServer->sig_close();
     // clean up server and client games.
     for (qint32 i = 0; i < m_games.size(); i++)
     {
@@ -75,7 +75,7 @@ void MainServer::joinSlaveGame(quint64 socketID, QDataStream & stream)
     QString slave;
     stream >> slave;
     Console::print("Searching for game " + slave + " for socket " + QString::number(socketID) + " to join game.", Console::eDEBUG);
-    for (const auto & game : m_games)
+    for (const auto & game : qAsConst(m_games))
     {
         if (game->game.getServerName() == slave)
         {
@@ -182,7 +182,7 @@ void MainServer::sendGameDataToClient(qint64 socketId)
     qint32 sizePos = buffer.pos();
     out << sizePos;
     qint32 count = 0;
-    for (const auto & game : m_games)
+    for (const auto & game : qAsConst(m_games))
     {
         if (!game->game.getData().getLaunched() &&
             game->game.getSlaveRunning())

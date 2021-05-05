@@ -52,19 +52,22 @@ CreditsMenue::CreditsMenue()
     while (!stream.atEnd())
     {
         QString line = stream.readLine().trimmed();
+        QString lowerLine = line.toLower();
         if (line.startsWith("//"))
         {
             continue;
         }
-        if (line.toLower().startsWith("headline:"))
+        if (lowerLine.startsWith("headline:"))
         {
             QString headline = line.remove(0, line.indexOf(":") + 1);
             m_Headlines.append(headline);
             m_Authors.append(QVector<QString>());
             while (!stream.atEnd())
             {
-                line = stream.readLine().trimmed();
-                if (line.toLower().startsWith("end"))
+                line = stream.readLine();
+                line = line.trimmed();
+                lowerLine = line.toLower();
+                if (lowerLine.startsWith("end"))
                 {
                     break;
                 }

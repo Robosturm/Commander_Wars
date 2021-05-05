@@ -44,6 +44,7 @@ public:
                 moveAway,
                 buildUnits,
     };
+    Q_ENUM(AISteps)
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
     static const QString ACTION_HOELLIUM_WAIT;
@@ -186,7 +187,7 @@ public slots:
      * @param pUnits
      * @return
      */
-    bool moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransporters);
+    bool moveSupport(CoreAI::AISteps step, spQmlVectorUnit pUnits, bool useTransporters);
     /**
      * @brief nextAction
      */

@@ -518,7 +518,7 @@ void BattleAnimation::nextAnimatinStep()
     
     if (currentState >= AnimationProgress::Finished)
     {
-        onFinished(false);
+        BattleAnimation::onFinished(false);
     }
 }
 

@@ -351,7 +351,6 @@ QImage SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage 
 
 QImage SpriteCreator::createColorTable(QImage& image)
 {
-    auto tableVector = image.colorTable();
     qint32 maxSize = 200;
     QImage ret(maxSize, 1, QImage::Format_RGBA8888);
     qint32 width = 0;

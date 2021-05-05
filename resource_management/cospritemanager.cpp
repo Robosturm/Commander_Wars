@@ -18,7 +18,7 @@ COSpriteManager::COSpriteManager()
 QVector<QString> COSpriteManager::getSpriteCOIDs()
 {
     QVector<QString> ret;
-    for (auto iter = _resourcesMap.begin(); iter != _resourcesMap.cend(); ++iter)
+    for (auto iter = _resourcesMap.begin(); iter != _resourcesMap.end(); ++iter)
     {
         QString id(iter.key());
         if (id.endsWith("+face"))

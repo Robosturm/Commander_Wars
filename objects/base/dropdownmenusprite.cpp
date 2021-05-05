@@ -20,7 +20,7 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QVector<QString>& items, st
     {
         addDropDownText(m_ItemTexts[i], i, dropDownWidth);
     }
-    setCurrentItem(0);
+    DropDownmenuSprite::setCurrentItem(0);
 }
 
 DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth)
@@ -39,7 +39,7 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QStringList& items, std::fu
         m_ItemTexts.append(items[i]);
         addDropDownText(m_ItemTexts[i], i, dropDownWidth);
     }
-    setCurrentItem(0);
+    DropDownmenuSprite::setCurrentItem(0);
 }
 
 void DropDownmenuSprite::setCurrentItem(qint32 index)

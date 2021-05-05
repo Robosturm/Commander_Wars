@@ -54,7 +54,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
         // check if the training data has changed
         if (currentHash == hash)
         {
-            deserializeObject(stream);
+            DecisionTree::deserializeObject(stream);
             needsTraining = false;
         }
         file.close();
@@ -73,7 +73,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
         {
             stream << static_cast<qint8>(hash[i]);
         }
-        serializeObject(stream);
+        DecisionTree::serializeObject(stream);
     }
 }
 

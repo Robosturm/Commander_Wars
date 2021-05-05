@@ -151,7 +151,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     }
     else
     {
-        hideMapSelection();
+        MapSelectionMapsMenue::hideMapSelection();
         hideRuleSelection();
         m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
         showPlayerSelection();

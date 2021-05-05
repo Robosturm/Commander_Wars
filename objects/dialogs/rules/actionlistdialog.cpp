@@ -149,7 +149,7 @@ ActionListDialog::ActionListDialog(QStringList bannlist)
             {
                 pCheckbox->setChecked(false);
             }
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
+            connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
             {
                 if (checked)
                 {

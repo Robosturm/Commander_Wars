@@ -151,7 +151,7 @@ public slots:
      * @brief doScreenshot
      */
     void doScreenshot();
-    void nextStartUpStep(StartupPhase step);
+    void nextStartUpStep(Mainapp::StartupPhase step);
 signals:
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
@@ -177,7 +177,7 @@ signals:
      */
     void sigApplyFilter(quint32 filter);
 
-    void sigNextStartUpStep(StartupPhase step);
+    void sigNextStartUpStep(Mainapp::StartupPhase step);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;

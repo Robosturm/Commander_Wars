@@ -51,6 +51,11 @@ void Player::init()
     setColor(m_Color, team);
 }
 
+BaseGameInputIF* Player::getBaseGameInput()
+{
+    return m_pBaseGameInput.get();
+}
+
 float Player::getUnitBuildValue(QString unitID)
 {
     float modifier = 0.0f;
@@ -1083,7 +1088,14 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
         case GameEnums::Fog_OfShroud:
         case GameEnums::Fog_OfWar:
         {
-            return (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear);
+            if (m_FogVisionFields.size() > 0)
+            {
+                return (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear);
+            }
+            else
+            {
+                return true;
+            }
         }
     }
     return false;
@@ -1101,11 +1113,18 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
         case GameEnums::Fog_OfShroud:
         case GameEnums::Fog_OfWar:
         {
-            if (pMap->onMap(x, y) && m_FogVisionFields.size() > 0)
+            if (m_FogVisionFields.size() > 0)
             {
-                return std::get<0>(m_FogVisionFields[x][y]);
+                if (pMap->onMap(x, y) && m_FogVisionFields.size() > 0)
+                {
+                    return std::get<0>(m_FogVisionFields[x][y]);
+                }
+                return GameEnums::VisionType_Shrouded;
             }
-            return GameEnums::VisionType_Shrouded;
+            else
+            {
+                return GameEnums::VisionType_Clear;
+            }
         }
     }
     return GameEnums::VisionType_Fogged;
@@ -1323,27 +1342,36 @@ QmlVectorBuilding* Player::getBuildings()
 
 void Player::updateVisualCORange()
 {
-    if (playerCOs[0].get() != nullptr &&
-        playerCOs[0]->getCOUnit() != nullptr)
+    spCO pCo = playerCOs[0];
+    if (pCo.get() != nullptr)
     {
-        if (playerCOs[0]->getPowerMode() == GameEnums::PowerMode_Off)
+        spUnit pCoUnit = pCo->getCOUnit();
+        if (pCoUnit.get() != nullptr)
         {
-            playerCOs[0]->getCOUnit()->createCORange(playerCOs[0]->getCORange());
-        }
-        else
-        {
-            playerCOs[0]->getCOUnit()->createCORange(-1);
+            if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
+            {
+                pCoUnit->createCORange(pCo->getCORange());
+            }
+            else
+            {
+                pCoUnit->createCORange(-1);
+            }
         }
     }
-    if (playerCOs[1].get() != nullptr && playerCOs[1]->getCOUnit() != nullptr)
+    pCo = playerCOs[1];
+    if (pCo.get() != nullptr)
     {
-        if (playerCOs[1]->getPowerMode() == GameEnums::PowerMode_Off)
+        spUnit pCoUnit = pCo->getCOUnit();
+        if (pCoUnit.get() != nullptr)
         {
-            playerCOs[1]->getCOUnit()->createCORange(playerCOs[1]->getCORange());
-        }
-        else
-        {
-            playerCOs[1]->getCOUnit()->createCORange(-1);
+            if (pCo->getPowerMode() == GameEnums::PowerMode_Off)
+            {
+                pCoUnit->createCORange(pCo->getCORange());
+            }
+            else
+            {
+                pCoUnit->createCORange(-1);
+            }
         }
     }
 }
@@ -1823,7 +1851,6 @@ void Player::deserializer(QDataStream& pStream, bool fast)
     {
         if (!colorToTable(m_Color))
         {
-            QString color = m_Color.name();
             createTable(m_Color.darker(160));
         }
         m_Color = m_colorTable.pixel(8, 0);

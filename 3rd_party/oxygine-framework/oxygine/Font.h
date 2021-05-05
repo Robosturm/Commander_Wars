@@ -13,17 +13,17 @@ namespace oxygine
     {
         RectF src;
 
-        qint32 ch;
-        glyphOptions opt;
+        qint32 ch{0};
+        glyphOptions opt{0};
 
-        short sw;
-        short sh;
+        short sw{0};
+        short sh{0};
 
-        short offset_x;
-        short offset_y;
+        short offset_x{0};
+        short offset_y{0};
 
-        short advance_x;
-        short advance_y;
+        short advance_x{0};
+        short advance_y{0};
 
         spNativeTexture texture;
 
@@ -62,12 +62,12 @@ namespace oxygine
         typedef QSet<glyph> glyphs;
 
         glyphs _glyphs;
-        bool _ignoreOptions;
+        bool _ignoreOptions{false};
 
-        float _scale;
-        bool _sdf;
+        float _scale{0.0f};
+        bool _sdf{false};
 
-        qint32 _size;
-        qint32 _baselineDistance;
+        qint32 _size{0};
+        qint32 _baselineDistance{0};
     };
 }

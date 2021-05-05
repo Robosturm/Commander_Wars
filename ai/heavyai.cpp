@@ -379,7 +379,7 @@ void HeavyAi::scoreActions(UnitData & unit)
                 {
                     prepareWaitPfs(unit, actions);
                 }
-                FunctionType type;
+                FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
                 mutateActionForFields(unit, moveTargets, action, type, index,
@@ -625,7 +625,7 @@ void HeavyAi::scoreActionWait()
                 float bestScore = 0.0f;
                 QString action = ACTION_WAIT;
                 spGameAction pAction = nullptr;
-                FunctionType type;
+                FunctionType type = FunctionType::CPlusPlus;
                 qint32 index = -1;
                 getFunctionType(action, type, index);
                 auto moveTargets = unit.m_pPfs->getAllNodePoints(unit.m_movepoints + 1);

@@ -171,7 +171,7 @@ void LobbyMenu::joinGamePassword(QString password)
     bool exists = false;
     if (m_currentGame.get() != nullptr)
     {
-        for (const auto & game : m_games)
+        for (const auto & game : qAsConst(m_games))
         {
             if (m_currentGame.get() == game.get())
             {
@@ -248,7 +248,7 @@ void LobbyMenu::updateGamesView()
     qint32 itemWidth = (m_pGamesPanel->getWidth() - 80 - 100 - 90) / 3;
     QVector<qint32> widths = {itemWidth, 100, itemWidth, itemWidth, 90};
     QVector<QStringList> items;
-    for (const auto & game : m_games)
+    for (const auto & game : qAsConst(m_games))
     {
         QStringList data;
         data.append(game->getMapName());

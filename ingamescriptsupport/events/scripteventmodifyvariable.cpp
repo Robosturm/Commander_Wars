@@ -40,7 +40,6 @@ void ScriptEventModifyVariable::readEvent(QTextStream& rStream)
         m_variable = list[0];
         if (list[1].startsWith(m_variable))
         {
-            QString item = list[1].replace(m_variable + "\").readDataInt32() ", "");
             QStringList items = list[1].split(" ");
             if (items.size() == 2)
             {
@@ -114,8 +113,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     dropDown->setTooltipText(tr("The way how the variable gets modified."));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Modifier);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
-            [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         m_Modifier = dropDown->getCurrentItemText();
     });

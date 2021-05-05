@@ -22,11 +22,11 @@
 
 namespace crashReporter
 {
-    static QString sCrashReportDirPath; // log file path
-    static QString sProgramName;        // the full path to the executable (which we need to resolve symbols)
+    QString sCrashReportDirPath; // log file path
+    QString sProgramName;        // the full path to the executable (which we need to resolve symbols)
     // Note that we are looking for GCC-style name mangles
     // See: https://en.wikipedia.org/wiki/Name_mangling #How_different_compilers_mangle_the_same_functions
-    static QRegularExpression  sSymbolMatching("^.*(_Z[^ ]+).*$");
+    QRegularExpression  sSymbolMatching("^.*(_Z[^ ]+).*$");
 
     static logWrittenCallback  sLogWrittenCallback; // function to call after we've written the log file
     static QProcess            *sProcess = nullptr; // process used to capture output of address mapping tool
@@ -106,8 +106,8 @@ namespace crashReporter
         if (file.open(QIODevice::WriteOnly | QIODevice::Text))
         {
             QTextStream stream( &file );
-
-            for ( const QString &data : cReportHeader + inFrameInfoList )
+            QStringList dataList = cReportHeader + inFrameInfoList;
+            for (const QString & data : qAsConst(dataList))
             {
                 stream << data << Qt::endl;
                 ret += data + "\n";

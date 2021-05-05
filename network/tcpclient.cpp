@@ -24,7 +24,7 @@ TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, qu
       m_onServer(true)
 {
     setObjectName("TCPClient");
-    setSocketID(socketId);
+    TCPClient::setSocketID(socketId);
     QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }
 
@@ -34,7 +34,7 @@ TCPClient::~TCPClient()
     disconnect();
     if (!m_onServer)
     {
-        disconnectTCP();
+        TCPClient::disconnectTCP();
     }
 }
 

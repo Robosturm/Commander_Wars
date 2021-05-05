@@ -256,7 +256,7 @@ bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransport
                             pAction->setMovepath(path, turnPfs.getCosts(path));
                             if (pAction->canBePerformed())
                             {
-                                performAction(pAction);
+                                emit performAction(pAction);
                                 return true;
                             }
                         }

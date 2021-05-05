@@ -18,7 +18,7 @@
 
 #include "objects/loadingscreen.h"
 
-static const QString RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
+const char* const RANDOMMAPGENERATORNAME = "RANDOMMAPGENERATOR";
 qint32 GameMap::randomMap(qint32 width, qint32 heigth, qint32 playerCount,
                           bool roadSupport, qint32 seed,
                           QVector<std::tuple<QString, float>> terrains,

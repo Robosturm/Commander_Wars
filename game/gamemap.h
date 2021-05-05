@@ -30,8 +30,6 @@ typedef oxygine::intrusive_ptr<GameMap> spGameMap;
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
     Q_OBJECT
-
-    Q_PROPERTY(qint32 width READ getWidth WRITE setWidth)
 public:
     static const qint32 frameTime;
     static constexpr qint32 defaultImageSize = 24;
@@ -488,10 +486,7 @@ public slots:
      * @brief getGameRecorder
      * @return
      */
-    inline GameRecorder* getGameRecorder()
-    {
-        return m_Recorder.get();
-    }
+    GameRecorder* getGameRecorder();
     /**
      * @brief getCurrentDay
      * @return

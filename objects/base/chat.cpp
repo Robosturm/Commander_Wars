@@ -13,11 +13,11 @@
 
 #include "menue/gamemenue.h"
 
-static const QString chatPlayerTarget = "@Player";
-static const QString chatTeamTarget = "@Team";
-static const QString chatNotTeamTarget = "@!Team";
-static const QString chatAllyTarget = "@Ally";
-static const QString chatEnemyTarget = "@Enemy";
+const char* const chatPlayerTarget = "@Player";
+const char* const chatTeamTarget = "@Team";
+const char* const chatNotTeamTarget = "@!Team";
+const char* const chatAllyTarget = "@Ally";
+const char* const chatEnemyTarget = "@Enemy";
 
 Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkSerives serviceMode)
     : QObject(),
@@ -53,7 +53,7 @@ Chat::Chat(spNetworkInterface pInterface, QSize size, NetworkInterface::NetworkS
     addChild(m_Send);
 
     m_ChatInput = spTextbox::create(size.width() - m_Send->getWidth() - 10);
-    setVisible(true);
+    Chat::setVisible(true);
 
     m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());
     connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
@@ -76,10 +76,10 @@ void Chat::setVisible(bool vis)
         {
             m_ChatInput->setTooltipText(tr("Message to send via chat. Start a message with one of the folling items to send ") +
                                         tr("a message to specific targets. \n") +
-                                        chatAllyTarget.toStdString().c_str() + tr(" send message to all your allies.\n") +
-                                        chatEnemyTarget.toStdString().c_str() + tr(" send message to all your enemies.\n") +
-                                        chatTeamTarget.toStdString().c_str() + "X" + tr(" send message to the given team X.\n") +
-                                        chatPlayerTarget.toStdString().c_str() + "X" + tr(" send message to the given player X."));
+                                        chatAllyTarget+ tr(" send message to all your allies.\n") +
+                                        chatEnemyTarget + tr(" send message to all your enemies.\n") +
+                                        chatTeamTarget + "X" + tr(" send message to the given team X.\n") +
+                                        chatPlayerTarget + "X" + tr(" send message to the given player X."));
         }
         else
         {
@@ -214,7 +214,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
+            emit m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");
         

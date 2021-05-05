@@ -199,8 +199,6 @@ namespace oxygine
                         float fPercent = result / size.x;
                         float fDU = du * fPercent;
 
-                        u1 = u;
-                        v1 = v;
                         u2 = u;
                         v2 = (v - dv / 2.f);
                         u3 = (u + fDU);

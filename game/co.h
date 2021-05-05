@@ -14,6 +14,7 @@
 #include "coreengine/scriptvariables.h"
 
 class Unit;
+using spUnit = oxygine::intrusive_ptr<Unit>;
 class Terrain;
 class Player;
 class Building;
@@ -642,7 +643,7 @@ private:
     qint32 powerStars{0};
     qint32 superpowerStars{0};
     double powerFilled{0.0};
-    Unit* m_pCOUnit{nullptr};
+    spUnit m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
     qint32 m_powerUsed{0};

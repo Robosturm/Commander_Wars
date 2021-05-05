@@ -326,7 +326,7 @@ void OptionMenue::showSettings()
     pScreenResolution->setCurrentItem(currentDisplayMode);
     pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game"));
     m_pOptions->addItem(pScreenResolution);
-    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         QStringList itemData = pScreenResolution->getCurrentItemText().split(" x ");
         qint32 width = itemData[0].toInt();
@@ -514,7 +514,7 @@ void OptionMenue::showSettings()
     spTextbox pTextbox = spTextbox::create(Settings::getWidth() - 20 - sliderOffset);
     pTextbox->setTooltipText(tr("Selects your username shown at various places of the game"));
     pTextbox->setCurrentText(Settings::getUsername());
-    connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
+    connect(pTextbox.get(), &Textbox::sigTextChanged, this, [=](QString value)
     {
         if (value.isEmpty())
         {
@@ -751,7 +751,7 @@ void OptionMenue::showMods()
             {
                 modCheck->setChecked(true);
             }
-            connect(modCheck.get(), &Checkbox::checkChanged, [=](bool checked)
+            connect(modCheck.get(), &Checkbox::checkChanged, this, [=](bool checked)
             {
                 if (checked)
                 {
@@ -912,7 +912,7 @@ void OptionMenue::updateModCheckboxes()
             Settings::getModInfos(mod, name, description, version,
                                   compatibleMods, incompatibleMods, requiredMods, isComsetic);
             bool enabled = true;
-            for (const auto & incompatibleMod : incompatibleMods)
+            for (const auto & incompatibleMod : qAsConst(incompatibleMods))
             {
                 if (mods.contains(incompatibleMod))
                 {
@@ -922,7 +922,7 @@ void OptionMenue::updateModCheckboxes()
             }
             if (enabled)
             {
-                for (const auto & requiredMod : requiredMods)
+                for (const auto & requiredMod : qAsConst(requiredMods))
                 {
                     if (!mods.contains(requiredMod))
                     {

@@ -84,7 +84,7 @@ void Multiplayermenu::initClientAndWaitForConnection()
 {
     createChat();
     hideRuleSelection();
-    hideMapSelection();
+    Multiplayermenu::hideMapSelection();
     m_MapSelectionStep = MapSelectionStep::selectPlayer;
     // change the name of the start button
     dynamic_cast<Label*>(m_pButtonStart->getFirstChild()->getFirstChild().get())->setHtmlText(tr("Ready"));
@@ -271,7 +271,7 @@ void Multiplayermenu::acceptNewConnection(quint64 socketID)
         }
     }
     // send map data to client
-    m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void Multiplayermenu::filterCosmeticMods(QStringList & mods, QStringList & versions, bool filter)
@@ -435,7 +435,7 @@ void Multiplayermenu::requestRule(quint64 socketID)
             }
             m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
         }
-        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -518,7 +518,7 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << NetworkCommands::REQUESTRULE;
-                m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
             else
             {
@@ -540,14 +540,14 @@ void Multiplayermenu::clientMapInfo(QDataStream & stream, quint64 socketID)
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::REQUESTRULE;
-                    m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
                 else
                 {
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << NetworkCommands::REQUESTMAP;
-                    m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
             }
         }
@@ -666,7 +666,7 @@ void Multiplayermenu::requestMap(quint64 socketID)
             Filesupport::writeByteArray(sendStream, data);
             script.close();
         }
-        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -726,7 +726,7 @@ void Multiplayermenu::recieveMap(QDataStream & stream, quint64 socketID)
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << NetworkCommands::REQUESTRULE;
-        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -763,7 +763,7 @@ void Multiplayermenu::sendSlaveReady()
     {
         sendStream << true;
     }
-    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, true);
+    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, true);
 }
 
 void Multiplayermenu::slotCancelHostConnection()
@@ -877,7 +877,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::CLIENTINITGAME;
     sendStream << m_NetworkInterface->getSocketID();
-    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     
 }
 
@@ -1034,7 +1034,7 @@ void Multiplayermenu::startGameOnServer()
     Filesupport::writeVectorList(sendStream, Settings::getMods());
     GameMap* pMap = GameMap::getInstance();
     pMap->serializeObject(sendStream);
-    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
+    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::ServerHosting, false);
 
     spDialogConnecting pDialogConnecting = spDialogConnecting::create(tr("Launching game on server"), 1000 * 60 * 5);
     addChild(pDialogConnecting);
@@ -1120,7 +1120,7 @@ void Multiplayermenu::startGame()
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
         sendStream << NetworkCommands::STARTSERVERGAME;
-        m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -1131,7 +1131,7 @@ void Multiplayermenu::markGameReady()
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::CLIENTREADY;
     sendStream << m_pPlayerSelection->getPlayerReady();
-    m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+    emit m_NetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
 }
 
 void Multiplayermenu::changeButtonText()

@@ -18,7 +18,7 @@ LocalClient::LocalClient()
 LocalClient::~LocalClient()
 {
     disconnect();
-    disconnectTCP();
+    LocalClient::disconnectTCP();
     Console::print("Client is closed", Console::eLogLevels::eDEBUG);
 }
 

@@ -1000,8 +1000,6 @@ void VictoryMenue::showPlayerStatistic(qint32 player)
         m_statisticsView->detach();
     }
     spGameMap pMap = GameMap::getInstance();
-    QString headline;
-    QMap<QString, qint32> items;
     const auto & playerdata = pMap->getGameRecorder()->getPlayerDataRecords()[player];
     m_statisticsView = spUnitStatisticView::create(playerdata, Settings::getWidth() - 30, Settings::getHeight() - 280, pMap->getPlayer(player));
     m_statisticsView->setPosition(10, 60);

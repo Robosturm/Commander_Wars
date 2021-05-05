@@ -106,7 +106,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
-    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
+    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
         m_newTerrainID = pMenu->getCurrentItemText();
     });

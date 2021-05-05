@@ -193,17 +193,20 @@ namespace oxygine
                             }
                         }
 
-                        if (rd.mat->_base.get() == gl->texture.get())
+                        if (gl != nullptr)
                         {
-                            s.mat = rd.mat;
-                        }
-                        else
-                        {
-                            spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(rd.mat->clone());
-                            mat->_base = gl->texture;
+                            if (rd.mat->_base.get() == gl->texture.get())
+                            {
+                                s.mat = rd.mat;
+                            }
+                            else
+                            {
+                                spSTDMaterial mat = dynamic_pointer_cast<STDMaterial>(rd.mat->clone());
+                                mat->_base = gl->texture;
 
-                            s.mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(*mat.get()));
-                            rd.mat = s.mat;
+                                s.mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(*mat.get()));
+                                rd.mat = s.mat;
+                            }
                         }
                     }
                     ++i;

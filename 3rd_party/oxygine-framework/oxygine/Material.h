@@ -92,7 +92,7 @@ namespace oxygine
             typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
             fn f = &STDMaterial::cmp;
             _compare = (compare)f;
-            init();
+            STDMaterial::init();
         }
         void copyTo(STDMaterial &d) const{d = *this;}
         void copyFrom(const STDMaterial &d) {*this = d;}

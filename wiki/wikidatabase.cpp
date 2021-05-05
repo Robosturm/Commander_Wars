@@ -266,7 +266,7 @@ spWikipage WikiDatabase::getPage(pageData data)
         QJSValueList args;
         QJSValue obj1 = pInterpreter->newQObject(ret.get());
         args << obj1;
-        QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
+        pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     else
     {

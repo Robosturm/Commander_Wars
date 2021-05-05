@@ -250,14 +250,6 @@ Mainwindow::Mainwindow()
 
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
     emit sigOnEnter();
-
-//    bool success;
-//    auto ui = UiFactory::getInstance().createUi("resources/ui.xml", success);
-//    if (success)
-//    {
-//        addChild(ui);
-//    }
-
     pApp->continueRendering();
 }
 

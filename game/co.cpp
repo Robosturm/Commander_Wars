@@ -39,7 +39,7 @@ void CO::init()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        QJSValue erg = pInterpreter->doFunction(this->coID, function1, args1);
+        pInterpreter->doFunction(this->coID, function1, args1);
     }
 }
 
@@ -70,7 +70,7 @@ void CO::setCOUnit(Unit* pUnit)
 {
     spGameMenue pMenu = GameMenue::getInstance();
     if ((pUnit == nullptr) &&
-        (m_pCOUnit != nullptr) &&
+        (m_pCOUnit.get() != nullptr) &&
         (pMenu.get() != nullptr))
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
@@ -78,9 +78,9 @@ void CO::setCOUnit(Unit* pUnit)
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        for (const auto & perk : m_perkList)
+        for (qint32 i = 0; i < m_perkList.size(); ++i)
         {
-            pInterpreter->doFunction(perk, function1, args1);
+            pInterpreter->doFunction(m_perkList[i], function1, args1);
         }
     }
     m_pCOUnit = pUnit;
@@ -103,9 +103,9 @@ void CO::startOfTurn()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
 }
 
@@ -210,9 +210,9 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -234,9 +234,9 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker)
     args1 << position.y();
     QJSValue obj3 = pInterpreter->newQObject(pAttacker);
     args1 << obj3;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool() == true)
         {
             return true;
@@ -257,9 +257,9 @@ qint32 CO::getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -280,9 +280,9 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -316,9 +316,9 @@ QStringList CO::getCOUnits(Building* pBuilding)
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
     QStringList ret;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         ret.append(erg.toVariant().toStringList());
     }
     return ret;
@@ -336,9 +336,9 @@ qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -359,9 +359,9 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -382,9 +382,9 @@ qint32 CO::getMinFirerangeModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -404,9 +404,9 @@ bool CO::getHpHidden(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool())
         {
             return true;
@@ -426,9 +426,9 @@ bool CO::getPerfectHpView(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool())
         {
             return true;
@@ -449,9 +449,9 @@ qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -472,9 +472,9 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -495,9 +495,9 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -516,9 +516,9 @@ QString CO::getAdditionalBuildingActions(Building* pBuilding)
     QJSValue obj1 = pInterpreter->newQObject(pBuilding);
     args1 << obj1;
     QString ret;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isString())
         {
             ret += erg.toString() + ",";
@@ -540,9 +540,9 @@ qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
     args1 << position.y();
     args1 << costs;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -563,9 +563,9 @@ qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -585,9 +585,9 @@ qint32 CO::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
     args1 << obj2;
     args1 << fuelCost;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -605,9 +605,9 @@ void CO::buildedUnit(Unit* pUnit)
     args1 << obj2;
     QJSValue obj1 = pInterpreter->newQObject(pUnit);
     args1 << obj1;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
 }
 
@@ -621,9 +621,9 @@ qint32 CO::getCostModifier(QString id, qint32 baseCost)
     args1 << id;
     args1 << baseCost;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -659,9 +659,9 @@ bool CO::getCanMoveAndFire(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool())
         {
             return true;
@@ -682,9 +682,9 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -704,9 +704,9 @@ bool CO::canBeRepaired(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && !erg.toBool())
         {
             return false;
@@ -727,9 +727,9 @@ qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
     args1 << position.x();
     args1 << position.y();
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -749,9 +749,9 @@ void CO::activatePower()
     QJSValueList args1;
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
@@ -773,9 +773,9 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
     args1 << powerMode;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
@@ -788,17 +788,20 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 void CO::addUnitShines()
 {
     spGameMap pMap = GameMap::getInstance();
-    qint32 heigth = pMap->getMapHeight();
-    qint32 width = pMap->getMapWidth();
-    for (qint32 y = 0; y < heigth; y++)
+    if (pMap.get() != nullptr)
     {
-        for (qint32 x = 0; x < width; x++)
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr &&
-                pUnit->getOwner() == m_Owner)
+            for (qint32 x = 0; x < width; x++)
             {
-                pUnit->addShineTween();
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr &&
+                    pUnit->getOwner() == m_Owner)
+                {
+                    pUnit->addShineTween();
+                }
             }
         }
     }
@@ -821,9 +824,9 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     args1 << defPosition.y();
     args1 << isDefender;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -849,9 +852,9 @@ qint32 CO::getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefe
     args1 << defPosition.y();
     args1 << isDefender;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -877,9 +880,9 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     args1 << defPosition.y();
     args1 << isDefender;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -905,9 +908,9 @@ qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDe
     args1 << defPosition.y();
     args1 << isDefender;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -937,9 +940,9 @@ float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, 
     args1 << isDefender;
     args1 << luckMode;
     float ergValue = 0.0f;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toNumber();
@@ -968,9 +971,9 @@ float CO::getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint3
     args1 << defPosition.y();
     args1 << isDefender;
     float ergValue = 0.0f;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toNumber();
@@ -1007,9 +1010,9 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
         args1 << counterAttack;
         // call co bonus
         QString function1 = "gainPowerstar";
-        for (const auto & perk : m_perkList)
+        for (qint32 i = 0; i < m_perkList.size(); ++i)
         {
-            pInterpreter->doFunction(perk, function1, args1);
+            pInterpreter->doFunction(m_perkList[i], function1, args1);
         }
         m_powerCharging = false;
         limitPowerbar(currentValue);
@@ -1018,7 +1021,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
 
 Unit* CO::getCOUnit()
 {
-    return m_pCOUnit;
+    return m_pCOUnit.get();
 }
 
 QStringList CO::getActionModifierList(Unit* pUnit)
@@ -1031,9 +1034,9 @@ QStringList CO::getActionModifierList(Unit* pUnit)
     QJSValue obj1 = pInterpreter->newQObject(pUnit);
     args1 << obj1;
     QStringList ret;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         ret.append(erg.toVariant().toStringList());
     }
     return ret;
@@ -1049,9 +1052,9 @@ qint32 CO::getCORange()
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        for (const auto & perk : m_perkList)
+        for (qint32 i = 0; i < m_perkList.size(); ++i)
         {
-            QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+            QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
             if (erg.isNumber())
             {
                 ret += erg.toInt();
@@ -1081,7 +1084,7 @@ bool CO::inCORange(QPoint position, Unit* pUnit)
         // return true for intel information
         return true;
     }
-    else if (m_pCOUnit != nullptr)
+    else if (m_pCOUnit.get() != nullptr)
     {
         if ((qAbs(m_pCOUnit->Unit::getX() - position.x()) + qAbs(m_pCOUnit->Unit::getY() - position.y())) <= getCORange())
         {
@@ -1106,9 +1109,9 @@ qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
     args1 << obj1;
     args1 << income;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -1128,9 +1131,9 @@ qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
     args1 << obj1;
     args1 << income;
     qint32 ergValue = 0;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isNumber())
         {
             ergValue += erg.toInt();
@@ -1146,9 +1149,9 @@ bool CO::getPerfectVision()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool())
         {
             return true;
@@ -1164,9 +1167,9 @@ bool CO::getWeatherImmune()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        QJSValue erg = pInterpreter->doFunction(perk, function1, args1);
+        QJSValue erg = pInterpreter->doFunction(m_perkList[i], function1, args1);
         if (erg.isBool() && erg.toBool())
         {
             return true;
@@ -1184,9 +1187,9 @@ void CO::postAction(GameAction* pAction)
     args1 << obj3;
     QJSValue obj2 = pInterpreter->newQObject(pAction);
     args1 << obj2;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
 }
 
@@ -1521,9 +1524,9 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     QJSValue obj2 = pInterpreter->newQObject(pDefender);
     args1 << obj2;
     args1 << gotAttacked;
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pInterpreter->doFunction(perk, function1, args1);
+        pInterpreter->doFunction(m_perkList[i], function1, args1);
     }
 }
 
@@ -1538,9 +1541,9 @@ void CO::serializeObject(QDataStream& pStream) const
     m_Variables.serializeObject(pStream);
     pStream << m_powerUsed;
     pStream << static_cast<qint32>(m_perkList.size());
-    for (const auto & perk : m_perkList)
+    for (qint32 i = 0; i < m_perkList.size(); ++i)
     {
-        pStream << perk;
+        pStream << m_perkList[i];
     }
     writeCoStyleToStream(pStream);
     pStream << m_coRangeEnabled;

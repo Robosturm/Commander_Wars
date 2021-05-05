@@ -187,7 +187,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         {
             pCheckbox->setChecked(false);
         }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
         {
             if (checked)
             {

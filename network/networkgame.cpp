@@ -248,7 +248,7 @@ void NetworkGame::processFinished(int, QProcess::ExitStatus)
     Console::print("Networkgame Closing game cause slave game has been terminated.", Console::eDEBUG);
     for (qint32 i = 0; i < m_Clients.size(); i++)
     {
-        sigDisconnectSocket(m_Clients[i]->getSocketID());
+        emit sigDisconnectSocket(m_Clients[i]->getSocketID());
     }
     emit sigClose(this);
 }

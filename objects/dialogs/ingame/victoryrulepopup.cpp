@@ -64,7 +64,8 @@ void VictoryRulePopup::updateInfo()
             if (pPlayer->getIsDefeated() == false)
             {
                 qint32 ruleValue = pVictoryRule->getRuleValue(0);
-                if (pVictoryRule->getRuleType()[0] == VictoryRule::checkbox)
+                auto ruleTypes = pVictoryRule->getRuleType();
+                if (ruleTypes[0] == VictoryRule::checkbox)
                 {
                     ruleValue = 0;
                 }

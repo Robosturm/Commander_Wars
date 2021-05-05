@@ -13,7 +13,7 @@ Filesupport::Filesupport() : QObject()
 QByteArray Filesupport::getHash(QStringList filter, QStringList folders)
 {
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
-    for (auto folder : folders)
+    for (const auto & folder : qAsConst(folders))
     {
         QString path =  QCoreApplication::applicationDirPath() + "/" + folder;
         QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);

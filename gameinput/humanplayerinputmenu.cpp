@@ -49,13 +49,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     width += GameMap::getImageSize() + GameMap::getImageSize() * 3 / 4 ;
     itemWidth = width;
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
     qint32 heigth = createTopSprite(0, width);
-
     qint32 y = heigth;
     startY = y;
     m_Cursor = oxygine::spSprite::create();
-    pAnim = pGameManager->getResAnim("cursor+menu");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("cursor+menu");
     if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
@@ -225,9 +223,8 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
 qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
     oxygine::spBox9Sprite pBottomBox = oxygine::spBox9Sprite::create();
-    pAnim = pGameManager->getResAnim("menu+bottom");
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+bottom");
     pBottomBox->setResAnim(pAnim);
     pBottomBox->setSize(pAnim->getSize());
     pBottomBox->setWidth(width);

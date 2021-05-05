@@ -16,7 +16,7 @@ TCPServer::TCPServer()
 TCPServer::~TCPServer()
 {
     disconnect();
-    disconnectTCP();
+    TCPServer::disconnectTCP();
     Console::print("Server is closed", Console::eLogLevels::eDEBUG);
 }
 

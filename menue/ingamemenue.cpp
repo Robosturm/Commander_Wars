@@ -204,13 +204,15 @@ void InGameMenue::connectMapCursor()
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
-        pApp->cursor().setShape(Qt::CursorShape::BlankCursor);
+        QCursor cursor = pApp->cursor();
+        cursor.setShape(Qt::CursorShape::BlankCursor);
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
     {
         if (!Settings::getShowCursor())
         {
-            pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
+            QCursor cursor = pApp->cursor();
+            cursor.setShape(Qt::CursorShape::ArrowCursor);
         }
     });
     GameMap::getInstance()->addChild(m_Cursor);
@@ -282,7 +284,8 @@ void InGameMenue::setFocused(bool Focused)
 InGameMenue::~InGameMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
+    QCursor cursor = pApp->cursor();
+    cursor.setShape(Qt::CursorShape::ArrowCursor);
     m_MapMover = nullptr;
     m_MapMoveThread.exit();
     m_MapMoveThread.wait();

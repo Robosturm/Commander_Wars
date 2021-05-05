@@ -22,7 +22,7 @@ namespace oxygine
 
     UberShaderProgramBase::~UberShaderProgramBase()
     {
-        releaseShaders();
+        UberShaderProgramBase::releaseShaders();
     }
 
     void UberShaderProgramBase::_restore(Restorable*, void*)

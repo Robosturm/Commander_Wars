@@ -15,7 +15,7 @@ LocalServer::LocalServer()
 LocalServer::~LocalServer()
 {
     disconnect();
-    disconnectTCP();
+    LocalServer::disconnectTCP();
     Console::print("Server is closed", Console::eLogLevels::eDEBUG);
 }
 
@@ -122,7 +122,7 @@ void LocalServer::forwardData(quint64 socketID, QByteArray data, NetworkInterfac
         {
             for (qint32 i2 = 0; i2 < pTXTasks.size(); i2++)
             {
-                emit pTXTasks[i2]->send(m_SocketIDs[i], data, service, false);
+                pTXTasks[i2]->send(m_SocketIDs[i], data, service, false);
             }
         }
     }

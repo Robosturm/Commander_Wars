@@ -168,5 +168,5 @@ void WorkerThread::startSlaveGame()
     spMultiplayermenu pMenu = spMultiplayermenu::create(pServer, "", true);
     pMenu->connectNetworkSlots();
     oxygine::getStage()->addChild(pMenu);
-    pServer->sig_connect(Settings::getSlaveServerName(), 0);
+    emit pServer->sig_connect(Settings::getSlaveServerName(), 0);
 }

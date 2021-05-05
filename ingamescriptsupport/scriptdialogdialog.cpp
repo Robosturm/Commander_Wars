@@ -141,7 +141,8 @@ void ScriptDialogDialog::addActorItem(qint32 i, qint32 panelWidth)
     QString function = "getAddtionalCoFaces";
     QJSValue ret = pInterpreter->doFunction("CO", function);
     auto additionalFaces = ret.toVariant().toStringList();
-    for (auto face : ret.toVariant().toStringList())
+    QStringList coIds = ret.toVariant().toStringList();
+    for (const auto & face : qAsConst(coIds))
     {
         oxygine::ResAnim* pAnim = nullptr;
         pAnim = COSpriteManager::getInstance()->getResAnim(face + "+info");

@@ -56,7 +56,7 @@ MapSelectionView::MapSelectionView()
 
     // map info text
     m_MapInfo = spPanel::create(true, QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60),
-                          QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
+                                QSize(Settings::getWidth() - width - 100, Settings::getHeight() / 2 - 60));
     m_MapInfo->setPosition(width + 50, Settings::getHeight() / 2 - 100);
     this->addChild(m_MapInfo);
 
@@ -346,28 +346,34 @@ void MapSelectionView::loadMapVictoryInfo()
                 {
                     pAnim = pCOSpriteManager->getResAnim("no_co+info");
                 }
-                pSprite->setResAnim(pAnim);
-                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
-                pSprite->setPosition(150, posY);
-                m_pVictoryInfo->addChild(pSprite);
-                if (!co2.isEmpty())
-                {
-                    pAnim = pCOSpriteManager->getResAnim(co2 + "+info");
-                }
-                else
-                {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
-                }
                 if (pAnim != nullptr)
                 {
-                    pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    pSprite->setResAnim(pAnim);
+                    pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+                    pSprite->setPosition(150, posY);
+                    m_pVictoryInfo->addChild(pSprite);
+                    if (!co2.isEmpty())
+                    {
+                        pAnim = pCOSpriteManager->getResAnim(co2 + "+info");
+                    }
+                    else
+                    {
+                        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    }
+                    if (pAnim != nullptr)
+                    {
+                        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+                    }
+                    pSprite = oxygine::spSprite::create();
+                    if (pAnim != nullptr)
+                    {
+                        pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setPosition(150, posY + pAnim->getHeight() * 2.0f);
+                    }
+                    m_pVictoryInfo->addChild(pSprite);
+                    pText->setHtmlText(QString::number(i + 1) + ". " + QString::number(score));
                 }
-                pSprite = oxygine::spSprite::create();
-                pSprite->setScale(2.0f * pAnim->getWidth() / 32.0f);
-                pSprite->setResAnim(pAnim);
-                pSprite->setPosition(150, posY + pAnim->getHeight() * 2.0f);
-                m_pVictoryInfo->addChild(pSprite);
-                pText->setHtmlText(QString::number(i + 1) + ". " + QString::number(score));
             }
         }
         posY += 55;

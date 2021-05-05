@@ -36,6 +36,7 @@ public:
         eFATAL,
         eOFF
     };
+    Q_ENUM(eLogLevels)
 
     enum
     {
@@ -72,7 +73,7 @@ public slots:
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void print(QString message, eLogLevels LogLevel);
+    static void print(QString message, Console::eLogLevels LogLevel);
     /**
      * @brief createfunnymessage
      * @param message
@@ -87,12 +88,12 @@ public slots:
      * @brief setLogLevel
      * @param newLogLevel
      */
-    static void setLogLevel(eLogLevels newLogLevel);
+    static void setLogLevel(Console::eLogLevels newLogLevel);
     /**
      * @brief getLogLevel
      * @return
      */
-    static eLogLevels getLogLevel();
+    static Console::eLogLevels getLogLevel();
     /**
      * @brief createSprites
      * @param input

@@ -14,8 +14,9 @@ CoPowermeter::CoPowermeter(CO* pCO)
 void CoPowermeter::drawPowerMeter()
 {
     removeChildren();
-    if ((GameMap::getInstance() == nullptr ||
-        !GameMap::getInstance()->getGameRules()->getNoPower()) &&
+    spGameMap pMap = GameMap::getInstance();
+    if ((pMap.get() == nullptr ||
+        !pMap->getGameRules()->getNoPower()) &&
         m_pCO != nullptr)
     {
         GameManager* pGameManager = GameManager::getInstance();
@@ -115,17 +116,17 @@ void CoPowermeter::drawPowerMeter()
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = oxygine::spTextField::create();
-                Text->setStyle(style);
-                Text->setHtmlText(tr("Power"));
-                Text->setY(0);
+                oxygine::spTextField pText = oxygine::spTextField::create();
+                pText->setStyle(style);
+                pText->setHtmlText(tr("Power"));
+                pText->setY(0);
                 if (m_flippedX)
                 {
-                    Text->setX(-10 - Text->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(0);
+                    pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -138,25 +139,25 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween2);
                 queue->add(tween3);
                 queue->setLoops(-1);
-                Text->addTween(queue);
-                this->addChild(Text);
+                pText->addTween(queue);
+                this->addChild(pText);
                 break;
             }
             case GameEnums::PowerMode_Superpower:
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = oxygine::spTextField::create();
-                Text->setStyle(style);
-                Text->setHtmlText(tr("Superpower"));
-                Text->setY(0);
+                oxygine::spTextField pText = oxygine::spTextField::create();
+                pText->setStyle(style);
+                pText->setHtmlText(tr("Superpower"));
+                pText->setY(0);
                 if (m_flippedX)
                 {
-                    Text->setX(-10 - Text->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(0);
+                    pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -169,25 +170,25 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween2);
                 queue->add(tween3);
                 queue->setLoops(-1);
-                Text->addTween(queue);
-                this->addChild(Text);
+                pText->addTween(queue);
+                this->addChild(pText);
                 break;
             }
             case GameEnums::PowerMode_Tagpower:
             {
                 oxygine::TextStyle style = FontManager::getMainFont24();
                 style.color = FontManager::getFontColor();
-                oxygine::spTextField Text = oxygine::spTextField::create();
-                Text->setStyle(style);
-                Text->setHtmlText(tr("Tagpower"));
-                Text->setY(- 4);
+                oxygine::spTextField pText = oxygine::spTextField::create();
+                pText->setStyle(style);
+                pText->setHtmlText(tr("Tagpower"));
+                pText->setY(- 4);
                 if (m_flippedX)
                 {
-                    Text->setX(-10 - Text->getTextRect().getWidth());
+                    pText->setX(-10 - pText->getTextRect().getWidth());
                 }
                 else
                 {
-                    Text->setX(0);
+                    pText->setX(0);
                 }
                 oxygine::spTweenQueue queue = oxygine::spTweenQueue::create();
                 oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
@@ -200,8 +201,8 @@ void CoPowermeter::drawPowerMeter()
                 queue->add(tween2);
                 queue->add(tween3);
                 queue->setLoops(-1);
-                Text->addTween(queue);
-                this->addChild(Text);
+                pText->addTween(queue);
+                this->addChild(pText);
                 break;
             }
         }

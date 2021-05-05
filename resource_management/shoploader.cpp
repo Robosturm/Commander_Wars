@@ -11,7 +11,7 @@ void ShopLoader::loadAll()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     RessourceManagement<ShopLoader>::loadAll();
-    for (auto achievement : m_loadedRessources)
+    for (const auto & achievement : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(achievement, "loadShopItems");
     }
@@ -23,7 +23,7 @@ void ShopLoader::onItemBought(qint32 itemType, QString key)
     QJSValueList args;
     args << itemType;
     args << key;
-    for (auto shopLoader : m_loadedRessources)
+    for (const auto &  shopLoader : qAsConst(m_loadedRessources))
     {
         pInterpreter->doFunction(shopLoader, "itemBought", args);
     }

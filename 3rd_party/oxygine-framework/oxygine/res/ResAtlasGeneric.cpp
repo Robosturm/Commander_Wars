@@ -258,7 +258,6 @@ namespace oxygine
                 continue;
             }
 
-            QString id = child_node.attribute("id");
             QString file = child_node.attribute("file");
 
             if (file.isEmpty())

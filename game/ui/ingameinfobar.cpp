@@ -551,7 +551,6 @@ void IngameInfoBar::createUnitInfo(qint32 x, qint32 y)
 
         qint32 fuel = pUnit->getFuel();
         qint32 maxFuel = pUnit->getMaxFuel();
-        divider = 0.0f;
         pTextfield = spLabel::create(pAnim->getWidth() - 10);
         pTextfield->setStyle(smallStyle);
         if (maxFuel > 0.0f)

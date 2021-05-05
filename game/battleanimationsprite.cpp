@@ -150,7 +150,7 @@ void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Un
     QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
     if (m_nextFrames.length() > 0 && !clearSprite)
     {
         for (qint32 i = m_currentFrame.length() - 1; i >= 0; --i)

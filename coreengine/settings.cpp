@@ -507,7 +507,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
 {
     m_activeMods = activeMods;
     m_activeMods.sort();
-    for (const auto& mod : m_activeMods)
+    for (const auto & mod : qAsConst(m_activeMods))
     {
         qDebug() << "Loaded mod: " + mod;
         bool found = false;

@@ -69,7 +69,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     loadMapData();
-    deserializeObject(stream);
+    GameMap::deserializeObject(stream);
     loaded = true;
 }
 
@@ -165,7 +165,7 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
 
 bool GameMap::anyPlayerAlive()
 {
-    for (const auto & player : players)
+    for (const auto & player : qAsConst(players))
     {
         if (!player->getIsDefeated())
         {
@@ -1509,6 +1509,11 @@ GameScript* GameMap::getGameScript()
 Campaign* GameMap::getCampaign()
 {
     return m_Campaign.get();
+}
+
+GameRecorder* GameMap::getGameRecorder()
+{
+    return m_Recorder.get();
 }
 
 QString GameMap::getMapDescription() const

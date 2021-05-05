@@ -261,7 +261,7 @@ public slots:
      * @param p2
      * @param mode
      */
-    void createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, CursorModes mode, QColor color = Qt::white);
+    void createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, EditorMenue::CursorModes mode, QColor color = Qt::white);
     /**
      * @brief selectionChanged
      */

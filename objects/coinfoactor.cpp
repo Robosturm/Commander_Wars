@@ -491,12 +491,9 @@ void COInfoActor::showPerks(spCO pCO, qint32 & y)
         {
             oxygine::spActor perkActor = oxygine::spActor::create();
             qint32 i = pCOPerkManager->getIndex(perk);
-            QString id = pCOPerkManager->getID(i);
             QString name = pCOPerkManager->getName(i);
             QString icon = pCOPerkManager->getIcon(i);
             oxygine::ResAnim* pAnim = pCOPerkManager->getResAnim(icon, oxygine::error_policy::ep_ignore_error);
-            QString description = pCOPerkManager->getDescription(i);
-
             oxygine::spSprite pSprite = oxygine::spSprite::create();
             pSprite->setResAnim(pAnim);
             if (pAnim != nullptr)

@@ -8,117 +8,117 @@ namespace NetworkCommands
     /**
      * @brief MAPINFO map info of from the host
      */
-    static const QString MAPINFO = "MAPINFO";
+    const char* const MAPINFO = "MAPINFO";
     /**
      * @brief REQUESTRULE request the game rules from the host
      */
-    static const QString REQUESTRULE = "REQUESTRULE";
+    const char* const REQUESTRULE = "REQUESTRULE";
     /**
      * @brief RANDOMMAPIDENTIFIER
      */
-    static const QString RANDOMMAPIDENTIFIER = "??;";
+    const char* const RANDOMMAPIDENTIFIER = "??;";
     /**
      * @brief HOSTMAPIDENTIFIER
      */
-    static const QString SERVERMAPIDENTIFIER = ";||;";
+    const char* const SERVERMAPIDENTIFIER = ";||;";
     /**
      * @brief SENDINITUPDATE initial update from the host containing the game rules and all player data
      */
-    static const QString SENDINITUPDATE = "SENDINITUPDATE";
+    const char* const SENDINITUPDATE = "SENDINITUPDATE";
     /**
      * @brief REQUESTMAP the client daoesn't own the map request it from the host
      */
-    static const QString REQUESTMAP = "REQUESTMAP";
+    const char* const REQUESTMAP = "REQUESTMAP";
     /**
      * @brief MAPDATA the map from the host either as savegame or as map file
      */
-    static const QString MAPDATA = "MAPDATA";
+    const char* const MAPDATA = "MAPDATA";
     /**
      * @brief INITGAME initializes the game
      */
-    static const QString INITGAME = "INITGAME";
+    const char* const INITGAME = "INITGAME";
     /**
      * @brief CLIENTREADY the client is ready to start the game
      */
-    static const QString CLIENTREADY = "CLIENTREADY";
+    const char* const CLIENTREADY = "CLIENTREADY";
     /**
      * @brief PLAYERDATA contains the complete player as stream data
      */
-    static const QString PLAYERDATA = "PLAYERDATA";
+    const char* const PLAYERDATA = "PLAYERDATA";
     /**
      * @brief PLAYERARMY
      */
-    static const QString PLAYERARMY = "PLAYERARMY";
+    const char* const PLAYERARMY = "PLAYERARMY";
     /**
      * @brief COLORDATA the color of the selected player
      */
-    static const QString COLORDATA = "COLORDATA";
+    const char* const COLORDATA = "COLORDATA";
     /**
      * @brief CODATA the selected co's of a player
      */
-    static const QString CODATA = "CODATA";
+    const char* const CODATA = "CODATA";
     /**
      * @brief PLAYERCHANGED the ai owner of a player has changed
      */
-    static const QString PLAYERCHANGED = "PLAYERCHANGED";
+    const char* const PLAYERCHANGED = "PLAYERCHANGED";
     /**
      * @brief REQUESTPLAYER request a player from the host
      */
-    static const QString REQUESTPLAYER = "REQUESTPLAYER";
+    const char* const REQUESTPLAYER = "REQUESTPLAYER";
     /**
      * @brief SERVERREADY the host is ready to start the game
      */
-    static const QString SERVERREADY = "SERVERREADY";
+    const char* const SERVERREADY = "SERVERREADY";
     /**
      * @brief CLIENTINITGAME the client has initialized the game
      */
-    static const QString CLIENTINITGAME = "CLIENTINITGAME";
+    const char* const CLIENTINITGAME = "CLIENTINITGAME";
     /**
      * @brief STARTGAME the host has started the game. the client is allowed to start the game as well.
      */
-    static const QString STARTGAME = "STARTGAME";
+    const char* const STARTGAME = "STARTGAME";
 
     // dedicated server commands
     /**
      * @brief LAUNCHGAMEONSERVER
      */
-    static const QString LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
+    const char* const LAUNCHGAMEONSERVER = "LAUNCHGAMEONSERVER";
     /**
       * @brief LAUNCHGAMEONSERVER
       */
-    static const QString GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
+    const char* const GAMERUNNINGONSERVER = "GAMERUNNINGONSERVER";
     /**
      * @brief PLAYERJOINEDGAMEONSERVER
      */
-    static const QString PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";
+    const char* const PLAYERJOINEDGAMEONSERVER = "PLAYERJOINEDGAMEONSERVER";
     /**
      * @brief PLAYERJOINEDGAMEONSERVER
      */
-    static const QString PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
+    const char* const PLAYERDISCONNECTEDGAMEONSERVER = "PLAYERDISCONNECTEDGAMEONSERVER";
     /**
      * @brief PLAYERREJECTEDONSERVER
      */
-    static const QString PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
+    const char* const PLAYERREJECTEDONSERVER = "PLAYERREJECTEDONSERVER";
     /**
      * @brief SERVERREQUESTOPENPLAYERCOUNT
      */
-    static const QString SERVERREQUESTOPENPLAYERCOUNT = "SERVERREQUESTOPENPLAYERCOUNT";
+    const char* const SERVERREQUESTOPENPLAYERCOUNT = "SERVERREQUESTOPENPLAYERCOUNT";
     /**
      * @brief SERVEROPENPLAYERCOUNT
      */
-    static const QString SERVEROPENPLAYERCOUNT = "SERVEROPENPLAYERCOUNT";
+    const char* const SERVEROPENPLAYERCOUNT = "SERVEROPENPLAYERCOUNT";
     /**
      * @brief SERVERGAMEDATA
      */
-    static const QString SERVERGAMEDATA = "SERVERGAMEDATA";
+    const char* const SERVERGAMEDATA = "SERVERGAMEDATA";
     /**
      * @brief SERVERJOINGAME
      */
-    static const QString SERVERJOINGAME = "SERVERJOINGAME";
+    const char* const SERVERJOINGAME = "SERVERJOINGAME";
     /**
      * @brief STARTSERVERGAME
      */
-    static const QString STARTSERVERGAME = "STARTSERVERGAME";
+    const char* const STARTSERVERGAME = "STARTSERVERGAME";
 }
 
 #endif // NETWORKCOMMANDS_H

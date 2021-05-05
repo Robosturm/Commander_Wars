@@ -74,10 +74,13 @@ void Building::scaleAndShowOnSingleTile()
 {
     qint32 width = getBuildingWidth();
     qint32 heigth = getBuildingHeigth();
-    setScaleX(1.0f / static_cast<float>(width));
-    setScaleY(1.0f / static_cast<float>(heigth));
-    setX(GameMap::getImageSize() * (width - 1) / (width));
-    setY(GameMap::getImageSize() * (heigth - 1) / (heigth));
+    if (width > 0 && heigth > 0)
+    {
+        setScaleX(1.0f / static_cast<float>(width));
+        setScaleY(1.0f / static_cast<float>(heigth));
+        setX(GameMap::getImageSize() * (width - 1) / (width));
+        setY(GameMap::getImageSize() * (heigth - 1) / (heigth));
+    }
 }
 QString Building::getDescription()
 {
@@ -574,7 +577,8 @@ QStringList Building::getConstructionList()
     QJSValue obj1 = pInterpreter->newQObject(this);
     args << obj1;
     QJSValue ret = pInterpreter->doFunction(m_BuildingID, function1, args);
-    QStringList buildList = ret.toVariant().toStringList();
+    QVariant var = ret.toVariant();
+    QStringList buildList = var.toStringList();
     QStringList coUnits;
     if (m_pOwner != nullptr)
     {
@@ -594,22 +598,25 @@ QStringList Building::getConstructionList()
             }
         }
     }
+
     spGameMap pMap = GameMap::getInstance();
     QStringList returnList;
-    if (m_pOwner != nullptr)
+    if (m_pOwner != nullptr && pMap.get() != nullptr)
     {
+     bool coUnits = pMap->getGameRules()->getCoUnits();
         QStringList playerBuildList = m_pOwner->getBuildList();
         for (qint32 i = 0; i < buildList.size(); i++)
         {
             QString unitID = buildList[i];
-            QJSValue erg = pInterpreter->doFunction(unitID, "getCOSpecificUnit", args);
+            function1 = "getCOSpecificUnit";
+            QJSValue erg = pInterpreter->doFunction(unitID, function1, args);
             bool isCoUnit = false;
             if (erg.isBool())
             {
                 isCoUnit = erg.toBool();
             }
             if (playerBuildList.contains(unitID) &&
-                (!isCoUnit || pMap->getGameRules()->getCoUnits()))
+                (!isCoUnit || coUnits))
             {
                 returnList.append(unitID);
             }

@@ -355,7 +355,7 @@ void CampaignEditor::loadCampaign(QString filename)
             QString line = stream.readLine().simplified();
             if (line.endsWith(campaign))
             {
-                if (started)
+                if (started == true)
                 {
                     started = false;
                     break;
@@ -884,8 +884,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableEnableCompare);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
-            [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         mapDatas[index].scriptVariableEnableCompare = dropDown->getCurrentItemText();
     });
@@ -959,8 +958,7 @@ void CampaignEditor::showEditScriptVariables(qint32 index)
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, y);
     dropDown->setCurrentItemText(mapDatas[index].scriptVariableDisableCompare);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
-            [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         mapDatas[index].scriptVariableDisableCompare = dropDown->getCurrentItemText();
     });

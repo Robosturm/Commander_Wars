@@ -39,12 +39,6 @@ void DropDownmenu::changeList(QVector<QString> items)
     m_Textfield->setHeight(m_Box->getHeight());
     m_Textfield->setY(5);
 
-    qint32 scrollHeigth = 6 * 40;
-    if (items.size() < 6)
-    {
-        scrollHeigth = (items.size() + 1) * 40;
-    }
-
     for (qint32 i = 0; i < m_ItemTexts.size(); i++)
     {
         addDropDownText(m_ItemTexts[i], i);

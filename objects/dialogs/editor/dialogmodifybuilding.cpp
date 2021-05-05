@@ -83,7 +83,7 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pBuilding->getOwner()->getPlayerID());
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
         if (value >= pMap->getPlayerCount())
         {

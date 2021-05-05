@@ -23,12 +23,14 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        map.getCurrentPlayer().getCO(0).activateSuperpower(GameEnums.PowerMode_Tagpower);
-        map.getCurrentPlayer().getCO(1).activateSuperpower(GameEnums.PowerMode_Tagpower);
+        var player = map.getCurrentPlayer();
+        var co0 = player.getCO(0);
+        var co1 = player.getCO(1);
+        co0.activateSuperpower(GameEnums.PowerMode_Tagpower);
+        co1.activateSuperpower(GameEnums.PowerMode_Tagpower);
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
         // achievements
-        var player = map.getCurrentPlayer();
         if (player.getBaseGameInput().getAiType() === GameEnums.AiTypes_Human)
         {
             ACHIEVEMENT_POWERS.powerUsed("TAGPOWER");

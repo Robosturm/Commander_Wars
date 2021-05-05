@@ -139,7 +139,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         {
             pCheckbox->setChecked(false);
         }
-        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
+        connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool checked)
         {
             if (checked)
             {

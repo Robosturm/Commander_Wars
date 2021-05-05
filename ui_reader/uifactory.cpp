@@ -118,7 +118,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
     pCheckbox->setChecked(value);
     pCheckbox->setTooltipText(tooltip);
     parent->addChild(pCheckbox);
-    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    connect(pCheckbox.get(), &Checkbox::checkChanged, this, [=](bool value)
     {
         onEvent(onEventLine, value);
     });
@@ -143,7 +143,7 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
     pSpinBox->setInfinityValue(infinite);
     pSpinBox->setTooltipText(tooltip);
     pSpinBox->setCurrentValue(value);
-    connect(pSpinBox.get(), &SpinBox::sigValueChanged, [=](qreal value)
+    connect(pSpinBox.get(), &SpinBox::sigValueChanged, this, [=](qreal value)
     {
         onEvent(onEventLine, value);
     });

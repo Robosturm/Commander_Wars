@@ -69,7 +69,7 @@ void Userdata::changeUser()
     {
         user.open(QIODevice::ReadOnly);
         QDataStream pStream(&user);
-        deserializeObject(pStream);
+        Userdata::deserializeObject(pStream);
         user.close();
     }
 }
@@ -150,7 +150,7 @@ void Userdata::deleteAchievement(QString id)
 
 bool Userdata::achieved(QString id)
 {
-    for (const auto & achievement : m_achievements)
+    for (const auto & achievement : qAsConst(m_achievements))
     {
         if (achievement.id == id)
         {
@@ -162,7 +162,7 @@ bool Userdata::achieved(QString id)
 
 QString Userdata::getActiveCoStyle(QString coid)
 {
-    for (const auto & style : m_customCOStyles)
+    for (const auto & style : qAsConst(m_customCOStyles))
     {
         if (coid == std::get<0>(style))
         {
@@ -268,7 +268,7 @@ const Userdata::MapVictoryInfo * Userdata::getVictoryForMap(QString mapPath)
 QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool buyable, bool bought)
 {
     QVector<Userdata::ShopItem> ret;
-    for (const auto & item : m_shopItems)
+    for (const auto & item : qAsConst(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.buyable == buyable &&
@@ -283,7 +283,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
 QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, bool bought)
 {
     QVector<Userdata::ShopItem> ret;
-    for (const auto & item : m_shopItems)
+    for (const auto & item : qAsConst(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
@@ -297,7 +297,7 @@ QVector<Userdata::ShopItem> Userdata::getItems(GameEnums::ShopItemType type, boo
 QStringList Userdata::getShopItemsList(GameEnums::ShopItemType type, bool bought)
 {
     QStringList ret;
-    for (const auto & item : m_shopItems)
+    for (const auto & item : qAsConst(m_shopItems))
     {
         if ((item.itemType == type || type == GameEnums::ShopItemType::ShopItemType_All) &&
             item.bought == bought)
@@ -409,7 +409,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
     }
     pStream << static_cast<qint32>(m_mapVictoryInfo.size());
     auto keys = m_mapVictoryInfo.keys();
-    for (auto key : keys)
+    for (const auto & key : qAsConst(keys))
     {
         auto & item = m_mapVictoryInfo[key];
         pStream << key;
@@ -418,7 +418,7 @@ void Userdata::serializeObject(QDataStream& pStream) const
         Filesupport::writeVectorList(pStream, item.score);
     }
     pStream << static_cast<qint32>(m_shopItems.size());
-    for (auto & item : m_shopItems)
+    for (const auto & item : qAsConst(m_shopItems))
     {
         pStream << item.key;
         pStream << item.name;
@@ -505,7 +505,6 @@ void Userdata::deserializeObject(QDataStream& pStream)
         m_shopItems.clear();
         for (qint32 i = 0; i < size; i++)
         {
-            QString key;
             ShopItem item;
             pStream >> item.key;
             pStream >> item.name;

@@ -8,7 +8,12 @@ namespace oxygine
         typedef C type;
         typedef Value value;
 
-        Property0(getValueRef dest) : _dest(dest), _initialized(false) {}
+        Property0(getValueRef dest)
+            : _dest(dest),
+              _src(dest),
+              _initialized(false)
+        {
+        }
 
         void init(type& t)
         {
@@ -49,7 +54,7 @@ namespace oxygine
             set(t, v);
         }
 
-        void done(type& t)
+        void done(type&)
         {
         }
 

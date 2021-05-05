@@ -108,6 +108,7 @@ QQmlDebuggingEnabler enabler;
     qRegisterMetaType<GameEnums::COInfoPosition>("GameEnums::COInfoPosition");
     qRegisterMetaType<GameEnums::WeaponType>("GameEnums::WeaponType");
     qRegisterMetaType<GameEnums::ShopItemType>("GameEnums::ShopItemType");
+    qRegisterMetaType<Console::eLogLevels>("Console::eLogLevels");
     qRegisterMetaType<Mainapp::StartupPhase>("Mainapp::StartupPhase");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");

@@ -62,6 +62,7 @@ Unit::~Unit()
     if (m_CORange.get() != nullptr)
     {
         m_CORange->removeChildren();
+        m_CORange->detach();
     }
 }
 
@@ -148,10 +149,7 @@ void Unit::setOwner(Player* pOwner)
         m_pOwner->getCO(1)->setCOUnit(nullptr);
         setUnitRank(getMaxUnitRang());
     }
-    if (m_CORange.get() != nullptr)
-    {
-        m_CORange->removeChildren();
-    }
+    showCORange();
     m_pOwner = pOwner;
     for (auto & loadedUnit : m_TransportUnits)
     {
@@ -170,12 +168,10 @@ void Unit::setTerrain(Terrain* pTerrain)
 }
 
 void Unit::addShineTween()
-{
-    
-    removeShineTween();
-    m_ShineTween = oxygine::createTween(TweenAddColorAll(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
-    addTween(m_ShineTween);
-    
+{    
+//    removeShineTween();
+//    m_ShineTween = oxygine::createTween(TweenAddColorAll(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
+//    addTween(m_ShineTween);
 }
 
 void Unit::removeShineTween()
@@ -468,7 +464,7 @@ void Unit::setUnitRank(const qint32 &UnitRank)
         QString function1 = "unloadIcons";
         QJSValue obj1 = pInterpreter->newQObject(this);
         args << obj1;
-        QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+        pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
         loadIcon(getUnitRangIcon(), GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
     }
 }
@@ -2420,11 +2416,7 @@ void Unit::removeUnit(bool killed)
             m_TransportUnits[i]->removeUnit();
         }
     }
-    if (m_CORange.get() != nullptr)
-    {
-        m_CORange->detach();
-        m_CORange = nullptr;
-    }
+    createCORange(-1);
     if (m_pTerrain != nullptr)
     {
         m_pTerrain->setUnit(nullptr);
@@ -3316,8 +3308,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
 }
 
 void Unit::showCORange()
-{
-    
+{    
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         createCORange(m_pOwner->getCO(0)->getCORange());
@@ -3328,29 +3319,32 @@ void Unit::showCORange()
     }
     else
     {
-        // do nothing
-    }
-    
+        createCORange(-1);
+    }    
 }
 
 void Unit::createCORange(qint32 coRange)
 {
-    spGameMap pMap = GameMap::getInstance();
     if (m_CORange.get() == nullptr)
     {
         m_CORange = oxygine::spActor::create();
     }
+    else
+    {
+        m_CORange->detach();
+    }
     m_CORange->removeChildren();
     m_CORange->setPriority(static_cast<qint32>(Mainapp::ZOrder::CORange));
-    if (m_pTerrain != nullptr && coRange >= 0)
+    spGameMap pMap = GameMap::getInstance();
+    if (m_pTerrain != nullptr && coRange >= 0 && pMap.get())
     {
         QColor color = m_pOwner->getColor();
         CreateOutline::addCursorRangeOutline(m_CORange, "co+range+marker", coRange, color);
-        //        QColor playerColor = color;
-        //        QColor inversColor = playerColor;
-        //        oxygine::Sprite::TweenColor tweenColor(inversColor);
-        //        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(500),  -1, true);
         m_CORange->setPosition(GameMap::getImageSize() * Unit::getX(), GameMap::getImageSize() * Unit::getY());
         pMap->addChild(m_CORange);
+    }
+    else
+    {
+        m_CORange = nullptr;
     }
 }

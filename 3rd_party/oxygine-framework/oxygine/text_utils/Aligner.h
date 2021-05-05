@@ -16,7 +16,12 @@ namespace oxygine
     {
         struct Symbol
         {
-            Symbol(): x(0), y(0), code(0) {}
+            Symbol()
+                : x(0),
+                  y(0),
+                  code(0)
+            {
+            }
 
             short x, y;
             qint32 code;

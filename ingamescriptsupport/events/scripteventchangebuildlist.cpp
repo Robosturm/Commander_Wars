@@ -121,7 +121,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
-    connect(pMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    connect(pMenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         unitID = pMenu->getCurrentItemText();
     });

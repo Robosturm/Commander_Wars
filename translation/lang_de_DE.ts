@@ -417,58 +417,58 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="861"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="938"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="937"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="865"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="942"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="941"/>
         <source>Name of the Variable that should be checked. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="878"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="955"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="954"/>
         <source>Compare: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="884"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="959"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="958"/>
         <source>The way how the variable gets compared with the constant. variable compare value </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="897"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="972"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="896"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="970"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="901"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="976"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="900"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="974"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="914"/>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="989"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="913"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="987"/>
         <source>Use Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="918"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="917"/>
         <source>If checked the enable variable needs to fullfil the condition to allow this map to be playable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="931"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="930"/>
         <source>Disable Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="993"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="991"/>
         <source>If checked and if the disable variable fullfil the condition this map can&apos;t be played.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -541,17 +541,17 @@
 <context>
     <name>CoPowermeter</name>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="120"/>
+        <location filename="../game/ui/copowermeter.cpp" line="121"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="151"/>
+        <location filename="../game/ui/copowermeter.cpp" line="152"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/copowermeter.cpp" line="182"/>
+        <location filename="../game/ui/copowermeter.cpp" line="183"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1213,12 +1213,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="110"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="111"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="131"/>
+        <location filename="../objects/dialogs/ingame/dialogvictoryconditions.cpp" line="132"/>
         <source>Keep Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1411,12 +1411,12 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1380"/>
+        <location filename="../menue/gamemenue.cpp" line="1382"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1390"/>
+        <location filename="../menue/gamemenue.cpp" line="1392"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2122,84 +2122,84 @@ Fullscreen  - Animations are upscaled based on the resolution
         <location filename="../game/ui/ingameinfobar.cpp" line="536"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="542"/>
         <location filename="../game/ui/ingameinfobar.cpp" line="546"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="794"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="793"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="559"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="558"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="565"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="564"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="578"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="577"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="584"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="583"/>
         <source>Ammo 1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="596"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="595"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="601"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="600"/>
         <source>Ammo 2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="612"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="833"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="611"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="832"/>
         <source>Owner:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="617"/>
-        <location filename="../game/ui/ingameinfobar.cpp" line="828"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="616"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="827"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="626"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="625"/>
         <source>Weapon 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="640"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="639"/>
         <source>Weapon 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="653"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="652"/>
         <source>Move:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="665"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="664"/>
         <source>Movepoints:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="677"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="676"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="811"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="810"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/ui/ingameinfobar.cpp" line="824"/>
+        <location filename="../game/ui/ingameinfobar.cpp" line="823"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3245,57 +3245,57 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1351"/>
+        <location filename="../menue/gamemenue.cpp" line="1353"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1352"/>
+        <location filename="../menue/gamemenue.cpp" line="1354"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1353"/>
+        <location filename="../menue/gamemenue.cpp" line="1355"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1354"/>
+        <location filename="../menue/gamemenue.cpp" line="1356"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1355"/>
+        <location filename="../menue/gamemenue.cpp" line="1357"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1356"/>
+        <location filename="../menue/gamemenue.cpp" line="1358"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1357"/>
+        <location filename="../menue/gamemenue.cpp" line="1359"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1358"/>
+        <location filename="../menue/gamemenue.cpp" line="1360"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1765"/>
+        <location filename="../menue/gamemenue.cpp" line="1767"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1797"/>
+        <location filename="../menue/gamemenue.cpp" line="1799"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1825"/>
+        <location filename="../menue/gamemenue.cpp" line="1827"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4223,22 +4223,22 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="147"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="146"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="150"/>
         <source>The value that the variable gets checked against.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="163"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="162"/>
         <source>Campaign Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="167"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="166"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4564,18 +4564,18 @@ Warning this may lead to asynchron games or crashes in case one of the mods is n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="177"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="178"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="200"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="201"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="209"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="210"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5181,42 +5181,42 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventModifyVariable</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="93"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="92"/>
         <source>Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="97"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="96"/>
         <source>Name of the Variable that should be changed. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="108"/>
         <source>Modifier: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="113"/>
         <source>The way how the variable gets modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="124"/>
         <source>Value: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="128"/>
         <source>The value modifying the variable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="142"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="140"/>
         <source>Campaign Variable: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="146"/>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="144"/>
         <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
         <translation type="unfinished"></translation>
     </message>

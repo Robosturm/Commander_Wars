@@ -212,7 +212,7 @@ void DialogModifyUnit::updateData()
     pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
     {
         m_pUnit->setOwner(pMap->getPlayer(value));
 
@@ -328,7 +328,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     {
         pDropdownmenu->setCurrentItem("-");
     }
-    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         emit sigLoadUnit(pDropdownmenu->getCurrentItemText(), index);
     });

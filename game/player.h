@@ -151,10 +151,7 @@ public slots:
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
      */
-    inline BaseGameInputIF* getBaseGameInput()
-    {
-        return m_pBaseGameInput.get();
-    }
+    BaseGameInputIF* getBaseGameInput();
     /**
      * @brief getIsDefeated
      * @return

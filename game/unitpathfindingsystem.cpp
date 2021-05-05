@@ -124,9 +124,9 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
     {
-        QList<QVector4D> usedNodes;
-        QList<QVector4D> nextNodes;
-        QList<QVector4D> currentNodes;
+        QVector<QVector4D> usedNodes;
+        QVector<QVector4D> nextNodes;
+        QVector<QVector4D> currentNodes;
         currentNodes.append(QVector4D(target.x(), target.y(), target.x(), target.y()));
         while (currentNodes.size() > 0 || nextNodes.size() > 0)
         {

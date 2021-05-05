@@ -743,7 +743,7 @@ void PlayerSelection::createArmySelection(qint32 ai, QVector<qint32> & xPosition
     pArmy->setTooltipText(tr("Selects the army for the player. CO means the army of the first CO is selected."));
     m_pPlayerSelection->addItem(pArmy);
     m_playerArmy.append(pArmy);
-    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
+    connect(pArmy.get(), &DropDownmenuSprite::sigItemChanged, this, [=](qint32)
     {
         emit sigSelectedArmyChanged(player, pArmy->getCurrentItemText());
     });
@@ -786,7 +786,7 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
         sendStream << NetworkCommands::PLAYERARMY;
         sendStream << player;
         sendStream << army;
-        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
     
 }
@@ -902,7 +902,7 @@ void PlayerSelection::playerDataChanged()
                 sendStream << buildList[i2];
             }
         }
-        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
     }
 }
 
@@ -920,7 +920,7 @@ void PlayerSelection::playerColorChanged(QColor value, qint32 playerIdx, qint32 
         sendStream << NetworkCommands::COLORDATA;
         sendStream << playerIdx;
         sendStream << pPlayer->getColor();
-        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
     
 }
@@ -1079,7 +1079,7 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
         {
             pCO->writeCoStyleToStream(sendStream);
         }
-        m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
+        emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
     }
 }
 
@@ -1174,7 +1174,7 @@ void PlayerSelection::selectAI(qint32 player)
             QByteArray data;
             createPlayerChangedData(data, socket, name, ai, player, false);
             // update data for all clients
-            m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             updatePlayerData(player);
         }
         else
@@ -1269,7 +1269,7 @@ void PlayerSelection::sendOpenPlayerCount()
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
     sendStream << NetworkCommands::SERVEROPENPLAYERCOUNT;
     qint32 openPlayerCount = 0;
-    for (const auto & playerAI : m_playerAIs)
+    for (const auto & playerAI : qAsConst(m_playerAIs))
     {
         if (playerAI->getCurrentItem() == playerAI->getItemCount() - 1)
         {
@@ -1322,7 +1322,7 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & 
         {
             sendStream << player[i];
         }
-        m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
+        emit m_pNetworkInterface.get()->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
     }
 }
 
@@ -1436,7 +1436,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             QByteArray sendDataOtherClients;
             createPlayerChangedData(sendDataOtherClients, socketID, username, aiType, player, false);
             // send player update
-            m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
+            emit m_pNetworkInterface->sig_sendData(socketID, sendDataRequester, NetworkInterface::NetworkSerives::Multiplayer, false);
             emit m_pNetworkInterface.get()->sigForwardData(socketID, sendDataOtherClients, NetworkInterface::NetworkSerives::Multiplayer);
         }
         else
@@ -1512,7 +1512,7 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
                 }
                 QByteArray data;
                 createPlayerChangedData(data, socket, name, aiType, player, false);
-                m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
+                emit m_pNetworkInterface->sigForwardData(socketId, data, NetworkInterface::NetworkSerives::Multiplayer);
             }
         }
         else

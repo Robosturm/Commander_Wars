@@ -135,8 +135,7 @@ void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEdito
     dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, 70);
     dropDown->setCurrentItemText(m_Compare);
-    connect(dropDown.get(), &DropDownmenu::sigItemChanged,
-            [=](qint32)
+    connect(dropDown.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
     {
         m_Compare = dropDown->getCurrentItemText();
     });

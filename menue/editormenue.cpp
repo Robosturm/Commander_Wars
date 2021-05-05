@@ -581,7 +581,7 @@ void EditorMenue::showResizeMap()
     y += 40;
 
     addChild(pBox);
-    connect(pBox.get(), &GenericBox::sigFinished, [=]
+    connect(pBox.get(), &GenericBox::sigFinished, this, [=]
     {
         emit sigResizeMap(leftBox->getCurrentValue(), topBox->getCurrentValue(),
                           rightBox->getCurrentValue(), bottomBox->getCurrentValue());
@@ -1742,7 +1742,8 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                                 {
                                     if (pBuilding->canBuildingBePlaced(pMap->getTerrain(x + xPos, y + yPos)))
                                     {
-                                        QString baseTerrain = pBuilding->getBaseTerrain()[0];
+                                        auto baseTerrains = pBuilding->getBaseTerrain();
+                                        QString baseTerrain = baseTerrains[0];
                                         pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
                                     }
                                     spBuilding pCopyBuilding = spBuilding::create(pBuilding->getBuildingID());

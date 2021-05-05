@@ -89,7 +89,7 @@ Achievementmenu::Achievementmenu()
     Userdata* pUserdata = Userdata::getInstance();
     auto achievements = pUserdata->getAchievements();
     qint32 achieveCount = 0;
-    for (auto achievement : *achievements)
+    for (const auto & achievement : qAsConst(*achievements))
     {
         if (achievement.progress >= achievement.targetValue)
         {
@@ -140,14 +140,16 @@ void Achievementmenu::searchChanged(QString text)
     qint32 x = 10;
     qint32 y = 10;
     qint32 singleWidth = Settings::getWidth() - 80;
-    for (auto achievement : *achievements)
+    for (const auto & achievement : qAsConst(*achievements))
     {
         if (achievement.loaded)
         {
             bool achieved = achievement.progress >= achievement.targetValue;
+            QString lowerName = achievement.name.toLower();
+            QString lowerDescription = achievement.description.toLower();
             if (text.isEmpty() ||
-                ((achievement.name.toLower().contains(text) ||
-                  achievement.description.toLower().contains(text)) &&
+                ((lowerName.contains(text) ||
+                  lowerDescription.contains(text)) &&
                  (!achievement.hide || achieved)))
             {
 
