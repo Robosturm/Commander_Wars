@@ -93,7 +93,11 @@ void Tooltip::showTooltip()
             {
                 Console::print("Showing tooltip", Console::eDEBUG);
                 QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
-
+                if (m_Tooltip.get() != nullptr)
+                {
+                    m_Tooltip->detach();
+                    m_Tooltip = nullptr;
+                }
                 m_Tooltip = oxygine::spActor::create();
                 m_Tooltip->setPriority(static_cast<qint32>(Mainapp::ZOrder::Tooltip));
 

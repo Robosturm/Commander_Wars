@@ -34,7 +34,6 @@ void GameAnimation::restart()
 {
     m_stopped = false;
     m_previousAnimation = nullptr;
-
     for (auto & tween : m_stageTweens)
     {
         oxygine::getStage()->addTween(tween);
@@ -48,6 +47,7 @@ void GameAnimation::start()
     if (!m_started)
     {
         m_started = true;
+        m_previousAnimation = nullptr;
         doPreAnimationCall();
         AudioThread* pAudioThread = Mainapp::getInstance()->getAudioThread();
         for (auto & data : m_SoundData)
@@ -93,7 +93,7 @@ void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 
 void GameAnimation::queueAnimationBefore(GameAnimation* pGameAnimation)
 {
-    if (m_previousAnimation != nullptr)
+    if (m_previousAnimation.get() != nullptr)
     {
         // remove ourself from previous animation and add our ancestor
         m_previousAnimation->removeQueuedAnimation(this);
@@ -108,7 +108,7 @@ void GameAnimation::removeQueuedAnimation(GameAnimation* pGameAnimation)
     qint32 i = 0;
     while (i < m_QueuedAnimations.size())
     {
-        if (m_QueuedAnimations[i] == pGameAnimation)
+        if (m_QueuedAnimations[i].get() == pGameAnimation)
         {
             m_QueuedAnimations.removeAt(i);
         }
@@ -331,17 +331,19 @@ bool GameAnimation::onFinished(bool skipping)
         else
         {
             for (auto & data : m_SoundData)
-        {
-            if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
             {
-                Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile, data.soundFolder);
+                if (m_stopSoundAtAnimationEnd || skipping || data.loops < 0)
+                {
+                    Mainapp::getInstance()->getAudioThread()->stopSound(data.soundFile, data.soundFolder);
+                }
             }
         }
-        }
+        GameAnimationFactory* pGameAnimationFactory = GameAnimationFactory::getInstance();
         for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
         {
-            GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
+            pGameAnimationFactory->startQueuedAnimation(m_QueuedAnimations[i].get());
         }
+        m_QueuedAnimations.clear();
         if ((!m_jsPostActionObject.isEmpty()) && (!m_jsPostActionObject.isEmpty()))
         {
             Console::print("Calling post Animation function " + m_jsPostActionObject + "." + m_jsPostActionFunction, Console::eDEBUG);

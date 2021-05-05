@@ -86,7 +86,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     spGameAnimationWalk pGameAnimationWalk = spGameAnimationWalk::create(pUnit, pAction->getMovePath());
     pGameAnimationWalk->setPriority(static_cast<qint32>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
-    m_Animations.append(pGameAnimationWalk);    
+    m_Animations.append(pGameAnimationWalk);
     return pGameAnimationWalk.get();
 }
 
@@ -99,7 +99,7 @@ GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, Gam
     {
         pGameMenue->addChild(pAnim);
     }
-    m_Animations.append(pAnim);    
+    m_Animations.append(pAnim);
     return pAnim.get();
 }
 
@@ -124,7 +124,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
     {
         spGameAnimationNextDay pAnim = spGameAnimationNextDay::create(pPlayer, frameTime, false, uptimeMs);
         pGameMenue->addChild(pAnim);
-        m_Animations.append(pAnim);        
+        m_Animations.append(pAnim);
         return pAnim.get();
     }
     return nullptr;
@@ -191,7 +191,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         else
         {
             pRet = spBattleAnimation::create(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
+                                             pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             oxygine::spSprite pBack = nullptr;
 
             if (battleViewMode == GameEnums::BattleAnimationMode_Fullscreen ||
@@ -326,7 +326,7 @@ void GameAnimationFactory::finishAllAnimations()
         spGameAnimation spAnimation = m_Animations[i];
         if (!spAnimation->onFinished(true))
         {
-            i++;
+            ++i;
         }
     }
 }

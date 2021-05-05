@@ -334,8 +334,8 @@ protected:
     bool m_skipping{false};
 private:
 
-    QVector<GameAnimation*> m_QueuedAnimations;
-    GameAnimation* m_previousAnimation{nullptr};
+    QVector<spGameAnimation> m_QueuedAnimations;
+    spGameAnimation m_previousAnimation{nullptr};
     QString m_jsPostActionObject{""};
     QString m_jsPostActionFunction{""};
     QString m_jsPreActionObject{""};

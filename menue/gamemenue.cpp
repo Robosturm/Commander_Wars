@@ -855,14 +855,9 @@ void GameMenue::skipAllAnimations()
     {
         GameAnimation* pAnimation = GameAnimationFactory::getAnimation(i);
         GameAnimationDialog* pDialogAnimation = dynamic_cast<GameAnimationDialog*>(pAnimation);
-        if (pDialogAnimation == nullptr || !dialogEnabled)
+        if ((pDialogAnimation == nullptr || !dialogEnabled) && pAnimation != nullptr)
         {
-            if (pAnimation != nullptr)
-            {
-                while (!pAnimation->onFinished(true))
-                {
-                }
-            }
+            while (!pAnimation->onFinished(true));
         }
         else
         {
