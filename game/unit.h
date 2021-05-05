@@ -994,7 +994,7 @@ private:
 
     QVector<QPoint> m_MultiTurnPath;
 
-    oxygine::spTween m_ShineTween;
+    QVector<oxygine::spTween> m_ShineTweens;
     QString m_MovementType;
 
     QVector<QPoint> m_OffensiveBonus;

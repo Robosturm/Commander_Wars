@@ -454,7 +454,7 @@ namespace oxygine
 
             spActor me = this;
 
-            parent->m_children.remove(me);
+            parent->m_children.removeItem(me);
 
             Actor* sibling = parent->m_children._last.get();
 
@@ -901,10 +901,9 @@ namespace oxygine
             Q_ASSERT(actor->m_parent == this);
             if (actor->m_parent == this)
             {
-                m_Locked.lock();
+                QMutexLocker lock(&m_Locked);
                 setParent(actor.get(), nullptr);
-                m_children.remove(actor);
-                m_Locked.unlock();
+                m_children.removeItem(actor);
             }
         }
     }
@@ -933,7 +932,7 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
-        m_Locked.lock();
+        QMutexLocker lock(&m_Locked);
         spTween tween = m_tweens._first;
         while (tween)
         {
@@ -945,7 +944,7 @@ namespace oxygine
             }
             if (tween->isDone() && tween->getParentList())
             {
-                m_tweens.remove(tween);
+                m_tweens.removeItem(tween);
             }
             tween = tweenNext;
         }
@@ -961,7 +960,6 @@ namespace oxygine
             }
             actor = next;
         }
-        m_Locked.unlock();
     }
 
     void Actor::update(const UpdateState& parentUS)
@@ -1129,9 +1127,8 @@ namespace oxygine
 
     void Actor::render(const RenderState& parentRS)
     {
-        m_Locked.lock();
+        QMutexLocker lock(&m_Locked);
         m_rdelegate->render(this, parentRS);
-        m_Locked.unlock();
     }
 
     RectF Actor::getDestRect() const
@@ -1142,14 +1139,13 @@ namespace oxygine
     spTween Actor::__addTween(spTween tween, bool)
     {
         Q_ASSERT(tween);
-        m_Locked.lock();
+        QMutexLocker lock(&m_Locked);
         if (!tween)
         {
             return nullptr;
         }
         tween->start(*this);
         m_tweens.append(tween);
-        m_Locked.unlock();
         return tween;
     }
 
@@ -1179,21 +1175,19 @@ namespace oxygine
         return nullptr;
     }
 
-    void Actor::removeTween(spTween v)
+    void Actor::removeTween(spTween pTween)
     {
-        m_Locked.lock();
-        Q_ASSERT(v);
-        if (!v)
+        QMutexLocker lock(&m_Locked);
+        Q_ASSERT(pTween);
+        if (pTween.get() != nullptr)
         {
             return;
         }
-
-        if (v->getParentList() == &m_tweens)
+        if (pTween->getParentList() == &m_tweens)
         {
-            v->setClient(nullptr);
-            m_tweens.remove(v);
+            pTween->setClient(nullptr);
+            m_tweens.removeItem(pTween);
         }
-        m_Locked.unlock();
     }
 
     void Actor::removeTweens(bool callComplete)

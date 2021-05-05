@@ -378,7 +378,7 @@ namespace oxygine
         Vector2 m_scale;
         Vector2 m_size;
         float   m_rotation;
-        qint32   m_zOrder;
+        qint32  m_zOrder;
 
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};

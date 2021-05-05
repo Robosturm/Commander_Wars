@@ -140,7 +140,7 @@ namespace oxygine
         virtual void complete(timeMS deltaTime = timeMS(TWEEN_COMPLETE_DT));
 
         /**removes self from Actor, complete callback not called*/
-        void remove();
+        void removeFromActor();
 
         void start(Actor& actor);
         void update(Actor& actor, const UpdateState& us);

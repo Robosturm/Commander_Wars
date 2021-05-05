@@ -8,6 +8,8 @@
 #include "3rd_party/oxygine-framework/oxygine/text_utils/Node.h"
 #include "3rd_party/oxygine-framework/oxygine/text_utils/TextBuilder.h"
 
+#include <QMutexLocker>
+
 namespace oxygine
 {
     static ResFont* _defaultFont = nullptr;
@@ -276,7 +278,7 @@ namespace oxygine
             const Font* font = m_style.font->getClosestFont(scale, m_style.fontSize, scale);
             if (font)
             {
-                m_Locked.lock();
+                QMutexLocker lock(&m_Locked);
                 _rtscale = scale;
                 //_realFontSize = fontSize;
                 _root = nullptr;
@@ -296,7 +298,6 @@ namespace oxygine
                 _root->finalPass(rd);
                 rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
                 _textRect = rd.bounds;
-                m_Locked.unlock();
             }
         }
     }

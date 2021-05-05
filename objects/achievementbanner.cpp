@@ -48,10 +48,10 @@ AchievementBanner::AchievementBanner(const Userdata::Achievement& achievement)
     m_activeBanners++;
     m_showTimer.setSingleShot(true);
     m_showTimer.start(std::chrono::seconds(5));
-    connect(&m_showTimer, &QTimer::timeout, this, &AchievementBanner::remove, Qt::QueuedConnection);
+    connect(&m_showTimer, &QTimer::timeout, this, &AchievementBanner::removeBanner, Qt::QueuedConnection);
 }
 
-void AchievementBanner::remove()
+void AchievementBanner::removeBanner()
 {
     m_activeBanners--;
     detach();

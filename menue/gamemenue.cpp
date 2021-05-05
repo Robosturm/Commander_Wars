@@ -9,7 +9,6 @@
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
 #include "coreengine/globalutils.h"
-#include "coreengine/tweens/tweenaddcolorall.h"
 #include "coreengine/settings.h"
 
 #include "ai/proxyai.h"
@@ -199,8 +198,12 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
     {
         if (m_pChat->getVisible() == false)
         {
-            oxygine::spTween tween = oxygine::createTween(TweenAddColorAll(QColor(0, 200, 0, 0), false), oxygine::timeMS(1000), -1, true);
-            m_ChatButton->addTween(tween);
+            if (m_chatButtonShineTween.get())
+            {
+                m_chatButtonShineTween->removeFromActor();
+            }
+            m_chatButtonShineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
+            m_ChatButton->addTween(m_chatButtonShineTween);
         }
     }
     else if (service == NetworkInterface::NetworkSerives::ServerHosting)

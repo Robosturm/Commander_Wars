@@ -150,7 +150,7 @@ namespace oxygine
             {
                 startDrag(te->localPosition);
             }
-            break;
+                break;
             case TouchEvent::TOUCH_UP:
             {
                 if (!_ignoreTouchUp)
@@ -163,13 +163,13 @@ namespace oxygine
                     }
                 }
             }
-            break;
+                break;
 
             case TouchEvent::MOVE:
             {
                 onMove(te->localPosition);
             }
-            break;
+                break;
         }
     }
 
@@ -205,17 +205,19 @@ namespace oxygine
     void Draggable::snapClient2Bounds()
     {
         Actor* client = getClient();
-
-        Vector2 np = client->getPosition();
-        if (_bounds.getWidth() != -1 && _bounds.getHeight() != -1)
+        if (client != nullptr)
         {
-            np.x = std::max(np.x, (float)_bounds.getX());
-            np.y = std::max(np.y, (float)_bounds.getY());
+            Vector2 np = client->getPosition();
+            if (_bounds.getWidth() != -1 && _bounds.getHeight() != -1)
+            {
+                np.x = std::max(np.x, (float)_bounds.getX());
+                np.y = std::max(np.y, (float)_bounds.getY());
 
-            np.x = std::min(np.x, (float)_bounds.getRight());
-            np.y = std::min(np.y, (float)_bounds.getBottom());
+                np.x = std::min(np.x, (float)_bounds.getRight());
+                np.y = std::min(np.y, (float)_bounds.getBottom());
+            }
+            client->setPosition(np);
         }
-        client->setPosition(np);
     }
 
 }

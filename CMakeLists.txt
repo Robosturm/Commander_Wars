@@ -285,7 +285,6 @@ set(${PROJECT_NAME}_SRCS
         # tweens
         coreengine/tweens/tweentogglevisibility.cpp
         coreengine/tweens/tweenwait.cpp
-        coreengine/tweens/tweenaddcolorall.cpp
         coreengine/tweens/tweenscreenshake.cpp
 
         # network engine

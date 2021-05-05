@@ -149,10 +149,10 @@ namespace oxygine
 
 
 
-        void remove(T& child)
+        void removeItem(T& child)
         {
             Q_ASSERT(child->_list == this);
-            child->_list = 0;
+            child->_list = nullptr;
 
             if (child->_next)
             {
@@ -177,8 +177,8 @@ namespace oxygine
                 _first = child->_next;
             }
 
-            child->_prev = 0;
-            child->_next = 0;
+            child->_prev = nullptr;
+            child->_next = nullptr;
 
             checkList();
         }

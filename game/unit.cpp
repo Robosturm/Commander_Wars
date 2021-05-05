@@ -19,7 +19,6 @@
 #include "menue/editormenue.h"
 
 #include "coreengine/tweens/tweentogglevisibility.h"
-#include "coreengine/tweens/tweenaddcolorall.h"
 
 const float Unit::animationSpeed = 1.5f;
 
@@ -169,27 +168,35 @@ void Unit::setTerrain(Terrain* pTerrain)
 
 void Unit::addShineTween()
 {    
-//    removeShineTween();
-//    m_ShineTween = oxygine::createTween(TweenAddColorAll(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
-//    addTween(m_ShineTween);
+    removeShineTween();
+    oxygine::spActor child = getFirstChild();
+    while (child.get() != nullptr)
+    {
+        oxygine::spVStyleActor pActor = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(child);
+        if (pActor.get() != nullptr)
+        {
+            oxygine::spTween shineTween = oxygine::createTween(oxygine::VStyleActor::TweenAddColor(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
+            pActor->addTween(shineTween);
+            m_ShineTweens.append(shineTween);
+        }
+        child = child->getNextSibling();
+    }
 }
 
 void Unit::removeShineTween()
 {
-    if (m_ShineTween.get() != nullptr)
+    QColor addColor(0, 0, 0, 0);
+    for (auto & shineTween : m_ShineTweens)
     {
-        m_ShineTween->remove();
-        m_ShineTween = nullptr;
-        QColor addColor(0, 0, 0, 0);
-        setAddColor(addColor);
-        oxygine::spVStyleActor child = static_cast<oxygine::VStyleActor*>(getFirstChild().get());
-        while (child)
+        oxygine::spActor pActor = shineTween->getClient();
+        oxygine::spVStyleActor pVStyle = oxygine::dynamic_pointer_cast<oxygine::VStyleActor>(pActor);
+        if (pVStyle.get() != nullptr)
         {
-            child->setAddColor(addColor);
-            child = static_cast<oxygine::VStyleActor*>(child->getNextSibling().get());
+            pVStyle->setAddColor(addColor);
         }
-        
+        shineTween->removeFromActor();
     }
+    m_ShineTweens.clear();
 }
 
 void Unit::loadSprite(QString spriteID, bool addPlayerColor, bool flipSprite)

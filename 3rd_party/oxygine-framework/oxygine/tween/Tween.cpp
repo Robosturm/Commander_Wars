@@ -107,9 +107,13 @@ namespace oxygine
         m_elapsed = elapsed;
     }
 
-    void Tween::remove()
+    void Tween::removeFromActor()
     {
-        getClient()->removeTween(this);
+        oxygine::Actor* pClient = getClient();
+        if (pClient != nullptr)
+        {
+            pClient->removeTween(this);
+        }
     }
 
     void Tween::complete(timeMS deltaTime)

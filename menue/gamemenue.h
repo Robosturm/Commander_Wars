@@ -301,6 +301,7 @@ protected:
     static spGameMenue m_pInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
+    oxygine::spTween m_chatButtonShineTween{nullptr};
     spNetworkInterface m_pNetworkInterface;
     bool gameStarted{false};
     QVector<quint64> m_PlayerSockets;

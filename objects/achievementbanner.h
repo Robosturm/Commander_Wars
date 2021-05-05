@@ -18,7 +18,7 @@ public:
     explicit AchievementBanner(const Userdata::Achievement& achievement);
 
 protected slots:
-    void remove();
+    void removeBanner();
 private:
     QTimer m_showTimer;
     static quint32 m_activeBanners;
