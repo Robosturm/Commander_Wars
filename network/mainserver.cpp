@@ -174,11 +174,13 @@ void MainServer::playerJoined(qint64 socketId)
 
 void MainServer::sendGameDataToClient(qint64 socketId)
 {
+    QString command = QString(NetworkCommands::SERVERGAMEDATA);
+    Console::print("Sending command " + command, Console::eDEBUG);
     QByteArray block;
     QBuffer buffer(&block);
     buffer.open(QIODevice::WriteOnly);
     QDataStream out(&buffer);
-    out << NetworkCommands::SERVERGAMEDATA;
+    out << command;
     qint32 sizePos = buffer.pos();
     out << sizePos;
     qint32 count = 0;

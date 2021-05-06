@@ -1,8 +1,6 @@
 #ifndef NETWORKCOMMANDS_H
 #define NETWORKCOMMANDS_H
 
-#include "qstring.h"
-
 namespace NetworkCommands
 {
     /**

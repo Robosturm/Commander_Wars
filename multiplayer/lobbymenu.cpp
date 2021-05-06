@@ -183,11 +183,13 @@ void LobbyMenu::joinGamePassword(QString password)
     if (exists)
     {
         Console::print("Leaving Lobby Menue", Console::eDEBUG);
+        QString command = QString(NetworkCommands::SERVERJOINGAME);
+        Console::print("Sending command " + command, Console::eDEBUG);
         m_usedForHosting = true;
         oxygine::getStage()->addChild(spMultiplayermenu::create(m_pTCPClient, password, false));
         QByteArray data;
         QDataStream stream(&data, QIODevice::WriteOnly);
-        stream << NetworkCommands::SERVERJOINGAME;
+        stream << command;
         stream << m_currentGame->getSlaveName();
         emit m_pTCPClient->sig_sendData(0, data, NetworkInterface::NetworkSerives::ServerHosting, false);
         oxygine::Actor::detach();        

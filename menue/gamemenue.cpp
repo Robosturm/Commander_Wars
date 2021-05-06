@@ -170,9 +170,11 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 if (ready)
                 {
                     Console::print("All players are ready starting game", Console::eDEBUG);
+                    QString command = QString(NetworkCommands::STARTGAME);
+                    Console::print("Sending command " + command, Console::eDEBUG);
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                    sendStream << NetworkCommands::STARTGAME;
+                    sendStream << command;
                     quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
                     GlobalUtils::seed(seed);
                     GlobalUtils::setUseSeed(true);
@@ -618,9 +620,10 @@ void GameMenue::performAction(spGameAction pGameAction)
             if (multiplayer &&
                 pCurrentPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
             {
+                Console::print("Sending action to other players", Console::eDEBUG);
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
-                pGameAction->setRoundTimerTime(pMap->getGameRules()->getRoundTimer()->remainingTime());
+                pGameAction->setRoundTimerTime(pMap->getGameRules()->getRoundTimer()->remainingTime());                
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
                 stream << pMap->getCurrentPlayer()->getPlayerID();

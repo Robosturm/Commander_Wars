@@ -63,8 +63,8 @@ void DialogConnecting::cancel()
 
 void DialogConnecting::connected()
 {
-    detach();
     emit sigConnected();
+    detach();
 }
 
 void DialogConnecting::connectionTimeout()

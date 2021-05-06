@@ -781,9 +781,11 @@ void PlayerSelection::selectedArmyChanged(qint32 player, QString army)
     }
     if (m_pNetworkInterface.get() != nullptr)
     {
+        QString command = QString(NetworkCommands::PLAYERARMY);
+        Console::print("Sending command " + command, Console::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::PLAYERARMY;
+        sendStream << command;
         sendStream << player;
         sendStream << army;
         emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
@@ -885,10 +887,12 @@ void PlayerSelection::playerDataChanged()
     if (m_pNetworkInterface.get() != nullptr &&
         m_pNetworkInterface->getIsServer())
     {
+        QString command = QString(NetworkCommands::PLAYERDATA);
+        Console::print("Sending command " + command, Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::PLAYERDATA;
+        sendStream << command;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
@@ -913,11 +917,13 @@ void PlayerSelection::playerColorChanged(QColor value, qint32 playerIdx, qint32 
     pMap->getPlayer(playerIdx)->setColor(value, item);
     if (m_pNetworkInterface.get() != nullptr)
     {
+        QString command = QString(NetworkCommands::COLORDATA);
+        Console::print("Sending command " + command, Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::COLORDATA;
+        sendStream << command;
         sendStream << playerIdx;
         sendStream << pPlayer->getColor();
         emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, true);
@@ -1045,11 +1051,13 @@ void PlayerSelection::updateCOData(qint32 playerIdx)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
+        QString command = QString(NetworkCommands::CODATA);
+        Console::print("Sending command " + command, Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         Player* pPlayer = pMap->getPlayer(playerIdx);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::CODATA;
+        sendStream << command;
         sendStream << playerIdx;
         CO* pCO = pPlayer->getCO(0);
         QString coid = "";
@@ -1265,9 +1273,11 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
 
 void PlayerSelection::sendOpenPlayerCount()
 {
+    QString command = QString(NetworkCommands::SERVEROPENPLAYERCOUNT);
+    Console::print("Sending command " + command, Console::eDEBUG);
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-    sendStream << NetworkCommands::SERVEROPENPLAYERCOUNT;
+    sendStream << command;
     qint32 openPlayerCount = 0;
     for (const auto & playerAI : qAsConst(m_playerAIs))
     {
@@ -1313,9 +1323,11 @@ void PlayerSelection::sendPlayerReady(quint64 socketID, const QVector<qint32> & 
 {
     if (m_pNetworkInterface->getIsServer())
     {
+        QString command = QString(NetworkCommands::SERVERREADY);
+        Console::print("Sending command " + command, Console::eDEBUG);
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-        sendStream << NetworkCommands::SERVERREADY;
+        sendStream << command;
         sendStream << value;
         sendStream << static_cast<qint32>(player.size());
         for  (qint32 i = 0; i < player.size(); i++)
@@ -1356,9 +1368,11 @@ void PlayerSelection::setSaveGame(bool value)
 
 void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnums::AiTypes aiType)
 {
+    QString command = QString(NetworkCommands::REQUESTPLAYER);
+    Console::print("Sending command " + command, Console::eDEBUG);
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-    sendStream << NetworkCommands::REQUESTPLAYER;
+    sendStream << command;
     // request player smaller 0 for any (the first avaible on the server :)
     sendStream << static_cast<qint32>(player);
     sendStream << Settings::getUsername();
@@ -1524,9 +1538,11 @@ void PlayerSelection::changePlayer(quint64 socketId, QDataStream& stream)
 
 void PlayerSelection::createPlayerChangedData(QByteArray & data, quint64 socketId, QString name, qint32 aiType, qint32 player, bool clientRequest)
 {
+    QString command = QString(NetworkCommands::PLAYERCHANGED);
+    Console::print("Sending command " + command, Console::eDEBUG);
     QDataStream sendStream(&data, QIODevice::WriteOnly);
     spGameMap pMap = GameMap::getInstance();
-    sendStream << NetworkCommands::PLAYERCHANGED;
+    sendStream << command;
     sendStream << clientRequest;
     sendStream << socketId;
     sendStream << name;
