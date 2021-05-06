@@ -89,7 +89,10 @@ var Constructor = function()
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(23, 16);
+                offset = Qt.point(21, 21);
+                // 45 31
+                //-20, 5
+                // -7 15
             }
             else if (armyName === "bh")
             {
@@ -122,7 +125,7 @@ var Constructor = function()
                 }
                 else if (armyName === "bm")
                 {
-                    offset = Qt.point(21, 52);
+                    offset = Qt.point(21, 50);
                 }
                 else if (armyName === "bh")
                 {
@@ -130,7 +133,7 @@ var Constructor = function()
                 }
                 else if (armyName === "ma")
                 {
-                    offset = Qt.point(41, 25);
+                    offset = Qt.point(30, 25);
                 }
                 sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);
@@ -150,7 +153,7 @@ var Constructor = function()
                 }
                 else if (armyName === "bm")
                 {
-                    offset = Qt.point(21, 46);
+                    offset = Qt.point(21, 45);
                 }
                 else if (armyName === "bh")
                 {
@@ -158,7 +161,7 @@ var Constructor = function()
                 }
                 else if (armyName === "ma")
                 {
-                    offset = Qt.point(41, 20);
+                    offset = Qt.point(30, 21);
                 }
                 sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                                   1, 1, 0, 0);

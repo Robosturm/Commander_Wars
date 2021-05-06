@@ -2034,7 +2034,6 @@ void GameMap::initPlayersAndSelectCOs()
         }
         if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
         {
-            QStringList bannList = m_Rules->getCOBannlist();
             qint32 count = 0;
             QStringList perkList = pPlayer->getCO(1)->getPerkList();
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||

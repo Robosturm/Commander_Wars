@@ -1,4 +1,4 @@
-HEAVY_TANK.init = function(unit)
+ZCOUNIT_ROYAL_GUARD.init = function(unit)
 {
     unit.setAmmo1(5);
     unit.setMaxAmmo1(5);

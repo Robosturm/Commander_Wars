@@ -1,17 +1,21 @@
-HEAVY_TANK.init = function(unit)
+ZCOUNIT_ROYAL_GUARD.init = function(unit)
 {
-    unit.setAmmo1(5);
-    unit.setMaxAmmo1(5);
+    unit.setAmmo1(8);
+    unit.setMaxAmmo1(8);
     unit.setWeapon1ID("WEAPON_HEAVY_TANK_GUN");
 
     unit.setAmmo2(-1);
     unit.setMaxAmmo2(-1);
     unit.setWeapon2ID("WEAPON_HEAVY_TANK_MG");
 
-    unit.setFuel(50);
-    unit.setMaxFuel(50);
+    unit.setFuel(60);
+    unit.setMaxFuel(60);
     unit.setBaseMovementPoints(5);
     unit.setMinRange(1);
     unit.setMaxRange(1);
-    unit.setVision(2);
+    unit.setVision(1);
+};
+ZCOUNIT_ROYAL_GUARD.getBaseCost = function()
+{
+    return 18000;
 };

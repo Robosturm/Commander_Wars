@@ -94,26 +94,27 @@ var Constructor = function()
         else
         {
             // mg
-            offset = Qt.point(81, 75);
+            // 0, 20
+            offset = Qt.point(81, 83);
             if (armyName === "yc")
             {
-                offset = Qt.point(82, 74);
+                offset = Qt.point(81, 83);
             }
             else if (armyName === "ge")
             {
-                offset = Qt.point(82, 74);
+                offset = Qt.point(81, 83);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(81, 74);
+                offset = Qt.point(81, 83);
             }
             else if (armyName === "bh")
             {
-                offset = Qt.point(81, 74);
+                offset = Qt.point(81, 78);
             }
             else if (armyName === "ma")
             {
-                offset = Qt.point(93, 56);
+                offset = Qt.point(93, 57);
             }
             sprite.loadSprite("mg_shot_air",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0, false, true);

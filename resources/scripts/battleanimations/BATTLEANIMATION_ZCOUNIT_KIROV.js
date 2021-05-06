@@ -22,9 +22,10 @@ var Constructor = function()
     {
         BATTLEANIMATION_ZCOUNIT_KIROV.loadStandingAnimation(sprite, unit, defender, weapon);
         var count = sprite.getUnitCount(5);
+        // 21 4
         for (var i = 0; i < count; i++)
         {
-            sprite.loadSingleMovingSprite("bombs_projectile", false, Qt.point(70, 90),
+            sprite.loadSingleMovingSprite("bombs_projectile", false, Qt.point(21, 84),
                                           Qt.point(0, -110), 400, false,
                                           1, 1, -1, i * 150);
             sprite.loadSound("falling_bomb.wav", 1, "resources/sounds/", i * 150);
