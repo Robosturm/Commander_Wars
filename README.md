@@ -1,4 +1,5 @@
 # Commander_Wars
+![](https://i.redd.it/61mcwen38mw51.png)
 The aim of this project is to create an Advance Wars Clone. 
 For Contact Inforamtion see the wiki page
 
