@@ -123,7 +123,6 @@ namespace oxygine
     }
 
     const timeMS fdt = timeMS(1000 / 60);
-    //const float fdt = 20;
 
     void SlidingActor::doUpdate(const UpdateState&)
     {

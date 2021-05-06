@@ -143,7 +143,6 @@ namespace oxygine
 
     RectF Box9Sprite::getDestRect() const
     {
-        //return Sprite::getDestRect();
         return Actor::getDestRect();
     }
 
@@ -242,7 +241,7 @@ namespace oxygine
             float centerPart = _guideY[1] - _guideY[0]; // length of the center piece (in px)
 
             // now we add a center piece every time until we reach right bound
-            while (1)
+            while (true)
             {
                 curY += centerPart;
 

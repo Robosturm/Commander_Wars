@@ -6,14 +6,14 @@
 class TweenWait
 {
 public:
-    typedef oxygine::Sprite type;
+    typedef oxygine::Actor type;
 
     explicit TweenWait();
 
-    void update(oxygine::Sprite& actor, float p, const oxygine::UpdateState& us);
+    void update(oxygine::Actor& actor, float p, const oxygine::UpdateState& us);
 
-    void init(oxygine::Sprite& actor){}
-    void done(oxygine::Sprite& actor){}
+    void init(oxygine::Actor&){}
+    void done(oxygine::Actor&){}
 protected:
 };
 

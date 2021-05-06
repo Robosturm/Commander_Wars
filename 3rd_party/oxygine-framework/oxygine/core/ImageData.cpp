@@ -21,7 +21,12 @@ namespace oxygine
 
     }
 
-    ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, void* Data): w(W), h(H), pitch(Pitch), format(Format), data((unsigned char*)Data)
+    ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, void* Data)
+        : w(W),
+          h(H),
+          pitch(Pitch),
+          data((unsigned char*)Data),
+          format(Format)
     {
         bytespp = getBytesPerPixel(Format);
     }

@@ -45,7 +45,7 @@ public slots:
     virtual void focusedLost() override;
 protected:
     /**
-     * @brief checkInput checks if the input is correct and updates it if needed and returns the new value
+     * @brief checkInput checks if the input is correct and updates it if needed and returns the value is valid
      * @return current value
      */
     qint32 checkInput();

@@ -43,6 +43,7 @@ if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
+        -DOXYGINE_DEBUG_SAFECAST
     )
     find_package(Qt5 COMPONENTS QmlDebug REQUIRED)
 else("Release")

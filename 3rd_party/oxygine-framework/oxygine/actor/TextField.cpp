@@ -280,7 +280,6 @@ namespace oxygine
             {
                 QMutexLocker lock(&m_Locked);
                 _rtscale = scale;
-                //_realFontSize = fontSize;
                 _root = nullptr;
                 if (m_htmlText)
                 {

@@ -41,18 +41,30 @@ namespace oxygine
         {
             return 0;
         }
+        /**
+         * @brief getName
+         * @return
+         */
+        QString  getName() const;
+        /**
+         * @brief setName
+         * @param name
+         */
+        void setName(QString name);
     protected:
         static void setNode(spResource res, const QDomElement& node) {res->_node = node;}
 
         virtual void _load(LoadResourcesContext* context = 0) = 0;
         virtual void _unload() = 0;
 
+    protected:
         Resource* _parent;
 
         qint32 _loadCounter;
         bool _useLoadCounter;
 
         QDomElement _node;
+        QString m_name;
 
     private:
         //non copyable

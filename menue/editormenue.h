@@ -289,8 +289,8 @@ private:
     qint32 tempCounter{0};
 
     QRect copyRect{-1, -1, 0, 0};
-    oxygine::spActor copyRectActor{new oxygine::Actor()};
-    oxygine::spActor cursorActor{new oxygine::Actor()};
+    oxygine::spActor copyRectActor{oxygine::spActor::create()};
+    oxygine::spActor cursorActor{oxygine::spActor::create()};
 
     QTimer m_autosaveTimer;
 };

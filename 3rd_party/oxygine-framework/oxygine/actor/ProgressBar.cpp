@@ -263,8 +263,8 @@ namespace oxygine
                         v2 = (v + dv / 2.f);
                         u3 = u - du / 2.f;
                         v3 = (v + fDV);
+                        break;
                     }
-                    break;
                     case 5:
                     {
                         result = bOverHi ? (0.f) : vecRad.x ;
@@ -278,10 +278,12 @@ namespace oxygine
                         v2 = (v - dv / 2.f);
                         u3 = u + fDU;
                         v3 = (v - dv / 2.f);
+                        break;
                     }
-                    break;
                     default:
+                    {
                         continue;
+                    }
                 }
 
                 u1 = u;
@@ -313,7 +315,9 @@ namespace oxygine
         dispatchEvent(&ev);
 
         if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
+        {
             return;
+        }
         _update();
     }
 

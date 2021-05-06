@@ -61,7 +61,6 @@ namespace oxygine
 
     }
 
-    /**returns handle (ptr) to HW texture ID*/
     GLuint NativeTextureNull::getHandle() const
     {
         return 0;

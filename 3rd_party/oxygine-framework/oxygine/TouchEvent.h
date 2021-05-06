@@ -9,18 +9,14 @@ namespace oxygine
         enum
         {
             __FIRST = sysEventID('T', 'O', 0),
-
             CLICK,
             OVER,
-            OUTX,//OUT, X - avoid conflicts with WinAPI
             MOVE,
             TOUCH_DOWN,
             TOUCH_UP,
-            WHEEL_UP,//DEPRECATED, use WHEEL_DIR with TouchEvent::wheelDirection
-            WHEEL_DOWN,//DEPRECATED, use WHEEL_DIR with TouchEvent::wheelDirection
             WHEEL_DIR,
-
-            __LAST//system
+            OUTX,       //OUT, X - avoid conflicts with WinAPI
+            __LAST      //system
         };
 
 

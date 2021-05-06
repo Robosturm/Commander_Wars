@@ -79,14 +79,12 @@ namespace oxygine
         atlas atl;
         atl.base = IVideoDriver::instance->createTexture();
         atl.base_path = base;
-        atl.base->setName(base);
         atl.base->init(0, w, h, tf);
 
         if (!alpha.isEmpty())
         {
             atl.alpha = IVideoDriver::instance->createTexture();
             atl.alpha_path = alpha;
-            atl.alpha->setName(alpha);
             atl.alpha->init(0, w, h, tf);
         }
 
@@ -108,7 +106,9 @@ namespace oxygine
         return ra;
     }
 
-    ResAtlas::ResAtlas(): _linearFilter(GL_LINEAR), _clamp2edge(true)
+    ResAtlas::ResAtlas()
+        : _linearFilter(GL_LINEAR),
+          _clamp2edge(true)
     {
 
     }

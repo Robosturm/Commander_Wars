@@ -5895,7 +5895,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="228"/>
-        <location filename="../menue/victorymenue.cpp" line="639"/>
+        <location filename="../menue/victorymenue.cpp" line="640"/>
         <source>Player Statistics</source>
         <translation type="unfinished"></translation>
     </message>

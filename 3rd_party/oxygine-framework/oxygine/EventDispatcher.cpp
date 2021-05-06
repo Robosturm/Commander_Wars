@@ -20,8 +20,20 @@ namespace oxygine
         ls.type = et;
         ls.cb = cb;
         ls.id = _lastID;
-        m_listeners.push_back(ls);
-
+        bool added = false;
+        for (qint32 i = 0; i < m_listeners.size(); ++i)
+        {
+            if (et < m_listeners[i].type)
+            {
+                m_listeners.insert(i, ls);
+                added = true;
+                break;
+            }
+        }
+        if (!added)
+        {
+            m_listeners.push_back(ls);
+        }
         return ls.id;
     }
 

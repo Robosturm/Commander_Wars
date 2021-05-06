@@ -828,8 +828,8 @@ private:
     qint32 currentDay{0};
     spGameRules m_Rules;
     spCampaign m_Campaign;
-    spGameRecorder m_Recorder{new GameRecorder()};
-    spGameScript m_GameScript{new GameScript()};
+    spGameRecorder m_Recorder{spGameRecorder::create()};
+    spGameScript m_GameScript{spGameScript::create()};
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};

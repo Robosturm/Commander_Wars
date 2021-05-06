@@ -52,13 +52,11 @@ namespace oxygine
 
         T& operator*() const
         {
-            Q_ASSERT(_ptr && _ptr->_ref_counter > 0);
             return *_ptr;
         }
 
         T* operator->() const
         {
-            Q_ASSERT(_ptr && _ptr->_ref_counter > 0);
             return _ptr;
         }
 

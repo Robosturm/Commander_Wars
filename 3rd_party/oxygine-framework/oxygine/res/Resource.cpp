@@ -35,8 +35,9 @@ namespace oxygine
     void Resource::unload()
     {
         if (_loadCounter == 1)
+        {
             _unload();
-
+        }
         _loadCounter = _useLoadCounter ? _loadCounter - 1 : 0;
     }
 
@@ -65,5 +66,15 @@ namespace oxygine
     QString Resource::getAttribute(QString attr) const
     {
         return _node.attribute(attr);
+    }
+
+    QString Resource::getName() const
+    {
+        return m_name;
+    }
+
+    void Resource::setName(QString name)
+    {
+        m_name = name;
     }
 }

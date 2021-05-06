@@ -14,7 +14,6 @@ namespace oxygine
     {
         spClock clock = spClock::create();
         setClock(clock);
-        setName("Stage");
         _stage = this;
     }
 

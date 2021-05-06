@@ -220,7 +220,6 @@ namespace oxygine
 
         float mlt(qint32 x, float sf)
         {
-            //return (x + 0.01f) / sf;
             return x / sf;
         }
 

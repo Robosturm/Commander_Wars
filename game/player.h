@@ -541,7 +541,7 @@ private:
 
     QColor m_Color;
     QImage m_colorTable;
-    oxygine::spResAnim m_ColorTableAnim{new oxygine::SingleResAnim()};    
+    oxygine::spResAnim m_ColorTableAnim{oxygine::spSingleResAnim::create()};
     QString playerArmy{""};
     qint32 team{0};
     spCO playerCOs[2]{nullptr, nullptr};

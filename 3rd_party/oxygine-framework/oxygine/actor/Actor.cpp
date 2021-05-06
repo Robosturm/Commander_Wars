@@ -708,61 +708,6 @@ namespace oxygine
         return false;
     }
 
-    Actor* Actor::getDescendant(QString name, error_policy ep)
-    {
-        if (isName(name))
-        {
-            return this;
-        }
-        Actor* actor = __getDescendant(name);
-        if (!actor)
-        {
-            handleErrorPolicy(ep, "can't find descendant: " + name);
-        }
-        return actor;
-    }
-
-    Actor* Actor::__getDescendant(QString name)
-    {
-        Actor* child = m_children._first.get();
-        while (child)
-        {
-            if (child->isName(name))
-            {
-                return child;
-            }
-            child = child->getNextSibling().get();
-        }
-
-        child = m_children._first.get();
-        while (child)
-        {
-            Actor* des = child->__getDescendant(name);
-            if (des)
-            {
-                return des;
-            }
-            child = child->getNextSibling().get();
-        }
-
-        return nullptr;
-    }
-
-    spActor  Actor::getChild(QString name, error_policy ep) const
-    {
-        spActor actor = m_children._first;
-        while (actor)
-        {
-            if (actor->isName(name))
-            {
-                return actor;
-            }
-            actor = actor->_next;
-        }
-        handleErrorPolicy(ep, "can't find child: " + name);
-        return nullptr;
-    }
-
     void Actor::setParent(Actor* actor, Actor* parent)
     {
         actor->m_parent = parent;
@@ -1160,21 +1105,6 @@ namespace oxygine
         return __addTween(tween, false);
     }
 
-    spTween Actor::getTween(QString name, error_policy ep)
-    {
-        spTween tween = m_tweens._first;
-        while (tween)
-        {
-            if (tween->isName(name))
-            {
-                return tween;
-            }
-            tween = tween->getNextSibling();
-        }
-        handleErrorPolicy(ep, "can't find tween: " + name);
-        return nullptr;
-    }
-
     void Actor::removeTween(spTween pTween)
     {
         QMutexLocker lock(&m_Locked);
@@ -1202,21 +1132,6 @@ namespace oxygine
                 c->complete();
             }
             else
-            {
-                removeTween(c);
-            }
-        }
-    }
-
-    void Actor::removeTweensByName(QString name)
-    {
-        spTween t = m_tweens._first;
-        while (t)
-        {
-            spTween c = t;
-            t = t->getNextSibling();
-
-            if (c->isName(name))
             {
                 removeTween(c);
             }

@@ -156,7 +156,6 @@ namespace oxygine
         }
         p.file += textureFile;
         p.texture = IVideoDriver::instance->createTexture();
-        p.texture->setName(p.file);
 
         if (tw)
         {
@@ -297,7 +296,7 @@ namespace oxygine
 
         fontSize = qAbs(fontSize);
         spFont font = spFont::create();
-        font->init(getName(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        font->init(fontSize, fontSize, lineHeight + fontSize - base, _sdf);
         _size = fontSize;
         _font = font;
 
@@ -329,23 +328,41 @@ namespace oxygine
                 qint32 value = attribute.nodeValue().toInt();
 
                 if (attr_name == "id")
+                {
                     charID = value;
+                }
                 else if (attr_name == "x")
+                {
                     xpos = value;
+                }
                 else if (attr_name == "y")
+                {
                     ypos = value;
+                }
                 else if (attr_name == "width")
+                {
                     width = value;
+                }
                 else if (attr_name == "height")
+                {
                     height = value;
+                }
                 else if (attr_name == "xoffset")
+                {
                     xoffset = value;
+                }
                 else if (attr_name == "yoffset")
+                {
                     yoffset = value;
+                }
                 else if (attr_name == "xadvance")
+                {
                     xadvance = value;
+                }
                 else if (attr_name == "page")
+                {
                     page = value;
+                }
             }
 
             spTexture t = _pages[page].texture;

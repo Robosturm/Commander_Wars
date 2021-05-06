@@ -636,6 +636,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         m_PlayerSelectPanel->setVisible(false);
         m_pGraphBackground->setVisible(false);
         m_statisticsBox->setVisible(true);
+        m_VictoryPanel->setVisible(false);
         m_Textfield->setHtmlText(tr("Player Statistics"));
     }
     m_Textfield->setX(Settings::getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);

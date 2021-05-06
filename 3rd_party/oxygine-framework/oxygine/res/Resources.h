@@ -91,17 +91,14 @@ namespace oxygine
         template<class T>
         T* getT(QString id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
 
-        /**debug function. prints all loaded resources*/
-        void print() const;
-
         /**collects all resources into vector*/
         void collect(resources&);
 
         resources& _getResources();
         resourcesMap& _getResourcesMap();
 
-        void setLinearFilter(quint32 linearFilter);
-        quint32 getLinearFilter() const;
+        virtual void setLinearFilter(quint32 linearFilter) override;
+        virtual quint32 getLinearFilter() const override;
     protected:
         void updateName(QString filename);
         void _load(LoadResourcesContext* context) override;
@@ -110,7 +107,6 @@ namespace oxygine
 
         struct registeredResource
         {
-            registeredResource() {id;}
             QString id;
             createResourceCallback cb;
 

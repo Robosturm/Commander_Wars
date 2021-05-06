@@ -23,7 +23,9 @@ namespace oxygine
     Polygon::~Polygon()
     {
         if (_own)
+        {
             delete[] _verticesData;
+        }
     }
 
     void Polygon::setVertices(const void* data, qint32 size, qint32 bformat, bool own)

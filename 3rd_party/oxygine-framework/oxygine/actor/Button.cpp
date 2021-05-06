@@ -107,7 +107,6 @@ namespace oxygine
         {
             return;
         }
-        //printf("set state: %d\n", (int)s);
         _state = s;
         updateButtonState(s);
     }

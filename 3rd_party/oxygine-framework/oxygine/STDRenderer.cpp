@@ -58,7 +58,9 @@ namespace oxygine
 
         _blend = blend_disabled;
         if (_driver)
+        {
             _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        }
         _program = 0;
     }
 
@@ -276,7 +278,6 @@ namespace oxygine
         oxygine::operations::applyOperation(fill, im);
 
         white = IVideoDriver::instance->createTexture();
-        white->setName("!renderer. white");
         white->init(im, false);
         white->setLinearFilter(GL_LINEAR);
         white->setClamp2Edge(false);
@@ -284,7 +285,6 @@ namespace oxygine
 
         memwhite.fillZero();
         invisible = IVideoDriver::instance->createTexture();
-        invisible->setName("!renderer. invisible");
         invisible->init(im, false);
         invisible->setLinearFilter(GL_LINEAR);
         invisible->setClamp2Edge(false);
@@ -312,9 +312,7 @@ namespace oxygine
     {
         if (rsCache().setShader(prog))
         {
-            //_driver->setUniform("mat", _vp);
             shaderProgramChanged();
-
             ShaderProgramChangedHook* hook = _sphookFirst;
             while (hook)
             {

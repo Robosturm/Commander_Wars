@@ -39,7 +39,7 @@ namespace oxygine
         Font();
         ~Font();
 
-        void init(QString name, qint32 size, qint32 baselineDistance, qint32 lineHeight, bool sdf = false);
+        void init(qint32 size, qint32 baselineDistance, qint32 lineHeight, bool sdf = false);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}

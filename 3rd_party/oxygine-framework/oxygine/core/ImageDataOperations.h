@@ -57,7 +57,7 @@ namespace oxygine
             Pixel color;
 
             template<class Src, class Dest>
-            void operator()(const Src& s, Dest& d, const unsigned char* srcData, unsigned char* destData) const
+            void operator()(const Src&, Dest& d, const unsigned char*, unsigned char* destData) const
             {
                 d.setPixel(destData, color);
             }
@@ -69,7 +69,7 @@ namespace oxygine
             op_noise(qint32 v): _v(v) {}
 
             template<class Src, class Dest>
-            void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const
+            void operator()(const Src&, Dest& destPixelFormat, const unsigned char*, unsigned char* destData) const
             {
                 Pixel p;
 

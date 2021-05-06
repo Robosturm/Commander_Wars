@@ -11,15 +11,9 @@ namespace oxygine
     {        
     public:
         Object(const Object& src);
-        Object();
+        Object() = default;
         virtual ~Object() = default;
-
-        QString  getName() const;
-        bool                isName(QString name) const;
-        void setName(QString name);
-
     protected:
-        QString m_name;
         QMutex m_Locked;
     };
 

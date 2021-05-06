@@ -180,16 +180,14 @@ namespace oxygine
         LoadResourcesContext::get()->createTexture(task);
     }
 
-    void ResAtlasGeneric::nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad, QString name)
+    void ResAtlasGeneric::nextAtlas(qint32 w, qint32 h, ImageData::TextureFormat tf, atlas_data& ad)
     {
         ad.mt.init(w, h, tf);
         ad.mt.fillZero();
 
         ad.atlas.clean();
         ad.atlas.init(w, h);
-
-
-        if ((int)_atlasses.size() > _current)
+        if (_atlasses.size() > _current)
         {
             ad.texture = _atlasses[_current].base;
         }
@@ -201,8 +199,6 @@ namespace oxygine
             atl.base = ad.texture;
             _atlasses.push_back(atl);
         }
-        ad.texture->setName(name);
-
         _current++;
     }
 
@@ -390,8 +386,7 @@ namespace oxygine
 
                     if (!ad.texture)
                     {
-                        QString atlas_id = getName();
-                        nextAtlas(w, h, tf, ad, atlas_id);
+                        nextAtlas(w, h, tf, ad);
                     }
 
                     bool s = ad.atlas.add(&ad.mt, src, dest, offset);
@@ -399,7 +394,7 @@ namespace oxygine
                     {
                         applyAtlas(ad, _linearFilter, _clamp2edge);
 
-                        nextAtlas(w, h, tf, ad, walker.getCurrentFolder());
+                        nextAtlas(w, h, tf, ad);
                         s = ad.atlas.add(&ad.mt, src, dest, offset);
                         Q_ASSERT(s);
                     }

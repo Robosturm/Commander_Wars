@@ -56,7 +56,7 @@ namespace oxygine
         materials fresh;
         for (auto it = m_materials.begin(); it != m_materials.end(); it++)
         {
-            if (it.value()->_ref_counter > 1)
+            if (it.value()->getRefCounter() > 1)
             {
                 fresh.insert(it.value()->_hash, it.value());
             }
@@ -71,7 +71,8 @@ namespace oxygine
         removeUnusedNoLock();
     }
 
-    MaterialCache::MaterialCache(): _addCounter(0)
+    MaterialCache::MaterialCache()
+        : _addCounter(0)
     {
 
     }

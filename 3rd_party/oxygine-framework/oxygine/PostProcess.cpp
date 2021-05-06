@@ -219,7 +219,7 @@ namespace oxygine
         for (size_t i = 0, sz = _rts.size(); i < sz; ++i)
         {
             spNativeTexture& texture = _rts[i];
-            if (texture->_ref_counter == 1)
+            if (texture->getRefCounter() == 1)
             {
                 free::iterator it = lower_bound(_free.begin(), _free.end(), texture, NTP::cmp);
                 _free.insert(it, texture);
@@ -235,7 +235,9 @@ namespace oxygine
             spNativeTexture& t = _free[i];
             timeMS createTime = t->getCreationTime();
             if (createTime + TEXTURE_LIVE > tm)
+            {
                 continue;
+            }
             _free.erase(_free.begin() + i);
             --i;
             --sz;
@@ -298,12 +300,8 @@ namespace oxygine
         if (!postProcessItems.empty())
         {
             _renderingPP = true;
-
             spIVideoDriver driver = IVideoDriver::instance;
-            //driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
-
-
             ShaderProgram* sp = driver->getShaderProgram();
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)
@@ -464,8 +462,6 @@ namespace oxygine
             offset.translate(-_screen.pos);
             rs.transform = rs.transform * offset;
         }
-
-        //Q_ASSERT(0);
         RenderDelegate* rd = actor->getRenderDelegate();
         actor->setRenderDelegate(STDRenderDelegate::instance.get());
         STDRenderDelegate::instance->RenderDelegate::render(actor, rs);

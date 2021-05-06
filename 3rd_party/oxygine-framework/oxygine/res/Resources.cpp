@@ -221,17 +221,6 @@ namespace oxygine
         }
     }
 
-
-    void Resources::print() const
-    {
-        qDebug("resources:\n");
-        for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
-        {
-            spResource res = i.value();
-            qDebug("%s", res->getName().toStdString().c_str());
-        }
-    }
-
     Resources::resources& Resources::_getResources()
     {
         return _resources;

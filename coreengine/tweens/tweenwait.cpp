@@ -5,7 +5,7 @@ TweenWait::TweenWait()
 
 }
 
-void TweenWait::update(oxygine::Sprite&, float, const oxygine::UpdateState&)
+void TweenWait::update(oxygine::Actor&, float, const oxygine::UpdateState&)
 {
     // do nothing
 }

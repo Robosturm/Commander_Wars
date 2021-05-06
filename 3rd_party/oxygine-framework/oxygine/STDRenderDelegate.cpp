@@ -28,7 +28,6 @@ namespace oxygine
         {
             return;
         }
-        // render fix changed actor to spActor  to avoid illegal deletion -> little bit slower but safer
         spActor actor = parent->getFirstChild();
         while (actor.get() != nullptr)
         {
@@ -56,15 +55,11 @@ namespace oxygine
         rs.clip = &clippedRect;
 
         Rect scissorRect(0, 0, 0, 0);
-
-
         bool scissorEnabled = driver->getScissorRect(scissorRect);
-
         bool vis = true;
         if (actor->getClipping())
         {
             renderer->flush();
-
             RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
             clippedRect.clip(ss_rect);
@@ -206,15 +201,10 @@ namespace oxygine
         {
             return;
         }
-
         text::DrawContext dc;
-
         STDRenderer* renderer = STDRenderer::getCurrent();
-
         dc.primary = premultiply(rs.getFinalColor(tf->getColor()));
         dc.color = tf->getStyle().color * dc.primary;
-
-        //renderer->setBlendMode(tf->getBlendMode());
         renderer->setTransform(rs.transform);
         root->draw(dc);
     }

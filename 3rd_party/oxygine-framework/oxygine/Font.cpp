@@ -21,9 +21,8 @@ namespace oxygine
     {
     }
 
-    void Font::init(QString name, qint32 realSize, qint32 baselineDistance, int, bool sdf)
+    void Font::init(qint32 realSize, qint32 baselineDistance, int, bool sdf)
     {
-        setName(name);
         _sdf = sdf;
         _size = realSize;
         _baselineDistance = baselineDistance;

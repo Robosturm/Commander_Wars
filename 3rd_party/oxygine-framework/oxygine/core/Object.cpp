@@ -5,28 +5,7 @@
 
 namespace oxygine
 {    
-    Object::Object(const Object& src)
-        : m_name("")
+    Object::Object(const Object&)
     {
-        setName(src.m_name);
-    }
-
-    Object::Object()
-    {
-    }
-
-    QString Object::getName() const
-    {
-        return m_name;
-    }
-
-    bool Object::isName(QString name) const
-    {
-        return name == m_name;
-    }
-
-    void Object::setName(QString name)
-    {
-        m_name = name;
     }
 }
