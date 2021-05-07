@@ -47,11 +47,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         }
     }
     width += GameMap::getImageSize() + GameMap::getImageSize() * 3 / 4 ;
-    itemWidth = width;
+    m_itemWidth = width;
     GameManager* pGameManager = GameManager::getInstance();
     qint32 heigth = createTopSprite(0, width);
     qint32 y = heigth;
-    startY = y;
+    m_startY = y;
     m_Cursor = oxygine::spSprite::create();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("cursor+menu");
     if (pAnim->getTotalFrames() > 1)
@@ -78,7 +78,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             createBottomSprite(x, y, width);
             x += width;
             maxY = y;
-            y = startY;
+            y = m_startY;
             createTopSprite(x, width);
         }
         bool enabled = true;
@@ -132,7 +132,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             pEvent->stopPropagation();
             m_Cursor->setY(y + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
             m_Cursor->setX(x + width);
-            currentAction = i;
+            m_currentAction = i;
         });
         QString action = actionIDs[i];
         if (enabled)
@@ -175,7 +175,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         {
             maxY = y;
         }
-        itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+        m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
     }
     if (xCount > 0)
     {
@@ -208,7 +208,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                 });
                 this->addChild(pItemBox);
                 y += static_cast<qint32>(pItemBox->getHeight());
-                itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+                m_itemHeigth = static_cast<qint32>(pItemBox->getHeight());
             }
         }
     }
@@ -253,7 +253,7 @@ qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width)
 
 void HumanPlayerInputMenu::leftClick(qint32, qint32)
 {
-    emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
+    emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
 }
 
 void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
@@ -294,53 +294,53 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
                 cur == Settings::getKey_up2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-                if (currentAction > 0)
+                if (m_currentAction > 0)
                 {
-                    currentAction--;
+                    m_currentAction--;
                 }
                 else
                 {
-                    currentAction = m_ActionIDs.size() - 1;
+                    m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
             else if (cur == Settings::getKey_down() ||
                      cur == Settings::getKey_down2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-                if (currentAction < m_ActionIDs.size() - 1)
+                if (m_currentAction < m_ActionIDs.size() - 1)
                 {
-                    currentAction++;
+                    m_currentAction++;
                 }
                 else
                 {
-                    currentAction = 0;
+                    m_currentAction = 0;
                 }
             }
             if (cur == Settings::getKey_left() ||
                 cur == Settings::getKey_left2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-                if (currentAction - Settings::getMenuItemCount() >= 0)
+                if (m_currentAction - Settings::getMenuItemCount() >= 0)
                 {
-                    currentAction -= Settings::getMenuItemCount();
+                    m_currentAction -= Settings::getMenuItemCount();
                 }
                 else
                 {
-                    currentAction = m_ActionIDs.size() - 1;
+                    m_currentAction = m_ActionIDs.size() - 1;
                 }
             }
             else if (cur == Settings::getKey_right() ||
                      cur == Settings::getKey_right2())
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-                if (currentAction + Settings::getMenuItemCount() < m_ActionIDs.size())
+                if (m_currentAction + Settings::getMenuItemCount() < m_ActionIDs.size())
                 {
 
-                    currentAction += Settings::getMenuItemCount();
+                    m_currentAction += Settings::getMenuItemCount();
                 }
                 else
                 {
-                    currentAction = 0;
+                    m_currentAction = 0;
                 }
             }
             else if (cur == Settings::getKey_confirm() ||
@@ -348,17 +348,17 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             {
                 if (m_ActionIDs.size() > 0)
                 {
-                    if ((m_EnabledList.size() > 0 && m_EnabledList[currentAction]) ||
+                    if ((m_EnabledList.size() > 0 && m_EnabledList[m_currentAction]) ||
                         (m_EnabledList.size() == 0))
                     {
                         Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
                         if (m_CostList.size() == m_ActionIDs.size())
                         {
-                            emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
+                            emit sigItemSelected(m_ActionIDs[m_currentAction], m_CostList[m_currentAction]);
                         }
                         else
                         {
-                            emit sigItemSelected(m_ActionIDs[currentAction], 0);
+                            emit sigItemSelected(m_ActionIDs[m_currentAction], 0);
                         }
                     }
                 }
@@ -371,7 +371,7 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             else if (cur == Settings::getKey_information() ||
                      cur == Settings::getKey_information2())
             {
-                QString id = m_ActionIDs[currentAction];
+                QString id = m_ActionIDs[m_currentAction];
                 UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
                 if (pUnitSpriteManager->exists(id))
                 {
@@ -403,14 +403,14 @@ void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
             }
 
             qint32 x = 0;
-            qint32 y = currentAction;
+            qint32 y = m_currentAction;
             while (y >= Settings::getMenuItemCount())
             {
                 y -= Settings::getMenuItemCount();
                 x++;
             }
-            m_Cursor->setY(startY + y * itemHeigth + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
-            m_Cursor->setX(itemWidth * (x + 1));
+            m_Cursor->setY(m_startY + y * m_itemHeigth + GameMap::getImageSize() / 2 - m_Cursor->getScaledHeight() / 2);
+            m_Cursor->setX(m_itemWidth * (x + 1));
         }
     }
 }
@@ -419,6 +419,6 @@ void HumanPlayerInputMenu::moveMouseToItem(qint32 x, qint32 y)
 {
     oxygine::Vector2 pos = local2stage();
     Mainapp* pApp = Mainapp::getInstance();
-    QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + itemWidth / 2 + itemWidth * x, pos.y + startY + itemHeigth / 2 + itemHeigth * y));
+    QPoint curPos = pApp->mapToGlobal(QPoint(pos.x + m_itemWidth / 2 + m_itemWidth * x, pos.y + m_startY + m_itemHeigth / 2 + m_itemHeigth * y));
     pApp->cursor().setPos(curPos);
 }

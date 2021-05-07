@@ -14,8 +14,6 @@ class CursorData : public QObject, public oxygine::ref_counter
 public:
     explicit CursorData();
     virtual ~CursorData() = default;
-    explicit CursorData(CursorData&& move) = default;
-    explicit CursorData(const CursorData& copy) = default;
 signals:
 
 public slots:
@@ -31,10 +29,10 @@ public slots:
     float getScale() const;
     void setScale(const float &value);
 private:
-    QString cursor{"cursor+default"};
-    qint32 xOffset{0};
-    qint32 yOffset{0};
-    float scale{1.0};
+    QString m_cursor{"cursor+default"};
+    qint32 m_xOffset{0};
+    qint32 m_yOffset{0};
+    float m_scale{1.0};
 };
 
 #endif // CURSORDATA_H

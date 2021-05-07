@@ -18,13 +18,13 @@ namespace oxygine
         static void releaseAll();
         static bool isRestored();
 
-        virtual void* _getRestorableObject() = 0;
+        virtual Restorable* _getRestorableObject() = 0;
         virtual void release() = 0;
 
         void restore();
-        using RestoreCallback = OwnedClosure<void,Restorable*, void*>;
+        using RestoreCallback = OwnedClosure<void,Restorable*>;
 
-        void reg(RestoreCallback cb, void* user);
+        void reg(RestoreCallback cb);
         void unreg();
 
     protected:
@@ -36,9 +36,9 @@ namespace oxygine
         Restorable(const Restorable&);
         const Restorable& operator=(const Restorable&);
 
-        RestoreCallback _cb;
-        void* _userData;
-        bool _registered;
+    private:
+        RestoreCallback m_cb;
+        bool m_registered;
 
         static QMutex m_mutex;
         static restorable m_restorable;

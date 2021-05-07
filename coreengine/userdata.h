@@ -245,9 +245,7 @@ private:
     friend class oxygine::intrusive_ptr<Userdata>;
     explicit Userdata();
 private:
-
     static spUserdata m_pInstance;
-
     QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
     QVector<Achievement> m_achievements;
     QMap<QString, MapVictoryInfo> m_mapVictoryInfo;

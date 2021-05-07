@@ -147,10 +147,10 @@ void Chat::addMessage(QString message, bool local)
     }
     if (show)
     {
-        messages.append(message);
-        if (messages.size() > m_bufferSize)
+        m_messages.append(message);
+        if (m_messages.size() > m_bufferSize)
         {
-            messages.pop_front();
+            m_messages.pop_front();
         }
         else
         {
@@ -163,9 +163,9 @@ void Chat::addMessage(QString message, bool local)
     }
 
     QString drawText;
-    for(qint32 i = 0; i < messages.size();i++)
+    for(qint32 i = 0; i < m_messages.size();i++)
     {
-        drawText += "> " + messages[i] + "\n";
+        drawText += "> " + m_messages[i] + "\n";
     }
     m_Chat->setHtmlText(drawText);
     m_Chat->setHeight(m_Chat->getTextRect().getHeight() + 20);
@@ -208,9 +208,9 @@ void Chat::sendData(QString message)
         }
 
         addMessage(text, true);
-        if (messages.size() > m_bufferSize)
+        if (m_messages.size() > m_bufferSize)
         {
-            messages.pop_front();
+            m_messages.pop_front();
         }
         if (m_pInterface.get() != nullptr)
         {

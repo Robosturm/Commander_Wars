@@ -10,7 +10,7 @@ namespace oxygine
 
     spMaterial MaterialCache::clone_(const Material& other)
     {
-        QMutexLocker alock(&_lock);
+        QMutexLocker alock(&m_lock);
 
         size_t hash;
         Material::compare cm;
@@ -19,7 +19,7 @@ namespace oxygine
         if (items.size() > 0)
         {
             Material* sec = items[0].get();
-            if (cm == sec->_compare && cm(sec, &other))
+            if (cm == sec->m_compare && cm(sec, &other))
             {
                 return sec;
             }
@@ -30,21 +30,21 @@ namespace oxygine
             for (; it != items.end(); it++)
             {
                 Material* sec = it->get();
-                if (cm == sec->_compare && cm(sec, &other))
+                if (cm == sec->m_compare && cm(sec, &other))
                 {
                     return sec;
                 }
             }
         }
-        _addCounter++;
-        if (_addCounter > 30)
+        m_addCounter++;
+        if (m_addCounter > 30)
         {
             removeUnusedNoLock();
         }
 
         spMaterial copy = other.clone();
-        copy->_hash = hash;
-        copy->_compare = cm;
+        copy->m_hash = hash;
+        copy->m_compare = cm;
         m_materials.insert(hash, copy);
 
         return copy;
@@ -52,13 +52,13 @@ namespace oxygine
 
     void MaterialCache::removeUnusedNoLock()
     {
-        _addCounter = 0;
+        m_addCounter = 0;
         materials fresh;
         for (auto it = m_materials.begin(); it != m_materials.end(); it++)
         {
             if (it.value()->getRefCounter() > 1)
             {
-                fresh.insert(it.value()->_hash, it.value());
+                fresh.insert(it.value()->m_hash, it.value());
             }
         }
 
@@ -67,20 +67,20 @@ namespace oxygine
 
     void MaterialCache::removeUnused()
     {
-        QMutexLocker alock(&_lock);
+        QMutexLocker alock(&m_lock);
         removeUnusedNoLock();
     }
 
     MaterialCache::MaterialCache()
-        : _addCounter(0)
+        : m_addCounter(0)
     {
 
     }
 
     void MaterialCache::clear()
     {
-        QMutexLocker alock(&_lock);
-        _addCounter = 0;
+        QMutexLocker alock(&m_lock);
+        m_addCounter = 0;
         m_materials.clear();
     }
 

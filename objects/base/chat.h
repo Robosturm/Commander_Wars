@@ -34,7 +34,7 @@ private:
     void addMessage(QString message, bool local = false);
 
 private:
-    QVector<QString> messages;
+    QVector<QString> m_messages;
     spNetworkInterface m_pInterface{nullptr};
     spPanel m_Panel;
     oxygine::spTextField m_Chat;

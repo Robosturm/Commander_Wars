@@ -21,10 +21,9 @@ namespace oxygine
     protected:
         void compileShader(QOpenGLShader& shader, QString data);
     private:
-        GLuint _p;
-        QOpenGLShaderProgram _program;
-        QOpenGLShader _vsShader;
-        QOpenGLShader _fsShader;
+        QOpenGLShaderProgram m_program;
+        QOpenGLShader m_vsShader;
+        QOpenGLShader m_fsShader;
     };
 
 

@@ -43,15 +43,12 @@ private:
     QStringList m_Armies;
     QVector<oxygine::spSprite> m_ArmyBanners;
     spPanel m_ArmyBannerPanel;
-
     QVector<oxygine::spActor> m_COFields;
     oxygine::spSprite m_Cursor;
     QStringList m_CoIDs;
     QString m_CurrentCO;
     QColor m_CurrentColor;
     spPanel m_CoFieldPanel;
-
-
     spLabel m_COName;
     oxygine::spTextField m_COBio;
     oxygine::spTextField m_CODesc;
@@ -59,7 +56,6 @@ private:
     spLabel m_COSuperpower;
     oxygine::spSprite m_pCurrentCO;
     spPanel m_CoDescription;
-
     QStringList m_Coids;
 };
 

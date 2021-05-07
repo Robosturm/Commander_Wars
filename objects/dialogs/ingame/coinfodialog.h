@@ -44,14 +44,10 @@ private:
     oxygine::spButton m_QuitButton;
     oxygine::spButton m_BackButton;
     spPanel m_pPanel;
-
     spCOInfoActor m_COInfo;
-
     spCO m_CurrentCO;
     spPlayer m_pCurrentPlayer{nullptr};
-
     std::function<void (spCO& m_CurrrentCO, spPlayer& pPlayer, qint32 direction)> m_StepFunction;
-
     bool m_Ingame{false};
 };
 

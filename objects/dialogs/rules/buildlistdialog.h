@@ -46,7 +46,7 @@ private:
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
     QStringList m_UnitList;
-    bool toggle{true};
+    bool m_toggle{true};
     QStringList m_CurrentBuildList;
     qint32 m_Player;
 };

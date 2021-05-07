@@ -131,9 +131,7 @@ private:
     qint32 m_currentMedia{-1};
     QVector<QSoundEffect*> m_Sounds;
     QVector<QTimer*> m_SoundTimers;
-
     QTimer m_doubleBufferTimer;
-
     bool m_loadBaseGameFolders{true};
 };
 

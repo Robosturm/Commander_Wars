@@ -10,18 +10,19 @@ namespace oxygine
     public:
         static spResource create(CreateResourceContext&);
 
-        ResBuffer();
+        explicit ResBuffer();
         ~ResBuffer();
 
         void init(QString file);
 
-        QString getBuffer() const {return _buffer;}
+        QString getBuffer() const {return m_buffer;}
 
     private:
         void _load(LoadResourcesContext*) override;
         void _unload() override;
 
-        QString _buffer;
-        QString _path;
+    private:
+        QString m_buffer;
+        QString m_path;
     };
 }

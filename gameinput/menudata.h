@@ -19,23 +19,23 @@ public:
 
     QStringList getTexts()
     {
-        return texts;
+        return m_texts;
     }
     QStringList getActionIDs()
     {
-        return actionIDs;
+        return m_actionIDs;
     }
     QVector<qint32> getCostList()
     {
-        return costList;
+        return m_costList;
     }
     QVector<bool> getEnabledList()
     {
-        return enabledList;
+        return m_enabledList;
     }
     QVector<oxygine::spActor> getIconList()
     {
-        return iconList;
+        return m_iconList;
     }
 signals:
 
@@ -65,11 +65,11 @@ public slots:
     bool validData();
 
 private:
-    QStringList texts;
-    QStringList actionIDs;
-    QVector<qint32> costList;
-    QVector<oxygine::spActor> iconList;
-    QVector<bool> enabledList;
+    QStringList m_texts;
+    QStringList m_actionIDs;
+    QVector<qint32> m_costList;
+    QVector<oxygine::spActor> m_iconList;
+    QVector<bool> m_enabledList;
 };
 
 #endif // MENUDATA_H

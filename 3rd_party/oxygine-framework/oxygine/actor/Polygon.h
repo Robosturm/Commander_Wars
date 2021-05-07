@@ -10,7 +10,6 @@ namespace oxygine
     public:
         Polygon();
         ~Polygon();
-
         /**
         if *own* is true Polygon will delete[] data array;
         */
@@ -18,9 +17,10 @@ namespace oxygine
     protected:
         void doRender(const RenderState&) override;
 
-        const VertexDeclaration* _vdecl;
-        bool _own;
-        const unsigned char* _verticesData;
-        qint32 _verticesSize;
+    protected:
+        const VertexDeclaration* m_vdecl;
+        bool m_own;
+        const unsigned char* m_verticesData;
+        qint32 m_verticesSize;
     };
 }

@@ -8,8 +8,8 @@ namespace oxygine
 {
     TweenGlowImpl::TweenGlowImpl(const QColor& c, const PostProcessOptions& opt)
         : TweenPostProcess(opt),
-          _color(c),
-          _downsample(1)
+          m_color(c),
+          m_downsample(1)
     {
     }
 
@@ -21,8 +21,8 @@ namespace oxygine
         actor->render(r);
         actor->setRenderDelegate(this);
         RectF src(0, 0,
-                  _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
-                  _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
+                  _pp._screen.getWidth() / (float)_pp._rt->getWidth() / m_downsample,
+                  _pp._screen.getHeight() / (float)_pp._rt->getHeight() / m_downsample);
         rsCache().setBlendMode(blend_premultiplied_alpha);
         AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
         renderer->setTransform(tr);
@@ -39,7 +39,7 @@ namespace oxygine
 
 
         spIVideoDriver driver = IVideoDriver::instance;
-        _downsample = 1;
+        m_downsample = 1;
         spNativeTexture rt = _pp._rt;
         spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
@@ -48,7 +48,7 @@ namespace oxygine
         driver->setShaderProgram(PostProcess::shaderBlurH.get());
         driver->setUniform("step", 1.0f / rt->getWidth());
         pass(rt, rc, rt2, rc);
-        QColor c = _color;
+        QColor c = m_color;
         c.setAlpha(64);
         driver->setShaderProgram(PostProcess::shaderBlurV.get());
         driver->setUniform("step", 1.0f / rt2->getHeight());

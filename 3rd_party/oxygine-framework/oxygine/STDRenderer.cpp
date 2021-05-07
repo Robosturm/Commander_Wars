@@ -305,7 +305,7 @@ namespace oxygine
 
     const oxygine::Matrix& STDRenderer::getViewProjection() const
     {
-        return _vp;
+        return m_vp;
     }
 
     void STDRenderer::setShader(ShaderProgram* prog)
@@ -313,7 +313,7 @@ namespace oxygine
         if (rsCache().setShader(prog))
         {
             shaderProgramChanged();
-            ShaderProgramChangedHook* hook = _sphookFirst;
+            ShaderProgramChangedHook* hook = m_sphookFirst;
             while (hook)
             {
                 hook->hook();
@@ -325,12 +325,12 @@ namespace oxygine
 
     void STDRenderer::xdrawBatch()
     {
-        size_t count = _verticesData.size() / _vdecl->size;
+        size_t count = m_verticesData.size() / m_vdecl->size;
         size_t indices = (count * 3) / 2;
 
-        getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_verticesData.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
+        getDriver()->draw(IVideoDriver::PT_TRIANGLES, m_vdecl, &m_verticesData.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
 
-        _verticesData.clear();
+        m_verticesData.clear();
     }
 
     void STDRenderer::initCoordinateSystem(qint32 width, qint32 height, bool flipU)
@@ -346,40 +346,40 @@ namespace oxygine
 
     IVideoDriver* STDRenderer::getDriver()
     {
-        return _driver;
+        return m_driver;
     }
 
 
     void STDRenderer::setViewProj(const Matrix& viewProj)
     {
-        _vp = viewProj;
+        m_vp = viewProj;
         flush();
 
-        if (!_driver->getShaderProgram())
+        if (!m_driver->getShaderProgram())
         {
             return;
         }
-        _driver->setUniform("mat", _vp);
+        m_driver->setUniform("mat", m_vp);
     }
 
     void STDRenderer::pushShaderSetHook(ShaderProgramChangedHook* hook)
     {
-        _sphookLast->next = hook;
-        hook->prev = _sphookLast;
-        _sphookLast = hook;
+        m_sphookLast->next = hook;
+        hook->prev = m_sphookLast;
+        m_sphookLast = hook;
     }
 
     void STDRenderer::popShaderSetHook()
     {
-        _sphookLast = _sphookLast->prev;
-        _sphookLast->next = 0;
+        m_sphookLast = m_sphookLast->prev;
+        m_sphookLast->next = 0;
     }
 
     void STDRenderer::begin()
     {
-        Q_ASSERT(_verticesData.empty() == true);
-        _verticesData.clear();
-        _transform.identity();
+        Q_ASSERT(m_verticesData.empty() == true);
+        m_verticesData.clear();
+        m_transform.identity();
 
         Material::null->apply();
 
@@ -392,21 +392,21 @@ namespace oxygine
     {
         flush();
 
-        if (_prevRT)
+        if (m_prevRT)
         {
-            _driver->setRenderTarget(_prevRT);
-            _prevRT = nullptr;
+            m_driver->setRenderTarget(m_prevRT);
+            m_prevRT = nullptr;
         }
 
     }
 
     void STDRenderer::setVertexDeclaration(const VertexDeclaration* decl)
     {
-        if (_vdecl != decl)
+        if (m_vdecl != decl)
         {
             flush();
         }
-        _vdecl = decl;
+        m_vdecl = decl;
     }
 
     void STDRenderer::addVertices(const void* data, quint32 size)
@@ -417,12 +417,12 @@ namespace oxygine
 
     void STDRenderer::xaddVertices(const void* data, quint32 size)
     {
-        _verticesData.insert(_verticesData.end(), (const unsigned char*)data, (const unsigned char*)data + size);
+        m_verticesData.insert(m_verticesData.end(), (const unsigned char*)data, (const unsigned char*)data + size);
     }
 
     void STDRenderer::checkDrawBatch()
     {
-        if (_verticesData.size() / sizeof(_vdecl->size) >= maxVertices)
+        if (m_verticesData.size() / sizeof(m_vdecl->size) >= maxVertices)
         {
             flush();
         }
@@ -493,29 +493,29 @@ namespace oxygine
 
 
     STDRenderer::STDRenderer(IVideoDriver* driver)
-        : _vdecl(0),
-          _driver(driver),
-          _uberShader(0)
+        : m_vdecl(0),
+          m_driver(driver),
+          m_uberShader(0)
     {
         if (!driver)
         {
             driver = IVideoDriver::instance.get();
         }
-        _driver = driver;
-        _vp.identity();
+        m_driver = driver;
+        m_vp.identity();
 
-        _vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
+        m_vdecl = m_driver->getVertexDeclaration(vertexPCT2::FORMAT);
 
-        _uberShader = &uberShader;
-        _transform.identity();
-        _baseShaderFlags = 0;
+        m_uberShader = &uberShader;
+        m_transform.identity();
+        m_baseShaderFlags = 0;
 
-        _sphookFirst = this;
-        _sphookLast  = this;
+        m_sphookFirst = this;
+        m_sphookLast  = this;
 
         hook = [ = ]()
         {
-            _driver->setUniform("mat", _vp);
+            m_driver->setUniform("mat", m_vp);
         };
     }
 
@@ -531,18 +531,18 @@ namespace oxygine
 
     void STDRenderer::swapVerticesData(STDRenderer& r)
     {
-        std::swap(_verticesData, r._verticesData);
+        std::swap(m_verticesData, r.m_verticesData);
     }
 
     void STDRenderer::swapVerticesData(std::vector<unsigned char>& data)
     {
-        std::swap(data, _verticesData);
+        std::swap(data, m_verticesData);
     }
 
 
     void STDRenderer::setTransform(const Transform& tr)
     {
-        _transform = tr;
+        m_transform = tr;
     }
 
     void STDRenderer::xbegin()
@@ -551,9 +551,9 @@ namespace oxygine
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
     {
-        Q_ASSERT(_prevRT == 0);
-        _prevRT = _driver->getRenderTarget();
-        _driver->setRenderTarget(nt);
+        Q_ASSERT(m_prevRT == 0);
+        m_prevRT = m_driver->getRenderTarget();
+        m_driver->setRenderTarget(nt);
 
         Rect vp;
         if (!viewport)
@@ -561,7 +561,7 @@ namespace oxygine
             vp = Rect(0, 0, nt->getWidth(), nt->getHeight());
             viewport = &vp;
         }
-        _driver->setViewport(*viewport);
+        m_driver->setViewport(*viewport);
 
 
         initCoordinateSystem(viewport->getWidth(), viewport->getHeight(), true);
@@ -573,7 +573,7 @@ namespace oxygine
     {
         QColor color = clr;
         vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, _transform, qRgba(premultiply(color)));
+        fillQuadT(v, srcRect, destRect, m_transform, qRgba(premultiply(color)));
 
         addVertices(v, sizeof(v));
     }
@@ -581,38 +581,38 @@ namespace oxygine
 
     void STDRenderer::setShaderFlags(quint32 flags)
     {
-        ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
+        ShaderProgram* sp = m_uberShader->getShaderProgram(m_baseShaderFlags | flags);
         setShader(sp);
     }
 
     void STDRenderer::flush()
     {
-        size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
+        size_t indices = (m_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
         if (!indices)
         {
             return;
         }
 
-        _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                      &_verticesData.front(), (unsigned int)_verticesData.size(),
+        m_driver->draw(IVideoDriver::PT_TRIANGLES, m_vdecl,
+                      &m_verticesData.front(), (unsigned int)m_verticesData.size(),
                       &STDRenderer::indices16.front(), (unsigned int)indices);
 
-        _verticesData.clear();
+        m_verticesData.clear();
     }
 
 
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {
-        if (_uberShader == pr)
+        if (m_uberShader == pr)
         {
             return;
         }
-        _uberShader = pr;
+        m_uberShader = pr;
     }
 
     void STDRenderer::setBaseShaderFlags(quint32 fl)
     {
-        _baseShaderFlags = fl;
+        m_baseShaderFlags = fl;
     }
 
 }

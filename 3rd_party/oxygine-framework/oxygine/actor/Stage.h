@@ -28,16 +28,16 @@ namespace oxygine
         void init(const Point& displaySize, const Point& gameSize);
 
         /**use Scissor test for outer Stage area*/
-        void setClipOuterArea(bool clip) {_clipOuter = clip;}
+        void setClipOuterArea(bool clip) {m_clipOuter = clip;}
         /**Render all actors*/
-        void render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
+        void renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
         /**Render all actors, simplified version*/
-        void render(const QColor& clearColor, const Rect& viewport);
+        void renderStage(const QColor& clearColor, const Rect& viewport);
 
         //const Rect    &getArea();
 
         /**Updates each children*/
-        void update();
+        void updateStage();
 
         void cleanup();
 
@@ -45,14 +45,12 @@ namespace oxygine
 
     protected:
         void onDeactivate(Event*);
-
         bool isOn(const Vector2& localPosition, float localScale) override;
 
     protected:
-
-        timeMS _statUpdate;
-        bool    _clipOuter;
-        Rect    _viewport;
+        timeMS m_statUpdate;
+        bool   m_clipOuter;
+        Rect   m_viewport;
     };
 
     inline const spStage& getStage() {return Stage::instance;}

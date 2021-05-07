@@ -62,7 +62,7 @@ private:
     qint32 m_currentStartIndex{0};
     oxygine::spBox9Sprite m_SelectedItem;
     qint32 m_spin = 0;
-    QElapsedTimer timer;
+    QElapsedTimer m_timer;
     QTimer m_itemChangedTimer;
     bool m_itemClicked{false};
 };

@@ -76,23 +76,21 @@ namespace oxygine
         void setHtmlText(QString str);
 
         virtual bool isOn(const Vector2& localPosition, float) override;
-
-
-    public:
         void doRender(const RenderState&) override;
-
         text::Node* getRootNode();
+
+    protected:
+        void sizeChanged(const Vector2& size) override;
+        void matChanged() override;
+        void rebuildText();
+
     protected:
         QString  m_text;
         TextStyle m_style;
 
-        text::spNode _root;
-        Rect _textRect;
-        float _rtscale;
-        qint32 _realFontSize;
+        text::spNode m_root;
+        Rect m_textRect;
+        float m_rtscale;
         bool m_htmlText = false;
-        void sizeChanged(const Vector2& size) override;
-        void matChanged() override;
-        void rebuildText();
     };
 }

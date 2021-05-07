@@ -8,14 +8,12 @@ namespace oxygine
     public:
         virtual ~RenderDelegate();
 
-        virtual void render(Actor*, const RenderState& rs);
-        virtual void render(ClipRectActor*, const RenderState& rs) {}
-        virtual void render(MaskedSprite*, const RenderState& rs) {}
-        virtual void doRender(Sprite*, const RenderState& rs) {}
-        virtual void doRender(TextField*, const RenderState& rs) {}
-        virtual void doRender(ColorRectSprite*, const RenderState& rs) {}
-        virtual void doRender(ProgressBar*, const RenderState& rs) {}
-
-        static void setCurrent(void*) {}
+        virtual void render(Actor*, const RenderState&);
+        virtual void render(ClipRectActor*, const RenderState&) {}
+        virtual void render(MaskedSprite*, const RenderState&) {}
+        virtual void doRender(Sprite*, const RenderState&) {}
+        virtual void doRender(TextField*, const RenderState&) {}
+        virtual void doRender(ColorRectSprite*, const RenderState&) {}
+        virtual void doRender(ProgressBar*, const RenderState&) {}
     };
 }

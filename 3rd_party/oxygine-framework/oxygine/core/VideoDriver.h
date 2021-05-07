@@ -149,8 +149,8 @@ namespace oxygine
 
         void reset() {}
         void restore() {}
-
-        spNativeTexture _rt;
+    private:
+        spNativeTexture m_rt;
     };
 
 }

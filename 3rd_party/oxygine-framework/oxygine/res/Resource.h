@@ -21,14 +21,14 @@ namespace oxygine
 
         /**Returns any attribute from xml resource definition. You could use it for defining for example per animation constants like duration, specific offsets, delays.*/
         QString             getAttribute(QString attr) const;
-        QDomElement         getNode() const {return _node;}
-        bool                getUseLoadCounter() const {return _useLoadCounter;}
-        qint32                 getLoadCounter() const { return _loadCounter; }
-        Resource*           getParent() const {return _parent;}
+        QDomElement         getNode() const {return m_node;}
+        bool                getUseLoadCounter() const {return m_useLoadCounter;}
+        qint32                 getLoadCounter() const { return m_loadCounter; }
+        Resource*           getParent() const {return m_parent;}
 
 
-        void setUseLoadCounter(bool v) {_useLoadCounter = v;}
-        void setParent(Resource* p) {_parent = p;}
+        void setUseLoadCounter(bool v) {m_useLoadCounter = v;}
+        void setParent(Resource* p) {m_parent = p;}
 
         /**returns id from xml node. Function is helper*/
         static QString extractID(const QDomElement& node, QString file, QString def);
@@ -52,18 +52,15 @@ namespace oxygine
          */
         void setName(QString name);
     protected:
-        static void setNode(spResource res, const QDomElement& node) {res->_node = node;}
-
+        static void setNode(spResource res, const QDomElement& node) {res->m_node = node;}
         virtual void _load(LoadResourcesContext* context = 0) = 0;
         virtual void _unload() = 0;
 
     protected:
-        Resource* _parent;
-
-        qint32 _loadCounter;
-        bool _useLoadCounter;
-
-        QDomElement _node;
+        Resource* m_parent;
+        qint32 m_loadCounter;
+        bool m_useLoadCounter;
+        QDomElement m_node;
         QString m_name;
 
     private:

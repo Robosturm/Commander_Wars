@@ -25,25 +25,25 @@ namespace oxygine
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);
 
-        float                   getScaleFactor() const {return _scaleFactor;}
-        float                   getAppliedScale() const { return _appliedScale; }
-        qint32                     getColumns() const {return _columns;}
-        qint32                     getRows() const {return (int)_frames.size() / _columns;}
-        qint32                     getTotalFrames() const {return (int)_frames.size();}
-        qint32                     getFrameRate() const { return _framerate; }
+        float                   getScaleFactor() const {return m_scaleFactor;}
+        float                   getAppliedScale() const { return m_appliedScale; }
+        qint32                     getColumns() const {return m_columns;}
+        qint32                     getRows() const {return (int)m_frames.size() / m_columns;}
+        qint32                     getTotalFrames() const {return (int)m_frames.size();}
+        qint32                     getFrameRate() const { return m_framerate; }
         const Resources*        getResources() const;
         const AnimationFrame&   getFrame(qint32 col, qint32 row) const;
         /**returns frame by index ignoring cols and rows*/
         const AnimationFrame&   getFrame(qint32 index) const;
         /**Returns atlas where this ResAnim was created*/
-        Resource*               getAtlas() {return _atlas;}
+        Resource*               getAtlas() {return m_atlas;}
         /**Returns size of frame*/
         const Vector2&          getSize() const;
         float                   getWidth() const;
         float                   getHeight() const;
 
         void setFrame(qint32 col, qint32 row, const AnimationFrame& frame);
-        void setFrameRate(qint32 v) { _framerate = v; }
+        void setFrameRate(qint32 v) { m_framerate = v; }
         void removeFrames();
 
         operator const AnimationFrame& ();
@@ -52,20 +52,19 @@ namespace oxygine
         void setResPath(const QString &value);
 
     protected:
-
         void _load(LoadResourcesContext* ctx = 0) override;
         void _unload() override;
 
-        qint32         _columns;
-        Resource*   _atlas;
-        float       _scaleFactor;
-        float       _appliedScale;
-        qint32         _framerate;
+    protected:
+        qint32      m_columns;
+        Resource*   m_atlas;
+        float       m_scaleFactor;
+        float       m_appliedScale;
+        qint32      m_framerate;
+        animationFrames m_frames;
+        QString m_resPath;
 
-        animationFrames _frames;
-
-        QString resPath;
     private:
-        static AnimationFrame emptyFrame;
+        static AnimationFrame m_emptyFrame;
     };
 }

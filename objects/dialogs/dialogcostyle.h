@@ -43,17 +43,14 @@ private:
     QVector<oxygine::spResAnim> m_pResAnims;
     QVector<oxygine::spSprite> m_pCOSprites;
     QVector<oxygine::spBox9Sprite> m_pCOBoxes;
-
     QStringList m_Styles;
     spDropDownmenu m_pPredefinedStyles;
-
     spPanel m_pPixelPanel;
     oxygine::spColorRectSprite m_PixelsSelector;
     QVector<oxygine::spColorRectSprite> m_Pixels;
     QImage m_baseColorTable;
     qint32 m_currentPixel = 0;
     qint32 m_boxWidth = 10;
-
     QString m_currentCOID;
     QString m_ResFilePath;
     QImage m_colorTable;

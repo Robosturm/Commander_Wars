@@ -37,43 +37,39 @@ namespace oxygine
             ~Aligner();
 
 
-            const TextStyle& getStyle() const {return style;}
+            const TextStyle& getStyle() const {return m_style;}
             float getScale() const;
 
             void begin();
             void end();
-
             qint32 putSymbol(Symbol& s);
             void nextLine();
 
-
-            TextStyle style;
-            Rect bounds;
-            qint32 width;
-            qint32 height;
-            size_t options;
-
-            spSTDMaterial mat;
-
-            const Font* _font;
+        public:
+            TextStyle m_style;
+            Rect m_bounds;
+            qint32 m_width;
+            qint32 m_height;
+            size_t m_options;
+            spSTDMaterial m_mat;
+            const Font* m_font;
 
         private:
+            typedef QVector<Symbol*> line;
             qint32 getLineWidth()const;
             qint32 getLineSkip()const;
-
-
-            typedef QVector<Symbol*> line;
-
             void _alignLine(line& ln);
+            void _nextLine(line& ln);
             qint32 _alignX(qint32 rx);
             qint32 _alignY(qint32 ry);
-            void _nextLine(line& ln);
 
-            float _scale;
-            qint32 m_x, _y;
-            line _line;
-            qint32 _lineWidth;
-            qint32 _lineSkip;
+        private:
+            float m_scale;
+            qint32 m_x;
+            qint32 m_y;
+            line m_line;
+            qint32 m_lineWidth;
+            qint32 m_lineSkip;
         };
     }
 }

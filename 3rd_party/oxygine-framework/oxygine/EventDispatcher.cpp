@@ -4,7 +4,7 @@
 namespace oxygine
 {
     EventDispatcher::EventDispatcher()
-        : _lastID(0)
+        : m_lastID(0)
     {
 
     }
@@ -15,11 +15,11 @@ namespace oxygine
 
     qint32 EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
-        _lastID++;
+        m_lastID++;
         listener ls;
         ls.type = et;
         ls.cb = cb;
-        ls.id = _lastID;
+        ls.id = m_lastID;
         bool added = false;
         for (qint32 i = 0; i < m_listeners.size(); ++i)
         {

@@ -5,66 +5,66 @@
 namespace oxygine
 {
     TweenAnim::TweenAnim(const ResAnim* resAnim, qint32 row):
-        _resAnim(resAnim),
-        _row(row),
-        _start(0),
-        _end(0)
+        m_resAnim(resAnim),
+        m_row(row),
+        m_start(0),
+        m_end(0)
     {
-        if (_resAnim)
+        if (m_resAnim)
         {
-            _end = _resAnim->getColumns() - 1;
+            m_end = m_resAnim->getColumns() - 1;
         }
     }
 
     TweenAnim::TweenAnim(const ResAnim* resAnim, float initFrame, qint32 row)
-        :_resAnim(resAnim),
-          _row(row),
-          _start(0),
-          _end(0),
-         _initFrame(initFrame)
+        :m_resAnim(resAnim),
+          m_row(row),
+          m_start(0),
+          m_end(0),
+         m_initFrame(initFrame)
       {
-          if (_resAnim)
+          if (m_resAnim)
           {
-              _end = _resAnim->getColumns() - 1;
+              m_end = m_resAnim->getColumns() - 1;
           }
       }
 
     TweenAnim::TweenAnim(const ResAnim* resAnim, qint32 startFrame, qint32 endFrame):
-        _resAnim(resAnim),
-        _row(-1),
-        _start(0),
-        _end(0)
+        m_resAnim(resAnim),
+        m_row(-1),
+        m_start(0),
+        m_end(0)
     {
         setInterval(startFrame, endFrame);
     }
 
     void TweenAnim::init(Sprite& actor)
     {
-        if (!_resAnim)
+        if (!m_resAnim)
         {
-            _resAnim = actor.getResAnim();
-            _end = _resAnim->getColumns() - 1;
+            m_resAnim = actor.getResAnim();
+            m_end = m_resAnim->getColumns() - 1;
         }
     }
 
 
     void TweenAnim::setResAnim(const ResAnim* resAnim)
     {
-        _resAnim = resAnim;
-        if (_resAnim && _row != -1)
+        m_resAnim = resAnim;
+        if (m_resAnim && m_row != -1)
         {
-            _end = _resAnim->getColumns() - 1;
+            m_end = m_resAnim->getColumns() - 1;
         }
     }
 
     void TweenAnim::setInterval(qint32 start, qint32 end)
     {
-        _start = start;
-        _end = end;
+        m_start = start;
+        m_end = end;
 
-        qint32 num = _row == -1 ? _resAnim->getTotalFrames() : _resAnim->getColumns();
-        Q_ASSERT(_start >= 0 && _start < num);
-        Q_ASSERT(_end >= 0 && _end < num);
+        qint32 num = m_row == -1 ? m_resAnim->getTotalFrames() : m_resAnim->getColumns();
+        Q_ASSERT(m_start >= 0 && m_start < num);
+        Q_ASSERT(m_end >= 0 && m_end < num);
     }
 
     void TweenAnim::_setAnimFrame(Sprite& actor, const AnimationFrame& frame)
@@ -74,10 +74,10 @@ namespace oxygine
 
     void TweenAnim::update(Sprite& actor, float p, const UpdateState&)
     {
-        Q_ASSERT(_resAnim);
+        Q_ASSERT(m_resAnim);
         qint32 frame;
 
-        p += _initFrame;
+        p += m_initFrame;
         if (p > 1.0f)
         {
             p -= 1.0f;
@@ -88,18 +88,18 @@ namespace oxygine
             p = 0.9999999f;
         }
 
-        if (_start > _end)
+        if (m_start > m_end)
         {
-            frame = - int((_start + 1 - _end) * p);
+            frame = - int((m_start + 1 - m_end) * p);
         }
         else
         {
-            frame =   int((_end   + 1 - _start) * p);
+            frame =   int((m_end   + 1 - m_start) * p);
         }
 
-        frame += _start;
+        frame += m_start;
 
-        const AnimationFrame& fr = _row == -1 ? _resAnim->getFrame(frame) : _resAnim->getFrame(frame, _row);
+        const AnimationFrame& fr = m_row == -1 ? m_resAnim->getFrame(frame) : m_resAnim->getFrame(frame, m_row);
         _setAnimFrame(actor, fr);
     }
 }

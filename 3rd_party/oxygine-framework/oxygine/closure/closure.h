@@ -88,7 +88,7 @@ namespace oxygine
         {
             return m_isSet;
         }
-        bool isOwner(void* pOwner) const
+        bool isOwner(IClosureOwner* pOwner) const
         {
             return (m_pOwner == pOwner);
         }

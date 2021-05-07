@@ -7,20 +7,20 @@ namespace oxygine
     namespace text
     {
         Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size)
-            : style(Style),
-              bounds(0, 0, 0, 0),
-              width((int)size.x),
-              height((int)size.y),
-              mat(mt),
-              _font(font),
-              _scale(gscale),
+            : m_style(Style),
+              m_bounds(0, 0, 0, 0),
+              m_width((int)size.x),
+              m_height((int)size.y),
+              m_mat(mt),
+              m_font(font),
+              m_scale(gscale),
               m_x(0),
-              _y(0),
-              _lineWidth(0)
+              m_y(0),
+              m_lineWidth(0)
         {
-            _line.reserve(50);
-            _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
-            options = Style.options;
+            m_line.reserve(50);
+            m_lineSkip = (int)(m_font->getBaselineDistance() * m_style.baselineScale) + m_style.linesOffset;
+            m_options = Style.options;
         }
 
         Aligner::~Aligner()
@@ -38,10 +38,10 @@ namespace oxygine
                     tx = 0;
                     break;
                 case TextStyle::HALIGN_MIDDLE:
-                    tx = width / 2 - rx / 2;
+                    tx = m_width / 2 - rx / 2;
                     break;
                 case TextStyle::HALIGN_RIGHT:
-                    tx = width - rx;
+                    tx = m_width - rx;
                     break;
             }
             return tx;
@@ -61,10 +61,10 @@ namespace oxygine
                     ty = 0;
                     break;
                 case TextStyle::VALIGN_MIDDLE:
-                    ty = height / 2 - ry / 2;
+                    ty = m_height / 2 - ry / 2;
                     break;
                 case TextStyle::VALIGN_BOTTOM:
-                    ty = height - ry;
+                    ty = m_height - ry;
                     break;
             }
             return ty;
@@ -73,42 +73,42 @@ namespace oxygine
         void Aligner::begin()
         {
             m_x = 0;
-            _y = 0;
+            m_y = 0;
 
-            width = int(width * _scale);
-            height = int(height * _scale);
+            m_width = int(m_width * m_scale);
+            m_height = int(m_height * m_scale);
 
-            bounds = Rect(_alignX(0), _alignY(0), 0, 0);
+            m_bounds = Rect(_alignX(0), _alignY(0), 0, 0);
             nextLine();
 
         }
 
         void Aligner::end()
         {
-            qint32 ry = _y;
+            qint32 ry = m_y;
 
             if (getStyle().multiline)
             {
                 nextLine();
-                _y -=  getLineSkip();
+                m_y -=  getLineSkip();
             }
             else
             {
-                _alignLine(_line);
+                _alignLine(m_line);
             }
 
-            bounds.setY(_alignY(ry));
-            bounds.setHeight(ry);
+            m_bounds.setY(_alignY(ry));
+            m_bounds.setHeight(ry);
         }
 
         qint32 Aligner::getLineWidth() const
         {
-            return _lineWidth;
+            return m_lineWidth;
         }
 
         qint32 Aligner::getLineSkip() const
         {
-            return _lineSkip;
+            return m_lineSkip;
         }
 
         void Aligner::_alignLine(line& ln)
@@ -131,62 +131,62 @@ namespace oxygine
                     s.x += tx;
                 }
 
-                _lineWidth = rx;
+                m_lineWidth = rx;
 
-                bounds.setX(std::min(tx, bounds.getX()));
-                bounds.setWidth(std::max(_lineWidth, bounds.getWidth()));
+                m_bounds.setX(std::min(tx, m_bounds.getX()));
+                m_bounds.setWidth(std::max(m_lineWidth, m_bounds.getWidth()));
             }
         }
 
         void Aligner::_nextLine(line& ln)
         {
-            _y += getLineSkip();
+            m_y += getLineSkip();
             _alignLine(ln);
 
 
-            _lineWidth = 0;
+            m_lineWidth = 0;
 
             m_x = 0;
         }
 
         void Aligner::nextLine()
         {
-            _nextLine(_line);
-            _line.clear();
+            _nextLine(m_line);
+            m_line.clear();
         }
 
         float Aligner::getScale() const
         {
-            return _scale;
+            return m_scale;
         }
 
         qint32 Aligner::putSymbol(Symbol& s)
         {
-            if (_line.empty() && s.code == ' ')
+            if (m_line.empty() && s.code == ' ')
             {
                 return 0;
             }
-            _line.push_back(&s);
+            m_line.push_back(&s);
 
             //optional remove?
-            if (_line.size() == 1 && s.gl.offset_x < 0)
+            if (m_line.size() == 1 && s.gl.offset_x < 0)
             {
                 m_x -= s.gl.offset_x;
             }
 
             s.x = m_x + s.gl.offset_x;
-            s.y = _y + s.gl.offset_y;
+            s.y = m_y + s.gl.offset_y;
             m_x += s.gl.advance_x + getStyle().kerning;
 
             qint32 rx = s.x + s.gl.advance_x;
-            _lineWidth = std::max(rx, _lineWidth);
+            m_lineWidth = std::max(rx, m_lineWidth);
 
-            if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)
+            if (m_lineWidth > m_width && getStyle().multiline && (m_width > 0) && m_line.size() > 1)
             {
-                qint32 lastWordPos = (int)_line.size() - 1;
+                qint32 lastWordPos = (int)m_line.size() - 1;
                 for (; lastWordPos > 0; --lastWordPos)
                 {
-                    if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
+                    if (m_line[lastWordPos]->code == ' ' && m_line[lastWordPos - 1]->code != ' ')
                     {
                         break;
                     }
@@ -194,9 +194,9 @@ namespace oxygine
 
                 if (!lastWordPos)
                 {
-                    if (style.breakLongWords)
+                    if (m_style.breakLongWords)
                     {
-                        lastWordPos = (int)_line.size() - 1;
+                        lastWordPos = (int)m_line.size() - 1;
                     }
                     else
                     {
@@ -204,11 +204,11 @@ namespace oxygine
                     }
                 }
 
-                qint32 delta = (int)_line.size() - lastWordPos;
+                qint32 delta = (int)m_line.size() - lastWordPos;
                 line leftPart;
                 leftPart.resize(delta + 1);
-                leftPart = line(_line.begin() + lastWordPos, _line.end());
-                _line.resize(lastWordPos);
+                leftPart = line(m_line.begin() + lastWordPos, m_line.end());
+                m_line.resize(lastWordPos);
                 nextLine();
                 for (qint32 i = 0; i < leftPart.size(); ++i)
                 {

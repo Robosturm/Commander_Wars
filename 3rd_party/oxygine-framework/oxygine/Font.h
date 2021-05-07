@@ -46,8 +46,8 @@ namespace oxygine
 
         void clear();
 
-        void setScale(float scale) { _scale = scale; }
-        void setBaselineDistance(qint32 d) { _baselineDistance = d; }
+        void setScale(float scale) { m_scale = scale; }
+        void setBaselineDistance(qint32 d) { m_baselineDistance = d; }
 
         const glyph*    getGlyph(qint32 code, const glyphOptions& opt) const;
         qint32             getBaselineDistance() const;
@@ -56,18 +56,17 @@ namespace oxygine
 
     protected:
         const glyph* findGlyph(qint32 code, const glyphOptions& opt) const;
-
         virtual bool loadGlyph(int, glyph&, const glyphOptions&) { return false; }
-
         typedef QSet<glyph> glyphs;
 
-        glyphs _glyphs;
-        bool _ignoreOptions{false};
+    protected:
+        glyphs m_glyphs;
+        bool m_ignoreOptions{false};
 
-        float _scale{0.0f};
-        bool _sdf{false};
+        float m_scale{0.0f};
+        bool m_sdf{false};
 
-        qint32 _size{0};
-        qint32 _baselineDistance{0};
+        qint32 m_size{0};
+        qint32 m_baselineDistance{0};
     };
 }

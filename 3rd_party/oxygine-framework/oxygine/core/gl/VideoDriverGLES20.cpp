@@ -8,7 +8,7 @@
 namespace oxygine
 {
 
-    VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
+    VideoDriverGLES20::VideoDriverGLES20(): m_programID(0), m_p(0)
     {
     }
 
@@ -60,8 +60,8 @@ namespace oxygine
     void VideoDriverGLES20::setShaderProgram(ShaderProgram* prog_)
     {
         prog_->bind();
-        _programID = prog_->getID();
-        _p = prog_;
+        m_programID = prog_->getID();
+        m_p = prog_;
     }
 
     void VideoDriverGLES20::setTexture(qint32 sampler, spNativeTexture t)
@@ -90,7 +90,7 @@ namespace oxygine
 
         const unsigned char* verticesData = (const unsigned char*)vdata;
 
-        const VertexDeclarationGL::Element* el = decl->elements;
+        const VertexDeclarationGL::Element* el = decl->m_elements;
         for (qint32 i = 0; i < decl->numElements; ++i)
         {
             window->glEnableVertexAttribArray(el->index);
@@ -101,7 +101,7 @@ namespace oxygine
         size_t primitives = verticesDataSize / decl->size;
         window->glDrawArrays(getPT(pt), 0, (GLsizei)primitives);
 
-        el = decl->elements;
+        el = decl->m_elements;
         for (qint32 i = 0; i < decl->numElements; ++i)
         {
             window->glDisableVertexAttribArray(el->index);
@@ -119,7 +119,7 @@ namespace oxygine
 
         const unsigned char* verticesData = (const unsigned char*)vdata;
 
-        const VertexDeclarationGL::Element* el = decl->elements;
+        const VertexDeclarationGL::Element* el = decl->m_elements;
         for (qint32 i = 0; i < decl->numElements; ++i)
         {
             window->glEnableVertexAttribArray(el->index);
@@ -129,7 +129,7 @@ namespace oxygine
 
         window->glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
 
-        el = decl->elements;
+        el = decl->m_elements;
         for (qint32 i = 0; i < decl->numElements; ++i)
         {
             window->glDisableVertexAttribArray(el->index);
@@ -151,7 +151,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniformInt(const char* id, qint32 v)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 location = window->glGetUniformLocation(_programID, id);
+        qint32 location = window->glGetUniformLocation(m_programID, id);
         if (location == -1)
         {
             return;
@@ -162,7 +162,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector4* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(_programID, id);
+        qint32 p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -173,7 +173,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector2* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(_programID, id);
+        qint32 p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -184,7 +184,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Vector3* v, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(_programID, id);
+        qint32 p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -195,7 +195,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, const Matrix* mat, qint32 num)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(_programID, id);
+        qint32 p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;
@@ -206,7 +206,7 @@ namespace oxygine
     void VideoDriverGLES20::setUniform(const char* id, float val)
     {
         GameWindow* window = oxygine::GameWindow::getWindow();
-        qint32 p = window->glGetUniformLocation(_programID, id);
+        qint32 p = window->glGetUniformLocation(m_programID, id);
         if (p == -1)
         {
             return;

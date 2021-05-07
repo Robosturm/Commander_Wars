@@ -7,7 +7,7 @@ namespace oxygine
         bformat = fmt;
         qint32 i = 0;
         qint32 offset = 0;
-        Element* dest = elements;
+        Element* dest = m_elements;
         if (fmt & VERTEX_POSITION)
         {
             dest->name = "position";

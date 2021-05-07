@@ -116,8 +116,8 @@ namespace oxygine
         bool beginRendering();
         void swapDisplayBuffers();
     protected:
-        bool _renderEnabled = true;
-        spEventDispatcher _dispatcher;
+        bool m_renderEnabled = true;
+        spEventDispatcher m_dispatcher;
 
         bool m_quit{false};
         QBasicTimer m_Timer;

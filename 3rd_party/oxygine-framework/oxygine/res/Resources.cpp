@@ -10,7 +10,7 @@
 
 namespace oxygine
 {
-    Resources::registeredResources Resources::_registeredResources;
+    Resources::registeredResources Resources::m_registeredResources;
     ResAnim* _defaultMissingRS = nullptr;
 
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, QString resTypeID)
@@ -19,8 +19,8 @@ namespace oxygine
         r.cb = creationCallback;
         r.id = resTypeID;
 
-        registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), r.id, registeredResource::comparePred2);
-        if (it != _registeredResources.end())
+        registeredResources::iterator it = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), r.id, registeredResource::comparePred2);
+        if (it != m_registeredResources.end())
         {
             if (it->id == resTypeID)
             {
@@ -28,17 +28,17 @@ namespace oxygine
                 return;
             }
         }
-        _registeredResources.insert(it, r);
+        m_registeredResources.insert(it, r);
     }
 
     void Resources::unregisterResourceType(QString resTypeID)
     {
-        registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), resTypeID, registeredResource::comparePred2);
-        if (it != _registeredResources.end())
+        registeredResources::iterator it = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), resTypeID, registeredResource::comparePred2);
+        if (it != m_registeredResources.end())
         {
             if (it->id == resTypeID)
             {
-                _registeredResources.erase(it);
+                m_registeredResources.erase(it);
                 return;
             }
         }
@@ -81,7 +81,7 @@ namespace oxygine
 
     void Resources::_load(LoadResourcesContext* context)
     {
-        for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
+        for (resources::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
         {
             Resource* res = (*i).get();
             res->load(context);
@@ -90,7 +90,7 @@ namespace oxygine
 
     void Resources::_unload()
     {
-        for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
+        for (resources::iterator i = m_resources.begin(); i != m_resources.end(); ++i)
         {
             Resource* res = (*i).get();
             res->unload();
@@ -99,14 +99,14 @@ namespace oxygine
 
     void Resources::free()
     {
-        _resourcesMap.clear();
-        _resources.clear();
-        _docs.clear();
+        m_resourcesMap.clear();
+        m_resources.clear();
+        m_docs.clear();
     }
 
     bool Resources::isEmpty() const
     {
-        return _docs.empty();
+        return m_docs.empty();
     }
 
     void Resources::updateName(QString filename)
@@ -117,8 +117,8 @@ namespace oxygine
 
     bool Resources::loadXML(const QString xmlFile, const ResourcesLoadOptions& opt)
     {
-        _name = xmlFile;
-        _loadCounter = opt._loadCompletely ? 1 : 0;
+        m_name = xmlFile;
+        m_loadCounter = opt.m_loadCompletely ? 1 : 0;
         qDebug("step0");
         QFile file(xmlFile);
 
@@ -134,31 +134,31 @@ namespace oxygine
         qDebug("step2");
 
 
-        _docs.push_back(QDomDocument());
-        QDomDocument& doc = _docs.last();
+        m_docs.push_back(QDomDocument());
+        QDomDocument& doc = m_docs.last();
         bool loaded = doc.setContent(&file);
         Q_ASSERT(loaded);
 
         QDomElement resources = doc.documentElement();
         qDebug("loading xml resources");
-        XmlWalker walker("", 1.0f, opt._loadCompletely, true, resources);
+        XmlWalker walker("", 1.0f, opt.m_loadCompletely, true, resources);
 
         while (true)
         {
             CreateResourceContext context;
-            context.options = &opt;
-            context.walker = walker.next();
-            if (context.walker.empty())
+            context.m_options = &opt;
+            context.m_walker = walker.next();
+            if (context.m_walker.empty())
             {
                 break;
             }
-            QString type = context.walker.getType();
+            QString type = context.m_walker.getType();
 
-            registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
-            if (i == _registeredResources.end() || (i->id != type))
+            registeredResources::iterator i = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), type);
+            if (i == m_registeredResources.end() || (i->id != type))
             {
                 qCritical("unknown resource. type: '%s' id: '%s'", type.toStdString().c_str(),
-                          Resource::extractID(context.walker.getNode(), "", "").toStdString().c_str());
+                          Resource::extractID(context.m_walker.getNode(), "", "").toStdString().c_str());
                 Q_ASSERT(!"unknown resource type");
                 continue;
             }
@@ -166,22 +166,22 @@ namespace oxygine
             registeredResource& r = *i;
 
 
-            context.xml_name = xmlFile;
-            context.resources = this;
+            context.m_xml_name = xmlFile;
+            context.m_resources = this;
 
-            qDebug("resource: %s ", context.xml_name.toStdString().c_str());
+            qDebug("resource: %s ", context.m_xml_name.toStdString().c_str());
             spResource res = r.cb(context);
             Q_ASSERT(res);
-            res->setUseLoadCounter(opt._useLoadCounter);
+            res->setUseLoadCounter(opt.m_useLoadCounter);
 
             if (res)
             {
-                if (context.walker.getLoad())
+                if (context.m_walker.getLoad())
                 {
                     res->load(nullptr);
                 }
                 res->setParent(this);
-                _resources.push_back(res);
+                m_resources.push_back(res);
             }
         }
 
@@ -191,7 +191,7 @@ namespace oxygine
 
     void Resources::collect(resources& r)
     {
-        for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
+        for (resourcesMap::const_iterator i = m_resourcesMap.cbegin(); i != m_resourcesMap.cend(); ++i)
         {
             spResource res = i.value();
             r.push_back(res);
@@ -208,7 +208,7 @@ namespace oxygine
         }
         QString name = r->getName().toLower();
         r->setName(name);
-        _resourcesMap[name] = r;
+        m_resourcesMap[name] = r;
 
         if (accessByShortenID)
         {
@@ -216,33 +216,33 @@ namespace oxygine
             QString shortName = file.fileName();
             if (shortName != name)
             {
-                _resourcesMap[shortName] = r;
+                m_resourcesMap[shortName] = r;
             }
         }
     }
 
     Resources::resources& Resources::_getResources()
     {
-        return _resources;
+        return m_resources;
     }
 
     Resources::resourcesMap& Resources::_getResourcesMap()
     {
-        return _resourcesMap;
+        return m_resourcesMap;
     }
 
     Resource* Resources::get(QString id_, error_policy ep, Resource* defIfNotFound) const
     {
         QString id = id_.toLower();
 
-        resourcesMap::const_iterator it = _resourcesMap.find(id);
+        resourcesMap::const_iterator it = m_resourcesMap.find(id);
 
-        if (it != _resourcesMap.end())
+        if (it != m_resourcesMap.end())
         {
             return it.value().get();
         }
 
-        handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + _name + "'");
+        handleErrorPolicy(ep, "can't find resource: '" + id + "' in '" + m_name + "'");
         if (ep == ep_show_error)
         {
             return defIfNotFound;
@@ -252,7 +252,7 @@ namespace oxygine
 
     void Resources::setLinearFilter(quint32 linearFilter)
     {
-        for (auto & res : _resources)
+        for (auto & res : m_resources)
         {
             res->setLinearFilter(linearFilter);
         }
@@ -260,9 +260,9 @@ namespace oxygine
 
     quint32 Resources::getLinearFilter() const
     {
-        if (_resources.size() > 0)
+        if (m_resources.size() > 0)
         {
-            return _resources[0]->getLinearFilter();
+            return m_resources[0]->getLinearFilter();
         }
         return 0;
     }

@@ -9,7 +9,7 @@ namespace oxygine
     ColorRectSprite::ColorRectSprite()
     {
         STDMaterial mat;
-        mat._base = STDRenderer::white;
+        mat.m_base = STDRenderer::white;
 
         m_mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(mat));
     }

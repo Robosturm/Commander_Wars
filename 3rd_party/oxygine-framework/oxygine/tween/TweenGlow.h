@@ -14,8 +14,8 @@ namespace oxygine
         virtual void render(Actor* actor, const RenderState& rs) override;
         virtual void _renderPP() override;
     private:
-        QColor _color;
-        qint32 _downsample;
+        QColor m_color;
+        qint32 m_downsample;
     };
 
     class TweenGlow : public TweenProxy<TweenGlowImpl>

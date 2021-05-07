@@ -6,7 +6,7 @@ namespace oxygine
 {
     TweenAlphaFadeImpl::TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt)
         : TweenPostProcess(opt),
-          _fadeIn(fadeIn)
+          m_fadeIn(fadeIn)
     {
     }
 
@@ -17,11 +17,11 @@ namespace oxygine
             return;
         }
         spSTDMaterial mat = spSTDMaterial::create();
-        mat->_base = _pp._rt;
-        mat->_blend = blend_premultiplied_alpha;
+        mat->m_base = _pp._rt;
+        mat->m_blend = blend_premultiplied_alpha;
         mat->apply();
 
-        qint32 _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
+        qint32 _a = lerp(m_fadeIn ? 0 : 255, m_fadeIn ? 255 : 0, _progress);
         STDRenderer* renderer = STDRenderer::getCurrent();
 
         spNativeTexture rt = _pp._rt;

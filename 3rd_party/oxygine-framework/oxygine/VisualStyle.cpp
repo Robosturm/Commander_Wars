@@ -15,8 +15,8 @@ namespace oxygine
     VStyleActor::VStyleActor()
     {
         STDMaterial mat;
-        mat._blend = blend_premultiplied_alpha;
-        mat._base = STDRenderer::white;
+        mat.m_blend = blend_premultiplied_alpha;
+        mat.m_base = STDRenderer::white;
         m_flags |= flag_actorHasBounds;
         m_mat = dynamic_pointer_cast<STDMaterial>(MaterialCache::mc().cache(mat));
     }
@@ -33,17 +33,17 @@ namespace oxygine
 
     const QColor& VStyleActor::getColor() const
     {
-        return _vstyle.getColor();
+        return m_vstyle.getColor();
     }
 
     const QColor& VStyleActor::getAddColor() const
     {
-        return m_mat->_addColor;
+        return m_mat->m_addColor;
     }
 
     void VStyleActor::setColor(const QColor& color)
     {
-        _vstyle.setColor(color);
+        m_vstyle.setColor(color);
     }
 
     void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
@@ -59,7 +59,7 @@ namespace oxygine
         }
 
         m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
-        m_mat->_addColor = color;
+        m_mat->m_addColor = color;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
     }
@@ -75,10 +75,10 @@ namespace oxygine
         {
             return;
         }
-        _vstyle.setBlendMode(mode);
+        m_vstyle.setBlendMode(mode);
 
         m_mat = dynamic_pointer_cast<STDMaterial>(m_mat->clone());
-        m_mat->_blend = mode;
+        m_mat->m_blend = mode;
         m_mat = MaterialCache::mc().cache(*m_mat.get());
         matChanged();
     }
@@ -96,12 +96,12 @@ namespace oxygine
 
     QColor VStyleActor::getDisableColor() const
     {
-        return disableColor;
+        return m_disableColor;
     }
 
     void VStyleActor::setDisableColor(const QColor &value)
     {
-        disableColor = value;
+        m_disableColor = value;
     }
 
     void VStyleActor::setEnabled(bool value)
@@ -113,7 +113,7 @@ namespace oxygine
         }
         else
         {
-            setAddColor(disableColor);
+            setAddColor(m_disableColor);
         }
     }
 

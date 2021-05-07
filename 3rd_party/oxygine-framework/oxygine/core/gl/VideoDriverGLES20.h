@@ -27,7 +27,7 @@ namespace oxygine
         void begin(const Rect& viewport, const QColor* clearColor) override;
         void clear(const QColor& color) override;
 
-        ShaderProgram*  getShaderProgram() const override { return _p; }
+        ShaderProgram*  getShaderProgram() const override { return m_p; }
 
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize) override;
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, quint32 verticesDataSize, const unsigned short* indicesData, quint32 numIndices) override;
@@ -44,10 +44,7 @@ namespace oxygine
         void setUniform(const char* id, float val) override;
 
     protected:
-        GLuint _vbo;
-        GLuint _ibo;
-
-        qint32 _programID;
-        ShaderProgram* _p;
+        qint32 m_programID;
+        ShaderProgram* m_p;
     };
 }

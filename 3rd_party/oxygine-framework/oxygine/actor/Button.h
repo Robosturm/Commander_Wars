@@ -32,15 +32,13 @@ namespace oxygine
         state _state;
         const ResAnim* _resAnim;
         qint32 _row;
-
     private:
-        pointer_index _btnPressed;
-        pointer_index _btnOvered;
-
         void _mouseEvent(Event* event);
-
         void setState(state s);
 
+    private:
+        pointer_index m_btnPressed;
+        pointer_index m_btnOvered;
         qint32 m_touchUpCbId{0};
     };
 }

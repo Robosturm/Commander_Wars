@@ -25,13 +25,13 @@ namespace oxygine
     void SingleResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
     {
 
-        _scaleFactor = scaleFactor;
+        m_scaleFactor = scaleFactor;
         if (!original)
         {
             return;
         }
         spNativeTexture texture = IVideoDriver::instance->createTexture();
-        _texture = texture;
+        m_texture = texture;
 
         texture->init(original->lock(), false);
         texture->apply();
@@ -58,9 +58,9 @@ namespace oxygine
                 Rect bounds;
                 HitTestData ht;
                 const ImageData& im = original->lock(src);
-                makeAlpha(im, bounds, _data, ht, true);
+                makeAlpha(im, bounds, m_data, ht, true);
 
-                _frames[i].setHitTestData(ht);
+                m_frames[i].setHitTestData(ht);
                 ++i;
             }
         }
@@ -70,12 +70,12 @@ namespace oxygine
         {
             for (qint32 x = 0; x < columns; ++x)
             {
-                HitTestData ht = _frames[i].getHitTestData();
-                if (_data.length() > 0)
+                HitTestData ht = m_frames[i].getHitTestData();
+                if (m_data.length() > 0)
                 {
-                    ht.data = &_data[reinterpret_cast<size_t>(ht.data)];
+                    ht.data = &m_data[reinterpret_cast<size_t>(ht.data)];
                 }
-                _frames[i].setHitTestData(ht);
+                m_frames[i].setHitTestData(ht);
                 ++i;
             }
         }
@@ -84,7 +84,7 @@ namespace oxygine
 
     spNativeTexture SingleResAnim::getTexture() const
     {
-        return _texture;
+        return m_texture;
     }
 
 }

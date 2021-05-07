@@ -30,7 +30,7 @@ namespace oxygine
     public:
         EventDispatcher(const EventDispatcher& ed)
             : Object(ed),
-              _lastID(0)
+              m_lastID(0)
         {
         }
         EventDispatcher();
@@ -54,7 +54,7 @@ namespace oxygine
         void dispatchEvent(Event& event) { dispatchEvent(&event); }
 
         qint32 getListenersCount() const;
-        qint32 getLastListenerID() const { return _lastID; }
+        qint32 getLastListenerID() const { return m_lastID; }
 
         const EventCallback& getListenerByIndex(qint32 index) const { return m_listeners[index].cb; }
 
@@ -75,7 +75,7 @@ namespace oxygine
             eventType type;
         };
 
-        qint32 _lastID;
+        qint32 m_lastID;
 
         typedef QVector<listener> listeners;
         listeners m_listeners;

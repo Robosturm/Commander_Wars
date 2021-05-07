@@ -10,30 +10,30 @@ namespace oxygine
 {
 
     Box9Sprite::Box9Sprite() :
-        _prepared(false),
-        _vertMode(STRETCHING),
-        _horzMode(STRETCHING)
+        m_prepared(false),
+        m_vertMode(STRETCHING),
+        m_horzMode(STRETCHING)
 
     {
-        _guideX[0] = 0.0f;
-        _guideX[1] = 0.0f;
-        _guideY[0] = 0.0f;
-        _guideY[1] = 0.0f;
+        m_guideX[0] = 0.0f;
+        m_guideX[1] = 0.0f;
+        m_guideY[0] = 0.0f;
+        m_guideY[1] = 0.0f;
 
     }
 
     oxygine::RectF Box9Sprite::getInnerArea() const
     {
-        if (!_prepared)
+        if (!m_prepared)
         {
             prepare();
         }
         RectF rect;
-        rect.pos = Vector2(_guideX[0], _guideY[0]);
+        rect.pos = Vector2(m_guideX[0], m_guideY[0]);
         
         Vector2 rb;
-        rb.x = getWidth() - (_frame.getWidth() - _guideX[1]);
-        rb.y = getHeight() - (_frame.getHeight() - _guideY[1]);
+        rb.x = getWidth() - (m_frame.getWidth() - m_guideX[1]);
+        rb.y = getHeight() - (m_frame.getHeight() - m_guideY[1]);
 
         rect.setSize(rb - rect.pos);
 
@@ -42,37 +42,37 @@ namespace oxygine
 
     void Box9Sprite::setVerticalMode(StretchMode m)
     {
-        _vertMode = m;
-        _prepared = false;
+        m_vertMode = m;
+        m_prepared = false;
     }
 
     void Box9Sprite::setHorizontalMode(StretchMode m)
     {
-        _horzMode = m;
-        _prepared = false;
+        m_horzMode = m;
+        m_prepared = false;
     }
 
     void Box9Sprite::setGuides(float x1, float x2, float y1, float y2)
     {
-        _guideX[0] = x1;
-        _guideX[1] = x2;
-        _guideY[0] = y1;
-        _guideY[1] = y2;
-        _prepared = false;
+        m_guideX[0] = x1;
+        m_guideX[1] = x2;
+        m_guideY[0] = y1;
+        m_guideY[1] = y2;
+        m_prepared = false;
     }
 
     void Box9Sprite::setVerticalGuides(float x1, float x2)
     {
-        _guideX[0] = x1;
-        _guideX[1] = x2;
-        _prepared = false;
+        m_guideX[0] = x1;
+        m_guideX[1] = x2;
+        m_prepared = false;
     }
 
     void Box9Sprite::setHorizontalGuides(float y1, float y2)
     {
-        _guideY[0] = y1;
-        _guideY[1] = y2;
-        _prepared = false;
+        m_guideY[0] = y1;
+        m_guideY[1] = y2;
+        m_prepared = false;
     }
 
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
@@ -84,7 +84,7 @@ namespace oxygine
 
     void Box9Sprite::animFrameChanged(const AnimationFrame& f)
     {
-        _prepared = false;
+        m_prepared = false;
 
         ResAnim* resanim = f.getResAnim();
         if (resanim)
@@ -93,49 +93,49 @@ namespace oxygine
 
             QString attr = resanim->getAttribute("guideX1");
             bool ok = false;
-            _guideX[0] = attr.toFloat(&ok);
+            m_guideX[0] = attr.toFloat(&ok);
             if (!ok)
             {
-                _guideX[0] = 0;
+                m_guideX[0] = 0;
             }
-            _guideX[0] *= scaleFactor;
+            m_guideX[0] *= scaleFactor;
 
             attr = resanim->getAttribute("guideX2");
-            _guideX[1] = attr.toFloat(&ok);
+            m_guideX[1] = attr.toFloat(&ok);
             if (!ok)
             {
-                _guideX[1] = resanim->getWidth();
+                m_guideX[1] = resanim->getWidth();
             }
-            _guideX[1] *= scaleFactor;
+            m_guideX[1] *= scaleFactor;
 
             attr = resanim->getAttribute("guideY1");
-            _guideY[0] = attr.toFloat(&ok);
+            m_guideY[0] = attr.toFloat(&ok);
             if (!ok)
             {
-                _guideY[0] = 0;
+                m_guideY[0] = 0;
             }
-            _guideY[0] *= scaleFactor;
+            m_guideY[0] *= scaleFactor;
 
             attr = resanim->getAttribute("guideY2");
-            _guideY[1] = attr.toFloat(&ok);
+            m_guideY[1] = attr.toFloat(&ok);
             if (!ok)
             {
-                _guideY[1] = resanim->getHeight();
+                m_guideY[1] = resanim->getHeight();
             }
-            _guideY[1] *= scaleFactor;
+            m_guideY[1] *= scaleFactor;
 
             attr = resanim->getAttribute("vertical");
-            _vertMode = static_cast<StretchMode>(attr.toUInt(&ok));
+            m_vertMode = static_cast<StretchMode>(attr.toUInt(&ok));
             if (!ok)
             {
-                _vertMode = STRETCHING;
+                m_vertMode = STRETCHING;
             }
 
             attr = resanim->getAttribute("horizontal");
-            _horzMode = static_cast<StretchMode>(attr.toUInt(&ok));
+            m_horzMode = static_cast<StretchMode>(attr.toUInt(&ok));
             if (!ok)
             {
-                _horzMode = STRETCHING;
+                m_horzMode = STRETCHING;
             }
         }
         Sprite::animFrameChanged(f);
@@ -153,52 +153,52 @@ namespace oxygine
 
     void Box9Sprite::prepare() const
     {
-        _guidesX.resize(4);
-        _guidesY.resize(4);
-        _pointsX.clear();
-        _pointsY.clear();
+        m_guidesX.resize(4);
+        m_guidesY.resize(4);
+        m_pointsX.clear();
+        m_pointsY.clear();
 
-        float fFrameWidth = _frame.getWidth();
-        float fFrameHeight = _frame.getHeight();
+        float fFrameWidth = m_frame.getWidth();
+        float fFrameHeight = m_frame.getHeight();
 
         float fActorWidth = getSize().x;
         float fActorHeight = getSize().y;
 
-        if (_guideX[1] == 0.0f)
+        if (m_guideX[1] == 0.0f)
         {
-            _guideX[1] = fFrameWidth;
+            m_guideX[1] = fFrameWidth;
         }
-        if (_guideY[1] == 0.0f)
+        if (m_guideY[1] == 0.0f)
         {
-            _guideY[1] = fFrameHeight;
+            m_guideY[1] = fFrameHeight;
         }
 
-        RectF srcFrameRect = _frame.getSrcRect();
+        RectF srcFrameRect = m_frame.getSrcRect();
 
-        _guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        _guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
-        _guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[1] / fFrameWidth);
-        _guidesX[3] = srcFrameRect.getRight();
+        m_guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
+        m_guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
+        m_guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), m_guideX[1] / fFrameWidth);
+        m_guidesX[3] = srcFrameRect.getRight();
 
-        _guidesY[0] = srcFrameRect.getTop();
-        _guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[0] / fFrameHeight);
-        _guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[1] / fFrameHeight);
-        _guidesY[3] = srcFrameRect.getBottom();
+        m_guidesY[0] = srcFrameRect.getTop();
+        m_guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), m_guideY[0] / fFrameHeight);
+        m_guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), m_guideY[1] / fFrameHeight);
+        m_guidesY[3] = srcFrameRect.getBottom();
 
         // filling X axis
-        _pointsX.push_back(0.0f);
-        _pointsX.push_back(_guideX[0]);
+        m_pointsX.push_back(0.0f);
+        m_pointsX.push_back(m_guideX[0]);
 
-        if (_horzMode == STRETCHING)
+        if (m_horzMode == STRETCHING)
         {
-            _pointsX.push_back(fActorWidth - (fFrameWidth - _guideX[1]));
-            _pointsX.push_back(fActorWidth);
+            m_pointsX.push_back(fActorWidth - (fFrameWidth - m_guideX[1]));
+            m_pointsX.push_back(fActorWidth);
         }
-        else if (_horzMode == TILING || _horzMode == TILING_FULL)
+        else if (m_horzMode == TILING || m_horzMode == TILING_FULL)
         {
-            float curX = _guideX[0];
-            float rightB = fActorWidth - (fFrameWidth - _guideX[1]); // right bound (in px)
-            float centerPart = _guideX[1] - _guideX[0]; // length of the center piece (in px)
+            float curX = m_guideX[0];
+            float rightB = fActorWidth - (fFrameWidth - m_guideX[1]); // right bound (in px)
+            float centerPart = m_guideX[1] - m_guideX[0]; // length of the center piece (in px)
 
             // now we add a center piece every time until we reach right bound
             while (1)
@@ -207,18 +207,18 @@ namespace oxygine
 
                 if (curX <= rightB)
                 {
-                    _pointsX.push_back(curX);
+                    m_pointsX.push_back(curX);
                 }
                 else
                 {
-                    if (_horzMode == TILING_FULL)
+                    if (m_horzMode == TILING_FULL)
                     {
-                        _pointsX.push_back(rightB);
-                        _pointsX.push_back(fActorWidth);
+                        m_pointsX.push_back(rightB);
+                        m_pointsX.push_back(fActorWidth);
                     }
                     else
                     {
-                        _pointsX.push_back(curX - centerPart + (fFrameWidth - _guideX[1]));
+                        m_pointsX.push_back(curX - centerPart + (fFrameWidth - m_guideX[1]));
                     }
                     break;
                 }
@@ -226,19 +226,19 @@ namespace oxygine
         }
 
         // filling Y axis
-        _pointsY.push_back(0.0f);
-        _pointsY.push_back(_guideY[0]);
+        m_pointsY.push_back(0.0f);
+        m_pointsY.push_back(m_guideY[0]);
 
-        if (_vertMode == STRETCHING)
+        if (m_vertMode == STRETCHING)
         {
-            _pointsY.push_back(fActorHeight - (fFrameHeight - _guideY[1]));
-            _pointsY.push_back(fActorHeight);
+            m_pointsY.push_back(fActorHeight - (fFrameHeight - m_guideY[1]));
+            m_pointsY.push_back(fActorHeight);
         }
-        else if (_vertMode == TILING || _vertMode == TILING_FULL)
+        else if (m_vertMode == TILING || m_vertMode == TILING_FULL)
         {
-            float curY = _guideY[0];
-            float bottomB = fActorHeight - (fFrameHeight - _guideY[1]); // bottom bound (in px)
-            float centerPart = _guideY[1] - _guideY[0]; // length of the center piece (in px)
+            float curY = m_guideY[0];
+            float bottomB = fActorHeight - (fFrameHeight - m_guideY[1]); // bottom bound (in px)
+            float centerPart = m_guideY[1] - m_guideY[0]; // length of the center piece (in px)
 
             // now we add a center piece every time until we reach right bound
             while (true)
@@ -247,35 +247,35 @@ namespace oxygine
 
                 if (curY <= bottomB)
                 {
-                    _pointsY.push_back(curY);
+                    m_pointsY.push_back(curY);
                 }
                 else
                 {
-                    if (_vertMode == TILING_FULL)
+                    if (m_vertMode == TILING_FULL)
                     {
-                        _pointsY.push_back(bottomB);
-                        _pointsY.push_back(fActorHeight);
+                        m_pointsY.push_back(bottomB);
+                        m_pointsY.push_back(fActorHeight);
                     }
                     else
                     {
-                        _pointsY.push_back(curY - centerPart + (fFrameHeight - _guideY[1]));
+                        m_pointsY.push_back(curY - centerPart + (fFrameHeight - m_guideY[1]));
                     }
                     break;
                 }
             }
         }
 
-        _prepared = true;
+        m_prepared = true;
     }
 
     void Box9Sprite::sizeChanged(const Vector2&)
     {
-        _prepared = false;
+        m_prepared = false;
     }
 
     void Box9Sprite::doRender(const RenderState& rs)
     {
-        if (!_prepared)
+        if (!m_prepared)
         {
             prepare();
         }
@@ -284,18 +284,18 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        if (m_mat->_base)
+        if (m_mat->m_base)
         {
-            if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
+            if (m_guidesX.size() >= 2 || m_guidesY.size() >= 2)
             {
                 renderer->setTransform(rs.transform);
 
                 QColor color = rs.getFinalColor(getColor());
 
                 // number of vertical blocks
-                qint32 vc = (int)_pointsX.size() - 1;
+                qint32 vc = (int)m_pointsX.size() - 1;
                 // number of horizontal blocks
-                qint32 hc = (int)_pointsY.size() - 1;
+                qint32 hc = (int)m_pointsY.size() - 1;
 
                 qint32 xgi = 0; // x guide index
                 qint32 ygi = 0;
@@ -307,7 +307,7 @@ namespace oxygine
                         {
                             xgi = 0;
                         }
-                        else if (xc == (int)_pointsX.size() - 2)
+                        else if (xc == (int)m_pointsX.size() - 2)
                         {
                             xgi = 2;
                         }
@@ -319,7 +319,7 @@ namespace oxygine
                         {
                             ygi = 0;
                         }
-                        else if (yc == (int)_pointsY.size() - 2)
+                        else if (yc == (int)m_pointsY.size() - 2)
                         {
                             ygi = 2;
                         }
@@ -327,8 +327,8 @@ namespace oxygine
                         {
                             ygi = 1;
                         }
-                        RectF srcRect(_guidesX[xgi], _guidesY[ygi], _guidesX[xgi + 1] - _guidesX[xgi], _guidesY[ygi + 1] - _guidesY[ygi]);
-                        RectF destRect(_pointsX[xc], _pointsY[yc], _pointsX[xc + 1] - _pointsX[xc], _pointsY[yc + 1] - _pointsY[yc]);
+                        RectF srcRect(m_guidesX[xgi], m_guidesY[ygi], m_guidesX[xgi + 1] - m_guidesX[xgi], m_guidesY[ygi + 1] - m_guidesY[ygi]);
+                        RectF destRect(m_pointsX[xc], m_pointsY[yc], m_pointsX[xc + 1] - m_pointsX[xc], m_pointsY[yc + 1] - m_pointsY[yc]);
 
                         renderer->addQuad(color, srcRect, destRect);
 

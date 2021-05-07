@@ -43,7 +43,7 @@ namespace oxygine
         }
     }
 
-    ProgressBar::ProgressBar(): _progress(1.0f), _direction(dir_0)
+    ProgressBar::ProgressBar(): m_progress(1.0f), m_direction(dir_0)
     {
         AnimationFrame f(STDRenderer::white);
         f.setSize(200, 60);
@@ -58,51 +58,51 @@ namespace oxygine
 
     void ProgressBar::animFrameChanged(const AnimationFrame& f)
     {
-        _originalFrame = f;
+        m_originalFrame = f;
         _update();
         Sprite::animFrameChanged(f);
     }
 
     void ProgressBar::_update()
     {
-        if (!_frame.getDiffuse().base)
+        if (!m_frame.getDiffuse().base)
         {
             return;
         }
-        RectF newSrc = _originalFrame.getSrcRect();
-        RectF newDest = _originalFrame.getDestRect();
+        RectF newSrc = m_originalFrame.getSrcRect();
+        RectF newDest = m_originalFrame.getDestRect();
 
-        float inv_progress = 1.0f - _progress;
-        switch (_direction)
+        float inv_progress = 1.0f - m_progress;
+        switch (m_direction)
         {
             case dir_180:
                 newSrc.pos.x += newSrc.size.x * inv_progress;
                 newDest.pos.x += newDest.size.x * inv_progress;
             //break; do not break
             case dir_0:
-                newSrc.size.x = newSrc.size.x * _progress;
-                newDest.size.x = newDest.size.x * _progress;
+                newSrc.size.x = newSrc.size.x * m_progress;
+                newDest.size.x = newDest.size.x * m_progress;
                 break;
             case dir_90:
                 newSrc.pos.y += newSrc.size.y * inv_progress;
                 newDest.pos.y += newDest.size.y * inv_progress;
             //break; do not break
             case dir_270:
-                newSrc.size.y = newSrc.size.y * _progress;
-                newDest.size.y = newDest.size.y * _progress;
+                newSrc.size.y = newSrc.size.y * m_progress;
+                newDest.size.y = newDest.size.y * m_progress;
                 break;
             default:
                 break;
         }
 
-        Vector2 newSize = _originalFrame.getSize() * _progress;
-        _frame.init(_frame.getResAnim(), _frame.getDiffuse(), newSrc, newDest, newSize);
+        Vector2 newSize = m_originalFrame.getSize() * m_progress;
+        m_frame.init(m_frame.getResAnim(), m_frame.getDiffuse(), newSrc, newDest, newSize);
         //_vstyle._material.srcRect = newSrc;
     }
 
     void ProgressBar::doRender(const RenderState& rs)
     {
-        if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
+        if (((m_direction != __dir_radial_ccw) && (m_direction != dir_radial_cw)) || (m_progress == 1.0f))
         {
             Sprite::doRender(rs);
             return;
@@ -112,7 +112,7 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        const Diffuse& df = _frame.getDiffuse();
+        const Diffuse& df = m_frame.getDiffuse();
         if (df.base)
         {
 
@@ -122,7 +122,7 @@ namespace oxygine
 
             RectF destRect = Sprite::getDestRect();
 
-            RectF srcRect = _frame.getSrcRect();
+            RectF srcRect = m_frame.getSrcRect();
             float u = srcRect.pos.x;
             float v = srcRect.pos.y;
 
@@ -144,7 +144,7 @@ namespace oxygine
 
             Vector2 vecRad = vecCircle - vecCenter;
 
-            float progress = _progress;
+            float progress = m_progress;
 
             float fP = M_PI * 2.f * progress;
 
@@ -309,12 +309,12 @@ namespace oxygine
     }
     void ProgressBar::setProgress(float f)
     {
-        _progress = scalar::clamp(f, 0.0f, 1.0f);
+        m_progress = scalar::clamp(f, 0.0f, 1.0f);
 
         Event ev(PROGRESS_CHANGED);
         dispatchEvent(&ev);
 
-        if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
+        if (m_direction == __dir_radial_ccw || m_direction == dir_radial_cw)
         {
             return;
         }
@@ -323,10 +323,10 @@ namespace oxygine
 
     void ProgressBar::setDirection(direction dir)
     {
-        _direction = dir;
-        if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
+        m_direction = dir;
+        if (m_direction == __dir_radial_ccw || m_direction == dir_radial_cw)
         {
-            _frame = _originalFrame;
+            m_frame = m_originalFrame;
             return;
         }
         _update();
@@ -334,11 +334,11 @@ namespace oxygine
 
     float ProgressBar::getProgress() const
     {
-        return _progress;
+        return m_progress;
     }
 
     ProgressBar::direction ProgressBar::getDirection() const
     {
-        return _direction;
+        return m_direction;
     }
 }

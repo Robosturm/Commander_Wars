@@ -14,14 +14,6 @@
 
 spInterpreter Interpreter::m_pInstance = nullptr;
 QString Interpreter::m_runtimeData;
-//Interpreter::Interpreter(QString script)
-//    : QQmlEngine()
-//{
-//    Mainapp* pApp = Mainapp::getInstance();
-//    this->moveToThread(pApp->getWorkerthread());
-//    init();
-//    openScript(script);
-//}
 
 Interpreter::Interpreter()
     : QQmlEngine()

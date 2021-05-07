@@ -19,12 +19,11 @@ namespace oxygine
         void init(qint32 w, qint32 h, ImageData::TextureFormat Format);
 
         void cleanup();
-        void convert(Image& dest, ImageData::TextureFormat format);
 
         void fillZero() { fill(0); }
         void fill(quint32 val);
 
-        quint32    getSizeVRAM() const {return (unsigned int)_buffer.size();}
+        quint32    getSizeVRAM() const {return (unsigned int)m_buffer.size();}
         qint32             getWidth() const;
         qint32             getHeight() const;
         const Point&    getSize() const;
@@ -45,8 +44,8 @@ namespace oxygine
         void        swap(Image& r);
 
     private:
-        ImageData _image;
-        size_t _offset;//buffer offset
-        QVector<unsigned char> _buffer;
+        ImageData m_image;
+        size_t m_offset;//buffer offset
+        QVector<unsigned char> m_buffer;
     };
 }

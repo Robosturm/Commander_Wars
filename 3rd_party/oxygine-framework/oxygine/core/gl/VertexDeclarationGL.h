@@ -20,7 +20,7 @@ namespace oxygine
             qint32 offset;
         };
 
-        Element elements[8];
+        Element m_elements[8];
 
     private:
 

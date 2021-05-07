@@ -21,13 +21,13 @@ namespace oxygine
 
         bool add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset);
 
-        const Rect& getBounds() const { return _bounds; }
+        const Rect& getBounds() const { return m_bounds; }
 
     protected:
         typedef QQueue<Rect> rects;
-        Rect _bounds;
-        rects _free;
-        qint32 _skipSize;
+        Rect m_bounds;
+        rects m_free;
+        qint32 m_skipSize;
     };
 
     typedef AtlasBuilder Atlas2;
@@ -44,7 +44,7 @@ namespace oxygine
 
         bool add(const ImageData& src, Rect& srcRect, spTexture& t);
 
-        const Rect& getBounds() const { return _bounds; }
+        const Rect& getBounds() const { return m_bounds; }
 
     protected:
         struct rect
@@ -52,15 +52,14 @@ namespace oxygine
             spTexture texture;
             Rect rct;
         };
-
-        createTextureCallback _cb;
-
+        static bool sortRects(const rect& a, const rect& b);
         void place(const rect& dest, qint32 w, qint32 h, const ImageData& src, spTexture& t, Rect& srcRect);
 
+    protected:
+        createTextureCallback m_cb;
         typedef QQueue<rect> rects;
-        Rect _bounds;
-        rects _free;
-        qint32 _skipSize;
-        static bool sortRects(const rect& a, const rect& b);
+        Rect m_bounds;
+        rects m_free;
+        qint32 m_skipSize;
     };
 }

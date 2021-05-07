@@ -388,7 +388,7 @@ private:
     /**
      * @brief updatePoints points we need to update for the next pfs
      */
-    QVector<QPoint> updatePoints;
+    QVector<QPoint> m_updatePoints;
     /**
      * @brief m_VirtualEnemyData
      */

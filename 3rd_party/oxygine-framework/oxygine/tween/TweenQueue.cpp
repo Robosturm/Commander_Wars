@@ -51,7 +51,7 @@ namespace oxygine
         return t;
     }
 
-    TweenQueue::TweenQueue(): _loopsDone(0) {}
+    TweenQueue::TweenQueue(): m_loopsDone(0) {}
 
     spTween TweenQueue::add(spTween t)
     {
@@ -60,19 +60,19 @@ namespace oxygine
         {
             return 0;
         }
-        _tweens.append(t);
+        m_tweens.append(t);
         return t;
     }
 
     void TweenQueue::complete(timeMS deltaTime)
     {
-        if (_status == status_remove)
+        if (m_status == status_remove)
         {
             return;
         }
         UpdateState us;
         us.dt = deltaTime;
-        while (_status != status_done)
+        while (m_status != status_done)
         {
             update(*m_client, us);
         }
@@ -80,49 +80,49 @@ namespace oxygine
 
     void TweenQueue::_start(Actor& actor)
     {
-        _current = _tweens._first;
-        if (!_current)
+        m_current = m_tweens._first;
+        if (!m_current)
         {
             return;
         }
         Event ev(EVENT_LOOP_BEGIN);
         dispatchEvent(&ev);
 
-        _current->start(actor);
+        m_current->start(actor);
     }
 
     void TweenQueue::_update(Actor& actor, const UpdateState& us)
     {
         m_elapsed += us.dt;
 
-        if (_current)
+        if (m_current)
         {
-            spTween next = _current->getNextSibling();
-            _current->update(actor, us);
-            if (_current->isDone())
+            spTween next = m_current->getNextSibling();
+            m_current->update(actor, us);
+            if (m_current->isDone())
             {
-                _current = next;
-                if (_current)
+                m_current = next;
+                if (m_current)
                 {
-                    _current->start(actor);
+                    m_current->start(actor);
                 }
             }
         }
 
-        if (!_current)
+        if (!m_current)
         {
             Event ev(EVENT_LOOP_END);
             dispatchEvent(&ev);
 
-            _loopsDone++;
+            m_loopsDone++;
 
-            if (_loopsDone >= _loops && _loops > 0)
+            if (m_loopsDone >= m_loops && m_loops > 0)
             {
-                _status = status_done;
+                m_status = status_done;
             }
             else
             {
-                spTween next = _tweens._first;
+                spTween next = m_tweens._first;
                 while (next)
                 {
                     next->reset();

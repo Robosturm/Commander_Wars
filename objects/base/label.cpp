@@ -37,26 +37,20 @@ void Label::setHeight(float height)
 }
 
 void Label::setText(QString str)
-{
-    
+{    
     m_textField->setHtmlText(str);
-    setTooltipText(str);
-    
+    setTooltipText(str);    
 }
 
 void Label::setHtmlText(QString str)
-{
-    
+{    
     m_textField->setHtmlText(str);
     m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);
-    setTooltipText(str);
-    
+    setTooltipText(str);    
 }
 
 void Label::setStyle(const oxygine::TextStyle& st)
-{
-    
+{    
     m_textField->setStyle(st);
-    m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);
-    
+    m_clipRect->setHeight(getTextRect().getHeight() * 1.4f);    
 }

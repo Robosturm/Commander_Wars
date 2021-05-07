@@ -32,9 +32,7 @@ namespace oxygine
         /**returns handle (ptr) to HW texture ID*/
         virtual GLuint getHandle() const = 0;
 
-        static QVector<spNativeTexture> getCreatedTextures();
-        /**debug counter of created textures*/
-        static volatile qint32 created;
+        static QVector<spNativeTexture> getCreatedTextures();        
     };
 
     class NativeTextureNull: public NativeTexture
@@ -60,6 +58,6 @@ namespace oxygine
         virtual qint32 getHeight() const override;
         virtual ImageData::TextureFormat getFormat() const override;
 
-        virtual void* _getRestorableObject() override { return 0; }
+        virtual Restorable* _getRestorableObject() override { return nullptr; }
     };
 }

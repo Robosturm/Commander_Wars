@@ -21,21 +21,21 @@ namespace oxygine
         Vector2 v(1.0f / mask->getWidth(), 1.0f / mask->getHeight());
         clipMask.expand(v, v);
 
-        _baseShaderFlags |= UberShaderProgram::MASK;
+        m_baseShaderFlags |= UberShaderProgram::MASK;
         if (channelR)
         {
-            _baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
+            m_baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
         }
 
-        clipUV.get(_msk);
-        _clipMask = Vector4(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());
+        clipUV.get(m_msk);
+        m_clipMask = Vector4(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, mask);
     }
 
     void MaskedRenderer::shaderProgramChanged()
     {
-        _driver->setUniform("clip_mask", _clipMask);
-        _driver->setUniform("msk", _msk, 4);
+        m_driver->setUniform("clip_mask", m_clipMask);
+        m_driver->setUniform("msk", m_msk, 4);
     }
 }

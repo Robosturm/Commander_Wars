@@ -203,8 +203,8 @@ namespace oxygine
         }
         text::DrawContext dc;
         STDRenderer* renderer = STDRenderer::getCurrent();
-        dc.primary = premultiply(rs.getFinalColor(tf->getColor()));
-        dc.color = tf->getStyle().color * dc.primary;
+        dc.m_primary = premultiply(rs.getFinalColor(tf->getColor()));
+        dc.m_color = tf->getStyle().color * dc.m_primary;
         renderer->setTransform(rs.transform);
         root->draw(dc);
     }

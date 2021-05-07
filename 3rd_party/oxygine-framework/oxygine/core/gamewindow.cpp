@@ -31,7 +31,7 @@ namespace oxygine
     GameWindow* GameWindow::_window = nullptr;
 
     GameWindow::GameWindow()
-        : _dispatcher(spEventDispatcher::create())
+        : m_dispatcher(spEventDispatcher::create())
     {
         setObjectName("GameWindow");
         QSurfaceFormat newFormat = format();
@@ -46,7 +46,7 @@ namespace oxygine
 
     GameWindow::~GameWindow()
     {
-        _dispatcher->removeAllEventListeners();
+        m_dispatcher->removeAllEventListeners();
 
         rsCache().reset();
         rsCache().setDriver(nullptr);
@@ -93,14 +93,14 @@ namespace oxygine
         updateData();
         if (m_pauseMutex.tryLock())
         {
-            oxygine::getStage()->update();
+            oxygine::getStage()->updateStage();
             if (beginRendering())
             {
                 QColor clearColor(0, 0, 0, 255);
                 QSize size = oxygine::GameWindow::getWindow()->size();
                 oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::Point(size.width(), size.height()));
                 // Render all actors inside the stage. Actor::render will also be called for all its children
-                oxygine::getStage()->render(clearColor, viewport);
+                oxygine::getStage()->renderStage(clearColor, viewport);
                 swapDisplayBuffers();
             }
             m_pauseMutex.unlock();
@@ -114,7 +114,7 @@ namespace oxygine
 
     bool GameWindow::beginRendering()
     {
-        if (!_renderEnabled)
+        if (!m_renderEnabled)
         {
             return false;
         }
@@ -137,7 +137,7 @@ namespace oxygine
 
     bool GameWindow::isReady2Render()
     {
-        if (!_renderEnabled)
+        if (!m_renderEnabled)
         {
             return false;
         }
@@ -310,7 +310,7 @@ namespace oxygine
 
     spEventDispatcher GameWindow::getDispatcher()
     {
-        return _dispatcher;
+        return m_dispatcher;
     }
 
     QOpenGLContext* GameWindow::getGLContext()

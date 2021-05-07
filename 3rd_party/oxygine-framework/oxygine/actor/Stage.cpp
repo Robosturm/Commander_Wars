@@ -10,11 +10,11 @@ namespace oxygine
 {
     spStage Stage::instance;
 
-    Stage::Stage() : _statUpdate(0), _clipOuter(false), _viewport(0, 0, 0, 0) //, _active(true)
+    Stage::Stage() : m_statUpdate(0), m_clipOuter(false), m_viewport(0, 0, 0, 0) //, _active(true)
     {
         spClock clock = spClock::create();
         setClock(clock);
-        _stage = this;
+        m_stage = this;
     }
 
     Stage::~Stage()
@@ -47,12 +47,12 @@ namespace oxygine
     {
         setSize(gameSize);
 
-        _viewport = calcCenteredViewport(displaySize, gameSize);
+        m_viewport = calcCenteredViewport(displaySize, gameSize);
 
-        float scaleFactor = _viewport.size.x / (float)gameSize.x;
+        float scaleFactor = m_viewport.size.x / (float)gameSize.x;
 
         setScale(scaleFactor);
-        setPosition(_viewport.pos);
+        setPosition(m_viewport.pos);
     }
 
     bool Stage::isOn(const Vector2&, float)
@@ -67,7 +67,7 @@ namespace oxygine
         return RectF(-getPosition(), s);
     }
 
-    void Stage::render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
+    void Stage::renderStage(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
 
         spIVideoDriver driver = IVideoDriver::instance;
@@ -89,10 +89,10 @@ namespace oxygine
         RectF clip(0.0f, 0.0f, (float)ds.width(), (float)ds.height());
         rs.clip = &clip;
 
-        if (_clipOuter)
+        if (m_clipOuter)
         {
-            driver->setScissorRect(&_viewport);
-            clip = _viewport.cast<RectF>();
+            driver->setScissorRect(&m_viewport);
+            clip = m_viewport.cast<RectF>();
         }
 
         Actor::render(rs);
@@ -101,25 +101,25 @@ namespace oxygine
         Material::null->apply();
     }
 
-    void Stage::render(const QColor& clearColor, const Rect& viewport)
+    void Stage::renderStage(const QColor& clearColor, const Rect& viewport)
     {
         //initialize projection and view matrix
         Matrix proj;
         Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0.2f, 10000);
         Matrix view = makeViewMatrix(viewport.getWidth(), viewport.getHeight());
-        render(&clearColor, viewport, view, proj);
+        renderStage(&clearColor, viewport, view, proj);
     }
 
     void Stage::cleanup()
     {
     }
 
-    void Stage::update()
+    void Stage::updateStage()
     {
         timeMS t = Clock::getTimeMS();
         UpdateState us;
         Actor::update(us);
 
-        _statUpdate = Clock::getTimeMS() - t;
+        m_statUpdate = Clock::getTimeMS() - t;
     }
 }

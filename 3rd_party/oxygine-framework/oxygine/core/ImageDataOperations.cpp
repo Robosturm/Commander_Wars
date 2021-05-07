@@ -6,25 +6,25 @@ namespace oxygine
     {
         bool check(const ImageData& src, const ImageData& dest)
         {
-            Q_ASSERT(dest.w == src.w);
-            Q_ASSERT(dest.h == src.h);
-            if (src.w)
+            Q_ASSERT(dest.m_w == src.m_w);
+            Q_ASSERT(dest.m_h == src.m_h);
+            if (src.m_w)
             {
-                Q_ASSERT(src.data);
-                Q_ASSERT(dest.data);
-                Q_ASSERT(src.pitch);
-                Q_ASSERT(dest.pitch);
+                Q_ASSERT(src.m_data);
+                Q_ASSERT(dest.m_data);
+                Q_ASSERT(src.m_pitch);
+                Q_ASSERT(dest.m_pitch);
             }
-            Q_ASSERT(src.bytespp);
-            Q_ASSERT(dest.bytespp);
-            if (dest.w != src.w ||
-                    dest.h != src.h ||
-                    !src.data ||
-                    !dest.data ||
-                    !src.pitch ||
-                    !dest.pitch ||
-                    !src.bytespp ||
-                    !dest.bytespp)
+            Q_ASSERT(src.m_bytespp);
+            Q_ASSERT(dest.m_bytespp);
+            if (dest.m_w != src.m_w ||
+                    dest.m_h != src.m_h ||
+                    !src.m_data ||
+                    !dest.m_data ||
+                    !src.m_pitch ||
+                    !dest.m_pitch ||
+                    !src.m_bytespp ||
+                    !dest.m_bytespp)
             {
                 return false;
             }
@@ -37,22 +37,22 @@ namespace oxygine
             {
                 return;
             }
-            Q_ASSERT(src.format == dest.format);
+            Q_ASSERT(src.m_format == dest.m_format);
 
-            qint32 bppPitch = src.w * src.bytespp;
+            qint32 bppPitch = src.m_w * src.m_bytespp;
 
-            if (src.pitch == dest.pitch && bppPitch == dest.pitch)
+            if (src.m_pitch == dest.m_pitch && bppPitch == dest.m_pitch)
             {
-                memcpy(dest.data, src.data, bppPitch * src.h);
+                memcpy(dest.m_data, src.m_data, bppPitch * src.m_h);
             }
             else
             {
-                const unsigned char* srcLine = src.data;
-                unsigned char* destLine = dest.data;
+                const unsigned char* srcLine = src.m_data;
+                unsigned char* destLine = dest.m_data;
 
-                const qint32 srch = src.h;
-                const qint32 srcpitch = src.pitch;
-                const qint32 destpitch = dest.pitch;
+                const qint32 srch = src.m_h;
+                const qint32 srcpitch = src.m_pitch;
+                const qint32 destpitch = dest.m_pitch;
                 for (qint32 h = 0; h < srch; h++)
                 {
                     if (bppPitch >= 0)
@@ -65,96 +65,15 @@ namespace oxygine
             }
         }
 
-        void move(const ImageData& src, const ImageData& dest)
-        {
-            if (!check(src, dest))
-            {
-                return;
-            }
-            Q_ASSERT(src.format == dest.format);
-
-            qint32 bppPitch = src.w * src.bytespp;
-
-            if (src.pitch == dest.pitch && bppPitch == dest.pitch)
-            {
-                memmove(dest.data, src.data, bppPitch * src.h);
-            }
-            else
-            {
-                const unsigned char* srcLine = src.data;
-                unsigned char* destLine = dest.data;
-
-                const qint32 srch = src.h;
-                const qint32 srcpitch = src.pitch;
-                const qint32 destpitch = dest.pitch;
-                for (qint32 h = 0; h < srch; h++)
-                {
-                    memmove(destLine, srcLine, bppPitch);
-                    srcLine += srcpitch;
-                    destLine += destpitch;
-                }
-            }
-        }
-
         void blit(const ImageData& src, const ImageData& dest)
         {
-            if (src.format == dest.format)
+            if (src.m_format == dest.m_format)
             {
                 copy(src, dest);
                 return;
             }
 
             op_blit op;
-            applyOperation(op, src, dest);
-        }
-
-        void blitPremultiply(const ImageData& src, const ImageData& dest)
-        {
-            op_premultipliedAlpha op;
-            applyOperation(op, src, dest);
-        }
-
-        void premultiply(const ImageData& dest)
-        {
-            blitPremultiply(dest, dest);
-        }
-
-        void blitColored(const ImageData& src, const ImageData& dest, const QColor& c)
-        {
-            Pixel p;
-            p.r = c.red();
-            p.g = c.green();
-            p.b = c.blue();
-            p.a = c.alpha();
-
-            op_blit_colored op(p);
-            applyOperation(op, src, dest);
-        }
-
-        void flipY(const ImageData& src, const ImageData& dest)
-        {
-            if (!check(src, dest))
-            {
-                return;
-            }
-            const unsigned char* srcLine = src.data;
-            unsigned char* destLine = dest.data + dest.pitch * dest.h - dest.pitch;
-
-            qint32 bppPitch = src.w * src.bytespp;
-            const qint32 srch = src.h;
-            const qint32 srcpitch = src.pitch;
-            const qint32 destpitch = dest.pitch;
-            for (qint32 h = 0; h < srch; h++)
-            {
-                memcpy(destLine, srcLine, bppPitch);
-                srcLine += srcpitch;
-                destLine -= destpitch;
-            }
-        }
-
-        void blend(const ImageData& src, const ImageData& dest)
-        {
-            op_blend_srcAlpha_invSrcAlpha op;
             applyOperation(op, src, dest);
         }
     }

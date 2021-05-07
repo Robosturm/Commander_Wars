@@ -7,7 +7,7 @@
 namespace oxygine
 {
 
-    ClipRectActor::ClipRectActor(): _clipping(true)
+    ClipRectActor::ClipRectActor(): m_clipping(true)
     {
 
     }

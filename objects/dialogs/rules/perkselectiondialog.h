@@ -54,7 +54,7 @@ private:
     oxygine::spButton m_ToggleAll;
     spDropDownmenu m_PredefinedLists;
     spCheckbox m_randomFillCheckbox;
-    bool toggle{true};
+    bool m_toggle{true};
     Player* m_pPlayer{nullptr};
     spPanel m_pPanel;
     spPerkSelection m_pPerkSelection;

@@ -3,20 +3,20 @@
 
 namespace oxygine
 {
-    PointerState::PointerState(): _index(1)
+    PointerState::PointerState(): m_index(1)
     {
-        init(_index);
+        init(m_index);
     }
 
     void PointerState::init(pointer_index index)
     {
-        _index = index;
-        _pressed = 0;
-        _position.setZero();
+        m_index = index;
+        m_pressed = 0;
+        m_position.setZero();
     }
 
     bool PointerState::isPressed(MouseButton mb) const
     {
-        return (_pressed & (1 << mb)) != 0;
+        return (m_pressed & (1 << mb)) != 0;
     }
 }

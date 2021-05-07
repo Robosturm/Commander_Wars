@@ -15,25 +15,24 @@ namespace oxygine
     class TweenOptions
     {
     public:
-        explicit TweenOptions(timeMS duration = timeMS(500)) : _duration(duration), _delay(timeMS(0)), _ease(Tween::ease_linear), _globalEase(Tween::ease_linear), _loops(1), _twoSides(false), _detach(false) {}
-        TweenOptions& duration(timeMS duration) { _duration = duration; return *this; }
-        TweenOptions& delay(timeMS delay) { _delay = delay; return *this; }
-        TweenOptions& loops(qint32 loops) { _loops = loops; return *this; }
-        TweenOptions& twoSides(bool enabled = true) { _twoSides = enabled; return *this; }
-        TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
-        TweenOptions& detach(bool detach_ = true) { _detach = detach_; return *this; }
-        TweenOptions& globalEase(Tween::EASE ease) { _globalEase = ease; return *this; }
-        TweenOptions& doneCallback(const EventCallback& cb) { _callback = cb; return *this; }
+        explicit TweenOptions(timeMS duration = timeMS(500)) : m_duration(duration), m_delay(timeMS(0)), m_ease(Tween::ease_linear), m_globalEase(Tween::ease_linear), m_loops(1), m_twoSides(false), m_detach(false) {}
+        TweenOptions& duration(timeMS duration) { m_duration = duration; return *this; }
+        TweenOptions& delay(timeMS delay) { m_delay = delay; return *this; }
+        TweenOptions& loops(qint32 loops) { m_loops = loops; return *this; }
+        TweenOptions& twoSides(bool enabled = true) { m_twoSides = enabled; return *this; }
+        TweenOptions& ease(Tween::EASE ease) { m_ease = ease; return *this; }
+        TweenOptions& detach(bool detach_ = true) { m_detach = detach_; return *this; }
+        TweenOptions& globalEase(Tween::EASE ease) { m_globalEase = ease; return *this; }
+        TweenOptions& doneCallback(const EventCallback& cb) { m_callback = cb; return *this; }
 
-
-        EventCallback   _callback;
-        timeMS          _duration;
-        timeMS          _delay;
-        Tween::EASE     _ease;
-        Tween::EASE     _globalEase;
-        qint32             _loops;
-        bool            _twoSides;
-        bool            _detach;
+        EventCallback   m_callback;
+        timeMS          m_duration;
+        timeMS          m_delay;
+        Tween::EASE     m_ease;
+        Tween::EASE     m_globalEase;
+        qint32          m_loops;
+        bool            m_twoSides;
+        bool            m_detach;
     };
 
     DECLARE_SMART(Actor, spActor);
@@ -60,9 +59,9 @@ namespace oxygine
         /**returns last tween in actor*/
         spTween             getLastTween() const {return m_tweens._last;}
 
-        const Vector2&      getAnchor() const {return _anchor;}
-        float               getAnchorX() const {return _anchor.x;}
-        float               getAnchorY() const {return _anchor.y;}
+        const Vector2&      getAnchor() const {return m_anchor;}
+        float               getAnchorX() const {return m_anchor.x;}
+        float               getAnchorY() const {return m_anchor.y;}
         bool                getIsAnchorInPixels() {return (m_flags & flag_anchorInPixels) != 0;}
         const Vector2&      getPosition() const {return m_pos;}
         float               getX() const {return m_pos.x;}
@@ -99,8 +98,6 @@ namespace oxygine
         /**return local actor transformation*/
         const Transform&      getTransform() const;
         const Transform&      getTransformInvert() const;
-
-
         /**computes global actor transformation*/
         Transform           computeGlobalTransform(Actor* parent = nullptr) const;
         /**computes actor Bounds rectangle. Iterates children*/
@@ -145,7 +142,7 @@ namespace oxygine
         virtual void setWidth(float w);
         virtual void setHeight(float h);
         /**Extends actor's clickable area from each side. Affects only to Actor::isOn. Max value is 127, Min Value is -128*/
-        void setExtendedClickArea(char add) {_extendedIsOn = add;}
+        void setExtendedClickArea(char add) {m_extendedIsOn = add;}
 
         void setClock(spClock clock);
         void setRenderDelegate(RenderDelegate* mat);
@@ -161,8 +158,6 @@ namespace oxygine
         void setHasOwnBounds(bool enable = true) { m_flags &= ~flag_actorHasBounds; if (enable) m_flags |= flag_actorHasBounds; }
         /**by default actor with Alpha = 0 not clickable*/
         void setClickableWithZeroAlpha(bool enable) { m_flags &= ~flag_clickableWithZeroAlpha; if (enable) m_flags |= flag_clickableWithZeroAlpha; }
-
-
         /**Enables/Disables Touch events for Actor.*/
         void setTouchEnabled(bool enabled) { m_flags &= ~flag_touchEnabled; if (enabled) m_flags |= flag_touchEnabled; }
         /**Enables/Disables Touch events for children of Actor.*/
@@ -190,14 +185,10 @@ namespace oxygine
         void removeChild(spActor actor);
         /**Removes all children from Actor*/
         void removeChildren();
-
-
         /**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
         Actor* detach();
-
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
         void dispatchEvent(Event* event) override;
-
         virtual void updateStateOvered() {}
         virtual void updateStatePressed() {}
 
@@ -269,10 +260,6 @@ namespace oxygine
         virtual bool getBounds(RectF&) const;
 
     protected:
-
-        RenderDelegate* m_rdelegate;
-        Stage* _stage;
-
         void added2stage(Stage*);
         void removedFromStage();
         virtual void onAdded2Stage() {}
@@ -281,39 +268,30 @@ namespace oxygine
 
         virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
         void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
-
-
         typedef intrusive_list<Actor> children;
         static void setParent(Actor* actor, Actor* parent);
         static children& getChildren(spActor& actor) { return actor->m_children; }
         static unsigned int& _getFlags(Actor* actor) { return actor->m_flags; }
-
         void _onGlobalTouchUpEvent(Event*);
-        void _onGlobalTouchUpEvent1(Event*);
-        void _onGlobalTouchUpEvent2(Event*);
         void _onGlobalTouchMoveEvent(Event*);
-
         const Vector2& _getSize() const { return m_size; }
         void __setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         spTween __addTween(spTween tween, bool rel);
-
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         bool onScreen(RenderState& rs);
         void completeRender(const RenderState& rs);
-
-
         void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
-
         /**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
         virtual void doUpdate(const UpdateState& us);
 
+    protected:
+        RenderDelegate* m_rdelegate;
+        Stage* m_stage;
         mutable Transform m_transform;
         mutable Transform m_transformInvert;
-
-
         enum flags
         {
             flag_anchorInPixels         = 1,
@@ -330,19 +308,14 @@ namespace oxygine
             flag_reserved               = 1 << 11,
             flag_last                   = flag_reserved
         };
-
         mutable quint32 m_flags;
         unsigned char   m_alpha;
-        char    _extendedIsOn;
-
+        char    m_extendedIsOn;
         spClock m_clock;
         Actor* m_parent;
-
         typedef intrusive_list<Tween> tweens;
         tweens m_tweens;
-
         children m_children;
-
         union
         {
             //dont change order!!! or brake statements: if (_pressedOvered == _overred)
@@ -354,54 +327,24 @@ namespace oxygine
             int32_t m_pressedOvered;
         };
 
-
     private:
-
         Vector2 m_pos;
-        Vector2 _anchor;
+        Vector2 m_anchor;
         Vector2 m_scale;
         Vector2 m_size;
-        float   m_rotation;
-        qint32  m_zOrder;
-
+        float  m_rotation;
+        qint32 m_zOrder;
         qint32 m_onGlobalTouchUpEvent{-1};
         qint32 m_onGlobalTouchMoveEvent{-1};
     };
-
-
-
-    /*Runs callback in time ms.Stage used as default actor*/
-    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root);
-    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root = nullptr);
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = nullptr);
     Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
     Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = nullptr);
     Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
 
-
     /*Tests 2 actors intersection and returns contact point in space of object1.*/
     bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = nullptr, Vector2* contact = nullptr);
-
-
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
-    /**changes actor parent but with the same position on the screen*/
-    void    reattachActor(spActor actor, spActor newParent, spActor root = nullptr);
-
-    void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale);
-    void setDecomposedTransform(Actor* actor, const Transform& t);
-
-    /** A TweenDummy class
-     *  doing nothing, could be used for calling your callback after timeout
-     */
-    class TweenDummy
-    {
-    public:
-        typedef Actor type;
-
-        void init(Actor&) {}
-        void done(Actor&) {}
-        void update(Actor&, float , const UpdateState& ) {}
-    };
 }

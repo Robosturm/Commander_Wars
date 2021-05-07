@@ -27,12 +27,11 @@ namespace oxygine
             Vector2 speed;
         };
 
-
         SlidingActor();
         ~SlidingActor();
 
-        spActor         getContent() const {return _content;}
-        const RectF&    getDragBounds() const {return _drag.getDragBounds();}
+        spActor         getContent() const {return m_content;}
+        const RectF&    getDragBounds() const {return m_drag.getDragBounds();}
 
         /**max allowed radius of touch move when content could be clicked*/
         void setTouchThreshold(float rad);
@@ -47,43 +46,31 @@ namespace oxygine
 
     protected:
         void destroy();
-
         void handleEvent(Event* event) override;
         void sizeChanged(const Vector2& size)  override;
         void doUpdate(const UpdateState& us)  override;
         void updateDragBounds();
-
         void _newEvent(Event* event);
 
-        bool _sliding;
-        float _rad;
-        float _maxSpeed;
-        timeMS _downTime;
-
-        bool _ignoreTouchUp;
-
-        Vector2 _downPos;
-        Vector2 _speed;
-
-        Draggable _drag;
-
-        spActor _content;
-        spClipRectActor _clip;
-
-        spEventDispatcher _holded;
-
+    protected:
+        bool m_sliding;
+        float m_rad;
+        bool m_ignoreTouchUp;
+        Vector2 m_downPos;
+        Vector2 m_speed;
+        Draggable m_drag;
+        spActor m_content;
+        spClipRectActor m_clip;
+        spEventDispatcher m_holded;
         struct  iter
         {
             Vector2 pos;
             timeMS tm;
         };
-
-        timeMS _lastTime;
         enum {NUM = 11};
-        iter _prev[NUM];
-        qint32 _current;
-
-        timeMS _lastIterTime;
-        pointer_index _finger;
+        iter m_prev[NUM];
+        qint32 m_current;
+        timeMS m_lastIterTime;
+        pointer_index m_finger;
     };
 }

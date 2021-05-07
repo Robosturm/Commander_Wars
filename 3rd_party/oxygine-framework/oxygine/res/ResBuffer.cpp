@@ -8,14 +8,14 @@ namespace oxygine
     spResource ResBuffer::create(CreateResourceContext& context)
     {
         spResBuffer rs = spResBuffer::create();
-        QDomElement node = context.walker.getNode();
+        QDomElement node = context.m_walker.getNode();
         QString file = node.attribute("file");
 
         rs->setName(Resource::extractID(node, file, ""));
-        rs->init(context.walker.getPath("file"));
+        rs->init(context.m_walker.getPath("file"));
         setNode(rs, node);
 
-        context.resources->add(rs);
+        context.m_resources->add(rs);
 
         return rs;
     }
@@ -33,20 +33,20 @@ namespace oxygine
 
     void ResBuffer::init(QString file)
     {
-        _path = file;
+        m_path = file;
     }
 
     void ResBuffer::_load(LoadResourcesContext*)
     {
-        QFile file(_path);
+        QFile file(m_path);
         file.open(QIODevice::ReadOnly);
         QTextStream stream(&file);
         // copy data to buffer
-        _buffer = stream.readAll();
+        m_buffer = stream.readAll();
     }
 
     void ResBuffer::_unload()
     {
-        _buffer.clear();
+        m_buffer.clear();
     }
 }

@@ -50,10 +50,11 @@ namespace oxygine
         void _start(Actor& actor);
         void _update(Actor& actor, const UpdateState& us);
 
+    private:
         typedef intrusive_list<Tween> tweens;
-        tweens _tweens;
-        spTween _current;
-        qint32 _loopsDone;
+        tweens m_tweens;
+        spTween m_current;
+        qint32 m_loopsDone;
     };
 
 

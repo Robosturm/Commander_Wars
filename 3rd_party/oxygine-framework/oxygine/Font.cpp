@@ -9,11 +9,11 @@ namespace oxygine
     }
 
     Font::Font()
-        : _ignoreOptions(true),
-          _scale(1.0f),
-          _sdf(false),
-          _size(0),
-          _baselineDistance(0)
+        : m_ignoreOptions(true),
+          m_scale(1.0f),
+          m_sdf(false),
+          m_size(0),
+          m_baselineDistance(0)
     {
     }
 
@@ -23,19 +23,19 @@ namespace oxygine
 
     void Font::init(qint32 realSize, qint32 baselineDistance, int, bool sdf)
     {
-        _sdf = sdf;
-        _size = realSize;
-        _baselineDistance = baselineDistance;
+        m_sdf = sdf;
+        m_size = realSize;
+        m_baselineDistance = baselineDistance;
     }
 
     void Font::addGlyph(const glyph& gl)
     {
-        _glyphs.insert(gl);
+        m_glyphs.insert(gl);
     }
 
     void Font::clear()
     {
-        _glyphs.clear();
+        m_glyphs.clear();
     }
 
     bool glyphFindPred(const glyph& g, qint32 code)
@@ -52,9 +52,9 @@ namespace oxygine
     {
         glyph g;
         g.ch = code;
-        g.opt = _ignoreOptions ? 0 : opt;
-        glyphs::const_iterator it = _glyphs.find(g);
-        if (it != _glyphs.end())
+        g.opt = m_ignoreOptions ? 0 : opt;
+        glyphs::const_iterator it = m_glyphs.find(g);
+        if (it != m_glyphs.end())
         {
             return &(*it);
         }
@@ -74,7 +74,7 @@ namespace oxygine
         Font* fn = const_cast<Font*>(this);
         if (fn->loadGlyph(code, gl, opt))
         {
-            fn->_glyphs.insert(gl);
+            fn->m_glyphs.insert(gl);
             g = findGlyph(code, opt);
             Q_ASSERT(g);
         }
@@ -84,16 +84,16 @@ namespace oxygine
 
     qint32 Font::getBaselineDistance() const
     {
-        return _baselineDistance;
+        return m_baselineDistance;
     }
 
     qint32 Font::getSize() const
     {
-        return _size;
+        return m_size;
     }
 
     float Font::getScale() const
     {
-        return _scale;
+        return m_scale;
     }
 }

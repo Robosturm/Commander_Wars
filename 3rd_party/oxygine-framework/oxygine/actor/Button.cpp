@@ -6,7 +6,7 @@
 namespace oxygine
 {
 
-    Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), _btnPressed(0), _btnOvered(0)
+    Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), m_btnPressed(0), m_btnOvered(0)
     {
         EventCallback ncb = EventCallback(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
@@ -44,10 +44,10 @@ namespace oxygine
         {
             case TouchEvent::OVER:
             {
-                if (!_btnOvered)
+                if (!m_btnOvered)
                 {
-                    _btnOvered = me->index;
-                    if (!_btnPressed)
+                    m_btnOvered = me->index;
+                    if (!m_btnPressed)
                     {
                         setState(stateOvered);
                     }
@@ -56,21 +56,21 @@ namespace oxygine
             break;
             case TouchEvent::OUTX:
             {
-                if (_btnOvered == me->index)
+                if (m_btnOvered == me->index)
                 {
-                    if (!_btnPressed)
+                    if (!m_btnPressed)
                     {
                         setState(stateNormal);
                     }
-                    _btnOvered = 0;
+                    m_btnOvered = 0;
                 }
             }
             break;
             case TouchEvent::TOUCH_DOWN:
             {
-                if (!_btnPressed)
+                if (!m_btnPressed)
                 {
-                    _btnPressed = me->index;
+                    m_btnPressed = me->index;
                     setState(statePressed);
                     m_touchUpCbId = addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &Button::_mouseEvent));
                 }
@@ -78,11 +78,11 @@ namespace oxygine
             break;
             case TouchEvent::TOUCH_UP:
             {
-                if (_btnPressed == me->index)
+                if (m_btnPressed == me->index)
                 {
                     setState(stateNormal);
                     removeEventListener(m_touchUpCbId);
-                    _btnPressed = 0;
+                    m_btnPressed = 0;
                 }
             }
             break;

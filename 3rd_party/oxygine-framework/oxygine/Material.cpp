@@ -12,13 +12,13 @@ namespace oxygine
 
     bool STDMaterial::cmp(const STDMaterial& a, const STDMaterial& b)
     {
-        if (a._base != b._base ||
-            a._table != b._table ||
-            a._alpha != b._alpha ||
-            a._blend != b._blend ||
-            a._flags != b._flags ||
-            a._uberShader != b._uberShader ||
-            a._addColor != b._addColor)
+        if (a.m_base != b.m_base ||
+            a.m_table != b.m_table ||
+            a.m_alpha != b.m_alpha ||
+            a.m_blend != b.m_blend ||
+            a.m_flags != b.m_flags ||
+            a.m_uberShader != b.m_uberShader ||
+            a.m_addColor != b.m_addColor)
         {
             return false;
         }
@@ -27,40 +27,40 @@ namespace oxygine
 
     void STDMaterial::init()
     {
-        _addColor = QColor(0, 0, 0, 0);
-        _blend = blend_premultiplied_alpha;
-        _flags = 0;
-        _uberShader = &STDRenderer::uberShader;
+        m_addColor = QColor(0, 0, 0, 0);
+        m_blend = blend_premultiplied_alpha;
+        m_flags = 0;
+        m_uberShader = &STDRenderer::uberShader;
     }
 
     void STDMaterial::rehash(size_t& hash) const
     {
-        hash_combine(hash, _base.get());
-        hash_combine(hash, _alpha.get());
-        hash_combine(hash, _table.get());
-        hash_combine(hash, (int)_blend);
-        hash_combine(hash, _flags);
-        hash_combine(hash, _uberShader);
-        hash_combine(hash, qRgba(_addColor));
+        hash_combine(hash, m_base.get());
+        hash_combine(hash, m_alpha.get());
+        hash_combine(hash, m_table.get());
+        hash_combine(hash, (int)m_blend);
+        hash_combine(hash, m_flags);
+        hash_combine(hash, m_uberShader);
+        hash_combine(hash, qRgba(m_addColor));
     }
 
     void STDMaterial::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
-        r->setUberShaderProgram(_uberShader);
+        r->setUberShaderProgram(m_uberShader);
         qint32 tempFlags = 0;
-        if (_table.get() != nullptr)
+        if (m_table.get() != nullptr)
         {
             tempFlags |= UberShaderProgram::COLOR_TABLE;
         }
-        if (_addColor.rgba())
+        if (m_addColor.rgba())
         {
             tempFlags |= UberShaderProgram::ADD_COLOR;
         }
-        r->setShaderFlags(_flags | tempFlags);
-        if (_addColor.rgba())
+        r->setShaderFlags(m_flags | tempFlags);
+        if (m_addColor.rgba())
         {
-            Vector4 vec = Vector4(_addColor.redF(), _addColor.greenF(), _addColor.blueF(), _addColor.alphaF());
+            Vector4 vec = Vector4(m_addColor.redF(), m_addColor.greenF(), m_addColor.blueF(), m_addColor.alphaF());
             r->getDriver()->setUniform("add_color", vec);
         }
         float brightnessColor = GameWindow::getWindow()->getBrightness();
@@ -69,10 +69,10 @@ namespace oxygine
         r->getDriver()->setUniform("brightness_color", brightness);
         r->getDriver()->setUniform("gamma", gamma);
 
-        rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, _table);
-        rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
-        rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
-        rsCache().setBlendMode(_blend);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_TABLE, m_table);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, m_base);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, m_alpha);
+        rsCache().setBlendMode(m_blend);
     }
 
     void STDMaterial::xflush()
@@ -96,24 +96,24 @@ namespace oxygine
     spSTDMaterial STDMaterial::cloneDefaultShader() const
     {
         STDMaterial mat(*this);
-        mat._uberShader = &STDRenderer::uberShader;
+        mat.m_uberShader = &STDRenderer::uberShader;
         return MaterialCache::mc().cache(mat);
     }
 
     Material::Material(const Material& other)
     {
-        _hash = other._hash;
-        _compare = other._compare;
+        m_hash = other.m_hash;
+        m_compare = other.m_compare;
     }
 
     Material::Material(compare cmp)
-        : _hash(0),
-          _compare(cmp)
+        : m_hash(0),
+          m_compare(cmp)
     {
 
     }
 
-    Material::Material() : _hash(0)
+    Material::Material() : m_hash(0)
     {
 
     }
@@ -136,8 +136,8 @@ namespace oxygine
 
     oxygine::Material& Material::operator=(const Material& r)
     {
-        _compare = r._compare;
-        _hash = r._hash;
+        m_compare = r.m_compare;
+        m_hash = r.m_hash;
         return *this;
     }
 }

@@ -7,13 +7,13 @@
 
 namespace oxygine
 {
-    AnimationFrame ResAnim::emptyFrame;
+    AnimationFrame ResAnim::m_emptyFrame;
     ResAnim::ResAnim(Resource* atlas)
-        : _columns(1),
-          _atlas(atlas),
-          _scaleFactor(1.0f),
-          _appliedScale(1.0f),
-          _framerate(30)
+        : m_columns(1),
+          m_atlas(atlas),
+          m_scaleFactor(1.0f),
+          m_appliedScale(1.0f),
+          m_framerate(30)
     {
     }
 
@@ -23,7 +23,7 @@ namespace oxygine
 
     void ResAnim::init(spNativeTexture texture, const Point& originalSize, qint32 columns, qint32 rows, float scaleFactor)
     {
-        _scaleFactor = scaleFactor;
+        m_scaleFactor = scaleFactor;
         if (!texture)
         {
             return;
@@ -81,7 +81,7 @@ namespace oxygine
 
     void ResAnim::init(Image* original, qint32 columns, qint32 rows, float scaleFactor)
     {
-        _scaleFactor = scaleFactor;
+        m_scaleFactor = scaleFactor;
         if (!original)
         {
             return;
@@ -95,23 +95,23 @@ namespace oxygine
 
     void ResAnim::init(animationFrames& frames, qint32 columns, float scaleFactor, float appliedScale)
     {
-        _columns = columns;
-        _frames.swap(frames);
-        for (qint32 i = 0; i < _frames.size(); ++i)
+        m_columns = columns;
+        m_frames.swap(frames);
+        for (qint32 i = 0; i < m_frames.size(); ++i)
         {
-            _frames[i].setResAnim(this);
+            m_frames[i].setResAnim(this);
         }
-        _scaleFactor = scaleFactor;
-        _appliedScale = appliedScale;
+        m_scaleFactor = scaleFactor;
+        m_appliedScale = appliedScale;
     }
 
     void ResAnim::_load(LoadResourcesContext* c)
     {
-        if (!_atlas)
+        if (!m_atlas)
         {
             return;
         }
-        _atlas->load(c);
+        m_atlas->load(c);
     }
 
     void ResAnim::_unload()
@@ -120,17 +120,17 @@ namespace oxygine
 
     QString ResAnim::getResPath() const
     {
-        return resPath;
+        return m_resPath;
     }
 
     void ResAnim::setResPath(const QString &value)
     {
-        resPath = value;
+        m_resPath = value;
     }
 
     void ResAnim::removeFrames()
     {
-        _frames.clear();
+        m_frames.clear();
     }
 
     ResAnim::operator const AnimationFrame& ()
@@ -148,32 +148,32 @@ namespace oxygine
 
     const AnimationFrame& ResAnim::getFrame(qint32 col, qint32 row) const
     {
-        qint32 i = row * _columns + col;
+        qint32 i = row * m_columns + col;
         return getFrame(i);
     }
 
     const AnimationFrame&   ResAnim::getFrame(qint32 index) const
     {
-        if (index < (int)_frames.size())
+        if (index < (int)m_frames.size())
         {
-            return _frames[index];
+            return m_frames[index];
         }
-        return emptyFrame;
+        return m_emptyFrame;
     }
 
     void ResAnim::setFrame(qint32 col, qint32 row, const AnimationFrame& frame)
     {
-        qint32 i = row * _columns + col;
-        if (i < (int)_frames.size())
+        qint32 i = row * m_columns + col;
+        if (i < (int)m_frames.size())
         {
-            _frames[i] = frame;
+            m_frames[i] = frame;
         }
     }
 
     const Vector2&  ResAnim::getSize() const
     {
-        Q_ASSERT(!_frames.empty());
-        return _frames[0].getSize();
+        Q_ASSERT(!m_frames.empty());
+        return m_frames[0].getSize();
     }
     float   ResAnim::getWidth() const
     {

@@ -130,8 +130,8 @@ PerkSelectionDialog::PerkSelectionDialog(Player* pPlayer, qint32 maxPerkcount, b
         pSpriteBox->addChild(m_ToggleAll);
         m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            toggle = !toggle;
-            emit sigToggleAll(toggle);
+            m_toggle = !m_toggle;
+            emit sigToggleAll(m_toggle);
         });
         connect(this, &PerkSelectionDialog::sigToggleAll, m_pPerkSelection.get(), &PerkSelection::toggleAll, Qt::QueuedConnection);
         auto items = getNameList("data/perkbannlist/");

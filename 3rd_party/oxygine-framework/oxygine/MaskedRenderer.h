@@ -9,53 +9,53 @@ namespace oxygine
     public:
         ClipUV() {}
         ClipUV(const Vector2& a, const Vector2& b, const Vector2& c,
-               const Vector2& a_uv, const Vector2& b_uv, const Vector2& c_uv) : _uvA(a_uv)
+               const Vector2& a_uv, const Vector2& b_uv, const Vector2& c_uv) : m_uvA(a_uv)
         {
-            _dAB = b - a;
-            _dAC = c - a;
+            m_dAB = b - a;
+            m_dAC = c - a;
 
-            float v = 1.0f / (_dAB.x * _dAC.y - _dAB.y * _dAC.x);
-            _dAB *= v;
-            _dAC *= v;
+            float v = 1.0f / (m_dAB.x * m_dAC.y - m_dAB.y * m_dAC.x);
+            m_dAB *= v;
+            m_dAC *= v;
 
-            _dac.x = _dAC.x * a.y - _dAC.y * a.x;
-            _dac.y = -(_dAB.x * a.y - _dAB.y * a.x);
+            m_dac.x = m_dAC.x * a.y - m_dAC.y * a.x;
+            m_dac.y = -(m_dAB.x * a.y - m_dAB.y * a.x);
 
-            _dAB *= -1;
+            m_dAB *= -1;
 
-            _dAB.x *= -1;
-            _dAC.x *= -1;
+            m_dAB.x *= -1;
+            m_dAC.x *= -1;
 
-            _duvAB = b_uv - _uvA;
-            _duvAC = c_uv - _uvA;
+            m_duvAB = b_uv - m_uvA;
+            m_duvAC = c_uv - m_uvA;
         }
 
         void get(Vector3* vec) const
         {
-            vec[0] = Vector3(_dac.x, _dAC.y, _dAC.x);
-            vec[1] = Vector3(_dac.y, _dAB.y, _dAB.x);
+            vec[0] = Vector3(m_dac.x, m_dAC.y, m_dAC.x);
+            vec[1] = Vector3(m_dac.y, m_dAB.y, m_dAB.x);
 
-            vec[2] = Vector3(_uvA.x, _duvAB.x, _duvAC.x);
-            vec[3] = Vector3(_uvA.y, _duvAB.y, _duvAC.y);
+            vec[2] = Vector3(m_uvA.x, m_duvAB.x, m_duvAC.x);
+            vec[3] = Vector3(m_uvA.y, m_duvAB.y, m_duvAC.y);
         }
 
         Vector2 calc(const Vector2& pos) const
         {
-            float a = Vector3(_dac.x, _dAC.y, _dAC.x).dot(Vector3(1, pos.x, pos.y));
-            float b = Vector3(_dac.y, _dAB.y, _dAB.x).dot(Vector3(1, pos.x, pos.y));
-            float u = Vector3(_uvA.x, _duvAB.x, _duvAC.x).dot(Vector3(1, a, b));
-            float v = Vector3(_uvA.y, _duvAB.y, _duvAC.y).dot(Vector3(1, a, b));
+            float a = Vector3(m_dac.x, m_dAC.y, m_dAC.x).dot(Vector3(1, pos.x, pos.y));
+            float b = Vector3(m_dac.y, m_dAB.y, m_dAB.x).dot(Vector3(1, pos.x, pos.y));
+            float u = Vector3(m_uvA.x, m_duvAB.x, m_duvAC.x).dot(Vector3(1, a, b));
+            float v = Vector3(m_uvA.y, m_duvAB.y, m_duvAC.y).dot(Vector3(1, a, b));
             return Vector2(u, v);
         }
 
     protected:
-        Vector2 _dac;
-        Vector2 _uvA;
+        Vector2 m_dac;
+        Vector2 m_uvA;
 
-        Vector2 _dAB;
-        Vector2 _dAC;
-        Vector2 _duvAB;
-        Vector2 _duvAC;
+        Vector2 m_dAB;
+        Vector2 m_dAC;
+        Vector2 m_duvAB;
+        Vector2 m_duvAC;
     };
 
     class MaskedRenderer : public STDRenderer
@@ -66,7 +66,7 @@ namespace oxygine
     protected:
         void shaderProgramChanged() override;
 
-        Vector3 _msk[4];
-        Vector4 _clipMask;
+        Vector3 m_msk[4];
+        Vector4 m_clipMask;
     };
 }

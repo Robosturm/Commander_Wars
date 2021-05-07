@@ -59,7 +59,7 @@ namespace oxygine
         }
     }
 
-    Restorable::Restorable(): _registered(false)
+    Restorable::Restorable(): m_registered(false)
     {
 
     }
@@ -69,19 +69,18 @@ namespace oxygine
         unreg();
     }
 
-    void Restorable::reg(RestoreCallback cb, void* user)
+    void Restorable::reg(RestoreCallback cb)
     {
-        if (_registered)
+        if (m_registered)
         {
             return;
         }
         QMutexLocker al(&m_mutex);
 
         Q_ASSERT(m_restoring == false);
-        _cb = cb;
-        _userData = user;
+        m_cb = cb;
 
-        _registered = true;
+        m_registered = true;
 
         restorable::iterator i = findRestorable(this);
         Q_ASSERT(i == m_restorable.end());
@@ -90,7 +89,7 @@ namespace oxygine
 
     void Restorable::unreg()
     {
-        if (!_registered)
+        if (!m_registered)
         {
             return;
         }
@@ -101,14 +100,14 @@ namespace oxygine
         {
             m_restorable.erase(i);
         }
-        _registered = false;
+        m_registered = false;
     }
 
     void Restorable::restore()
     {
-        if (_cb.isSet())
+        if (m_cb.isSet())
         {
-            _cb(this, _userData);
+            m_cb(this);
         }
     }
 }

@@ -26,10 +26,10 @@ namespace oxygine
         void init(Sprite& actor);
         void done(Sprite&) {}
 
-        const ResAnim*  getResAnim() const {return _resAnim;}
-        qint32             getRow() const {return _row;}
-        qint32             getStart() const {return _start;}
-        qint32             getEnd() const {return _end;}
+        const ResAnim*  getResAnim() const {return m_resAnim;}
+        qint32             getRow() const {return m_row;}
+        qint32             getStart() const {return m_start;}
+        qint32             getEnd() const {return m_end;}
 
         /**Changes ResAnim*/
         void setResAnim(const ResAnim* resAnim);
@@ -41,10 +41,12 @@ namespace oxygine
 
     protected:
         virtual void _setAnimFrame(Sprite&, const AnimationFrame&);
-        const ResAnim* _resAnim;
-        qint32 _row;
-        qint32 _start;
-        qint32 _end;
-        float _initFrame{0.0f};
+
+    protected:
+        const ResAnim* m_resAnim;
+        qint32 m_row;
+        qint32 m_start;
+        qint32 m_end;
+        float m_initFrame{0.0f};
     };
 }

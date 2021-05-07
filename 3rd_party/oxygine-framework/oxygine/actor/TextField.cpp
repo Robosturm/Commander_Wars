@@ -24,9 +24,9 @@ namespace oxygine
     }
 
     TextField::TextField():
-        _root(nullptr),
-        _textRect(0, 0, 0, 0),
-        _rtscale(1.0f)
+        m_root(nullptr),
+        m_textRect(0, 0, 0, 0),
+        m_rtscale(1.0f)
     {
         m_style.font = _defaultFont;
         setText("");
@@ -39,7 +39,7 @@ namespace oxygine
     bool TextField::isOn(const Vector2& localPosition, float)
     {
         Rect r = getTextRect();
-        r.expand(Point(_extendedIsOn, _extendedIsOn), Point(_extendedIsOn, _extendedIsOn));
+        r.expand(Point(m_extendedIsOn, m_extendedIsOn), Point(m_extendedIsOn, m_extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
 
@@ -160,11 +160,11 @@ namespace oxygine
 
     void TextField::matChanged()
     {
-        if (!_root)
+        if (!m_root)
         {
             return;
         }
-        _root->updateMaterial(*m_mat.get());
+        m_root->updateMaterial(*m_mat.get());
     }
 
     void TextField::setText(QString str)
@@ -251,7 +251,7 @@ namespace oxygine
     const Rect& TextField::getTextRect() const
     {
         const_cast<TextField*>(this)->getRootNode();
-        return _textRect;
+        return m_textRect;
     }
 
     bool TextField::getBounds(RectF& r) const
@@ -265,9 +265,9 @@ namespace oxygine
     {
         if (!m_style.font)
         {
-            return _root.get();
+            return m_root.get();
         }
-        return _root.get();
+        return m_root.get();
     }
 
     void TextField::rebuildText()
@@ -279,24 +279,24 @@ namespace oxygine
             if (font)
             {
                 QMutexLocker lock(&m_Locked);
-                _rtscale = scale;
-                _root = nullptr;
+                m_rtscale = scale;
+                m_root = nullptr;
                 if (m_htmlText)
                 {
                     text::TextBuilder b;
-                    _root = b.parse(m_text);
+                    m_root = b.parse(m_text);
                 }
                 else
                 {
-                    _root = text::spTextNode::create(m_text);
+                    m_root = text::spTextNode::create(m_text);
                 }
                 text::Aligner rd(m_style, m_mat, font, scale, getSize());
                 rd.begin();
-                _root->resize(rd);
+                m_root->resize(rd);
                 rd.end();
-                _root->finalPass(rd);
-                rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
-                _textRect = rd.bounds;
+                m_root->finalPass(rd);
+                rd.m_bounds = (rd.m_bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
+                m_textRect = rd.m_bounds;
             }
         }
     }

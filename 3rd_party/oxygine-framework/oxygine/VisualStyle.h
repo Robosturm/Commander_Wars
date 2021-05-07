@@ -28,7 +28,7 @@ namespace oxygine
     public:
         VStyleActor();
 
-        blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}
+        blend_mode              getBlendMode() const {return m_vstyle.getBlendMode();}
         const QColor&            getColor() const;
         const QColor&            getAddColor() const;
 
@@ -52,8 +52,9 @@ namespace oxygine
 
     protected:
         virtual void matChanged() {}
-        VisualStyle _vstyle;
-        QColor disableColor{75, 75, 75, 0};
+    protected:
+        VisualStyle m_vstyle;
+        QColor m_disableColor{75, 75, 75, 0};
 
     };
 

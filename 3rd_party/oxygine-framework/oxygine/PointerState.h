@@ -22,14 +22,14 @@ namespace oxygine
         void init(pointer_index pointerIndex);
 
         bool            isPressed(MouseButton mb = MouseButton_Touch) const;
-        pointer_index   getIndex() const {return _index;}
-        const Vector2&  getPosition() const {return _position;}
+        pointer_index   getIndex() const {return m_index;}
+        const Vector2&  getPosition() const {return m_position;}
 
     private:
         friend class Input;
 
-        Vector2 _position;
-        qint32 _pressed;
-        pointer_index _index;
+        Vector2 m_position;
+        qint32 m_pressed;
+        pointer_index m_index;
     };
 }

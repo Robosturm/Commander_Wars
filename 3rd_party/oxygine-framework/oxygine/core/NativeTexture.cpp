@@ -4,8 +4,6 @@
 
 namespace oxygine
 {
-    volatile qint32 NativeTexture::created = 0;
-
     void NativeTextureNull::init(GLuint, int, int, ImageData::TextureFormat)
     {
 

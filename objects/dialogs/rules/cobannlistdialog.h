@@ -42,7 +42,7 @@ private:
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
     QStringList m_COIDs;
-    bool toggle{true};
+    bool m_toggle{true};
     QStringList m_CurrentCOBannList;
 };
 

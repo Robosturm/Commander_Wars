@@ -29,7 +29,7 @@ public slots:
 private:
         QVector<qint32> m_AnswersChances;
         QVector<float> m_Answers;
-        qint32 totalChance{0};
+        qint32 m_totalChance{0};
 };
 
 #endif

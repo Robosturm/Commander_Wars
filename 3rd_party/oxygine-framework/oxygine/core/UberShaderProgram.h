@@ -30,12 +30,13 @@ namespace oxygine
 
 
     protected:
-        void* _getRestorableObject() {return this;}
-        void _restore(Restorable*, void*);
+        Restorable* _getRestorableObject() {return this;}
+        void _restore(Restorable*);
 
-        QString _fracShader;
-        QString _vertexShader;
-        QString _fracTableShader;
+    protected:
+        QString m_fracShader;
+        QString m_vertexShader;
+        QString m_fracTableShader;
 
         virtual void releaseShaders() {}
     };
@@ -72,6 +73,8 @@ namespace oxygine
 
     protected:
         void releaseShaders() override;
-        shader _shaders[_SIZE];
+
+    protected:
+        shader m_shaders[_SIZE];
     };
 }

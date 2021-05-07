@@ -14,15 +14,15 @@ namespace oxygine
                   bool load, bool alpha,
                   QDomElement xml);
 
-        bool empty() const {return _root.isNull();}
+        bool empty() const {return m_root.isNull();}
 
-        QString  getCurrentFolder() const { return _path; }
+        QString  getCurrentFolder() const { return m_path; }
         QString         getPath(QString attrName) const;
-        QDomElement        getNode() const {return _root;}
-        float               getScaleFactor() const {return _scaleFactor;}
-        bool                getLoad() const {return _load;}
-        bool                getAlphaHitTest() const { return _alphaHitTest; }
-        QString         getType() const {return _root.nodeName();}
+        QDomElement        getNode() const {return m_root;}
+        float               getScaleFactor() const {return m_scaleFactor;}
+        bool                getLoad() const {return m_load;}
+        bool                getAlphaHitTest() const { return m_alphaHitTest; }
+        QString         getType() const {return m_root.nodeName();}
 
         void                checkSetAttributes();
 
@@ -30,32 +30,31 @@ namespace oxygine
 
     private:
         void _checkSetAttributes(QDomElement node);
-        QString _path;
 
-        QDomElement _root;
-        QDomElement _last;
-
-        bool _notStarted;
-
-        float _scaleFactor;
-        bool _load;
-        bool _alphaHitTest;
+    private:
+        QString m_path;
+        QDomElement m_root;
+        QDomElement m_last;
+        bool m_notStarted;
+        float m_scaleFactor;
+        bool m_load;
+        bool m_alphaHitTest;
     };
 
 
     class CreateResourceContext
     {
     public:
-        CreateResourceContext() : resources(0), xml_name(""), prebuilt_folder(""), options(0),
-            walker("", 1.0f, true, false, QDomElement())
+        CreateResourceContext() : m_resources(0), m_xml_name(""), m_prebuilt_folder(""), m_options(0),
+            m_walker("", 1.0f, true, false, QDomElement())
         {
         }
 
-        Resources* resources;
-        QString xml_name;
-        QString prebuilt_folder;
-        const ResourcesLoadOptions* options;
-        XmlWalker walker;
+        Resources* m_resources;
+        QString m_xml_name;
+        QString m_prebuilt_folder;
+        const ResourcesLoadOptions* m_options;
+        XmlWalker m_walker;
     };
 
     DECLARE_SMART(Image, spImage);
@@ -91,16 +90,18 @@ namespace oxygine
     class SingleThreadResourcesContext: public LoadResourcesContext
     {
     public:
-        static SingleThreadResourcesContext instance;
         void createTexture(const CreateTextureTask& opt) override;
         bool isNeedProceed(spNativeTexture t) override;
+    public:
+        static SingleThreadResourcesContext m_instance;
     };
 
     class RestoreResourcesContext: public LoadResourcesContext
     {
     public:
-        static RestoreResourcesContext instance;
         void createTexture(const CreateTextureTask& opt) override;
         bool isNeedProceed(spNativeTexture t) override;
+    public:
+        static RestoreResourcesContext m_instance;
     };
 }

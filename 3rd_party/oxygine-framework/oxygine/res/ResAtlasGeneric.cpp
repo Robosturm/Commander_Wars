@@ -44,8 +44,8 @@ namespace oxygine
 
     void makeAlpha(const ImageData& srcImage, Rect& bounds, QVector<unsigned char>& alpha, HitTestData& adata, bool hittest)
     {
-        qint32 w = srcImage.w;
-        qint32 h = srcImage.h;
+        qint32 w = srcImage.m_w;
+        qint32 h = srcImage.m_h;
 
         size_t pos = alpha.size();
         adata.data = reinterpret_cast<unsigned char*>(pos);
@@ -62,9 +62,9 @@ namespace oxygine
         alpha.resize(pos + size + 10);
 
 
-        const unsigned char* srcData = srcImage.data;
-        qint32 srcStep = srcImage.bytespp;
-        qint32 srcPitch = srcImage.pitch;
+        const unsigned char* srcData = srcImage.m_data;
+        qint32 srcStep = srcImage.m_bytespp;
+        qint32 srcPitch = srcImage.m_pitch;
 
         unsigned char* destData = &alpha[pos];
 
@@ -187,9 +187,9 @@ namespace oxygine
 
         ad.atlas.clean();
         ad.atlas.init(w, h);
-        if (_atlasses.size() > _current)
+        if (m_atlasses.size() > m_current)
         {
-            ad.texture = _atlasses[_current].base;
+            ad.texture = m_atlasses[m_current].base;
         }
         else
         {
@@ -197,9 +197,9 @@ namespace oxygine
 
             atlas atl;
             atl.base = ad.texture;
-            _atlasses.push_back(atl);
+            m_atlasses.push_back(atl);
         }
-        _current++;
+        m_current++;
     }
 
     void ResAtlasGeneric::_unload()
@@ -217,8 +217,8 @@ namespace oxygine
 
     void ResAtlasGeneric::loadAtlas2(CreateResourceContext& context)
     {
-        _current = 0;
-        QDomElement node = context.walker.getNode();
+        m_current = 0;
+        QDomElement node = context.m_walker.getNode();
 
         bool ok = false;
         qint32 w = node.attribute("width").toInt(&ok);
@@ -240,7 +240,7 @@ namespace oxygine
         QVector<spResAnim> anims;
         while (true)
         {
-            XmlWalker walker = context.walker.next();
+            XmlWalker walker = context.m_walker.next();
             if (walker.empty())
             {
                 break;
@@ -375,10 +375,10 @@ namespace oxygine
 
                     HitTestData adata;
                     ImageData src;
-                    Rect bounds(0, 0, srcImage_.w, srcImage_.h);
+                    Rect bounds(0, 0, srcImage_.m_w, srcImage_.m_h);
                     if (trim)
                     {
-                        makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
+                        makeAlpha(srcImage_, bounds, m_hitTestBuffer, adata, walker.getAlphaHitTest());
                     }
                     src = srcImage_.getRect(bounds);
 
@@ -392,7 +392,7 @@ namespace oxygine
                     bool s = ad.atlas.add(&ad.mt, src, dest, offset);
                     if (s == false)
                     {
-                        applyAtlas(ad, _linearFilter, _clamp2edge);
+                        applyAtlas(ad, m_linearFilter, m_clamp2edge);
 
                         nextAtlas(w, h, tf, ad);
                         s = ad.atlas.add(&ad.mt, src, dest, offset);
@@ -408,26 +408,26 @@ namespace oxygine
 
                         if (bounds.getY() == 0 && dest.pos.y != 0)
                         {
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.m_w, 1));
+                            operations::copy(src.getRect(Rect(0, 0, src.m_w, 1)), tmp);
                         }
 
-                        if (bounds.getHeight() == im.h && dest.getBottom() != mt.getHeight())
+                        if (bounds.getHeight() == im.m_h && dest.getBottom() != mt.getHeight())
                         {
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.m_h, src.m_w, 1));
+                            operations::copy(src.getRect(Rect(0, src.m_h - 1, src.m_w, 1)), tmp);
                         }
 
                         if (bounds.getX() == 0 && dest.pos.x != 0)
                         {
-                            tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.m_h));
+                            operations::copy(src.getRect(Rect(0, 0, 1, src.m_h)), tmp);
                         }
 
-                        if (bounds.getWidth() == im.w && dest.getRight() != mt.getWidth())
+                        if (bounds.getWidth() == im.m_w && dest.getRight() != mt.getWidth())
                         {
-                            tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x + src.m_w, dest.pos.y, 1, src.m_h));
+                            operations::copy(src.getRect(Rect(src.m_w - 1, 0, 1, src.m_h)), tmp);
                         }
                     }
                     float iw = 1.0f;
@@ -456,10 +456,10 @@ namespace oxygine
 
             ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
             ra->setParent(this);
-            context.resources->add(ra, context.options->_shortenIDS);
+            context.m_resources->add(ra, context.m_options->m_shortenIDS);
         }
 
-        applyAtlas(ad, _linearFilter, _clamp2edge);
+        applyAtlas(ad, m_linearFilter, m_clamp2edge);
 
         for (QVector<spResAnim>::iterator i = anims.begin(); i != anims.end(); ++i)
         {
@@ -483,7 +483,7 @@ namespace oxygine
                 HitTestData ad = frame.getHitTestData();
                 if (ad.pitch)
                 {
-                    ad.data = &_hitTestBuffer[reinterpret_cast<size_t>(ad.data)];
+                    ad.data = &m_hitTestBuffer[reinterpret_cast<size_t>(ad.data)];
                     frame.setHitTestData(ad);
                 }
             }

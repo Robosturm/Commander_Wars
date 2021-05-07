@@ -36,25 +36,23 @@ namespace oxygine
 
         GLuint getId() override
         {
-            return _id;
+            return m_id;
         }
     protected:
-        virtual void* _getRestorableObject() override {return this;}
+        virtual Restorable* _getRestorableObject() override {return this;}
         friend class VideoDriverGL;
         friend class VideoDriverGLES20;
         friend class intrusive_ptr<NativeTextureGLES>;
         NativeTextureGLES();
 
-        GLuint _id;
-        size_t _fbo;
-
-        ImageData::TextureFormat _format;
-        qint32 _width;
-        qint32 _height;
-
-
-        QVector<unsigned char> _data;
-        qint32 _lockFlags;
-        Rect _lockRect;
+    protected:
+        GLuint m_id;
+        size_t m_fbo;
+        ImageData::TextureFormat m_format;
+        qint32 m_width;
+        qint32 m_height;
+        QVector<unsigned char> m_data;
+        qint32 m_lockFlags;
+        Rect m_lockRect;
     };
 }

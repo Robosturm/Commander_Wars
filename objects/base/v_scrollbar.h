@@ -78,7 +78,6 @@ private:
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
     QElapsedTimer m_ScrollTimer;
-
     oxygine::spBox9Sprite m_pBox;
     oxygine::spButton m_pArrowRigth;
     oxygine::spButton m_pArrowLeft;

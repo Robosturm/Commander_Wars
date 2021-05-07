@@ -25,10 +25,6 @@ namespace oxygine
         Material(compare cmp);
         Material(const Material& other);
 
-
-        size_t _hash;
-        compare _compare;
-
         virtual void init() {}
 
         virtual void xapply() {}
@@ -51,6 +47,10 @@ namespace oxygine
             apply();
             f();
         }
+
+    public:
+        size_t m_hash;
+        compare m_compare;
     };
 
     typedef intrusive_ptr<Material> spMaterialX;
@@ -65,7 +65,7 @@ namespace oxygine
         {
             typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
             fn f = &NullMaterialX::cmp;
-            _compare = (compare)f;
+            m_compare = (compare)f;
             init();
         }
         void copyTo(NullMaterialX &d) const{d = *this;}
@@ -91,7 +91,7 @@ namespace oxygine
         {
             typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
             fn f = &STDMaterial::cmp;
-            _compare = (compare)f;
+            m_compare = (compare)f;
             STDMaterial::init();
         }
         void copyTo(STDMaterial &d) const{d = *this;}
@@ -106,14 +106,6 @@ namespace oxygine
             rehash(hash);
         }
 
-        spNativeTexture    _base;
-        spNativeTexture    _table;
-        spNativeTexture    _alpha;
-        blend_mode         _blend;
-        UberShaderProgram* _uberShader;
-        QColor             _addColor;
-        qint32             _flags;
-
         static bool cmp(const STDMaterial& a, const STDMaterial& b);
 
         virtual void init() override;
@@ -126,5 +118,14 @@ namespace oxygine
         virtual void render(const QColor& c, const RectF& src, const RectF& dest) override;
 
         spSTDMaterial cloneDefaultShader() const;
+
+    public:
+        spNativeTexture    m_base;
+        spNativeTexture    m_table;
+        spNativeTexture    m_alpha;
+        blend_mode         m_blend;
+        UberShaderProgram* m_uberShader;
+        QColor             m_addColor;
+        qint32             m_flags;
     };    
 }

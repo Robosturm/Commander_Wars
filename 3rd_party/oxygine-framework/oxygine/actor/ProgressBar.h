@@ -37,13 +37,12 @@ namespace oxygine
 
     private:
         void doRender(const RenderState&) override;
-
         virtual void _update();
-
         void animFrameChanged(const AnimationFrame& f) override;
 
-        float _progress;
-        direction _direction;
-        AnimationFrame _originalFrame;
+    private:
+        float m_progress;
+        direction m_direction;
+        AnimationFrame m_originalFrame;
     };
 }

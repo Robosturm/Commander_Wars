@@ -37,7 +37,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spin = -1;
-        timer.start();
+        m_timer.start();
         emit changeSelection(m_currentStartIndex - 1);
     });
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
@@ -144,7 +144,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spin = +1;
-        timer.start();
+        m_timer.start();
         emit changeSelection(m_currentStartIndex + 1);
     });
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
@@ -258,9 +258,9 @@ void MapSelection::changeFolder(QString folder)
 
 void MapSelection::update(const oxygine::UpdateState& us)
 {
-    if (m_spin != 0 && timer.elapsed() >= 250)
+    if (m_spin != 0 && m_timer.elapsed() >= 250)
     {
-        timer.start();
+        m_timer.start();
         emit changeSelection(m_currentStartIndex + m_spin);
     }
 

@@ -772,7 +772,7 @@ void HeavyAi::addAttackTargets(Unit* pUnit, Terrain* pTerrain, QmlVectorPoint* p
                      pBuilding->getHp() > 0 &&
                      m_pPlayer->isEnemy(pBuilding->getOwner()) &&
                      pUnit->isEnvironmentAttackable(pBuilding->getBuildingID())) ||
-                    (enableNeutralTerrainAttack &&
+                    (m_enableNeutralTerrainAttack &&
                      isAttackOnTerrainAllowed(pTerrain) &&
                      pUnit->isEnvironmentAttackable(pTerrain->getID())))
                 {

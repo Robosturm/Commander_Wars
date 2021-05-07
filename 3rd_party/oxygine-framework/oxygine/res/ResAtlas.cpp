@@ -9,10 +9,6 @@
 namespace oxygine
 {
     static load_texture_hook _hook = nullptr;
-    void set_load_texture_hook(load_texture_hook hook)
-    {
-        _hook = hook;
-    }
 
     void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
@@ -24,7 +20,7 @@ namespace oxygine
         qDebug("atlas file loaded: %s", file.toStdString().c_str());
         mt->init(img, true);
         im = mt->lock();
-        qDebug("atlas size: %d %d", im.w, im.h);
+        qDebug("atlas size: %d %d", im.m_w, im.m_h);
 
         CreateTextureTask opt;
         opt.src = mt;
@@ -54,14 +50,14 @@ namespace oxygine
 
     quint32 ResAtlas::getLinearFilter() const
     {
-        return _linearFilter;
+        return m_linearFilter;
     }
 
     void ResAtlas::setLinearFilter(quint32 linearFilter)
     {
-        _linearFilter = linearFilter;
+        m_linearFilter = linearFilter;
         // apply filter
-        for (auto & atlas : _atlasses)
+        for (auto & atlas : m_atlasses)
         {
             if (atlas.alpha.get() != nullptr)
             {
@@ -88,34 +84,34 @@ namespace oxygine
             atl.alpha->init(0, w, h, tf);
         }
 
-        _atlasses.push_back(atl);
+        m_atlasses.push_back(atl);
     }
 
     spResource ResAtlas::create(CreateResourceContext& context)
     {
-        context.walker.checkSetAttributes();
+        context.m_walker.checkSetAttributes();
         spResAtlas ra = nullptr;
         spResAtlasGeneric rs = spResAtlasGeneric::create();
         rs->loadAtlas(context);
         ra = rs;
 
-        ra->setName(Resource::extractID(context.walker.getNode(), "", QString("!atlas:") + context.xml_name));
-        context.resources->add(ra);
-        setNode(ra, context.walker.getNode());
+        ra->setName(Resource::extractID(context.m_walker.getNode(), "", QString("!atlas:") + context.m_xml_name));
+        context.m_resources->add(ra);
+        setNode(ra, context.m_walker.getNode());
 
         return ra;
     }
 
     ResAtlas::ResAtlas()
-        : _linearFilter(GL_LINEAR),
-          _clamp2edge(true)
+        : m_linearFilter(GL_LINEAR),
+          m_clamp2edge(true)
     {
 
     }
 
     ResAtlas::~ResAtlas()
     {
-        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+        for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {
             atlas& atl = *i;
             if (atl.base)
@@ -138,47 +134,47 @@ namespace oxygine
         {
             if (value.toBool())
             {
-                _linearFilter = GL_LINEAR;
+                m_linearFilter = GL_LINEAR;
             }
             else
             {
-                _linearFilter = GL_NEAREST;
+                m_linearFilter = GL_NEAREST;
             }
         }
         else
         {
-            _linearFilter = GL_LINEAR;
+            m_linearFilter = GL_LINEAR;
         }
         value = QVariant(node.attribute("clamp2edge"));
         if (value.type() == QVariant::Type::String &&
             !value.isNull())
         {
-            _clamp2edge = value.toBool();
+            m_clamp2edge = value.toBool();
         }
         else
         {
-            _clamp2edge = true;
+            m_clamp2edge = true;
         }
     }
 
-    void ResAtlas::_restore(Restorable* r, void*)
+    void ResAtlas::_restore(Restorable* r)
     {
-        NativeTexture* texture = (NativeTexture*)r->_getRestorableObject();
+        NativeTexture* texture = dynamic_cast<NativeTexture*>(r->_getRestorableObject());
 
-        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+        for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {
             atlas& atl = *i;
             if (atl.base.get() == texture)
             {
-                load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
+                load_texture(atl.base_path, atl.base, m_linearFilter, m_clamp2edge, &RestoreResourcesContext::m_instance);
+                atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore));
                 break;
             }
 
             if (atl.alpha.get() == texture)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
+                load_texture(atl.alpha_path, atl.alpha, m_linearFilter, m_clamp2edge, &RestoreResourcesContext::m_instance);
+                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore));
                 break;
             }
         }
@@ -186,27 +182,27 @@ namespace oxygine
 
     void ResAtlas::_load(LoadResourcesContext* load_context)
     {
-        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+        for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {
             atlas& atl = *i;
             if (!load_context->isNeedProceed(atl.base))
             {
                 continue;
             }
-            load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
-            atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
+            load_texture(atl.base_path, atl.base, m_linearFilter, m_clamp2edge, load_context);
+            atl.base->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore));
 
             if (atl.alpha)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, load_context);
-                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore), nullptr);
+                load_texture(atl.alpha_path, atl.alpha, m_linearFilter, m_clamp2edge, load_context);
+                atl.alpha->reg(Restorable::RestoreCallback(this, &ResAtlas::_restore));
             }
         }
     }
 
     void ResAtlas::_unload()
     {
-        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+        for (atlasses::iterator i = m_atlasses.begin(); i != m_atlasses.end(); ++i)
         {
             atlas& atl = *i;
             if (atl.base)
@@ -226,7 +222,7 @@ namespace oxygine
         ra->init(nullptr, 0, 0, walker.getScaleFactor());
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);
-        context.resources->add(ra);
+        context.m_resources->add(ra);
 
         return ra;
     }

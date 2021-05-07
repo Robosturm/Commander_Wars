@@ -30,8 +30,8 @@ namespace oxygine
         public:
             DrawContext() {}
 
-            QColor color;
-            QColor primary;
+            QColor m_color;
+            QColor m_primary;
         };
 
         class Node;
@@ -53,16 +53,16 @@ namespace oxygine
 
             virtual void draw(DrawContext& dc);
 
-            virtual void xresize(Aligner& rd) {}
-            virtual void xfinalPass(Aligner& rd) {}
+            virtual void xresize(Aligner&) {}
+            virtual void xfinalPass(Aligner&) {}
 
             void updateMaterial(const STDMaterial& mat);
-            virtual void xupdateMaterial(const STDMaterial& mat) {}
+            virtual void xupdateMaterial(const STDMaterial&) {}
 
-
-            spNode _firstChild;
-            spNode _lastChild;
-            spNode _nextSibling;
+        public:
+            spNode m_firstChild;
+            spNode m_lastChild;
+            spNode m_nextSibling;
         };
 
         class TextNode;
@@ -95,8 +95,9 @@ namespace oxygine
             void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;
 
-            QColor color;
-            quint32 options;
+        public:
+            QColor m_color;
+            quint32 m_options;
         };
 
         class BrNode;

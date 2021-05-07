@@ -6,11 +6,11 @@ namespace oxygine
 {
     VideoDriverGL::VideoDriverGL()
     {
-        _rt = spNativeTextureGLES::create();
+        m_rt = spNativeTextureGLES::create();
         GLint fbo = 0;
         GameWindow* window = oxygine::GameWindow::getWindow();
         window->glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-        _rt->_fbo = fbo;
+        m_rt->m_fbo = fbo;
     }
 
     quint32 VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
@@ -81,12 +81,12 @@ namespace oxygine
 
     spNativeTexture VideoDriverGL::getRenderTarget() const
     {
-        return _rt;
+        return m_rt;
     }
 
     const VertexDeclarationGL* VideoDriverGL::getVertexDeclaration(bvertex_format fmt) const
     {
-        return _vdeclarations.get(fmt);
+        return m_vdeclarations.get(fmt);
     }
 
     void VideoDriverGL::getViewport(Rect& r) const
@@ -114,9 +114,9 @@ namespace oxygine
 
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
     {
-        _rt = safeSpCast<NativeTextureGLES>(rt);
+        m_rt = safeSpCast<NativeTextureGLES>(rt);
         GameWindow* window = oxygine::GameWindow::getWindow();
-        window->glBindFramebuffer(GL_FRAMEBUFFER, _rt->getFboID());
+        window->glBindFramebuffer(GL_FRAMEBUFFER, m_rt->getFboID());
     }
 
     void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)

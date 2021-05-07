@@ -11,10 +11,10 @@
 namespace oxygine
 {
     Polygon::Polygon()
-        : _vdecl(0),
-          _own(false),
-          _verticesData(0),
-          _verticesSize(0)
+        : m_vdecl(nullptr),
+          m_own(false),
+          m_verticesData(nullptr),
+          m_verticesSize(0)
 
     {
 
@@ -22,23 +22,23 @@ namespace oxygine
 
     Polygon::~Polygon()
     {
-        if (_own)
+        if (m_own)
         {
-            delete[] _verticesData;
+            delete[] m_verticesData;
         }
     }
 
     void Polygon::setVertices(const void* data, qint32 size, qint32 bformat, bool own)
     {
-        if (_own && data != _verticesData)
+        if (m_own && data != m_verticesData)
         {
-            delete[] _verticesData;
+            delete[] m_verticesData;
         }
 
-        _own = own;
-        _verticesData = reinterpret_cast<const unsigned char*>(data);
-        _verticesSize = size;
-        _vdecl = IVideoDriver::instance->getVertexDeclaration(bformat);
+        m_own = own;
+        m_verticesData = reinterpret_cast<const unsigned char*>(data);
+        m_verticesSize = size;
+        m_vdecl = IVideoDriver::instance->getVertexDeclaration(bformat);
     }
 
     template <class T>
@@ -50,7 +50,7 @@ namespace oxygine
 
     void Polygon::doRender(const RenderState& rs)
     {
-        if (!_verticesSize)
+        if (!m_verticesSize)
         {
             return;
         }
@@ -62,19 +62,19 @@ namespace oxygine
             static std::vector<unsigned char> buff;
             buff.clear();
 
-            buff.reserve(_verticesSize);
-            qint32 num = _verticesSize / _vdecl->size;
+            buff.reserve(m_verticesSize);
+            qint32 num = m_verticesSize / m_vdecl->size;
 
-            const unsigned char* ptr = (const unsigned char*)_verticesData;
+            const unsigned char* ptr = (const unsigned char*)m_verticesData;
             for (qint32 i = 0; i < num; ++i)
             {
                 const Vector2* pos = (Vector2*)ptr;
                 Vector2 t = rs.transform.transform(*pos);
 
                 append(buff, t);
-                buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
+                buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + m_vdecl->size - sizeof(t));
 
-                ptr += _vdecl->size;
+                ptr += m_vdecl->size;
             }
 
             renderer->addVertices(&buff.front(), (unsigned int)buff.size());

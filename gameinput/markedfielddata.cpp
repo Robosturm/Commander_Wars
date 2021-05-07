@@ -14,12 +14,12 @@ MarkedFieldData::MarkedFieldData()
 
 bool MarkedFieldData::getAllFields() const
 {
-    return allFields;
+    return m_allFields;
 }
 
 void MarkedFieldData::setAllFields(bool value)
 {
-    allFields = value;
+    m_allFields = value;
 }
 
 QColor MarkedFieldData::getColor() const
@@ -54,10 +54,10 @@ void MarkedFieldData::setZLabelText(const QString &ZLabelText)
 
 bool MarkedFieldData::getShowZData() const
 {
-    return showZData;
+    return m_showZData;
 }
 
 void MarkedFieldData::setShowZData(bool value)
 {
-    showZData = value;
+    m_showZData = value;
 }

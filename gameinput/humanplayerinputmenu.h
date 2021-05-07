@@ -32,16 +32,18 @@ public slots:
     void keyInput(oxygine::KeyEvent event);
     void moveMouseToItem(qint32 x, qint32 y);
 private:
+    qint32 createTopSprite(qint32 x, qint32 width);
+    qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
+
+private:
     oxygine::spSprite m_Cursor;
-    qint32 startY{0};
-    qint32 itemHeigth{0};
-    qint32 itemWidth{0};
-    qint32 currentAction{0};
+    qint32 m_startY{0};
+    qint32 m_itemHeigth{0};
+    qint32 m_itemWidth{0};
+    qint32 m_currentAction{0};
     QStringList m_ActionIDs;
     QVector<qint32> m_CostList;
     QVector<bool> m_EnabledList;
-    qint32 createTopSprite(qint32 x, qint32 width);
-    qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
 
     bool m_Focused{true};
 };

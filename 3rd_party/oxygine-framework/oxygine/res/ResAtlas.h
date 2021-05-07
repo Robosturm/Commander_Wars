@@ -22,20 +22,19 @@ namespace oxygine
             QString alpha_path;
         };
 
-
         ResAtlas();
         ~ResAtlas();
 
         void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, qint32 w, qint32 h);
 
-        const atlas& getAtlas(qint32 i) const {return _atlasses[i];}
-        qint32          getNum() const { return (int)_atlasses.size(); }
+        const atlas& getAtlas(qint32 i) const {return m_atlasses[i];}
+        qint32          getNum() const { return (int)m_atlasses.size(); }
 
         virtual void setLinearFilter(quint32 linearFilter) override;
         virtual quint32 getLinearFilter() const override;
 
     protected:
-        void _restore(Restorable* r, void* user);
+        void _restore(Restorable* r);
 
         void _load(LoadResourcesContext*) override;
         void _unload() override;
@@ -43,21 +42,18 @@ namespace oxygine
         //void loadAtlas(CreateResourceContext& context);
         spResAnim createEmpty(const XmlWalker& walker, CreateResourceContext& context);
         static void init_resAnim(spResAnim rs, QString file, QDomElement node);
+        void loadBase(QDomElement node);
 
     protected:
         //settings from xml
-        quint32 _linearFilter;
-        bool _clamp2edge;
-
-        void loadBase(QDomElement node);
-
-        QVector<unsigned char> _hitTestBuffer;
+        quint32 m_linearFilter;
+        bool m_clamp2edge;
+        QVector<unsigned char> m_hitTestBuffer;
 
         typedef QVector<atlas> atlasses;
-        atlasses _atlasses;
+        atlasses m_atlasses;
     };
 
     typedef void(*load_texture_hook)(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
-    void set_load_texture_hook(load_texture_hook);
     void load_texture_internal(QString file, spNativeTexture nt, quint32 linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

@@ -17,10 +17,10 @@ namespace oxygine
 {
     Actor::Actor()
         : m_rdelegate(STDRenderDelegate::instance.get()),
-          _stage(nullptr),
+          m_stage(nullptr),
           m_flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
           m_alpha(255),
-          _extendedIsOn(0),
+          m_extendedIsOn(0),
           m_parent(nullptr),
           m_scale(1, 1),
           m_rotation(0),
@@ -39,13 +39,13 @@ namespace oxygine
 
     Stage* Actor::__getStage()
     {
-        return _stage;
+        return m_stage;
     }
 
     void Actor::added2stage(Stage* stage)
     {
-        Q_ASSERT(_stage == nullptr);
-        _stage = stage;
+        Q_ASSERT(m_stage == nullptr);
+        m_stage = stage;
 
         spActor actor = m_children._first;
         while (actor)
@@ -60,11 +60,11 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
-        Q_ASSERT(_stage);
+        Q_ASSERT(m_stage);
 
         onRemovedFromStage();
-        _stage->removeEventListeners(this);
-        _stage = 0;
+        m_stage->removeEventListeners(this);
+        m_stage = 0;
 
         m_pressedOvered = 0;
 
@@ -353,7 +353,7 @@ namespace oxygine
 
     void Actor::setAnchor(const Vector2& anchor)
     {
-        _anchor = anchor;
+        m_anchor = anchor;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
     }
@@ -365,7 +365,7 @@ namespace oxygine
 
     void Actor::setAnchorInPixels(const Vector2& anchor)
     {
-        _anchor = anchor;
+        m_anchor = anchor;
         m_flags |= flag_anchorInPixels;
         markTranformDirty();
     }
@@ -412,22 +412,22 @@ namespace oxygine
 
     void Actor::setAnchorX(float x)
     {
-        if (_anchor.x == x)
+        if (m_anchor.x == x)
         {
             return;
         }
-        _anchor.x = x;
+        m_anchor.x = x;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
     }
 
     void Actor::setAnchorY(float y)
     {
-        if (_anchor.y == y)
+        if (m_anchor.y == y)
         {
             return;
         }
-        _anchor.y = y;
+        m_anchor.y = y;
         m_flags &= ~flag_anchorInPixels;
         markTranformDirty();
     }
@@ -664,13 +664,13 @@ namespace oxygine
         Vector2 offset;
         if (m_flags & flag_anchorInPixels)
         {
-            offset.x = -_anchor.x;
-            offset.y = -_anchor.y;
+            offset.x = -m_anchor.x;
+            offset.y = -m_anchor.y;
         }
         else
         {
-            offset.x = -float(m_size.x * _anchor.x);
-            offset.y = -float(m_size.y * _anchor.y);//todo, what to do? (per pixel quality)
+            offset.x = -float(m_size.x * m_anchor.x);
+            offset.y = -float(m_size.y * m_anchor.y);//todo, what to do? (per pixel quality)
         }
 
         tr.translate(offset);
@@ -685,7 +685,7 @@ namespace oxygine
     bool Actor::isOn(const Vector2& localPosition, float)
     {
         RectF r = getDestRect();
-        r.expand(Vector2(_extendedIsOn, _extendedIsOn), Vector2(_extendedIsOn, _extendedIsOn));
+        r.expand(Vector2(m_extendedIsOn, m_extendedIsOn), Vector2(m_extendedIsOn, m_extendedIsOn));
 
         if (r.pointIn(localPosition))
         {
@@ -1219,23 +1219,6 @@ namespace oxygine
         return t;
     }
 
-    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root)
-    {
-        if (!root)
-        {
-            root = getStage().get();
-        }
-        dur = timeMS(std::max((long long) dur.count(), 1ll));
-        spTween t = root->addTween(TweenDummy(), dur);
-        t->setDoneCallback(cb);
-        return t;
-    }
-
-    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
-    {
-        return setTimeout(dur, cb, root.get());
-    }
-
     Transform getGlobalTransform2(spActor child, Actor* parent)
     {
         Transform t;
@@ -1265,46 +1248,6 @@ namespace oxygine
         }
         actor->setPosition(pos);
         actor->attachTo(newParent);
-    }
-
-    void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale)
-    {
-        scale.x = qSqrt(t.a * t.a + t.c * t.c);
-        scale.y = qSqrt(t.b * t.b + t.d * t.d);
-
-        angle = -atan2(t.c, t.a);
-        pos.x = t.x;
-        pos.y = t.y;
-    }
-
-    void setDecomposedTransform(Actor* actor, const Transform& t)
-    {
-        Vector2 pos;
-        Vector2 scale;
-        float angle;
-
-        decompose(t, pos, angle, scale);
-        actor->setPosition(pos);
-        actor->setRotation(angle);
-        actor->setScale(scale);
-    }
-
-    void    reattachActor(spActor actor, spActor newParent, spActor root)
-    {
-        Transform t1 = actor->computeGlobalTransform(root.get());
-        Transform t2 = newParent->computeGlobalTransform(root.get());
-        t2.invert();
-        Transform r = t1 * t2;
-
-        Vector2 pos;
-        Vector2 scale;
-        float angle;
-
-        decompose(r, pos, angle, scale);
-        actor->attachTo(newParent);
-        actor->setPosition(pos);
-        actor->setRotation(angle);
-        actor->setScale(scale);
     }
 
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)

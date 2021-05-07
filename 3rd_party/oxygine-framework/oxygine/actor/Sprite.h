@@ -17,14 +17,14 @@ namespace oxygine
         Sprite();
         virtual ~Sprite() override;
 
-        const AnimationFrame&   getAnimFrame() const {return _frame;}
+        const AnimationFrame&   getAnimFrame() const {return m_frame;}
         RectF                   getDestRect() const override;
-        const Diffuse&          getDiffuse() const {return _frame.getDiffuse();}
+        const Diffuse&          getDiffuse() const {return m_frame.getDiffuse();}
         bool                    getManageResAnim() const {return (m_flags & flag_manageResAnim) != 0;}
-        const RectF&            getSrcRect() const {return _frame.getSrcRect();}
-        const ResAnim*          getResAnim() const {return _frame.getResAnim();}
-        qint32                     getColumn() const {return _frame.getColumn();}
-        qint32                     getRow() const {return _frame.getRow();}
+        const RectF&            getSrcRect() const {return m_frame.getSrcRect();}
+        const ResAnim*          getResAnim() const {return m_frame.getResAnim();}
+        qint32                     getColumn() const {return m_frame.getColumn();}
+        qint32                     getRow() const {return m_frame.getRow();}
         const Vector2&          getLocalScale() const { return m_localScale; }
 
         /**load/unload atlas automatically or not*/
@@ -70,12 +70,11 @@ namespace oxygine
         virtual void animFrameChanged(const AnimationFrame& f);
         void sizeChanged(const Vector2& size) override;
 
+    protected:
         Vector2 m_localScale;
-        AnimationFrame _frame;
+        AnimationFrame m_frame;
         oxygine::spResAnim m_colorTable;
-
         oxygine::RectF m_DestRecModifier{oxygine::RectF(0.0f, 0.0f, 0.0f, 0.0f)};
-
-        bool invertFlipX{false};
+        bool m_invertFlipX{false};
     };
 }

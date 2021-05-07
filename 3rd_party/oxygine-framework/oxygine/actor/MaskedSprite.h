@@ -19,7 +19,7 @@ namespace oxygine
         void render(const RenderState& parentRS) override;
 
     private:
-        spSprite _mask;
-        bool _useRChannel;
+        spSprite m_mask;
+        bool m_useRChannel;
     };
 }

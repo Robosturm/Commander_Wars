@@ -19,7 +19,7 @@ namespace oxygine
         spNativeTexture getTexture() const;
 
     protected:
-        QVector<unsigned char> _data;
-        spNativeTexture _texture;
+        QVector<unsigned char> m_data;
+        spNativeTexture m_texture;
     };
 }

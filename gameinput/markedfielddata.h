@@ -51,8 +51,8 @@ public slots:
     QString getZLabelText() const;
     void setZLabelText(const QString &ZLabelText);
 private:
-    bool allFields{false};
-    bool showZData{false};
+    bool m_allFields{false};
+    bool m_showZData{false};
     QVector<QPoint> m_MarkedFields;
     /**
      * @brief m_ZInformation shown information over the selected field. For example the damage

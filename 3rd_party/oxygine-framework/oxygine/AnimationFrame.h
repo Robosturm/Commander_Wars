@@ -80,14 +80,12 @@ namespace oxygine
         };
 
         Diffuse         m_diffuse;
-
         RectF           m_srcRect;
         RectF           m_destRect;
         Vector2         m_frameSize;//real size without clipping
         ResAnim*        m_resAnim;
         short           m_row;
         short           m_column;
-
-        HitTestData       m_hittest;
+        HitTestData     m_hittest;
     };
 }

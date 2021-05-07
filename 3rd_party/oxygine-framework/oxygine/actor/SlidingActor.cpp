@@ -15,28 +15,26 @@ namespace oxygine
     }
 
     SlidingActor::SlidingActor():
-        _sliding(false),
-        _rad(_defaultTouchThreshold),
-        _maxSpeed(250),
-        _downTime(0),
-        _ignoreTouchUp(false),
-        _lastTime(0), _current(0), _lastIterTime(0),
-        _finger(0)
+        m_sliding(false),
+        m_rad(_defaultTouchThreshold),
+        m_ignoreTouchUp(false),
+        m_current(0), m_lastIterTime(0),
+        m_finger(0)
     {
-        _clip = spClipRectActor::create();
-        _clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
-        _clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
-        _clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));
+        m_clip = spClipRectActor::create();
+        m_clip->addEventListener(TouchEvent::TOUCH_DOWN, EventCallback(this, &SlidingActor::_newEvent));
+        m_clip->addEventListener(TouchEvent::TOUCH_UP, EventCallback(this, &SlidingActor::_newEvent));
+        m_clip->addEventListener(TouchEvent::MOVE, EventCallback(this, &SlidingActor::_newEvent));
 
-        addChild(_clip);
+        addChild(m_clip);
     }
 
     void SlidingActor::destroy()
     {
-        _clip->removeChildren();
+        m_clip->removeChildren();
 
-        _drag.destroy();
-        _content = 0;
+        m_drag.destroy();
+        m_content = nullptr;
     }
 
     SlidingActor::~SlidingActor()
@@ -46,149 +44,147 @@ namespace oxygine
 
     void SlidingActor::setTouchThreshold(float rad)
     {
-        _rad = rad;
+        m_rad = rad;
     }
 
     void SlidingActor::sizeChanged(const Vector2& size)
     {
-        if (_clip)
+        if (m_clip)
         {
-            _clip->setSize(size);
+            m_clip->setSize(size);
         }
         updateDragBounds();
     }
 
     void SlidingActor::snap()
     {
-        if (!_content)
+        if (!m_content)
         {
             return;
         }
         updateDragBounds();
-        _drag.snapClient2Bounds();
-        _sliding = false;
+        m_drag.snapClient2Bounds();
+        m_sliding = false;
     }
 
     void SlidingActor::stop()
     {
-        _speed = Vector2(0, 0);
+        m_speed = Vector2(0, 0);
     }
 
     void SlidingActor::setContent(spActor content)
     {
-        if (_content)
+        if (m_content)
         {
-            _drag.destroy();
-            _content->detach();
+            m_drag.destroy();
+            m_content->detach();
         }
 
-        _downTime = timeMS(0);
-
-        _current = 0;
-        _lastIterTime = timeMS(0);
-        _sliding = false;
+        m_current = 0;
+        m_lastIterTime = timeMS(0);
+        m_sliding = false;
 
         for (qint32 i = 0; i < NUM; ++i)
         {
-            _prev[i].tm = timeMS(0);
+            m_prev[i].tm = timeMS(0);
         }
-        _holded = nullptr; //event->target;
-        _finger = 0;
-        _speed = Vector2(0, 0);
+        m_holded = nullptr; //event->target;
+        m_finger = 0;
+        m_speed = Vector2(0, 0);
 
-        _content = content;
-        _drag.init(content.get());
+        m_content = content;
+        m_drag.init(content.get());
 
-        _clip->addChild(_content);
+        m_clip->addChild(m_content);
 
         updateDragBounds();
     }
 
     void SlidingActor::setLocked(bool locked)
     {
-        _drag.setDragEnabled(!locked);
+        m_drag.setDragEnabled(!locked);
     }
 
     void SlidingActor::updateDragBounds()
     {
-        if (!_content)
+        if (!m_content)
         {
             return;
         }
-        float w = std::max(0.0f, _content->getWidth() * _content->getScaleX() - _clip->getWidth());
-        float h = std::max(0.0f, _content->getHeight() * _content->getScaleY() - _clip->getHeight());
+        float w = std::max(0.0f, m_content->getWidth() * m_content->getScaleX() - m_clip->getWidth());
+        float h = std::max(0.0f, m_content->getHeight() * m_content->getScaleY() - m_clip->getHeight());
         RectF bounds(-w, -h, w, h);
 
-        _drag.setDragBounds(bounds);
+        m_drag.setDragBounds(bounds);
     }
 
     const timeMS fdt = timeMS(1000 / 60);
 
     void SlidingActor::doUpdate(const UpdateState&)
     {
-        if (!_content)
+        if (!m_content)
         {
             return;
         }
 
         timeMS ct = Clock::getTimeMS();
-        if (_lastIterTime + NUM * fdt < ct)
+        if (m_lastIterTime + NUM * fdt < ct)
         {
-            _lastIterTime = ct;
+            m_lastIterTime = ct;
         }
 
-        if (_drag.isDragging())
+        if (m_drag.isDragging())
         {
-            Vector2 pos = _content->getPosition();
-            _prev[_current].pos = pos;
-            _prev[_current].tm = ct;
-            _current = (_current + 1) % NUM;
+            Vector2 pos = m_content->getPosition();
+            m_prev[m_current].pos = pos;
+            m_prev[m_current].tm = ct;
+            m_current = (m_current + 1) % NUM;
             return;
         }
 
-        if (_sliding)
+        if (m_sliding)
         {
-            const RectF& bounds = _drag.getDragBounds();
-            while (_lastIterTime + fdt <= ct)
+            const RectF& bounds = m_drag.getDragBounds();
+            while (m_lastIterTime + fdt <= ct)
             {
-                Vector2 pos = _content->getPosition();
-                Vector2 newpos = pos + _speed * (fdt.count() / 1000.0f);
+                Vector2 pos = m_content->getPosition();
+                Vector2 newpos = pos + m_speed * (fdt.count() / 1000.0f);
                 if (newpos.x < bounds.getLeft())
                 {
                     newpos.x = bounds.getLeft();
-                    _speed.x = 0;
+                    m_speed.x = 0;
                 }
                 else if (newpos.x > bounds.getRight())
                 {
                     newpos.x = bounds.getRight();
-                    _speed.x = 0;
+                    m_speed.x = 0;
                 }
 
                 if (newpos.y < bounds.getTop())
                 {
                     newpos.y = bounds.getTop();
-                    _speed.y = 0;
+                    m_speed.y = 0;
                 }
                 else if (newpos.y > bounds.getBottom())
                 {
                     newpos.y = bounds.getBottom();
-                    _speed.y = 0;
+                    m_speed.y = 0;
                 }
-                _speed *= 0.97f;
-                _content->setPosition(newpos);
+                m_speed *= 0.97f;
+                m_content->setPosition(newpos);
 
-                _lastIterTime += fdt;
+                m_lastIterTime += fdt;
             }
 
 
             SlidingEvent sl(SlidingEvent::SLIDING);
-            sl.speed = _speed;
+            sl.speed = m_speed;
             dispatchEvent(&sl);
-            _speed = sl.speed;
+            m_speed = sl.speed;
 
-            if (_speed.sqlength() < 8)
+            if (m_speed.sqlength() < 8)
             {
-                _sliding = false;
+                m_sliding = false;
                 SlidingEvent ev(SlidingEvent::END);
                 dispatchEvent(&ev);
             }
@@ -203,7 +199,7 @@ namespace oxygine
 
     void SlidingActor::_newEvent(Event* event)
     {
-        if (!_content)
+        if (!m_content)
         {
             return;
         }
@@ -213,49 +209,47 @@ namespace oxygine
         {
             case TouchEvent::TOUCH_DOWN:
             {
-                _finger = te->index;
-                _current = 0;
-                _lastIterTime = tm;
+                m_finger = te->index;
+                m_current = 0;
+                m_lastIterTime = tm;
 
-                _prev[0].pos = _content->getPosition();
-                _prev[0].tm = tm;
+                m_prev[0].pos = m_content->getPosition();
+                m_prev[0].tm = tm;
 
                 for (qint32 i = 1; i < NUM; ++i)
                 {
-                    _prev[i].tm = timeMS(0);
+                    m_prev[i].tm = timeMS(0);
                 }
 
-                _holded = event->target;
-                _downPos = te->localPosition;
-                _downTime = tm;
+                m_holded = event->target;
+                m_downPos = te->localPosition;
             }
             break;
 
             case TouchEvent::TOUCH_UP:
             {
-                if (_ignoreTouchUp)
+                if (m_ignoreTouchUp)
                 {
                     te->stopImmediatePropagation();
                 }
 
-                if (_drag.getDragEnabled() && te->index == _finger && _ignoreTouchUp == false)
+                if (m_drag.getDragEnabled() && te->index == m_finger && m_ignoreTouchUp == false)
                 {
-                    _finger = 0;
-                    _downTime = timeMS(0);
-                    Vector2 pos = _content->getPosition();
+                    m_finger = 0;
+                    Vector2 pos = m_content->getPosition();
 
-                    _holded = 0;
+                    m_holded = nullptr;
 
                     const iter* old = 0;
                     const iter* mid = 0;
-                    const iter* last = _prev + _current;
+                    const iter* last = m_prev + m_current;
 
                     for (qint32 i = 1; i < NUM; ++i)
                     {
-                        qint32 n = (_current + NUM - i) % NUM;
-                        if (_prev[n].tm > timeMS(0))
+                        qint32 n = (m_current + NUM - i) % NUM;
+                        if (m_prev[n].tm > timeMS(0))
                         {
-                            last = _prev + n;
+                            last = m_prev + n;
                         }
                         else
                         {
@@ -283,7 +277,7 @@ namespace oxygine
                     Vector2 dir = pos - midpos;
                     if (dir.sqlength() < 10 * 10)
                     {
-                        _speed = Vector2(0, 0);
+                        m_speed = Vector2(0, 0);
                     }
                     else
                     {
@@ -297,43 +291,43 @@ namespace oxygine
 
                         Vector2 ns = (dr * 1000.0f) / v.count();
 
-                        if (_speed.dot(ns) < 0)
+                        if (m_speed.dot(ns) < 0)
                         {
-                            _speed = ns;
+                            m_speed = ns;
                         }
                         else
                         {
-                            _speed += ns;
+                            m_speed += ns;
                         }
                     }
 
 
-                    if (!_sliding)
+                    if (!m_sliding)
                     {
-                        _sliding = true;
+                        m_sliding = true;
                     }
 
                     SlidingEvent sd(SlidingEvent::BEGIN);
-                    sd.speed = _speed;
+                    sd.speed = m_speed;
                     dispatchEvent(&sd);
-                    _speed = sd.speed;
+                    m_speed = sd.speed;
 
-                    _lastIterTime = tm;
+                    m_lastIterTime = tm;
                 }
             }
             break;
 
             case TouchEvent::MOVE:
             {
-                if (te->index == _finger)
+                if (te->index == m_finger)
                 {
-                    Vector2 offset = _downPos - te->localPosition;
+                    Vector2 offset = m_downPos - te->localPosition;
                     float d = offset.dot(offset);
-                    if (_holded && (d >= _rad * _rad))
+                    if (m_holded && (d >= m_rad * m_rad))
                     {
-                        spActor act = safeSpCast<Actor>(_holded);
+                        spActor act = safeSpCast<Actor>(m_holded);
 
-                        while (act && act.get() != _content.get())
+                        while (act && act.get() != m_content.get())
                         {
                             for (qint32 i = 0; i < MouseButton_Num; ++i)
                             {
@@ -349,7 +343,7 @@ namespace oxygine
                             act = act->getParent();
                         }
 
-                        _holded = 0;
+                        m_holded = nullptr;
                     }
                 }
             }

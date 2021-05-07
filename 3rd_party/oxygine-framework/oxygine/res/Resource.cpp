@@ -5,9 +5,9 @@
 namespace oxygine
 {
     Resource::Resource()
-        : _parent(0),
-          _loadCounter(0),
-          _useLoadCounter(false)
+        : m_parent(0),
+          m_loadCounter(0),
+          m_useLoadCounter(false)
     {
 
     }
@@ -24,21 +24,21 @@ namespace oxygine
             context = LoadResourcesContext::get();
         }
 
-        if (_loadCounter == 0)
+        if (m_loadCounter == 0)
         {
             _load(context);
         }
 
-        _loadCounter = _useLoadCounter ? _loadCounter + 1 : 1;
+        m_loadCounter = m_useLoadCounter ? m_loadCounter + 1 : 1;
     }
 
     void Resource::unload()
     {
-        if (_loadCounter == 1)
+        if (m_loadCounter == 1)
         {
             _unload();
         }
-        _loadCounter = _useLoadCounter ? _loadCounter - 1 : 0;
+        m_loadCounter = m_useLoadCounter ? m_loadCounter - 1 : 0;
     }
 
     QString Resource::extractID(const QDomElement& node, QString file, QString def)
@@ -65,7 +65,7 @@ namespace oxygine
 
     QString Resource::getAttribute(QString attr) const
     {
-        return _node.attribute(attr);
+        return m_node.attribute(attr);
     }
 
     QString Resource::getName() const

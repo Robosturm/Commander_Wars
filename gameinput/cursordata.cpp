@@ -13,40 +13,40 @@ CursorData::CursorData()
 
 QString CursorData::getCursor() const
 {
-    return cursor;
+    return m_cursor;
 }
 
 void CursorData::setCursor(const QString &value)
 {
-    cursor = value;
+    m_cursor = value;
 }
 
 qint32 CursorData::getXOffset() const
 {
-    return xOffset;
+    return m_xOffset;
 }
 
 void CursorData::setXOffset(const qint32 &value)
 {
-    xOffset = value;
+    m_xOffset = value;
 }
 
 qint32 CursorData::getYOffset() const
 {
-    return yOffset;
+    return m_yOffset;
 }
 
 void CursorData::setYOffset(const qint32 &value)
 {
-    yOffset = value;
+    m_yOffset = value;
 }
 
 float CursorData::getScale() const
 {
-    return scale;
+    return m_scale;
 }
 
 void CursorData::setScale(const float &value)
 {
-    scale = value;
+    m_scale = value;
 }

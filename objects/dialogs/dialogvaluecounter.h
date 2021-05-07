@@ -25,7 +25,6 @@ private:
     spLabel m_totalPointsLabel;
     qint32 m_totalPoints{0};
     qint32 m_pointsToAdd{0};
-
     oxygine::spButton m_OkButton;
     QTimer m_updateTimer;
 };

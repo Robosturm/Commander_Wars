@@ -26,7 +26,7 @@ public slots:
 
 private:
     InGameMenue* m_pOwner{nullptr};
-    QTimer scrollTimer;
+    QTimer m_scrollTimer;
     qint64 m_lastUpdateTimestamp{0};
 };
 

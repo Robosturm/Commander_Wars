@@ -39,7 +39,6 @@ public:
         return 1;
     }
 public slots:
-
     /**
      * @brief createScriptVariable
      * @param id identifier for the variable

@@ -9,11 +9,11 @@ namespace oxygine
 
     TweenOutlineImpl::TweenOutlineImpl(const QColor& c, const PostProcessOptions& opt)
         : TweenPostProcess(opt),
-          _color(c),
-          _downsample(1)
+          m_color(c),
+          m_downsample(1)
     {
-        _matx = spSTDMaterial::create();
-        _matx->_blend = blend_premultiplied_alpha;
+        m_matx = spSTDMaterial::create();
+        m_matx->m_blend = blend_premultiplied_alpha;
     }
 
     void TweenOutlineImpl::render(Actor* actor, const RenderState& rs)
@@ -24,8 +24,8 @@ namespace oxygine
         }
         spNativeTexture rt = _pp._rt;
 
-        _matx->_base = rt;
-        _matx->apply();
+        m_matx->m_base = rt;
+        m_matx->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
         RectF src(0, 0,
@@ -53,7 +53,7 @@ namespace oxygine
             return;
         }
         spIVideoDriver driver = IVideoDriver::instance;
-        _downsample = 1;
+        m_downsample = 1;
         spNativeTexture rt = _pp._rt;
         spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
@@ -67,11 +67,11 @@ namespace oxygine
         QColor c;
         if (_pp._options._flags & PostProcessOptions::flag_singleR2T)
         {
-            c = _color;
+            c = m_color;
         }
         else
         {
-            c = _color;
+            c = m_color;
             c.setAlpha(alpha);
             c = premultiply(c);
         }

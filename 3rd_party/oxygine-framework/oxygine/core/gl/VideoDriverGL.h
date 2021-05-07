@@ -32,10 +32,11 @@ namespace oxygine
     protected:
         quint32 getPT(IVideoDriver::PRIMITIVE_TYPE pt);
         quint32 getBT(IVideoDriver::BLEND_TYPE pt);
-
         void _begin(const Rect& viewport, const QColor* clearColor);
-        spNativeTextureGLES _rt;
 
-        mutable VertexDeclarations<VertexDeclarationGL> _vdeclarations;
+    protected:
+        spNativeTextureGLES m_rt;
+
+        mutable VertexDeclarations<VertexDeclarationGL> m_vdeclarations;
     };
 }

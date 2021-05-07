@@ -18,18 +18,18 @@ namespace oxygine
 
         void destroy();
 
-        Actor*          getDragClient() const {return _dragClient;}
-        const RectF&    getDragBounds() const {return _bounds;}
-        const Vector2&  getClientPos() const {return _clientPos;}
-        bool            getDragEnabled() const { return _dragEnabled; }
-        bool            isDragging() const {return _pressed;}
+        Actor*          getDragClient() const {return m_dragClient;}
+        const RectF&    getDragBounds() const {return m_bounds;}
+        const Vector2&  getClientPos() const {return m_clientPos;}
+        bool            getDragEnabled() const { return m_dragEnabled; }
+        bool            isDragging() const {return m_pressed;}
 
-        void setDragEnabled(bool en) {_dragEnabled = en;}
+        void setDragEnabled(bool en) {m_dragEnabled = en;}
         /**sets bounds position for dragged actor*/
         void setDragBounds(const RectF& bounds);
         /**sets destination drag client. Default value is Actor attached to DragHandler*/
         void setDragClient(Actor* actor);
-        void setIgnoreTouchUp(bool ignore) { _ignoreTouchUp = ignore; }
+        void setIgnoreTouchUp(bool ignore) { m_ignoreTouchUp = ignore; }
         void snapClient2Bounds();
 
     protected:
@@ -40,22 +40,18 @@ namespace oxygine
         void onDrag(TouchEvent* es);
         void onMove(const Vector2& position);
 
-        RectF _bounds;
-        Vector2 _dragPos;
-        Vector2 _clientPos;
+    protected:
+        RectF m_bounds;
+        Vector2 m_dragPos;
+        Vector2 m_clientPos;
 
-        Actor* _dragClient;
-        Actor* _actor;
-        timeMS _startTm;
+        Actor* m_dragClient;
+        Actor* m_actor;
+        timeMS m_startTm;
 
-        bool _clientIsParent;
-        bool _dragEnabled;
-        bool _pressed;
-        bool _singleDrag;
-        bool _ignoreTouchUp;
-
-
-
-
+        bool m_dragEnabled;
+        bool m_pressed;
+        bool m_singleDrag;
+        bool m_ignoreTouchUp;
     };
 }

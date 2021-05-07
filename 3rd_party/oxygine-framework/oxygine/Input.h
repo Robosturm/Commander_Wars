@@ -25,19 +25,15 @@ namespace oxygine
 
         qint32 touchID2index(qint64 id);
         PointerState* getTouchByID(qint64 id);
-
-
-        //internal:
-        PointerState _pointers[MAX_TOUCHES];
-        PointerState _pointerMouse;
-
-        qint64 _ids[MAX_TOUCHES + 1];
-
-
         void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, qint32 type, PointerState*);
         void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState*);
         void sendPointerWheelEvent(spStage, const Vector2& dir, PointerState*);
 
-        bool _multiTouch;
+
+    public:
+        PointerState m_pointers[MAX_TOUCHES];
+        PointerState m_pointerMouse;
+        qint64 m_ids[MAX_TOUCHES + 1];
+        bool m_multiTouch;
     };
 }

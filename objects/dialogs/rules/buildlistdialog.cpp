@@ -62,11 +62,11 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        toggle = !toggle;
+        m_toggle = !m_toggle;
         for (qint32 i = 0; i < m_Checkboxes.size(); i++)
         {
-            m_Checkboxes[i]->setChecked(toggle);
-            emit m_Checkboxes[i]->checkChanged(toggle);
+            m_Checkboxes[i]->setChecked(m_toggle);
+            emit m_Checkboxes[i]->checkChanged(m_toggle);
         }
     });
     auto items = getNameList();

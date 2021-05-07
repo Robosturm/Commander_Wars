@@ -130,26 +130,26 @@ void WorkerThread::mousePressEvent(oxygine::MouseButton button, qint32 x, qint32
 {
     oxygine::Input* input = &oxygine::Input::instance;
     input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_DOWN, &input->_pointerMouse);
+                                  oxygine::TouchEvent::TOUCH_DOWN, &input->m_pointerMouse);
 }
 
 void WorkerThread::mouseReleaseEvent(oxygine::MouseButton button, qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
     input->sendPointerButtonEvent(oxygine::getStage(), button, x, y, 1.0f,
-                                  oxygine::TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                                  oxygine::TouchEvent::TOUCH_UP, &input->m_pointerMouse);
 }
 
 void WorkerThread::wheelEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerWheelEvent(oxygine::getStage(), oxygine::Vector2(x, y), &input->_pointerMouse);
+    input->sendPointerWheelEvent(oxygine::getStage(), oxygine::Vector2(x, y), &input->m_pointerMouse);
 }
 
 void WorkerThread::mouseMoveEvent(qint32 x, qint32 y)
 {
     oxygine::Input* input = &oxygine::Input::instance;
-    input->sendPointerMotionEvent(oxygine::getStage(), x, y, 1.0f, &input->_pointerMouse);
+    input->sendPointerMotionEvent(oxygine::getStage(), x, y, 1.0f, &input->m_pointerMouse);
 }
 
 void WorkerThread::showMainwindow()

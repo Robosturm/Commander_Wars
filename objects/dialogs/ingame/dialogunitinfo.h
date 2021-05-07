@@ -23,7 +23,6 @@ signals:
     void sigMoveToUnit(qint32 posX, qint32 posY);
 public slots:
     void moveToUnit(qint32 posX, qint32 posY);
-private:
 };
 
 #endif // DIALOGUNITINFO_H

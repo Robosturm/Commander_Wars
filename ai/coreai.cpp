@@ -525,9 +525,9 @@ void CoreAI::getAttacksFromField(Unit* pUnit, spGameAction pAction, QVector<QVec
 bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
 {
     Building* pBuilding = pTerrain->getBuilding();
-    if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+    if ((m_enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
         (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != m_pPlayer) ||
-        (enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
+        (m_enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
     {
         return true;
     }
@@ -1545,7 +1545,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
             }
         }
     }
-    if (enableNeutralTerrainAttack)
+    if (m_enableNeutralTerrainAttack)
     {
         // find terrains
         qint32 width = pMap->getMapWidth();
@@ -1979,7 +1979,7 @@ bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
 void CoreAI::serializeObject(QDataStream& stream) const
 {
     stream << getVersion();
-    stream << enableNeutralTerrainAttack;
+    stream << m_enableNeutralTerrainAttack;
     stream << static_cast<qint32>(m_BuildingChanceModifier.size());
     for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
     {
@@ -2009,7 +2009,7 @@ void CoreAI::deserializeObject(QDataStream& stream)
     stream >> version;
     if (version > 1)
     {
-        stream >> enableNeutralTerrainAttack;
+        stream >> m_enableNeutralTerrainAttack;
     }
     if (version > 2)
     {

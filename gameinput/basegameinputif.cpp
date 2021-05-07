@@ -30,12 +30,12 @@ void BaseGameInputIF::setPlayer(Player* pPlayer)
 
 bool BaseGameInputIF::getEnableNeutralTerrainAttack() const
 {
-    return enableNeutralTerrainAttack;
+    return m_enableNeutralTerrainAttack;
 }
 
 void BaseGameInputIF::setEnableNeutralTerrainAttack(bool value)
 {
-    enableNeutralTerrainAttack = value;
+    m_enableNeutralTerrainAttack = value;
 }
 
 void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input)

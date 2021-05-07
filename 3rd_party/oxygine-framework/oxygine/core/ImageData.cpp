@@ -16,24 +16,24 @@ namespace oxygine
         return 0;
     }
 
-    ImageData::ImageData(): w(0), h(0), bytespp(0), pitch(0), data(0), format(TF_UNDEFINED)
+    ImageData::ImageData(): m_w(0), m_h(0), m_bytespp(0), m_pitch(0), m_data(0), m_format(TF_UNDEFINED)
     {
 
     }
 
-    ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, void* Data)
-        : w(W),
-          h(H),
-          pitch(Pitch),
-          data((unsigned char*)Data),
-          format(Format)
+    ImageData::ImageData(qint32 W, qint32 H, qint32 Pitch, TextureFormat Format, unsigned char* pData)
+        : m_w(W),
+          m_h(H),
+          m_pitch(Pitch),
+          m_data(pData),
+          m_format(Format)
     {
-        bytespp = getBytesPerPixel(Format);
+        m_bytespp = getBytesPerPixel(Format);
     }
 
-    ImageData::ImageData(const ImageData& b, void* Data)
+    ImageData::ImageData(const ImageData& b, unsigned char* pData)
+        : ImageData(b.m_w, b.m_h, b.m_pitch, b.m_format, pData)
     {
-        *this = ImageData(b.w, b.h, b.pitch, b.format, Data);
     }
 
     ImageData::~ImageData()
@@ -42,13 +42,13 @@ namespace oxygine
 
     ImageData ImageData::getRect(const Rect& r) const
     {
-        Q_ASSERT(r.getX() >= 0 && r.getX() <= w);
-        Q_ASSERT(r.getY() >= 0 && r.getY() <= h);
-        Q_ASSERT(r.getX() + r.getWidth() <= w);
-        Q_ASSERT(r.getY() + r.getHeight() <= h);
+        Q_ASSERT(r.getX() >= 0 && r.getX() <= m_w);
+        Q_ASSERT(r.getY() >= 0 && r.getY() <= m_h);
+        Q_ASSERT(r.getX() + r.getWidth() <= m_w);
+        Q_ASSERT(r.getY() + r.getHeight() <= m_h);
 
-        void* ptr = (unsigned char*)data + r.getX() * bytespp + r.getY() * pitch;
-        ImageData buffer(r.getWidth(), r.getHeight(), pitch, format, ptr);
+        unsigned char* ptr = m_data + r.getX() * m_bytespp + r.getY() * m_pitch;
+        ImageData buffer(r.getWidth(), r.getHeight(), m_pitch, m_format, ptr);
 
         return buffer;
     }
@@ -60,11 +60,11 @@ namespace oxygine
 
     ImageData ImageData::getRect(qint32 x, qint32 y) const
     {
-        return getRect(x, y, w - x, h - y);
+        return getRect(x, y, m_w - x, m_h - y);
     }
 
     unsigned char* ImageData::getPixelPtr(qint32 x, qint32 y) const
     {
-        return (unsigned char*)data + x * bytespp + y * pitch;
+        return (unsigned char*)m_data + x * m_bytespp + y * m_pitch;
     }
 }

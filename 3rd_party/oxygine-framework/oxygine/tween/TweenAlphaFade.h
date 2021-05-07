@@ -15,7 +15,7 @@ namespace oxygine
         TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt);
         void render(Actor*, const RenderState&);
     private:
-        bool _fadeIn;
+        bool m_fadeIn;
     };
 
     class TweenAlphaFade: public TweenProxy<TweenAlphaFadeImpl>

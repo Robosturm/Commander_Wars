@@ -778,8 +778,8 @@ bool NormalAi::captureBuildings(spQmlVectorUnit pUnits)
                     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
                     QVector<QPoint> path = pfs.getPath(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y()));
                     pAction->setMovepath(path, pfs.getCosts(path));
-                    updatePoints.append(pUnit->getPosition());
-                    updatePoints.append(pAction->getActionTarget());
+                    m_updatePoints.append(pUnit->getPosition());
+                    m_updatePoints.append(pAction->getActionTarget());
                     if (pAction->canBePerformed())
                     {
                         emit performAction(pAction);
@@ -836,9 +836,9 @@ bool NormalAi::fireWithUnits(spQmlVectorUnit pUnits, qint32 minfireRange, qint32
                 }
                 if (pAction->isFinalStep() && pAction->canBePerformed())
                 {
-                    updatePoints.append(pUnit->getPosition());
-                    updatePoints.append(pAction->getActionTarget());
-                    updatePoints.append(QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
+                    m_updatePoints.append(pUnit->getPosition());
+                    m_updatePoints.append(pAction->getActionTarget());
+                    m_updatePoints.append(QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
                     emit performAction(pAction);
                     return true;
                 }
@@ -899,8 +899,8 @@ bool NormalAi::refillUnits(spQmlVectorUnit pUnits, spQmlVectorBuilding pBuilding
                     pAction->setMovepath(path, pfs.getCosts(path));
                     if (pAction->canBePerformed())
                     {
-                        updatePoints.append(pUnit->getPosition());
-                        updatePoints.append(pAction->getActionTarget());
+                        m_updatePoints.append(pUnit->getPosition());
+                        m_updatePoints.append(pAction->getActionTarget());
                         emit performAction(pAction);
                         return true;
                     }
@@ -1255,8 +1255,8 @@ bool NormalAi::moveToUnloadArea(spGameAction pAction, Unit* pUnit, spQmlVectorUn
                 }
                 while (unloaded);
                 addMenuItemData(pAction, ACTION_WAIT, 0);
-                updatePoints.append(pUnit->getPosition());
-                updatePoints.append(pAction->getActionTarget());
+                m_updatePoints.append(pUnit->getPosition());
+                m_updatePoints.append(pAction->getActionTarget());
                 if (pAction->canBePerformed())
                 {
                     emit performAction(pAction);
@@ -1335,8 +1335,8 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
             pAction->setActionID(ACTION_LOAD);
             if (pAction->canBePerformed())
             {
-                updatePoints.append(pUnit->getPosition());
-                updatePoints.append(pAction->getActionTarget());
+                m_updatePoints.append(pUnit->getPosition());
+                m_updatePoints.append(pAction->getActionTarget());
                 emit performAction(pAction);
                 return true;
             }
@@ -1348,8 +1348,8 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
             pAction->setActionID(ACTION_WAIT);
             if (pAction->canBePerformed())
             {
-                updatePoints.append(pUnit->getPosition());
-                updatePoints.append(pAction->getActionTarget());
+                m_updatePoints.append(pUnit->getPosition());
+                m_updatePoints.append(pAction->getActionTarget());
                 emit performAction(pAction);
                 return true;
             }
@@ -1413,9 +1413,9 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
                                                                  static_cast<qint32>(target.y())));
                     if (pAction->isFinalStep() && pAction->canBePerformed())
                     {
-                        updatePoints.append(pUnit->getPosition());
-                        updatePoints.append(pAction->getActionTarget());
-                        updatePoints.append(QPoint(static_cast<qint32>(target.x()),
+                        m_updatePoints.append(pUnit->getPosition());
+                        m_updatePoints.append(pAction->getActionTarget());
+                        m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
                                                    static_cast<qint32>(target.y())));
                         emit performAction(pAction);
                         return true;
@@ -1424,8 +1424,8 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
             }
             if (pAction->getMovePath().size() > 0)
             {
-                updatePoints.append(pUnit->getPosition());
-                updatePoints.append(pAction->getActionTarget());
+                m_updatePoints.append(pUnit->getPosition());
+                m_updatePoints.append(pAction->getActionTarget());
                 for (const auto & action : actions)
                 {
                     if (action.startsWith(ACTION_SUPPORTALL))
@@ -1492,9 +1492,9 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
                                                                      static_cast<qint32>(target.y())));
                         if (pAction->isFinalStep() && pAction->canBePerformed())
                         {
-                            updatePoints.append(pUnit->getPosition());
-                            updatePoints.append(pAction->getActionTarget());
-                            updatePoints.append(QPoint(static_cast<qint32>(target.x()),
+                            m_updatePoints.append(pUnit->getPosition());
+                            m_updatePoints.append(pAction->getActionTarget());
+                            m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
                                                        static_cast<qint32>(target.y())));
                             emit performAction(pAction);
                             return true;
@@ -1535,9 +1535,9 @@ bool NormalAi::suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem&
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep() && pAction->canBePerformed())
         {
-            updatePoints.append(pUnit->getPosition());
-            updatePoints.append(pAction->getActionTarget());
-            updatePoints.append(QPoint(static_cast<qint32>(target.x()),
+            m_updatePoints.append(pUnit->getPosition());
+            m_updatePoints.append(pAction->getActionTarget());
+            m_updatePoints.append(QPoint(static_cast<qint32>(target.x()),
                                        static_cast<qint32>(target.y())));
             emit performAction(pAction);
             return true;
@@ -1926,7 +1926,7 @@ void NormalAi::updateEnemyData(spQmlVectorUnit pUnits)
         }
     }
     QVector<qint32> updated;
-    for (qint32 i = 0; i < updatePoints.size(); i++)
+    for (qint32 i = 0; i < m_updatePoints.size(); i++)
     {
         for (qint32 i2 = 0; i2 < m_EnemyUnits.size(); i2++)
         {
@@ -1934,8 +1934,8 @@ void NormalAi::updateEnemyData(spQmlVectorUnit pUnits)
             {
                 if (m_EnemyUnits[i2]->getHp() > 0 && m_EnemyUnits[i2]->getTerrain() != nullptr)
                 {
-                    if (qAbs(updatePoints[i].x() - m_EnemyUnits[i2]->Unit::getX()) +
-                        qAbs(updatePoints[i].y() - m_EnemyUnits[i2]->Unit::getY()) <=
+                    if (qAbs(m_updatePoints[i].x() - m_EnemyUnits[i2]->Unit::getX()) +
+                        qAbs(m_updatePoints[i].y() - m_EnemyUnits[i2]->Unit::getY()) <=
                         m_EnemyUnits[i2]->getMovementpoints(QPoint(m_EnemyUnits[i2]->Unit::getX(), m_EnemyUnits[i2]->Unit::getY())) + 2)
                     {
                         m_EnemyPfs[i2] = spUnitPathFindingSystem::create(m_EnemyUnits[i2].get());
@@ -1946,7 +1946,7 @@ void NormalAi::updateEnemyData(spQmlVectorUnit pUnits)
             }
         }
     }
-    updatePoints.clear();
+    m_updatePoints.clear();
 }
 
 void NormalAi::calcVirtualDamage(spQmlVectorUnit pUnits)
@@ -2235,7 +2235,7 @@ bool NormalAi::buildUnits(spQmlVectorBuilding pBuildings, spQmlVectorUnit pUnits
         // produce the unit
         if (pAction->isFinalStep())
         {
-            updatePoints.append(pAction->getActionTarget());
+            m_updatePoints.append(pAction->getActionTarget());
             emit performAction(pAction);
             return true;
         }

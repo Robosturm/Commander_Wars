@@ -22,20 +22,20 @@ MenuData::MenuData()
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)
 {
-    texts.append(text);
-    actionIDs.append(actionID);
-    costList.append(costs);
-    enabledList.append(enabled);
+    m_texts.append(text);
+    m_actionIDs.append(actionID);
+    m_costList.append(costs);
+    m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
-    iconList.append(pGameManager->getIcon(icon));
+    m_iconList.append(pGameManager->getIcon(icon));
 }
 
 void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 costs, bool enabled)
 {
-    texts.append(text);
-    actionIDs.append(actionID);
-    costList.append(costs);
-    enabledList.append(enabled);
+    m_texts.append(text);
+    m_actionIDs.append(actionID);
+    m_costList.append(costs);
+    m_enabledList.append(enabled);
     GameManager* pGameManager = GameManager::getInstance();
     spUnit menuIcon = dynamic_cast<Unit*>(pGameManager->getIcon(pIcon->getUnitID()).get());
     if (menuIcon.get() != nullptr)
@@ -46,21 +46,21 @@ void MenuData::addUnitData(QString text, QString actionID, Unit* pIcon, qint32 c
         menuIcon->setAmmo2(pIcon->getAmmo2());
         menuIcon->setFuel(pIcon->getFuel());
         menuIcon->setUnitRank(pIcon->getUnitRank());
-        iconList.append(menuIcon);
+        m_iconList.append(menuIcon);
     }
     else
     {
-        iconList.append(oxygine::spSprite::create());
+        m_iconList.append(oxygine::spSprite::create());
     }
 
 }
 
 bool MenuData::validData()
 {
-    if (texts.size() > 0 &&
-        texts.size() == actionIDs.size() &&
-        actionIDs.size() == costList.size() &&
-        costList.size() == enabledList.size())
+    if (m_texts.size() > 0 &&
+        m_texts.size() == m_actionIDs.size() &&
+        m_actionIDs.size() == m_costList.size() &&
+        m_costList.size() == m_enabledList.size())
     {
         return true;
     }

@@ -8,7 +8,7 @@ namespace oxygine
 {
     LoadResourcesContext* LoadResourcesContext::get()
     {
-        LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
+        LoadResourcesContext* scontext = &SingleThreadResourcesContext::m_instance;
         return scontext;
     }
 
@@ -23,20 +23,20 @@ namespace oxygine
     }
 
     XmlWalker::XmlWalker(QString path, float scaleFactor, bool load, bool alpha, QDomElement xml)
-        : _path(path),
-          _root(xml),
-          _notStarted(true),
-          _scaleFactor(scaleFactor),          
-          _load(load),
-          _alphaHitTest(alpha)
+        : m_path(path),
+          m_root(xml),
+          m_notStarted(true),
+          m_scaleFactor(scaleFactor),
+          m_load(load),
+          m_alphaHitTest(alpha)
     {
     }
 
 
     QString XmlWalker::getPath(QString attrName) const
     {
-        QString str = _root.attribute(attrName);
-        return _path + str;
+        QString str = m_root.attribute(attrName);
+        return m_path + str;
     }
 
     XmlWalker XmlWalker::next()
@@ -44,26 +44,26 @@ namespace oxygine
         while (true)
         {
             QDomNode node;
-            if (_notStarted)
+            if (m_notStarted)
             {
-                node = _root.firstChild();
-                _notStarted = false;
+                node = m_root.firstChild();
+                m_notStarted = false;
             }
             else
             {
-                node = _last.nextSibling();
+                node = m_last.nextSibling();
             }
             // skip comment nodes for the greater good
             while (node.isComment())
             {
                 node = node.nextSibling();
             }
-            _last = node.toElement();
+            m_last = node.toElement();
 
-            QString name = _last.nodeName();
+            QString name = m_last.nodeName();
             if (name == "set")
             {
-                _checkSetAttributes(_last);
+                _checkSetAttributes(m_last);
                 continue;
             }
 
@@ -71,7 +71,7 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(_path, _scaleFactor, _load, _alphaHitTest, _last);
+        return XmlWalker(m_path, m_scaleFactor, m_load, m_alphaHitTest, m_last);
     }
 
     void XmlWalker::_checkSetAttributes(QDomElement node)
@@ -82,39 +82,39 @@ namespace oxygine
             QDomNode node = attr.item(i);
             if (node.nodeName() == "path")
             {
-                _path = node.nodeValue();
-                if (!_path.isEmpty())
+                m_path = node.nodeValue();
+                if (!m_path.isEmpty())
                 {
-                    _path += "/";
+                    m_path += "/";
                 }
             }
             else if (node.nodeName() ==  "load")
             {
-                _load = QVariant(node.nodeValue()).toBool();
+                m_load = QVariant(node.nodeValue()).toBool();
             }
             else if (node.nodeName() ==  "scale_factor")
             {
                 bool ok = false;
-                _scaleFactor = node.nodeValue().toFloat(&ok);
+                m_scaleFactor = node.nodeValue().toFloat(&ok);
                 if (!ok)
                 {
                     handleErrorPolicy(error_policy::ep_show_error, "invalid scale factor found in xml");
-                    _scaleFactor = 1.0f;
+                    m_scaleFactor = 1.0f;
                 }
             }
             else if (node.nodeName() ==  "hit_test")
             {
-                _alphaHitTest = QVariant(node.nodeValue()).toBool();
+                m_alphaHitTest = QVariant(node.nodeValue()).toBool();
             }
         }
     }
 
     void XmlWalker::checkSetAttributes()
     {
-        _checkSetAttributes(_root);
+        _checkSetAttributes(m_root);
     }
 
-    RestoreResourcesContext RestoreResourcesContext::instance;
+    RestoreResourcesContext RestoreResourcesContext::m_instance;
     void RestoreResourcesContext::createTexture(const CreateTextureTask& opt)
     {
         opt.dest->init(opt.src->lock(), false);
@@ -126,7 +126,7 @@ namespace oxygine
         return true;
     }
 
-    SingleThreadResourcesContext SingleThreadResourcesContext::instance;
+    SingleThreadResourcesContext SingleThreadResourcesContext::m_instance;
 
     void SingleThreadResourcesContext::createTexture(const CreateTextureTask& opt)
     {

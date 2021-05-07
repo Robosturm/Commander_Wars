@@ -34,25 +34,21 @@ namespace oxygine
             QString file;
             spNativeTexture texture;
         };
-
         void addPage(qint32 tw, qint32 th, QString head, QString file);
-
         void _loadPage(const page& p, LoadResourcesContext*);
         void _load(LoadResourcesContext*) override;
         void _unload() override;
-        void _restore(Restorable*, void*);
+        void _restore(Restorable*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, qint32 downsample);
         void _finalize();
 
+    private:
         typedef QVector<page> pages;
-        pages _pages;
-        spFont _font;
-        bool _sdf;
-
-        ImageData::TextureFormat _format;
-
-        QString _file;
-        bool _premultipliedAlpha;
+        pages m_pages;
+        spFont m_font;
+        bool m_sdf;
+        QString m_file;
+        bool m_premultipliedAlpha;
 
         //settings from xml
         quint32 m_linearFilter;

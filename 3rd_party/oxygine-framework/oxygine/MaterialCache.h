@@ -39,14 +39,16 @@ namespace oxygine
 
         static MaterialCache& mc();
     protected:
+        spMaterial clone_(const Material& other);
+        void removeUnusedNoLock();
+
+    protected:
         typedef QMultiMap<size_t, spMaterialX> materials;
         materials m_materials;
 
-        QMutex _lock;
-        qint32 _addCounter;
+        QMutex m_lock;
+        qint32 m_addCounter;
 
-        spMaterial clone_(const Material& other);
-        void removeUnusedNoLock();
     private:
         static MaterialCache mcache;
     };

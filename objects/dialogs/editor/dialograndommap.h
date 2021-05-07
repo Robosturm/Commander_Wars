@@ -63,7 +63,6 @@ private:
     spSpinBox m_Seed;
     spCheckbox m_CreateRoad;
     spSlider m_BaseSize;
-
     QStringList m_TerrainIDs;
     oxygine::spTextField m_TerrainChanceLabel;
     spMultislider m_TerrainChances;
@@ -72,7 +71,6 @@ private:
     spMultislider m_BuildingChances;
     oxygine::spTextField m_OwnerDistributionLabel;
     spMultislider m_OwnerDistribution;
-
     spLabel m_unitCountLabel;
     spSpinBox m_unitCount;
     spLabel m_unitsNearHqLabel;
@@ -85,8 +83,6 @@ private:
     spMultislider m_UnitChances;
     QStringList m_UnitIDs;
     QVector<qint32> m_UnitChanceValues;
-
-
     spPanel m_pPanel;
 };
 
