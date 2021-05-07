@@ -1,0 +1,7 @@
+name=Commander Wars Movement Mod
+description=This mod changes the movement for all units so that air units get only blocked by air units while sea and ground units can move through them. Created by Robosturm
+version=1.0.0
+compatible_mods=
+incompatible_mods=mods/awds_movement
+required_mods=
+cosmetic=false

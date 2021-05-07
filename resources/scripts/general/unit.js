@@ -31,6 +31,11 @@ var UNIT =
         unit.setMaxRange(1);
         unit.setVision(1);
     },
+    initForMods : function(unit)
+    {
+        // you can use this init function to extend
+    },
+
     loadSprites : function(unit)
     {
     },

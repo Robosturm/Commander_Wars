@@ -1726,6 +1726,8 @@ void Unit::initUnit()
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
     pInterpreter->doFunction(m_UnitID, function1, args1);
+    function1 = "initForMods";
+    pInterpreter->doFunction(m_UnitID, function1, args1);
     setFuel(m_fuel);
     setAmmo1(m_ammo1);
     setAmmo2(m_ammo2);

@@ -809,7 +809,7 @@ void OptionMenue::showMods()
     }
     m_pMods->setContentWidth(width);
     m_pMods->setContentHeigth(50 + mods * 50);
-    
+    updateModCheckboxes();
 }
 
 void OptionMenue::selectMods(qint32 item)
