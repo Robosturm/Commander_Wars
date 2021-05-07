@@ -41,6 +41,18 @@ public:
      * @brief clearAllAnimations
      */
     static void clearAllAnimations();
+    /**
+     * @brief removeAnimationFromQueue
+     * @param pAnimation
+     */
+    static void removeAnimationFromQueue(spGameAnimation pAnimation);
+    /**
+     * @brief removeAnimation
+     * @param pAnimation
+     * @param skipping
+     * @param removeFromQueue
+     */
+    static void removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue);
 signals:
     void animationsFinished();
 public slots:

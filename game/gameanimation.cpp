@@ -322,6 +322,7 @@ qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float 
 bool GameAnimation::onFinished(bool skipping)
 {
     m_skipping |= skipping;
+    GameAnimationFactory::removeAnimationFromQueue(this);
     if (m_skipping == skipping)
     {
         if (!m_started)
@@ -359,7 +360,7 @@ bool GameAnimation::onFinished(bool skipping)
         tween->complete();
     }
     m_stageTweens.clear();
-    GameAnimationFactory::removeAnimation(this, m_skipping);
+    GameAnimationFactory::removeAnimation(this, m_skipping, false);
     return true;
 }
 

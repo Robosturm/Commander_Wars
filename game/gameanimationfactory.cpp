@@ -283,21 +283,37 @@ GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
     return nullptr;
 }
 
-void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
+void GameAnimationFactory::removeAnimationFromQueue(spGameAnimation pAnimation)
 {
     qint32 i = 0;
     while (i < m_Animations.size())
     {
         if (m_Animations[i].get() == pAnimation)
         {
-            spGameAnimation spAnimation = m_Animations[i];
-            spAnimation->detach();
             m_Animations.removeAt(i);
         }
         else
         {
             i++;
         }
+    }
+}
+
+void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping)
+{
+    removeAnimation(pAnimation, skipping, true);
+}
+
+void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation, bool skipping, bool removeFromQueue)
+{
+    spGameAnimation spAnimation = pAnimation;
+    if (removeFromQueue)
+    {
+        removeAnimationFromQueue(spAnimation);
+    }
+    if (spAnimation.get() != nullptr)
+    {
+        spAnimation->detach();
     }
     if (m_Animations.size() == 0 && !skipping)
     {

@@ -684,7 +684,8 @@ void GameMenue::doTrapping(spGameAction & pGameAction)
             {
                 QPoint point = path[i];
                 QPoint prevPoint = path[i + 1];
-                if (pMap->getTerrain(point.x(), point.y())->getUnit() == nullptr)
+                Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+                if (pUnit == nullptr || pMoveUnit->getOwner()->isAlly(pUnit->getOwner()))
                 {
                     if (i > 0)
                     {

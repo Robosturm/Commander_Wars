@@ -18,10 +18,10 @@ var Constructor = function()
         var terrain = unit.getTerrain();
         if (terrain !== null)
         {
-            unit.getTerrain().getTerrainID();
+            terrainId = unit.getTerrain().getTerrainID();
         }
         if (terrainId === "RIVER" ||
-                terrainId === "DESERT_TRY_RIVER")
+            terrainId === "DESERT_TRY_RIVER")
         {
             return "+river";
         }
@@ -31,8 +31,8 @@ var Constructor = function()
     this.isMountain = function(terrainId)
     {
         if (terrainId === "MOUNTAIN" ||
-                terrainId === "SNOW_MOUNTAIN" ||
-                terrainId === "DESERT_ROCK")
+            terrainId === "SNOW_MOUNTAIN" ||
+            terrainId === "DESERT_ROCK")
         {
             return true
         }
