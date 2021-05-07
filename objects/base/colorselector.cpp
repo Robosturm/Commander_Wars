@@ -11,7 +11,7 @@
 
 ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     : m_CurrentColor(color),
-      pixelSize(pixelSize)
+      m_pixelSize(pixelSize)
 {
     setObjectName("ColorSelector");
     Mainapp* pApp = Mainapp::getInstance();
@@ -222,13 +222,13 @@ void ColorSelector::selecetedColorChanged(QColor color)
             m_RedGreenField[red / pixelCount][green / pixelCount]->setColor(red, green, m_CurrentColor.blue(), 255);
         }
     }
-    m_Cursor1->setPosition(color.red() * pixelSize - m_Cursor1->getResAnim()->getWidth() * m_Cursor1->getScaleX() / 2, color.green() * pixelSize - m_Cursor1->getResAnim()->getHeight()  * m_Cursor1->getScaleY() / 2);
+    m_Cursor1->setPosition(color.red() * m_pixelSize - m_Cursor1->getResAnim()->getWidth() * m_Cursor1->getScaleX() / 2, color.green() * m_pixelSize - m_Cursor1->getResAnim()->getHeight()  * m_Cursor1->getScaleY() / 2);
 
     for (qint32 blue = 0; blue <= 255; blue += pixelCount)
     {
         m_BlueField[blue / pixelCount]->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
     }
-    m_Cursor2->setY(color.blue() * pixelSize - m_Cursor2->getResAnim()->getHeight() / 2);
+    m_Cursor2->setY(color.blue() * m_pixelSize - m_Cursor2->getResAnim()->getHeight() / 2);
 
     
 }

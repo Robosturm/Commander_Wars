@@ -32,7 +32,7 @@ private:
     QVector<oxygine::spColorRectSprite> m_HLines;
     QVector<spLabel> m_Labels;
     QVector<qint32> m_widths;
-    qint32 currentItem{-1};
+    qint32 m_currentItem{-1};
 };
 
 #endif // TABLEVIEW_H

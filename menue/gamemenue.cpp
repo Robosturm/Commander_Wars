@@ -103,7 +103,7 @@ GameMenue::GameMenue(bool saveGame, spNetworkInterface pNetworkInterface)
 
 GameMenue::GameMenue(QString map, bool saveGame)
     : InGameMenue(-1, -1, map, saveGame),
-      gameStarted(false),
+      m_gameStarted(false),
       m_SaveGame(saveGame)
 
 {
@@ -289,7 +289,7 @@ void GameMenue::disconnected(quint64 socketID)
         }
         if (showDisconnect)
         {
-            gameStarted = false;
+            m_gameStarted = false;
             spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(QObject::tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
             addChild(pDialogMessageBox);
         }
@@ -336,7 +336,7 @@ void GameMenue::loadGameMenue()
     addChild(m_IngameInfoBar);
     addChild(m_pPlayerinfo);
 
-    autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getWidth(), 50);
+    m_autoScrollBorder = QRect(50, 50, m_IngameInfoBar->getWidth(), 50);
 
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(&m_AutoSavingTimer, &QTimer::timeout, this, &GameMenue::autoSaveMap, Qt::QueuedConnection);
@@ -432,11 +432,11 @@ void GameMenue::loadUIButtons()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = spLabel::create(180);
-    xyTextInfo->setStyle(style);
-    xyTextInfo->setHtmlText("X: 0 Y: 0");
-    xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(xyTextInfo);
+    m_xyTextInfo = spLabel::create(180);
+    m_xyTextInfo->setStyle(style);
+    m_xyTextInfo->setHtmlText("X: 0 Y: 0");
+    m_xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     m_XYButtonBox = pButtonBox;
@@ -497,7 +497,7 @@ void GameMenue::updateTimer()
 
 bool GameMenue::getGameStarted() const
 {
-    return gameStarted;
+    return m_gameStarted;
 }
 
 GameMenue::~GameMenue()
@@ -590,12 +590,12 @@ void GameMenue::performAction(spGameAction pGameAction)
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
                            m_pNetworkInterface.get() != nullptr &&
-                                                        gameStarted;
+                                                        m_gameStarted;
         if (multiplayer &&
             pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi &&
             m_syncCounter + 1 != pGameAction->getSyncCounter())
         {
-            gameStarted = false;
+            m_gameStarted = false;
             spDialogMessageBox pDialogMessageBox = spDialogMessageBox::create(QObject::tr("The game is out of sync and can't be continued. The game has been stopped. You can save the game and restart."));
             addChild(pDialogMessageBox);
         }
@@ -1024,17 +1024,17 @@ void GameMenue::autoScroll()
             qint32 moveX = 0;
             qint32 moveY = 0;
             QPoint bottomRightUi = QPoint(135, 220);
-            if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() &&
-                 (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x() - 50) &&
-                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
+            if ((curPos.x() < Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() &&
+                 (curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x() - 50) &&
+                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::getImageSize() > Settings::getWidth() - m_autoScrollBorder.width()- bottomRightUi.x() - 50)) &&
                 curPos.y() > Settings::getHeight() - bottomRightUi.y())
             {
 
                 moveX = -GameMap::getImageSize() * pMap->getZoom();
             }
-            if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height() - bottomRightUi.y()) &&
-                (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - autoScrollBorder.height() - bottomRightUi.y()) &&
-                curPos.x() > Settings::getWidth() - autoScrollBorder.width() - bottomRightUi.x())
+            if ((curPos.y() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
+                (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::getImageSize() > Settings::getHeight() - m_autoScrollBorder.height() - bottomRightUi.y()) &&
+                curPos.x() > Settings::getWidth() - m_autoScrollBorder.width() - bottomRightUi.x())
             {
                 moveY = -GameMap::getImageSize() * pMap->getZoom();
             }
@@ -1129,9 +1129,9 @@ void GameMenue::actionPerformed()
 
 void GameMenue::cursorMoved(qint32 x, qint32 y)
 {
-    if (xyTextInfo.get() != nullptr)
+    if (m_xyTextInfo.get() != nullptr)
     {
-        xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
+        m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
         QPoint pos = getMousePos(x, y);
         bool flip = m_pPlayerinfo->getFlippedX();
         qint32 screenWidth = Settings::getWidth() - m_IngameInfoBar->getScaledWidth();
@@ -1187,8 +1187,14 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
 void GameMenue::updatePlayerinfo()
 {
     Mainapp::getInstance()->pauseRendering();
-    m_pPlayerinfo->updateData();
-    m_IngameInfoBar->updatePlayerInfo();
+    if (m_pPlayerinfo.get() != nullptr)
+    {
+        m_pPlayerinfo->updateData();
+    }
+    if (m_IngameInfoBar.get() != nullptr)
+    {
+        m_IngameInfoBar->updatePlayerInfo();
+    }
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -1200,7 +1206,10 @@ void GameMenue::updatePlayerinfo()
 void GameMenue::updateMinimap()
 {
     Mainapp::getInstance()->pauseRendering();
-    m_IngameInfoBar->updateMinimap();
+    if (m_IngameInfoBar.get() != nullptr)
+    {
+        m_IngameInfoBar->updateMinimap();
+    }
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -1609,7 +1618,7 @@ void GameMenue::exitGame()
 {
     
     Console::print("Finishing running animations and exiting game", Console::eDEBUG);
-    gameStarted = false;
+    m_gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
@@ -1650,14 +1659,14 @@ void GameMenue::startGame()
         m_ReplayRecorder.startRecording();
         if ((m_pNetworkInterface.get() == nullptr ||
              m_pNetworkInterface->getIsServer()) &&
-            !gameStarted)
+            !m_gameStarted)
         {
             Console::print("emitting sigActionPerformed()", Console::eDEBUG);
             emit sigActionPerformed();
         }
     }
     pMap->setVisible(true);
-    gameStarted = true;
+    m_gameStarted = true;
     
 }
 
@@ -1684,12 +1693,11 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 {
                     Mainapp* pApp = Mainapp::getInstance();
                     Console::print("Leaving Game Menue", Console::eDEBUG);
-                    oxygine::Actor::detach();
                     spGameMenue pMenue = spGameMenue::create("savegames/quicksave1.sav", true);
                     oxygine::getStage()->addChild(pMenue);
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
-                    
+                    oxygine::Actor::detach();
                 }
             }
             else if (cur == Settings::getKey_quickload2())

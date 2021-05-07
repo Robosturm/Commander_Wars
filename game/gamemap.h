@@ -665,7 +665,7 @@ public slots:
      */
     qint32 getPlayerCount() const
     {
-        return players.size();
+        return m_players.size();
     }
     /**
      * @brief getPlayer
@@ -817,15 +817,18 @@ public slots:
      */
     void addScreenshake(qint32 startIntensity, float decay, qint32 durationMs, qint32 delayMs = 0, qint32 shakePauseMs = 30);
 private:
+    void loadMapData();
+
+private:
     static spGameMap m_pInstance;
     QString m_mapName;
     QString m_mapAuthor;
     QString m_mapDescription;
     QString m_mapPath;
-    QVector<QVector<spTerrain>> fields;
-    QVector<spPlayer> players;
+    QVector<QVector<spTerrain>> m_fields;
+    QVector<spPlayer> m_players;
     spPlayer m_CurrentPlayer;
-    qint32 currentDay{0};
+    qint32 m_currentDay{0};
     spGameRules m_Rules;
     spCampaign m_Campaign;
     spGameRecorder m_Recorder{spGameRecorder::create()};
@@ -833,7 +836,7 @@ private:
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
-    bool loaded{false};
+    bool m_loaded{false};
     qint32 m_UniqueIdCounter{0};
     QString m_mapMusic;
     QString m_loadedMapMusic;
@@ -841,7 +844,6 @@ private:
     qint32 m_endLoopMs{-1};
     bool m_savegame{false};
     static qint32 m_imagesize;
-    void loadMapData();
 };
 
 #endif // GAMEMAP_H

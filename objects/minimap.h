@@ -35,7 +35,7 @@ private:
     };
     QVector<MinimapFieldInfo> m_Items;
 
-    static const qint32 ImageSize{4};
+    static const qint32 m_ImageSize{4};
 };
 
 #endif // MINIMAP_H

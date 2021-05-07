@@ -41,7 +41,7 @@ public:
      */
     QStringList getMods()
     {
-        return _mods;
+        return m_mods;
     }
     /**
      * @brief seekToStart
@@ -53,7 +53,7 @@ public:
      */
     qint32 getProgess()
     {
-        return _progress;
+        return m_progress;
     }
     /**
      * @brief getRecordSize
@@ -61,7 +61,7 @@ public:
      */
     qint32 getRecordSize()
     {
-        return _count;
+        return m_count;
     }
     /**
      * @brief getDayFromPosition
@@ -80,18 +80,18 @@ signals:
 private:
     QFile m_recordFile;
     QDataStream m_stream{&m_recordFile};
-    QStringList _mods;
-    qint32 _count = 0;
-    qint32 _progress = 0;
-    qint64 _countPos = 0;
-    qint64 _mapPos = 0;
-    qint64 _dailyMapPos = 0;
-    qint64 _posOfDailyMapPos = 0;
+    QStringList m_mods;
+    qint32 m_count = 0;
+    qint32 m_progress = 0;
+    qint64 m_countPos = 0;
+    qint64 m_mapPos = 0;
+    qint64 m_dailyMapPos = 0;
+    qint64 m_posOfDailyMapPos = 0;
 
     bool m_recording {false};
-    bool playing{false};
-    QBuffer _dailyBuffer;
-    QDataStream _dailyStream{&_dailyBuffer};
+    bool m_playing{false};
+    QBuffer m_dailyBuffer;
+    QDataStream m_dailyStream{&m_dailyBuffer};
     qint32 m_currentDay{0};
 };
 

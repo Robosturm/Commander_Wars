@@ -16,11 +16,11 @@ void GameRuleManager::reset()
 void GameRuleManager::loadAll()
 {
     reset();
-    scriptPath = "/scripts/gamerules/victory";
+    m_scriptPath = "/scripts/gamerules/victory";
     RessourceManagement<GameRuleManager>::loadAll(m_loadedVictoryRules);
-    scriptPath = "/scripts/gamerules/weather";
+    m_scriptPath = "/scripts/gamerules/weather";
     RessourceManagement<GameRuleManager>::loadAll(m_loadedWeather);
-    scriptPath = "/scripts/gamerules/rules";
+    m_scriptPath = "/scripts/gamerules/rules";
     RessourceManagement<GameRuleManager>::loadAll(m_loadedGameRules);
     m_loadedVictoryRules.sort();
     m_loadedWeather.sort();

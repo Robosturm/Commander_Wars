@@ -10,7 +10,7 @@
 
 GlobalUtils GlobalUtils::m_pInstace = GlobalUtils();
 
-QRandomGenerator GlobalUtils::randGenerator;
+QRandomGenerator GlobalUtils::m_randGenerator;
 bool GlobalUtils::m_useSeed{false};
 quint32 GlobalUtils::m_seed = 0;
 
@@ -18,13 +18,13 @@ GlobalUtils::GlobalUtils()
 {
     Interpreter::setCppOwnerShip(this);
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
-    randGenerator.seed(seedValue);
+    m_randGenerator.seed(seedValue);
 }
 
 void GlobalUtils::seed(quint32 seed)
 {
     m_seed = seed;
-    randGenerator.seed(seed);
+    m_randGenerator.seed(seed);
     Console::print("Seeding with " + QString::number(m_seed), Console::eDEBUG);
 }
 
@@ -41,7 +41,7 @@ qint32 GlobalUtils::randInt(qint32 low, qint32 high)
     }
     if (m_useSeed)
     {
-        return randGenerator.bounded(low, high + 1);
+        return m_randGenerator.bounded(low, high + 1);
     }
     else
     {
@@ -57,7 +57,7 @@ float GlobalUtils::randFloat(float low, float high)
     }
     if (m_useSeed)
     {
-        return randGenerator.bounded(high + 0.00001f) + low;
+        return m_randGenerator.bounded(high + 0.00001f) + low;
     }
     else
     {
@@ -73,7 +73,7 @@ double GlobalUtils::randDouble(double low, double high)
     }
     if (m_useSeed)
     {
-        return randGenerator.bounded(high + 0.00001) + low;
+        return m_randGenerator.bounded(high + 0.00001) + low;
     }
     else
     {

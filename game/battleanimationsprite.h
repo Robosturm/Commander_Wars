@@ -376,8 +376,8 @@ private:
     spUnit m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
-    qint32 hpRounded{0};
-    qint32 maxUnitCount{-1};
+    qint32 m_hpRounded{0};
+    qint32 m_maxUnitCount{-1};
 
     QVector<std::tuple<QString, QString>> m_Sounds;
     QVector<QTimer*> m_Timers;

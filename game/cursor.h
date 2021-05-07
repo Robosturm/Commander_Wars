@@ -58,7 +58,7 @@ private:
 private:
     oxygine::spSprite m_CurrentCursor;
     oxygine::spActor m_cursorRangeOutline;
-    bool onMap{false};
+    bool m_onMap{false};
 
     qint32 m_MapPointX{-1};
     qint32 m_MapPointY{-1};

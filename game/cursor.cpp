@@ -55,8 +55,8 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
     {
         qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::getImageSize() * pMap->getZoom());
         qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::getImageSize() * pMap->getZoom());
-        onMap = pMap->onMap(x, y);
-        if (onMap)
+        m_onMap = pMap->onMap(x, y);
+        if (m_onMap)
         {
             // play tick sound when changing the field
             if ((x != m_MapPointX) ||

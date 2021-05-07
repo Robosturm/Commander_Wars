@@ -253,13 +253,13 @@ void Building::updatePlayerColor(bool visible)
 {
     if (m_pOwner != nullptr)
     {
-        if (neutralLoaded && (visible || alwaysVisble))
+        if (m_neutralLoaded && (visible || m_alwaysVisble))
         {
             updateBuildingSprites(false);
         }
         else
         {
-            if (visible || alwaysVisble)
+            if (visible || m_alwaysVisble)
             {
                 for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
                 {
@@ -274,13 +274,13 @@ void Building::updatePlayerColor(bool visible)
                     }
                 }
             }
-            else if (!neutralLoaded)
+            else if (!m_neutralLoaded)
             {
                 updateBuildingSprites(true);
             }
         }
     }
-    else if (!neutralLoaded)
+    else if (!m_neutralLoaded)
     {
         updateBuildingSprites(true);
     }
@@ -320,7 +320,7 @@ void Building::updateBuildingSprites(bool neutral)
     args1 << obj1;
     args1 << neutral;
     pInterpreter->doFunction(m_BuildingID, function1, args1);
-    neutralLoaded = neutral;
+    m_neutralLoaded = neutral;
 }
 
 bool Building::canBuildingBePlaced(Terrain* pTerrain)
@@ -872,17 +872,17 @@ qint32 Building::getTotalVisionHigh()
 
 bool Building::getNeutralLoaded() const
 {
-    return neutralLoaded;
+    return m_neutralLoaded;
 }
 
 bool Building::getAlwaysVisble() const
 {
-    return alwaysVisble;
+    return m_alwaysVisble;
 }
 
 void Building::setAlwaysVisble(bool value)
 {
-    alwaysVisble = value;
+    m_alwaysVisble = value;
 }
 
 QString Building::getTerrainAnimationBase()
@@ -1000,12 +1000,12 @@ Terrain* Building::getTerrain()
 
 qint32 Building::getFireCount() const
 {
-    return fireCount;
+    return m_fireCount;
 }
 
 void Building::setFireCount(const qint32 &value)
 {
-    fireCount = value;
+    m_fireCount = value;
 }
 
 qint32 Building::getHp() const
@@ -1037,7 +1037,7 @@ void Building::serializeObject(QDataStream& pStream) const
         pStream << static_cast<qint32>(m_pOwner->getPlayerID());
     }
     pStream << m_Hp;
-    pStream << fireCount;
+    pStream << m_fireCount;
     m_Variables.serializeObject(pStream);
     pStream << m_BuildingName;
 }
@@ -1076,7 +1076,7 @@ void Building::deserializer(QDataStream& pStream, bool fast)
         {
             m_Hp = newHp;
         }
-        pStream >> fireCount;
+        pStream >> m_fireCount;
     }
     if (version > 2)
     {

@@ -131,11 +131,11 @@ void GameMap::importTxtMap(QString file)
             else if (line.startsWith("SPIELER|"))
             {
                 QStringList data = line.split("|");
-                players.append(spPlayer::create());
-                qint32 idx = players.size() - 1;
-                players[idx]->setFundsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
-                players[idx]->setFunds(data[2].toInt());
-                players[idx]->init();
+                m_players.append(spPlayer::create());
+                qint32 idx = m_players.size() - 1;
+                m_players[idx]->setFundsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
+                m_players[idx]->setFunds(data[2].toInt());
+                m_players[idx]->init();
             }
             else if (line.startsWith(("GROESSE")))
             {
@@ -144,12 +144,12 @@ void GameMap::importTxtMap(QString file)
                 qint32 heigth = data[2].toInt();
                 for (qint32 y = 0; y < heigth; y++)
                 {
-                    fields.append(QVector<spTerrain>());
+                    m_fields.append(QVector<spTerrain>());
                     for (qint32 x = 0; x < width; x++)
                     {
                         spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                         this->addChild(pTerrain);
-                        fields[y].append(pTerrain);
+                        m_fields[y].append(pTerrain);
                         pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                         pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
                     }

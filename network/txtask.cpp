@@ -9,7 +9,7 @@
 TxTask::TxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool sendAll)
  : m_pSocket(pSocket),
    m_SocketID(socketID),
-   pIF(CommIF),
+   m_pIF(CommIF),
    m_sendAll(sendAll)
 {
 }

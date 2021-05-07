@@ -477,13 +477,13 @@ private:
 
 
     // ingame options
-    static GameEnums::AnimationMode showAnimations;
-    static GameEnums::BattleAnimationMode battleAnimations;
-    static quint32 animationSpeed;
-    static quint32 walkAnimationSpeed;
+    static GameEnums::AnimationMode m_showAnimations;
+    static GameEnums::BattleAnimationMode m_battleAnimations;
+    static quint32 m_animationSpeed;
+    static quint32 m_walkAnimationSpeed;
     static quint32 battleAnimationSpeed;
-    static quint32 dialogAnimationSpeed;
-    static quint32 captureAnimationSpeed;
+    static quint32 m_dialogAnimationSpeed;
+    static quint32 m_captureAnimationSpeed;
     static bool m_dialogAnimation;
     static quint32 multiTurnCounter;
     static QString m_LastSaveGame;

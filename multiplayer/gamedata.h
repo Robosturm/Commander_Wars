@@ -38,9 +38,9 @@ private:
     QString m_MapName;
     qint32 m_Player{0};
     qint32 m_MaxPlayer{0};
-    QString password;
+    QString m_password;
     QString m_Version;
-    QStringList modData;
+    QStringList m_modData;
 };
 
 #endif // GAMEDATA_H

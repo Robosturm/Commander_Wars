@@ -30,8 +30,8 @@ protected:
     virtual void focused() override;
 private:
     oxygine::spButton m_Button;
-    Qt::Key currentCode{Qt::Key_Space};
-    bool active{false};
+    Qt::Key m_currentCode{Qt::Key_Space};
+    bool m_active{false};
 
 };
 

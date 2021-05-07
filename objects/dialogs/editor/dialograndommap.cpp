@@ -303,8 +303,8 @@ DialogRandomMap::DialogRandomMap()
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigCancel();
+        detach();
     });
     generatorChanged(m_GeneratorFile->getCurrentText());
 }

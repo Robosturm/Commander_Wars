@@ -27,7 +27,7 @@ public slots:
     void setFlippedX(bool value);
     bool getFlippedX() const;
 private:
-    QVector<oxygine::spSprite> playerBackground;
+    QVector<oxygine::spSprite> m_playerBackground;
     bool m_flippedX{false};
 };
 

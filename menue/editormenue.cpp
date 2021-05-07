@@ -49,7 +49,7 @@ EditorMenue::EditorMenue()
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
-    autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
+    m_autoScrollBorder = QRect(50, 50, Settings::getWidth() / 4, 50);
 
     m_EditorSelection = spEditorSelection::create();
     this->addChild(m_EditorSelection);
@@ -109,11 +109,11 @@ EditorMenue::EditorMenue()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = spLabel::create(180);
-    xyTextInfo->setStyle(style);
-    xyTextInfo->setHtmlText("X: 0 Y: 0");
-    xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(xyTextInfo);
+    m_xyTextInfo = spLabel::create(180);
+    m_xyTextInfo->setStyle(style);
+    m_xyTextInfo->setHtmlText("X: 0 Y: 0");
+    m_xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
@@ -179,7 +179,7 @@ void EditorMenue::cleanTemp(qint32 step)
     QDir dir("temp/");
     if (step < 0)
     {
-        tempCounter = 0;
+        m_tempCounter = 0;
         dir.removeRecursively();
         dir.mkpath(".");
     }
@@ -205,16 +205,16 @@ void EditorMenue::createTempFile(bool cleanUp)
     Console::print(QString("createTempFile(") + (cleanUp ? "true" : "false") + ")", Console::eDEBUG);
     if (cleanUp)
     {
-        cleanTemp(tempCounter);
+        cleanTemp(m_tempCounter);
     }
-    QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+    QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     QDataStream stream(&file);
     spGameMap pMap = GameMap::getInstance();
     pMap->serializeObject(stream);
     file.close();
 
-    QFile previous("temp/temp" + QString::number(tempCounter - 1) + ".tmp");
+    QFile previous("temp/temp" + QString::number(m_tempCounter - 1) + ".tmp");
     if (previous.exists())
     {
         file.open(QIODevice::ReadOnly | QIODevice::Truncate);
@@ -235,26 +235,26 @@ void EditorMenue::createTempFile(bool cleanUp)
         }
         else
         {
-            tempCounter++;
+            m_tempCounter++;
         }
     }
     else
     {
-        tempCounter++;
+        m_tempCounter++;
     }
 }
 
 void EditorMenue::editorUndo()
 {
-    tempCounter--;
-    if (tempCounter >= 0)
+    m_tempCounter--;
+    if (m_tempCounter >= 0)
     {
-        QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+        QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
         if (file.exists())
         {
-            tempCounter++;
+            m_tempCounter++;
             createTempFile(false);
-            tempCounter -= 2;
+            m_tempCounter -= 2;
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
             GameMap::getInstance()->deserializeObject(stream);
@@ -268,14 +268,14 @@ void EditorMenue::editorUndo()
     }
     else
     {
-        tempCounter = 0;
+        m_tempCounter = 0;
     }
 }
 
 void EditorMenue::editorRedo()
 {
-    tempCounter++;
-    QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+    m_tempCounter++;
+    QFile file("temp/temp" + QString::number(m_tempCounter) + ".tmp");
     if (file.exists())
     {
         file.open(QIODevice::ReadOnly);
@@ -461,17 +461,17 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "DELETEUNITS")
     {
         m_EditorMode = EditorModes::RemoveUnits;
-        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "EDITUNITS")
     {
         m_EditorMode = EditorModes::EditUnits;
-        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "EDITTERRAIN")
     {
         m_EditorMode = EditorModes::EditTerrain;
-        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
+        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "OPTIMIZEPLAYERS")
     {
@@ -494,7 +494,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "COPY")
     {
         m_EditorMode = EditorModes::CopySelection;
-        copyRect = QRect(-1, -1, 0, 0);
+        m_copyRect = QRect(-1, -1, 0, 0);
     }
     else if (itemID == "PASTE")
     {
@@ -717,15 +717,15 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
                     case Qt::Key_C:
                     {
                         m_EditorMode = EditorModes::CopySelection;
-                        copyRect = QRect(-1, -1, 0, 0);
-                        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
-                        createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                        m_copyRect = QRect(-1, -1, 0, 0);
+                        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                        createMarkedArea(m_copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
                         break;
                     }
                     case Qt::Key_V:
                     {
-                        if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
-                            copyRect.width() != 0 && copyRect.height() != 0)
+                        if (m_copyRect.x() >= 0 && m_copyRect.y() >= 0 &&
+                            m_copyRect.width() != 0 && m_copyRect.height() != 0)
                         {
                             if ((event.getModifiers() & Qt::KeyboardModifier::ShiftModifier) > 0)
                             {
@@ -783,14 +783,14 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     m_Topbar->hide();
-    xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
+    m_xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
 
     spGameMap pMap = GameMap::getInstance();
-    copyRectActor->detach();
+    m_copyRectActor->detach();
     if (pMap->onMap(x, y))
     {
-        pMap->addChild(cursorActor);
-        cursorActor->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
+        pMap->addChild(m_cursorActor);
+        m_cursorActor->setPosition(x * GameMap::getImageSize(), y * GameMap::getImageSize());
     }
 
     switch (m_EditorMode)
@@ -885,15 +885,15 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         case EditorModes::CopySelection:
         {
             m_Cursor->changeCursor("cursor+default");
-            pMap->addChild(copyRectActor);
-            if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
-                copyRect.width() == 0 && copyRect.height() == 0)
+            pMap->addChild(m_copyRectActor);
+            if (m_copyRect.x() >= 0 && m_copyRect.y() >= 0 &&
+                m_copyRect.width() == 0 && m_copyRect.height() == 0)
             {
-                createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+                createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
             }
-            else if (copyRect.x() < 0 || copyRect.y() < 0)
+            else if (m_copyRect.x() < 0 || m_copyRect.y() < 0)
             {
-                copyRectActor->removeChildren();
+                m_copyRectActor->removeChildren();
             }
             break;
         }
@@ -914,7 +914,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         case EditorModes::EditTerrain:
         case EditorModes::RemoveUnits:
         {
-            copyRectActor->detach();
+            m_copyRectActor->detach();
             m_EditorMode = EditorModes::PlaceEditorSelection;
             selectionChanged();
             break;
@@ -961,17 +961,17 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
     {
         case EditorModes::CopySelection:
         {
-            if (copyRect.x() < 0)
+            if (m_copyRect.x() < 0)
             {
                 pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
-                GameMap::getInstance()->addChild(copyRectActor);
-                if (copyRect.width() == 0)
+                GameMap::getInstance()->addChild(m_copyRectActor);
+                if (m_copyRect.width() == 0)
                 {
-                    createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+                    createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
                 }
                 else
                 {
-                    createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
+                    createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), m_copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
                 }
             }
             break;
@@ -992,17 +992,17 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
     {
         case EditorModes::CopySelection:
         {
-            if (copyRect.x() >= 0)
+            if (m_copyRect.x() >= 0)
             {
                 pasteSelection(x, y, true, m_EditorSelection->getCurrentMode());
-                GameMap::getInstance()->addChild(copyRectActor);
-                if (copyRect.width() == 0)
+                GameMap::getInstance()->addChild(m_copyRectActor);
+                if (m_copyRect.width() == 0)
                 {
-                    createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+                    createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
                 }
                 else
                 {
-                    createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
+                    createMarkedArea(m_copyRectActor, m_copyRect.topLeft(), m_copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
                 }
             }
             break;
@@ -1504,7 +1504,7 @@ void EditorMenue::selectionChanged()
             if (pCurrentBuilding->getBuildingWidth() > 1 ||
                 pCurrentBuilding->getBuildingHeigth() > 1)
             {
-                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(-pCurrentBuilding->getBuildingWidth() + 1, -pCurrentBuilding->getBuildingHeigth() + 1), CursorModes::Rect);
+                createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(-pCurrentBuilding->getBuildingWidth() + 1, -pCurrentBuilding->getBuildingHeigth() + 1), CursorModes::Rect);
                 return;
             }
         }
@@ -1512,25 +1512,25 @@ void EditorMenue::selectionChanged()
         {
             case EditorSelection::PlacementSize::Medium:
             {
-                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
+                createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
                 break;
             }
             case EditorSelection::PlacementSize::Big:
             {
-                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(2, -1), CursorModes::Circle);
+                createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(2, -1), CursorModes::Circle);
                 break;
             }
             case EditorSelection::PlacementSize::Small:
             case EditorSelection::PlacementSize::Fill:
             {
-                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
+                createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
                 break;
             }
         }
     }
     else if (m_EditorMode == EditorModes::CopySelection)
     {
-        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(copyRect.width() - 1, copyRect.height() - 1), CursorModes::Rect);
+        createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(m_copyRect.width() - 1, m_copyRect.height() - 1), CursorModes::Rect);
     }
 }
 
@@ -1669,59 +1669,59 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
     spGameMap pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
-        if (copyRect.x() < 0)
+        if (m_copyRect.x() < 0)
         {
-            copyRect.setX(x);
-            copyRect.setY(y);
-            copyRect.setWidth(0);
-            copyRect.setHeight(0);
+            m_copyRect.setX(x);
+            m_copyRect.setY(y);
+            m_copyRect.setWidth(0);
+            m_copyRect.setHeight(0);
         }
-        else if (copyRect.width() == 0)
+        else if (m_copyRect.width() == 0)
         {
-            if (copyRect.x() < x)
+            if (m_copyRect.x() < x)
             {
-                copyRect.setRight(x);
+                m_copyRect.setRight(x);
             }
             else
             {
-                qint32 copy = copyRect.x();
-                copyRect.setX(x);
-                copyRect.setRight(copy);
+                qint32 copy = m_copyRect.x();
+                m_copyRect.setX(x);
+                m_copyRect.setRight(copy);
             }
-            if (copyRect.y() < y)
+            if (m_copyRect.y() < y)
             {
-                copyRect.setBottom(y);
+                m_copyRect.setBottom(y);
             }
             else
             {
-                qint32 copy = copyRect.y();
-                copyRect.setY(y);
-                copyRect.setBottom(copy);
+                qint32 copy = m_copyRect.y();
+                m_copyRect.setY(y);
+                m_copyRect.setBottom(copy);
             }
-            createMarkedArea(cursorActor, QPoint(0, 0), QPoint(copyRect.width() - 1, copyRect.height() - 1), CursorModes::Rect);
+            createMarkedArea(m_cursorActor, QPoint(0, 0), QPoint(m_copyRect.width() - 1, m_copyRect.height() - 1), CursorModes::Rect);
         }
         else if (!click)
         {
-            QRect rect(x, y, copyRect.width(), copyRect.height());
+            QRect rect(x, y, m_copyRect.width(), m_copyRect.height());
             if (pMap->onMap(rect.x(), rect.y()) &&
                 pMap->onMap(rect.right(), rect.bottom()) &&
-                !copyRect.intersects(QRect(x, y, copyRect.width(), copyRect.height())))
+                !m_copyRect.intersects(QRect(x, y, m_copyRect.width(), m_copyRect.height())))
             {
                 createTempFile();
-                qint32 xDir = copyRect.width() / qAbs(copyRect.width());
-                qint32 yDir = copyRect.height() / qAbs(copyRect.height());
+                qint32 xDir = m_copyRect.width() / qAbs(m_copyRect.width());
+                qint32 yDir = m_copyRect.height() / qAbs(m_copyRect.height());
 
 
-                for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
+                for (qint32 xPos = 0; xPos != m_copyRect.width(); xPos += xDir)
                 {
-                    for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                    for (qint32 yPos = 0; yPos != m_copyRect.height(); yPos += yDir)
                     {
                         switch (selection)
                         {
                             case EditorSelection::EditorMode::All:
                             case EditorSelection::EditorMode::Terrain:
                             {
-                                Terrain* pCopyTerrain = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos);
+                                Terrain* pCopyTerrain = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos);
                                 pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(1), x + xPos, y + yPos, false, false);
                                 pMap->replaceTerrain(pCopyTerrain->getBaseTerrainIDOfLevel(0), x + xPos, y + yPos, true, false);
                                 Terrain* pTerrain = pMap->getTerrain(x + xPos, y + yPos);
@@ -1735,7 +1735,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                             }
                             case EditorSelection::EditorMode::Building:
                             {
-                                Building* pBuilding = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getBuilding();
+                                Building* pBuilding = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getBuilding();
                                 if (pBuilding != nullptr &&
                                     pBuilding->getBuildingWidth() == 1 &&
                                     pBuilding->getBuildingHeigth() == 1)
@@ -1757,7 +1757,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click, EditorSelection
                             }
                             case EditorSelection::EditorMode::Unit:
                             {
-                                Unit* pUnit = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getUnit();
+                                Unit* pUnit = pMap->getTerrain(m_copyRect.x() + xPos, m_copyRect.y() + yPos)->getUnit();
                                 if (pUnit != nullptr)
                                 {
                                     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();

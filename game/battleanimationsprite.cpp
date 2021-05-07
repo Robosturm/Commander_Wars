@@ -29,14 +29,14 @@ BattleAnimationSprite::BattleAnimationSprite(spUnit pUnit, Terrain* pTerrain, QS
     : QObject(),
       m_pUnit(pUnit),
       m_pTerrain(pTerrain),
-      hpRounded(hp),
+      m_hpRounded(hp),
       m_nextFrameTimer(this),
       m_playSound(playSound)
 {
     setObjectName("BattleAnimationSprite");
-    if (hpRounded < 0.0f)
+    if (m_hpRounded < 0.0f)
     {
-        hpRounded = pUnit->getHpRounded();
+        m_hpRounded = pUnit->getHpRounded();
     }
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -215,9 +215,9 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
 
 qint32 BattleAnimationSprite::getMaxUnitCount()
 {
-    if (maxUnitCount > 0)
+    if (m_maxUnitCount > 0)
     {
-        return maxUnitCount;
+        return m_maxUnitCount;
     }
     return getAnimationUnitCount();
 }
@@ -315,7 +315,7 @@ bool BattleAnimationSprite::hasDyingAnimation()
 
 void BattleAnimationSprite::setMaxUnitCount(const qint32 &value)
 {
-    maxUnitCount = value;
+    m_maxUnitCount = value;
 }
 
 qint32 BattleAnimationSprite::getFireDurationMS(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
@@ -416,7 +416,7 @@ void BattleAnimationSprite::loadSpriteV2(QString spriteID, GameEnums::Recoloring
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
 {
-    return getUnitCount(maxUnitCount, hpRounded);
+    return getUnitCount(maxUnitCount, m_hpRounded);
 }
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount, qint32 hp)
@@ -627,8 +627,8 @@ void BattleAnimationSprite::loadColorOverlayForLastLoadedFrame(QColor color, qin
     {
         frame = &m_currentFrame;
     }
-    qint32 value = getUnitCount(maxUnitCount);
-    for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
+    qint32 value = getUnitCount(m_maxUnitCount);
+    for (qint32 i = m_maxUnitCount; i >= m_maxUnitCount - value + 1; i--)
     {
         if (i - 1 < frame->length() && i > 0)
         {
@@ -637,7 +637,7 @@ void BattleAnimationSprite::loadColorOverlayForLastLoadedFrame(QColor color, qin
                 // add impact image
                 oxygine::ColorRectSprite::TweenColor tweenColor2(color);
                 oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(time / Settings::getBattleAnimationSpeed())), loops, true,
-                                                                    oxygine::timeMS(static_cast<qint64>((showDelayMs + m_nextFrameTimer.interval() * (i - maxUnitCount)) / Settings::getBattleAnimationSpeed())));
+                                                                    oxygine::timeMS(static_cast<qint64>((showDelayMs + m_nextFrameTimer.interval() * (i - m_maxUnitCount)) / Settings::getBattleAnimationSpeed())));
                 sprite->addTween(colorTween2);
             }
         }
@@ -653,12 +653,12 @@ void BattleAnimationSprite::detachChild(oxygine::spActor pActor)
 
 qint32 BattleAnimationSprite::getHpRounded() const
 {
-    return hpRounded;
+    return m_hpRounded;
 }
 
 void BattleAnimationSprite::setHpRounded(const qint32 &value)
 {
-    hpRounded = value;
+    m_hpRounded = value;
 }
 
 void BattleAnimationSprite::loadSound(QString file, qint32 loops, QString folder, qint32 delay, float volume)

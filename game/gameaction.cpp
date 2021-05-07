@@ -15,8 +15,8 @@ GameAction::GameAction()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer.open(QIODevice::ReadWrite);
-    _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+    m_buffer.open(QIODevice::ReadWrite);
+    m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 GameAction::GameAction(QString actionID)
@@ -27,13 +27,13 @@ GameAction::GameAction(QString actionID)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer.open(QIODevice::ReadWrite);
-    _seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+    m_buffer.open(QIODevice::ReadWrite);
+    m_seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 void GameAction::setSeed(quint32 seed)
 {
-    _seed = seed;
+    m_seed = seed;
 }
 
 GameAction::~GameAction()
@@ -47,12 +47,12 @@ void GameAction::deleteAction()
 
 bool GameAction::getIsLocal() const
 {
-    return isLocal;
+    return m_isLocal;
 }
 
 void GameAction::setIsLocal(bool value)
 {
-    isLocal = value;
+    m_isLocal = value;
 }
 
 QVector<QPoint> GameAction::getMultiTurnPath() const
@@ -63,11 +63,11 @@ QVector<QPoint> GameAction::getMultiTurnPath() const
 void GameAction::reset()
 {
     m_actionID = "";
-    costs = 0;
-    inputStep = 0;
+    m_costs = 0;
+    m_inputStep = 0;
     m_MultiTurnPath.clear();
-    buffer.close();
-    buffer.open(QIODevice::ReadWrite | QIODevice::Truncate);
+    m_buffer.close();
+    m_buffer.open(QIODevice::ReadWrite | QIODevice::Truncate);
 }
 
 qint64 GameAction::getSyncCounter() const
@@ -108,8 +108,8 @@ void GameAction::printAction()
     Console::print("Performing Action " + m_actionID, Console::eINFO);
     Console::print("Target X " + QString::number(m_target.x()) +
                    " Target Y " + QString::number(m_target.y()), Console::eINFO);
-    Console::print("Costs " + QString::number(costs), Console::eINFO);
-    Console::print("Seed " + QString::number(_seed), Console::eINFO);
+    Console::print("Costs " + QString::number(m_costs), Console::eINFO);
+    Console::print("Seed " + QString::number(m_seed), Console::eINFO);
     Unit* pUnit = getTargetUnit();
     Building* pBuilding = getTargetBuilding();
     if (pUnit != nullptr)
@@ -126,7 +126,7 @@ void GameAction::printAction()
                 " Moving to Y " + QString::number(m_Movepath[0].y()), Console::eINFO);
     }
     QString data;
-    QByteArray bytes = buffer.data();
+    QByteArray bytes = m_buffer.data();
     for (qint32 i = 0; i < bytes.size(); i++)
     {
         data += "0x" + QString::number(bytes[i])+ " ";
@@ -189,7 +189,7 @@ Building* GameAction::getTargetBuilding()
 void GameAction::setMovepath(QVector<QPoint> points, qint32 fuelCost)
 {
     m_Movepath = points;
-    costs = fuelCost;
+    m_costs = fuelCost;
 }
 
 bool GameAction::canBePerformed()
@@ -363,7 +363,7 @@ spMarkedFieldData GameAction::getMarkedFieldStepData()
 
 quint32 GameAction::getSeed() const
 {
-    return _seed;
+    return m_seed;
 }
 
 void GameAction::setTarget(QPoint point)
@@ -426,22 +426,22 @@ Terrain* GameAction::getMovementTerrain()
 
 qint32 GameAction::getCosts() const
 {
-    return costs;
+    return m_costs;
 }
 
 void GameAction::setCosts(const qint32 &value)
 {
-    costs = value;
+    m_costs = value;
 }
 
 qint32 GameAction::getInputStep() const
 {
-    return inputStep;
+    return m_inputStep;
 }
 
 void GameAction::setInputStep(const qint32 &value)
 {
-    inputStep = value;
+    m_inputStep = value;
 }
 
 void GameAction::serializeObject(QDataStream& stream) const
@@ -454,15 +454,15 @@ void GameAction::serializeObject(QDataStream& stream) const
     {
         stream << m_Movepath[i];
     }
-    stream << inputStep;
-    stream << costs;
-    QByteArray data = buffer.data();
+    stream << m_inputStep;
+    stream << m_costs;
+    QByteArray data = m_buffer.data();
     stream << static_cast<qint32>(data.size());
     for (qint32 i = 0; i < data.size(); i++)
     {
         stream << static_cast<qint8>(data[i]);
     }
-    stream << _seed;
+    stream << m_seed;
     qint32 size = m_MultiTurnPath.size();
     stream << size;
     for (qint32 i = 0; i < size; i++)
@@ -488,19 +488,19 @@ void GameAction::deserializeObject(QDataStream& stream)
         stream >> point;
         m_Movepath.append(point);
     }
-    stream >> inputStep;
-    stream >> costs;
+    stream >> m_inputStep;
+    stream >> m_costs;
     stream >> size;
-    buffer.seek(0);
+    m_buffer.seek(0);
     for (qint32 i = 0; i < size; i++)
     {
         qint8 value = 0;
         // stream out of recieved data
         stream >> value;
         // stream into action buffer
-        actionData << value;
+        m_actionData << value;
     }
-    stream >> _seed;
+    stream >> m_seed;
     if (version > 1)
     {
         qint32 size = 0;

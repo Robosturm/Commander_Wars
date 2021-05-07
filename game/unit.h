@@ -135,11 +135,11 @@ public:
 
     void setVirtuellX(qint32 value)
     {
-        virtuellX = value;
+        m_virtuellX = value;
     }
     void setVirtuellY(qint32 value)
     {
-        virtuellY = value;
+        m_virtuellY = value;
     }
     QVector<QPoint> getMultiTurnPath() const;
     void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
@@ -958,19 +958,19 @@ private:
      */
     Terrain* m_pTerrain{nullptr};
     // basic data of this unit
-    float hp{Unit::MAX_UNIT_HP};
-    qint32 ammo1{-1};
-    qint32 maxAmmo1{-1};
-    QString weapon1ID;
-    qint32 ammo2{-1};
-    qint32 maxAmmo2{-1};
-    QString weapon2ID;
-    qint32 fuel{-1};
-    qint32 maxFuel{-1};
-    qint32 baseMovementPoints{0};
+    float m_hp{Unit::MAX_UNIT_HP};
+    qint32 m_ammo1{-1};
+    qint32 m_maxAmmo1{-1};
+    QString m_weapon1ID;
+    qint32 m_ammo2{-1};
+    qint32 m_maxAmmo2{-1};
+    QString m_weapon2ID;
+    qint32 m_fuel{-1};
+    qint32 m_maxFuel{-1};
+    qint32 m_baseMovementPoints{0};
     bool m_Moved{false};
     QVector<spUnit> m_TransportUnits;
-    qint32 capturePoints{0};
+    qint32 m_capturePoints{0};
     qint32 m_UnitRank{GameEnums::UnitRank_None};
 
     qint32 m_cloaked{false};
@@ -978,9 +978,9 @@ private:
 
     bool m_IgnoreUnitCollision{false};
 
-    qint32 minRange{1};
-    qint32 maxRange{-1};
-    qint32 vision{1};
+    qint32 m_minRange{1};
+    qint32 m_maxRange{-1};
+    qint32 m_vision{1};
     qint32 m_UniqueID{0};
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
     QVector<QPoint> m_AiMovePath;
@@ -989,8 +989,8 @@ private:
 
     qint32 m_VisionHigh{-1};
 
-    qint32 virtuellX{-1};
-    qint32 virtuellY{-1};
+    qint32 m_virtuellX{-1};
+    qint32 m_virtuellY{-1};
 
     QVector<QPoint> m_MultiTurnPath;
 

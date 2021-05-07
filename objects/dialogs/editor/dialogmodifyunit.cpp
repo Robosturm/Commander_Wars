@@ -47,8 +47,8 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigFinished();
+        detach();
     });
 
 

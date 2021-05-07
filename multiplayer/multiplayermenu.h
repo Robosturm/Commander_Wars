@@ -141,7 +141,7 @@ private:
     oxygine::spButton m_pHostAdresse;
     spChat m_Chat;
     QTimer m_GameStartTimer;
-    qint32 counter{5};
+    qint32 m_counter{5};
     oxygine::spButton m_pButtonLoadSavegame;
     bool m_saveGame{false};
     bool m_local{true};

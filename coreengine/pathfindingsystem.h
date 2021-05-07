@@ -207,9 +207,9 @@ protected:
     QPoint m_StartPoint;
     qint32 m_width;
     qint32 m_heigth;
-    qint32 *costs;
+    qint32 *m_costs;
     Directions* m_DirectionMap;
-    std::array<qint32, Directions::Max> *movecosts;
+    std::array<qint32, Directions::Max> *m_movecosts;
     QList<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;

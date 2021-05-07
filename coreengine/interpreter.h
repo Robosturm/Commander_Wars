@@ -95,6 +95,8 @@ private:
      * @brief init
      */
     void init();
+
+private:
     static QString m_runtimeData;
     static spInterpreter m_pInstance;
 };

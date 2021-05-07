@@ -75,8 +75,8 @@ private:
     oxygine::spButton m_pArrowUp;
     QString m_Text;
     QString m_unit;
-    QElapsedTimer toggle;
-    qint32 curmsgpos{0};
+    QElapsedTimer m_toggle;
+    qint32 m_curmsgpos{0};
     qreal m_InfinityValue{-1.0};
     qreal m_MinValue{0.0};
     qreal m_MaxValue{100.0};

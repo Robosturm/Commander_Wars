@@ -96,23 +96,23 @@ protected:
     void startFinishTimer();
 private:
     QString m_Text;
-    qint32 writePosition{0};
-    qint32 autoFinishMs{-1};
-    QTimer finishTimer;
+    qint32 m_writePosition{0};
+    qint32 m_autoFinishMs{-1};
+    QTimer m_finishTimer;
 
     oxygine::spSprite m_TextMask;
     oxygine::spSprite m_TextBackground;
     oxygine::spSprite m_COSprite;
 
     oxygine::spTextField m_TextField;
-    QElapsedTimer textTimer;
-    qint32 textSpeed;
+    QElapsedTimer m_textTimer;
+    qint32 m_textSpeed;
 
     // background sprite handling
     oxygine::spSprite m_BackgroundSprite;
     oxygine::spResAnim m_BackgroundAnim;
 
-    bool paused{false};
+    bool m_paused{false};
 };
 
 #endif // GAMEANIMATIONDIALOG_H

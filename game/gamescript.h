@@ -83,12 +83,12 @@ public slots:
         return &m_Variables;
     }
 private:
-    bool victoryCalled{false};
-    QString script;
-    QString scriptFile;
+    bool m_victoryCalled{false};
+    QString m_script;
+    QString m_scriptFile;
     ScriptVariables m_Variables;
-    bool loaded{false};
-    static const QString scriptName;
+    bool m_loaded{false};
+    static const QString m_scriptName;
 };
 
 #endif // GAMESCRIPT_H

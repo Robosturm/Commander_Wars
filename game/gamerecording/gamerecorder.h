@@ -254,11 +254,11 @@ private:
     QVector<spDayToDayRecord> m_Record;
     QVector<spAttackReport> m_Attackreports;
 
-    QVector<quint32> destroyedUnits;
-    QVector<quint32> lostUnits;
-    QVector<quint32> damageDealt;
-    QVector<quint32> attackNumbers;
-    QVector<quint32> deployedUnits;
+    QVector<quint32> m_destroyedUnits;
+    QVector<quint32> m_lostUnits;
+    QVector<quint32> m_damageDealt;
+    QVector<quint32> m_attackNumbers;
+    QVector<quint32> m_deployedUnits;
     qint32 m_mapTime{0};
     quint32 m_deployLimit{0};
     QVector<PlayerData> m_playerDataRecords;

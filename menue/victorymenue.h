@@ -138,7 +138,7 @@ private:
      */
     QTimer m_ProgressTimer;
 
-    float lineLength{0};
+    float m_lineLength{0};
 
     oxygine::spBox9Sprite m_pGraphBackground;
 
@@ -156,7 +156,7 @@ private:
     spUnitStatisticView m_statisticsView;
     spDropDownmenu m_pStatisticPlayer;
 
-    qint32 progress = 0;
+    qint32 m_progress = 0;
 
     spNetworkInterface m_pNetworkInterface;
 

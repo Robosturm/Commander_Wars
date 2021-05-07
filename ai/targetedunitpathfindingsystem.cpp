@@ -56,13 +56,13 @@ qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y,
             if (found)
             {
                 costs = m_costInfo[id];
-                movecosts[index][direction] = costs;
+                m_movecosts[index][direction] = costs;
             }
             else
             {
                 costs = m_pUnit->getBaseMovementCosts(x, y, curX, curY);
                 m_costInfo.insert(id, costs);
-                movecosts[index][direction] = costs;
+                m_movecosts[index][direction] = costs;
             }
         }
     }

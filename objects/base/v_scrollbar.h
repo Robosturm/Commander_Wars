@@ -69,7 +69,7 @@ private:
     void scroll(oxygine::Event* pEvent);
 private:
     float m_Scrollvalue{0.0f};
-    qint32 speedCounter{0};
+    qint32 m_speedCounter{0};
     qint32 m_Width;
     qint32 m_ContentWidth;
     qint32 m_scroll{0};

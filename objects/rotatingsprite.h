@@ -28,9 +28,9 @@ private:
     oxygine::spClipRectActor m_SecondRect;
     oxygine::spActor m_FirstSprite;
     oxygine::spActor m_SecondSprite;
-    QElapsedTimer speedTimer;
-    qint32 speed{10};
-    qint32 direction{1};
+    QElapsedTimer m_speedTimer;
+    qint32 m_speed{10};
+    qint32 m_direction{1};
 };
 
 #endif // ROTATINGSPRITE_H

@@ -296,14 +296,14 @@ protected:
     ReplayRecorder m_ReplayRecorder;
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
-    spLabel xyTextInfo;
+    spLabel m_xyTextInfo;
     oxygine::spActor m_XYButtonBox;
     static spGameMenue m_pInstance;
     spChat m_pChat{nullptr};
     oxygine::spButton m_ChatButton{nullptr};
     oxygine::spTween m_chatButtonShineTween{nullptr};
     spNetworkInterface m_pNetworkInterface;
-    bool gameStarted{false};
+    bool m_gameStarted{false};
     QVector<quint64> m_PlayerSockets;
     QVector<quint64> m_ReadySockets;
     oxygine::spTextField m_CurrentRoundTime;

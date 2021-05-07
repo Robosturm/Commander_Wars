@@ -75,16 +75,16 @@ void DialogConnecting::connectionTimeout()
 void DialogConnecting::timeout()
 {
     
-    counter++;
-    if (counter % 3 == 0)
+    m_counter++;
+    if (m_counter % 3 == 0)
     {
         m_Text->setHtmlText((m_Message + ".  "));
     }
-    else if (counter % 3 == 1)
+    else if (m_counter % 3 == 1)
     {
         m_Text->setHtmlText((m_Message + " . "));
     }
-    else if (counter % 3 == 2)
+    else if (m_counter % 3 == 2)
     {
         m_Text->setHtmlText((m_Message + "  ."));
     }

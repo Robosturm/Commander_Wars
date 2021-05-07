@@ -85,8 +85,8 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigCancel();
+        detach();
     });
 
     // go folder up

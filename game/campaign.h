@@ -96,10 +96,10 @@ public slots:
         return &m_Variables;
     }
 private:
-    QString script;
-    QString scriptFile;
+    QString m_script;
+    QString m_scriptFile;
     ScriptVariables m_Variables;
-    bool loaded{false};
+    bool m_loaded{false};
 
 };
 

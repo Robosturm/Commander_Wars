@@ -28,7 +28,7 @@ protected slots:
     void wheelEvent(qint32 x, qint32 y);
     void mouseMoveEvent(qint32 x, qint32 y);
 private:
-    bool started{false};
+    bool m_started{false};
 };
 
 #endif // RENDERTHREAD_H

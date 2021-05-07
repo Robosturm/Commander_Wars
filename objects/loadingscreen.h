@@ -39,8 +39,6 @@ private:
     friend class oxygine::intrusive_ptr<LoadingScreen>;
     explicit LoadingScreen();
 private:
-    bool loaded = false;
-
     oxygine::spTextField m_workText;
     oxygine::spTextField m_loadingProgress;
     oxygine::spColorRectSprite m_BackgroundBar;

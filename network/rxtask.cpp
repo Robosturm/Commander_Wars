@@ -5,7 +5,7 @@
 
 RxTask::RxTask(QIODevice* pSocket, quint64 socketID, NetworkInterface* CommIF, bool useReceivedId)
     : m_pSocket(pSocket),
-      pIF(CommIF),
+      m_pIF(CommIF),
       m_SocketID(socketID),
       m_pStream(m_pSocket),
       m_useReceivedId(useReceivedId)
@@ -42,7 +42,7 @@ void RxTask::recieveData()
         if (eService == NetworkInterface::NetworkSerives::ServerSocketInfo)
         {
             Console::print("Updating Socket ID to: " + QString::number(socketId), Console::eLogLevels::eDEBUG);
-            pIF->setSocketID(socketId);
+            m_pIF->setSocketID(socketId);
         }
         else if ((eService < NetworkInterface::NetworkSerives::Game) || (eService >= NetworkInterface::NetworkSerives::Max))
         {
@@ -51,11 +51,11 @@ void RxTask::recieveData()
         }
         else
         {
-            if (pIF->getIsServer() && forwardData)
+            if (m_pIF->getIsServer() && forwardData)
             {
-                emit pIF->sigForwardData(socketId, data, eService);
+                emit m_pIF->sigForwardData(socketId, data, eService);
             }
-            emit pIF->recieveData(socketId, data, eService);
+            emit m_pIF->recieveData(socketId, data, eService);
         }
     }
 }

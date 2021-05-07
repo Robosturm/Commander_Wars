@@ -38,8 +38,8 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigFinished();
+        detach();
     });
 
     m_pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 110),

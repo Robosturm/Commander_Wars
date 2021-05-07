@@ -536,20 +536,20 @@ private:
      */
     void addVisionFieldInternal(qint32 x, qint32 y, qint32 duration, bool directView);
 private:
-    qint32 funds{0};
-    float fundsModifier{1.0f};
+    qint32 m_funds{0};
+    float m_fundsModifier{1.0f};
 
     QColor m_Color;
     QImage m_colorTable;
     oxygine::spResAnim m_ColorTableAnim{oxygine::spSingleResAnim::create()};
-    QString playerArmy{""};
-    qint32 team{0};
-    spCO playerCOs[2]{nullptr, nullptr};
+    QString m_playerArmy{""};
+    qint32 m_team{0};
+    spCO m_playerCOs[2]{nullptr, nullptr};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
-    bool isDefeated{false};
+    bool m_isDefeated{false};
     QVector<QVector<std::tuple<GameEnums::VisionType, qint32, bool>>> m_FogVisionFields;
     /**
      * @brief m_BuildList contains all units we're allowed to build

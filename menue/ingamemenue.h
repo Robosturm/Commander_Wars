@@ -56,12 +56,12 @@ protected:
     QPoint m_MoveMapMousePoint;
 
     spCursor m_Cursor{spCursor::create()};
-    QRect autoScrollBorder{300, 50, 300, 50};
+    QRect m_autoScrollBorder{300, 50, 300, 50};
 
     QThread m_MapMoveThread;
     spMapMover m_MapMover;
     oxygine::spSprite m_backgroundSprite;
-    bool handlingLoaded{false};
+    bool m_handlingLoaded{false};
 };
 
 #endif // INGAMEMENUE_H

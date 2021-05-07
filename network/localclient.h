@@ -21,9 +21,9 @@ public slots:
 protected slots:
     void connected();
 private:
-    spRxTask pRXTask;
-    spTxTask pTXTask;
-    QLocalSocket* pSocket;
+    spRxTask m_pRXTask;
+    spTxTask m_pTXTask;
+    QLocalSocket* m_pSocket;
 };
 
 #endif // LOCALCLIENT_H

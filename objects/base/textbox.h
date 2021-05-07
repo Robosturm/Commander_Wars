@@ -54,8 +54,8 @@ protected:
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
     QString m_Text;
-    QElapsedTimer toggle;
-    qint32 curmsgpos{0};
+    QElapsedTimer m_toggle;
+    qint32 m_curmsgpos{0};
 };
 
 #endif // TEXTBOX_H

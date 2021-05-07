@@ -33,7 +33,7 @@ public slots:
 private:
    QIODevice* m_pSocket;
    quint64 m_SocketID;
-   NetworkInterface* pIF;
+   NetworkInterface* m_pIF;
    bool m_sendAll{false};
 };
 

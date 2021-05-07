@@ -92,13 +92,13 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
 
     if (!m_permanent)
     {
-        endTimer.setSingleShot(true);
-        endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
-        connect(&endTimer, &QTimer::timeout, [=]()
+        m_endTimer.setSingleShot(true);
+        m_endTimer.setInterval(uptimeMs / Settings::getAnimationSpeed());
+        connect(&m_endTimer, &QTimer::timeout, [=]()
         {
             emitFinished();
         });
-        endTimer.start();
+        m_endTimer.start();
         addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
         {
             oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -160,7 +160,7 @@ void GameAnimationNextDay::rightClick()
 
 void GameAnimationNextDay::stop()
 {
-    endTimer.stop();
+    m_endTimer.stop();
 }
 
 void GameAnimationNextDay::restart()
@@ -171,7 +171,7 @@ void GameAnimationNextDay::restart()
         if (!m_permanent)
         {
             pMenu->addChild(this);
-            endTimer.start();
+            m_endTimer.start();
         }
     }
 }

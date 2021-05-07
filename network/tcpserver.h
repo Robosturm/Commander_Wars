@@ -35,7 +35,7 @@ public slots:
 private:
     QVector<spTCPClient> m_pClients;
     quint64 m_idCounter = 0;
-    QTcpServer* pTCPServer{nullptr};
+    QTcpServer* m_pTCPServer{nullptr};
     bool m_gameServer{false};
 };
 

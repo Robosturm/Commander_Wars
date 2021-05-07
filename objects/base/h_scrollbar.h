@@ -50,7 +50,7 @@ private:
 private:
     float m_Scrollvalue{0.0f};
     float m_Scrollspeed{1.0f};
-    qint32 speedCounter{0};
+    qint32 m_speedCounter{0};
     qint32 m_Heigth;
     qint32 m_ContentHeigth;
     qint32 m_scroll{0};

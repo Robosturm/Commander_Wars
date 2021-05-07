@@ -54,7 +54,7 @@ public slots:
 protected:
     spPanel m_pPanel;
     oxygine::spButton m_OkButton;
-    qint32 y{10};
+    qint32 m_y{10};
 };
 
 #endif // WIKIPAGE_H

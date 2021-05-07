@@ -324,7 +324,7 @@ public slots:
         }
         else
         {
-            return terrainID;
+            return m_terrainID;
         }
     }
     /**
@@ -341,7 +341,7 @@ public slots:
         }
         else
         {
-            return terrainID;
+            return m_terrainID;
         }
     }
     /**
@@ -430,7 +430,7 @@ private:
     /**
      * @brief terrainName terrain name shown in the game
      */
-    QString terrainName;
+    QString m_terrainName;
     /**
      * @brief m_terrainDescription
      */
@@ -438,7 +438,7 @@ private:
     /**
      * @brief terrainID our terrain id
      */
-    QString terrainID;
+    QString m_terrainID;
     /**
      * @brief m_pTerrainSprite actor holding our sprite data
      */
@@ -466,11 +466,11 @@ private:
     /**
      * @brief x coordinates in x direction in the map array
      */
-    qint32 x{-1};
+    qint32 m_x{-1};
     /**
      * @brief y coordinates in y direction in the map array
      */
-    qint32 y{-1};
+    qint32 m_y{-1};
     /**
       * the building at this position
       */
@@ -482,7 +482,7 @@ private:
     /**
       * hp of this unit
       */
-    qint32 hp{-1};
+    qint32 m_hp{-1};
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
     bool m_hasStartOfTurn{false};

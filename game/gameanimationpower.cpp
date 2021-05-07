@@ -190,14 +190,14 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         textField->addTween(queue);
         addChild(textField);
     }
-    endTimer.setSingleShot(true);
+    m_endTimer.setSingleShot(true);
     qint32 time = text.size() * static_cast<qint32>(m_frameTime) * 4;
     if (time < static_cast<qint32>(m_frameTime) * 30)
     {
         time = static_cast<qint32>(m_frameTime) * 30;
     }
-    endTimer.setInterval(time);
-    connect(&endTimer, &QTimer::timeout, [=]()
+    m_endTimer.setInterval(time);
+    connect(&m_endTimer, &QTimer::timeout, [=]()
     {
         emitFinished();
     });
@@ -235,7 +235,7 @@ void GameAnimationPower::rightClick()
 
 void GameAnimationPower::stop()
 {
-    endTimer.stop();
+    m_endTimer.stop();
 }
 
 void GameAnimationPower::update(const oxygine::UpdateState& us)
@@ -256,6 +256,6 @@ void GameAnimationPower::restart()
     if (pGameMenue.get() != nullptr)
     {
         pGameMenue->addChild(this);
-        endTimer.start();
+        m_endTimer.start();
     }
 }

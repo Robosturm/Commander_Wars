@@ -171,31 +171,33 @@ public slots:
      */
     QList<QString> getConsoleLog()
     {
-        QMutexLocker locker(&datalocker);
-        return output;
+        QMutexLocker locker(&m_datalocker);
+        return m_output;
     }
 private:
-    static eLogLevels m_LogLevel;
-    static QString curmsg;
-    static QList<QString> lastmsgs;
-    static const qint32 lastMsgSize{10};
-    static qint32 curlastmsgpos;
-    static qint32 curmsgpos;
-    static QElapsedTimer toggle;
-    static spConsole m_pConsole;
-    static bool show;
-    static bool toggled;
-    static QList<QString> output;
-    static qint32 outputSize;
-    static QMutex datalocker;
-    static bool m_developerMode;
-    oxygine::spSprite m_pBackgroundsprite;
-    oxygine::spTextField m_text;
     friend class oxygine::intrusive_ptr<Console>;
     Console();
     virtual  ~Console() = default;
 
     void createSprites(QString file, QImage& colorTable, QImage maskTable);
+
+private:
+    static eLogLevels m_LogLevel;
+    static QString m_curmsg;
+    static QList<QString> m_lastmsgs;
+    static const qint32 m_lastMsgSize{10};
+    static qint32 m_curlastmsgpos;
+    static qint32 m_curmsgpos;
+    static QElapsedTimer m_toggle;
+    static spConsole m_pConsole;
+    static bool m_show;
+    static bool m_toggled;
+    static QList<QString> m_output;
+    static qint32 m_outputSize;
+    static QMutex m_datalocker;
+    static bool m_developerMode;
+    oxygine::spSprite m_pBackgroundsprite;
+    oxygine::spTextField m_text;
 };
 
 #endif // CONSOLE_H

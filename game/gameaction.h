@@ -243,8 +243,8 @@ public slots:
      */
     void writeDataString(QString data)
     {
-        buffer.seek(buffer.size());
-        actionData << data;
+        m_buffer.seek(m_buffer.size());
+        m_actionData << data;
     }
     /**
      * @brief readDataString
@@ -253,7 +253,7 @@ public slots:
     QString readDataString()
     {
         QString data;
-        actionData >> data;
+        m_actionData >> data;
         return data;
     }
     /**
@@ -262,8 +262,8 @@ public slots:
      */
     void writeDataInt32(qint32 data)
     {
-        buffer.seek(buffer.size());
-        actionData << data;
+        m_buffer.seek(m_buffer.size());
+        m_actionData << data;
     }
     /**
      * @brief readDataInt32
@@ -272,7 +272,7 @@ public slots:
     qint32 readDataInt32()
     {
         qint32 data;
-        actionData >> data;
+        m_actionData >> data;
         return data;
     }
     /**
@@ -281,8 +281,8 @@ public slots:
      */
     void writeDataFloat(float data)
     {
-        buffer.seek(buffer.size());
-        actionData << data;
+        m_buffer.seek(m_buffer.size());
+        m_actionData << data;
     }
     /**
      * @brief readDataFloat
@@ -291,7 +291,7 @@ public slots:
     float readDataFloat()
     {
         float data;
-        actionData >> data;
+        m_actionData >> data;
         return data;
     }
     /**
@@ -300,7 +300,7 @@ public slots:
     void startReading()
     {
         // go to start again
-        buffer.seek(0);
+        m_buffer.seek(0);
     }
     /**
      * @brief deleteAction
@@ -345,18 +345,18 @@ private:
     /**
       * @brief current input step for tracking when all data is gathered to perform the action
       */
-    qint32 inputStep{0};
+    qint32 m_inputStep{0};
     /**
       * @brief costs needed to be paid to perform this action
       */
-    qint32 costs{0};
+    qint32 m_costs{0};
     /**
      * @brief actionData data needed to perform this action
      */
-    QBuffer buffer;
-    QDataStream actionData{&buffer};
+    QBuffer m_buffer;
+    QDataStream m_actionData{&m_buffer};
 
-    quint32 _seed;
+    quint32 m_seed;
     /**
       * needed for ai simulations
       */
@@ -364,7 +364,7 @@ private:
 
     QVector<QPoint> m_MultiTurnPath;
 
-    bool isLocal{false};
+    bool m_isLocal{false};
 
     qint64 m_syncCounter{0};
 

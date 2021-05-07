@@ -78,12 +78,13 @@ public:
 protected:
     explicit RessourceManagement(QString resPath, QString scriptPath);
     virtual ~RessourceManagement() = default;
-    QStringList m_loadedRessources;
-    QString scriptPath;
-    QStringList getSearchPaths();
     void loadRessources(QString resPath);
     void loadAll(QStringList& list);
     void reset(QStringList& list);
+    QStringList getSearchPaths();
+protected:
+    QStringList m_loadedRessources;
+    QString m_scriptPath;
 private:
     static TClass* m_pInstance;
 };
@@ -104,7 +105,7 @@ TClass* RessourceManagement<TClass>::getInstance()
 
 template<class TClass>
 RessourceManagement<TClass>::RessourceManagement(QString resPath, QString scriptPath)
-    : scriptPath(scriptPath)
+    : m_scriptPath(scriptPath)
 {
     loadRessources(resPath);
 }
@@ -185,13 +186,13 @@ template<class TClass>
 QStringList RessourceManagement<TClass>::getSearchPaths()
 {
     QStringList searchPaths;
-    if (!scriptPath.isEmpty())
+    if (!m_scriptPath.isEmpty())
     {
-        searchPaths.append("resources/" + scriptPath);
+        searchPaths.append("resources/" + m_scriptPath);
         // make sure to overwrite existing js stuff
         for (qint32 i = 0; i < Settings::getMods().size(); i++)
         {
-            searchPaths.append(Settings::getMods().at(i) + "/" + scriptPath);
+            searchPaths.append(Settings::getMods().at(i) + "/" + m_scriptPath);
         }
     }
     return searchPaths;

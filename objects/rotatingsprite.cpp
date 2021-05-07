@@ -4,7 +4,7 @@
 
 RotatingSprite::RotatingSprite()
 {
-    speedTimer.start();
+    m_speedTimer.start();
 
     m_SecondRect = oxygine::spClipRectActor::create();
     addChild(m_SecondRect);
@@ -38,13 +38,13 @@ void RotatingSprite::sizeChanged(const oxygine::Vector2& size)
 
 void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
 {
-    if (speedTimer.elapsed() > speed)
+    if (m_speedTimer.elapsed() > m_speed)
     {
         float width = getWidth();
-        float overflow = m_FirstRect->getWidth() + direction;
+        float overflow = m_FirstRect->getWidth() + m_direction;
         if (overflow >= width || overflow <= 0.0f)
         {
-            if (direction > 0)
+            if (m_direction > 0)
             {
                 m_SecondRect->setWidth(width - (overflow - width));
                 m_FirstRect->setWidth((overflow - width));
@@ -57,8 +57,8 @@ void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
         }
         else
         {
-            m_SecondRect->setWidth(m_SecondRect->getWidth() - direction);
-            m_FirstRect->setWidth(m_FirstRect->getWidth() + direction);
+            m_SecondRect->setWidth(m_SecondRect->getWidth() - m_direction);
+            m_FirstRect->setWidth(m_FirstRect->getWidth() + m_direction);
         }
         if (overflow == 0.0f)
         {
@@ -71,27 +71,27 @@ void RotatingSprite::doUpdate(const oxygine::UpdateState& us)
             m_SecondRect->setX(firstRectWidth);
             m_FirstSprite->setX(firstRectWidth - m_FirstSprite->getWidth());
         }
-        speedTimer.start();
+        m_speedTimer.start();
     }
     oxygine::Actor::doUpdate(us);
 }
 
 qint32 RotatingSprite::getDirection() const
 {
-    return direction;
+    return m_direction;
 }
 
 void RotatingSprite::setDirection(const qint32 &value)
 {
-    direction = value;
+    m_direction = value;
 }
 
 qint32 RotatingSprite::getSpeed() const
 {
-    return speed;
+    return m_speed;
 }
 
 void RotatingSprite::setSpeed(const qint32 &value)
 {
-    speed = value;
+    m_speed = value;
 }

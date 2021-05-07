@@ -26,8 +26,8 @@ Minimap::Minimap()
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            float x = pTouchEvent->localPosition.x / ImageSize;
-            float y = pTouchEvent->localPosition.y / ImageSize;
+            float x = pTouchEvent->localPosition.x / m_ImageSize;
+            float y = pTouchEvent->localPosition.y / m_ImageSize;
             emit clicked(static_cast<qint32>(x), static_cast<qint32>(y));
         }
     });
@@ -53,7 +53,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
         qint32 width = static_cast<qint32>(pMap->getMapWidth());
         qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
         qint32 size = width * heigth;
-        setSize(ImageSize * width, ImageSize * heigth);
+        setSize(m_ImageSize * width, m_ImageSize * heigth);
         if (size != m_Items.length())
         {
             clear();
@@ -85,8 +85,8 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                     {
                         oxygine::spColorRectSprite pSprite = oxygine::spColorRectSprite::create();
                         pSprite->setColor(Qt::black);
-                        pSprite->setPosition(x * ImageSize, y * ImageSize);
-                        pSprite->setSize(ImageSize, ImageSize);
+                        pSprite->setPosition(x * m_ImageSize, y * m_ImageSize);
+                        pSprite->setSize(m_ImageSize, m_ImageSize);
                         addChild(pSprite);
                         if (m_Items[item].background.get())
                         {
@@ -137,7 +137,7 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                 {
                                     pSprite->setResAnim(pAnim);
                                 }
-                                pSprite->setPosition(x * ImageSize, y * ImageSize);
+                                pSprite->setPosition(x * m_ImageSize, y * m_ImageSize);
 
                                 if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
                                 {
@@ -170,8 +170,8 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                             {
                                 pSprite->setResAnim(pAnim);
                             }
-                            pSprite->setPosition(x * ImageSize, y * ImageSize);
-                            pSprite->setSize(ImageSize, ImageSize);
+                            pSprite->setPosition(x * m_ImageSize, y * m_ImageSize);
+                            pSprite->setSize(m_ImageSize, m_ImageSize);
                             addChild(pSprite);
                             m_Items[item].background = pSprite;
                         }
@@ -207,8 +207,8 @@ void Minimap::updateMinimap(spGameMap pMap, bool useVision)
                                     }
                                     oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), oxygine::timeMS(1000), -1);
                                     pSprite->addTween(tween2);
-                                    pSprite->setPosition(x * ImageSize, y * ImageSize);
-                                    pSprite->setSize(ImageSize, ImageSize);
+                                    pSprite->setPosition(x * m_ImageSize, y * m_ImageSize);
+                                    pSprite->setSize(m_ImageSize, m_ImageSize);
                                     Player* pPlayer = pUnit->getOwner();
                                     QColor color = pPlayer->getColor();
                                     pSprite->setColor(color.red(), color.green(), color.blue(), 255);

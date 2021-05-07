@@ -43,10 +43,10 @@ private:
     qint32 m_maxPoints{0};
     float m_BuildingStartPos{20.0f};
     float m_BuildingEndPos{65.0f};
-    static const qint32 capturingFactor;
-    static const qint32 jumpSprites;
-    static const qint32 ayeAyeSprites;
-    static const qint32 jumpingCount;
+    static const qint32 m_capturingFactor;
+    static const qint32 m_jumpSprites;
+    static const qint32 m_ayeAyeSprites;
+    static const qint32 m_jumpingCount;
 };
 
 #endif // GAMEANIMATIONCAPTURE_H

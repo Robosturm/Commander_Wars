@@ -26,11 +26,11 @@ public slots:
     void exitMenue();
 
 private:
-    QElapsedTimer speedTimer;
+    QElapsedTimer m_speedTimer;
     QVector<QString> m_Headlines;
     QVector<QVector<QString>> m_Authors;
     qint32 m_creditsHeigth{100};
-    oxygine::spActor creditsActor;
+    oxygine::spActor m_creditsActor;
 };
 
 #endif // CREDITSMENUE_H

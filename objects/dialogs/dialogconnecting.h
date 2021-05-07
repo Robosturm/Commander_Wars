@@ -30,7 +30,7 @@ private:
      QString m_Message;
      QTimer m_Timer;
      QTimer m_TimerConnectionTimeout;
-     quint8 counter;
+     quint8 m_counter;
 };
 
 #endif // DIALOGCONNECTING_H

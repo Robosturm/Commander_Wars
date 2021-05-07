@@ -15,14 +15,14 @@
 
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     : GameAnimation (frameTime),
-      textSpeed(100 / Settings::getDialogAnimationSpeed())
+      m_textSpeed(100 / Settings::getDialogAnimationSpeed())
 {
     setObjectName("GameAnimationDialog");
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
-    connect(&finishTimer, &QTimer::timeout, [=]()
+    connect(&m_finishTimer, &QTimer::timeout, [=]()
     {
         emitFinished();
     });
@@ -69,7 +69,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     addChild(m_COSprite);
 
     setPositionTop(false);
-    textTimer.start();
+    m_textTimer.start();
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -96,7 +96,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
 void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 {
-    if (!m_stopped && writePosition > 0)
+    if (!m_stopped && m_writePosition > 0)
     {
         // for debugging
         Qt::Key cur = event.getKey();
@@ -110,15 +110,15 @@ void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 
 void GameAnimationDialog::nextDialogStep()
 {
-    if (paused)
+    if (m_paused)
     {
-        paused = false;
-        writePosition += 1;
-        m_TextField->setHtmlText(m_Text.mid(0, writePosition));
+        m_paused = false;
+        m_writePosition += 1;
+        m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
     }
     else
     {
-        if (writePosition >= m_Text.size())
+        if (m_writePosition >= m_Text.size())
         {
             onFinished(false);
         }
@@ -127,21 +127,21 @@ void GameAnimationDialog::nextDialogStep()
             float textHeight = m_TextField->getTextRect().getHeight();
             qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
             // loop till two lines of text will be shown
-            while (writePosition < m_Text.size())
+            while (m_writePosition < m_Text.size())
             {
-                writePosition += 1;
-                m_TextField->setHtmlText(m_Text.mid(0, writePosition));
+                m_writePosition += 1;
+                m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
                 textHeight = m_TextField->getTextRect().getHeight();
                 if (textHeight > nextHeight)
                 {
-                    writePosition -= 1;
+                    m_writePosition -= 1;
                     break;
                 }
             }
             updateShownText();
-            if (writePosition < m_Text.size())
+            if (m_writePosition < m_Text.size())
             {
-                paused = true;
+                m_paused = true;
             }
             
         }
@@ -150,15 +150,15 @@ void GameAnimationDialog::nextDialogStep()
 
 void GameAnimationDialog::startFinishTimer()
 {
-    finishTimer.setSingleShot(true);
-    finishTimer.start(autoFinishMs);
+    m_finishTimer.setSingleShot(true);
+    m_finishTimer.start(m_autoFinishMs);
 }
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
-    if (textTimer.elapsed() > textSpeed && !paused)
+    if (m_textTimer.elapsed() > m_textSpeed && !m_paused)
     {
-        writePosition += 1;
+        m_writePosition += 1;
         // check for auto pause
         float textHeight = m_TextField->getTextRect().getHeight();
         qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth) * dialogHeigth;
@@ -166,20 +166,20 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
         {
             nextHeight += dialogHeigth;
         }
-        m_TextField->setHtmlText(m_Text.mid(0, writePosition));
+        m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
         textHeight = m_TextField->getTextRect().getHeight();
-        if (textHeight > nextHeight && autoFinishMs < 0)
+        if (textHeight > nextHeight && m_autoFinishMs < 0)
         {
-            writePosition -= 1;
+            m_writePosition -= 1;
             updateShownText();
-            paused = true;
+            m_paused = true;
         }
         else
         {
-            if (writePosition > m_Text.size())
+            if (m_writePosition > m_Text.size())
             {
-                writePosition = m_Text.size();
-                if (autoFinishMs >= 0 && !finishTimer.isActive())
+                m_writePosition = m_Text.size();
+                if (m_autoFinishMs >= 0 && !m_finishTimer.isActive())
                 {
                     emit sigStartFinishTimer();
                 }
@@ -191,14 +191,14 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             }
             updateShownText();
         }
-        textTimer.start();
+        m_textTimer.start();
     }
     GameAnimation::update(us);
 }
 
 void GameAnimationDialog::updateShownText()
 {
-    m_TextField->setHtmlText(m_Text.mid(0, writePosition));
+    m_TextField->setHtmlText(m_Text.mid(0, m_writePosition));
     float textHeight = m_TextField->getTextRect().getHeight();
     m_TextField->setHeight(textHeight);
     if (textHeight > dialogHeigth)
@@ -209,13 +209,13 @@ void GameAnimationDialog::updateShownText()
 
 bool GameAnimationDialog::onFinished(bool skipping)
 {
-    if (writePosition >= m_Text.size())
+    if (m_writePosition >= m_Text.size())
     {
         return GameAnimation::onFinished(skipping);
     }
     else
     {
-        writePosition = m_Text.size();
+        m_writePosition = m_Text.size();
     }
     return false;
 }
@@ -276,12 +276,12 @@ void GameAnimationDialog::setPlayerCO(qint32 player, quint8 co, GameEnums::COMoo
 
 void GameAnimationDialog::setFinishDelay(qint32 valueMs)
 {
-    autoFinishMs = valueMs;
+    m_autoFinishMs = valueMs;
 }
 
 void GameAnimationDialog::setTextSpeed(qint32 speed)
 {
-    textSpeed = speed / Settings::getAnimationSpeed();
+    m_textSpeed = speed / Settings::getAnimationSpeed();
 }
 
 void GameAnimationDialog::restart()

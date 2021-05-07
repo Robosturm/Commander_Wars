@@ -172,7 +172,7 @@ private:
      */
     void loadDyingFadeoutAnimation(spBattleAnimationSprite pSprite);
 private:
-    QTimer battleTimer;
+    QTimer m_battleTimer;
 
     oxygine::spSprite m_AtkCO0;
     oxygine::spSprite m_AtkCO1;
@@ -200,7 +200,7 @@ private:
     qint32 m_DefWeapon{0};
     float m_DefenderDamage{-1};
 
-    AnimationProgress currentState{AnimationProgress::MoveIn};
+    AnimationProgress m_currentState{AnimationProgress::MoveIn};
 };
 
 #endif // BATTLEANIMATION_H

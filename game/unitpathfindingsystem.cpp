@@ -56,7 +56,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
     {
         return m_pUnit->getMovementCosts(x, y, x, y);
     }
-    else if (movecosts[index][direction] == infinite)
+    else if (m_movecosts[index][direction] == infinite)
     {
         spGameMap pMap = GameMap::getInstance();
         if (pMap.get() != nullptr && pMap->onMap(x, y))
@@ -71,8 +71,8 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
                 {
                     if (!m_pUnit->getIgnoreUnitCollision() && !m_ignoreEnemies)
                     {
-                        movecosts[index][direction] = -1;
-                        return movecosts[index][direction];
+                        m_movecosts[index][direction] = -1;
+                        return m_movecosts[index][direction];
                     }
                 }
             }
@@ -84,28 +84,28 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 
                 if (found)
                 {
                     qint32 cost = m_costInfo[id];
-                    movecosts[index][direction] = cost;
+                    m_movecosts[index][direction] = cost;
                 }
                 else
                 {
                     qint32 cost = m_pUnit->getMovementCosts(x, y, curX, curY);
                     m_costInfo.insert(id, cost);
-                    movecosts[index][direction] = cost;
+                    m_movecosts[index][direction] = cost;
                 }
             }
             else
             {
-                movecosts[index][direction] = m_pUnit->getMovementCosts(x, y, curX, curY);
+                m_movecosts[index][direction] = m_pUnit->getMovementCosts(x, y, curX, curY);
             }
-            return movecosts[index][direction];
+            return m_movecosts[index][direction];
         }
         else
         {
-            movecosts[index][direction] = -1;
-            return costs[index];
+            m_movecosts[index][direction] = -1;
+            return m_costs[index];
         }
     }
-    return movecosts[index][direction];
+    return m_movecosts[index][direction];
 }
 
 qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)

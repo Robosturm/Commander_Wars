@@ -82,9 +82,9 @@ CreditsMenue::CreditsMenue()
             }
         }
     }
-    creditsActor = oxygine::spActor::create();
-    addChild(creditsActor);
-    creditsActor->setY(Settings::getHeight());
+    m_creditsActor = oxygine::spActor::create();
+    addChild(m_creditsActor);
+    m_creditsActor->setY(Settings::getHeight());
     qint32 y = 0;
     oxygine::TextStyle style = FontManager::getMainFont24();
     style.color = FontManager::getFontColor();
@@ -106,7 +106,7 @@ CreditsMenue::CreditsMenue()
         pTextfield->setStyle(headstyle);
         pTextfield->setHtmlText(m_Headlines[i]);
         pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2, y);
-        creditsActor->addChild(pTextfield);
+        m_creditsActor->addChild(pTextfield);
         y += pTextfield->getTextRect().getHeight() + 10;
         for (qint32 i2 = 0; i2 < m_Authors[i].size(); i2++)
         {
@@ -114,23 +114,23 @@ CreditsMenue::CreditsMenue()
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(m_Authors[i][i2]);
             pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2.0f, y);
-            creditsActor->addChild(pTextfield);
+            m_creditsActor->addChild(pTextfield);
             y += pTextfield->getTextRect().getHeight() + 5;
         }
     }
     m_creditsHeigth = y;
-    speedTimer.start();
+    m_speedTimer.start();
     pApp->continueRendering();
 }
 
 void CreditsMenue::doUpdate(const oxygine::UpdateState&)
 {
-    if (speedTimer.elapsed() > 40)
+    if (m_speedTimer.elapsed() > 40)
     {
-        creditsActor->setY(creditsActor->getY() - 2);
-        speedTimer.start();
+        m_creditsActor->setY(m_creditsActor->getY() - 2);
+        m_speedTimer.start();
     }
-    if (creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
+    if (m_creditsActor->getY() - Settings::getHeight() / 2.0f + m_creditsHeigth < 0)
     {
         emit sigExitMenue();
     }

@@ -161,6 +161,18 @@ private:
      */
     void changeSelection(qint32 item);
 private:
+    void createBoxPlacementSize();
+    void createBoxSelectionMode();
+    void initSelection();
+
+    /**
+     * @brief calcMaxPlayerSelection the amount of player hq's shown in the select player part
+     * @return
+     */
+    qint32 calcMaxPlayerSelection();
+    oxygine::spSprite createV9Box(qint32 x, qint32 y, qint32 width, qint32 heigth);
+
+private:
     // small hints for the ui
     static const qint32 frameSize = 30;
     static const qint32 selectionHeight = 80;
@@ -205,18 +217,6 @@ private:
     spPlayer m_currentPlayer{nullptr};
     qint32 m_playerStartIndex{0};
     QVector<spBuilding> m_Players;
-
-    oxygine::spSprite createV9Box(qint32 x, qint32 y, qint32 width, qint32 heigth);
-    void createBoxPlacementSize();
-    void createBoxSelectionMode();
-    void initSelection();
-
-    /**
-     * @brief calcMaxPlayerSelection the amount of player hq's shown in the select player part
-     * @return
-     */
-    qint32 calcMaxPlayerSelection();
-
 };
 
 #endif // EDITORSELECTION_H

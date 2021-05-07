@@ -7,10 +7,10 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
 
-const qint32 GameAnimationCapture::capturingFactor = 10;
-const qint32 GameAnimationCapture::jumpSprites = 3;
-const qint32 GameAnimationCapture::ayeAyeSprites = 2;
-const qint32 GameAnimationCapture::jumpingCount = 3;
+const qint32 GameAnimationCapture::m_capturingFactor = 10;
+const qint32 GameAnimationCapture::m_jumpSprites = 3;
+const qint32 GameAnimationCapture::m_ayeAyeSprites = 2;
+const qint32 GameAnimationCapture::m_jumpingCount = 3;
 
 GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints, qint32 maxPoints)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
@@ -73,7 +73,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
         }
 
         // going down of the building
-        oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * jumpSprites * jumpingCount + m_frameTime * ayeAyeSprites);
+        oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * m_jumpSprites * m_jumpingCount + m_frameTime * m_ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - startPercent), jumpingDuration, 1);
         dummyTween->setDoneCallback([=](oxygine::Event *)
@@ -84,12 +84,12 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
             }
         });
         queueAnimating->add(dummyTween);
-        oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(capturingFactor * m_frameTime), 1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
         queueAnimating->add(tween);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween2 = oxygine::createTween(oxygine::Actor::TweenY(startPosition), jumpingDuration, 1);
         queueMoving->add(dummyTween2);
-        oxygine::spTween tween2 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY + percentDone * movingHeight), oxygine::timeMS(capturingFactor * m_frameTime), 1);
+        oxygine::spTween tween2 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY + percentDone * movingHeight), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
         queueMoving->add(tween2);
         if (m_endPoints == 0)
         {
@@ -119,10 +119,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, Player* startPlay
                     }
                 }
             });
-            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
+            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(m_capturingFactor * m_frameTime), 1, false);
             queueAnimating->add(tween3);
 
-            oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
+            oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), oxygine::timeMS(m_capturingFactor * m_frameTime), 1, false);
             queueMoving->add(tween4);
         }
         pSprite->addTween(queueAnimating);
@@ -179,19 +179,19 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
         {
             // jumping
             oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, jumpSprites - 1), oxygine::timeMS(jumpSprites * m_frameTime), jumpingCount);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, m_jumpSprites - 1), oxygine::timeMS(m_jumpSprites * m_frameTime), m_jumpingCount);
             queueAnimating->add(tween);
             // cool aye aye sir
-            oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, jumpSprites, jumpSprites + ayeAyeSprites - 1), oxygine::timeMS(ayeAyeSprites * m_frameTime), 1);
+            oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, m_jumpSprites, m_jumpSprites + m_ayeAyeSprites - 1), oxygine::timeMS(m_ayeAyeSprites * m_frameTime), 1);
             queueAnimating->add(tween2);
             // going down on the building
             float endPosition = unitOffsetY + percentDone * buildingHigh;
-            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenY(endPosition), oxygine::timeMS(capturingFactor * m_frameTime), 1);
+            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenY(endPosition), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
             queueAnimating->add(tween3);
             // maybe going up again as well
             if (m_endPoints == 0)
             {
-                oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(capturingFactor * m_frameTime), 1);
+                oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(m_capturingFactor * m_frameTime), 1);
                 queueAnimating->add(tween4);
                 oxygine::spTween tween5 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(m_frameTime), 1);
                 queueAnimating->add(tween5);

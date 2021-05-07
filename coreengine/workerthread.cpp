@@ -122,7 +122,7 @@ void WorkerThread::start()
     connect(pApp, &Mainapp::sigMouseReleaseEvent, this, &WorkerThread::mouseReleaseEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigWheelEvent, this, &WorkerThread::wheelEvent, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigMouseMoveEvent, this, &WorkerThread::mouseMoveEvent, Qt::QueuedConnection);
-    started = true;
+    m_started = true;
     emit pApp->sigNextStartUpStep(Mainapp::StartupPhase::Finalizing);
 }
 
@@ -159,7 +159,7 @@ void WorkerThread::showMainwindow()
 
 bool WorkerThread::getStarted() const
 {
-    return started;
+    return m_started;
 }
 
 void WorkerThread::startSlaveGame()

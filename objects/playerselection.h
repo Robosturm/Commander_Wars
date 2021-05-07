@@ -241,7 +241,7 @@ private:
     spNetworkInterface m_pNetworkInterface{nullptr};
     spCampaign m_pCampaign;
 
-    bool saveGame{false};
+    bool m_saveGame{false};
     bool m_PlayerReady{false};
     bool m_isServerGame{false};
 };

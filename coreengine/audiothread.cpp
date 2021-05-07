@@ -117,42 +117,42 @@ void AudioThread::SlotClearPlayList()
     m_Player2.stop();
     m_playList2.clear();
     m_PlayListdata.clear();
-    currentPlayer = -1;
+    m_currentPlayer = -1;
 }
 
 void AudioThread::SlotPlayMusic(qint32 File)
 {
-    currentPlayer = -1;
+    m_currentPlayer = -1;
     m_playList.setCurrentIndex(File);
     m_Player2.stop();
     m_Player.play();
-    currentMedia = File;
+    m_currentMedia = File;
 }
 
 
 void AudioThread::SlotPlayRandom()
 {
     bufferAudio();
-    if (currentPlayer == 0)
+    if (m_currentPlayer == 0)
     {
         // start buffered player
-        currentMedia = m_playList2.currentIndex();
+        m_currentMedia = m_playList2.currentIndex();
         m_Player2.play();
-        currentPlayer = 1;
+        m_currentPlayer = 1;
     }
     else
     {
         // start buffered player
-        currentMedia = m_playList.currentIndex();
+        m_currentMedia = m_playList.currentIndex();
         m_Player.play();
-        currentPlayer = 0;
+        m_currentPlayer = 0;
     }
     m_doubleBufferTimer.start();
 }
 
 void AudioThread::bufferAudio()
 {
-    if (currentPlayer < 0)
+    if (m_currentPlayer < 0)
     {
         qint32 size = m_playList.mediaCount();
         if (size > 0)
@@ -172,7 +172,7 @@ void AudioThread::bufferAudio()
             m_Player2.stop();
             m_playList.setCurrentIndex(newMedia);
             if (std::get<0>(m_PlayListdata[newMedia]) > 0  &&
-                currentPlayer >= 0 &&
+                m_currentPlayer >= 0 &&
                 newMedia2 == newMedia)
             {
                 m_Player.setPosition(std::get<0>(m_PlayListdata[newMedia]));
@@ -191,7 +191,7 @@ void AudioThread::stopSecondPlayer()
     if (size > 0)
     {
         qint32 newMedia = GlobalUtils::randIntBase(0, size - 1);
-        if (currentPlayer == 0)
+        if (m_currentPlayer == 0)
         {
             // load buffe on current player
             m_Player2.stop();
@@ -322,9 +322,9 @@ void AudioThread::setLoadBaseGameFolders(bool loadBaseGameFolders)
 
 void AudioThread::SlotCheckMusicEnded(qint64 duration)
 {
-    if (currentMedia >= 0 && currentMedia < m_PlayListdata.size())
+    if (m_currentMedia >= 0 && m_currentMedia < m_PlayListdata.size())
     {
-        qint64 loopPos = std::get<1>(m_PlayListdata[currentMedia]);
+        qint64 loopPos = std::get<1>(m_PlayListdata[m_currentMedia]);
         if ((loopPos <= duration) &&
             (loopPos > 0))
         {

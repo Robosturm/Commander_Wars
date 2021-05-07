@@ -78,9 +78,9 @@ void Wikipage::loadText(QString text)
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
-    pLabel->setPosition(10, y);
+    pLabel->setPosition(10, m_y);
     m_pPanel->addItem(pLabel);
-    y += pLabel->getTextRect().getHeight() + 10;
+    m_y += pLabel->getTextRect().getHeight() + 10;
 }
 
 
@@ -94,9 +94,9 @@ void Wikipage::loadHeadline(QString text)
     oxygine::spTextField pLabel = oxygine::spTextField::create();
     pLabel->setStyle(style);
     pLabel->setHtmlText(text);
-    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, y);
+    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth() / 2, m_y);
     m_pPanel->addItem(pLabel);
-    y += 80;
+    m_y += 80;
 }
 
 void Wikipage::showLink(QString pageID)
@@ -116,11 +116,11 @@ void Wikipage::loadImage(QString file, float scale, QString pageID)
     WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
     oxygine::spSprite pSprite = pWikiDatabase->getIcon(file, 24);
     pSprite->setScale(scale);
-    pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+    pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, m_y);
     pSprite->addClickListener([=](oxygine::Event*)
     {
         emit sigShowLink(pageID);
     });
     m_pPanel->addItem(pSprite);
-    y += pSprite->getScaledHeight() + 10;
+    m_y += pSprite->getScaledHeight() + 10;
 }

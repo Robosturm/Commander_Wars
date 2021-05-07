@@ -21,7 +21,7 @@ public:
     virtual ~RxTask();
     void swapNetworkInterface(NetworkInterface* pCommIF)
     {
-        pIF = pCommIF;
+        m_pIF = pCommIF;
     }
     quint64 getSocketID() const;
     void setSocketID(const quint64 &SocketID);
@@ -29,7 +29,7 @@ public slots:
     void recieveData();
 private:
    QIODevice* m_pSocket;
-   NetworkInterface* pIF;
+   NetworkInterface* m_pIF;
    quint64 m_SocketID;
    QDataStream m_pStream;
    bool m_useReceivedId{false};

@@ -18,7 +18,7 @@ Campaign::Campaign(QString file)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    scriptFile = file;
+    m_scriptFile = file;
     init();
 }
 
@@ -40,24 +40,24 @@ Campaign::~Campaign()
 void Campaign::init()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
-    if (!scriptFile.isEmpty())
+    if (!m_scriptFile.isEmpty())
     {
-        if (QFile::exists(scriptFile))
+        if (QFile::exists(m_scriptFile))
         {
-            QFile file(scriptFile);
+            QFile file(m_scriptFile);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
-            script = stream.readAll();
+            m_script = stream.readAll();
             file.close();
-            pInterpreter->loadScript(script, scriptName);
-            loaded = true;
+            pInterpreter->loadScript(m_script, scriptName);
+            m_loaded = true;
         }
         else
         {
-            scriptFile = "";
-            script = "";
+            m_scriptFile = "";
+            m_script = "";
             pInterpreter->deleteObject(scriptName);
-            loaded = false;
+            m_loaded = false;
         }
     }
 }
@@ -180,8 +180,8 @@ QString Campaign::getDescription()
 void Campaign::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
-    pStream << script;
-    pStream << scriptFile;
+    pStream << m_script;
+    pStream << m_scriptFile;
     m_Variables.serializeObject(pStream);
 }
 
@@ -189,13 +189,13 @@ void Campaign::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    pStream >> script;
-    pStream >> scriptFile;
-    if (!script.isEmpty())
+    pStream >> m_script;
+    pStream >> m_scriptFile;
+    if (!m_script.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
-        pInterpreter->loadScript(script, scriptName);
-        loaded = true;
+        pInterpreter->loadScript(m_script, scriptName);
+        m_loaded = true;
     }
     m_Variables.deserializeObject(pStream);
 

@@ -37,8 +37,8 @@ DialogModifyBuilding::DialogModifyBuilding(Building* pBuilding)
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigFinished();
+        detach();
     });
 
 

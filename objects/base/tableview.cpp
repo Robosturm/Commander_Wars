@@ -162,13 +162,13 @@ void TableView::setCurrentItem(qint32 i)
     m_VLines[i]->setPriority(1);
     m_VLines[i + 1]->setColor(color2);
     m_VLines[i + 1]->setPriority(1);
-    currentItem = i;
+    m_currentItem = i;
     
 }
 
 qint32 TableView::getCurrentItem() const
 {
-    return currentItem;
+    return m_currentItem;
 }
 
 QStringList TableView::getItem(qint32 i)

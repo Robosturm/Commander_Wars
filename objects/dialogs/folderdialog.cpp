@@ -57,8 +57,8 @@ FolderDialog::FolderDialog(QString startFolder)
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigCancel();
+        detach();
     });
 
     // go folder up

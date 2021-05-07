@@ -44,7 +44,7 @@ ReplayMenu::ReplayMenu(QString filename)
         loadUIButtons();
         m_HumanInput = spHumanPlayerInput::create();
         m_HumanInput->init();
-        gameStarted = true;
+        m_gameStarted = true;
         Console::print("emitting sigActionPerformed()", Console::eDEBUG);
         emit sigActionPerformed();
     }
@@ -82,7 +82,7 @@ void ReplayMenu::showRecordInvalid()
 void ReplayMenu::exitReplay()
 {
     
-    gameStarted = false;
+    m_gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
@@ -230,14 +230,16 @@ void ReplayMenu::loadUIButtons()
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    xyTextInfo = spLabel::create(180);
-    xyTextInfo->setStyle(style);
-    xyTextInfo->setHtmlText("X: 0 Y: 0");
-    xyTextInfo->setPosition(8, 8);
-    pButtonBox->addChild(xyTextInfo);
+    m_xyTextInfo = spLabel::create(180);
+    m_xyTextInfo->setStyle(style);
+    m_xyTextInfo->setHtmlText("X: 0 Y: 0");
+    m_xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(m_xyTextInfo);
     pButtonBox->setSize(200, 50);
     pButtonBox->setPosition((Settings::getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    m_XYButtonBox = pButtonBox;
+    m_XYButtonBox->setVisible(Settings::getShowIngameCoordinates());
     addChild(pButtonBox);
     
 }
@@ -335,6 +337,7 @@ void ReplayMenu::seekToDay(qint32 day)
         pMap->setPosition(pos);
         pMap->updateSprites();
         pMap->getGameRules()->createFogVision();
+        updatePlayerinfo();
         Mainapp::getInstance()->continueRendering();
         connectMap();
         connectMapCursor();
@@ -386,10 +389,7 @@ void ReplayMenu::startFastForward()
     
     m_StoredShowAnimations = Settings::getShowAnimations();
     Settings::setShowAnimations(GameEnums::AnimationMode::AnimationMode_None);
-    if (GameAnimationFactory::getAnimationCount() > 0)
-    {
-        GameAnimationFactory::finishAllAnimations();
-    }
+    skipAnimations();
     
 }
 

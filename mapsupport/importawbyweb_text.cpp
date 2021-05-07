@@ -47,20 +47,20 @@ void GameMap::importAWByWebMap(QString file)
         // load 16 players :)
         for (qint32 i = 0; i < 16; i++)
         {
-            players.append(spPlayer::create());
-            players[i]->init();
+            m_players.append(spPlayer::create());
+            m_players[i]->init();
         }
         // load empty map
         qint32 mapHeigth = mapIDs.size();
         for (qint32 y = 0; y < mapHeigth; y++)
         {
             pLoadingScreen->setProgress(tr("Loading Empty Map Row ") + QString::number(y) + tr(" of ") + QString::number(mapHeigth), 10 + 20 * y / mapHeigth);
-            fields.append(QVector<spTerrain>());
+            m_fields.append(QVector<spTerrain>());
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
-                fields[y].append(pTerrain);
+                m_fields[y].append(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }

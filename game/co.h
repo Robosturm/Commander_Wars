@@ -639,10 +639,10 @@ private:
     void loadResAnim(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
 private:
     Player* m_Owner;
-    QString coID;
-    qint32 powerStars{0};
-    qint32 superpowerStars{0};
-    double powerFilled{0.0};
+    QString m_coID;
+    qint32 m_powerStars{0};
+    qint32 m_superpowerStars{0};
+    double m_powerFilled{0.0};
     spUnit m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;

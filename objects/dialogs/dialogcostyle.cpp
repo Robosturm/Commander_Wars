@@ -42,10 +42,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* event)
     {
         event->stopPropagation();
-        Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
-        emit pCOSpriteManager->sigLoadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
-        detach();
+        Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
+        emit pCOSpriteManager->sigLoadResAnim(m_currentCOID, m_ResFilePath, m_colorTable, m_maskTable, m_useColorBox);
         emit sigFinished();
+        detach();
     });
 
     // cancel button
@@ -54,8 +54,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigCancel();
+        detach();
     });
     qint32 heigth = Settings::getHeight() - 320;
     qint32 width = Settings::getWidth() / 2 - 80;
@@ -128,10 +128,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     if (currentStyle != nullptr)
     {
-        maskTable = std::get<3>(*currentStyle);
-        for (qint32 i = 0; i < maskTable.width(); i++)
+        m_maskTable = std::get<3>(*currentStyle);
+        for (qint32 i = 0; i < m_maskTable.width(); i++)
         {
-            QColor color = maskTable.pixelColor(i, 0);
+            QColor color = m_maskTable.pixelColor(i, 0);
             m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
         }
     }
@@ -141,10 +141,10 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
 void DialogCOStyle::selecetedColorChanged(QColor color)
 {
-    if (currentPixel < maskTable.width())
+    if (m_currentPixel < m_maskTable.width())
     {
-        maskTable.setPixelColor(currentPixel, 0, color);
-        m_Pixels[currentPixel]->setColor(color.red(), color.green(), color.blue(), 255);
+        m_maskTable.setPixelColor(m_currentPixel, 0, color);
+        m_Pixels[m_currentPixel]->setColor(color.red(), color.green(), color.blue(), 255);
         updateSprites();
     }
 }
@@ -173,12 +173,12 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         QFile file(m_ResFilePath + "+table.png");
         if (file.exists())
         {
-            useColorBox = false;
+            m_useColorBox = false;
             QVector<QString> items;
-            baseColorTable.load(m_ResFilePath + "+table.png");
-            colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-            maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-            for (qint32 i = 0; i < baseColorTable.height(); i++)
+            m_baseColorTable.load(m_ResFilePath + "+table.png");
+            m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+            m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+            for (qint32 i = 0; i < m_baseColorTable.height(); i++)
             {
                 items.append(tr("CO Style ") + QString::number(i));
             }
@@ -188,11 +188,11 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         }
         else
         {
-            useColorBox = true;
+            m_useColorBox = true;
             QImage src(m_ResFilePath + "+nrm.png");
-            baseColorTable = SpriteCreator::createColorTable(src);
-            colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-            maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+            m_baseColorTable = SpriteCreator::createColorTable(src);
+            m_colorTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
+            m_maskTable = m_baseColorTable.copy(0, 0, m_baseColorTable.width(), 1);
             QVector<QString> items;
             items.append(tr("CO Style ") + QString::number(0));
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
@@ -201,10 +201,10 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         }
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
         {
-            maskTable = baseColorTable.copy(0, item, baseColorTable.width(), 1);
-            for (qint32 i = 0; i < maskTable.width(); i++)
+            m_maskTable = m_baseColorTable.copy(0, item, m_baseColorTable.width(), 1);
+            for (qint32 i = 0; i < m_maskTable.width(); i++)
             {
-                QColor color = maskTable.pixelColor(i, 0);
+                QColor color = m_maskTable.pixelColor(i, 0);
                 m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
             }
             updateSprites();
@@ -220,18 +220,18 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
         m_PixelsSelector->setPriority(-1);
         m_pPixelPanel->addItem(m_PixelsSelector);
-        for (qint32 i = 0; i < maskTable.width(); i++)
+        for (qint32 i = 0; i < m_maskTable.width(); i++)
         {
             oxygine::spColorRectSprite pixel = oxygine::spColorRectSprite::create();
             pixel->setSize(16, 16);
-            QColor color = maskTable.pixelColor(i, 0);
+            QColor color = m_maskTable.pixelColor(i, 0);
             pixel->setColor(color.red(), color.green(), color.blue(), 255);
             pixel->setPosition(xStep * 22 + 5, y);
             pixel->addClickListener([=](oxygine::Event* pEvent)
             {
                 pEvent->stopPropagation();
                 m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
-                currentPixel = i;
+                m_currentPixel = i;
 
             });
 
@@ -306,6 +306,6 @@ void DialogCOStyle::updateSprites()
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
-    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+    m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", m_colorTable, m_maskTable, m_useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
     m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
 }

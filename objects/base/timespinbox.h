@@ -65,8 +65,8 @@ private:
     oxygine::spButton m_pArrowDown;
     oxygine::spButton m_pArrowUp;
     QString m_Text;
-    QElapsedTimer toggle;
-    qint32 curmsgpos{0};
+    QElapsedTimer m_toggle;
+    qint32 m_curmsgpos{0};
     qint32 m_spinDirection{0};
     qint32 m_SpinSpeed{1000 * 60};
 };

@@ -39,16 +39,16 @@ QThread Mainapp::m_GameServerThread;
 WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
 bool Mainapp::m_slave{false};
-QMutex Mainapp::crashMutex;
+QMutex Mainapp::m_crashMutex;
 
 Mainapp::Mainapp()
 {
     setObjectName("Mainapp");
-    pMainThread = QThread::currentThread();
+    m_pMainThread = QThread::currentThread();
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
 
-    pMainThread->setObjectName("Mainthread");
+    m_pMainThread->setObjectName("Mainthread");
     m_Workerthread.setObjectName("Workerthread");
     m_AudioWorker.setObjectName("AudioWorker");
     m_Networkthread.setObjectName("Networkthread");
@@ -76,7 +76,7 @@ Mainapp::~Mainapp()
 bool Mainapp::isWorker()
 {
     return QThread::currentThread() == &m_Workerthread ||
-            QThread::currentThread() == pMainThread;
+            QThread::currentThread() == m_pMainThread;
 }
 
 void Mainapp::loadRessources()
@@ -496,18 +496,18 @@ void Mainapp::showCrashReport(QString log)
         {
             // unlock crashed process
             counter--;
-            crashMutex.unlock();
+            m_crashMutex.unlock();
         }
     }
     else
     {
         // swap to gui thread
         counter++;
-        crashMutex.lock();
+        m_crashMutex.lock();
         emit Mainapp::getInstance()->sigShowCrashReport(log);
         // lock crash thread
-        crashMutex.lock();
-        crashMutex.unlock();
+        m_crashMutex.lock();
+        m_crashMutex.unlock();
     }
 }
 

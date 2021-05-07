@@ -282,15 +282,15 @@ private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
-    spLabel xyTextInfo;
+    spLabel m_xyTextInfo;
 
     static EditorMenue* m_pInstance;
 
-    qint32 tempCounter{0};
+    qint32 m_tempCounter{0};
 
-    QRect copyRect{-1, -1, 0, 0};
-    oxygine::spActor copyRectActor{oxygine::spActor::create()};
-    oxygine::spActor cursorActor{oxygine::spActor::create()};
+    QRect m_copyRect{-1, -1, 0, 0};
+    oxygine::spActor m_copyRectActor{oxygine::spActor::create()};
+    oxygine::spActor m_cursorActor{oxygine::spActor::create()};
 
     QTimer m_autosaveTimer;
 };

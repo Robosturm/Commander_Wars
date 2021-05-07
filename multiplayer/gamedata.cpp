@@ -13,11 +13,11 @@ void GameData::serializeObject(QDataStream& pStream) const
     pStream << m_Player;
     pStream << m_MaxPlayer;
     pStream << m_Version;
-    pStream << password;
-    pStream << static_cast<qint32>(modData.size());
-    for (qint32 i = 0; i < modData.size(); ++i)
+    pStream << m_password;
+    pStream << static_cast<qint32>(m_modData.size());
+    for (qint32 i = 0; i < m_modData.size(); ++i)
     {
-        pStream << modData[i];
+        pStream << m_modData[i];
     }
 }
 
@@ -30,14 +30,14 @@ void GameData::deserializeObject(QDataStream& pStream)
     pStream >> m_Player;
     pStream >> m_MaxPlayer;
     pStream >> m_Version;
-    pStream >> password;
+    pStream >> m_password;
     qint32 size = 0;
     pStream >> size;
-    modData.clear();
+    m_modData.clear();
     for (qint32 i = 0; i < size; ++i)
     {
         QString value;
         pStream >> value;
-        modData.append(value);
+        m_modData.append(value);
     }
 }

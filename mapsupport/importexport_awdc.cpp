@@ -29,18 +29,18 @@ void GameMap::importAWDCMap(QString file)
         // load 5 players :)
         for (qint32 i = 0; i < 9; i++)
         {
-            players.append(spPlayer::create());
-            players[i]->init();
+            m_players.append(spPlayer::create());
+            m_players[i]->init();
         }
 
         for (qint32 y = 0; y < heigth; y++)
         {
-            fields.append(QVector<spTerrain>());
+            m_fields.append(QVector<spTerrain>());
             for (qint32 x = 0; x < width; x++)
             {
                 spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
-                fields[y].append(pTerrain);
+                m_fields[y].append(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
             }

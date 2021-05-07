@@ -48,7 +48,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             pEvent->stopPropagation();
             m_scroll = 1;
             m_currentScrollspeed = m_Scrollspeed;
-            speedCounter = 0;
+            m_speedCounter = 0;
             emit sigStartEditValue();
         }
     });
@@ -90,7 +90,7 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             pEvent->stopPropagation();
             m_scroll = -1;
             m_currentScrollspeed = m_Scrollspeed;
-            speedCounter = 0;
+            m_speedCounter = 0;
             emit sigStartEditValue();
         }
     });
@@ -281,8 +281,8 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentWidth > m_Width)
             {
-                speedCounter++;
-                if (speedCounter % 8 == 0)
+                m_speedCounter++;
+                if (m_speedCounter % 8 == 0)
                 {
                     m_currentScrollspeed *= 2;
                 }

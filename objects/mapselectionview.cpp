@@ -213,7 +213,12 @@ void MapSelectionView::loadCurrentMap()
 
 void MapSelectionView::loadMap(QFileInfo info, bool fast)
 {
-    
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
+    {
+        m_BuildingCountTexts[i]->setVisible(false);
+        m_BuildingCountSprites[i]->setVisible(false);
+    }
     if (info.isFile() &&
         (info != m_currentMapFile || !fast) &&
         (info.fileName().endsWith(".map") ||
@@ -243,7 +248,6 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
         m_MapPlayerCount->setVisible(true);
         m_currentMapFile = info;
         loadMapVictoryInfo();
-        BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         qint32 pos = 0;
         for (qint32 i = 0; i < pBuildingSpriteManager->getCount(); i++)
         {
@@ -259,11 +263,6 @@ void MapSelectionView::loadMap(QFileInfo info, bool fast)
                 building->setY(building->oxygine::Actor::getY() + 5 + GameMap::getImageSize() / 2);
                 building->setVisible(true);
                 pos++;
-            }
-            else
-            {
-                m_BuildingCountTexts[i]->setVisible(false);
-                m_BuildingCountSprites[i]->setVisible(false);
             }
         }
         m_content->setSize(pos * (GameMap::getImageSize() + 12), 100);

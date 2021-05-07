@@ -148,7 +148,7 @@ void Chat::addMessage(QString message, bool local)
     if (show)
     {
         messages.append(message);
-        if (messages.size() > bufferSize)
+        if (messages.size() > m_bufferSize)
         {
             messages.pop_front();
         }
@@ -208,7 +208,7 @@ void Chat::sendData(QString message)
         }
 
         addMessage(text, true);
-        if (messages.size() > bufferSize)
+        if (messages.size() > m_bufferSize)
         {
             messages.pop_front();
         }

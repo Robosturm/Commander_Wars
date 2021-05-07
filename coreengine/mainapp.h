@@ -183,14 +183,14 @@ protected:
     virtual void keyReleaseEvent(QKeyEvent *event) override;
 private:
     static Mainapp* m_pMainapp;
-    static QMutex crashMutex;
+    static QMutex m_crashMutex;
     static QThread m_Workerthread;
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
     static QThread m_GameServerThread;
     static WorkerThread* m_Worker;
     static AudioThread* m_Audiothread;
-    QThread* pMainThread{nullptr};
+    QThread* m_pMainThread{nullptr};
     static bool m_slave;
     bool m_noUi{false};
 };

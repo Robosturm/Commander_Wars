@@ -88,13 +88,13 @@ std::chrono::seconds Settings::autoSavingCylceTime = std::chrono::minutes(0);
 qint32 Settings::autoSavingCycle = 0;
 
 // ingame options
-GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
-GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
-quint32 Settings::animationSpeed = 1;
+GameEnums::AnimationMode Settings::m_showAnimations = GameEnums::AnimationMode_All;
+GameEnums::BattleAnimationMode Settings::m_battleAnimations = GameEnums::BattleAnimationMode_Detail;
+quint32 Settings::m_animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
-quint32 Settings::walkAnimationSpeed = 20;
-quint32 Settings::dialogAnimationSpeed = 20;
-quint32 Settings::captureAnimationSpeed = 1;
+quint32 Settings::m_walkAnimationSpeed = 20;
+quint32 Settings::m_dialogAnimationSpeed = 20;
+quint32 Settings::m_captureAnimationSpeed = 1;
 bool Settings::m_dialogAnimation = true;
 quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
@@ -546,20 +546,20 @@ void Settings::setShowIngameCoordinates(bool showIngameCoordinates)
 
 quint32 Settings::getWalkAnimationSpeedValue()
 {
-    return walkAnimationSpeed;
+    return m_walkAnimationSpeed;
 }
 
 void Settings::setWalkAnimationSpeed(const quint32 &value)
 {
-    walkAnimationSpeed = value;
+    m_walkAnimationSpeed = value;
 }
 
 
 float Settings::getWalkAnimationSpeed()
 {
-    if (walkAnimationSpeed <= 100)
+    if (m_walkAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - walkAnimationSpeed);
+        return 100.0f / (101.0f - m_walkAnimationSpeed);
     }
     return 100;
 }
@@ -1118,26 +1118,26 @@ void Settings::loadSettings()
 
     // game
     settings.beginGroup("Game");
-    showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
-    if (!ok || showAnimations < GameEnums::AnimationMode_None || showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
+    m_showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
+    if (!ok || m_showAnimations < GameEnums::AnimationMode_None || m_showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " ShowAnimations";
         Console::print(error, Console::eERROR);
-        animationSpeed = GameEnums::AnimationMode_All;
+        m_animationSpeed = GameEnums::AnimationMode_All;
     }
-    battleAnimations  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimations", 0).toInt(&ok));
-    if (!ok || battleAnimations < GameEnums::BattleAnimationMode_Detail || battleAnimations > GameEnums::BattleAnimationMode_Overworld)
+    m_battleAnimations  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimations", 0).toInt(&ok));
+    if (!ok || m_battleAnimations < GameEnums::BattleAnimationMode_Detail || m_battleAnimations > GameEnums::BattleAnimationMode_Overworld)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " BattleAnimations";
         Console::print(error, Console::eERROR);
-        battleAnimations = GameEnums::BattleAnimationMode_Detail;
+        m_battleAnimations = GameEnums::BattleAnimationMode_Detail;
     }
-    animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
-    if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
+    m_animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || m_animationSpeed <= 0 ||  m_animationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " AnimationSpeed";
         Console::print(error, Console::eERROR);
-        animationSpeed = 1u;
+        m_animationSpeed = 1u;
     }
     battleAnimationSpeed = settings.value("BattleAnimationSpeed", 1u).toUInt(&ok);
     if(!ok || battleAnimationSpeed <= 0 ||  battleAnimationSpeed > 100u)
@@ -1146,26 +1146,26 @@ void Settings::loadSettings()
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
-    walkAnimationSpeed = settings.value("WalkAnimationSpeed", 20u).toUInt(&ok);
-    if(!ok || walkAnimationSpeed <= 0 ||  walkAnimationSpeed > 100u)
+    m_walkAnimationSpeed = settings.value("WalkAnimationSpeed", 20u).toUInt(&ok);
+    if(!ok || m_walkAnimationSpeed <= 0 ||  m_walkAnimationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " WalkAnimationSpeed";
         Console::print(error, Console::eERROR);
-        walkAnimationSpeed = 20u;
+        m_walkAnimationSpeed = 20u;
     }
-    dialogAnimationSpeed = settings.value("DialogAnimationSpeed", 1u).toUInt(&ok);
-    if(!ok || dialogAnimationSpeed <= 0 ||  dialogAnimationSpeed > 100u)
+    m_dialogAnimationSpeed = settings.value("DialogAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || m_dialogAnimationSpeed <= 0 ||  m_dialogAnimationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " DialogAnimationSpeed";
         Console::print(error, Console::eERROR);
-        dialogAnimationSpeed = 20u;
+        m_dialogAnimationSpeed = 20u;
     }
-    captureAnimationSpeed = settings.value("CaptureAnimationSpeed", 1u).toUInt(&ok);
-    if(!ok || captureAnimationSpeed <= 0 ||  captureAnimationSpeed > 100u)
+    m_captureAnimationSpeed = settings.value("CaptureAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || m_captureAnimationSpeed <= 0 ||  m_captureAnimationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " CaptureAnimationSpeed";
         Console::print(error, Console::eERROR);
-        captureAnimationSpeed = 1u;
+        m_captureAnimationSpeed = 1u;
     }
 
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
@@ -1354,13 +1354,13 @@ void Settings::saveSettings()
         settings.endGroup();
 
         settings.beginGroup("Game");
-        settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
-        settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
+        settings.setValue("ShowAnimations",                 static_cast<qint32>(m_showAnimations));
+        settings.setValue("BattleAnimations",               static_cast<qint32>(m_battleAnimations));
         settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
-        settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(walkAnimationSpeed));
-        settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(dialogAnimationSpeed));
-        settings.setValue("CaptureAnimationSpeed",           static_cast<qint32>(captureAnimationSpeed));
-        settings.setValue("AnimationSpeed",                 animationSpeed);
+        settings.setValue("WalkAnimationSpeed",             static_cast<qint32>(m_walkAnimationSpeed));
+        settings.setValue("DialogAnimationSpeed",           static_cast<qint32>(m_dialogAnimationSpeed));
+        settings.setValue("CaptureAnimationSpeed",           static_cast<qint32>(m_captureAnimationSpeed));
+        settings.setValue("AnimationSpeed",                 m_animationSpeed);
         settings.setValue("MultiTurnCounter",               multiTurnCounter);
         settings.setValue("LastSaveGame",                   m_LastSaveGame);
         settings.setValue("Username",                       m_Username);
@@ -1436,12 +1436,12 @@ void Settings::setMouseSensitivity(float value)
 
 GameEnums::AnimationMode Settings::getShowAnimations()
 {
-    return showAnimations;
+    return m_showAnimations;
 }
 
 void Settings::setShowAnimations(GameEnums::AnimationMode value)
 {
-    showAnimations = value;
+    m_showAnimations = value;
 }
 
 void Settings::setFullscreen(bool fullscreen)
@@ -1466,21 +1466,21 @@ void Settings::setHeight(const qint32 &height)
 
 float Settings::getAnimationSpeedValue()
 {
-    return animationSpeed;
+    return m_animationSpeed;
 }
 
 float Settings::getAnimationSpeed()
 {
-    if (animationSpeed <= 100)
+    if (m_animationSpeed <= 100)
     {
-        return 100.0f / (101.0f - animationSpeed);
+        return 100.0f / (101.0f - m_animationSpeed);
     }
     return 100;
 }
 
 void Settings::setAnimationSpeed(const quint32 &value)
 {
-    animationSpeed = value;
+    m_animationSpeed = value;
 }
 
 float Settings::getBattleAnimationSpeedValue()
@@ -1504,40 +1504,40 @@ void Settings::setBattleAnimationSpeed(const quint32 &value)
 
 float Settings::getDialogAnimationSpeedValue()
 {
-    return dialogAnimationSpeed;
+    return m_dialogAnimationSpeed;
 }
 
 float Settings::getDialogAnimationSpeed()
 {
-    if (dialogAnimationSpeed <= 100)
+    if (m_dialogAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - dialogAnimationSpeed);
+        return 100.0f / (101.0f - m_dialogAnimationSpeed);
     }
     return 100;
 }
 
 void Settings::setDialogAnimationSpeed(const quint32 &value)
 {
-    dialogAnimationSpeed = value;
+    m_dialogAnimationSpeed = value;
 }
 
 float Settings::getCaptureAnimationSpeedValue()
 {
-    return captureAnimationSpeed;
+    return m_captureAnimationSpeed;
 }
 
 float Settings::getCaptureAnimationSpeed()
 {
-    if (captureAnimationSpeed <= 100)
+    if (m_captureAnimationSpeed <= 100)
     {
-        return 100.0f / (101.0f - captureAnimationSpeed);
+        return 100.0f / (101.0f - m_captureAnimationSpeed);
     }
     return 100;
 }
 
 void Settings::setCaptureAnimationSpeed(const quint32 &value)
 {
-    captureAnimationSpeed = value;
+    m_captureAnimationSpeed = value;
 }
 
 Qt::Key Settings::getKey_up()
@@ -1722,12 +1722,12 @@ void Settings::setMultiTurnCounter(const quint32 &value)
 
 GameEnums::BattleAnimationMode Settings::getBattleAnimations()
 {
-    return battleAnimations;
+    return m_battleAnimations;
 }
 
 void Settings::setBattleAnimations(const GameEnums::BattleAnimationMode &value)
 {
-    battleAnimations = value;
+    m_battleAnimations = value;
 }
 
 Qt::Key Settings::getKey_moveMapLeft()

@@ -44,8 +44,8 @@ DialogUnitInfo::DialogUnitInfo(Player* pPlayer)
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigFinished();
+        detach();
     });
     spPanel pPanel = spPanel::create(true, QSize(Settings::getWidth() - 60, Settings::getHeight() - 150),
                                QSize(Settings::getWidth() - 60, Settings::getHeight() - 150));

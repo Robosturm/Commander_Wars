@@ -47,8 +47,8 @@ void Player::init()
     QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
     pInterpreter->doFunction("PLAYER", function, args);
-    team = getPlayerID();
-    setColor(m_Color, team);
+    m_team = getPlayerID();
+    setColor(m_Color, m_team);
 }
 
 BaseGameInputIF* Player::getBaseGameInput()
@@ -59,13 +59,13 @@ BaseGameInputIF* Player::getBaseGameInput()
 float Player::getUnitBuildValue(QString unitID)
 {
     float modifier = 0.0f;
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        modifier += playerCOs[0]->getUnitBuildValue(unitID);
+        modifier += m_playerCOs[0]->getUnitBuildValue(unitID);
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        modifier += playerCOs[1]->getUnitBuildValue(unitID);
+        modifier += m_playerCOs[1]->getUnitBuildValue(unitID);
     }
     return modifier;
 }
@@ -106,16 +106,16 @@ void Player::loadVisionFields()
 
 void Player::loadCOMusic()
 {
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        playerCOs[0]->loadCOMusic();
+        m_playerCOs[0]->loadCOMusic();
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        playerCOs[1]->loadCOMusic();
+        m_playerCOs[1]->loadCOMusic();
     }
-    if (playerCOs[0].get() == nullptr &&
-        playerCOs[0].get() == nullptr)
+    if (m_playerCOs[0].get() == nullptr &&
+        m_playerCOs[0].get() == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         qint32 count = GlobalUtils::randIntBase(0, 1);
@@ -134,11 +134,11 @@ QColor Player::getColor() const
 
 void Player::swapCOs()
 {
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        spCO co0 = playerCOs[0];
-        playerCOs[0] = playerCOs[1];
-        playerCOs[1] = co0;
+        spCO co0 = m_playerCOs[0];
+        m_playerCOs[0] = m_playerCOs[1];
+        m_playerCOs[1] = co0;
         spGameMenue pGameMenue = GameMenue::getInstance();
         if (pGameMenue.get() != nullptr)
         {
@@ -352,7 +352,7 @@ void Player::createTable(QColor baseColor)
 
 void Player::setPlayerArmy(const QString &value)
 {
-    playerArmy = value;
+    m_playerArmy = value;
 }
 
 bool Player::getPlayerArmySelected() const
@@ -417,7 +417,7 @@ bool Player::getFlipUnitSprites() const
     {
         if (pMap->getGameRules()->getTeamFacingUnits())
         {
-            return !GlobalUtils::isEven(team);
+            return !GlobalUtils::isEven(m_team);
         }
         else
         {
@@ -435,9 +435,9 @@ bool Player::getFlipUnitSprites() const
 
 QString Player::getArmy()
 {
-    if (!playerArmy.isEmpty())
+    if (!m_playerArmy.isEmpty())
     {
-        return playerArmy;
+        return m_playerArmy;
     }
     else
     {
@@ -467,7 +467,7 @@ GameEnums::Alliance Player::checkAlliance(Player* pPlayer)
     else
     {
         if ((pPlayer != nullptr) &&
-            (team == pPlayer->getTeam()))
+            (m_team == pPlayer->getTeam()))
         {
             return GameEnums::Alliance_Friend;
         }
@@ -496,7 +496,7 @@ bool Player::isAlly(Player* pOwner)
 
 void Player::setFunds(const qint32 &value)
 {
-    funds = value;
+    m_funds = value;
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
@@ -506,12 +506,12 @@ void Player::setFunds(const qint32 &value)
 
 void Player::addFunds(const qint32 &value)
 {
-    setFunds(funds + value);
+    setFunds(m_funds + value);
 }
 
 qint32 Player::getFunds() const
 {
-    return funds;
+    return m_funds;
 }
 
 qint32 Player::getBuildingCount(QString buildingID)
@@ -619,12 +619,12 @@ qint32 Player::getUnitCount(Unit* pUnit, QString unitID)
 
 qint32 Player::getTeam() const
 {
-    return team;
+    return m_team;
 }
 
 void Player::setTeam(const qint32 &value)
 {
-    team = value;
+    m_team = value;
 }
 
 void Player::defeatPlayer(Player* pPlayer, bool units)
@@ -687,7 +687,7 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
             }
         }
     }
-    isDefeated = true;
+    m_isDefeated = true;
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
@@ -697,13 +697,13 @@ void Player::defeatPlayer(Player* pPlayer, bool units)
 
 bool Player::getIsDefeated() const
 {
-    return isDefeated;
+    return m_isDefeated;
 }
 
 qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
 {
     qint32 reduction = 0;
-    if (!isDefeated)
+    if (!m_isDefeated)
     {
         CO* pCO = getCO(0);
         if (pCO != nullptr)
@@ -721,7 +721,7 @@ qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
 
 void Player::postAction(GameAction* pAction)
 {
-    if (!isDefeated)
+    if (!m_isDefeated)
     {
         CO* pCO = getCO(0);
         if (pCO != nullptr)
@@ -771,56 +771,56 @@ qint32 Player::calcArmyValue()
 
 void Player::earnMoney(float modifier)
 {
-    setFunds(funds + calcIncome(modifier));
+    setFunds(m_funds + calcIncome(modifier));
 }
 
 qint32 Player::getCostModifier(QString id, qint32 baseCost)
 {
     qint32 costModifier = 0;
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        costModifier += playerCOs[0]->getCostModifier(id, baseCost);
+        costModifier += m_playerCOs[0]->getCostModifier(id, baseCost);
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        costModifier += playerCOs[1]->getCostModifier(id, baseCost);
+        costModifier += m_playerCOs[1]->getCostModifier(id, baseCost);
     }
     return costModifier;
 }
 
 void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {
-    if (!isDefeated)
+    if (!m_isDefeated)
     {
-        if (playerCOs[0].get() != nullptr)
+        if (m_playerCOs[0].get() != nullptr)
         {
-            playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+            m_playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
         }
-        if (playerCOs[1].get() != nullptr)
+        if (m_playerCOs[1].get() != nullptr)
         {
-            playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
+            m_playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender, gotAttacked);
         }
     }
 }
 
 void Player::buildedUnit(Unit* pUnit)
 {
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        playerCOs[0]->buildedUnit(pUnit);
+        m_playerCOs[0]->buildedUnit(pUnit);
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        playerCOs[1]->buildedUnit(pUnit);
+        m_playerCOs[1]->buildedUnit(pUnit);
     }
 }
 
 bool Player::getWeatherImmune()
 {
-    if ((playerCOs[0].get() != nullptr &&
-         playerCOs[0]->getWeatherImmune()) ||
-        (playerCOs[1].get() != nullptr &&
-         playerCOs[1]->getWeatherImmune()))
+    if ((m_playerCOs[0].get() != nullptr &&
+         m_playerCOs[0]->getWeatherImmune()) ||
+        (m_playerCOs[1].get() != nullptr &&
+         m_playerCOs[1]->getWeatherImmune()))
     {
         return true;
     }
@@ -835,13 +835,13 @@ QStringList Player::getBuildList() const
 QStringList Player::getCOUnits(Building* pBuilding)
 {
     QStringList ret;
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        ret.append(playerCOs[0]->getCOUnits(pBuilding));
+        ret.append(m_playerCOs[0]->getCOUnits(pBuilding));
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        ret.append(playerCOs[1]->getCOUnits(pBuilding));
+        ret.append(m_playerCOs[1]->getCOUnits(pBuilding));
     }
     return ret;
 }
@@ -889,7 +889,7 @@ void Player::setBuildlistChanged(bool BuildlistChanged)
 
 void Player::setIsDefeated(bool value)
 {
-    isDefeated = value;
+    m_isDefeated = value;
 }
 
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView)
@@ -1158,13 +1158,13 @@ qint32 Player::getCosts(QString id)
 void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, bool defender, bool counterAttack)
 {
     float speed = GameMap::getInstance()->getGameRules()->getPowerGainSpeed();
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        playerCOs[0]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
+        m_playerCOs[0]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        playerCOs[1]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
+        m_playerCOs[1]->gainPowerstar(fundsDamage * speed, position, hpDamage * speed, defender, counterAttack);
     }
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
@@ -1176,13 +1176,13 @@ void Player::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage,
 qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        modifier += playerCOs[0]->getMovementcostModifier(pUnit, position);
+        modifier += m_playerCOs[0]->getMovementcostModifier(pUnit, position);
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        modifier += playerCOs[1]->getMovementcostModifier(pUnit, position);
+        modifier += m_playerCOs[1]->getMovementcostModifier(pUnit, position);
     }
     if (pUnit->getOwner() == this)
     {
@@ -1228,17 +1228,17 @@ void Player::startOfTurn()
     args1 << obj1;
     pInterpreter->doFunction("PLAYER", function1, args1);
 
-    if (playerCOs[0].get() != nullptr)
+    if (m_playerCOs[0].get() != nullptr)
     {
-        playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
-        playerCOs[0]->setCoRangeEnabled(true);
-        playerCOs[0]->startOfTurn();
+        m_playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
+        m_playerCOs[0]->setCoRangeEnabled(true);
+        m_playerCOs[0]->startOfTurn();
     }
-    if (playerCOs[1].get() != nullptr)
+    if (m_playerCOs[1].get() != nullptr)
     {
-        playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
-        playerCOs[1]->setCoRangeEnabled(true);
-        playerCOs[1]->startOfTurn();
+        m_playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
+        m_playerCOs[1]->setCoRangeEnabled(true);
+        m_playerCOs[1]->startOfTurn();
     }
 }
 
@@ -1342,7 +1342,7 @@ QmlVectorBuilding* Player::getBuildings()
 
 void Player::updateVisualCORange()
 {
-    spCO pCo = playerCOs[0];
+    spCO pCo = m_playerCOs[0];
     if (pCo.get() != nullptr)
     {
         spUnit pCoUnit = pCo->getCOUnit();
@@ -1358,7 +1358,7 @@ void Player::updateVisualCORange()
             }
         }
     }
-    pCo = playerCOs[1];
+    pCo = m_playerCOs[1];
     if (pCo.get() != nullptr)
     {
         spUnit pCoUnit = pCo->getCOUnit();
@@ -1389,7 +1389,7 @@ spCO Player::getspCO(quint8 id)
 {
     if (id <= 1)
     {
-        return playerCOs[id];
+        return m_playerCOs[id];
     }
     else
     {
@@ -1401,7 +1401,7 @@ CO* Player::getCO(quint8 id)
 {
     if (id <= 1)
     {
-        return playerCOs[id].get();
+        return m_playerCOs[id].get();
     }
     else
     {
@@ -1415,11 +1415,11 @@ void Player::setCO(QString coId, quint8 idx)
     {
         if (coId.isEmpty())
         {
-            playerCOs[idx] = nullptr;
+            m_playerCOs[idx] = nullptr;
         }
         else
         {
-            playerCOs[idx] = spCO::create(coId, this);
+            m_playerCOs[idx] = spCO::create(coId, this);
         }
 
     }
@@ -1587,20 +1587,20 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
 
 void Player::defineArmy()
 {
-    if (playerCOs[0].get() != nullptr && !m_playerArmySelected)
+    if (m_playerCOs[0].get() != nullptr && !m_playerArmySelected)
     {
-        playerArmy = playerCOs[0]->getCOArmy();
+        m_playerArmy = m_playerCOs[0]->getCOArmy();
     }
 }
 
 float Player::getFundsModifier() const
 {
-    return fundsModifier;
+    return m_fundsModifier;
 }
 
 void Player::setFundsModifier(float value)
 {
-    fundsModifier = value;
+    m_fundsModifier = value;
 }
 
 qint32 Player::calculatePlayerStrength()
@@ -1629,29 +1629,29 @@ void Player::serializeObject(QDataStream& pStream) const
     quint32 color = m_Color.rgb();
     pStream << color;
 
-    pStream << funds;
-    pStream << fundsModifier;
-    pStream << playerArmy;
-    if (playerCOs[0].get() == nullptr)
+    pStream << m_funds;
+    pStream << m_fundsModifier;
+    pStream << m_playerArmy;
+    if (m_playerCOs[0].get() == nullptr)
     {
         pStream << false;
     }
     else
     {
         pStream << true;
-        playerCOs[0]->serializeObject(pStream);
+        m_playerCOs[0]->serializeObject(pStream);
     }
-    if (playerCOs[1].get() == nullptr)
+    if (m_playerCOs[1].get() == nullptr)
     {
         pStream << false;
     }
     else
     {
         pStream << true;
-        playerCOs[1]->serializeObject(pStream);
+        m_playerCOs[1]->serializeObject(pStream);
     }
-    pStream << team;
-    pStream << isDefeated;
+    pStream << m_team;
+    pStream << m_isDefeated;
     BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
     qint32 width = m_FogVisionFields.size();
     qint32 heigth = 0;
@@ -1702,38 +1702,38 @@ void Player::deserializer(QDataStream& pStream, bool fast)
             qint32 dummy = 0;
             pStream >> dummy;
         }
-        pStream >> funds;
-        pStream >> fundsModifier;
-        pStream >> playerArmy;
+        pStream >> m_funds;
+        pStream >> m_fundsModifier;
+        pStream >> m_playerArmy;
         bool hasC0 = false;
         pStream >> hasC0;
         if (hasC0)
         {
-            playerCOs[0] = spCO::create("", this);
-            playerCOs[0]->deserializer(pStream, fast);
-            if (!playerCOs[0]->isValid())
+            m_playerCOs[0] = spCO::create("", this);
+            m_playerCOs[0]->deserializer(pStream, fast);
+            if (!m_playerCOs[0]->isValid())
             {
-                playerCOs[0] = nullptr;
+                m_playerCOs[0] = nullptr;
             }
         }
         bool hasC1 = false;
         pStream >> hasC1;
         if (hasC1)
         {
-            playerCOs[1] = spCO::create("", this);
-            playerCOs[1]->deserializer(pStream, fast);
-            if (!playerCOs[1]->isValid())
+            m_playerCOs[1] = spCO::create("", this);
+            m_playerCOs[1]->deserializer(pStream, fast);
+            if (!m_playerCOs[1]->isValid())
             {
-                playerCOs[1] = nullptr;
+                m_playerCOs[1] = nullptr;
             }
         }
         if (version > 3)
         {
-            pStream >> team;
+            pStream >> m_team;
         }
         if (version > 4)
         {
-            pStream >> isDefeated;
+            pStream >> m_isDefeated;
             m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream, version);
             if (m_pBaseGameInput.get() != nullptr)
             {

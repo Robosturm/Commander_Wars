@@ -425,10 +425,10 @@ private:
     /**
       *
       */
-    qint32 fireCount{0};
+    qint32 m_fireCount{0};
 
-    bool alwaysVisble{false};
-    bool neutralLoaded{false};
+    bool m_alwaysVisble{false};
+    bool m_neutralLoaded{false};
     qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
 };

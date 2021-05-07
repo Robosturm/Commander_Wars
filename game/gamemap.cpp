@@ -57,7 +57,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     m_mapAuthor = Settings::getUsername();
     loadMapData();
     newMap(width, heigth, playerCount);
-    loaded = true;
+    m_loaded = true;
 }
 
 GameMap::GameMap(QDataStream& stream, bool savegame)
@@ -70,7 +70,7 @@ GameMap::GameMap(QDataStream& stream, bool savegame)
     this->moveToThread(pApp->getWorkerthread());
     loadMapData();
     GameMap::deserializeObject(stream);
-    loaded = true;
+    m_loaded = true;
 }
 
 GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
@@ -87,7 +87,7 @@ GameMap::GameMap(QString map, bool onlyLoad, bool fast, bool savegame)
     QDataStream pStream(&file);
     deserializer(pStream, fast);
     setMapNameFromFilename(map);
-    loaded = true;
+    m_loaded = true;
     if (!onlyLoad)
     {
         updateSprites();
@@ -165,7 +165,7 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
 
 bool GameMap::anyPlayerAlive()
 {
-    for (const auto & player : qAsConst(players))
+    for (const auto & player : qAsConst(m_players))
     {
         if (!player->getIsDefeated())
         {
@@ -327,11 +327,11 @@ GameMap::~GameMap()
         pInterpreter->deleteObject(m_JavascriptName);
     }
     // clean up session
-    for (qint32 y = 0; y < fields.size(); y++)
+    for (qint32 y = 0; y < m_fields.size(); y++)
     {
-        fields[y].clear();
+        m_fields[y].clear();
     }
-    fields.clear();
+    m_fields.clear();
 }
 
 QStringList GameMap::getAllUnitIDs()
@@ -353,7 +353,7 @@ spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        return fields[y][x];
+        return m_fields[y][x];
     }
     else
     {
@@ -365,7 +365,7 @@ Terrain* GameMap::getTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))
     {
-        return fields[y][x].get();
+        return m_fields[y][x].get();
     }
     else
     {
@@ -375,9 +375,9 @@ Terrain* GameMap::getTerrain(qint32 x, qint32 y)
 
 spPlayer GameMap::getspPlayer(qint32 player)
 {
-    if (player >= 0 && player < players.size())
+    if (player >= 0 && player < m_players.size())
     {
-        return players[player];
+        return m_players[player];
     }
     else
     {
@@ -387,9 +387,9 @@ spPlayer GameMap::getspPlayer(qint32 player)
 
 Player* GameMap::getPlayer(qint32 player)
 {
-    if (player >= 0 && player < players.size())
+    if (player >= 0 && player < m_players.size())
     {
-        return players[player].get();
+        return m_players[player].get();
     }
     else
     {
@@ -409,9 +409,9 @@ spPlayer GameMap::getSpCurrentPlayer()
 
 void GameMap::setCurrentPlayer(qint32 player)
 {
-    if ((player >= 0) && (player < players.size()))
+    if ((player >= 0) && (player < m_players.size()))
     {
-        m_CurrentPlayer = players[player];
+        m_CurrentPlayer = m_players[player];
     }
 }
 
@@ -441,14 +441,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             }
             for (qint32 x = 0; x < width; x++)
             {
-                fields[y][x]->loadSprites();
-                if (fields[y][x]->getUnit() != nullptr)
+                m_fields[y][x]->loadSprites();
+                if (m_fields[y][x]->getUnit() != nullptr)
                 {
-                    fields[y][x]->getUnit()->updateSprites(editor);
+                    m_fields[y][x]->getUnit()->updateSprites(editor);
                 }
-                if (fields[y][x]->getBuilding() != nullptr)
+                if (m_fields[y][x]->getBuilding() != nullptr)
                 {
-                    fields[y][x]->getBuilding()->updateBuildingSprites(false);
+                    m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
                 }
                 
             }
@@ -463,14 +463,14 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
             {
                 if (onMap(x, y))
                 {
-                    fields[y][x]->loadSprites();
-                    if (fields[y][x]->getUnit() != nullptr)
+                    m_fields[y][x]->loadSprites();
+                    if (m_fields[y][x]->getUnit() != nullptr)
                     {
-                        fields[y][x]->getUnit()->updateSprites(editor);
+                        m_fields[y][x]->getUnit()->updateSprites(editor);
                     }
-                    if (fields[y][x]->getBuilding() != nullptr)
+                    if (m_fields[y][x]->getBuilding() != nullptr)
                     {
-                        fields[y][x]->getBuilding()->updateBuildingSprites(false);
+                        m_fields[y][x]->getBuilding()->updateBuildingSprites(false);
                     }
                     
                 }
@@ -488,7 +488,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput, bool editor, bool show
         }
         for (qint32 x = 0; x < width; x++)
         {
-            fields[y][x]->syncAnimation(timeMs);
+            m_fields[y][x]->syncAnimation(timeMs);
         }
     }
     
@@ -516,12 +516,12 @@ void GameMap::syncUnitsAndBuildingAnimations()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            auto * pBuilding = fields[y][x]->getBuilding();
+            auto * pBuilding = m_fields[y][x]->getBuilding();
             if (pBuilding != nullptr)
             {
                 pBuilding->syncAnimation(timeMs);
             }
-            auto * pUnit = fields[y][x]->getUnit();
+            auto * pUnit = m_fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->syncAnimation(timeMs);
@@ -538,11 +538,11 @@ void GameMap::killDeadUnits()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            Unit* pUnit = fields[y][x]->getUnit();
+            Unit* pUnit = m_fields[y][x]->getUnit();
             if (pUnit != nullptr &&
                 pUnit->getHp() <= 0)
             {
-                fields[y][x]->setUnit(nullptr);
+                m_fields[y][x]->setUnit(nullptr);
             }
         }
     }
@@ -595,7 +595,7 @@ void GameMap::setImagesize(const qint32 &imagesize)
 
 void GameMap::removePlayer(qint32 index)
 {
-    players.removeAt(index);
+    m_players.removeAt(index);
 }
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
@@ -610,14 +610,14 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             range = width + heigth;
         }
         spPlayer pPlayer = nullptr;
-        for (qint32 i = 0; i < players.size(); i++)
+        for (qint32 i = 0; i < m_players.size(); i++)
         {
-            if (owner == players[i].get())
+            if (owner == m_players[i].get())
             {
-                pPlayer = players[i];
+                pPlayer = m_players[i];
                 break;
             }
-            else if (i == players.size() - 1)
+            else if (i == m_players.size() - 1)
             {
                 // cancel since we have no owner for the unit
                 Console::print("Invalid player selected. Didn't spawn unit " + unitID, Console::eERROR);
@@ -732,16 +732,16 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
 
 qint32 GameMap::getMapWidth() const
 {
-    if (fields.size() > 0)
+    if (m_fields.size() > 0)
     {
-        return fields[0].size();
+        return m_fields[0].size();
     }
     return 0;
 }
 
 qint32 GameMap::getMapHeight() const
 {
-    return fields.size();
+    return m_fields.size();
 }
 
 qint32 GameMap::getBuildingCount(QString buildingID)
@@ -910,7 +910,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
 {
     if (onMap(x, y))
     {
-        spTerrain pTerrainOld = fields[y][x];
+        spTerrain pTerrainOld = m_fields[y][x];
         if (pTerrainOld->getTerrainID() != terrainID)
         {
             pTerrainOld->removeBuilding();
@@ -927,7 +927,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             {
                 pTerrainOld->detach();
                 pTerrain->setBaseTerrain(pTerrainOld);
-                fields[y].replace(x, pTerrain);
+                m_fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
@@ -935,7 +935,7 @@ void GameMap::replaceTerrainOnly(QString terrainID, qint32 x, qint32 y, bool use
             else
             {
                 pTerrainOld->detach();
-                fields[y].replace(x, pTerrain);
+                m_fields[y].replace(x, pTerrain);
                 this->addChild(pTerrain);
                 pTerrain->setPosition(x * m_imagesize, y * m_imagesize);
                 pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + static_cast<qint32>(y));
@@ -987,9 +987,9 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
             {
                 if (onMap(xPos, yPos))
                 {
-                    if (!canBePlaced(fields[yPos][xPos]->getTerrainID(), xPos, yPos))
+                    if (!canBePlaced(m_fields[yPos][xPos]->getTerrainID(), xPos, yPos))
                     {
-                        replaceTerrain(fields[yPos][xPos]->getBaseTerrainID(), xPos, yPos, false, true);
+                        replaceTerrain(m_fields[yPos][xPos]->getBaseTerrainID(), xPos, yPos, false, true);
                     }
                 }
             }
@@ -1029,25 +1029,25 @@ void GameMap::serializeObject(QDataStream& pStream) const
     pStream << m_UniqueIdCounter;
     pStream << getPlayerCount();
     qint32 currentPlayerIdx = 0;
-    for (qint32 i = 0; i < players.size(); i++)
+    for (qint32 i = 0; i < m_players.size(); i++)
     {
-        if (m_CurrentPlayer.get() == players[i].get())
+        if (m_CurrentPlayer.get() == m_players[i].get())
         {
             currentPlayerIdx = i;
         }
-        players[i]->serializeObject(pStream);
+        m_players[i]->serializeObject(pStream);
     }
 
 
     pStream << currentPlayerIdx;
-    pStream << currentDay;
+    pStream << m_currentDay;
     // store map
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            fields[y][x]->serializeObject(pStream);
+            m_fields[y][x]->serializeObject(pStream);
         }
     }
     m_Rules->serializeObject(pStream);
@@ -1121,16 +1121,16 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
     for (qint32 i = 0; i < playerCount; i++)
     {
         // create player
-        players.append(spPlayer::create());
+        m_players.append(spPlayer::create());
         // get player data from stream
-        players[i]->deserializer(pStream, fast);
+        m_players[i]->deserializer(pStream, fast);
     }
 
     qint32 currentPlayerIdx = 0;
     if (version > 1)
     {
         pStream >> currentPlayerIdx;
-        pStream >> currentDay;
+        pStream >> m_currentDay;
     }
 
     // restore map
@@ -1140,11 +1140,11 @@ void GameMap::deserializer(QDataStream& pStream, bool fast)
         {
             pLoadingScreen->setProgress(tr("Loading Map Row ") + QString::number(y) + tr(" of ") + QString::number(heigth), 5 + 75 * y / heigth);
         }
-        fields.append(QVector<spTerrain>());
+        m_fields.append(QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
-            fields[y].append(pTerrain);
+            m_fields[y].append(pTerrain);
             pTerrain->deserializer(pStream, fast);
             if (pTerrain->isValid())
             {
@@ -1303,11 +1303,11 @@ void GameMap::showUnitStatistics()
 void GameMap::startGame()
 {
     m_Recorder = spGameRecorder::create();
-    for (qint32 y = 0; y < fields.size(); y++)
+    for (qint32 y = 0; y < m_fields.size(); y++)
     {
-        for (qint32 x = 0; x < fields[y].size(); x++)
+        for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            Unit* pUnit = fields[y][x]->getUnit();
+            Unit* pUnit = m_fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->applyMod();
@@ -1317,25 +1317,25 @@ void GameMap::startGame()
     Userdata* pUserdata = Userdata::getInstance();
     auto lockedUnits = pUserdata->getShopItemsList(GameEnums::ShopItemType_Unit, false);
 
-    for (qint32 i = 0; i < players.size(); i++)
+    for (qint32 i = 0; i < m_players.size(); i++)
     {
-        players[i]->loadVisionFields();
-        players[i]->setBuildlistChanged(true);
+        m_players[i]->loadVisionFields();
+        m_players[i]->setBuildlistChanged(true);
 
-        CoreAI* pAI = dynamic_cast<CoreAI*>(players[i]->getBaseGameInput());
+        CoreAI* pAI = dynamic_cast<CoreAI*>(m_players[i]->getBaseGameInput());
         if (pAI != nullptr)
         {
             pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
         }
-        HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(players[i]->getBaseGameInput());
+        HumanPlayerInput* pHuman = dynamic_cast<HumanPlayerInput*>(m_players[i]->getBaseGameInput());
         if (pHuman != nullptr)
         {
-            auto buildList = players[i]->getBuildList();
+            auto buildList = m_players[i]->getBuildList();
             for (const auto & unitId : lockedUnits)
             {
                 buildList.removeAll(unitId);
             }
-            players[i]->setBuildList(buildList);
+            m_players[i]->setBuildList(buildList);
         }
     }
     QStringList mods = Settings::getMods();
@@ -1356,21 +1356,21 @@ void GameMap::startGame()
 
 void GameMap::clearMap()
 {
-    for (qint32 y = 0; y < fields.size(); y++)
+    for (qint32 y = 0; y < m_fields.size(); y++)
     {
-        for (qint32 x = 0; x < fields[y].size(); x++)
+        for (qint32 x = 0; x < m_fields[y].size(); x++)
         {
-            Unit* pUnit = fields[y][x]->getUnit();
+            Unit* pUnit = m_fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->detach();
             }
-            fields[y][x]->detach();
+            m_fields[y][x]->detach();
         }
-        fields[y].clear();
+        m_fields[y].clear();
     }
-    fields.clear();
-    players.clear();
+    m_fields.clear();
+    m_players.clear();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)
@@ -1399,7 +1399,7 @@ void GameMap::enableUnits(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1417,9 +1417,9 @@ bool GameMap::nextPlayer()
     bool found = false;
     qint32 start = m_CurrentPlayer->getPlayerID();
     m_CurrentPlayer->updatePlayerVision(true);
-    for (qint32 i = start + 1; i < players.size(); i++)
+    for (qint32 i = start + 1; i < m_players.size(); i++)
     {
-        m_CurrentPlayer = players[i];
+        m_CurrentPlayer = m_players[i];
         if (!m_CurrentPlayer->getIsDefeated())
         {
             found = true;
@@ -1427,23 +1427,23 @@ bool GameMap::nextPlayer()
         }
         else
         {
-            startOfTurn(players[i].get());
+            startOfTurn(m_players[i].get());
         }
     }
     if (!found)
     {
         nextDay = true;
-        currentDay++;
-        for (qint32 i = 0; i < players.size(); i++)
+        m_currentDay++;
+        for (qint32 i = 0; i < m_players.size(); i++)
         {
-            m_CurrentPlayer = players[i];
+            m_CurrentPlayer = m_players[i];
             if (!m_CurrentPlayer->getIsDefeated())
             {
                 break;
             }
             else
             {
-                startOfTurn(players[i].get());
+                startOfTurn(m_players[i].get());
             }
         }
     }
@@ -1459,7 +1459,7 @@ void GameMap::updateUnitIcons()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 pUnit->updateIcons(getCurrentViewPlayer());
@@ -1472,19 +1472,19 @@ void GameMap::updateUnitIcons()
 qint32 GameMap::getWinnerTeam()
 {
     qint32 winnerTeam = -1;
-    for (qint32 i = 0; i < players.size(); i++)
+    for (qint32 i = 0; i < m_players.size(); i++)
     {
-        if (!players[i]->getIsDefeated())
+        if (!m_players[i]->getIsDefeated())
         {
             if (winnerTeam >= 0 &&
-                winnerTeam != players[i]->getTeam())
+                winnerTeam != m_players[i]->getTeam())
             {
                 winnerTeam = -1;
                 break;
             }
             else if (winnerTeam < 0)
             {
-                winnerTeam = players[i]->getTeam();
+                winnerTeam = m_players[i]->getTeam();
             }
         }
     }
@@ -1538,7 +1538,7 @@ void GameMap::setMapAuthor(const QString &value)
 
 qint32 GameMap::getCurrentDay() const
 {
-    return currentDay;
+    return m_currentDay;
 }
 
 void GameMap::refillAll()
@@ -1549,7 +1549,7 @@ void GameMap::refillAll()
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 pUnit->refill();
@@ -1609,7 +1609,7 @@ void GameMap::startOfTurnNeutral()
     {
         for (auto x : xValues)
         {
-            spTerrain pTerrain = fields[y][x];
+            spTerrain pTerrain = m_fields[y][x];
             pTerrain->startOfTurn();
             spBuilding pBuilding = pTerrain->getSpBuilding();
             if (pBuilding.get() != nullptr &&
@@ -1636,7 +1636,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
     {
         for (auto x : xValues)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1653,7 +1653,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
     {
         for (auto x : xValues)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1662,7 +1662,7 @@ void GameMap::startOfTurnPlayer(Player* pPlayer)
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
-            spBuilding pBuilding = fields[y][x]->getSpBuilding();
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == pPlayer &&
@@ -1686,7 +1686,7 @@ void GameMap::centerOnPlayer(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == pPlayer)
@@ -1697,7 +1697,7 @@ void GameMap::centerOnPlayer(Player* pPlayer)
                     }
                 }
             }
-            spBuilding pBuilding = fields[y][x]->getSpBuilding();
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == pPlayer &&
@@ -1739,7 +1739,7 @@ void GameMap::checkFuel(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if ((pUnit->getOwner() == pPlayer) &&
@@ -1761,7 +1761,7 @@ Unit* GameMap::getUnit(qint32 uniqueID)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            Unit* pUnit = fields[y][x]->getUnit();
+            Unit* pUnit = m_fields[y][x]->getUnit();
             if (pUnit != nullptr)
             {
                 if (pUnit->getUniqueID() == uniqueID)
@@ -1815,7 +1815,7 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spUnit pUnit = fields[y][x]->getSpUnit();
+            spUnit pUnit = m_fields[y][x]->getSpUnit();
             if (pUnit.get() != nullptr)
             {
                 if ((pUnit->getOwner() == pPlayer))
@@ -1837,8 +1837,8 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            spBuilding pBuilding = fields[y][x]->getSpBuilding();
-            if (pBuilding.get() != nullptr && pBuilding->getTerrain() == fields[y][x].get())
+            spBuilding pBuilding = m_fields[y][x]->getSpBuilding();
+            if (pBuilding.get() != nullptr && pBuilding->getTerrain() == m_fields[y][x].get())
             {
                 if ((pBuilding->getOwner() == pPlayer))
                 {
@@ -1886,11 +1886,11 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
             for (qint32 i = currentPlayerID - 1; i >= 0; i--)
             {
-                if (players[i]->getBaseGameInput() != nullptr &&
-                    players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
-                    !players[i]->getIsDefeated())
+                if (m_players[i]->getBaseGameInput() != nullptr &&
+                    m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human &&
+                    !m_players[i]->getIsDefeated())
                 {
-                    if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
+                    if (m_players[i]->getTeam() != m_CurrentPlayer->getTeam())
                     {
                         permanent = true;
                     }
@@ -1900,12 +1900,12 @@ void GameMap::nextTurn(quint32 dayToDayUptimeMs)
             }
             if (!found)
             {
-                for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
+                for (qint32 i = m_players.size() - 1; i > currentPlayerID; i--)
                 {
-                    if (players[i]->getBaseGameInput() != nullptr &&
-                        players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                    if (m_players[i]->getBaseGameInput() != nullptr &&
+                        m_players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
                     {
-                        if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
+                        if (m_players[i]->getTeam() != m_CurrentPlayer->getTeam())
                         {
                             permanent = true;
                         }
@@ -2068,5 +2068,5 @@ void GameMap::initPlayersAndSelectCOs()
 
 void GameMap::initPlayers()
 {
-    m_CurrentPlayer = players[players.size() - 1];
+    m_CurrentPlayer = m_players[m_players.size() - 1];
 }

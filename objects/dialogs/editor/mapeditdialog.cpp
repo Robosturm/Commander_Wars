@@ -177,8 +177,8 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        detach();
         emit sigCanceled();
+        detach();
     });
 }
 

@@ -55,10 +55,9 @@ endif()
 
 # general defines
 add_definitions(
-    -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=18
-    -DREVISION=1
+    -DMINOR=19
+    -DREVISION=0
 )
 
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")

@@ -25,7 +25,7 @@ public slots:
     void rightClick();
     virtual bool onFinished(bool skipping) override;
 private:
-    QTimer endTimer;
+    QTimer m_endTimer;
     bool m_permanent;
 };
 

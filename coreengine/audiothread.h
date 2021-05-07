@@ -126,9 +126,9 @@ private:
     QMediaPlaylist m_playList;
     QMediaPlayer m_Player2;
     QMediaPlaylist m_playList2;
-    qint32 currentPlayer{-1};
+    qint32 m_currentPlayer{-1};
     QVector<std::tuple<qint64, qint64>> m_PlayListdata;
-    qint32 currentMedia{-1};
+    qint32 m_currentMedia{-1};
     QVector<QSoundEffect*> m_Sounds;
     QVector<QTimer*> m_SoundTimers;
 

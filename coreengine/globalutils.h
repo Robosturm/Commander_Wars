@@ -130,7 +130,7 @@ public slots:
 private:
     explicit GlobalUtils();
     static GlobalUtils m_pInstace;
-    static QRandomGenerator randGenerator;
+    static QRandomGenerator m_randGenerator;
     static bool m_useSeed;
     static quint32 m_seed;
 };

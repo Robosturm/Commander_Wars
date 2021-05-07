@@ -93,17 +93,17 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     {
         while (totalSliderValue != 100)
         {
-            qint32 currentValue = m_Slider[currentSliderChange]->getCurrentValue();
+            qint32 currentValue = m_Slider[m_currentSliderChange]->getCurrentValue();
             if ((currentValue > 0 && sliderDirection < 0) ||
                 (currentValue < 100 && sliderDirection > 0))
             {
-                m_Slider[currentSliderChange]->setCurrentValue(m_Slider[currentSliderChange]->getCurrentValue() + sliderDirection);
+                m_Slider[m_currentSliderChange]->setCurrentValue(m_Slider[m_currentSliderChange]->getCurrentValue() + sliderDirection);
                 totalSliderValue += sliderDirection;
             }
-            currentSliderChange += 1;
-            if (currentSliderChange >= m_Slider.size())
+            m_currentSliderChange += 1;
+            if (m_currentSliderChange >= m_Slider.size())
             {
-                currentSliderChange = 0;
+                m_currentSliderChange = 0;
             }
         }
     }
@@ -141,26 +141,26 @@ void Multislider::sliderValueChanged(qint32 slider)
     bool changed = false;
     while (totalSliderValue != 100)
     {
-        if (currentSliderChange != slider && !m_locked[currentSliderChange])
+        if (m_currentSliderChange != slider && !m_locked[m_currentSliderChange])
         {
-            qint32 currentValue = m_Slider[currentSliderChange]->getCurrentValue();
+            qint32 currentValue = m_Slider[m_currentSliderChange]->getCurrentValue();
             if ((currentValue > 0 && sliderDirection < 0) ||
                 (currentValue < 100 && sliderDirection > 0))
             {
                 changed = true;
-                m_Slider[currentSliderChange]->setCurrentValue(m_Slider[currentSliderChange]->getCurrentValue() + sliderDirection);
+                m_Slider[m_currentSliderChange]->setCurrentValue(m_Slider[m_currentSliderChange]->getCurrentValue() + sliderDirection);
                 totalSliderValue += sliderDirection;
             }
         }
-        currentSliderChange += 1;
-        if (currentSliderChange >= m_Slider.size())
+        m_currentSliderChange += 1;
+        if (m_currentSliderChange >= m_Slider.size())
         {
             if (!changed)
             {
                 m_Slider[slider]->setCurrentValue(m_Slider[slider]->getCurrentValue() + sliderDirection);
                 totalSliderValue += sliderDirection;
             }
-            currentSliderChange = 0;
+            m_currentSliderChange = 0;
             changed = false;
         }
     }

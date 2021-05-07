@@ -19,7 +19,7 @@
 
 CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
-      coID(coID)
+      m_coID(coID)
 {
     setObjectName("CO");
     Mainapp* pApp = Mainapp::getInstance();
@@ -32,20 +32,20 @@ CO::CO(QString coID, Player* owner)
 
 void CO::init()
 {
-    if (!coID.isEmpty())
+    if (!m_coID.isEmpty())
     {
         Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "init";
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        pInterpreter->doFunction(this->coID, function1, args1);
+        pInterpreter->doFunction(this->m_coID, function1, args1);
     }
 }
 
 bool CO::isValid()
 {
-    return COSpriteManager::getInstance()->exists(coID);
+    return COSpriteManager::getInstance()->exists(m_coID);
 }
 
 float CO::getUnitBuildValue(QString unitID)
@@ -58,7 +58,7 @@ float CO::getUnitBuildValue(QString unitID)
     args1 << unitID;
 
     float ergValue = 0.0f;
-    QJSValue erg = pInterpreter->doFunction(coID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isNumber())
     {
         ergValue += erg.toNumber();
@@ -88,12 +88,12 @@ void CO::setCOUnit(Unit* pUnit)
 
 QString CO::getCoID() const
 {
-    return coID;
+    return m_coID;
 }
 
 double CO::getPowerFilled() const
 {
-    return powerFilled;
+    return m_powerFilled;
 }
 
 void CO::startOfTurn()
@@ -113,8 +113,8 @@ void CO::setPowerFilled(const double &value)
 {
     if (!GameMap::getInstance()->getGameRules()->getNoPower())
     {
-        float currentValue = powerFilled;
-        powerFilled = value;
+        float currentValue = m_powerFilled;
+        m_powerFilled = value;
         if (!m_powerCharging)
         {
             limitPowerbar(currentValue);
@@ -128,23 +128,23 @@ void CO::setPowerFilled(const double &value)
 }
 void CO::limitPowerbar(float previousValue)
 {
-    if (powerFilled > powerStars + superpowerStars)
+    if (m_powerFilled > m_powerStars + m_superpowerStars)
     {
-        powerFilled = powerStars + superpowerStars;
+        m_powerFilled = m_powerStars + m_superpowerStars;
     }
-    else if (powerFilled < 0)
+    else if (m_powerFilled < 0)
     {
-        powerFilled = 0;
+        m_powerFilled = 0;
     }
     spGameMenue pMenu = GameMenue::getInstance();
     if (pMenu.get() != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        if (previousValue < powerStars && powerFilled >= powerStars)
+        if (previousValue < m_powerStars && m_powerFilled >= m_powerStars)
         {
             pApp->getAudioThread()->playSound("powerready.wav");
         }
-        else if (previousValue < powerStars + superpowerStars && powerFilled >= powerStars + superpowerStars)
+        else if (previousValue < m_powerStars + m_superpowerStars && m_powerFilled >= m_powerStars + m_superpowerStars)
         {
             pApp->getAudioThread()->playSound("superpowerready.wav");
         }
@@ -153,23 +153,23 @@ void CO::limitPowerbar(float previousValue)
 
 void CO::addPowerFilled(const double &value)
 {
-    setPowerFilled(value + powerFilled);
+    setPowerFilled(value + m_powerFilled);
 }
 
 qint32 CO::getSuperpowerStars() const
 {
-    return superpowerStars;
+    return m_superpowerStars;
 }
 
 void CO::setSuperpowerStars(const qint32 &value)
 {        
-    superpowerStars = value;
+    m_superpowerStars = value;
 }
 
 bool CO::canUseSuperpower() const
 {
-    if ((powerFilled >= powerStars + superpowerStars) &&
-        (superpowerStars > 0) &&
+    if ((m_powerFilled >= m_powerStars + m_superpowerStars) &&
+        (m_superpowerStars > 0) &&
         (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
@@ -179,8 +179,8 @@ bool CO::canUseSuperpower() const
 
 bool CO::canUsePower() const
 {
-    if ((powerFilled >= powerStars) &&
-        (powerStars > 0) &&
+    if ((m_powerFilled >= m_powerStars) &&
+        (m_powerStars > 0) &&
         (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
@@ -190,12 +190,12 @@ bool CO::canUsePower() const
 
 qint32 CO::getPowerStars() const
 {
-    return powerStars;
+    return m_powerStars;
 }
 
 void CO::setPowerStars(const qint32 &value)
 {
-    powerStars = value;
+    m_powerStars = value;
 }
 
 qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
@@ -295,7 +295,7 @@ QString CO::getCOName()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getName";
-    QJSValue erg = pInterpreter->doFunction(coID, function1);
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1);
     if (erg.isString())
     {
         return erg.toString();
@@ -637,7 +637,7 @@ QString CO::getCOArmy()
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getCOArmy";
     QJSValueList args1;
-    QJSValue erg = pInterpreter->doFunction(coID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isString())
     {
         return erg.toString();
@@ -743,7 +743,7 @@ void CO::activatePower()
     ++m_powerUsed;
     m_coRangeEnabled = false;
     m_PowerMode = GameEnums::PowerMode_Power;
-    powerFilled -= powerStars;
+    m_powerFilled -= m_powerStars;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activatePower";
     QJSValueList args1;
@@ -766,7 +766,7 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     ++m_powerUsed;
     m_coRangeEnabled = false;
     m_PowerMode = powerMode;
-    powerFilled = 0;
+    m_powerFilled = 0;
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "activateSuperpower";
     QJSValueList args1;
@@ -996,7 +996,7 @@ void CO::gainPowerstar(qint32 fundsDamage, QPoint position, qint32 hpDamage, boo
 {
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
-        float currentValue = powerFilled;
+        float currentValue = m_powerFilled;
         m_powerCharging = true;
         Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args1;
@@ -1209,7 +1209,7 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
     args1 << directUnits;
     args1 << enemyUnits;
     args1 << turnMode;
-    QJSValue erg = pInterpreter->doFunction(coID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_coID, function1, args1);
     if (erg.isNumber())
     {
         return static_cast<GameEnums::PowerMode>(erg.toInt());
@@ -1226,7 +1226,7 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
     float value = 0;
     valid = false;
     QString function1 = "getAiCoUnitBonus";
-    if (pInterpreter->exists(coID, function1))
+    if (pInterpreter->exists(m_coID, function1))
     {
         valid = true;
         QJSValueList args;
@@ -1234,7 +1234,7 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
         args << obj;
         QJSValue obj1 = pInterpreter->newQObject(pUnit);
         args << obj1;
-        QJSValue erg = pInterpreter->doFunction(coID, function1, args);
+        QJSValue erg = pInterpreter->doFunction(m_coID, function1, args);
         if (erg.isNumber())
         {
             value = erg.toNumber();
@@ -1254,7 +1254,7 @@ float CO::getAiCoUnitBonus(Unit* pUnit, bool & valid)
 QStringList CO::getPerkList()
 {
     QStringList ret = m_perkList;
-    ret.removeAll(coID);
+    ret.removeAll(m_coID);
     ret.removeAll("TAGPOWER");
     return ret;
 }
@@ -1262,7 +1262,7 @@ QStringList CO::getPerkList()
 void CO::setPerkList(QStringList perks)
 {
     m_perkList.clear();
-    m_perkList.append(coID);
+    m_perkList.append(m_coID);
     m_perkList.append("TAGPOWER");
     m_perkList.append(perks);
 }
@@ -1297,7 +1297,7 @@ void CO::loadCOMusic()
     QJSValueList args1;
     QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
-    pInterpreter->doFunction(coID, function1, args1);
+    pInterpreter->doFunction(m_coID, function1, args1);
 }
 
 GameAnimationDialog* CO::createPowerSentence()
@@ -1306,10 +1306,10 @@ GameAnimationDialog* CO::createPowerSentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QStringList sentences = pInterpreter->doFunction(coID, "getPowerSentences", args).toVariant().toStringList();
+    QStringList sentences = pInterpreter->doFunction(m_coID, "getPowerSentences", args).toVariant().toStringList();
     QString sentence = sentences[GlobalUtils::randInt(0, sentences.size() - 1)];
 
-    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, m_coID, GameEnums::COMood_Normal, m_Owner->getColor());
     pGameAnimationDialog->setFinishDelay(500);
 
     return pGameAnimationDialog;
@@ -1321,7 +1321,7 @@ QString CO::getDefeatSentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QStringList sentences = pInterpreter->doFunction(coID, "getDefeatSentences", args).toVariant().toStringList();
+    QStringList sentences = pInterpreter->doFunction(m_coID, "getDefeatSentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1336,7 +1336,7 @@ QString CO::getVictorySentence()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QStringList sentences = pInterpreter->doFunction(coID, "getVictorySentences", args).toVariant().toStringList();
+    QStringList sentences = pInterpreter->doFunction(m_coID, "getVictorySentences", args).toVariant().toStringList();
     QString sentence = "";
     if (sentences.size() > 0)
     {
@@ -1367,7 +1367,7 @@ QString CO::getBio()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getBio", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getBio", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1382,7 +1382,7 @@ QString CO::getLongBio()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getLongBio", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getLongBio", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1397,7 +1397,7 @@ QString CO::getHits()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getHits", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getHits", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1412,7 +1412,7 @@ QString CO::getMiss()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getMiss", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getMiss", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1427,7 +1427,7 @@ QString CO::getCODescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getCODescription", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getCODescription", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1442,7 +1442,7 @@ QString CO::getLongCODescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getLongCODescription", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getLongCODescription", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1457,7 +1457,7 @@ QString CO::getPowerDescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getPowerDescription", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getPowerDescription", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1472,7 +1472,7 @@ QString CO::getPowerName()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getPowerName", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getPowerName", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1487,7 +1487,7 @@ QString CO::getSuperPowerDescription()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getSuperPowerDescription", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerDescription", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1502,7 +1502,7 @@ QString CO::getSuperPowerName()
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
-    QJSValue value = pInterpreter->doFunction(coID, "getSuperPowerName", args);
+    QJSValue value = pInterpreter->doFunction(m_coID, "getSuperPowerName", args);
     if (value.isString())
     {
         ret = value.toString();
@@ -1533,10 +1533,10 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
 void CO::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
-    pStream << coID;
-    pStream << powerStars;
-    pStream << superpowerStars;
-    pStream << powerFilled;
+    pStream << m_coID;
+    pStream << m_powerStars;
+    pStream << m_superpowerStars;
+    pStream << m_powerFilled;
     pStream << static_cast<qint32>(m_PowerMode);
     m_Variables.serializeObject(pStream);
     pStream << m_powerUsed;
@@ -1558,19 +1558,19 @@ void CO::deserializer(QDataStream& pStream, bool fast)
 {
     qint32 version = 0;
     pStream >> version;
-    pStream >> coID;
-    pStream >> powerStars;
-    pStream >> superpowerStars;
+    pStream >> m_coID;
+    pStream >> m_powerStars;
+    pStream >> m_superpowerStars;
 
     if (version > 2)
     {
-        pStream >> powerFilled;
+        pStream >> m_powerFilled;
     }
     else
     {
         float power = 0.0f;
         pStream >> power;
-        powerFilled = static_cast<double>(power);
+        m_powerFilled = static_cast<double>(power);
     }
 
     qint32 value = 0;
@@ -1599,7 +1599,7 @@ void CO::deserializer(QDataStream& pStream, bool fast)
     }
     else
     {
-        m_perkList.append(coID);
+        m_perkList.append(m_coID);
     }
     if (!m_perkList.contains("TAGPOWER"))
     {
@@ -1675,7 +1675,7 @@ void CO::readCoStyleFromStream(QDataStream& pStream)
 void CO::setCoStyleFromUserdata()
 {
     m_customCOStyles.clear();
-    auto * style = Userdata::getInstance()->getCOStyle(coID);
+    auto * style = Userdata::getInstance()->getCOStyle(m_coID);
     QString file;
     QImage colorTable;
     QImage maskTable;
@@ -1690,13 +1690,13 @@ void CO::setCoStyleFromUserdata()
     else
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        file = pCOSpriteManager->getResAnim(coID + "+nrm")->getResPath();
+        file = pCOSpriteManager->getResAnim(m_coID + "+nrm")->getResPath();
         file.replace("+nrm.png", "");
     }
-    if (coID != "CO_RANDOM")
+    if (m_coID != "CO_RANDOM")
     {
-        loadResAnim(coID, file, colorTable, maskTable, useColorBox);
-        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+        loadResAnim(m_coID, file, colorTable, maskTable, useColorBox);
+        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(m_coID, file, colorTable, maskTable, useColorBox));
     }
 }
 
@@ -1710,8 +1710,8 @@ void CO::setCoStyle(QString file, qint32 style)
     bool useColorBox = false;
     colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
     maskTable = baseColorTable.copy(0, style, baseColorTable.width(), 1);
-    loadResAnim(coID, file, colorTable, maskTable, useColorBox);
-    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coID, file, colorTable, maskTable, useColorBox));
+    loadResAnim(m_coID, file, colorTable, maskTable, useColorBox);
+    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(m_coID, file, colorTable, maskTable, useColorBox));
 
 }
 

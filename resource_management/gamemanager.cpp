@@ -21,9 +21,9 @@ void GameManager::reset()
 void GameManager::loadAll()
 {
     reset();
-    scriptPath = "scripts/actions/";
+    m_scriptPath = "scripts/actions/";
     RessourceManagement<GameManager>::loadAll(m_loadedRessources);
-    scriptPath = "aidata/heavy/";
+    m_scriptPath = "aidata/heavy/";
     RessourceManagement<GameManager>::loadAll(m_loadedHeavyAis);
 }
 

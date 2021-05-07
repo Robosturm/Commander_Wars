@@ -48,14 +48,14 @@ public:
     void writeList(QList <ListType> list)
     {
         // remove the buffer content
-        buffer.close();
-        buffer.setData(QByteArray());
-        buffer.open(QIODevice::ReadWrite);
-        buffer.seek(0);
-        actionData << static_cast<qint32>(list.size());
+        m_buffer.close();
+        m_buffer.setData(QByteArray());
+        m_buffer.open(QIODevice::ReadWrite);
+        m_buffer.seek(0);
+        m_actionData << static_cast<qint32>(list.size());
         for (qint32 i = 0; i < list.size(); i++)
         {
-            actionData << list[i];
+            m_actionData << list[i];
         }
     }
     /**
@@ -64,16 +64,16 @@ public:
     template<typename ListType>
     QList<ListType> readList()
     {
-        buffer.seek(0);
+        m_buffer.seek(0);
         QList<ListType> ret;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
             qint32 size = 0;
-            actionData >> size;
+            m_actionData >> size;
             for (qint32 i = 0; i < size; i++)
             {
                 ListType type;
-                actionData >> type;
+                m_actionData >> type;
                 ret.append(type);
             }
         }
@@ -87,11 +87,11 @@ public:
     void writeData(type data)
     {
         // remove the buffer content
-        buffer.close();
-        buffer.setData(QByteArray());
-        buffer.open(QIODevice::ReadWrite);
-        buffer.seek(0);
-        actionData << data;
+        m_buffer.close();
+        m_buffer.setData(QByteArray());
+        m_buffer.open(QIODevice::ReadWrite);
+        m_buffer.seek(0);
+        m_actionData << data;
     }
     /**
      * @brief readData
@@ -100,11 +100,11 @@ public:
     template<typename type>
     type readData()
     {
-        buffer.seek(0);
+        m_buffer.seek(0);
         type data = 0;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -152,8 +152,8 @@ public slots:
      */
     void writeDataString(QString data)
     {
-        buffer.seek(0);
-        actionData << data;
+        m_buffer.seek(0);
+        m_actionData << data;
     }
     /**
      * @brief readDataString
@@ -161,11 +161,11 @@ public slots:
      */
     QString readDataString()
     {
-        buffer.seek(0);
+        m_buffer.seek(0);
         QString data;
-        if (buffer.size() > 0)
+        if (m_buffer.size() > 0)
         {
-            actionData >> data;
+            m_actionData >> data;
         }
         return data;
     }
@@ -238,8 +238,8 @@ private:
     /**
      * @brief actionData data needed to perform this action
      */
-    QBuffer buffer;
-    QDataStream actionData{&buffer};
+    QBuffer m_buffer;
+    QDataStream m_actionData{&m_buffer};
 };
 
 #endif // SCRIPTVARIABLE_H

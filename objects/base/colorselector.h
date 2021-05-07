@@ -38,7 +38,7 @@ private:
     QVector<oxygine::spColorRectSprite> m_BlueField;
     oxygine::spSprite m_Cursor1;
     oxygine::spSprite m_Cursor2;
-    qint32 pixelSize;
+    qint32 m_pixelSize;
     bool m_barUpdating{false};
     bool m_boxUpdating{false};
 };

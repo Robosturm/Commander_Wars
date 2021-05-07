@@ -31,18 +31,18 @@ public slots:
     void dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service);
     void sendData(QString message);
 private:
+    void addMessage(QString message, bool local = false);
+
+private:
     QVector<QString> messages;
     spNetworkInterface m_pInterface{nullptr};
     spPanel m_Panel;
     oxygine::spTextField m_Chat;
     spTextbox m_ChatInput;
     oxygine::spButton m_Send;
-
-    void addMessage(QString message, bool local = false);
-
     NetworkInterface::NetworkSerives m_serviceMode{NetworkInterface::NetworkSerives::GameChat};
 
-    static const qint32 bufferSize = 500;
+    static const qint32 m_bufferSize = 500;
 };
 
 #endif // CHAT_H

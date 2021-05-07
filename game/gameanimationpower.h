@@ -30,7 +30,7 @@ private:
     GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);
 
 private:
-    QTimer endTimer;
+    QTimer m_endTimer;
     CO* m_pCO{nullptr};
     static GameAnimationPower* m_pGameAnimationPower;
 };

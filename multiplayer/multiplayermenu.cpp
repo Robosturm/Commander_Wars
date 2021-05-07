@@ -1173,7 +1173,7 @@ void Multiplayermenu::changeButtonText()
 
 void Multiplayermenu::startCountdown()
 {
-    counter = 5;
+    m_counter = 5;
     // can we start the game?
     if (getGameReady())
     {
@@ -1184,7 +1184,7 @@ void Multiplayermenu::startCountdown()
             m_GameStartTimer.setInterval(std::chrono::seconds(1));
             m_GameStartTimer.setSingleShot(false);
             m_GameStartTimer.start();
-            emit m_Chat->sigSendText(QString::number(counter) + "...");
+            emit m_Chat->sigSendText(QString::number(m_counter) + "...");
         }
     }
     else
@@ -1228,13 +1228,13 @@ void Multiplayermenu::countdown()
 {
     if (getGameReady())
     {
-        counter--;
+        m_counter--;
         if (m_Chat.get() != nullptr)
         {
-            Console::print("Sending game counter..." + QString::number(counter), Console::eDEBUG);
-            emit m_Chat->sigSendText(QString::number(counter) + "...");
+            Console::print("Sending game counter..." + QString::number(m_counter), Console::eDEBUG);
+            emit m_Chat->sigSendText(QString::number(m_counter) + "...");
         }
-        if (counter == 0 && m_NetworkInterface.get() != nullptr)
+        if (m_counter == 0 && m_NetworkInterface.get() != nullptr)
         {
             Console::print("Starting game on server", Console::eDEBUG);
             defeatClosedPlayers();
@@ -1274,7 +1274,7 @@ void Multiplayermenu::countdown()
     }
     else
     {
-        counter = 5;
+        m_counter = 5;
         m_GameStartTimer.stop();
         sendServerReady(false);
     }

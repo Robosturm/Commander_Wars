@@ -45,9 +45,9 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
     if (!m_UnitID.isEmpty())
     {
         initUnit();
-        setFuel(maxFuel);
-        setAmmo1(maxAmmo1);
-        setAmmo2(maxAmmo2);
+        setFuel(m_maxFuel);
+        setAmmo1(m_maxAmmo1);
+        setAmmo2(m_maxAmmo2);
         updateSprites(false);
         if (aquireId)
         {
@@ -381,10 +381,10 @@ void Unit::updateSprites(bool editor)
     args1 << obj1;
     pInterpreter->doFunction(m_UnitID, function1, args1);
 
-    setHp(hp);
-    setFuel(fuel);
-    setAmmo1(ammo1);
-    setAmmo2(ammo2);
+    setHp(m_hp);
+    setFuel(m_fuel);
+    setAmmo1(m_ammo1);
+    setAmmo2(m_ammo2);
     setUnitRank(m_UnitRank);
     if (!editor)
     {
@@ -516,8 +516,8 @@ qint32 Unit::getVision(QPoint position)
         }
     }
     rangeModifier += pMap->getTerrain(position.x(), position.y())->getBonusVision(this);
-    qint32 points = vision + rangeModifier;
-    if (vision >= 1 && points < 1)
+    qint32 points = m_vision + rangeModifier;
+    if (m_vision >= 1 && points < 1)
     {
         points = 1;
     }
@@ -530,12 +530,12 @@ qint32 Unit::getVision(QPoint position)
 
 void Unit::setVision(const qint32 &value)
 {
-    vision = value;
+    m_vision = value;
 }
 
 qint32 Unit::getBaseVision()
 {
-    return vision;
+    return m_vision;
 }
 
 qint32 Unit::getMaxRange(QPoint position)
@@ -573,7 +573,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
 
 qint32 Unit::getMaxRangeAtPosition(QPoint position)
 {
-    qint32 points = maxRange + getBonusMaxRange(position);
+    qint32 points = m_maxRange + getBonusMaxRange(position);
     qint32 min = getMinRange(position);
     if (points < min)
     {
@@ -584,30 +584,30 @@ qint32 Unit::getMaxRangeAtPosition(QPoint position)
 
 void Unit::setMaxRange(const qint32 &value)
 {
-    maxRange = value;
+    m_maxRange = value;
 }
 
 qint32 Unit::getBaseMaxRange()
 {
-    return maxRange;
+    return m_maxRange;
 }
 
 qint32 Unit::getBaseMinRange() const
 {
-    return minRange;
+    return m_minRange;
 }
 
 qint32 Unit::getMinRange(QPoint position)
 {
-    qint32 points = minRange + getBonusMinRange(position);
+    qint32 points = m_minRange + getBonusMinRange(position);
     qint32 maxBonus = getBonusMaxRange(position);
-    if (maxBonus > 0 && points > maxBonus + maxRange)
+    if (maxBonus > 0 && points > maxBonus + m_maxRange)
     {
-        points = maxBonus + maxRange;
+        points = maxBonus + m_maxRange;
     }
-    else if (points > maxRange)
+    else if (points > m_maxRange)
     {
-        points = maxRange;
+        points = m_maxRange;
     }
     if (points < 1)
     {
@@ -645,7 +645,7 @@ qint32 Unit::getBonusMinRange(QPoint position)
 
 void Unit::setMinRange(const qint32 &value)
 {
-    minRange = value;
+    m_minRange = value;
 }
 
 qint32 Unit::getCosts() const
@@ -752,7 +752,7 @@ bool Unit::canMoveOver(qint32 x, qint32 y)
 
 qint32 Unit::getUnitValue()
 {
-    return static_cast<qint32>(getCosts() * hp / Unit::MAX_UNIT_HP);
+    return static_cast<qint32>(getCosts() * m_hp / Unit::MAX_UNIT_HP);
 }
 
 bool Unit::canBeRepaired(QPoint position)
@@ -815,16 +815,16 @@ void Unit::addFirerangeBonus(qint32 value, qint32 duration)
 bool Unit::isEnvironmentAttackable(QString terrainID)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    if (hasAmmo1() && !weapon1ID.isEmpty())
+    if (hasAmmo1() && !m_weapon1ID.isEmpty())
     {
-        if (pWeaponManager->getEnviromentDamage(weapon1ID, terrainID) > 0)
+        if (pWeaponManager->getEnviromentDamage(m_weapon1ID, terrainID) > 0)
         {
             return true;
         }
     }
-    if (hasAmmo2() && !weapon2ID.isEmpty())
+    if (hasAmmo2() && !m_weapon2ID.isEmpty())
     {
-        if (pWeaponManager->getEnviromentDamage(weapon2ID, terrainID) > 0)
+        if (pWeaponManager->getEnviromentDamage(m_weapon2ID, terrainID) > 0)
         {
             return true;
         }
@@ -853,18 +853,18 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange, QPoint uni
                 {
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
-                        if (hasAmmo1() && !weapon1ID.isEmpty() &&
+                        if (hasAmmo1() && !m_weapon1ID.isEmpty() &&
                             (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(0, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
                         {
-                            if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
+                            if (pWeaponManager->getBaseDamage(m_weapon1ID, pDefender) > 0)
                             {
                                 return true;
                             }
                         }
-                        if (hasAmmo2() && !weapon2ID.isEmpty() &&
+                        if (hasAmmo2() && !m_weapon2ID.isEmpty() &&
                             (!pMap->onMap(unitPos.x(), unitPos.y()) || canAttackWithWeapon(1, unitPos.x(), unitPos.y(), pDefender->Unit::getX(), pDefender->Unit::getY())))
                         {
-                            if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
+                            if (pWeaponManager->getBaseDamage(m_weapon2ID, pDefender) > 0)
                             {
                                 return true;
                             }
@@ -1631,17 +1631,17 @@ void Unit::updateUnitStatus()
 
 qint32 Unit::getCapturePoints() const
 {
-    return capturePoints;
+    return m_capturePoints;
 }
 
 void Unit::setCapturePoints(const qint32 &value)
 {
-    capturePoints = value;
-    if (capturePoints < 0)
+    m_capturePoints = value;
+    if (m_capturePoints < 0)
     {
-        capturePoints = 0;
+        m_capturePoints = 0;
     }
-    if (capturePoints > 0)
+    if (m_capturePoints > 0)
     {
         loadIcon("capture", GameMap::getImageSize() / 2, GameMap::getImageSize() / 2);
     }
@@ -1653,12 +1653,12 @@ void Unit::setCapturePoints(const qint32 &value)
 
 qint32 Unit::getBaseMovementPoints() const
 {
-    return baseMovementPoints;
+    return m_baseMovementPoints;
 }
 
 void Unit::setBaseMovementPoints(const qint32 &value)
 {
-    baseMovementPoints = value;
+    m_baseMovementPoints = value;
 }
 
 qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY, bool trapChecking)
@@ -1726,34 +1726,34 @@ void Unit::initUnit()
     QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
     pInterpreter->doFunction(m_UnitID, function1, args1);
-    setFuel(fuel);
-    setAmmo1(ammo1);
-    setAmmo2(ammo2);
-    setHp(hp);
+    setFuel(m_fuel);
+    setAmmo1(m_ammo1);
+    setAmmo2(m_ammo2);
+    setHp(m_hp);
 }
 
 qint32 Unit::getMaxFuel() const
 {
-    return maxFuel;
+    return m_maxFuel;
 }
 
 void Unit::setMaxFuel(const qint32 &value)
 {
-    maxFuel = value;
+    m_maxFuel = value;
 }
 
 qint32 Unit::getFuel() const
 {
-    return fuel;
+    return m_fuel;
 }
 
 void Unit::setFuel(const qint32 &value)
 {
-    if (maxFuel > 0)
+    if (m_maxFuel > 0)
     {
-        fuel = value;
+        m_fuel = value;
     }
-    if (maxFuel > 0 && static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
+    if (m_maxFuel > 0 && static_cast<float>(m_fuel) / static_cast<float>(m_maxFuel) <= 1.0f / 3.0f)
     {
         loadIcon("fuel", GameMap::getImageSize() / 2, 0);
     }
@@ -1765,22 +1765,22 @@ void Unit::setFuel(const qint32 &value)
 
 qint32 Unit::getMaxAmmo2() const
 {
-    return maxAmmo2;
+    return m_maxAmmo2;
 }
 
 void Unit::setMaxAmmo2(const qint32 &value)
 {
-    maxAmmo2 = value;
+    m_maxAmmo2 = value;
 }
 
 qint32 Unit::getAmmo2() const
 {
-    return ammo2;
+    return m_ammo2;
 }
 
 bool Unit::hasAmmo2() const
 {
-    if ((maxAmmo2 < 0) || (ammo2 > 0))
+    if ((m_maxAmmo2 < 0) || (m_ammo2 > 0))
     {
         return true;
     }
@@ -1793,28 +1793,28 @@ bool Unit::hasAmmo2() const
 
 QString Unit::getWeapon2ID() const
 {
-    return weapon2ID;
+    return m_weapon2ID;
 }
 
 void Unit::setWeapon2ID(const QString &value)
 {
-    weapon2ID = value;
+    m_weapon2ID = value;
 }
 
 void Unit::setAmmo2(const qint32 &value)
 {
-    ammo2 = value;
-    if ((ammo2 < 0) && (maxAmmo2 > 0))
+    m_ammo2 = value;
+    if ((m_ammo2 < 0) && (m_maxAmmo2 > 0))
     {
-        ammo2 = 0;
+        m_ammo2 = 0;
     }
-    else  if (maxAmmo2 > 0 && ammo2 < 0)
+    else  if (m_maxAmmo2 > 0 && m_ammo2 < 0)
     {
-        ammo2 = 0;
+        m_ammo2 = 0;
     }
-    if (maxAmmo2 > 0 && static_cast<float>(ammo2) / static_cast<float>(maxAmmo2) <= 1.0f / 3.0f)
+    if (m_maxAmmo2 > 0 && static_cast<float>(m_ammo2) / static_cast<float>(m_maxAmmo2) <= 1.0f / 3.0f)
     {
-        if (weapon2ID.isEmpty())
+        if (m_weapon2ID.isEmpty())
         {
             loadIcon("material1", GameMap::getImageSize() / 2, 0);
         }
@@ -1832,52 +1832,52 @@ void Unit::setAmmo2(const qint32 &value)
 
 void Unit::reduceAmmo2(qint32 value)
 {
-    if (ammo2 >= 0)
+    if (m_ammo2 >= 0)
     {
-        setAmmo2(ammo2 - value);
+        setAmmo2(m_ammo2 - value);
     }
 }
 
 qint32 Unit::getMaxAmmo1() const
 {
-    return maxAmmo1;
+    return m_maxAmmo1;
 }
 
 void Unit::setMaxAmmo1(const qint32 &value)
 {
-    maxAmmo1 = value;
+    m_maxAmmo1 = value;
 }
 
 QString Unit::getWeapon1ID() const
 {
-    return weapon1ID;
+    return m_weapon1ID;
 }
 
 void Unit::setWeapon1ID(const QString &value)
 {
-    weapon1ID = value;
+    m_weapon1ID = value;
 }
 
 qint32 Unit::getAmmo1() const
 {
-    return ammo1;
+    return m_ammo1;
 }
 
 void Unit::setAmmo1(const qint32 &value)
 {
-    ammo1 = value;
-    if ((ammo1 < 0) && (maxAmmo1 > 0))
+    m_ammo1 = value;
+    if ((m_ammo1 < 0) && (m_maxAmmo1 > 0))
     {
-        ammo1 = 0;
+        m_ammo1 = 0;
     }
-    else if (maxAmmo1 > 0 && ammo1 < 0)
+    else if (m_maxAmmo1 > 0 && m_ammo1 < 0)
     {
-        ammo1 = 0;
+        m_ammo1 = 0;
     }
 
-    if (maxAmmo1 > 0 && static_cast<float>(ammo1) / static_cast<float>(maxAmmo1) <= 1.0f / 3.0f)
+    if (m_maxAmmo1 > 0 && static_cast<float>(m_ammo1) / static_cast<float>(m_maxAmmo1) <= 1.0f / 3.0f)
     {
-        if (weapon1ID.isEmpty())
+        if (m_weapon1ID.isEmpty())
         {
             loadIcon("material", GameMap::getImageSize() / 2, 0);
         }
@@ -1895,7 +1895,7 @@ void Unit::setAmmo1(const qint32 &value)
 
 bool Unit::hasAmmo1() const
 {
-    if ((maxAmmo1 < 0) || (ammo1 > 0))
+    if ((m_maxAmmo1 < 0) || (m_ammo1 > 0))
     {
         return true;
     }
@@ -1907,28 +1907,28 @@ bool Unit::hasAmmo1() const
 
 void Unit::reduceAmmo1(qint32 value)
 {
-    if (ammo1 >= 0)
+    if (m_ammo1 >= 0)
     {
-        setAmmo1(ammo1 - value);
+        setAmmo1(m_ammo1 - value);
     }
 }
 
 float Unit::getHp() const
 {
-    return hp;
+    return m_hp;
 }
 
 qint32 Unit::getHpRounded() const
 {
-    return GlobalUtils::roundUp(hp);
+    return GlobalUtils::roundUp(m_hp);
 }
 
 void Unit::setHp(const float &value)
 {
-    hp = value;
-    if (hp > MAX_UNIT_HP)
+    m_hp = value;
+    if (m_hp > MAX_UNIT_HP)
     {
-        hp = MAX_UNIT_HP;
+        m_hp = MAX_UNIT_HP;
     }
     spGameMap pMap = GameMap::getInstance();
     if (pMap.get() != nullptr)
@@ -1989,7 +1989,7 @@ bool Unit::getPerfectHpView(Player* pPlayer)
 
 void Unit::updateIcons(Player* pPlayer)
 {
-    qint32 hpValue = GlobalUtils::roundUp(hp);
+    qint32 hpValue = GlobalUtils::roundUp(m_hp);
     // unload the icons
     unloadIcon("1");
     unloadIcon("2");
@@ -2111,7 +2111,7 @@ qint32 Unit::getX() const
     }
     else
     {
-        return virtuellX;
+        return m_virtuellX;
     }
 }
 
@@ -2123,20 +2123,20 @@ qint32 Unit::getY() const
     }
     else
     {
-        return virtuellY;
+        return m_virtuellY;
     }
 }
 
 void Unit::refill(bool noMaterial)
 {
-    setFuel(maxFuel);
-    if (!(noMaterial && weapon1ID.isEmpty()))
+    setFuel(m_maxFuel);
+    if (!(noMaterial && m_weapon1ID.isEmpty()))
     {
-        setAmmo1(maxAmmo1);
+        setAmmo1(m_maxAmmo1);
     }
-    if (!(noMaterial && weapon2ID.isEmpty()))
+    if (!(noMaterial && m_weapon2ID.isEmpty()))
     {
-        setAmmo2(maxAmmo2);
+        setAmmo2(m_maxAmmo2);
     }
 }
 
@@ -2212,14 +2212,14 @@ qint32 Unit::getBonusMovementpoints(QPoint position)
 
 qint32 Unit::getMovementpoints(QPoint position)
 {
-    qint32 points = baseMovementPoints + getBonusMovementpoints(position);
+    qint32 points = m_baseMovementPoints + getBonusMovementpoints(position);
     if (points < 0)
     {
         points = 0;
     }
-    if (fuel < points)
+    if (m_fuel < points)
     {
-        return fuel;
+        return m_fuel;
     }
     return points;
 }
@@ -2313,7 +2313,7 @@ void Unit::moveUnitAction(GameAction* pAction)
     {
         fuelCost = 0;
     }
-    qint32 value = fuel - fuelCost;
+    qint32 value = m_fuel - fuelCost;
     if (value < 0)
     {
         value = 0;
@@ -2480,9 +2480,9 @@ void Unit::increaseCapturePoints(QPoint position)
         modifier += pCO->getCaptureBonus(this, position);
     }
 
-    capturePoints += getHpRounded() + modifier;
+    m_capturePoints += getHpRounded() + modifier;
     // update icons
-    setCapturePoints(capturePoints);
+    setCapturePoints(m_capturePoints);
 }
 
 void Unit::loadIcon(QString iconID, qint32 x, qint32 y, qint32 duration, qint32 player)
@@ -2769,7 +2769,7 @@ void Unit::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
 
 bool Unit::hasWeapons()
 {
-    if (!weapon1ID.isEmpty() || !weapon2ID.isEmpty())
+    if (!m_weapon1ID.isEmpty() || !m_weapon2ID.isEmpty())
     {
         return true;
     }
@@ -2789,7 +2789,7 @@ GameEnums::GameAi Unit::getAiMode() const
 void Unit::modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, qint32 fuelChange)
 {
     setHp(getHp() + hpChange);
-    if (hp <= 0.0f)
+    if (m_hp <= 0.0f)
     {
         setHp(0.0001f);
     }
@@ -2962,10 +2962,10 @@ void Unit::serializeObject(QDataStream& pStream) const
 {
     pStream << getVersion();
     pStream << m_UnitID;
-    pStream << hp;
-    pStream << ammo1;
-    pStream << ammo2;
-    pStream << fuel;
+    pStream << m_hp;
+    pStream << m_ammo1;
+    pStream << m_ammo2;
+    pStream << m_fuel;
     pStream << static_cast<qint32>(m_UnitRank);
     pStream << m_pOwner->getPlayerID();
     pStream << m_Moved;
@@ -2975,7 +2975,7 @@ void Unit::serializeObject(QDataStream& pStream) const
     {
         m_TransportUnits[i]->serializeObject(pStream);
     }
-    pStream << capturePoints;
+    pStream << m_capturePoints;
     pStream << m_Hidden;
     m_Variables.serializeObject(pStream);
     pStream << m_IgnoreUnitCollision;
@@ -3040,14 +3040,15 @@ void Unit::serializeObject(QDataStream& pStream) const
         pStream << iconInfo.player;
     }
 
-    pStream << weapon1ID;
-    pStream << weapon2ID;
-    pStream << maxAmmo1;
-    pStream << maxAmmo2;
-    pStream << vision;
-    pStream << minRange;
-    pStream << maxRange;
-    pStream << maxFuel;
+    pStream << m_weapon1ID;
+    pStream << m_weapon2ID;
+    pStream << m_maxAmmo1;
+    pStream << m_maxAmmo2;
+    pStream << m_vision;
+    pStream << m_minRange;
+    pStream << m_maxRange;
+    pStream << m_maxFuel;
+    pStream << m_baseMovementPoints;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -3079,7 +3080,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     qint32 bufAmmo1 = 0;
     qint32 bufAmmo2 = 0;
     qint32 bufFuel = 0;
-    pStream >> hp;
+    pStream >> m_hp;
     pStream >> bufAmmo1;
     pStream >> bufAmmo2;
     pStream >> bufFuel;
@@ -3115,7 +3116,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     {
         initUnit();
     }
-    setHp(hp);
+    setHp(m_hp);
     if (version > 1)
     {
         pStream >> m_Moved;
@@ -3134,10 +3135,10 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     }
     if (version > 2)
     {
-        pStream >> capturePoints;
+        pStream >> m_capturePoints;
         if (!fast)
         {
-            setCapturePoints(capturePoints);
+            setCapturePoints(m_capturePoints);
         }
     }
     if (version > 3)
@@ -3292,14 +3293,15 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
     {
         if (savegame)
         {
-            pStream >> weapon1ID;
-            pStream >> weapon2ID;
-            pStream >> maxAmmo1;
-            pStream >> maxAmmo2;
-            pStream >> vision;
-            pStream >> minRange;
-            pStream >> maxRange;
-            pStream >> maxFuel;
+            pStream >> m_weapon1ID;
+            pStream >> m_weapon2ID;
+            pStream >> m_maxAmmo1;
+            pStream >> m_maxAmmo2;
+            pStream >> m_vision;
+            pStream >> m_minRange;
+            pStream >> m_maxRange;
+            pStream >> m_maxFuel;
+            pStream >> m_baseMovementPoints;
         }
         else
         {
@@ -3307,6 +3309,7 @@ void Unit::deserializer(QDataStream& pStream, bool fast)
             pStream >> dummy;
             pStream >> dummy;
             qint32 dummy2;
+            pStream >> dummy2;
             pStream >> dummy2;
             pStream >> dummy2;
             pStream >> dummy2;

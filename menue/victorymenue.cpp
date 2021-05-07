@@ -165,11 +165,11 @@ VictoryMenue::VictoryMenue(spNetworkInterface pNetworkInterface)
 
     if (pMap->getCurrentDay() > 1)
     {
-        lineLength = m_pGraphBackground->getWidth() / static_cast<float>(pMap->getCurrentDay() - 1);
+        m_lineLength = m_pGraphBackground->getWidth() / static_cast<float>(pMap->getCurrentDay() - 1);
     }
     else
     {
-        lineLength = m_pGraphBackground->getWidth();
+        m_lineLength = m_pGraphBackground->getWidth();
     }
 
     m_ProgressTimer.setSingleShot(false);
@@ -736,21 +736,21 @@ void VictoryMenue::updateGraph()
         }
         else
         {
-            if (progress < 100)
+            if (m_progress < 100)
             {
-                progress += 2;
+                m_progress += 2;
                 // update values
                 for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
                 {
-                    m_VictoryTexts[i][0]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)));
-                    m_VictoryTexts[i][1]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)));
-                    m_VictoryTexts[i][2]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)));
+                    m_VictoryTexts[i][0]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * m_progress / 100)));
+                    m_VictoryTexts[i][1]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * m_progress / 100)));
+                    m_VictoryTexts[i][2]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * m_progress / 100)));
                     float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
-                    m_VictoryTexts[i][3]->setHtmlText(QString::number(static_cast<qint32>(sum * progress / 100)));
+                    m_VictoryTexts[i][3]->setHtmlText(QString::number(static_cast<qint32>(sum * m_progress / 100)));
                 }
-                if (progress >= 100)
+                if (m_progress >= 100)
                 {
-                    progress = 100;
+                    m_progress = 100;
                     // show CO-Rank
                     for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
                     {
@@ -801,15 +801,15 @@ void VictoryMenue::drawGraphStep(qint32 progress)
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)
     {
-        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX((progress + 1) * lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
+        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX((progress + 1) * m_lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
         // add player lines
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             QPointF startPoint(-1, -1);
             QPointF endPoint(-1, -1);
 
-            startPoint.setX(progress * lineLength);
-            endPoint.setX((progress + 1) * lineLength);
+            startPoint.setX(progress * m_lineLength);
+            endPoint.setX((progress + 1) * m_lineLength);
 
             switch (m_CurrentGraphMode)
             {

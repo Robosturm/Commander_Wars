@@ -26,7 +26,7 @@ public:
     }
     QString getCurrentFile()
     {
-        return m_currentFolder + currentItem;
+        return m_currentFolder + m_currentItem;
     }
     virtual void update(const oxygine::UpdateState& us) override;
     /**
@@ -52,16 +52,16 @@ public slots:
     void itemChangeTimerExpired();
 private:
     QString m_currentFolder;
-    QString currentItem;
-    QString lastItem;
-    qint32 currentIdx{0};
+    QString m_currentItem;
+    QString m_lastItem;
+    qint32 m_currentIdx{0};
     QVector<oxygine::spTextField> m_Items;
-    qint32 itemCount{0};
-    static const qint32 itemHeigth{35};
+    qint32 m_itemCount{0};
+    static const qint32 m_itemHeigth{35};
     QStringList m_Files;
-    qint32 currentStartIndex{0};
+    qint32 m_currentStartIndex{0};
     oxygine::spBox9Sprite m_SelectedItem;
-    qint32 spin = 0;
+    qint32 m_spin = 0;
     QElapsedTimer timer;
     QTimer m_itemChangedTimer;
     bool m_itemClicked{false};
