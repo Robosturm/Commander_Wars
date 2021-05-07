@@ -74,12 +74,13 @@ void Chat::setVisible(bool vis)
     {
         if (GameMenue::getInstance() != nullptr)
         {
-            m_ChatInput->setTooltipText(tr("Message to send via chat. Start a message with one of the folling items to send ") +
-                                        tr("a message to specific targets. \n") +
-                                        chatAllyTarget+ tr(" send message to all your allies.\n") +
-                                        chatEnemyTarget + tr(" send message to all your enemies.\n") +
-                                        chatTeamTarget + "X" + tr(" send message to the given team X.\n") +
-                                        chatPlayerTarget + "X" + tr(" send message to the given player X."));
+            QString tooltip = tr("Message to send via chat. Start a message with one of the following items to send "
+                                 "a message to specific targets. \n") +
+                              chatAllyTarget+ tr(" send message to all your allies.\n") +
+                              chatEnemyTarget + tr(" send message to all your enemies.\n") +
+                              chatTeamTarget + "X" + tr(" send message to the given team X.\n") +
+                              chatPlayerTarget + "X" + tr(" send message to the given player X.");
+            m_ChatInput->setTooltipText(tooltip);
         }
         else
         {

@@ -533,7 +533,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/base/chat.cpp" line="86"/>
+        <location filename="../objects/base/chat.cpp" line="87"/>
         <source>Message to send via chat.</source>
         <translation type="unfinished"></translation>
     </message>

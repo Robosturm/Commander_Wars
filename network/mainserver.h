@@ -56,7 +56,6 @@ private:
     void joinSlaveGame(quint64 socketID, QDataStream & stream);
     void closeGame(NetworkGame* pGame);
 private:
-
     class InternNetworkGame;
     typedef oxygine::intrusive_ptr<InternNetworkGame> spInternNetworkGame;
     class InternNetworkGame : public oxygine::ref_counter
@@ -66,9 +65,10 @@ private:
         NetworkGame game;
         QThread m_runner;
     };
-
     explicit MainServer();
-    static MainServer* m_pInstance;
+
+private:
+    static MainServer* m_pInstance;    
     TCPServer* m_pGameServer{nullptr};
     quint64 m_slaveGameIterator{0};
     // data for games currently run on the server
