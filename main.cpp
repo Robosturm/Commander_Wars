@@ -70,14 +70,14 @@ QQmlDebuggingEnabler enabler;
 #endif
 
     QGuiApplication app(argc, argv);
-    app.setApplicationName(tr("Commander Wars"));
+    app.setApplicationName("Commander Wars");
     app.setApplicationVersion(Mainapp::getGameVersion());
     Settings::loadSettings();
     QDir dir("temp/");
     dir.removeRecursively();
     dir.mkpath(".");
     Mainapp window;
-    window.setTitle(tr("Commander Wars"));
+    window.setTitle("Commander Wars");
     QStringList args = app.arguments();
     window.loadArgs(args);
     // start crash report handler
