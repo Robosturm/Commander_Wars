@@ -26,8 +26,6 @@ public:
     virtual ~InGameMenue();
 
     Cursor* getCursor();
-    bool getFocused() const;
-    void setFocused(bool Focused);
     void calcNewMousePosition(qint32 x, qint32 y);
     QPoint getMousePos(qint32 x, qint32 y);
     void MoveMap(qint32 x, qint32 y);
@@ -47,12 +45,12 @@ public slots:
     virtual void keyUp(oxygine::KeyEvent event);
     void centerMapOnCursor();
     void changeBackground(QString background);
+    virtual void setFocused(bool Focused) override;
 protected:
     void loadBackground();
     void loadHandling();
     void connectMapCursor();
     bool m_moveMap{false};
-    bool m_Focused{true};
     QPoint m_MoveMapMousePoint;
 
     spCursor m_Cursor{spCursor::create()};

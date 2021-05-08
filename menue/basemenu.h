@@ -11,6 +11,11 @@ public:
 
 signals:
     void sigOnUpdate();
+public slots:
+    bool getFocused() const;
+    virtual void setFocused(bool Focused);
+protected:
+    bool m_Focused{true};
 };
 
 #endif // BASEMENU_H

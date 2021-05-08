@@ -269,6 +269,7 @@ void GameMenue::disconnected(quint64 socketID)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
+        Console::print("Handling player GameMenue::disconnect()", Console::eDEBUG);
         bool showDisconnect = !m_pNetworkInterface->getIsServer();
         spGameMap pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -298,8 +299,6 @@ void GameMenue::disconnected(quint64 socketID)
             Console::print("Closing slave cause a player has disconnected.", Console::eDEBUG);
             QCoreApplication::exit(0);
         }
-        
-
     }
 }
 
@@ -479,8 +478,7 @@ void GameMenue::loadUIButtons()
 }
 
 void GameMenue::updateTimer()
-{
-    
+{    
     QTimer* pTimer = GameMap::getInstance()->getGameRules()->getRoundTimer();
     qint32 roundTime = pTimer->remainingTime();
     if (!pTimer->isActive())
@@ -491,8 +489,7 @@ void GameMenue::updateTimer()
     {
         roundTime = 0;
     }
-    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
-    
+    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));    
 }
 
 bool GameMenue::getGameStarted() const
@@ -517,6 +514,7 @@ spGameAction GameMenue::doMultiTurnMovement(spGameAction pGameAction)
         (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
          pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
+        Console::print("Check and update multiTurnMovement", Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         // check for units that have a multi turn avaible
         qint32 heigth = pMap->getMapHeight();
@@ -586,6 +584,7 @@ void GameMenue::performAction(spGameAction pGameAction)
     m_saveAllowed = false;
     if (pGameAction.get() != nullptr)
     {
+        Console::print("GameMenue::performAction", Console::eDEBUG);
         spGameMap pMap = GameMap::getInstance();
         Mainapp::getInstance()->pauseRendering();
         bool multiplayer = !pGameAction->getIsLocal() &&
@@ -670,6 +669,7 @@ void GameMenue::performAction(spGameAction pGameAction)
 
 void GameMenue::doTrapping(spGameAction & pGameAction)
 {
+    Console::print("GameMenue::doTrapping", Console::eDEBUG);
     QVector<QPoint> path = pGameAction->getMovePath();
     spGameMap pMap = GameMap::getInstance();
     Unit * pMoveUnit = pGameAction->getTargetUnit();
@@ -1188,6 +1188,7 @@ void GameMenue::cursorMoved(qint32 x, qint32 y)
 void GameMenue::updatePlayerinfo()
 {
     Mainapp::getInstance()->pauseRendering();
+    Console::print("GameMenue::updatePlayerinfo", Console::eDEBUG);
     if (m_pPlayerinfo.get() != nullptr)
     {
         m_pPlayerinfo->updateData();
@@ -1201,6 +1202,7 @@ void GameMenue::updatePlayerinfo()
     {
         pMap->getPlayer(i)->updateVisualCORange();
     }
+    emit sigOnUpdate();
     Mainapp::getInstance()->continueRendering();
 }
 
@@ -1216,7 +1218,7 @@ void GameMenue::updateMinimap()
 
 void GameMenue::victory(qint32 team)
 {
-    
+    Console::print("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     bool exit = true;
     bool humanWin = false;
@@ -1431,8 +1433,7 @@ void GameMenue::showGameInfo(qint32 player)
 }
 
 void GameMenue::showCOInfo()
-{
-    
+{    
     Console::print("showCOInfo()", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     spCOInfoDialog pCOInfoDialog = spCOInfoDialog::create(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
@@ -1496,8 +1497,7 @@ void GameMenue::showCOInfo()
 }
 
 void GameMenue::saveGame()
-{
-    
+{    
     QVector<QString> wildcards;
     wildcards.append("*" + getSaveFileEnding());
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
@@ -1505,8 +1505,7 @@ void GameMenue::saveGame()
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
     setFocused(false);
-    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
 }
 
 QString GameMenue::getSaveFileEnding()
@@ -1523,8 +1522,7 @@ QString GameMenue::getSaveFileEnding()
 }
 
 void GameMenue::showSaveAndExitGame()
-{
-    
+{    
     Console::print("showSaveAndExitGame()", Console::eDEBUG);
     QVector<QString> wildcards;
     if (m_pNetworkInterface.get() != nullptr ||
@@ -1541,19 +1539,16 @@ void GameMenue::showSaveAndExitGame()
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
-    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
 }
 
 void GameMenue::victoryInfo()
-{
-    
+{    
     Console::print("victoryInfo()", Console::eDEBUG);
     spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create();
     addChild(pVictoryConditions);
     setFocused(false);
-    connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
-    
+    connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
 }
 
 void GameMenue::autoSaveMap()
@@ -1616,20 +1611,19 @@ void GameMenue::doSaveMap()
 }
 
 void GameMenue::exitGame()
-{
-    
+{    
     Console::print("Finishing running animations and exiting game", Console::eDEBUG);
     m_gameStarted = false;
     while (GameAnimationFactory::getAnimationCount() > 0)
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    victory(-1);
-    
+    victory(-1);    
 }
 
 void GameMenue::startGame()
 {
+    Console::print("GameMenue::startGame", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     GameAnimationFactory::clearAllAnimations();
     spGameMap pMap = GameMap::getInstance();
@@ -1770,8 +1764,7 @@ Chat* GameMenue::getChat() const
 }
 
 void GameMenue::showExitGame()
-{
-    
+{    
     Console::print("showExitGame()", Console::eDEBUG);
     m_Focused = false;
     spDialogMessageBox pExit = spDialogMessageBox::create(QObject::tr("Do you want to exit the current game?"), true);
@@ -1780,8 +1773,7 @@ void GameMenue::showExitGame()
     {
         m_Focused = true;
     });
-    addChild(pExit);
-    
+    addChild(pExit);    
 }
 
 void GameMenue::showWiki()
@@ -1797,8 +1789,8 @@ void GameMenue::showWiki()
         m_Focused = true;
     });
     addChild(pBox);
-
 }
+
 void GameMenue::showSurrenderGame()
 {
     spGameMap pMap = GameMap::getInstance();
@@ -1818,18 +1810,16 @@ void GameMenue::showSurrenderGame()
 }
 
 void GameMenue::surrenderGame()
-{
-    
+{    
+    Console::print("GameMenue::surrenderGame", Console::eDEBUG);
     spGameAction pAction = spGameAction::create();
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
-    m_Focused = true;
-    
+    m_Focused = true;    
 }
 
 void GameMenue::showNicknameUnit(qint32 x, qint32 y)
-{
-    
+{    
     spUnit pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
     if (pUnit.get() != nullptr)
     {
@@ -1845,18 +1835,16 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
         });
         addChild(pDialogTextInput);
         m_Focused = false;
-    }
-    
+    }    
 }
 
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
 {
-    
+    Console::print("GameMenue::nicknameUnit", Console::eDEBUG);
     spGameAction pAction = spGameAction::create();
     pAction->setActionID("ACTION_NICKNAME_UNIT_INTERNAL");
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);
     performAction(pAction);
-    m_Focused = true;
-    
+    m_Focused = true;    
 }

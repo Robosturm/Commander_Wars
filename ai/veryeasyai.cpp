@@ -329,6 +329,7 @@ bool VeryEasyAI::fireWithDirectUnits(spQmlVectorUnit pUnits)
 
 bool VeryEasyAI::attack(Unit* pUnit)
 {
+    Console::print("VeryEasyAI::attack", Console::eDEBUG);
     if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack

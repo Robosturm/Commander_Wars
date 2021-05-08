@@ -76,6 +76,7 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
             m_Slider[i]->setEnabled(m_locked[i]);
             m_locked[i] = !m_locked[i];
         });
+        m_lockButtons.append(pLockButton);
         m_locked.append(false);
         addChild(pLockButton);
     }
@@ -174,5 +175,6 @@ void Multislider::setEnabled(bool value)
     {
         m_Slider[i]->setEnabled(value);
         m_Textfields[i]->setEnabled(value);
+        m_lockButtons[i]->setEnabled(value);
     }
 }

@@ -94,6 +94,7 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 {
     if (service == m_serviceMode)
     {
+        Console::print("Receiving chat message", Console::eDEBUG);
         QString message(data);
         addMessage(message);
     }
@@ -215,6 +216,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
+            Console::print("Sending chat message", Console::eDEBUG);
             emit m_pInterface->sig_sendData(0, text.toStdString().c_str(), m_serviceMode, true);
         }
         m_ChatInput->setCurrentText("");

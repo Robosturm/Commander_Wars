@@ -1519,6 +1519,7 @@ bool NormalAi::moveUnit(spGameAction pAction, Unit* pUnit, spQmlVectorUnit pUnit
 
 bool NormalAi::suicide(spGameAction pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs)
 {
+    Console::print("NormalAi::suicide", Console::eDEBUG);
     // we don't have a good option do the best that we can attack with an all in attack :D
     pAction->setActionID(ACTION_FIRE);
     QVector<QVector3D> ret;
@@ -1550,6 +1551,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, spQmlVectorU
                                                        UnitPathFindingSystem& turnPfs, QPoint target,
                                                        spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
+    Console::print("NormalAi::moveToSafety", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     QVector<QPoint> targets = turnPfs.getAllNodePoints();
     QPoint ret(pUnit->Unit::getX(), pUnit->Unit::getY());
@@ -1895,6 +1897,7 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, s
 
 void NormalAi::updateEnemyData(spQmlVectorUnit pUnits)
 {    
+    Console::print("NormalAi::updateEnemyData", Console::eDEBUG);
     rebuildIsland(pUnits);
     if (m_EnemyUnits.size() == 0)
     {

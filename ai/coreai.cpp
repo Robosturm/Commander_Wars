@@ -131,6 +131,7 @@ void CoreAI::loadIni(QString file)
 
 void CoreAI::nextAction()
 {
+    Console::print("CoreAI::nextAction", Console::eDEBUG);
     // check if it's our turn
     spGameMenue pMenue = GameMenue::getInstance();
     if (pMenue.get() != nullptr &&
@@ -313,6 +314,7 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
 
 void CoreAI::createMovementMap(spQmlVectorBuilding pBuildings, spQmlVectorBuilding pEnemyBuildings)
 {
+    Console::print("CoreAI::createMovementMap", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     qint32 heigth = pMap->getMapHeight();
     qint32 width = pMap->getMapWidth();
@@ -594,6 +596,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
 
 bool CoreAI::moveAwayFromProduction(spQmlVectorUnit pUnits)
 {
+    Console::print("CoreAI::moveAwayFromProduction", Console::eDEBUG);
     aiStep = AISteps::moveAway;
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -1583,6 +1586,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, spQmlVectorBuilding
 
 void CoreAI::rebuildIsland(spQmlVectorUnit pUnits)
 {
+    Console::print("CoreAI::rebuildIsland", Console::eDEBUG);
     // and create one
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -1762,6 +1766,7 @@ void CoreAI::finishTurn()
 
 bool CoreAI::useBuilding(spQmlVectorBuilding pBuildings)
 {
+    Console::print("CoreAI::useBuilding", Console::eDEBUG);
     spGameMap pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
@@ -1913,6 +1918,7 @@ void CoreAI::GetOwnUnitCounts(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnit
 
 bool CoreAI::buildCOUnit(spQmlVectorUnit pUnits)
 {
+    Console::print("CoreAI::buildCOUnit", Console::eDEBUG);
     spGameAction pAction = spGameAction::create();
     for (quint8 i2 = 0; i2 < 2; i2++)
     {

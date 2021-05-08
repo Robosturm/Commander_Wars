@@ -288,7 +288,7 @@ bool Console::getDeveloperMode()
 {
     if (m_developerMode)
     {
-        print("Developer Mode enabled! And used for changing some data.", Console::eWARNING);
+        print("Developer Mode enabled! And used for changing some data.", Console::eINFO);
     }
     return m_developerMode;
 }
@@ -1333,6 +1333,9 @@ void Console::createfunnymessage(qint32 message){
             break;
         case 327:
             printmessage = "It isn't over until it's over!";
+            break;
+        case 328:
+            printmessage = "We need to train tanks to talk. So we can get another Advance Wars game.";
             break;
         default:
             printmessage = "No more funny Messages found. Delete your Harddisk instead";

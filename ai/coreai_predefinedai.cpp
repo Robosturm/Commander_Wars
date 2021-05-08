@@ -27,7 +27,6 @@ bool CoreAI::moveFlares(spQmlVectorUnit pUnits)
         {
             if (pUnit->getActionList().contains(ACTION_FLARE))
             {
-                Console::print("", Console::eDEBUG);
                 UnitPathFindingSystem turnPfs(pUnit);
                 turnPfs.explore();
                 spGameAction pAction = spGameAction::create(ACTION_FLARE);
@@ -183,6 +182,7 @@ bool CoreAI::moveBlackBombs(spQmlVectorUnit pUnits, spQmlVectorUnit pEnemyUnits)
 
 bool CoreAI::moveSupport(AISteps step, spQmlVectorUnit pUnits, bool useTransporters)
 {
+    Console::print("CoreAI::moveSupport", Console::eDEBUG);
     aiStep = step;
     spGameMap pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
@@ -316,6 +316,7 @@ bool CoreAI::processPredefinedAi()
 
 void CoreAI::processPredefinedAiHold(Unit* pUnit)
 {
+    Console::print("CoreAI::processPredefinedAiHold", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     QVector<QVector3D> ret;
@@ -347,6 +348,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
 
 void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 {
+    Console::print("CoreAI::processPredefinedAiDefensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     UnitPathFindingSystem pfs(pUnit);
@@ -393,6 +395,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
 
 void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit pEnemyUnits)
 {
+    Console::print("CoreAI::processPredefinedAiOffensive", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
@@ -418,6 +421,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, spQmlVectorUnit pEnemyUni
 
 bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPathFindingSystem & pfs)
 {
+    Console::print("CoreAI::processPredefinedAiAttack", Console::eDEBUG);
     pAction->setTarget(QPoint(pUnit->Unit::getX(), pUnit->Unit::getY()));
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->Unit::getX(), pUnit->Unit::getY())), 0);
 
@@ -454,6 +458,7 @@ bool CoreAI::processPredefinedAiAttack(Unit* pUnit, spGameAction pAction, UnitPa
 
 void CoreAI::processPredefinedAiPatrol(Unit* pUnit)
 {
+    Console::print("CoreAI::processPredefinedAiPatrol", Console::eDEBUG);
     spGameAction pAction = spGameAction::create(ACTION_FIRE);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();

@@ -500,12 +500,7 @@
     </message>
     <message>
         <location filename="../objects/base/chat.cpp" line="77"/>
-        <source>Message to send via chat. Start a message with one of the folling items to send </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/base/chat.cpp" line="78"/>
-        <source>a message to specific targets. 
+        <source>Message to send via chat. Start a message with one of the following items to send a message to specific targets. 
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,42 +1234,42 @@ Distributed for units beeing spawned at the given rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="533"/>
+        <location filename="../menue/editormenue.cpp" line="531"/>
         <source>Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="537"/>
+        <location filename="../menue/editormenue.cpp" line="535"/>
         <source>Change of the map size on the left map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="546"/>
+        <location filename="../menue/editormenue.cpp" line="544"/>
         <source>Top: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="550"/>
+        <location filename="../menue/editormenue.cpp" line="548"/>
         <source>Change of the map size on the top map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="559"/>
+        <location filename="../menue/editormenue.cpp" line="557"/>
         <source>Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="563"/>
+        <location filename="../menue/editormenue.cpp" line="561"/>
         <source>Change of the map size on the right map border.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="572"/>
+        <location filename="../menue/editormenue.cpp" line="570"/>
         <source>Bottom: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="576"/>
+        <location filename="../menue/editormenue.cpp" line="574"/>
         <source>Change of the map size on the bottom map border.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1406,17 +1401,17 @@ Distributed for units beeing spawned at the given rate.</source>
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="468"/>
+        <location filename="../menue/gamemenue.cpp" line="467"/>
         <source>Show Chat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1393"/>
+        <location filename="../menue/gamemenue.cpp" line="1395"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1403"/>
+        <location filename="../menue/gamemenue.cpp" line="1405"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3183,7 +3178,7 @@ Host mods: </source>
     <message>
         <location filename="../menue/achievementmenu.cpp" line="45"/>
         <location filename="../menue/optionmenue.cpp" line="56"/>
-        <location filename="../menue/gamemenue.cpp" line="418"/>
+        <location filename="../menue/gamemenue.cpp" line="417"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3230,72 +3225,72 @@ Host mods: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="293"/>
+        <location filename="../menue/gamemenue.cpp" line="294"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="410"/>
+        <location filename="../menue/gamemenue.cpp" line="409"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="599"/>
+        <location filename="../menue/gamemenue.cpp" line="598"/>
         <source>The game is out of sync and can&apos;t be continued. The game has been stopped. You can save the game and restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1364"/>
+        <location filename="../menue/gamemenue.cpp" line="1366"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1365"/>
+        <location filename="../menue/gamemenue.cpp" line="1367"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1366"/>
+        <location filename="../menue/gamemenue.cpp" line="1368"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1367"/>
+        <location filename="../menue/gamemenue.cpp" line="1369"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1368"/>
+        <location filename="../menue/gamemenue.cpp" line="1370"/>
         <source>Army Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1369"/>
+        <location filename="../menue/gamemenue.cpp" line="1371"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1370"/>
+        <location filename="../menue/gamemenue.cpp" line="1372"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1371"/>
+        <location filename="../menue/gamemenue.cpp" line="1373"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1777"/>
+        <location filename="../menue/gamemenue.cpp" line="1770"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1809"/>
+        <location filename="../menue/gamemenue.cpp" line="1801"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1837"/>
+        <location filename="../menue/gamemenue.cpp" line="1827"/>
         <source>Nickname for the Unit:</source>
         <translation type="unfinished"></translation>
     </message>

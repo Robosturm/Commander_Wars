@@ -267,18 +267,13 @@ void InGameMenue::MoveMap(qint32 x, qint32 y)
     GameMap::getInstance()->moveMap(x, y);
 }
 
-bool InGameMenue::getFocused() const
-{
-    return m_Focused;
-}
-
 void InGameMenue::setFocused(bool Focused)
 {
     if (!Focused)
     {
         m_moveMap = false;
     }
-    m_Focused = Focused;
+    Basemenu::setFocused(Focused);
 }
 
 InGameMenue::~InGameMenue()
