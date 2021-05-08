@@ -167,7 +167,7 @@ void NetworkGame::checkServerRunning()
 
 void NetworkGame::onConnectToLocalServer(quint64)
 {
-    emit m_gameConnection.sigChangeThread(0, QObject::thread());
+    emit m_gameConnection.sigChangeThread(0, thread());
     emit m_gameConnection.sig_sendData(0, m_dataBuffer, NetworkInterface::NetworkSerives::ServerHosting, false);
 
     m_data.setSlaveName(m_serverName);

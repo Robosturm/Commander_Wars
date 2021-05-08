@@ -25,7 +25,7 @@ TCPClient::TCPClient(spRxTask pRXTask, spTxTask pTXTask, QTcpSocket* pSocket, qu
 {
     setObjectName("TCPClient");
     TCPClient::setSocketID(socketId);
-    QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+    connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 }
 
 TCPClient::~TCPClient()
@@ -43,21 +43,21 @@ void TCPClient::connectTCP(QString adress, quint16 port)
     // Launch Socket
     m_pSocket = new QTcpSocket(this);
     m_pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(m_pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    QObject::connect(m_pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
-    QObject::connect(m_pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
+    connect(m_pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    connect(m_pSocket, &QAbstractSocket::errorOccurred, this, &TCPClient::displayTCPError, Qt::QueuedConnection);
+    connect(m_pSocket, &QAbstractSocket::connected, this, &TCPClient::connected, Qt::QueuedConnection);
 
     m_pSocket->connectToHost(adress, port);
 
     // Start RX-Task
     m_pRXTask = spRxTask::create(m_pSocket, 0, this, false);
     m_pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(m_pSocket, &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+    connect(m_pSocket, &QTcpSocket::readyRead, m_pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
     // start TX-Task
     m_pTXTask = spTxTask::create(m_pSocket, 0, this, false);
     m_pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-    QObject::connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+    connect(this, &TCPClient::sig_sendData, m_pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
 
     Console::print("Client is running", Console::eLogLevels::eDEBUG);
 }

@@ -24,11 +24,11 @@ void LocalServer::connectTCP(QString adress, quint16)
     m_pTCPServer = new QLocalServer(this);
     m_pTCPServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pTCPServer->listen(adress);
-    QObject::connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
-    QObject::connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
-    QObject::connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
-    QObject::connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
-    QObject::connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
+    connect(m_pTCPServer, &QLocalServer::newConnection, this, &LocalServer::onConnect, Qt::QueuedConnection);
+    connect(this, &LocalServer::sigDisconnectClient, this, &LocalServer::disconnectClient, Qt::QueuedConnection);
+    connect(this, &LocalServer::sigForwardData, this, &LocalServer::forwardData, Qt::QueuedConnection);
+    connect(this, &LocalServer::sigContinueListening, this, &LocalServer::continueListening, Qt::QueuedConnection);
+    connect(this, &LocalServer::sigPauseListening, this, &LocalServer::pauseListening, Qt::QueuedConnection);
 
     Console::print("Local Server is running. " + adress, Console::eLogLevels::eDEBUG);
     // create marker file
@@ -90,21 +90,21 @@ void LocalServer::onConnect()
         QLocalSocket* nextSocket = m_pTCPServer->nextPendingConnection();
         m_pTCPSockets.append(nextSocket);
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
+        connect(nextSocket, &QLocalSocket::errorOccurred, this, &LocalServer::displayLocalError, Qt::QueuedConnection);
         m_idCounter++;
         // Start RX-Task
         spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, true);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pRXTasks.append(pRXTask);
-        QObject::connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+        connect(nextSocket, &QLocalSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, true);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         m_pTXTasks.append(pTXTask);
-        QObject::connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+        connect(this, &LocalServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         quint64 socket = m_idCounter;
-        QObject::connect(nextSocket, &QLocalSocket::disconnected, [=]()
+        connect(nextSocket, &QLocalSocket::disconnected, [=]()
         {
             emit sigDisconnectClient(socket);
         });

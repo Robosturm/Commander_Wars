@@ -25,11 +25,11 @@ void TCPServer::connectTCP(QString, quint16 port)
     m_pTCPServer = new QTcpServer(this);
     m_pTCPServer->moveToThread(Mainapp::getInstance()->getNetworkThread());
     m_pTCPServer->listen(QHostAddress::Any, port);
-    QObject::connect(m_pTCPServer, &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
-    QObject::connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
-    QObject::connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
-    QObject::connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
-    QObject::connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
+    connect(m_pTCPServer, &QTcpServer::newConnection, this, &TCPServer::onConnect, Qt::QueuedConnection);
+    connect(this, &TCPServer::sigDisconnectClient, this, &TCPServer::disconnectClient, Qt::QueuedConnection);
+    connect(this, &TCPServer::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+    connect(this, &TCPServer::sigContinueListening, this, &TCPServer::continueListening, Qt::QueuedConnection);
+    connect(this, &TCPServer::sigPauseListening, this, &TCPServer::pauseListening, Qt::QueuedConnection);
 
     Console::print("TCP Server is running", Console::eLogLevels::eDEBUG);
 }
@@ -74,7 +74,7 @@ void TCPServer::onConnect()
     {
         QTcpSocket* nextSocket = m_pTCPServer->nextPendingConnection();
         nextSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
+        connect(nextSocket, &QAbstractSocket::errorOccurred, this, &TCPServer::displayTCPError, Qt::QueuedConnection);
         m_idCounter++;
         if (m_idCounter == 0)
         {
@@ -83,17 +83,17 @@ void TCPServer::onConnect()
         // Start RX-Task
         spRxTask pRXTask = spRxTask::create(nextSocket, m_idCounter, this, false);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(nextSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
+        connect(nextSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData, Qt::QueuedConnection);
 
         // start TX-Task
         spTxTask pTXTask = spTxTask::create(nextSocket, m_idCounter, this, false);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
-        QObject::connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
+        connect(this, &TCPServer::sig_sendData, pTXTask.get(), &TxTask::send, Qt::QueuedConnection);
         spTCPClient pClient = spTCPClient::create(pRXTask, pTXTask, nextSocket, m_idCounter);
-        QObject::connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
+        connect(pClient.get(), &TCPClient::sigForwardData, this, &TCPServer::forwardData, Qt::QueuedConnection);
 
         quint64 socket = pClient->getSocketID();
-        QObject::connect(nextSocket, &QTcpSocket::disconnected, [=]()
+        connect(nextSocket, &QTcpSocket::disconnected, [=]()
         {
             emit sigDisconnectClient(socket);
         });

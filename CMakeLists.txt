@@ -483,6 +483,9 @@ add_custom_target(shaders SOURCES ${ShaderScripts})
 
 FILE(GLOB_RECURSE DataScripts "data/*.js")
 add_custom_target(data SOURCES ${DataScripts})
+
+FILE(GLOB_RECURSE UiXmls "resources/ui/*.xml")
+add_custom_target(uiXml SOURCES ${UiXmls})
 ##############################################################
 # end of this is just for the ide view nothing for execution #
 ##############################################################
@@ -496,11 +499,22 @@ set(TS_FILES
     translation/lang_de_DE.ts
     translation/lang_en.ts
 )
+
+set(TS_FILES
+    translation/lang_de_DE.ts
+    translation/lang_en.ts
+)
+
+
 # adds the translations and a target for it
 qt5_create_translation(
         QM_FILES
         ${${PROJECT_NAME}_SRCS}
-        ${JavaScripts}
+        ${scripts}
+        ${modScripts}
+        ${GameScripts}
+        ${CampaignScripts}
+        ${UiXmls}
         ${TS_FILES}
         OPTIONS ${LUPDATE_OPTIONS}
 )

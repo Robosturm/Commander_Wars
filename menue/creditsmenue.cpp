@@ -12,6 +12,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "ui_reader/uifactory.h"
+
 CreditsMenue::CreditsMenue()
     : Basemenu()
 {
@@ -120,6 +122,9 @@ CreditsMenue::CreditsMenue()
     }
     m_creditsHeigth = y;
     m_speedTimer.start();
+
+    UiFactory::getInstance().createUi("ui/creditsmenu.xml", this);
+
     pApp->continueRendering();
 }
 

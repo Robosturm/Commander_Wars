@@ -44,7 +44,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     style.multiline = false;
 
     // ok button
-    oxygine::spButton pOkButton = pObjectManager->createButton(QObject::tr("Ok"), 150);
+    oxygine::spButton pOkButton = pObjectManager->createButton(tr("Ok"), 150);
     pOkButton->setPosition(Settings::getWidth() / 2 - pOkButton->getWidth() / 2, Settings::getHeight() - 30 - pOkButton->getHeight());
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

@@ -40,6 +40,7 @@ WorkerThread* Mainapp::m_Worker = new WorkerThread();
 AudioThread* Mainapp::m_Audiothread = nullptr;
 bool Mainapp::m_slave{false};
 QMutex Mainapp::m_crashMutex;
+const char* const Mainapp::GAME_CONTEXT = "GAME";
 
 Mainapp::Mainapp()
 {
@@ -559,4 +560,14 @@ void Mainapp::onActiveChanged()
     {
         FocusableObject::looseFocus();
     }
+}
+
+QString Mainapp::qsTr(QString text)
+{
+    return Mainapp::qsTr(text.toStdString().c_str());
+}
+
+QString Mainapp::qsTr(const char* const text)
+{
+    return QCoreApplication::translate(GAME_CONTEXT, text);
 }

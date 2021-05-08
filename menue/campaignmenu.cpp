@@ -18,6 +18,8 @@
 
 #include "objects/dialogs/filedialog.h"
 
+#include "ui_reader/uifactory.h"
+
 CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     : Basemenu(),
       m_Multiplayer(multiplayer)
@@ -80,6 +82,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
     std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
     m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));
+    UiFactory::getInstance().createUi("ui/campaignmenu.xml", this);
     pApp->continueRendering();
 }
 

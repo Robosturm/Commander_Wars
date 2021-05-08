@@ -53,7 +53,7 @@ OptionMenue::OptionMenue()
     pApp->getAudioThread()->playRandom();
 
 
-    oxygine::spButton pButtonExit = ObjectManager::createButton(QObject::tr("Exit"));
+    oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
     pButtonExit->setPosition(Settings::getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
                              Settings::getHeight() - pButtonExit->getHeight() - 10);
@@ -310,7 +310,7 @@ void OptionMenue::showSettings()
 
     spLabel pTextfield = spLabel::create(800);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(QObject::tr("Screen Settings"));
+    pTextfield->setHtmlText(tr("Screen Settings"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
@@ -318,7 +318,7 @@ void OptionMenue::showSettings()
 
     pTextfield = spLabel::create(sliderOffset - 10);
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(QObject::tr("Screen Resolution: "));
+    pTextfield->setHtmlText(tr("Screen Resolution: "));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spDropDownmenu pScreenResolution = spDropDownmenu::create(400, displaySizes);
@@ -700,12 +700,12 @@ void OptionMenue::showMods()
     spLabel pLabel = spLabel::create(250);
     style.multiline = false;
     pLabel->setStyle(style);
-    pLabel->setText(QObject::tr("Advance Wars Game:"));
+    pLabel->setText(tr("Advance Wars Game:"));
     m_ModSelector->addChild(pLabel);
-    QVector<QString> versions = {QObject::tr("Unkown"),
-                                 QObject::tr("Commander Wars"),
-                                 QObject::tr("Advance Wars DS"),
-                                 QObject::tr("Advance Wars DC")};
+    QVector<QString> versions = {tr("Unkown"),
+                                 tr("Commander Wars"),
+                                 tr("Advance Wars DS"),
+                                 tr("Advance Wars DC")};
     spDropDownmenu pModSelection = spDropDownmenu::create(300, versions);
     pModSelection->setTooltipText(tr("Select an Advance Wars Game to preselect all mods which are required to play like this Advance Wars Game"));
     pModSelection->setX(260);

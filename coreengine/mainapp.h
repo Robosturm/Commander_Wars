@@ -21,6 +21,7 @@ class Mainapp : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
+    static const char* const GAME_CONTEXT;
     static constexpr qint32 stepProgress = 4;
     enum StartupPhase
     {
@@ -117,6 +118,19 @@ public:
      * @return
      */
     static QThread* getGameServerThread();
+    /**
+     * @brief qsTr
+     * @param text
+     * @return
+     */
+    static QString qsTr(const char* const text);
+    /**
+     * @brief qsTr
+     * @param text
+     * @return
+     */
+    static QString qsTr(QString text);
+
     bool getNoUi() const;
 
 public slots:

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<ui>
+        <!-- Numbers can be any JS code that evaluates to a number
+        the values lastX, lastY, lastWidth and lastHeight can be used for integer evaluations
+        they represent the coordinates of the last item to create the ui relative to the last created item
+        Texts can be marked for translatable:
+                QT_TRANSLATE_NOOP("GAME", "Test")
+        onUpdate: 	only works inside a game or replay right now. Can be any JS code that evaluates to a string.
+                                And gets called whenever the ui gets updated during the game. Mainly cause of mouse moves or actions finished.
+        onEvent: 	the variable input holds the value of the item that can be used inside the JS code here
+
+        currently supported filenames:
+                campaignmenu
+                editormenu
+                gamemenu
+                mainmenu
+                mapselectionmapsmenu
+        Check the UiFactory.h for all xml parameter options
+        -->
+    <Label>
+        <x>settings.getWidth() - 200</x>
+        <y>10</y>
+        <width>100</width>
+        <height>30</height>
+        <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+        <font>font24</font>
+        <onUpdate>Works</onUpdate>
+    </Label>
+    <Checkbox>
+        <x>settings.getWidth() - 100</x>
+        <y>10</y>
+        <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+        <startValue>settings.getAutoCamera()</startValue>
+        <onEvent>settings.setAutoCamera(input);</onEvent>
+    </Checkbox>
+    <Panel>
+        <x>10</x>
+        <y>10</y>
+        <width>500</width>
+        <height>200</height>
+        <childs>
+            <Spinbox>
+                <x>10</x>
+                <y>10</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+                <startValue>11</startValue>
+                <infinite>10</infinite>
+                <min>10</min>
+                <max>100</max>
+                <onEvent></onEvent>
+            </Spinbox>
+            <TimeSpinbox>
+                <x>lastX</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+                <startValue>11</startValue>
+                <onEven></onEven>
+            </TimeSpinbox>
+            <Textbox>
+                <x>lastX</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+                <startValue>Test</startValue>
+                <onEvent></onEvent>
+            </Textbox>
+            <Icon>
+                <x>lastX</x>
+                <y>lastY + lastHeight + 10</y>
+                <size>48</size>
+                <startValue>BOMBER</startValue>
+            </Icon>
+        </childs>
+    </Panel>
+</ui>

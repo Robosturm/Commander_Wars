@@ -49,9 +49,9 @@ public:
           isConnected(false)
     {
         m_pNetworkInterface = this;
-        QObject::connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
-        QObject::connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
-        QObject::connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
+        connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
+        connect(this, &NetworkInterface::sig_close, this, &NetworkInterface::closeNetworkInterface, Qt::QueuedConnection);
+        connect(this, &NetworkInterface::sigChangeThread, this, &NetworkInterface::changeThread, Qt::QueuedConnection);
     }
 
     virtual ~NetworkInterface()

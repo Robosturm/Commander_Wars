@@ -2811,8 +2811,7 @@ float NormalAi::calcTransporterScore(UnitBuildData & unitBuildData,  spQmlVector
             score += unitBuildData.loadingCount * m_additionalLoadingUnitBonus;
         }
     }
-    // avoid building transporters if the score is low
-    if (score <= 20)
+    else
     {
         score = std::numeric_limits<float>::lowest();
     }

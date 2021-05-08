@@ -13,7 +13,7 @@ class UiFactory : public QObject
 {
     Q_OBJECT
 public:
-    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor item, Basemenu* pMenu)>;
+    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor & item, Basemenu* pMenu)>;
     struct FactoryItem
     {
         QString m_id;
@@ -27,7 +27,7 @@ public:
      * @brief createUi
      * @param uiXmlFile
      */
-    void createUi(QString uiXmlFile, Basemenu* pMenu);
+    void createUi(QString uiXml, Basemenu* pMenu);
     /**
      * @brief getFactoryItems
      * @return
@@ -42,21 +42,47 @@ private:
      * mandatory: x, y, width, heigth, text, font,
      * optional: tooltip, onUpdate
      */
-    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
+    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
     /**
       * Nodename: Checkbox
       * supported attributes are:
       * mandatory: x, y, onEvent, startValue
       * optional: tooltip
       */
-    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
+    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
     /**
       * Nodename: Spinbox
       * supported attributes are:
       * mandatory: x, y, width, min, max, infinite, onEvent, startValue
       * optional: tooltip
       */
-    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
+    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    /**
+      * Nodename: Textbox
+      * supported attributes are:
+      * mandatory: x, y, width, onEvent, startValue
+      * optional: tooltip
+      */
+    bool createTextbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    /**
+      * Nodename: TimeSpinbox
+      * supported attributes are:
+      * mandatory: x, y, width, onEvent, startValue
+      * optional: tooltip
+      */
+    bool createTimeSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    /**
+      * Nodename: Panel
+      * supported attributes are:
+      * mandatory: x, y, width, height, childs
+      */
+    bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    /**
+      * Nodename: Icon
+      * supported attributes are:
+      * mandatory: x, y, size, startValue
+      */
+    bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
 private:
     explicit UiFactory();
     /**
@@ -64,8 +90,10 @@ private:
      * @param attributes
      * @return
      */
-    bool checkElement(QDomElement element, QVector<QString> attributes);
-    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
+    bool checkElements(QDomNodeList element, QVector<QString> attributes);
+    QString getAttribute(QDomNodeList childs, QString attribute);
+    QDomNode getNode(QDomNodeList childs, QString attribute);
+    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
     qint32 getIntValue(QString line);
     bool getBoolValue(QString line);
     QString getStringValue(QString line);
@@ -73,7 +101,15 @@ private:
     template<typename TType>
     void onEvent(QString line, TType value)
     {
-        QString args = "var input = " + QString::number(value) + ";";
+        QString args;
+        if constexpr(std::is_same<QString, TType>::value)
+        {
+            args = "var input = " + value + ";";
+        }
+        else
+        {
+            args = "var input = " + QString::number(value) + ";";
+        }
         QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
         if (erg.isError())
         {
@@ -104,10 +140,12 @@ private:
         }
         return ret;
     }
+    static QString translate(QString line);
 private:
 
     static UiFactory m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
+    QRect m_lastCoordinates;
 };
 
 #endif // UIFACTORY_H

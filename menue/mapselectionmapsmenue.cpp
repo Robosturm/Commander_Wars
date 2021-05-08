@@ -24,6 +24,8 @@
 #include "multiplayer/multiplayermenu.h"
 #include "multiplayer/networkcommands.h"
 
+#include "ui_reader/uifactory.h"
+
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : Basemenu()
 {
@@ -158,6 +160,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
     connect(this, &MapSelectionMapsMenue::sigOnEnter, this, &MapSelectionMapsMenue::onEnter, Qt::QueuedConnection);
+    UiFactory::getInstance().createUi("ui/mapselectionmapsmenu.xml", this);
     emit sigOnEnter();
     pApp->continueRendering();
 }

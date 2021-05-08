@@ -249,10 +249,9 @@ Mainwindow::Mainwindow()
     btnI++;
 
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
+
+    UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
     emit sigOnEnter();
-
-    UiFactory::getInstance().createUi("resources/ui.xml", this);
-
     pApp->continueRendering();
 }
 
