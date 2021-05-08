@@ -140,7 +140,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 
 void HumanPlayerInput::cancelActionInput()
 {
-
+    Console::print("HumanPlayerInput::cancelActionInput", Console::eDEBUG);
     Unit* pUnit = nullptr;
     if (m_pGameAction.get() != nullptr)
     {
@@ -517,6 +517,7 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
 
 void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 {
+    Console::print("HumanPlayerInput::menuItemSelected", Console::eDEBUG);
     if (m_pGameAction.get() != nullptr)
     {
         // we're currently selecting the action for this action
@@ -550,6 +551,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 
 void HumanPlayerInput::getNextStepData()
 {
+    Console::print("HumanPlayerInput::getNextStepData", Console::eDEBUG);
     clearMenu();
     clearMarkedFields();
     spGameMenue pMenu = GameMenue::getInstance();
@@ -594,6 +596,7 @@ void HumanPlayerInput::getNextStepData()
 
 void HumanPlayerInput::finishAction()
 {
+    Console::print("HumanPlayerInput::finishAction", Console::eDEBUG);
     if (m_pGameAction.get() != nullptr)
     {
         Unit* pUnit = m_pGameAction->getTargetUnit();
@@ -644,6 +647,7 @@ void HumanPlayerInput::finishAction()
 
 void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
 {
+    Console::print("HumanPlayerInput::createActionMenu", Console::eDEBUG);
     clearMarkedFields();
     MenuData data;
 
@@ -940,6 +944,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
+    Console::print("HumanPlayerInput::createCursorPath", Console::eDEBUG);
     QVector<QPoint> points = m_ArrowPoints;
     QPoint lastPoint = QPoint(-1, -1);
     if (points.size() > 0)
@@ -1007,6 +1012,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 
 QStringList HumanPlayerInput::getEmptyActionList()
 {
+    Console::print("HumanPlayerInput::getEmptyActionList", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
     if (value.isString())
@@ -1021,6 +1027,7 @@ QStringList HumanPlayerInput::getEmptyActionList()
 
 QStringList HumanPlayerInput::getViewplayerActionList()
 {
+    Console::print("HumanPlayerInput::getViewplayerActionList", Console::eDEBUG);
     Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction("ACTION", "getViewplayerActionList");
     if (value.isString())
@@ -1166,7 +1173,7 @@ void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 
 void HumanPlayerInput::showSelectedUnitAttackableFields(bool all)
 {
-    
+    Console::print("HumanPlayerInput::showSelectedUnitAttackableFields", Console::eDEBUG);
     if (m_pUnitPathFindingSystem.get() != nullptr &&
         m_pGameAction.get() != nullptr &&
         m_CurrentMenu.get() == nullptr)
@@ -1626,6 +1633,7 @@ void HumanPlayerInput::autoEndTurn()
 {
     if (m_pPlayer)
     {
+        Console::print("HumanPlayerInput::autoEndTurn", Console::eDEBUG);
         CO* pCO0 = m_pPlayer->getCO(0);
         CO* pCO1 = m_pPlayer->getCO(1);
         if (Settings::getAutoEndTurn() &&

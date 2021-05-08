@@ -15,7 +15,7 @@
 class CampaignMenu;
 using spCampaignMenu = oxygine::intrusive_ptr<CampaignMenu>;
 
-class CampaignMenu : public Basemenu, public oxygine::Actor
+class CampaignMenu : public Basemenu
 {
     Q_OBJECT
 public:

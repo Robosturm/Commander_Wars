@@ -7,7 +7,7 @@
 class Wikimenu;
 using spWikimenu = oxygine::intrusive_ptr<Wikimenu>;
 
-class Wikimenu : public Basemenu, public oxygine::Actor
+class Wikimenu : public Basemenu
 {
     Q_OBJECT
 public:

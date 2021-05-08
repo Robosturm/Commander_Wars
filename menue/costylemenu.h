@@ -9,7 +9,7 @@
 class COStyleMenu;
 using spCOStyleMenu = oxygine::intrusive_ptr<COStyleMenu>;
 
-class COStyleMenu : public Basemenu, public oxygine::Actor
+class COStyleMenu : public Basemenu
 {
     Q_OBJECT
 public:

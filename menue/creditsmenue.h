@@ -12,7 +12,7 @@
 class CreditsMenue;
 using spCreditsMenue = oxygine::intrusive_ptr<CreditsMenue>;
 
-class CreditsMenue : public Basemenu, public oxygine::Actor
+class CreditsMenue : public Basemenu
 {
     Q_OBJECT
 public:

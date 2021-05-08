@@ -7,12 +7,13 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
+#include "menue/basemenu.h"
 
 class UiFactory : public QObject
 {
     Q_OBJECT
 public:
-    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor item)>;
+    using CreatorFunction = std::function<bool(oxygine::spActor, QDomElement, oxygine::spActor item, Basemenu* pMenu)>;
     struct FactoryItem
     {
         QString m_id;
@@ -26,7 +27,7 @@ public:
      * @brief createUi
      * @param uiXmlFile
      */
-    oxygine::spActor createUi(QString uiXmlFile, bool & success);
+    void createUi(QString uiXmlFile, Basemenu* pMenu);
     /**
      * @brief getFactoryItems
      * @return
@@ -34,28 +35,37 @@ public:
     QVector<UiFactory::FactoryItem> & getFactoryItems();
 
 private:
+    // this section contains the information about the elements and the attributes supported by the xml
     /**
      * Nodename: Label
      * supported attributes are:
-     * x, y, width, heigth, text, tooltip and font
+     * mandatory: x, y, width, heigth, text, font,
+     * optional: tooltip, onUpdate
      */
-    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor item);
+    bool createLabel(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
     /**
       * Nodename: Checkbox
       * supported attributes are:
-      * x, y, tooltip, onEvent, startValue
+      * mandatory: x, y, onEvent, startValue
+      * optional: tooltip
       */
-    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item);
+    bool createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
     /**
       * Nodename: Spinbox
       * supported attributes are:
-      * x, y, width, min, max, infinite, tooltip, onEvent, startValue
+      * mandatory: x, y, width, min, max, infinite, onEvent, startValue
+      * optional: tooltip
       */
-    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item);
-
+    bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
 private:
     explicit UiFactory();
-    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor item);
+    /**
+     * @brief checkArray
+     * @param attributes
+     * @return
+     */
+    bool checkElement(QDomElement element, QVector<QString> attributes);
+    bool createItem(oxygine::spActor parent, QDomElement element, oxygine::spActor item, Basemenu* pMenu);
     qint32 getIntValue(QString line);
     bool getBoolValue(QString line);
     QString getStringValue(QString line);
@@ -69,6 +79,30 @@ private:
         {
             Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
         }
+    }
+    template<typename TType>
+    TType onUpdate(QString line)
+    {
+        TType ret;
+        QJSValue erg = Interpreter::getInstance()->evaluate(line);
+
+        if constexpr(std::is_same<QString, TType>::value)
+        {
+            ret = erg.toString();
+        }
+        else if constexpr(std::is_arithmetic<TType>::value)
+        {
+            ret = erg.toNumber();
+        }
+        else
+        {
+            Console::print("Unable to determine a return value while interpreting. Line: " + line, Console::eERROR);
+        }
+        if (erg.isError())
+        {
+            Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+        }
+        return ret;
     }
 private:
 

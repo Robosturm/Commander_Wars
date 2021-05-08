@@ -7,7 +7,7 @@
 class Mainwindow;
 using spMainwindow = oxygine::intrusive_ptr<Mainwindow>;
 
-class Mainwindow : public Basemenu, public oxygine::Actor
+class Mainwindow : public Basemenu
 {
     Q_OBJECT
 public:

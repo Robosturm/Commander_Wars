@@ -14,7 +14,7 @@
 class OptionMenue;
 using spOptionMenue = oxygine::intrusive_ptr<OptionMenue>;
 
-class OptionMenue : public Basemenu, public oxygine::Actor
+class OptionMenue : public Basemenu
 {
     Q_OBJECT
 public:

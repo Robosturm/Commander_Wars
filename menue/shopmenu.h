@@ -14,7 +14,7 @@
 class Shopmenu;
 using spShopmenu = oxygine::intrusive_ptr<Shopmenu>;
 
-class Shopmenu : public Basemenu, public oxygine::Actor
+class Shopmenu : public Basemenu
 {
     Q_OBJECT
 public:

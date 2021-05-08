@@ -22,7 +22,7 @@
 class VictoryMenue;
 using spVictoryMenue = oxygine::intrusive_ptr<VictoryMenue>;
 
-class VictoryMenue : public Basemenu, public oxygine::Actor
+class VictoryMenue : public Basemenu
 {
     Q_OBJECT
 public:

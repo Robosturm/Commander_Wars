@@ -2,8 +2,12 @@
 #define BASEMENU_H
 
 #include <QObject>
+#include "3rd_party/oxygine-framework/oxygine-framework.h"
 
-class Basemenu : public QObject
+class Basemenu;
+using spBasemenu = oxygine::intrusive_ptr<Basemenu>;
+
+class Basemenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:

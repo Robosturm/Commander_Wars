@@ -250,6 +250,9 @@ Mainwindow::Mainwindow()
 
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
     emit sigOnEnter();
+
+    UiFactory::getInstance().createUi("resources/ui.xml", this);
+
     pApp->continueRendering();
 }
 

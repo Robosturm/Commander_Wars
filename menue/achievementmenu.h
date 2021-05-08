@@ -11,7 +11,7 @@
 class Achievementmenu;
 using spAchievementmenu = oxygine::intrusive_ptr<Achievementmenu>;
 
-class Achievementmenu : public Basemenu, public oxygine::Actor
+class Achievementmenu : public Basemenu
 {
     Q_OBJECT
 public:

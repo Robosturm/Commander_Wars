@@ -17,7 +17,7 @@
 class InGameMenue;
 using spInGameMenue = oxygine::intrusive_ptr<InGameMenue>;
 
-class InGameMenue : public Basemenu, public oxygine::Actor
+class InGameMenue : public Basemenu
 {
     Q_OBJECT
 public:
