@@ -1,4 +1,4 @@
-this.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
+MOVE_TIRE_B.getMovementpoints = function(terrain, unit, currentTerrain, trapChecking = false)
 {
     var currentUnit = terrain.getUnit();
     if ((currentUnit !== null) &&
