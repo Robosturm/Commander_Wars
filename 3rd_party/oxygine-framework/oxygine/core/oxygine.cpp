@@ -43,7 +43,7 @@ namespace oxygine
             case ep_show_error:
                 qCritical() << message;
 #ifdef GAMEDEBUG
-                QASSERT(false);
+                Q_ASSERT(false);
 #endif
                 break;
             case ep_show_warning:
