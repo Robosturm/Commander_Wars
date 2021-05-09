@@ -13,7 +13,7 @@
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"
-#include "game/battleanimationsprite.h"
+#include "game/gameanimation/battleanimationsprite.h"
 #include "menue/gamemenue.h"
 
 #include "objects/base/label.h"

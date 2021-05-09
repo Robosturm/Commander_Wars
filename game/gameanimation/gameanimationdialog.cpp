@@ -1,7 +1,7 @@
 #include "qfile.h"
 
-#include "game/gameanimationdialog.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationdialog.h"
+#include "game/gameanimation/gameanimationfactory.h"
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"

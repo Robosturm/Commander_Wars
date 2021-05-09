@@ -2,7 +2,7 @@
 #define GAMEANIMATIONPOWER_H
 #include <QTimer>
 
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 #include "game/GameEnums.h"
 #include "game/co.h"
 
@@ -19,12 +19,12 @@ public:
 
     virtual void restart() override;
     virtual void stop() override;
-
-    virtual void update(const oxygine::UpdateState& us) override;
 signals:
     void sigRightClick();
 public slots:
     void rightClick();
+protected slots:
+    virtual void start() override;
 private:
     friend class oxygine::intrusive_ptr<GameAnimationPower>;
     GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, CO* pCO);

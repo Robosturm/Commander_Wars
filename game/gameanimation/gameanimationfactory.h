@@ -5,7 +5,7 @@
 #include <QVector>
 
 #include "game/gamemap.h"
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 
 class GameAnimationWalk;
 class GameAnimationCapture;

@@ -3,7 +3,7 @@
 #include "ai/targetedunitpathfindingsystem.h"
 
 
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "game/gamemap.h"
 

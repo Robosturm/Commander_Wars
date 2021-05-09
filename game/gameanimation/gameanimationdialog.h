@@ -5,7 +5,7 @@
 #include <QElapsedTimer>
 #include "3rd_party/oxygine-framework/oxygine/KeyEvent.h"
 
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 #include "game/GameEnums.h"
 
 class GameAnimationDialog;

@@ -11,8 +11,8 @@
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/player.h"
-#include "game/battleanimationsprite.h"
-#include "game/battleanimation.h"
+#include "game/gameanimation/battleanimationsprite.h"
+#include "game/gameanimation/battleanimation.h"
 #include "game/co.h"
 
 

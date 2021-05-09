@@ -1,4 +1,4 @@
-#include "game/gameanimationcapture.h"
+#include "game/gameanimation/gameanimationcapture.h"
 #include "game/gamemap.h"
 
 #include "resource_management/gameanimationmanager.h"
@@ -7,7 +7,7 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
 
-const qint32 GameAnimationCapture::m_capturingFactor = 10;
+const qint32 GameAnimationCapture::m_capturingFactor = 7;
 const qint32 GameAnimationCapture::m_jumpSprites = 3;
 const qint32 GameAnimationCapture::m_ayeAyeSprites = 2;
 const qint32 GameAnimationCapture::m_jumpingCount = 3;
@@ -180,6 +180,10 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, Player*  pPlayer, 
             // jumping
             oxygine::spTweenQueue queueAnimating = oxygine::spTweenQueue::create();
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, m_jumpSprites - 1), oxygine::timeMS(m_jumpSprites * m_frameTime), m_jumpingCount);
+            for (qint32 i = 0; i < m_jumpingCount; ++i)
+            {
+                addSound("capture_jump.wav", 1, "resources/sounds/", m_jumpSprites * m_frameTime * i);
+            }
             queueAnimating->add(tween);
             // cool aye aye sir
             oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, m_jumpSprites, m_jumpSprites + m_ayeAyeSprites - 1), oxygine::timeMS(m_ayeAyeSprites * m_frameTime), 1);

@@ -14,7 +14,7 @@
 #include "game/building.h"
 #include "game/player.h"
 #include "game/unit.h"
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 
 #include "menue/editormenue.h"
 

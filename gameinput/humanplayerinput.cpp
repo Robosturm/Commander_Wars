@@ -7,7 +7,7 @@
 #include "game/building.h"
 #include "game/player.h"
 #include "game/co.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"

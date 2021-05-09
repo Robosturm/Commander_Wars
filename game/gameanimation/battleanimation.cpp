@@ -8,7 +8,7 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 
-#include "game/battleanimation.h"
+#include "game/gameanimation/battleanimation.h"
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"

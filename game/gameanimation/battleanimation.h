@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QTimer>
 
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 #include "game/GameEnums.h"
-#include "game/battleanimationsprite.h"
+#include "game/gameanimation/battleanimationsprite.h"
 
 #include "coreengine/LUPDATE_MACROS.h"
 

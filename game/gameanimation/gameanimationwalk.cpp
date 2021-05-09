@@ -4,11 +4,11 @@
 #include "coreengine/audiothread.h"
 
 #include "game/player.h"
-#include "game/gameanimationwalk.h"
+#include "game/gameanimation/gameanimationwalk.h"
 #include "game/gamemap.h"
 #include "game/unit.h"
 #include "game/co.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),

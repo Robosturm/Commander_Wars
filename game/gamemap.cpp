@@ -22,8 +22,8 @@
 #include "game/unit.h"
 #include "game/player.h"
 #include "game/co.h"
-#include "game/gameanimationfactory.h"
-#include "game/gameanimationnextday.h"
+#include "game/gameanimation/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationnextday.h"
 #include "game/building.h"
 #include "game/gamemap.h"
 

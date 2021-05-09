@@ -16,10 +16,10 @@
 #include "gameinput/humanplayerinput.h"
 #include "game/player.h"
 #include "game/co.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 #include "game/unitpathfindingsystem.h"
-#include "game/battleanimation.h"
-#include "game/gameanimationdialog.h"
+#include "game/gameanimation/battleanimation.h"
+#include "game/gameanimation/gameanimationdialog.h"
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -1244,6 +1244,10 @@ void GameMenue::victory(qint32 team)
             {
                 humanWin = true;
             }
+        }
+        if (humanWin)
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
         }
         pMap->getGameScript()->victory(team);
         if (GameAnimationFactory::getAnimationCount() == 0)

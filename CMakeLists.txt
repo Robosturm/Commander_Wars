@@ -324,17 +324,17 @@ set(${PROJECT_NAME}_SRCS
         game/gamerecording/replayrecorder.cpp
         # cool ingame script support
         game/gamescript.cpp
-        game/campaign.cpp
-        game/battleanimationsprite.cpp
+        game/campaign.cpp        
         # animation stuff
-        game/gameanimation.cpp
-        game/gameanimationfactory.cpp
-        game/gameanimationwalk.cpp
-        game/gameanimationcapture.cpp
-        game/gameanimationdialog.cpp
-        game/gameanimationpower.cpp
-        game/gameanimationnextday.cpp
-        game/battleanimation.cpp
+        game/gameanimation/gameanimation.cpp
+        game/gameanimation/gameanimationfactory.cpp
+        game/gameanimation/gameanimationwalk.cpp
+        game/gameanimation/gameanimationcapture.cpp
+        game/gameanimation/gameanimationdialog.cpp
+        game/gameanimation/gameanimationpower.cpp
+        game/gameanimation/gameanimationnextday.cpp
+        game/gameanimation/battleanimation.cpp
+        game/gameanimation/battleanimationsprite.cpp
         # replay/observer
         game/viewplayer.cpp
 

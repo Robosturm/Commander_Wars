@@ -1,5 +1,5 @@
-#include "game/gameanimation.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimation.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/gameanimationmanager.h"
 #include "resource_management/fontmanager.h"

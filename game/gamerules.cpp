@@ -8,7 +8,7 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/unit.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamemanager.h"

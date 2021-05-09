@@ -6,9 +6,9 @@
 #include "game/player.h"
 #include "game/unit.h"
 #include "game/co.h"
-#include "game/gameanimationfactory.h"
-#include "game/gameanimationdialog.h"
-#include "game/gameanimationpower.h"
+#include "game/gameanimation/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationdialog.h"
+#include "game/gameanimation/gameanimationpower.h"
 #include "game/gameaction.h"
 
 #include "menue/gamemenue.h"

@@ -13,7 +13,7 @@
 #include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
-#include "game/battleanimationsprite.h"
+#include "game/gameanimation/battleanimationsprite.h"
 #include "game/gameaction.h"
 
 #include "objects/base/label.h"

@@ -12,8 +12,8 @@
 #include "coreengine/tweens/tweenwait.h"
 #include "coreengine/audiothread.h"
 
-#include "game/gameanimationfactory.h"
-#include "game/gameanimationpower.h"
+#include "game/gameanimation/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationpower.h"
 #include "game/player.h"
 #include "game/co.h"
 
@@ -213,6 +213,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         }
     });
     connect(this, &GameAnimationPower::sigRightClick, this, &GameAnimationPower::rightClick, Qt::QueuedConnection);
+    addSound("power_activation.wav");
 }
 
 GameAnimationPower::~GameAnimationPower()
@@ -238,7 +239,7 @@ void GameAnimationPower::stop()
     m_endTimer.stop();
 }
 
-void GameAnimationPower::update(const oxygine::UpdateState& us)
+void GameAnimationPower::start()
 {
     if (!m_started)
     {
@@ -247,7 +248,7 @@ void GameAnimationPower::update(const oxygine::UpdateState& us)
         m_pCO->loadCOMusic();
         pAudioThread->playRandom();
     }
-    GameAnimation::update(us);
+    GameAnimation::start();
 }
 
 void GameAnimationPower::restart()

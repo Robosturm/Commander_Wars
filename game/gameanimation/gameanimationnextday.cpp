@@ -5,10 +5,10 @@
 
 #include "coreengine/mainapp.h"
 
-#include "game/gameanimationnextday.h"
+#include "game/gameanimation/gameanimationnextday.h"
 #include "game/co.h"
 #include "game/gamemap.h"
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "menue/gamemenue.h"
 

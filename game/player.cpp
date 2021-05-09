@@ -11,7 +11,7 @@
 #include "game/gamerules.h"
 #include "game/player.h"
 #include "game/gamemap.h"
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 
 #include "menue/gamemenue.h"
 

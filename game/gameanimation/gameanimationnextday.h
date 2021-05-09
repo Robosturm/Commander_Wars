@@ -3,7 +3,7 @@
 
 #include <QTimer>
 
-#include "game/gameanimation.h"
+#include "game/gameanimation/gameanimation.h"
 #include "game/player.h"
 
 class GameAnimationNextDay;

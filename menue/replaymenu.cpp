@@ -3,7 +3,7 @@
 #include "menue/replaymenu.h"
 #include "menue/mainwindow.h"
 
-#include "game/gameanimationfactory.h"
+#include "game/gameanimation/gameanimationfactory.h"
 
 #include "objects/dialogs/dialogmessagebox.h"
 #include "objects/base/dropdownmenu.h"
