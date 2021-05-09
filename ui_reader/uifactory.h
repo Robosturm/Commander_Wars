@@ -21,7 +21,11 @@ public:
     };
     static UiFactory & getInstance()
     {
-        return m_pUiFactory;
+        if (m_pUiFactory == nullptr)
+        {
+            m_pUiFactory = new UiFactory();
+        }
+        return *m_pUiFactory;
     }
     /**
      * @brief createUi
@@ -33,7 +37,6 @@ public:
      * @return
      */
     QVector<UiFactory::FactoryItem> & getFactoryItems();
-
 private:
     // this section contains the information about the elements and the attributes supported by the xml
     /**
@@ -78,11 +81,29 @@ private:
       */
     bool createPanel(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
     /**
+      * Nodename: Box
+      * supported attributes are:
+      * mandatory: x, y, width, height, sprite, childs
+     */
+    bool createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    /**
       * Nodename: Icon
       * supported attributes are:
       * mandatory: x, y, size, startValue
       */
     bool createIcon(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    /**
+     * Nodename: Button
+     * supported attributes are:
+     * mandatory: x, y, text, onEvent
+     * optional: tooltip, width
+     */
+    bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+signals:
+    void sigDoEvent(QString command);
+private slots:
+    void doEvent(QString command);
+
 private:
     explicit UiFactory();
     /**
@@ -113,7 +134,7 @@ private:
         QJSValue erg = Interpreter::getInstance()->evaluate(args + line);
         if (erg.isError())
         {
-            Console::print("Error while parsing " + line + " Error: " + erg.toString() + ".", Console::eERROR);
+            Console::print("Error while parsing " + args + line + " Error: " + erg.toString() + ".", Console::eERROR);
         }
     }
     template<typename TType>
@@ -143,7 +164,7 @@ private:
     static QString translate(QString line);
 private:
 
-    static UiFactory m_pUiFactory;
+    static UiFactory* m_pUiFactory;
     QVector<FactoryItem> m_factoryItems;
     QRect m_lastCoordinates;
 };

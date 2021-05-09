@@ -160,6 +160,10 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
     connect(this, &MapSelectionMapsMenue::sigOnEnter, this, &MapSelectionMapsMenue::onEnter, Qt::QueuedConnection);
+
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue obj = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mapselectionmapsmenu.xml", this);
     emit sigOnEnter();
     pApp->continueRendering();

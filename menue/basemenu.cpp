@@ -1,9 +1,10 @@
 #include "menue/basemenu.h"
 
+#include "coreengine/interpreter.h"
+
 Basemenu::Basemenu()
     : QObject()
 {
-
 }
 
 Basemenu::~Basemenu()

@@ -3,10 +3,13 @@
 #include "3rd_party/oxygine-framework/oxygine/res/ResAnim.h"
 #include "3rd_party/oxygine-framework/oxygine/res/ResFont.h"
 #include "3rd_party/oxygine-framework/oxygine/res/Resource.h"
+
 #include "qfile.h"
 #include "qfileinfo.h"
 #include "qdir.h"
 #include "qtextstream.h"
+
+#include "coreengine/console.h"
 
 namespace oxygine
 {
@@ -119,73 +122,74 @@ namespace oxygine
     {
         m_name = xmlFile;
         m_loadCounter = opt.m_loadCompletely ? 1 : 0;
-        qDebug("step0");
         QFile file(xmlFile);
 
         if (!file.exists() || file.size() == 0)
         {
-            qCritical("can't load xml file: '%s'", xmlFile.toStdString().c_str());
+            Console::print("can't load xml file: '" + xmlFile + "'", Console::eDEBUG);
             Q_ASSERT(!"can't find xml file");
             return false;
         }
         file.open(QIODevice::ReadOnly);
-        qDebug("step1");
         updateName(xmlFile);
-        qDebug("step2");
-
-
         m_docs.push_back(QDomDocument());
         QDomDocument& doc = m_docs.last();
-        bool loaded = doc.setContent(&file);
-        Q_ASSERT(loaded);
-
-        QDomElement resources = doc.documentElement();
-        qDebug("loading xml resources");
-        XmlWalker walker("", 1.0f, opt.m_loadCompletely, true, resources);
-
-        while (true)
+        QString error;
+        qint32 line;
+        qint32 column;
+        bool loaded = doc.setContent(&file, &error, &line, &column);
+        if (loaded)
         {
-            CreateResourceContext context;
-            context.m_options = &opt;
-            context.m_walker = walker.next();
-            if (context.m_walker.empty())
+            QDomElement resources = doc.documentElement();
+            Console::print("loading xml resources", Console::eDEBUG);
+            XmlWalker walker("", 1.0f, opt.m_loadCompletely, true, resources);
+            while (true)
             {
-                break;
-            }
-            QString type = context.m_walker.getType();
-
-            registeredResources::iterator i = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), type);
-            if (i == m_registeredResources.end() || (i->id != type))
-            {
-                qCritical("unknown resource. type: '%s' id: '%s'", type.toStdString().c_str(),
-                          Resource::extractID(context.m_walker.getNode(), "", "").toStdString().c_str());
-                Q_ASSERT(!"unknown resource type");
-                continue;
-            }
-
-            registeredResource& r = *i;
-
-
-            context.m_xml_name = xmlFile;
-            context.m_resources = this;
-
-            qDebug("resource: %s ", context.m_xml_name.toStdString().c_str());
-            spResource res = r.cb(context);
-            Q_ASSERT(res);
-            res->setUseLoadCounter(opt.m_useLoadCounter);
-
-            if (res)
-            {
-                if (context.m_walker.getLoad())
+                CreateResourceContext context;
+                context.m_options = &opt;
+                context.m_walker = walker.next();
+                if (context.m_walker.empty())
                 {
-                    res->load(nullptr);
+                    break;
                 }
-                res->setParent(this);
-                m_resources.push_back(res);
-            }
-        }
+                QString type = context.m_walker.getType();
 
-        qDebug("xml loaded");
+                registeredResources::iterator i = std::lower_bound(m_registeredResources.begin(), m_registeredResources.end(), type);
+                if (i == m_registeredResources.end() || (i->id != type))
+                {
+                    qCritical("unknown resource. type: '%s' id: '%s'", type.toStdString().c_str(),
+                              Resource::extractID(context.m_walker.getNode(), "", "").toStdString().c_str());
+                    Q_ASSERT(!"unknown resource type");
+                    continue;
+                }
+
+                registeredResource& r = *i;
+
+
+                context.m_xml_name = xmlFile;
+                context.m_resources = this;
+
+                Console::print("resource: " + context.m_xml_name, Console::eDEBUG);
+                spResource res = r.cb(context);
+                Q_ASSERT(res);
+                res->setUseLoadCounter(opt.m_useLoadCounter);
+
+                if (res)
+                {
+                    if (context.m_walker.getLoad())
+                    {
+                        res->load(nullptr);
+                    }
+                    res->setParent(this);
+                    m_resources.push_back(res);
+                }
+            }
+            Console::print("xml loaded", Console::eDEBUG);
+        }
+        else
+        {
+            Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
+        }
         return true;
     }
 

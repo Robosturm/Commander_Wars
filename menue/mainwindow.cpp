@@ -250,6 +250,9 @@ Mainwindow::Mainwindow()
 
     connect(this, &Mainwindow::sigOnEnter, this, &Mainwindow::onEnter, Qt::QueuedConnection);
 
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue obj = pInterpreter->newQObject(this);
+    pInterpreter->setGlobal("currentMenu", obj);
     UiFactory::getInstance().createUi("ui/mainmenu.xml", this);
     emit sigOnEnter();
     pApp->continueRendering();

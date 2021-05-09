@@ -11,6 +11,8 @@
 #include <qdir.h>
 #include "qtextstream.h"
 
+#include "coreengine/console.h"
+
 namespace oxygine
 {
     spResource ResFontBM::create(CreateResourceContext& context)
@@ -256,10 +258,14 @@ namespace oxygine
         }
 
         QDomDocument doc;
-        bool isXml = doc.setContent(&file);
+        QString error;
+        qint32 line;
+        qint32 column;
+        bool isXml = doc.setContent(&file, &error, &line, &column);
 
         if (!isXml)
         {
+            Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             return;
         }
         /////////////////////////////////////////////////

@@ -8,7 +8,7 @@
         onUpdate: 	only works inside a game or replay right now. Can be any JS code that evaluates to a string.
                                 And gets called whenever the ui gets updated during the game. Mainly cause of mouse moves or actions finished.
         onEvent: 	the variable input holds the value of the item that can be used inside the JS code here
-
+        all fields
         currently supported filenames:
                 campaignmenu
                 editormenu
@@ -24,7 +24,7 @@
         <height>30</height>
         <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
         <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
-        <font>font24</font>
+        <font>main24</font>
         <onUpdate>Works</onUpdate>
     </Label>
     <Checkbox>
@@ -64,15 +64,32 @@
                 <y>lastY + lastHeight + 10</y>
                 <width>400</width>
                 <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
-                <startValue>Test</startValue>
+                <startValue>"Test"</startValue>
                 <onEvent></onEvent>
             </Textbox>
             <Icon>
                 <x>lastX</x>
                 <y>lastY + lastHeight + 10</y>
                 <size>48</size>
-                <startValue>BOMBER</startValue>
+                <startValue>"BOMBER"</startValue>
             </Icon>
         </childs>
     </Panel>
+    <Box>
+        <x>10</x>
+        <y>lastY + lastHeight + 10</y>
+        <width>200</width>
+        <height>200</height>
+        <sprite>"panel"</sprite>
+        <childs>
+            <Button>
+                <x>10</x>
+                <y>10</y>
+                <width>100</width>
+                <text>QT_TRANSLATE_NOOP("GAME","Test")</text>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+                <onEvent>currentMenu.enterEditor();</onEvent>
+            </Button>
+        </childs>
+    </Box>
 </ui>

@@ -108,6 +108,7 @@ void Mainapp::nextStartUpStep(StartupPhase step)
             BackgroundManager::getInstance();
             LoadingScreen* pLoadingScreen = LoadingScreen::getInstance();
             pLoadingScreen->show();
+
             pLoadingScreen->setProgress(tr("Start Loading..."), step  * stepProgress);
             if (!m_noUi)
             {

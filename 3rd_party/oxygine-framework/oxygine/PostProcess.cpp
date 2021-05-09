@@ -148,15 +148,6 @@ namespace oxygine
     {
     }
 
-    void RenderTargetsManager::print()
-    {
-        qDebug("print");
-        for (size_t i = 0, sz = _free.size(); i < sz; ++i)
-        {
-            spNativeTexture t = _free[i];
-            qDebug("texture %d %d", t->getWidth(), t->getHeight());
-        }
-    }
     bool RenderTargetsManager::isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const
     {
         if (!t)

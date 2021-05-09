@@ -509,7 +509,7 @@ void Settings::setActiveMods(const QStringList &activeMods)
     m_activeMods.sort();
     for (const auto & mod : qAsConst(m_activeMods))
     {
-        qDebug() << "Loaded mod: " + mod;
+        Console::print("Loaded mod: " + mod, Console::eDEBUG);
         bool found = false;
         QFile file(mod + "/mod.txt");
         if (file.exists())

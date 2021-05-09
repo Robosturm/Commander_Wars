@@ -1,5 +1,13 @@
 PLAYER.startOfTurn = function(player)
 {
+    // moved all code to sub functions so it easier to cross mod against this vanilla mod
+    PLAYER.coop_ModDoStartOfTurnRepairing(player);
+    PLAYER.coop_ModApplyDefenceDebuf(player);
+    PLAYER.coop_ModApplyRoyalGuardDebuf(player);
+};
+
+PLAYER.coop_ModDoStartOfTurnRepairing = function(player)
+{
     if (!player.getIsDefeated())
     {
         for (var i = 0; i < map.getPlayerCount(); i++)
@@ -40,8 +48,7 @@ PLAYER.startOfTurn = function(player)
             }
         }
     }
-    PLAYER.coop_ModApplyDefenceDebuf(player);
-};
+}
 
 PLAYER.coop_ModApplyDefenceDebuf = function(player)
 {
@@ -56,6 +63,26 @@ PLAYER.coop_ModApplyDefenceDebuf = function(player)
         {
             // negate boost for the rest of the day
             defenseUnit.addDefensiveBonus(-200, 1);
+        }
+    }
+    var empty = [];
+    boostVariable.writeDataListInt32(empty);
+};
+
+PLAYER.coop_ModApplyRoyalGuardDebuf = function(player)
+{
+    var variables = player.getVariables();
+    var boostVariable = variables.createVariable("COOP_MOD_ROYAL_GUARD_UNITS");
+    var boosts = boostVariable.readDataListInt32();
+    for (var i = 0; i < boosts.length; i++)
+    {
+        var unitId = boosts[i];
+        var defenseUnit = map.getUnit(unitId);
+        if (defenseUnit !== null)
+        {
+            // negate boost for the rest of the day
+            defenseUnit.addDefensiveBonus(-ZCOUNIT_ROYAL_GUARD.defBonus, 1);
+            defenseUnit.addOffensiveBonus(-ZCOUNIT_ROYAL_GUARD.offBonus, 1);
         }
     }
     var empty = [];

@@ -1,6 +1,8 @@
 #include "ui_reader/uifactory.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
+
 #include "coreengine/mainapp.h"
 
 #include "objects/base/label.h"
@@ -18,7 +20,9 @@ static const char* const itemSpinbox = "Spinbox";
 static const char* const itemTextbox = "Textbox";
 static const char* const itemTimeSpinbox = "TimeSpinbox";
 static const char* const itemPanel = "Panel";
+static const char* const itemBox = "Box";
 static const char* const itemIcon = "Icon";
+static const char* const itemButton = "Button";
 
 
 static const char* const attrX = "x";
@@ -36,15 +40,19 @@ static const char* const attrInfinite = "infinite";
 static const char* const attrMin = "min";
 static const char* const attrMax = "max";
 static const char* const attrChilds = "childs";
+static const char* const attrSprite = "sprite";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
 
-UiFactory UiFactory::m_pUiFactory;
+UiFactory* UiFactory::m_pUiFactory;
 
 UiFactory::UiFactory()
     : QObject()
 {
+    setObjectName("UiFactory");
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     m_factoryItems.append({QString(itemLabel), std::bind(&UiFactory::createLabel, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemCheckbox), std::bind(&UiFactory::createCheckbox, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemSpinbox), std::bind(&UiFactory::createSpinbox, this, _1, _2, _3, _4)});
@@ -52,6 +60,10 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemTimeSpinbox), std::bind(&UiFactory::createTimeSpinbox, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemPanel), std::bind(&UiFactory::createPanel, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemIcon), std::bind(&UiFactory::createIcon, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemBox), std::bind(&UiFactory::createBox, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemButton), std::bind(&UiFactory::createButton, this, _1, _2, _3, _4)});
+
+    connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
 
 QVector<UiFactory::FactoryItem> & UiFactory::getFactoryItems()
@@ -75,7 +87,10 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
             QDomDocument document;
             QFile file(uiFile);
             file.open(QIODevice::ReadOnly);
-            bool loaded = document.setContent(&file);
+            QString error;
+            qint32 line;
+            qint32 column;
+            bool loaded = document.setContent(&file, &error, &line, &column);
             if (loaded)
             {
                 oxygine::spActor root = oxygine::spActor::create();
@@ -107,6 +122,7 @@ void UiFactory::createUi(QString uiXml, Basemenu* pMenu)
             else
             {
                 Console::print("Unable to load: " + uiFile + ".", Console::eERROR);
+                Console::print("Error: " + error + " at line " + QString::number(line) + " at column " + QString::number(column), Console::eERROR);
             }
         }
     }
@@ -163,6 +179,44 @@ bool UiFactory::createLabel(oxygine::spActor parent, QDomElement element, oxygin
         item = pLabel;
 
         m_lastCoordinates = QRect(x, y, width, height);
+    }
+    return success;
+}
+
+bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrText, attrOnEvent});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        QString test = getAttribute(childs, attrWidth);
+        qint32 width = -1;
+        if (!test.isEmpty())
+        {
+            width = getIntValue(test);
+        }
+        QString text = translate(getAttribute(childs, attrText));
+        QString tooltip = translate(getAttribute(childs, attrTooltip));
+        test = getAttribute(childs, attrSprite);
+        QString sprite = "button";
+        if (!test.isEmpty())
+        {
+            sprite = getStringValue(test);
+        }
+        oxygine::spButton pButton = ObjectManager::createButton(text, width, tooltip, sprite);
+        pButton->setX(x);
+        pButton->setY(y);
+        QString onEvent = getAttribute(childs, attrOnEvent);
+        pButton->addClickListener([=](oxygine::Event*)
+        {
+            emit sigDoEvent(onEvent);
+        });
+        parent->addChild(pButton);
+        item = pButton;
+
+        m_lastCoordinates = QRect(x, y, width, 40);
     }
     return success;
 }
@@ -300,7 +354,7 @@ bool UiFactory::createIcon(oxygine::spActor parent, QDomElement element, oxygine
         qint32 x = getIntValue(getAttribute(childs,attrX));
         qint32 y = getIntValue(getAttribute(childs,attrY));
         qint32 size = getIntValue(getAttribute(childs,attrSize));
-        QString icon = getStringValue(getAttribute(childs,attrStartValue));
+        QString icon = getStringValue(getAttribute(childs, attrStartValue));
         WikiDatabase* pWikiDatabase = WikiDatabase::getInstance();
         oxygine::spSprite pIcon = pWikiDatabase->getIcon(icon, size);
         pIcon->setPosition(x, y);
@@ -362,6 +416,52 @@ bool UiFactory::createPanel(oxygine::spActor parent, QDomElement element, oxygin
     return success;
 }
 
+bool UiFactory::createBox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrHeight, attrSprite, attrChilds});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        qint32 width = getIntValue(getAttribute(childs, attrWidth));
+        qint32 height = getIntValue(getAttribute(childs, attrHeight));
+        QString spriteId = getStringValue(getAttribute(childs, attrSprite));
+        QSize size = QSize(width, height);
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        oxygine::spBox9Sprite pPanel = oxygine::spBox9Sprite::create();
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteId);
+        pPanel->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pPanel->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pPanel->setResAnim(pAnim);
+        pPanel->setX(x);
+        pPanel->setY(y);
+        pPanel->setSize(width, height);
+        auto node = getNode(childs, attrChilds).firstChild();
+        while (!node.isNull())
+        {
+            while (node.isComment())
+            {
+                node = node.nextSibling();
+            }
+            if (!node.isNull())
+            {
+                oxygine::spActor panelItem;
+                success = success && createItem(parent, node.toElement(), panelItem, pMenu);
+                if (panelItem.get() != nullptr)
+                {
+                    pPanel->addChild(panelItem);
+                }
+            }
+            node = node.nextSibling();
+        }
+        parent->addChild(pPanel);
+        item = pPanel;
+        m_lastCoordinates = QRect(x, y, width, height);
+    }
+    return success;
+}
+
 QString UiFactory::getAttribute(QDomNodeList childs, QString attribute)
 {
     qint32 childCount = childs.count();
@@ -375,7 +475,6 @@ QString UiFactory::getAttribute(QDomNodeList childs, QString attribute)
     }
     return "";
 }
-
 
 QDomNode UiFactory::getNode(QDomNodeList childs, QString attribute)
 {
@@ -471,23 +570,7 @@ QString UiFactory::getStringValue(QString line)
 
 oxygine::TextStyle UiFactory::getStyle(QString styleName)
 {
-    oxygine::TextStyle style;
-    if (styleName == "font16")
-    {
-        style = FontManager::getMainFont16();
-    }
-    else if (styleName == "font48")
-    {
-        style = FontManager::getMainFont48();
-    }
-    else if (styleName == "font72")
-    {
-        style = FontManager::getMainFont72();
-    }
-    else
-    {
-        style = FontManager::getMainFont24();
-    }
+    oxygine::TextStyle style = FontManager::getInstance()->getResFont(styleName);
     style.color = FontManager::getFontColor();
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
@@ -502,4 +585,13 @@ QString UiFactory::translate(QString line)
     line = line.trimmed();
     line.remove(line.length() - 2, 2);
     return Mainapp::qsTr(line);
+}
+
+void UiFactory::doEvent(QString command)
+{
+    QJSValue erg = Interpreter::getInstance()->evaluate(command);
+    if (erg.isError())
+    {
+        Console::print("Error while parsing " + command + " Error: " + erg.toString() + ".", Console::eERROR);
+    }
 }

@@ -23,6 +23,8 @@
 #include "menue/victorymenue.h"
 #include "menue/gamemenue.h"
 #include "menue/mapselectionmapsmenue.h"
+#include "menue/campaignmenu.h"
+#include "menue/editormenue.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -161,6 +163,8 @@ QQmlDebuggingEnabler enabler;
     qmlRegisterInterface<Mainwindow>("Mainwindow", 1);
     qmlRegisterInterface<VictoryMenue>("VictoryMenue", 1);
     qmlRegisterInterface<GameMenue>("GameMenue", 1);
+    qmlRegisterInterface<CampaignMenu>("CampaignMenu", 1);
+    qmlRegisterInterface<EditorMenue>("EditorMenue", 1);
     qmlRegisterInterface<MapSelectionMapsMenue>("MapSelectionMapsMenue", 1);
     qmlRegisterInterface<PlayerSelection>("PlayerSelection", 1);
     /*************************************************************************************************/

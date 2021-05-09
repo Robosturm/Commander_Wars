@@ -6,6 +6,8 @@
 
 #include <qvariant.h>
 
+#include "coreengine/console.h"
+
 namespace oxygine
 {
     static load_texture_hook _hook = nullptr;
@@ -15,12 +17,12 @@ namespace oxygine
         ImageData im;
         spImage mt = spImage::create();
 
-        qDebug("loading atlas: %s", file.toStdString().c_str());
+        Console::print("loading atlas: " + file, Console::eDEBUG);
         QImage img (file);
-        qDebug("atlas file loaded: %s", file.toStdString().c_str());
+        Console::print("atlas file loaded: " + file, Console::eDEBUG);
         mt->init(img, true);
         im = mt->lock();
-        qDebug("atlas size: %d %d", im.m_w, im.m_h);
+        Console::print("atlas size: " + QString::number(im.m_w) + " " + QString::number(im.m_h), Console::eDEBUG);
 
         CreateTextureTask opt;
         opt.src = mt;

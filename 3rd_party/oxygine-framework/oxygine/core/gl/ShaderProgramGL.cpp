@@ -2,6 +2,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gl/VertexDeclarationGL.h"
 #include "3rd_party/oxygine-framework/oxygine/core/gamewindow.h"
 
+#include "coreengine/console.h"
+
 namespace oxygine
 {
     ShaderProgramGL::ShaderProgramGL(QString vsShader, QString fsShader, const VertexDeclarationGL* decl)
@@ -21,11 +23,11 @@ namespace oxygine
         QString log = m_program.log();
         if (success)
         {
-            qDebug("compiled program:\n %s", log.toStdString().c_str());
+            Console::print("compiled shader program", Console::eDEBUG);
         }
         else
         {
-            qCritical("can't compile program: %s", log.toStdString().c_str());
+            Console::print("can't compile program: " + log, Console::eFATAL);
         }
     }
 

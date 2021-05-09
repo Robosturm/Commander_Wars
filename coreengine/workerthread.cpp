@@ -27,6 +27,8 @@
 
 #include "objects/loadingscreen.h"
 
+#include "ui_reader/uifactory.h"
+
 WorkerThread::WorkerThread()
 {
     setObjectName("WorkerThread");
@@ -52,6 +54,7 @@ void WorkerThread::start()
     oxygine::getStage()->addChild(pConsole);
     Interpreter* pInterpreter = Interpreter::createInstance();
     pConsole->init();
+    UiFactory::getInstance();
     // load General-Base Scripts
     QStringList searchPaths;
     searchPaths.append("/resources/scripts/general");

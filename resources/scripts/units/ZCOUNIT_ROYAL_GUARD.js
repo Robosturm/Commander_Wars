@@ -88,10 +88,10 @@ var Constructor = function()
     };
     this.offBonus = 15;
     this.defBonus = 10;
-    this.addBuff = function(unit, playerId)
+    this.addBuff = function(unit, playerId, duration = 1)
     {
-        unit.addDefensiveBonus(ZCOUNIT_ROYAL_GUARD.defBonus);
-        unit.addOffensiveBonus(ZCOUNIT_ROYAL_GUARD.offBonus);
+        unit.addDefensiveBonus(ZCOUNIT_ROYAL_GUARD.defBonus, duration);
+        unit.addOffensiveBonus(ZCOUNIT_ROYAL_GUARD.offBonus, duration);
         unit.loadIcon("arrow_up", map.getImageSize() / 2, map.getImageSize() / 2, 1, playerId);
     }
 

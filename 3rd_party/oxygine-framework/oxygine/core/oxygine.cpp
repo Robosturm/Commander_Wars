@@ -17,6 +17,8 @@
 #include "3rd_party/oxygine-framework/oxygine/core/gl/VideoDriverGLES20.h"
 #include <qmutex.h>
 
+#include "coreengine/console.h"
+
 namespace oxygine
 {
 
@@ -25,13 +27,13 @@ namespace oxygine
 
         void reset()
         {
-            qDebug("core::reset()");
+            Console::print("core::reset()", Console::eDEBUG);
             clearPostProcessItems();
             Restorable::releaseAll();
             PostProcess::freeShaders();
             STDRenderer::reset();
             IVideoDriver::instance->reset();
-            qDebug("core::reset() done");
+            Console::print("core::reset() done", Console::eDEBUG);
         }
     }
     void handleErrorPolicy(error_policy ep, QString message)
@@ -40,7 +42,9 @@ namespace oxygine
         {
             case ep_show_error:
                 qCritical() << message;
-                // Q_ASSERT(!"handleErrorPolicy error.");
+#ifdef GAMEDEBUG
+                QASSERT(false);
+#endif
                 break;
             case ep_show_warning:
                 qWarning() << message;

@@ -110,7 +110,6 @@ namespace oxygine
         void reset();
 
     protected:
-        void print();
         bool isGood(const spNativeTexture& t, qint32 w, qint32 h, ImageData::TextureFormat tf) const;
 
         typedef QVector<spNativeTexture> rts;
