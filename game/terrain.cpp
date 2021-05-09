@@ -358,7 +358,10 @@ void Terrain::loadBaseSprite(QString spriteID)
         Mainapp::getInstance()->loadResAnim(pAnim, img);
         m_SpriteAnim = pAnim;
         pSprite->setResAnim(pAnim.get());
-        pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+        if (pAnim.get() != nullptr)
+        {
+            pSprite->setScale((GameMap::getImageSize()) / pAnim->getWidth() );
+        }
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::getImageSize()) / 2, -(pSprite->getScaledHeight() - GameMap::getImageSize()));
         m_pTerrainSprite = pSprite;
 

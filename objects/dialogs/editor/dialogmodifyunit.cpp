@@ -80,14 +80,14 @@ void DialogModifyUnit::updateData()
     headerStyle.multiline = false;
 
     qint32 sliderOffset = 400;
-    spLabel pLabel = spLabel::create(sliderOffset - 10);    
+    spLabel pLabel = spLabel::create(sliderOffset - 140);    
     pLabel->setStyle(headerStyle);
     pLabel->setHtmlText(tr("Unit: ") + m_pUnit->getName());
     pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth() / 2, 10);
     m_pPanel->addItem(pLabel);
 
     qint32 y = 30 + pLabel->getTextRect().getHeight();
-    pLabel = spLabel::create(sliderOffset - 10);
+    pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Unit: "));
     pLabel->setPosition(10, y);
@@ -103,7 +103,7 @@ void DialogModifyUnit::updateData()
     m_pPanel->addItem(pTexbox);
     y += 40;
 
-    pLabel = spLabel::create(sliderOffset - 10);
+    pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("HP: "));
     pLabel->setPosition(10, y);
@@ -120,7 +120,7 @@ void DialogModifyUnit::updateData()
     y += 40;
     if (m_pUnit->getMaxFuel() > 0)
     {
-        pLabel = spLabel::create(sliderOffset - 10);
+        pLabel = spLabel::create(sliderOffset - 140);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Fuel: "));
         pLabel->setPosition(10, y);
@@ -146,7 +146,7 @@ void DialogModifyUnit::updateData()
     }
     if (m_pUnit->getMaxAmmo1() > 0)
     {
-        pLabel = spLabel::create(sliderOffset - 10);
+        pLabel = spLabel::create(sliderOffset - 140);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 1: "));
         pLabel->setPosition(10, y);
@@ -172,7 +172,7 @@ void DialogModifyUnit::updateData()
     }
     if (m_pUnit->getMaxAmmo2() > 0)
     {
-        pLabel = spLabel::create(sliderOffset - 10);
+        pLabel = spLabel::create(sliderOffset - 140);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 2: "));
         pLabel->setPosition(10, y);
@@ -197,7 +197,7 @@ void DialogModifyUnit::updateData()
         y += 40;
     }
 
-    pLabel = spLabel::create(sliderOffset - 10);
+    pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Player: "));
     pLabel->setPosition(10, y);
@@ -220,7 +220,7 @@ void DialogModifyUnit::updateData()
     m_pPanel->addItem(pDropdownmenu);
     y += 40;
 
-    pLabel = spLabel::create(sliderOffset - 10);
+    pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("AI-Mode: "));
     pLabel->setPosition(10, y);
@@ -246,7 +246,7 @@ void DialogModifyUnit::updateData()
     y += 40;
     addLoadLoopPoints(y, sliderOffset);
 
-    pLabel = spLabel::create(sliderOffset - 10);
+    pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Unit Rank: "));
     pLabel->setPosition(10, y);
@@ -302,7 +302,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spLabel  pLabel = spLabel::create(sliderOffset - 10);
+    spLabel  pLabel = spLabel::create(sliderOffset - 140);
     pLabel->setStyle(style);
     pLabel->setHtmlText((tr("Loaded Unit ") + QString::number(index + 1) + ": "));
     pLabel->setPosition(10, y);
@@ -362,7 +362,7 @@ void DialogModifyUnit::addLoadLoopPoints(qint32& y, qint32 sliderOffset)
     if (m_pUnit->getAiMode() == GameEnums::GameAi_Patrol ||
         m_pUnit->getAiMode() == GameEnums::GameAi_PatrolLoop)
     {
-        spLabel pLabel = spLabel::create(sliderOffset - 10);
+        spLabel pLabel = spLabel::create(sliderOffset - 140);
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Move Point: "));
         pLabel->setPosition(10, y);

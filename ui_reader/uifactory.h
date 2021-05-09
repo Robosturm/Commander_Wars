@@ -61,6 +61,13 @@ private:
       */
     bool createSpinbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
     /**
+      * Nodename: Slider
+      * supported attributes are:
+      * mandatory: x, y, width, min, max, onEvent, startValue
+      * optional: tooltip
+      */
+    bool createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
+    /**
       * Nodename: Textbox
       * supported attributes are:
       * mandatory: x, y, width, onEvent, startValue
@@ -99,6 +106,12 @@ private:
      * optional: tooltip, width
      */
     bool createButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu* pMenu);
+    /**
+     * Nodename: Button
+     * supported attributes are:
+     * mandatory: x, y, sprite, onEvent
+     */
+    bool createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*);
 signals:
     void sigDoEvent(QString command);
 private slots:

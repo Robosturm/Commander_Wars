@@ -92,29 +92,28 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, CO* pCO, quint32 frameTime)
 {    
-    spGameAnimationPower pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
-    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
+    spGameAnimationPower pGameAnimationPower = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, pCO);
+    pGameAnimationPower->setPriority(static_cast<qint32>(Mainapp::ZOrder::Objects));
     spGameMenue pGameMenue = GameMenue::getInstance();
     if (pGameMenue.get() != nullptr)
     {
-        pGameMenue->addChild(pAnim);
+        pGameMenue->addChild(pGameAnimationPower);
     }
-    m_Animations.append(pAnim);
-    return pAnim.get();
+    m_Animations.append(pGameAnimationPower);
+    return pGameAnimationPower.get();
 }
 
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     
-    spGameAnimationDialog pAnim = spGameAnimationDialog::create(frameTime);
-    pAnim->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
-    pAnim->setDialog(text);
-    pAnim->setCO(coid, mood);
-    pAnim->setColor(color);
-    oxygine::getStage()->addChild(pAnim);
-    m_Animations.append(pAnim);
-    
-    return pAnim.get();
+    spGameAnimationDialog pGameAnimationDialog = spGameAnimationDialog::create(frameTime);
+    pGameAnimationDialog->setPriority(static_cast<qint32>(Mainapp::ZOrder::Dialogs));
+    pGameAnimationDialog->setDialog(text);
+    pGameAnimationDialog->setCO(coid, mood);
+    pGameAnimationDialog->setColor(color);
+    oxygine::getStage()->addChild(pGameAnimationDialog);
+    m_Animations.append(pGameAnimationDialog);
+    return pGameAnimationDialog.get();
 }
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime, quint32 uptimeMs)

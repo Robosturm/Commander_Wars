@@ -11,6 +11,7 @@
 #include "objects/base/timespinbox.h"
 #include "objects/base/textbox.h"
 #include "objects/base/panel.h"
+#include "objects/base/slider.h"
 
 #include "wiki/wikidatabase.h"
 
@@ -23,7 +24,8 @@ static const char* const itemPanel = "Panel";
 static const char* const itemBox = "Box";
 static const char* const itemIcon = "Icon";
 static const char* const itemButton = "Button";
-
+static const char* const itemIconButton = "IconButton";
+static const char* const itemSlider = "Slider";
 
 static const char* const attrX = "x";
 static const char* const attrY = "y";
@@ -41,6 +43,7 @@ static const char* const attrMin = "min";
 static const char* const attrMax = "max";
 static const char* const attrChilds = "childs";
 static const char* const attrSprite = "sprite";
+static const char* const attrUnit = "unit";
 
 // normally i'm not a big fan of this but else the function table gets unreadable
 using namespace std::placeholders;
@@ -62,6 +65,8 @@ UiFactory::UiFactory()
     m_factoryItems.append({QString(itemIcon), std::bind(&UiFactory::createIcon, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemBox), std::bind(&UiFactory::createBox, this, _1, _2, _3, _4)});
     m_factoryItems.append({QString(itemButton), std::bind(&UiFactory::createButton, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemIconButton), std::bind(&UiFactory::createIconButton, this, _1, _2, _3, _4)});
+    m_factoryItems.append({QString(itemSlider), std::bind(&UiFactory::createSlider, this, _1, _2, _3, _4)});
 
     connect(this, &UiFactory::sigDoEvent, this, &UiFactory::doEvent, Qt::QueuedConnection);
 }
@@ -221,6 +226,31 @@ bool UiFactory::createButton(oxygine::spActor parent, QDomElement element, oxygi
     return success;
 }
 
+bool UiFactory::createIconButton(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrSprite, attrOnEvent});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs, attrX));
+        qint32 y = getIntValue(getAttribute(childs, attrY));
+        QString sprite = getStringValue(getAttribute(childs, attrSprite));
+        oxygine::spButton pButton = ObjectManager::createIconButton(sprite);
+        pButton->setX(x);
+        pButton->setY(y);
+        QString onEvent = getAttribute(childs, attrOnEvent);
+        pButton->addClickListener([=](oxygine::Event*)
+        {
+            emit sigDoEvent(onEvent);
+        });
+        parent->addChild(pButton);
+        item = pButton;
+
+        m_lastCoordinates = QRect(x, y, 30, 30);
+    }
+    return success;
+}
+
 bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
 {
     auto childs = element.childNodes();
@@ -243,7 +273,7 @@ bool UiFactory::createCheckbox(oxygine::spActor parent, QDomElement element, oxy
             onEvent(onEventLine, value);
         });
         item = pCheckbox;
-        m_lastCoordinates = QRect(x, y, 50, 40);
+        m_lastCoordinates = QRect(x, y, 40, 40);
     }
     return success;
 }
@@ -276,6 +306,43 @@ bool UiFactory::createSpinbox(oxygine::spActor parent, QDomElement element, oxyg
         });
         parent->addChild(pSpinBox);
         item = pSpinBox;
+        m_lastCoordinates = QRect(x, y, width, 40);
+    }
+    return success;
+}
+
+bool UiFactory::createSlider(oxygine::spActor parent, QDomElement element, oxygine::spActor & item, Basemenu*)
+{
+    auto childs = element.childNodes();
+    bool success = checkElements(childs, {attrX, attrY, attrWidth, attrMin,
+                                          attrMax, attrOnEvent, attrStartValue});
+    if (success)
+    {
+        qint32 x = getIntValue(getAttribute(childs,attrX));
+        qint32 y = getIntValue(getAttribute(childs,attrY));
+        qint32 width = getIntValue(getAttribute(childs,attrWidth));
+        qint32 min = getIntValue(getAttribute(childs,attrMin));
+        qint32 max = getIntValue(getAttribute(childs,attrMax));
+        QString tooltip = translate(getAttribute(childs,attrTooltip));
+        QString onEventLine = getAttribute(childs,attrOnEvent);
+        qint32 value = getIntValue(getAttribute(childs,attrStartValue));
+        QString unit = "%";
+        QString test = getAttribute(childs, attrUnit);
+        if (!test.isEmpty())
+        {
+            unit = getStringValue(test);
+        }
+        spSlider pSlider = spSlider::create(width - 75, min, max, unit);
+        pSlider->setX(x);
+        pSlider->setY(y);
+        pSlider->setTooltipText(tooltip);
+        pSlider->setCurrentValue(value);
+        connect(pSlider.get(), &Slider::sliderValueChanged, this, [=](qint32 value)
+        {
+            onEvent(onEventLine, value);
+        });
+        parent->addChild(pSlider);
+        item = pSlider;
         m_lastCoordinates = QRect(x, y, width, 40);
     }
     return success;

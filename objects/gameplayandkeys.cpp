@@ -36,7 +36,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Animations: "));
     pTextfield->setPosition(10, y);
@@ -55,7 +55,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Animations: "));
     pTextfield->setPosition(10, y);
@@ -79,7 +79,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialogs: "));
     pTextfield->setPosition(10, y);
@@ -96,7 +96,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: "));
     pTextfield->setPosition(10, y);
@@ -112,7 +112,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Walk Speed: "));
     pTextfield->setPosition(10, y);
@@ -128,7 +128,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Battle Anim. Speed: "));
     pTextfield->setPosition(10, y);
@@ -144,7 +144,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Capture Anim. Speed: "));
     pTextfield->setPosition(10, y);
@@ -160,7 +160,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Dialog Speed: "));
     pTextfield->setPosition(10, y);
@@ -176,7 +176,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Multi Turn Plantime: "));
     pTextfield->setPosition(10, y);
@@ -192,7 +192,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto End Turn: "));
     pTextfield->setPosition(10, y);
@@ -208,7 +208,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Menu Heigth: "));
     pTextfield->setPosition(10, y);
@@ -224,7 +224,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Shown Players: "));
     pTextfield->setPosition(10, y);
@@ -238,7 +238,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(showCoCount);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Show PC Cursor: "));
     pTextfield->setPosition(10, y);
@@ -254,7 +254,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animated Markers: "));
     pTextfield->setPosition(10, y);
@@ -270,7 +270,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("CO Info Position: "));
     pTextfield->setPosition(10, y);
@@ -287,7 +287,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Scrolling: "));
     pTextfield->setPosition(10, y);
@@ -303,7 +303,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Show Coordinates: "));
     pTextfield->setPosition(10, y);
@@ -319,7 +319,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Camera: "));
     pTextfield->setPosition(10, y);
@@ -335,7 +335,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Camera Mode: "));
     pTextfield->setPosition(10, y);
@@ -352,7 +352,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Center Camera on Fields: "));
     pTextfield->setPosition(10, y);
@@ -365,7 +365,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     connect(pCenterOnCamera.get(), &Checkbox::checkChanged, Settings::getInstance(), Settings::setCenterOnMarkedField, Qt::QueuedConnection);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Synchronize Animations: "));
     pTextfield->setPosition(10, y);
@@ -378,14 +378,14 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     connect(pSyncAnimations.get(), &Checkbox::checkChanged, Settings::getInstance(), Settings::setSyncAnimations, Qt::QueuedConnection);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Up: "));
     pTextfield->setPosition(10, y);
@@ -402,7 +402,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Left: "));
     pTextfield->setPosition(10, y);
@@ -419,7 +419,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Down: "));
     pTextfield->setPosition(10, y);
@@ -436,7 +436,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Right: "));
     pTextfield->setPosition(10, y);
@@ -453,7 +453,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Confirm: "));
     pTextfield->setPosition(10, y);
@@ -470,7 +470,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Cancel: "));
     pTextfield->setPosition(10, y);
@@ -487,7 +487,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Next: "));
     pTextfield->setPosition(10, y);
@@ -504,7 +504,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Previous: "));
     pTextfield->setPosition(10, y);
@@ -521,7 +521,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quicksave 1: "));
     m_pOptions->addItem(pTextfield);
@@ -533,7 +533,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quickload 1: "));
     m_pOptions->addItem(pTextfield);
@@ -545,7 +545,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quicksave 2: "));
     m_pOptions->addItem(pTextfield);
@@ -557,7 +557,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Quickload 2: "));
     m_pOptions->addItem(pTextfield);
@@ -569,7 +569,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Information: "));
     m_pOptions->addItem(pTextfield);
@@ -586,7 +586,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Up: "));
     m_pOptions->addItem(pTextfield);
@@ -603,7 +603,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Left: "));
     m_pOptions->addItem(pTextfield);
@@ -620,7 +620,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Down: "));
     m_pOptions->addItem(pTextfield);
@@ -637,7 +637,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Move Map Right: "));
     m_pOptions->addItem(pTextfield);
@@ -654,7 +654,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Zoom In: "));
     m_pOptions->addItem(pTextfield);
@@ -671,7 +671,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Zoom Out: "));
     m_pOptions->addItem(pTextfield);
@@ -688,7 +688,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Show Indirects: "));
     m_pOptions->addItem(pTextfield);
@@ -705,7 +705,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Show all: "));
     m_pOptions->addItem(pTextfield);
@@ -722,13 +722,13 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Editor"));
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Place Terrain: "));
     m_pOptions->addItem(pTextfield);
@@ -740,7 +740,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Place Unit: "));
     m_pOptions->addItem(pTextfield);
@@ -752,7 +752,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Place Building: "));
     m_pOptions->addItem(pTextfield);
@@ -764,7 +764,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Next Team: "));
     m_pOptions->addItem(pTextfield);
@@ -776,7 +776,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Previous Team: "));
     m_pOptions->addItem(pTextfield);
@@ -788,7 +788,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Next Item: "));
     m_pOptions->addItem(pTextfield);
@@ -800,7 +800,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Key Previous Item: "));
     m_pOptions->addItem(pTextfield);
@@ -812,7 +812,7 @@ GameplayAndKeys::GameplayAndKeys(qint32 heigth)
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screenshot: "));
     pTextfield->setPosition(10, y);

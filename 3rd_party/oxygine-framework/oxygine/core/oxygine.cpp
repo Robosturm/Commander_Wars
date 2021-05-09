@@ -41,13 +41,13 @@ namespace oxygine
         switch (ep)
         {
             case ep_show_error:
-                qCritical() << message;
+                Console::print(message, Console::eERROR);
 #ifdef GAMEDEBUG
                 Q_ASSERT(false);
 #endif
                 break;
             case ep_show_warning:
-                qWarning() << message;
+                Console::print(message, Console::eWARNING);
                 break;
             case ep_ignore_error:
                 break;

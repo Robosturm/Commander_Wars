@@ -35,7 +35,10 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("battle_back");
-    setSize(pAnim->getSize());
+    if (pAnim != nullptr)
+    {
+        setSize(pAnim->getSize());
+    }
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     pSprite->setResAnim(pAnim);
     pSprite->setPriority(priorityBack);

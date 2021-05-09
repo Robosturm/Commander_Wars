@@ -470,14 +470,17 @@ void IngameInfoBar::updateDetailedView(qint32 x, qint32 y)
         pSprite->setScale(1.5f);
         pSprite->setPriority(4);
         pBox->addChild(pSprite);
-        if (i % 4 == 0)
+        if (pAnim != nullptr)
         {
-            defenseY += pAnim->getHeight() + 2;
-            defenseX = startDefenseX;
-        }
-        else
-        {
-            defenseX += pAnim->getWidth() + 2;
+            if (i % 4 == 0)
+            {
+                defenseY += pAnim->getHeight() + 2;
+                defenseX = startDefenseX;
+            }
+            else
+            {
+                defenseX += pAnim->getWidth() + 2;
+            }
         }
     }
 }

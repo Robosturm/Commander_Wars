@@ -67,6 +67,7 @@ void Tooltip::restartTooltiptimer()
 
 void Tooltip::stopTooltiptimer()
 {
+    m_mouseHovered = false;
     m_TooltipTimer.stop();
 }
 

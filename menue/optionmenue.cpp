@@ -316,7 +316,7 @@ void OptionMenue::showSettings()
     y += 40;
 
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Resolution: "));
     pTextfield->setPosition(10, y);
@@ -337,7 +337,7 @@ void OptionMenue::showSettings()
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Screen Mode: "));
     pTextfield->setPosition(10, y);
@@ -351,7 +351,7 @@ void OptionMenue::showSettings()
     connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, &Mainapp::changeScreenMode, Qt::QueuedConnection);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Brightness: "));
     pTextfield->setPosition(10, y);
@@ -368,7 +368,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pSlider);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Gamma: "));
     pTextfield->setPosition(10, y);
@@ -385,7 +385,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pSlider);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sprite Aliasing: "));
     pTextfield->setPosition(10, y);
@@ -412,7 +412,7 @@ void OptionMenue::showSettings()
 
     showSoundOptions(m_pOptions, sliderOffset, y);
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Language: "));
     pTextfield->setPosition(10, y);
@@ -456,7 +456,7 @@ void OptionMenue::showSettings()
     });
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Saving Time: "));
     pTextfield->setPosition(10, y);
@@ -472,7 +472,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(autoSavingCycleTime);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto Saving Cycle: "));
     pTextfield->setPosition(10, y);
@@ -486,7 +486,7 @@ void OptionMenue::showSettings()
     y += 40;
 
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Record Games: "));
     pTextfield->setPosition(10, y);
@@ -506,7 +506,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Username: "));
     pTextfield->setPosition(10, y);
@@ -534,7 +534,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Server Adress: "));
     pTextfield->setPosition(10, y);
@@ -550,7 +550,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Lobby port: "));
     pTextfield->setPosition(10, y);
@@ -566,7 +566,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(portBox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Server: "));
     pTextfield->setPosition(10, y);
@@ -584,7 +584,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pCheckbox);
     y += 40;
 
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Game port: "));
     pTextfield->setPosition(10, y);
@@ -612,13 +612,13 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
 
-    spLabel pTextfield = spLabel::create(sliderOffset - 10);
+    spLabel pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Audio Settings"));
     pTextfield->setPosition(10, y);
     pOwner->addItem(pTextfield);
     y += 40;
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Global Volume: "));
     pTextfield->setPosition(10, y);
@@ -635,7 +635,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pSlider);
 
     y += 40;
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Music Volume: "));
     pTextfield->setPosition(10, y);
@@ -652,7 +652,7 @@ void OptionMenue::showSoundOptions(spPanel pOwner, qint32 sliderOffset, qint32 &
     pOwner->addItem(pSlider);
 
     y += 40;
-    pTextfield = spLabel::create(sliderOffset - 10);
+    pTextfield = spLabel::create(sliderOffset - 140);
     pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Sound Volume: "));
     pTextfield->setPosition(10, y);

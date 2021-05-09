@@ -240,7 +240,10 @@ namespace oxygine
 
     void GameWindow::loadSingleResAnim(oxygine::spResAnim pAnim, QImage & image, qint32 columns, qint32 rows, float scaleFactor)
     {
-        pAnim->init(image, columns, rows, scaleFactor);
+        if (pAnim.get() != nullptr)
+        {
+            pAnim->init(image, columns, rows, scaleFactor);
+        }
     }
 
     void GameWindow::mousePressEvent(QMouseEvent *event)

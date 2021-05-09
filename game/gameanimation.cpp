@@ -274,14 +274,22 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
 {
     oxygine::spSprite pSprite = oxygine::spSprite::create();
     oxygine::spTweenQueue queuedAnim = oxygine::spTweenQueue::create();
-    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
+    qint32 totalFrames = 0;
+    if (pAnim != nullptr)
+    {
+        totalFrames = pAnim->getTotalFrames();
+    }
+    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * m_frameTime), loops, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
     queuedAnim->add(tween);
     if (sleepAfterFinish > 0)
     {
         oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
         queuedAnim->add(tween1);
     }
-    setSize(pAnim->getSize());
+    if (pAnim != nullptr)
+    {
+        setSize(pAnim->getSize());
+    }
     pSprite->setScaleX(scaleX);
     pSprite->setScaleY(scaleY);
     pSprite->addTween(queuedAnim);
@@ -300,6 +308,7 @@ void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float
         });
 
     }
+
 }
 
 qint32 GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color, qint32 priority)

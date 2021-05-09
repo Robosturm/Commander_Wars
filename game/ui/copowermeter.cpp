@@ -39,13 +39,23 @@ void CoPowermeter::drawPowerMeter()
                         if (powerFilled >= static_cast<float>(i2 + 1))
                         {
                             pAnim = pGameManager->getResAnim("superpowerstarfull");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                            qint32 totalFrames = 0;
+                            if (pAnim != nullptr)
+                            {
+                                totalFrames = pAnim->getTotalFrames();
+                            }
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else if (powerFilled >= static_cast<float>(i2 + 1) - 0.5f)
                         {
                             pAnim = pGameManager->getResAnim("superpowerstarhalf");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                            qint32 totalFrames = 0;
+                            if (pAnim != nullptr)
+                            {
+                                totalFrames = pAnim->getTotalFrames();
+                            }
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else
@@ -77,13 +87,23 @@ void CoPowermeter::drawPowerMeter()
                         if (powerFilled >= static_cast<float>(i2 + 1))
                         {
                             pAnim = pGameManager->getResAnim("powerstarfull");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                            qint32 totalFrames = 0;
+                            if (pAnim != nullptr)
+                            {
+                                totalFrames = pAnim->getTotalFrames();
+                            }
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else if (powerFilled >= static_cast<float>(i2 + 1) - 0.5f)
                         {
                             pAnim = pGameManager->getResAnim("powerstarhalf");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+                            qint32 totalFrames = 0;
+                            if (pAnim != nullptr)
+                            {
+                                totalFrames = pAnim->getTotalFrames();
+                            }
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(totalFrames * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else

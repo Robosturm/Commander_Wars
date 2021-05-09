@@ -73,6 +73,23 @@
                 <size>48</size>
                 <startValue>"BOMBER"</startValue>
             </Icon>
+            <IconButton>
+                <x>lastX</x>
+                <y>lastY + lastHeight + 10</y>
+                <sprite>"settings"</sprite>
+                <onEvent>currentMenu.enterEditor();</onEvent>
+            </IconButton>
+            <Slider>
+                <x>lastX</x>
+                <y>lastY + lastHeight + 10</y>
+                <width>400</width>
+                <tooltip>QT_TRANSLATE_NOOP("GAME","Test")</tooltip>
+                <startValue>11</startValue>
+                <min>10</min>
+                <max>100</max>
+                <unit>"%"</unit>
+                <onEvent></onEvent>
+            </Slider>
         </childs>
     </Panel>
     <Box>

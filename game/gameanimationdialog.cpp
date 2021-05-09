@@ -33,13 +33,19 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("dialogfield+mask");
     m_TextMask = oxygine::spSprite::create();
-    m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    if (pAnim != nullptr)
+    {
+        m_TextMask->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    }
     m_TextMask->setResAnim(pAnim);
     addChild(m_TextMask);
 
     pAnim = pGameManager->getResAnim("dialogfield");
     m_TextBackground = oxygine::spSprite::create();
-    m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    if (pAnim != nullptr)
+    {
+        m_TextBackground->setScaleX(Settings::getWidth() / pAnim->getWidth());
+    }
     m_TextBackground->setResAnim(pAnim);
     m_TextBackground->setPriority(1);
     addChild(m_TextBackground);
@@ -301,8 +307,11 @@ void GameAnimationDialog::loadBackground(QString file)
     Mainapp::getInstance()->loadResAnim(pAnim, img);
     m_BackgroundAnim = pAnim;
     m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
-    m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
-    m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+    if (pAnim.get() != nullptr)
+    {
+        m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
+        m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+    }
 }
 
 void GameAnimationDialog::loadCoSprite(QString coid, float offsetX, float offsetY, bool flippedX, float scale)
