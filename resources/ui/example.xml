@@ -6,16 +6,15 @@
         Texts can be marked for translatable:
                 QT_TRANSLATE_NOOP("GAME", "Test")
         onUpdate: 	only works inside a game or replay right now. Can be any JS code that evaluates to a string.
-                                And gets called whenever the ui gets updated during the game. Mainly cause of mouse moves or actions finished.
-        onEvent: 	the variable input holds the value of the item that can be used inside the JS code here
-        all fields
+                        And gets called whenever the ui gets updated during the game. Mainly cause of mouse moves or actions finished.
+        onEvent: 	the variable input holds the value of the item that can be used inside the JS code here. Gets called upon finishing a user interaction with the object
+        Check the UiFactory.h for all xml parameter options for each object
         currently supported filenames:
                 campaignmenu
                 editormenu
                 gamemenu
                 mainmenu
-                mapselectionmapsmenu
-        Check the UiFactory.h for all xml parameter options
+                mapselectionmapsmenu        
         -->
     <Label>
         <x>settings.getWidth() - 200</x>

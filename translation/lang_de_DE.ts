@@ -3831,15 +3831,15 @@ Distributed for units beeing spawned at the given rate.</source>
     <name>GAME</name>
     <message>
         <location filename="../resources/ui/example.xml" line="7"/>
+        <location filename="../resources/ui/example.xml" line="24"/>
         <location filename="../resources/ui/example.xml" line="25"/>
-        <location filename="../resources/ui/example.xml" line="26"/>
-        <location filename="../resources/ui/example.xml" line="33"/>
-        <location filename="../resources/ui/example.xml" line="47"/>
-        <location filename="../resources/ui/example.xml" line="58"/>
-        <location filename="../resources/ui/example.xml" line="66"/>
-        <location filename="../resources/ui/example.xml" line="86"/>
+        <location filename="../resources/ui/example.xml" line="32"/>
+        <location filename="../resources/ui/example.xml" line="46"/>
+        <location filename="../resources/ui/example.xml" line="57"/>
+        <location filename="../resources/ui/example.xml" line="65"/>
+        <location filename="../resources/ui/example.xml" line="85"/>
+        <location filename="../resources/ui/example.xml" line="105"/>
         <location filename="../resources/ui/example.xml" line="106"/>
-        <location filename="../resources/ui/example.xml" line="107"/>
         <source>Test</source>
         <translation type="unfinished">Hilfe</translation>
     </message>
