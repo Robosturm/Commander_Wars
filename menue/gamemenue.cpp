@@ -496,7 +496,7 @@ void GameMenue::updateTimer()
     {
         roundTime = 0;
     }
-    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));    
+    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
 }
 
 bool GameMenue::getGameStarted() const
@@ -629,7 +629,7 @@ void GameMenue::performAction(spGameAction pGameAction)
                 Console::print("Sending action to other players", Console::eDEBUG);
                 m_syncCounter++;
                 pGameAction->setSyncCounter(m_syncCounter);
-                pGameAction->setRoundTimerTime(pMap->getGameRules()->getRoundTimer()->remainingTime());                
+                pGameAction->setRoundTimerTime(pMap->getGameRules()->getRoundTimer()->remainingTime());
                 QByteArray data;
                 QDataStream stream(&data, QIODevice::WriteOnly);
                 stream << pMap->getCurrentPlayer()->getPlayerID();
@@ -838,7 +838,7 @@ void GameMenue::skipAnimations()
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         spGameMap pMap = GameMap::getInstance();
-       // skip all animations
+        // skip all animations
         if (skipAnimations == AnimationSkipMode::All)
         {
             skipAllAnimations();
@@ -1225,59 +1225,61 @@ void GameMenue::updateMinimap()
 
 void GameMenue::victory(qint32 team)
 {
-    Console::print("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
-    spGameMap pMap = GameMap::getInstance();
-    bool exit = true;
-    bool humanWin = false;
-    // create victory
-    if (team >= 0)
+    if (m_pInstance.get() != nullptr)
     {
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        Console::print("GameMenue::victory for team " + QString::number(team), Console::eDEBUG);
+        spGameMap pMap = GameMap::getInstance();
+        bool exit = true;
+        bool humanWin = false;
+        // create victorysd
+        if (team >= 0)
         {
-            Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->getTeam() != team)
+            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
-                Console::print("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
-                pPlayer->defeatPlayer(nullptr);
+                Player* pPlayer = pMap->getPlayer(i);
+                if (pPlayer->getTeam() != team)
+                {
+                    Console::print("Defeating player " + QString::number(i) + " cause team " + QString::number(team) + " is set to win the game", Console::eDEBUG);
+                    pPlayer->defeatPlayer(nullptr);
+                }
+                if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+                {
+                    humanWin = true;
+                }
             }
-            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
+            if (humanWin)
             {
-                humanWin = true;
+                Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
+            }
+            pMap->getGameScript()->victory(team);
+            if (GameAnimationFactory::getAnimationCount() == 0)
+            {
+                exit = true;
+            }
+            else
+            {
+                exit = false;
             }
         }
-        if (humanWin)
+        if (exit == true)
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("victory.wav");
-        }
-        pMap->getGameScript()->victory(team);
-        if (GameAnimationFactory::getAnimationCount() == 0)
-        {
-            exit = true;
-        }
-        else
-        {
-            exit = false;
+            if (m_pNetworkInterface.get() != nullptr)
+            {
+                m_pChat->detach();
+                m_pChat = nullptr;
+            }
+            if (pMap->getCampaign() != nullptr)
+            {
+                Console::print("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
+                pMap->getCampaign()->mapFinished(humanWin);
+            }
+            AchievementManager::getInstance()->onVictory(team, humanWin);
+            Console::print("Leaving Game Menue", Console::eDEBUG);
+            oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
+            m_pInstance = nullptr;
+            oxygine::Actor::detach();
         }
     }
-    if (exit == true)
-    {
-        if (m_pNetworkInterface.get() != nullptr)
-        {
-            m_pChat->detach();
-            m_pChat = nullptr;
-        }
-        if (pMap->getCampaign() != nullptr)
-        {
-            Console::print("Informing campaign about game result. That human player game result is: " + QString::number(humanWin), Console::eDEBUG);
-            pMap->getCampaign()->mapFinished(humanWin);
-        }
-        AchievementManager::getInstance()->onVictory(team, humanWin);
-        Console::print("Leaving Game Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(spVictoryMenue::create(m_pNetworkInterface));
-        m_pInstance = nullptr;
-        oxygine::Actor::detach();
-    }
-    
 }
 
 void GameMenue::showAttackLog(qint32 player)
@@ -1289,7 +1291,7 @@ void GameMenue::showAttackLog(qint32 player)
     {
         m_Focused = true;
     });
-    addChild(pAttackLog);    
+    addChild(pAttackLog);
 }
 
 void GameMenue::showRules()
@@ -1324,7 +1326,7 @@ void GameMenue::showUnitStatistics()
     spGenericBox pBox = spGenericBox::create();
     Player* pPlayer = pMap->getCurrentViewPlayer();
     spUnitStatisticView view = spUnitStatisticView::create(pMap->getGameRecorder()->getPlayerDataRecords()[pPlayer->getPlayerID()],
-                                    Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
+            Settings::getWidth() - 60, Settings::getHeight() - 100, pPlayer);
     view->setPosition(30, 30);
     pBox->addItem(view);
     connect(pBox.get(), &GenericBox::sigFinished, [=]()
@@ -1440,7 +1442,7 @@ void GameMenue::showGameInfo(qint32 player)
         {
             m_Focused = true;
         });
-    }    
+    }
 }
 
 void GameMenue::showCOInfo()
@@ -1516,7 +1518,7 @@ void GameMenue::saveGame()
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
     setFocused(false);
-    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
 }
 
 QString GameMenue::getSaveFileEnding()
@@ -1550,7 +1552,7 @@ void GameMenue::showSaveAndExitGame()
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMapAndExit, Qt::QueuedConnection);
     setFocused(false);
-    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
 }
 
 void GameMenue::victoryInfo()
@@ -1559,7 +1561,7 @@ void GameMenue::victoryInfo()
     spDialogVictoryConditions pVictoryConditions = spDialogVictoryConditions::create();
     addChild(pVictoryConditions);
     setFocused(false);
-    connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);    
+    connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
 }
 
 void GameMenue::autoSaveMap()
@@ -1585,7 +1587,7 @@ void GameMenue::saveMap(QString filename)
     {
         skipAllAnimations();
     }
-    setFocused(true);    
+    setFocused(true);
 }
 
 void GameMenue::saveMapAndExit(QString filename)
@@ -1629,7 +1631,7 @@ void GameMenue::exitGame()
     {
         GameAnimationFactory::finishAllAnimations();
     }
-    victory(-1);    
+    victory(-1);
 }
 
 void GameMenue::startGame()
@@ -1716,7 +1718,7 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                     Mainapp* pApp = Mainapp::getInstance();
                     pApp->getAudioThread()->clearPlayList();
                     pMenue->startGame();
-                    oxygine::Actor::detach();                    
+                    oxygine::Actor::detach();
                 }
             }
             else
@@ -1784,7 +1786,7 @@ void GameMenue::showExitGame()
     {
         m_Focused = true;
     });
-    addChild(pExit);    
+    addChild(pExit);
 }
 
 void GameMenue::showWiki()
@@ -1826,7 +1828,7 @@ void GameMenue::surrenderGame()
     spGameAction pAction = spGameAction::create();
     pAction->setActionID("ACTION_SURRENDER_INTERNAL");
     performAction(pAction);
-    m_Focused = true;    
+    m_Focused = true;
 }
 
 void GameMenue::showNicknameUnit(qint32 x, qint32 y)
@@ -1846,7 +1848,7 @@ void GameMenue::showNicknameUnit(qint32 x, qint32 y)
         });
         addChild(pDialogTextInput);
         m_Focused = false;
-    }    
+    }
 }
 
 void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
@@ -1857,5 +1859,5 @@ void GameMenue::nicknameUnit(qint32 x, qint32 y, QString name)
     pAction->setTarget(QPoint(x, y));
     pAction->writeDataString(name);
     performAction(pAction);
-    m_Focused = true;    
+    m_Focused = true;
 }
