@@ -1,7 +1,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class GameManager : public QObject, public RessourceManagement<GameManager>
 {

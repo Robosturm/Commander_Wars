@@ -3,7 +3,7 @@
 
 class Unit;
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class WeaponManager : public QObject, public RessourceManagement<WeaponManager>
 {

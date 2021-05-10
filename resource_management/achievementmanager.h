@@ -1,7 +1,7 @@
 #ifndef ACHIEVEMENTMANAGER_H
 #define ACHIEVEMENTMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class AchievementManager : public QObject, public RessourceManagement<AchievementManager>
 {

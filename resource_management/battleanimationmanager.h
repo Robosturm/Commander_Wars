@@ -1,7 +1,7 @@
 #ifndef BATTLEANIMATIONMANAGER_H
 #define BATTLEANIMATIONMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class BattleAnimationManager : public QObject, public RessourceManagement<BattleAnimationManager>
 {

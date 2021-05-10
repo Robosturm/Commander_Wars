@@ -1,7 +1,7 @@
 #ifndef GAMEANIMATIONMANAGER_H
 #define GAMEANIMATIONMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class GameAnimationManager : public QObject, public RessourceManagement<GameAnimationManager>
 {

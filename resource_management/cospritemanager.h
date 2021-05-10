@@ -1,7 +1,7 @@
 #ifndef COSPRITEMANAGER_H
 #define COSPRITEMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class COSpriteManager : public QObject, public RessourceManagement<COSpriteManager>
 {

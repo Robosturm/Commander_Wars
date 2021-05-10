@@ -1,7 +1,7 @@
 #ifndef OBJECTMANAGER_H
 #define OBJECTMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class ObjectManager : public QObject, public RessourceManagement<ObjectManager>
 {

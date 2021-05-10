@@ -2,7 +2,7 @@
 #define SHOPLOADER_H
 
 #include <QObject>
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class ShopLoader : public QObject, public RessourceManagement<ShopLoader>
 {

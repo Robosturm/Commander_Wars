@@ -1,7 +1,7 @@
 #ifndef TERRAINMANAGER_H
 #define TERRAINMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class TerrainManager : public QObject, public RessourceManagement<TerrainManager>
 {

@@ -1,7 +1,7 @@
 #ifndef MOVEMENTTABLEMANAGER_H
 #define MOVEMENTTABLEMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class Unit;
 class Terrain;

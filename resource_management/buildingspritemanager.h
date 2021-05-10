@@ -2,7 +2,7 @@
 #define BUILDINGSPRITEMANAGER_H
 
 #include <qobject.h>
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class BuildingSpriteManager : public QObject, public RessourceManagement<BuildingSpriteManager>
 {

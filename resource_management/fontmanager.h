@@ -3,7 +3,7 @@
 
 #include <QColor>
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class FontManager : public QObject, public RessourceManagement<FontManager>
 {

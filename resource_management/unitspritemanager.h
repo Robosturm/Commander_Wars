@@ -3,7 +3,7 @@
 
 #include "game/GameEnums.h"
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class UnitSpriteManager : public QObject, public RessourceManagement<UnitSpriteManager>
 {

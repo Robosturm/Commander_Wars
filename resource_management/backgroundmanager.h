@@ -1,7 +1,7 @@
 #ifndef BACKGROUNDMANAGER_H
 #define BACKGROUNDMANAGER_H
 
-#include "resource_management/RessourceManagement.h"
+#include "resource_management/ressourcemanagement.h"
 
 class BackgroundManager : public QObject, public RessourceManagement<BackgroundManager>
 {
