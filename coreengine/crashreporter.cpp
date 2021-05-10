@@ -14,10 +14,14 @@
 #include <windows.h>
 #include <cxxabi.h>
 #include <imagehlp.h>
-#else
+#elif defined(Q_OS_ANDROID)
+// no crash reporter for android
+#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
 #include <csignal>
 #include <err.h>
 #include <execinfo.h>
+#else
+// no crash reporting for other os right now
 #endif
 
 namespace crashReporter
@@ -285,7 +289,9 @@ namespace crashReporter
 
         return EXCEPTION_EXECUTE_HANDLER;
     }
-#else
+#elif defined(Q_OS_ANDROID)
+    // no crash reporter for android
+#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     constexpr qint32  MAX_STACK_FRAMES = 64;
     static void    *sStackTraces[MAX_STACK_FRAMES];
     static uint8_t sAlternateStack[SIGSTKSZ];
@@ -465,8 +471,12 @@ namespace crashReporter
         }
 #ifdef Q_OS_WIN
         SetUnhandledExceptionFilter( _winExceptionHandler );
-#else
+#elif defined(Q_OS_ANDROID)
+    // no crash reporter for android
+#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
         _posixSetupSignalHandler();
+#else
+    // no crash reporter for other os for now
 #endif
     }
 

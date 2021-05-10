@@ -196,7 +196,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             QVector<QString> items;
             items.append(tr("CO Style ") + QString::number(0));
             m_pPredefinedStyles = spDropDownmenu::create(200, items);
-            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70);
             m_pSpriteBox->addChild(m_pPredefinedStyles);
         }
         connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)

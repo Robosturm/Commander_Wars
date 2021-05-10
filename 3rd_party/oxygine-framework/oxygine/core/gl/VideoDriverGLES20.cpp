@@ -145,7 +145,9 @@ namespace oxygine
         window->glDisable(GL_BLEND);
         window->glDepthMask(GL_FALSE);
         window->glCullFace(GL_FRONT_AND_BACK);
+#ifdef GL_MULTISAMPLE
         window->glEnable(GL_MULTISAMPLE);
+#endif
     }
 
     void VideoDriverGLES20::setUniformInt(const char* id, qint32 v)
