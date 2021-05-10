@@ -241,7 +241,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
                                                      GlobalUtils::roundUp(defStartHp));
     m_pDefenderAnimation->setDyingStartHp(defStartHp);
     m_pDefenderAnimation->setDyingEndHp(defEndHp);
-    if (!m_pAttackerAnimation->hasMoveInAnimation())
+    if (!m_pAttackerAnimation->hasMoveInAnimation(pAtkUnit, pDefUnit, atkWeapon))
     {
         // skip move in
         m_currentState = AnimationProgress::WaitAfterIn;

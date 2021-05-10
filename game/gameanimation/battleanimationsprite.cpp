@@ -260,11 +260,17 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit, Unit* pDefender, 
     }
 }
 
-bool BattleAnimationSprite::hasMoveInAnimation()
+bool BattleAnimationSprite::hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon)
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "hasMoveInAnimation";
-    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
     if (erg.isBool())
     {
         return erg.toBool();

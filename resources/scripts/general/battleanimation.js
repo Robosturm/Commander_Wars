@@ -12,7 +12,7 @@ var BATTLEANIMATION =
 
     },
 
-    hasMoveInAnimation : function()
+    hasMoveInAnimation : function(sprite, unit, defender, weapon)
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return false;

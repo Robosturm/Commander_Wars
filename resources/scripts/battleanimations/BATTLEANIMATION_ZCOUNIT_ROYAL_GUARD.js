@@ -76,7 +76,7 @@ var Constructor = function()
     };
 
 
-    this.hasMoveInAnimation = function()
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return true;

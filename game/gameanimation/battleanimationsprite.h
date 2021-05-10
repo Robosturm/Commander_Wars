@@ -322,7 +322,7 @@ public slots:
      * @brief hasMoveInAnimation
      * @return
      */
-    bool hasMoveInAnimation();
+    bool hasMoveInAnimation(Unit* pUnit, Unit* pDefender, qint32 attackerWeapon);
     /**
      * @brief detachChild
      * @param pActor

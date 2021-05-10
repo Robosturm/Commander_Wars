@@ -3,7 +3,7 @@ project (Commander_Wars)
 
 # Information for building commander wars on other platforms
 # 1. make sure the CMAKE_PREFIX_PATH targets to the correct qt installation
-# 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.0/gcc_64/lib
+# 2. make sure the LIBRARY_PATH targets the library folder of qt e.g. LD_LIBRARY_PATH=$HOME/Qt/5.15.2/gcc_64/lib
 
 # Special Information for Android
 # ANDROID_NATIVE_API_LEVEL needs to be 26 or higher

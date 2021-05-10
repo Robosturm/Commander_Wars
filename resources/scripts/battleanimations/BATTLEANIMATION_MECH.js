@@ -21,7 +21,7 @@ var Constructor = function()
             terrainId = unit.getTerrain().getTerrainID();
         }
         if (terrainId === "RIVER" ||
-            terrainId === "DESERT_TRY_RIVER")
+                terrainId === "DESERT_TRY_RIVER")
         {
             return "+river";
         }
@@ -43,26 +43,18 @@ var Constructor = function()
     {
         if (weapon === 1 || defender === null)
         {
-            var terrainId = unit.getTerrain().getTerrainID();
-            if (BATTLEANIMATION_MECH.isMountain(terrainId))
+            var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
+            var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
+            var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
+            sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                    Qt.point(65, 0), 600, false,
+                                    1, 1);
+            sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
+                                      Qt.point(65, 0), 600, false,
+                                      1, 1);
+            for (var i = 0; i < count; i++)
             {
-                BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
-            }
-            else
-            {
-                var count = sprite.getUnitCount(BATTLEANIMATION_MECH.getMaxUnitCount());
-                var armyName = Global.getArmyNameFromPlayerTable(unit.getOwner(), BATTLEANIMATION_MECH.armyData);
-                var riverName = BATTLEANIMATION_MECH.getRiverString(unit);
-                sprite.loadMovingSprite("mech+" + armyName + riverName + "+walk", false, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                        Qt.point(65, 0), 600, false,
-                                        1, 1);
-                sprite.loadMovingSpriteV2("mech+" + armyName + riverName + "+walk+mask", GameEnums.Recoloring_Table, sprite.getMaxUnitCount(), Qt.point(-75, 5),
-                                          Qt.point(65, 0), 600, false,
-                                          1, 1);
-                for (var i = 0; i < count; i++)
-                {
-                    sprite.loadSound("infantry_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
-                }
+                sprite.loadSound("infantry_move.wav", 5, "resources/sounds/", i * BATTLEANIMATION.defaultFrameDelay);
             }
         }
         else
@@ -234,10 +226,18 @@ var Constructor = function()
         return Qt.point(0, 0);
     };
 
-    this.hasMoveInAnimation = function()
+    this.hasMoveInAnimation = function(sprite, unit, defender, weapon)
     {
-        // return true if the unit has an implementation for loadMoveInAnimation
-        return true;
+        var terrainId = unit.getTerrain().getTerrainID();
+        if (BATTLEANIMATION_MECH.isMountain(terrainId))
+        {
+            return false;
+        }
+        else
+        {
+            // return true if the unit has an implementation for loadMoveInAnimation
+            return true;
+        }
     };
     this.getMoveInDurationMS = function()
     {
