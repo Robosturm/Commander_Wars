@@ -236,10 +236,10 @@
 		<image file="heavy_tank/heavy_tank+bm+fire+mask.png" cols = "5" />
 		<image file="heavy_tank/heavy_tank+ge+fire.png" cols = "5" />
 		<image file="heavy_tank/heavy_tank+ge+fire+mask.png" cols = "5" />
-		<image file="heavy_tank/heavy_tank+os+fire.png" cols = "4" />
-		<image file="heavy_tank/heavy_tank+os+fire+mask.png" cols = "4" />
-		<image file="heavy_tank/heavy_tank+yc+fire.png" cols = "4" />
-		<image file="heavy_tank/heavy_tank+yc+fire+mask.png" cols = "4" />
+		<image file="heavy_tank/heavy_tank+os+fire.png" cols = "5" />
+		<image file="heavy_tank/heavy_tank+os+fire+mask.png" cols = "5" />
+		<image file="heavy_tank/heavy_tank+yc+fire.png" cols = "5" />
+		<image file="heavy_tank/heavy_tank+yc+fire+mask.png" cols = "5" />
 		<image file="heavy_tank/heavy_tank+ma+fire.png" />
 		<image file="heavy_tank/heavy_tank+ma+fire+mask.png" />
 		<image file="heavy_tank/heavy_tank+bh+move.png" cols = "3" />

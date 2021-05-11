@@ -301,6 +301,7 @@ void Mainwindow::importFromDirectory(QString folder)
 void Mainwindow::changeUsername(QString name)
 {
     Settings::setUsername(name);
+    Userdata::getInstance()->changeUser();
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
